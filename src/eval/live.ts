@@ -14,6 +14,7 @@ interface LiveEvalOptions {
   models: string[];
   n: number;
   outDir: string;
+  maxTokens?: number;
 }
 
 export async function runLiveEval(opts: LiveEvalOptions): Promise<EvalReport> {
@@ -22,6 +23,7 @@ export async function runLiveEval(opts: LiveEvalOptions): Promise<EvalReport> {
   const compiled = compile(brief, token);
 
   const samplesRoot = resolve(opts.outDir, opts.token);
+  const maxTokens = opts.maxTokens ?? 12000;
 
   for (const spec of opts.models) {
     const runner = runnerFromSpec(spec);
@@ -36,17 +38,32 @@ export async function runLiveEval(opts: LiveEvalOptions): Promise<EvalReport> {
           condition === "compiled" ? compiled.prompts.generic : undefined;
         const userPrompt =
           condition === "compiled"
-            ? `Follow the brief above. Return a full, self-contained HTML document only.`
-            : `${brief.intent}\n\nReturn a full, self-contained HTML document only.`;
+            ? [
+                `Follow the brief above exactly. Return a single, self-contained, valid HTML5 document only — nothing before it, nothing after it, no prose commentary, no reasoning, no fenced code blocks. Start the response with <!doctype html> and end it with </html>.`,
+                ``,
+                `Brief intent: ${brief.intent}`,
+              ].join("\n")
+            : [
+                `Design a web page for the following intent.`,
+                ``,
+                brief.intent,
+                ``,
+                `Return a single, self-contained, valid HTML5 document only — nothing before it, nothing after it, no prose commentary, no reasoning, no fenced code blocks. Start with <!doctype html> and end with </html>.`,
+              ].join("\n");
         try {
           const out = await runner.run({
             systemPrompt,
             userPrompt,
             seed: i + 1,
+            maxTokens,
           });
           await writeFile(
             join(condDir, `sample-${String(i + 1).padStart(3, "0")}.html`),
             out.html,
+          );
+          await writeFile(
+            join(condDir, `sample-${String(i + 1).padStart(3, "0")}.raw.txt`),
+            out.rawResponse,
           );
         } catch (err) {
           await writeFile(

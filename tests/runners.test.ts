@@ -90,4 +90,19 @@ describe("extractHtmlBlock", () => {
       "<html><body></body></html>",
     );
   });
+
+  it("strips <think> reasoning blocks before extraction", () => {
+    const raw =
+      "<think>let me plan the page</think><!doctype html><html><body>hi</body></html>";
+    expect(extractHtmlBlock(raw)).toBe("<!doctype html><html><body>hi</body></html>");
+  });
+
+  it("returns an empty string when the response is only reasoning", () => {
+    const raw = "<think>I would design a minimalist page with...</think>";
+    expect(extractHtmlBlock(raw)).toBe("");
+  });
+
+  it("returns an empty string when the response is pure prose with no HTML", () => {
+    expect(extractHtmlBlock("I recommend a restrained Swiss layout.")).toBe("");
+  });
 });
