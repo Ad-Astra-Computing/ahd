@@ -112,6 +112,8 @@ Every week a new product ships that lets an LLM generate a UI. Every product shi
 
 ## Licence
 
-Code is released under Apache-2.0 (patent grant included). Style tokens in `tokens/` and documentation artwork in `docs/artwork/` are released under CC-BY-4.0, unless an individual token's `licence:` field says otherwise. Attribution strings are in `LICENSE-tokens` and `NOTICE`.
+Code is released under the **Functional Source License 1.1, Apache 2.0 Future License** (FSL-1.1-Apache-2.0). You can use, modify and redistribute AHD for any purpose except building a commercial product that competes with AHD itself. Internal use, client work, education, research and downstream non-competing products are all unrestricted from day one. Two years after each release, that release automatically converts to Apache-2.0 with its patent grant.
+
+Style tokens in `tokens/` and documentation artwork in `docs/artwork/` are released under **CC-BY-4.0**, unless an individual token's `licence:` field says otherwise. Tokens are meant to proliferate — use them on client work, in your own products, wherever. Attribution strings are in `LICENSE-tokens` and `NOTICE`.
 
 Repo: `ssh://forgejo@perdurabo.ussuri-elevator.ts.net:2222/Ad_Astra_Computing_Inc/ahd.git`
