@@ -2,6 +2,8 @@
 import { readFile, writeFile, mkdir } from "node:fs/promises";
 import { resolve } from "node:path";
 import { parse as parseYaml } from "yaml";
+import { loadDotEnv } from "../dist/env.js";
+await loadDotEnv();
 import { compile } from "../dist/compile.js";
 import { loadToken, listTokens, validateAll } from "../dist/load.js";
 import { lintFile, formatReport } from "../dist/lint/engine.js";

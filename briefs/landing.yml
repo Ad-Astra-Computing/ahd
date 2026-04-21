@@ -1,0 +1,43 @@
+intent: |
+  A one-page landing for AHD itself (Artificial Human Design). The visitor is
+  a working designer, a senior engineer, or a founder who has seen too many
+  AI-generated sites in the last month and already suspects the problem. They
+  do not need to be sold on the slop thesis; they need to be shown that AHD
+  takes it seriously and does something about it. One screen of reading. A
+  terminal-aesthetic code block showing the one-liner that runs the eval. A
+  manifest section that lists exactly what ships today versus what is gated
+  on external resources. No testimonials, no pricing tier, no "Trusted by"
+  strip.
+
+audience: |
+  Working designers, senior engineers, and early-stage founders who already
+  have an opinion about AI-generated design and would like a framework rather
+  than a lecture.
+
+token: swiss-editorial
+
+surfaces:
+  - web
+
+mustInclude:
+  - "A link to github (or the forgejo mirror) labelled as the read-the-code CTA."
+  - "The command `ahd eval-live swiss-editorial --brief briefs/landing.yml --models <specs> --n 10` rendered in a monospace code block with the language tag `bash`."
+  - "A clearly separated manifest section titled 'What ships' that enumerates: brief compiler, 28-rule linter, eval harness, vision-critic scaffold, MCP server, editor plugins, eight tokens."
+  - "A clearly separated manifest section titled 'What is gated' that enumerates: live frontier-model calls (needs API keys), live vision critique (needs multimodal key + screenshot pipeline), standalone npm packages for the editor plugins, additional tokens."
+  - "A footer that names the licence explicitly: FSL-1.1-Apache-2.0 for code, CC-BY-4.0 for tokens and artwork."
+
+mustAvoid:
+  - "any variant of 'build the future of'"
+  - "any variant of 'ship faster' or 'AI-native'"
+  - "gradient text on the word AI"
+  - "three equal feature cards"
+  - "centred hero stack with pill badge + two CTAs"
+  - "fake testimonials"
+  - "a Trusted by logo bar"
+  - "emoji bullets"
+  - "Lucide icons in gradient tiles"
+  - "purple-to-blue hero gradient"
+  - "AI shimmer"
+  - "Corporate Memphis illustration"
+  - "an iridescent 3D blob"
+  - "a canonical 4-column Product / Company / Resources / Legal footer"
