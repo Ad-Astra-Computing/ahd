@@ -1,0 +1,114 @@
+id: neubrutalist-gumroad
+name: "Neubrutalist (Gumroad-era)"
+version: 0.1.0
+status: stable
+licence: CC-BY-4.0
+authors:
+  - "Ad Astra Computing"
+
+provenance:
+  movement: "Neubrutalism / Neobrutalism (2020– revival)"
+  references:
+    - { name: "Gumroad 2021 redesign", kind: work }
+    - { name: "Figma community neubrutalist kits", kind: work }
+    - { name: "Ahrefs editorial treatments", kind: studio }
+  exemplars:
+    - { path: "exemplars/gumroad-2021.png", caption: "Gumroad redesign, 2021" }
+
+mood:
+  keywords: [loud, flat, confrontational, tactile, primary]
+  anti-keywords: [subtle, frosted, gradient, pastel, corporate]
+
+type:
+  families:
+    display: { name: "ABC Favorit", fallback: ["Neue Haas Grotesk Display", "Inter Tight"] }
+    text:    { name: "Mabry Pro", fallback: ["Inter", "system-ui"] }
+  pairing-rule: grotesque-plus-humanist-contrast
+  scale:
+    base: 18
+    ratio: 1.25
+    steps: [-2, -1, 0, 1, 2, 3, 4]
+  weights: [400, 700, 900]
+  tracking:
+    display: "-0.01em"
+    body: "0"
+    allcaps: "0.04em"
+  line-height:
+    display: 1.0
+    h2: 1.1
+    body: 1.5
+  measure: 68ch
+
+colour:
+  space: oklch
+  palette:
+    black:   "oklch(0.12 0 0)"
+    paper:   "oklch(0.98 0.005 95)"
+    yellow:  "oklch(0.92 0.18 95)"
+    pink:    "oklch(0.78 0.16 10)"
+    sky:     "oklch(0.82 0.12 230)"
+    green:   "oklch(0.82 0.18 140)"
+  roles:
+    background: paper
+    foreground: black
+    accent: yellow
+    border: black
+  contrast-tier: WCAG-AAA
+
+grid:
+  kind: swiss-12
+  columns: 12
+  gutter: 16
+  baseline: 8
+
+space:
+  scale: [0, 4, 8, 16, 24, 32, 48, 64, 96]
+
+surface:
+  radius:
+    scale: [0, 4]
+    rule: "mostly sharp; small radii on buttons only"
+  border:
+    weight: 2
+    style: solid
+    colour: black
+  shadow:
+    policy: "hard offset shadow only, black, 4px/4px, no blur"
+  motion:
+    policy: "instant state changes; hover translates 2px towards shadow"
+
+forbidden:
+  - "soft drop shadows"
+  - "glassmorphism"
+  - "purple-to-blue gradients"
+  - "gradient text"
+  - "Lucide icons in gradient squares"
+  - "pastel-only palettes"
+  - "AI shimmer"
+  - "fade-up-on-scroll"
+  - "rounded-2xl cards"
+  - "emoji bullets"
+
+required-quirks:
+  - "at least one hard offset shadow in a non-primary colour"
+  - "at least one section with a full-bleed flat colour block"
+  - "at least one element outlined in 2px black with no fill"
+
+copy:
+  voice: "plain, direct, cheeky, short"
+  banned-phrases:
+    - "build the future of"
+    - "seamless"
+    - "AI-native"
+
+prompt-fragments:
+  system: |
+    Design in a neubrutalist direction in the Gumroad-2021 lineage. Flat
+    colour blocks, 2px solid black borders on interactive elements, hard
+    offset drop shadows (4px/4px, zero blur, solid black). Palette is paper
+    with primaries used as full-bleed blocks, not tints. Sharp edges. Display
+    type at 72–120px, -0.01em tracking. Hover moves elements 2px towards
+    their shadow. Nothing soft.
+  negative: |
+    Do not use soft shadows, glassmorphism, gradients of any kind, pastel-only
+    palettes, AI shimmer, entrance animations, rounded-2xl, or emoji bullets.

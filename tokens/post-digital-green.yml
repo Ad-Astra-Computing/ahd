@@ -1,0 +1,107 @@
+id: post-digital-green
+name: "Post-Digital Green"
+version: 0.1.0
+status: stable
+licence: CC-BY-4.0
+authors:
+  - "Ad Astra Computing"
+
+provenance:
+  movement: "Post-digital / Code Brutalism / Terminal Aesthetics"
+  references:
+    - { name: "Are.na", kind: studio, url: "https://are.na" }
+    - { name: "Berg Cloud", kind: studio }
+    - { name: "low-tech web movement", kind: work }
+  exemplars:
+    - { path: "exemplars/arena-2024.png", caption: "Are.na browse view" }
+
+mood:
+  keywords: [textual, monospace, modest, modular, legible]
+  anti-keywords: [glossy, dimensional, animated, decorative]
+
+type:
+  families:
+    display: { name: "Berkeley Mono", fallback: ["IBM Plex Mono", "JetBrains Mono", "ui-monospace"] }
+    text:    { name: "Berkeley Mono", fallback: ["IBM Plex Mono", "JetBrains Mono", "ui-monospace"] }
+  pairing-rule: single-monospace
+  scale:
+    base: 15
+    ratio: 1.2
+    steps: [-1, 0, 1, 2, 3, 4]
+  weights: [400, 700]
+  tracking:
+    display: "0"
+    body: "0"
+    allcaps: "0.04em"
+  line-height:
+    display: 1.1
+    h2: 1.25
+    body: 1.55
+  measure: 72ch
+
+colour:
+  space: oklch
+  palette:
+    bg:    "oklch(0.14 0.02 150)"
+    fg:    "oklch(0.92 0.12 135)"
+    dim:   "oklch(0.55 0.05 150)"
+    rule:  "oklch(0.3 0.04 150)"
+    amber: "oklch(0.82 0.15 75)"
+  roles:
+    background: bg
+    foreground: fg
+    accent: amber
+    border: rule
+  contrast-tier: WCAG-AAA
+
+grid:
+  kind: char-grid
+  columns: 80
+  gutter: 1
+  baseline: 8
+
+space:
+  scale: [0, 4, 8, 12, 16, 24, 32, 48, 64]
+
+surface:
+  radius:
+    scale: [0]
+    rule: "no radii; only rectangles"
+  border:
+    weight: 1
+    style: solid
+    colour: rule
+  shadow:
+    policy: "forbidden"
+  motion:
+    policy: "forbidden except caret blink and link underline"
+
+forbidden:
+  - "gradients"
+  - "rounded corners"
+  - "drop shadows"
+  - "sans-serif body"
+  - "entrance animations"
+  - "Lucide icons"
+  - "emoji bullets"
+  - "glassmorphism"
+  - "3D blobs"
+
+required-quirks:
+  - "at least one ASCII diagram rendered as text"
+  - "at least one element aligned to the char grid (e.g. 80ch max-width)"
+  - "link style: underline-offset 4px, no colour change"
+
+copy:
+  voice: "technical, lowercase by default, terse"
+
+prompt-fragments:
+  system: |
+    Design post-digital. Everything in monospace. Dark green-black background,
+    muted green foreground, a single amber accent. Everything aligns to an 80
+    character grid. Rectangles only. One hairline rule colour. No shadows, no
+    gradients, no radii, no entrance animation. Include one ASCII diagram.
+    Underlined links with an offset, no colour change.
+  negative: |
+    Do not use sans-serif body text. Do not use gradients, shadows, rounded
+    corners, Lucide icons, emoji bullets, glassmorphism or 3D imagery.
