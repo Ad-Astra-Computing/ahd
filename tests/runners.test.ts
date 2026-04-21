@@ -36,18 +36,40 @@ describe("runnerFromSpec", () => {
     const prevA = process.env.ANTHROPIC_API_KEY;
     const prevO = process.env.OPENAI_API_KEY;
     const prevG = process.env.GEMINI_API_KEY;
+    const prevCF = process.env.CF_API_TOKEN;
+    const prevCFA = process.env.CF_ACCOUNT_ID;
     delete process.env.ANTHROPIC_API_KEY;
     delete process.env.OPENAI_API_KEY;
     delete process.env.GEMINI_API_KEY;
     delete process.env.GOOGLE_API_KEY;
+    delete process.env.CF_API_TOKEN;
+    delete process.env.CLOUDFLARE_API_TOKEN;
+    delete process.env.CF_ACCOUNT_ID;
+    delete process.env.CLOUDFLARE_ACCOUNT_ID;
     try {
       expect(() => runnerFromSpec("claude-opus-4-7")).toThrow();
       expect(() => runnerFromSpec("gpt-5")).toThrow();
       expect(() => runnerFromSpec("gemini-3-pro")).toThrow();
+      expect(() => runnerFromSpec("cf:@cf/meta/llama-3.3-70b-instruct-fp8-fast")).toThrow();
     } finally {
       if (prevA) process.env.ANTHROPIC_API_KEY = prevA;
       if (prevO) process.env.OPENAI_API_KEY = prevO;
       if (prevG) process.env.GEMINI_API_KEY = prevG;
+      if (prevCF) process.env.CF_API_TOKEN = prevCF;
+      if (prevCFA) process.env.CF_ACCOUNT_ID = prevCFA;
+    }
+  });
+
+  it("cf: spec constructs a runner when env is present", () => {
+    process.env.CF_API_TOKEN = "test-token";
+    process.env.CF_ACCOUNT_ID = "test-account";
+    try {
+      const runner = runnerFromSpec("cf:@cf/meta/llama-3.3-70b-instruct-fp8-fast");
+      expect(runner.provider).toBe("cloudflare-workers-ai");
+      expect(runner.id).toBe("@cf/meta/llama-3.3-70b-instruct-fp8-fast");
+    } finally {
+      delete process.env.CF_API_TOKEN;
+      delete process.env.CF_ACCOUNT_ID;
     }
   });
 

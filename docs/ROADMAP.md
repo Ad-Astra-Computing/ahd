@@ -33,9 +33,9 @@ Linter core plus eval scaffold.
 ## v0.3 — shipped as scaffold, live runs gated on API keys
 
 - `ahd eval-live` end-to-end pipeline: brief → compile → per-model calls → save samples → score → report
-- Model runners for **Anthropic** (Claude), **OpenAI** (GPT / o-series), **Google** (Gemini), **Ollama** (local OSS: Llama, DeepSeek, Qwen, etc.)
+- Model runners for **Anthropic** (Claude), **OpenAI** (GPT / o-series), **Google** (Gemini), **Cloudflare Workers AI** (Llama 3.3 / Llama 4 / DeepSeek R1 / Qwen QwQ / Mistral via `cf:@cf/vendor/model`), **Ollama** (local OSS)
 - Deterministic **mock runners** (`mock-slop`, `mock-swiss`) for offline testing of the full pipeline — covered in `tests/runners.test.ts`
-- Runners respect env vars: `ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, `GEMINI_API_KEY` / `GOOGLE_API_KEY`
+- Runners respect env vars: `ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, `GEMINI_API_KEY` / `GOOGLE_API_KEY`, `CF_API_TOKEN` + `CF_ACCOUNT_ID`
 - Blocked on external: live runs require keys and budget — drop them in `.env` and `ahd eval-live swiss-editorial --brief b.yml --models claude-opus-4-7,gpt-5,gemini-3-pro --n 10` runs the real thing
 
 ## v0.4 — shipped as scaffold, live critic gated on API keys

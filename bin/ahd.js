@@ -169,6 +169,8 @@ live-eval model specs:
   claude-<id>                           requires ANTHROPIC_API_KEY
   gpt-<id> / o<n>                       requires OPENAI_API_KEY
   gemini-<id>                           requires GEMINI_API_KEY or GOOGLE_API_KEY
+  cf:<@cf/vendor/model>                 Cloudflare Workers AI (OSS models, free tier)
+                                        requires CF_API_TOKEN + CF_ACCOUNT_ID
   ollama:<model>                        requires a running ollama at :11434
 
 docs: docs/SLOP_TAXONOMY.md, docs/LINTER_SPEC.md, docs/STYLE_TOKEN_SCHEMA.md, docs/TESTING.md, docs/ROADMAP.md`);
