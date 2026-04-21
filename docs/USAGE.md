@@ -1,6 +1,25 @@
 # Usage
 
-There are three ways to use AHD. They are independent. You can adopt one without touching the others.
+There are three ways to use AHD in production. There is also a single-command demo that does not count as a production path. The production flows are independent; adopt one without touching the others.
+
+## Quick demo: `ahd try`
+
+The fastest way to see the framework produce something. One brief in, one HTML page out, linted automatically. Offline by default, no API keys required.
+
+```bash
+npx ahd try briefs/landing.yml
+```
+
+What happens in order. The brief is read from disk. Its `token:` field (or a `--token <id>` override) resolves to a style token in `tokens/`. The brief is compiled in `mode: final`, which produces a single-output system prompt without the exploration-mode "three divergent directions" instruction. A runner is chosen. If no `--model <spec>` flag is set, `ahd try` uses `mock-swiss` when no Cloudflare credentials are in the environment, or `cf:@cf/mistralai/mistral-small-3.1-24b-instruct` (the measured-best OSS model on the Swiss taxonomy, free tier) when they are. The runner is called once. No pairing, no retry loop outside the runner's own, no iteration. The response is extracted to HTML. A header comment is stamped into the file declaring the token, the model, the ISO timestamp and a `Demo artifact, not production output` line. The file is written to `./out/ahd-try-<token>-<timestamp>.html`. Unless `--no-lint` is set, the source linter runs on the output immediately and prints a summary.
+
+```bash
+npx ahd try briefs/landing.yml --model mock-swiss
+npx ahd try briefs/landing.yml --model cf:@cf/meta/llama-3.3-70b-instruct-fp8-fast
+npx ahd try briefs/landing.yml --token monochrome-editorial
+npx ahd try-image briefs/editorial-illustration.yml   # needs CF_API_TOKEN + CF_ACCOUNT_ID
+```
+
+`ahd try` exists to make the framework demonstrable in one command. It is not the production path. For production you use the three flows below.
 
 ## 1. As a linter in continuous integration
 

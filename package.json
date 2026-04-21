@@ -1,9 +1,12 @@
 {
   "name": "@adastra/ahd",
-  "version": "0.1.0",
+  "version": "0.5.0-beta.1",
   "description": "Artificial Human Design — a brief compiler, linter and style-token library that forces LLMs out of design slop.",
   "license": "SEE LICENSE IN LICENSE",
   "type": "module",
+  "workspaces": [
+    "packages/*"
+  ],
   "bin": {
     "ahd": "./bin/ahd.js",
     "ahd-mcp": "./bin/ahd-mcp.js"
@@ -22,8 +25,15 @@
     "tokens",
     "docs",
     "schema",
-    "README.md"
+    "README.md",
+    "LICENSE",
+    "NOTICE"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Ad-Astra-Computing/ahd"
+  },
+  "homepage": "https://ahd.adastra.computer",
   "dependencies": {
     "playwright-core": "^1.59.1",
     "yaml": "^2.6.1",
