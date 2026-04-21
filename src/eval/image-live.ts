@@ -6,6 +6,17 @@ import { imageRunnerFromSpec } from "./runners/image-index.js";
 import { compileImagePrompt, briefAsProse } from "../compile.js";
 import { loadToken } from "../load.js";
 import { anthropicVisionCritic, mockCritic, type Critic } from "../critique/critic.js";
+
+function resolveDefaultCritic(): Critic {
+  const key = process.env.ANTHROPIC_API_KEY;
+  if (key) {
+    return anthropicVisionCritic({
+      apiKey: key,
+      model: process.env.AHD_VISION_MODEL ?? "claude-haiku-4-5-20251001",
+    });
+  }
+  return mockCritic({});
+}
 import type { Violation } from "../lint/types.js";
 
 interface LiveImageEvalOptions {
@@ -65,10 +76,7 @@ export async function runLiveImageEval(
   const samplesRoot = resolve(opts.outDir, opts.token, "images");
   await mkdir(samplesRoot, { recursive: true });
 
-  const critic = opts.critic ?? anthropicVisionCritic({
-    apiKey: process.env.ANTHROPIC_API_KEY ?? "",
-    model: process.env.AHD_VISION_MODEL ?? "claude-haiku-4-5-20251001",
-  });
+  const critic = opts.critic ?? resolveDefaultCritic();
 
   const cells: ImageEvalCell[] = [];
 

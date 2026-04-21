@@ -55,15 +55,15 @@ Full report with per-tell counts and the prompts used: [docs/evals/2026-04-21-ed
 
 ## What AHD ships
 
-**Taxonomy.** Thirty-eight slop tells documented in [docs/SLOP_TAXONOMY.md](docs/SLOP_TAXONOMY.md) and [docs/LINTER_SPEC.md](docs/LINTER_SPEC.md); 28 decidable from HTML/CSS, 9 behind the vision critic.
+**Taxonomy.** Thirty-eight slop tells documented in [docs/SLOP_TAXONOMY.md](docs/SLOP_TAXONOMY.md) and [docs/LINTER_SPEC.md](docs/LINTER_SPEC.md). Enforced today by 28 HTML/CSS rules, 3 SVG rules, and 13 vision-critic rules. The rule count is higher than the taxonomy count because several taxonomy entries are covered by more than one rule (for example, "Corporate Memphis" is enforced by a vision rule on rendered pixels and by the `no-corporate-memphis` negative in the compiled image prompt).
 
-**Brief compiler.** `ahd compile <brief.yml>` takes a structured brief, resolves it against a named style token, emits a `spec.json` plus per-model system prompts. `--mode final` for single-shot HTML output (used by the eval), default `draft` for three-direction exploration.
+**Brief compiler.** `ahd compile <brief.yml>` takes a structured brief, resolves it against a named style token, emits a `spec.json` plus per-model system prompts. `--mode final` produces single-shot output constraints (used by `ahd try` and by `ahd eval-live`); default mode is `draft`, which asks the model for three divergent directions for human-in-the-loop exploration.
 
-**Slop linter.** `ahd lint <file.html|css>` runs 28 deterministic source-level rules. `eslint-plugin-ahd` and `stylelint-plugin-ahd` wrap the rule engine for editor integration.
+**Slop linter.** `ahd lint <file.html|css|svg>` runs 28 HTML/CSS rules plus 3 SVG rules, in one pass against whatever input kind it's given. `eslint-plugin-ahd` and `stylelint-plugin-ahd` wrap the rule engine for editor integration.
 
 **Live-model eval.** `ahd eval-live <token> --brief b.yml --models <specs> --n N --report r.md` runs a controlled raw-vs-compiled comparison across Claude, GPT, Gemini, Cloudflare Workers AI (OSS models, free tier), Ollama and deterministic mock runners. Reports attempted, extractionFailed, errored and scored counts per cell; canonical model ids preserved via `evals/<token>/manifest.json`.
 
-**Vision critic.** `ahd critique <token>` renders each sample via headless Chromium and runs an Anthropic vision model against the nine vision-only rules, with rate-limit-aware retry/backoff. Chromium is resolved via `AHD_CHROMIUM_PATH` / `PATH` — use `nix-shell` (the flake's devShell provides `pkgs.chromium`) rather than `npx playwright install`.
+**Vision critic.** `ahd critique <token>` renders each sample via headless Chromium and runs an Anthropic vision model against 13 vision-only rules (9 web/graphic, 4 image-specific), with rate-limit-aware retry/backoff. `--critic mock` runs offline for deterministic tests; `--critic anthropic` runs live and needs `ANTHROPIC_API_KEY`. Chromium is resolved via `AHD_CHROMIUM_PATH` / `PATH`; use `nix-shell` (the flake's devShell provides `pkgs.chromium`) rather than `npx playwright install`.
 
 **MCP server.** `ahd mcp-serve` exposes `ahd.brief`, `ahd.list_tokens`, `ahd.get_token`, `ahd.palette`, `ahd.type_system`, `ahd.reference`, `ahd.lint`, `ahd.vision_rules` over stdio JSON-RPC for any MCP-capable agent (Claude Code, Cursor, Windsurf, Zed).
 

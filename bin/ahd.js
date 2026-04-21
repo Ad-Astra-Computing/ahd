@@ -45,10 +45,14 @@ async function main() {
     case "compile": {
       const briefPath = rest[0];
       const outDir = flag(rest, "--out") ?? "out";
-      if (!briefPath) exit("usage: ahd compile <brief.yml> [--out <dir>]");
+      const modeFlag = flag(rest, "--mode") ?? "draft";
+      if (!briefPath) exit("usage: ahd compile <brief.yml> [--out <dir>] [--mode draft|final]");
+      if (modeFlag !== "draft" && modeFlag !== "final") {
+        exit("--mode must be 'draft' or 'final'");
+      }
       const brief = parseYaml(await readFile(briefPath, "utf8"));
       const token = await loadToken(TOKENS, brief.token);
-      const result = compile(brief, token);
+      const result = compile(brief, token, modeFlag);
       await mkdir(outDir, { recursive: true });
       await writeFile(
         `${outDir}/spec.json`,
@@ -58,7 +62,7 @@ async function main() {
         await writeFile(`${outDir}/prompt.${model}.md`, text);
       }
       console.log(
-        `wrote ${outDir}/spec.json and prompt.{claude,gpt,gemini,generic}.md`,
+        `wrote ${outDir}/spec.json and prompt.{claude,gpt,gemini,generic}.md (mode: ${modeFlag})`,
       );
       return;
     }
@@ -194,10 +198,23 @@ async function main() {
       const n = parseInt(flag(rest, "--n") ?? "3", 10);
       const outDir = flag(rest, "--out") ?? "evals";
       const reportFile = flag(rest, "--report");
+      const criticChoice = flag(rest, "--critic") ?? (process.env.ANTHROPIC_API_KEY ? "anthropic" : "mock");
       if (!token || !briefPath)
         exit(
-          "usage: ahd eval-image <token> --brief <brief.yml> [--models <cfimg:@cf/...,...>] [--n <count>] [--out <dir>] [--report <file.md>]",
+          "usage: ahd eval-image <token> --brief <brief.yml> [--models <cfimg:@cf/...,...>] [--n <count>] [--critic anthropic|mock] [--out <dir>] [--report <file.md>]",
         );
+      if (criticChoice !== "anthropic" && criticChoice !== "mock") {
+        exit("--critic must be 'anthropic' or 'mock'");
+      }
+      if (criticChoice === "anthropic" && !process.env.ANTHROPIC_API_KEY) {
+        exit("--critic anthropic requires ANTHROPIC_API_KEY; pass --critic mock for offline scoring");
+      }
+      const criticImpl = criticChoice === "mock"
+        ? mockCritic({})
+        : anthropicVisionCritic({
+            apiKey: process.env.ANTHROPIC_API_KEY,
+            model: process.env.AHD_VISION_MODEL ?? "claude-haiku-4-5-20251001",
+          });
       const models = modelsCsv
         ? modelsCsv.split(",").map((s) => s.trim()).filter(Boolean)
         : WORKERS_AI_IMAGE_DEFAULTS.slice(0, 2).map((m) => `cfimg:${m}`);
@@ -206,6 +223,7 @@ async function main() {
         token,
         briefPath,
         imageModels: models,
+        critic: criticImpl,
         n,
         outDir,
       });

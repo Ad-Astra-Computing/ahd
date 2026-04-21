@@ -18,14 +18,21 @@ Four pieces, one purpose:
 - **Illustration tells in the taxonomy.** Corporate Memphis, AI illustration with subsurface-scatter glow, iridescent 3D blobs, stock team-at-laptop photography, monoline default icon sets — five of the 38 rules are graphic / illustration tells, checked by the vision critic.
 - **Image-agnostic vision critic.** Accepts any rendered PNG, so it already works on generated illustration or ad creative — not only on rendered HTML.
 
-## What's on the roadmap as its own vertical
+## What's shipped for image generation
 
-Image generation end-to-end. The taxonomy and vision critic already span it; the runner and eval pipeline do not yet.
+- **Image-generation runner** for Cloudflare Workers AI image models via `cfimg:<@cf/vendor/model>` specs. Ships today with FLUX.1 schnell, SDXL Lightning, SDXL base, and DreamShaper.
+- **Image-first eval pipeline.** `ahd eval-image <token> --brief <brief.yml> --models <cfimg-specs> --n N` saves generated PNGs directly (no HTML intermediary) and scores each with the vision critic against the taxonomy's illustration and graphic tells. `--critic mock` runs offline; `--critic anthropic` runs live with `ANTHROPIC_API_KEY`.
+- **SVG / vector linter.** Three source-level rules (`ahd/svg/no-uniform-stroke`, `ahd/svg/palette-bounds`, `ahd/svg/no-perfect-symmetry`) score SVG output alongside HTML/CSS. The engine runs them automatically when it sees a `<svg>` in the input.
+- **Image-specific vision rules.** Four additions to the vision critic: `ahd/image/no-malformed-anatomy`, `ahd/image/no-midjourney-face-symmetry`, `ahd/image/no-decorative-cursive-in-render`, `ahd/image/no-stock-diversity-casting`. Total vision ruleset is thirteen.
+- **Image-surface style tokens.** `editorial-illustration` and `ad-creative-collision` ship authored for image prompts, not web layouts. Both carry `compileImagePrompt` fragments so the compiler emits a positive + negative prompt pair rather than an HTML system prompt.
 
-- **Image-generation runners.** Adapters for FLUX, Stable Diffusion XL, Imagen 3, DALL·E 3, Firefly, and the image models on Cloudflare Workers AI (`@cf/black-forest-labs/flux-1-schnell`, `@cf/bytedance/stable-diffusion-xl-lightning`, `@cf/lykon/dreamshaper-8-lcm`). Same `ModelRunner` interface as the text runners.
-- **Image-first eval pipeline.** `ahd eval-image <token> --brief <brief.yml> --models <image-specs> --n N` that saves generated PNGs directly (no HTML intermediary) and scores them with the vision critic against the illustration and graphic tells.
-- **SVG / vector linter.** A source-level checker for SVG and illustration output (monoline-uniform stroke, symmetry heuristics, palette-bounds checks against the token's OKLCH palette) so vector-format generators get source-level scoring too.
-- **Extended taxonomy.** Tells specific to image generation: six-finger hands, shiny 3D-blob characters, Midjourney face-symmetry, over-sampled rule-of-thirds composition, decorative cursive in renders. Each added entry comes with exemplars and a critic prompt.
+Measured run published 21 April 2026: see [docs/evals/2026-04-21-editorial-image.md](evals/2026-04-21-editorial-image.md). FLUX schnell dropped 50% of vision tells under the compiled prompt, Corporate Memphis fires went from 67% of raw samples to 0% compiled; SDXL Lightning ignored the negative entirely. Both results are in the report.
+
+## Image-generation roadmap (not yet shipped)
+
+- **Additional runners.** Replicate (FLUX.1 pro / dev), OpenAI gpt-image-1 / DALL·E 3, Google Imagen 3, Adobe Firefly, Midjourney via proxy.
+- **Expanded taxonomy.** Six-finger hands / hand anatomy as a dedicated rule family, shiny 3D-blob characters as a distinct tell from Corporate Memphis, over-sampled rule-of-thirds composition, decorative cursive specifically in product shots.
+- **Longer-n image evals.** n≥30 per cell with bootstrap confidence intervals, following the same credibility work outlined below for the text eval.
 
 See [docs/ROADMAP.md](docs/ROADMAP.md) for sequencing.
 
