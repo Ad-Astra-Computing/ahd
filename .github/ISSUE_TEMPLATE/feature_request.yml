@@ -1,0 +1,45 @@
+name: Feature request
+description: Propose a change to the CLI, the linter, the vision critic, or the eval pipeline
+title: "[feature] "
+labels: [feature, triage]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does this solve?
+      description: Describe the user pain, not the solution yet.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposal
+      description: The change you'd like to see.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+    validations:
+      required: false
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - cli
+        - linter
+        - vision critic
+        - compile
+        - eval
+        - mcp
+        - plugins
+        - schema
+        - docs
+      default: 0
+    validations:
+      required: true
