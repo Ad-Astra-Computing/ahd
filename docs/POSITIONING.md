@@ -26,7 +26,7 @@ Four pieces, one purpose:
 - **Image-specific vision rules.** Four additions to the vision critic: `ahd/image/no-malformed-anatomy`, `ahd/image/no-midjourney-face-symmetry`, `ahd/image/no-decorative-cursive-in-render`, `ahd/image/no-stock-diversity-casting`. Total vision ruleset is thirteen.
 - **Image-surface style tokens.** `editorial-illustration` and `ad-creative-collision` ship authored for image prompts, not web layouts. Both carry `compileImagePrompt` fragments so the compiler emits a positive + negative prompt pair rather than an HTML system prompt.
 
-Measured run published 21 April 2026: see [docs/evals/2026-04-21-editorial-image.md](evals/2026-04-21-editorial-image.md). FLUX schnell dropped 50% of vision tells under the compiled prompt, Corporate Memphis fires went from 67% of raw samples to 0% compiled; SDXL Lightning ignored the negative entirely. Both results are in the report.
+Measured run published 21 April 2026: see [2026-04-21-editorial-image.md](./evals/2026-04-21-editorial-image.md). FLUX schnell dropped 50% of vision tells under the compiled prompt, Corporate Memphis fires went from 67% of raw samples to 0% compiled; SDXL Lightning ignored the negative entirely. Both results are in the report.
 
 ## Image-generation roadmap (not yet shipped)
 
