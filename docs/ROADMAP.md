@@ -21,7 +21,8 @@ Source of truth for what's shipped, what's scaffolded, and what's gated on exter
 ## v0.3 — shipped
 
 - `ahd eval-live` end-to-end pipeline: brief → compile → per-model calls → score → report
-- Runners: **Anthropic** (Claude), **OpenAI** (GPT / o-series), **Google** (Gemini), **Cloudflare Workers AI** (Llama 3.3 / Llama 4 / DeepSeek R1 / Qwen QwQ / Mistral via `cf:@cf/vendor/model`), **Ollama** (local OSS)
+- Runners: **Anthropic** (Claude), **OpenAI** (GPT / o-series), **Google** (Gemini), **Cloudflare Workers AI** (Llama 3.3 / Llama 4 / DeepSeek R1 / Qwen QwQ / Mistral via `cf:@cf/vendor/model`)
+- Unverified in-tree: **Ollama** (local OSS). Code ships with unit tests against a mocked HTTP layer, but no end-to-end run against a live Ollama daemon has been performed. Treat as experimental until v0.6.1 verifies it against a running instance.
 - CF AI Gateway routing via `CF_AI_GATEWAY` env for caching / rate-limit / spend tracking on frontier-provider calls
 - Deterministic **mock runners** (`mock-slop`, `mock-swiss`) for offline testing of the full pipeline
 - Runners respect env vars: `ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, `GEMINI_API_KEY` / `GOOGLE_API_KEY`, `CF_API_TOKEN` + `CF_ACCOUNT_ID`
