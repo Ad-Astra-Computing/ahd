@@ -4,6 +4,7 @@ import { geminiRunner } from "./gemini.js";
 import { ollamaRunner } from "./ollama.js";
 import { workersAiRunner } from "./workers-ai.js";
 import { mockRunner, slopResponder, swissResponder } from "./mock.js";
+import { cfGatewayUrl } from "./gateway.js";
 import type { ModelRunner } from "./types.js";
 
 export function runnerFromSpec(spec: string): ModelRunner {
@@ -12,17 +13,29 @@ export function runnerFromSpec(spec: string): ModelRunner {
   if (spec.startsWith("claude")) {
     const key = process.env.ANTHROPIC_API_KEY;
     if (!key) throw new Error("ANTHROPIC_API_KEY is not set");
-    return anthropicRunner({ apiKey: key, model: spec });
+    return anthropicRunner({
+      apiKey: key,
+      model: spec,
+      baseURL: cfGatewayUrl("anthropic"),
+    });
   }
   if (spec.startsWith("gpt") || spec.startsWith("o")) {
     const key = process.env.OPENAI_API_KEY;
     if (!key) throw new Error("OPENAI_API_KEY is not set");
-    return openaiRunner({ apiKey: key, model: spec });
+    return openaiRunner({
+      apiKey: key,
+      model: spec,
+      baseURL: cfGatewayUrl("openai"),
+    });
   }
   if (spec.startsWith("gemini")) {
     const key = process.env.GEMINI_API_KEY ?? process.env.GOOGLE_API_KEY;
     if (!key) throw new Error("GEMINI_API_KEY is not set");
-    return geminiRunner({ apiKey: key, model: spec });
+    return geminiRunner({
+      apiKey: key,
+      model: spec,
+      baseURL: cfGatewayUrl("google-ai-studio"),
+    });
   }
   if (spec.startsWith("ollama:")) {
     const model = spec.slice("ollama:".length);
@@ -52,4 +65,5 @@ export {
   slopResponder,
   swissResponder,
 };
+export { cfGatewayUrl } from "./gateway.js";
 export type { ModelRunner } from "./types.js";

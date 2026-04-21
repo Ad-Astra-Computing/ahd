@@ -173,6 +173,11 @@ live-eval model specs:
                                         requires CF_API_TOKEN + CF_ACCOUNT_ID
   ollama:<model>                        requires a running ollama at :11434
 
+CF AI Gateway (caching, rate limiting, spend tracking for any frontier provider):
+  CF_AI_GATEWAY=<account>/<gateway>     when set, claude-*, gpt-*, gemini-*
+                                        specs route through the gateway
+                                        transparently (no spec change needed)
+
 docs: docs/SLOP_TAXONOMY.md, docs/LINTER_SPEC.md, docs/STYLE_TOKEN_SCHEMA.md, docs/TESTING.md, docs/ROADMAP.md`);
   }
 }

@@ -8,8 +8,12 @@ import { extractHtmlBlock } from "./types.js";
 export function geminiRunner(options: {
   apiKey: string;
   model?: string;
+  baseURL?: string;
 }): ModelRunner {
   const model = options.model ?? "gemini-3-pro";
+  const baseURL = (
+    options.baseURL ?? "https://generativelanguage.googleapis.com/v1beta"
+  ).replace(/\/+$/, "");
   return {
     id: model,
     provider: "google",
@@ -28,7 +32,7 @@ export function geminiRunner(options: {
         };
       }
       const res = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${options.apiKey}`,
+        `${baseURL}/models/${model}:generateContent?key=${options.apiKey}`,
         {
           method: "POST",
           headers: { "content-type": "application/json" },
