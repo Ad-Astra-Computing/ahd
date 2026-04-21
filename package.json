@@ -5,14 +5,16 @@
   "license": "SEE LICENSE IN LICENSE",
   "type": "module",
   "bin": {
-    "ahd": "./bin/ahd.js"
+    "ahd": "./bin/ahd.js",
+    "ahd-mcp": "./bin/ahd-mcp.js"
   },
   "scripts": {
     "build": "tsc",
+    "prepare": "tsc || true",
     "test": "vitest run",
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit",
-    "lint:tokens": "node bin/ahd.js validate-tokens"
+    "lint:tokens": "npm run build -s && node bin/ahd.js validate-tokens"
   },
   "files": [
     "bin",

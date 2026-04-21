@@ -1,0 +1,110 @@
+id: monochrome-editorial
+name: "Monochrome Editorial"
+version: 0.1.0
+status: stable
+licence: CC-BY-4.0
+authors:
+  - "Ad Astra Computing"
+
+provenance:
+  movement: "Editorial single-hue practice"
+  references:
+    - { name: "The New York Times Magazine", kind: studio }
+    - { name: "MIT Press", kind: studio }
+    - { name: "Ellen Lupton, 'Thinking with Type'", kind: work }
+    - { name: "Massimo Vignelli on one-colour systems", kind: work }
+  exemplars:
+    - { path: "exemplars/nytmag-cover.jpg", caption: "NYTM, monochrome issue" }
+
+mood:
+  keywords: [restrained, literate, photographic, confident, editorial]
+  anti-keywords: [colourful, decorative, gimmicky]
+
+type:
+  families:
+    display: { name: "PP Editorial New", fallback: ["Tiempos Display", "Playfair Display"] }
+    text:    { name: "Söhne", fallback: ["GT America", "Inter"] }
+  pairing-rule: editorial-serif-display-plus-grotesque-text
+  scale:
+    base: 18
+    ratio: 1.333
+    steps: [-2, -1, 0, 1, 2, 3, 4, 5]
+  weights: [300, 400, 500, 700]
+  tracking:
+    display: "-0.02em"
+    body: "0"
+    allcaps: "0.1em"
+  line-height:
+    display: 1.05
+    h2: 1.2
+    body: 1.6
+  measure: 60ch
+
+colour:
+  space: oklch
+  palette:
+    paper: "oklch(0.98 0 0)"
+    ink:   "oklch(0.15 0 0)"
+    mid:   "oklch(0.55 0 0)"
+    rule:  "oklch(0.15 0 0)"
+  roles:
+    background: paper
+    foreground: ink
+    accent: ink
+    border: rule
+  contrast-tier: WCAG-AAA
+
+grid:
+  kind: asymmetric-12
+  columns: 12
+  gutter: 32
+  baseline: 8
+
+space:
+  scale: [0, 4, 8, 12, 16, 24, 32, 48, 64, 96, 160, 240]
+
+surface:
+  radius:
+    scale: [0]
+    rule: "sharp only"
+  border:
+    weight: 1
+    style: solid
+    colour: rule
+  shadow:
+    policy: "forbidden"
+  motion:
+    policy: "typographic scroll-linked moments permitted; no generic fade-ups"
+
+forbidden:
+  - "any chromatic colour at all"
+  - "rounded-2xl"
+  - "centred heroes"
+  - "three equal feature cards"
+  - "gradients"
+  - "AI shimmer"
+  - "glassmorphism"
+  - "Lucide icons in tiles"
+  - "stock photography of teams"
+
+required-quirks:
+  - "one display word at 160–240px, italic or roman"
+  - "one oversized black-and-white photograph spanning >= 8 columns"
+  - "one pullquote set in the serif display italic at dramatically larger size"
+
+copy:
+  voice: "long-form, literate, confident, no hedges"
+
+prompt-fragments:
+  system: |
+    Design in a monochrome editorial direction. Warm white paper, deep ink,
+    a single midtone for rule and caption. Serif display (PP Editorial New
+    or equivalent) paired with grotesque body text. Asymmetric 12-col grid
+    with 32px gutters. One display word set at 160–240px. One oversized
+    black-and-white photograph spanning most of the page. One pullquote in
+    the display serif italic at dramatic scale. Sharp edges. No shadows. No
+    chromatic colour anywhere.
+  negative: |
+    Do not use any chromatic colour. Do not centre the hero. Do not use
+    rounded-2xl, gradients, AI shimmer, glassmorphism, Lucide icons in tiles
+    or stock photography of teams.
