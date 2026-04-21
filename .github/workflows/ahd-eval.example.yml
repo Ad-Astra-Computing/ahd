@@ -1,0 +1,82 @@
+# Example GitHub Actions workflow for running AHD's live eval in CI.
+# Copy into your own repo's .github/workflows/ and rename.
+#
+# This fires only on a weekly schedule and on manual dispatch — you almost
+# certainly do not want to burn API tokens on every push.
+#
+# Secrets required (add under repo Settings → Secrets and variables → Actions):
+#   CF_API_TOKEN      - Cloudflare API token with AI.run permission
+#   CF_ACCOUNT_ID     - Cloudflare account id
+#   ANTHROPIC_API_KEY - optional, for claude-* model specs and the vision critic
+#   OPENAI_API_KEY    - optional, for gpt-* / o* model specs
+#   GEMINI_API_KEY    - optional, for gemini-* model specs
+#   CF_AI_GATEWAY     - optional, for routing frontier calls through CF gateway
+
+name: ahd · eval
+
+on:
+  schedule:
+    - cron: "17 3 * * 1"   # every Monday at 03:17 UTC
+  workflow_dispatch:
+    inputs:
+      token:
+        description: "style token id"
+        required: true
+        default: "swiss-editorial"
+      brief:
+        description: "path to brief yaml"
+        required: true
+        default: "briefs/landing.yml"
+      n:
+        description: "samples per cell"
+        required: true
+        default: "5"
+
+jobs:
+  eval:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: install
+        run: npm ci
+
+      - name: eval-live (text-to-HTML)
+        env:
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+          CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          CF_AI_GATEWAY: ${{ secrets.CF_AI_GATEWAY }}
+          TOKEN: ${{ github.event.inputs.token || 'swiss-editorial' }}
+          BRIEF: ${{ github.event.inputs.brief || 'briefs/landing.yml' }}
+          N: ${{ github.event.inputs.n || '5' }}
+        run: |
+          mkdir -p docs/evals
+          MODELS="cf:@cf/meta/llama-3.3-70b-instruct-fp8-fast,cf:@cf/mistralai/mistral-small-3.1-24b-instruct,cf:@cf/qwen/qwen2.5-coder-32b-instruct"
+          if [ -n "$ANTHROPIC_API_KEY" ]; then MODELS="$MODELS,claude-opus-4-7"; fi
+          if [ -n "$OPENAI_API_KEY" ];    then MODELS="$MODELS,gpt-5"; fi
+          if [ -n "$GEMINI_API_KEY" ];    then MODELS="$MODELS,gemini-3-pro"; fi
+          npx ahd eval-live "$TOKEN" \
+            --brief "$BRIEF" \
+            --models "$MODELS" \
+            --n "$N" \
+            --report "docs/evals/$(date +%Y-%m-%d)-$TOKEN.md"
+
+      - name: commit report
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git add docs/evals/
+          if git diff --cached --quiet; then
+            echo "no new report to commit"
+          else
+            git commit -m "eval: automated weekly ahd eval-live"
+            git push
+          fi

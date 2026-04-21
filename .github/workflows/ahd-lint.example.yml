@@ -1,0 +1,49 @@
+# Example GitHub Actions workflow for projects that consume AHD.
+# Copy this into your own repo's .github/workflows/ and rename.
+#
+# It does three things, all offline / free:
+#   1. Installs AHD via npm
+#   2. Validates any style tokens you've committed in tokens/ against the schema
+#   3. Runs `ahd lint` on every HTML + CSS file in dist/ and src/
+#
+# For image-gen or live-model eval in CI, see ahd-eval.example.yml.
+
+name: ahd · lint
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: checkout
+        uses: actions/checkout@v5
+
+      - name: set up node
+        uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: install
+        run: npm ci
+
+      - name: validate style tokens
+        run: npx ahd validate-tokens || true
+
+      - name: ahd lint
+        run: |
+          shopt -s globstar nullglob
+          files=()
+          for f in dist/**/*.html src/**/*.html src/**/*.css; do
+            files+=("$f")
+          done
+          if [ ${#files[@]} -eq 0 ]; then
+            echo "no files to lint"
+            exit 0
+          fi
+          npx ahd lint "${files[@]}"

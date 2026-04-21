@@ -2,8 +2,10 @@ import { describe, it, expect } from "vitest";
 import { mockCritic, VISION_RULES, buildCriticPrompt } from "../src/critique/critic.js";
 
 describe("vision critic", () => {
-  it("ships nine vision-only rules", () => {
-    expect(VISION_RULES).toHaveLength(9);
+  it("ships thirteen vision-only rules (9 web/graphic + 4 image-specific)", () => {
+    expect(VISION_RULES).toHaveLength(13);
+    const imageRules = VISION_RULES.filter((r) => r.id.startsWith("ahd/image/"));
+    expect(imageRules).toHaveLength(4);
     for (const r of VISION_RULES) {
       expect(r.id.startsWith("ahd/")).toBe(true);
       expect(r.description.length).toBeGreaterThan(10);

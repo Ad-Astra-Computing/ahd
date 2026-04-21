@@ -13,6 +13,8 @@ import { runLiveEval } from "../dist/eval/live.js";
 import { runStdioServer } from "../dist/mcp/server.js";
 import { VISION_RULES, anthropicVisionCritic, mockCritic } from "../dist/critique/critic.js";
 import { runCritiqueOnDir, formatCritiqueReport } from "../dist/critique/runner.js";
+import { runLiveImageEval, formatImageEvalReport } from "../dist/eval/image-live.js";
+import { WORKERS_AI_IMAGE_DEFAULTS } from "../dist/eval/runners/workers-ai-image.js";
 
 const ROOT = resolve(new URL("..", import.meta.url).pathname);
 const TOKENS = resolve(ROOT, "tokens");
@@ -151,6 +153,38 @@ async function main() {
       return;
     }
 
+    case "eval-image": {
+      const token = rest[0];
+      const briefPath = flag(rest, "--brief");
+      const modelsCsv = flag(rest, "--models");
+      const n = parseInt(flag(rest, "--n") ?? "3", 10);
+      const outDir = flag(rest, "--out") ?? "evals";
+      const reportFile = flag(rest, "--report");
+      if (!token || !briefPath)
+        exit(
+          "usage: ahd eval-image <token> --brief <brief.yml> [--models <cfimg:@cf/...,...>] [--n <count>] [--out <dir>] [--report <file.md>]",
+        );
+      const models = modelsCsv
+        ? modelsCsv.split(",").map((s) => s.trim()).filter(Boolean)
+        : WORKERS_AI_IMAGE_DEFAULTS.slice(0, 2).map((m) => `cfimg:${m}`);
+      const report = await runLiveImageEval({
+        tokensDir: TOKENS,
+        token,
+        briefPath,
+        imageModels: models,
+        n,
+        outDir,
+      });
+      const text = formatImageEvalReport(report);
+      if (reportFile) {
+        await writeFile(reportFile, text);
+        console.log(`wrote ${reportFile}`);
+      } else {
+        console.log(text);
+      }
+      return;
+    }
+
     case "critique": {
       const token = rest[0];
       const samplesDir = flag(rest, "--samples") ?? "evals";
@@ -201,7 +235,9 @@ commands:
   ahd vision-rules                      list every vision-only rule (run via the critic)
   ahd eval <token> [--samples dir]      aggregate lint scores across pre-rendered samples
   ahd eval-live <token> --brief b.yml --models <spec,...> [--n 3] [--out dir] [--report r.md]
-                                        run a brief through live models, score, aggregate
+                                        run a brief through live text-to-HTML models, score via linter
+  ahd eval-image <token> --brief b.yml [--models <cfimg:@cf/...,...>] [--n 3] [--report r.md]
+                                        run a brief through live image-generation models, score via vision critic
   ahd mcp-serve                         run the AHD MCP server over stdio
   ahd critique <token> [--samples d] [--critic anthropic|mock] [--max n] [--out dir] [--report r.md]
                                         render each sample, run the vision critic on the screenshot
@@ -214,6 +250,10 @@ live-eval model specs:
   cf:<@cf/vendor/model>                 Cloudflare Workers AI (OSS models, free tier)
                                         requires CF_API_TOKEN + CF_ACCOUNT_ID
   ollama:<model>                        requires a running ollama at :11434
+
+image-generation specs (for ahd eval-image):
+  cfimg:<@cf/vendor/model>              Cloudflare Workers AI image models (FLUX schnell, SDXL, etc.)
+                                        requires CF_API_TOKEN + CF_ACCOUNT_ID
 
 CF AI Gateway (caching, rate limiting, spend tracking for any frontier provider):
   CF_AI_GATEWAY=<account>/<gateway>     when set, claude-*, gpt-*, gemini-*

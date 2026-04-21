@@ -26,6 +26,7 @@ import { rule as noFakeTrustBar } from "./no-fake-trust-bar.js";
 import { rule as ctaNotCanonical } from "./cta-not-canonical.js";
 import { rule as trackingPerSize } from "./tracking-per-size.js";
 import { rule as radiusHierarchy } from "./radius-hierarchy.js";
+import { svgRulesAsRules } from "../svg/rules.js";
 import type { Rule } from "../types.js";
 
 export const rules: Rule[] = [
@@ -57,6 +58,7 @@ export const rules: Rule[] = [
   ctaNotCanonical,
   trackingPerSize,
   radiusHierarchy,
+  ...svgRulesAsRules,
 ];
 
 export function rulesById(): Record<string, Rule> {

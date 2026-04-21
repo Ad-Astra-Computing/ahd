@@ -1,0 +1,117 @@
+id: ad-creative-collision
+name: "Ad Creative (Agency Collision)"
+version: 0.1.0
+status: draft
+licence: CC-BY-4.0
+authors:
+  - "Ad Astra Computing"
+
+provenance:
+  movement: "Agency-era collision / typographic brutalism applied to commercial image"
+  references:
+    - { name: "Wieden+Kennedy (Nike, Old Spice lineage)", kind: studio }
+    - { name: "Sagmeister & Walsh", kind: studio }
+    - { name: "DIA Studio", kind: studio }
+    - { name: "Alan Aldridge (1960s-70s agency)", kind: designer }
+  exemplars:
+    - { path: "exemplars/wk-nike.jpg", caption: "Wieden+Kennedy Nike campaign" }
+
+mood:
+  keywords: [loud, collaged, typographic, cut, physical]
+  anti-keywords: [pastel, smooth, rendered, floating]
+
+type:
+  families:
+    display: { name: "Druk", fallback: ["ABC Whyte Inktrap", "Inter Tight"] }
+    text:    { name: "ABC Diatype", fallback: ["Inter"] }
+  pairing-rule: ultra-bold-display-plus-mono-caption
+  scale:
+    base: 16
+    ratio: 1.5
+    steps: [0, 1, 2, 3, 4, 5]
+  weights: [400, 900]
+  tracking:
+    display: "-0.03em"
+    body: "0"
+    allcaps: "0.02em"
+  line-height:
+    display: 0.95
+    h2: 1.05
+    body: 1.4
+  measure: 50ch
+
+colour:
+  space: oklch
+  palette:
+    black:   "oklch(0.12 0 0)"
+    paper:   "oklch(0.96 0.005 80)"
+    red:     "oklch(0.5 0.25 25)"
+    orange:  "oklch(0.72 0.22 45)"
+    yellow:  "oklch(0.88 0.2 95)"
+  roles:
+    background: paper
+    foreground: black
+    accent: red
+    border: black
+  contrast-tier: WCAG-AAA
+
+grid:
+  kind: broken
+  columns: 6
+  gutter: 12
+  baseline: 8
+
+space:
+  scale: [0, 4, 8, 16, 24, 48, 96]
+
+surface:
+  radius:
+    scale: [0]
+    rule: "no radii at all — cuts and tears, not soft edges"
+  border:
+    weight: 3
+    style: solid
+    colour: black
+  shadow:
+    policy: "hard offset shadows allowed in red or black only"
+  motion:
+    policy: "hard state snaps; no eased transitions"
+
+forbidden:
+  - "corporate memphis, alegria"
+  - "pastel-only palettes"
+  - "iridescent 3D blobs"
+  - "smooth AI rendering with subsurface scatter"
+  - "stock photography of smiling diverse teams"
+  - "decorative cursive overlaid on the render"
+  - "midjourney face symmetry"
+  - "six-finger hands"
+  - "glossy clean chrome"
+
+required-quirks:
+  - "at least one element tilted or rotated off the implied grid"
+  - "type that overlaps or is cut by an image edge"
+  - "high-chroma clash of red and either orange or yellow, adjacent"
+
+copy:
+  voice: "imperative, short, declarative, confrontational"
+  banned-phrases:
+    - "build the future of"
+    - "seamless"
+    - "AI-native"
+    - "your journey"
+
+prompt-fragments:
+  system: |
+    Design an ad creative in the Wieden+Kennedy / Sagmeister agency
+    lineage: loud, physical, collaged. Ultra-bold Druk-family display
+    type colliding with image. Ink on warm paper, red and yellow or red
+    and orange clashing adjacently. One element deliberately tilted off
+    the grid. Type that overlaps image edges. Hard offset shadows in red
+    or black only. No smooth AI rendering, no floating figures, no
+    pastels.
+  negative: |
+    No corporate memphis, no Alegria, no pastel palettes, no iridescent
+    3D blobs, no subsurface-scatter AI glow, no stock photography of
+    smiling diverse teams, no decorative cursive overlays, no Midjourney
+    face symmetry, no six-finger hands, no glossy clean chrome.
