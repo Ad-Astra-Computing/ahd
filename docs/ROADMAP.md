@@ -38,28 +38,28 @@ Source of truth for what's shipped, what's scaffolded, and what's gated on exter
 - **MCP server** (`ahd mcp-serve`): 8 tools over stdio JSON-RPC, full initialize / tools/list / tools/call lifecycle tested
 - Chromium resolved via `AHD_CHROMIUM_PATH` / `PATH`; nix flake devShell provides `pkgs.chromium`
 
-## v0.5 — shipped partially
+## v0.5 — shipped
 
-- Eight style tokens: `swiss-editorial`, `manual-sf`, `neubrutalist-gumroad`, `post-digital-green`, `memphis-clash` (draft), `heisei-retro` (draft), `monochrome-editorial`, `bauhaus-revival` (draft)
-- `eslint-plugin-ahd` + `stylelint-plugin-ahd` wrappers derived from the rule engine
-- **Not yet shipped as standalone npm packages** (currently ride with `@adastra/ahd`); splitting is a packaging task
-- Community contribution flow (DCO, review sign-off policy) still to write
+- Ten style tokens: `swiss-editorial`, `manual-sf`, `neubrutalist-gumroad`, `post-digital-green`, `memphis-clash` (draft), `heisei-retro` (draft), `monochrome-editorial`, `bauhaus-revival` (draft), `editorial-illustration` (draft), `ad-creative-collision` (draft)
+- `eslint-plugin-ahd` + `stylelint-plugin-ahd` split into standalone packages under `packages/`, derived programmatically from the shared rule engine in `@adastra/ahd`
+- Community contribution flow shipped: `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `SECURITY.md`, issue templates, PR template, DCO sign-off requirement
+- Per-token exemplar references under `tokens/exemplars/*/reference.md` sourced from public-domain archives (Wikimedia, LOC, MoMA Open Access, Rijksmuseum, Cooper Hewitt, Letterform Archive)
 
-## v0.6 — image generation vertical (planned)
+## v0.6 — image generation vertical · shipped
 
-Closes the "across web and image" promise. The taxonomy and vision critic already span it; only runners and the eval pipeline are web-specific today.
+- **Image-generation runner** for Cloudflare Workers AI image models via `cfimg:<@cf/vendor/model>` specs (FLUX.1 schnell, SDXL Lightning, SDXL base, DreamShaper). Same `ImageRunner` interface shape as the text runners.
+- **`ahd eval-image`** — image-first eval pipeline saves generated PNGs directly with no HTML intermediary, scored by the vision critic against illustration and graphic tells. `--critic mock|anthropic` flag added to the CLI so users without `ANTHROPIC_API_KEY` can score offline rather than getting a report full of `.critique-error.txt` files.
+- **`ahd try-image`** — single-shot image demo command, parallel to `ahd try` for text.
+- **SVG / vector linter** — three source-level rules shipped (`ahd/svg/no-uniform-stroke`, `ahd/svg/palette-bounds`, `ahd/svg/no-perfect-symmetry`). Engine runs them automatically when the input contains an `<svg>`.
+- **Four image-specific vision rules** added to the critic: `ahd/image/no-malformed-anatomy`, `ahd/image/no-midjourney-face-symmetry`, `ahd/image/no-decorative-cursive-in-render`, `ahd/image/no-stock-diversity-casting`. Total vision ruleset is thirteen.
+- **Two image-surface style tokens** (`editorial-illustration`, `ad-creative-collision`) authored for image prompts, not web layouts. `compileImagePrompt` emits a positive + negative prompt pair rather than an HTML system prompt.
+- **Measured image run** published 21 April 2026 with real numbers: FLUX.1 schnell dropped 50% of vision tells compiled vs raw (Corporate Memphis fires: 67% → 0%); SDXL Lightning ignored the negative and stayed put. See `docs/evals/2026-04-21-editorial-image.md`.
 
-- **Image-generation runners** with the same `ModelRunner` interface:
-  - Anthropic / OpenAI image models (DALL·E 3, gpt-image-1)
-  - Google Imagen 3
-  - Adobe Firefly
-  - Replicate (FLUX.1 schnell / dev / pro, SDXL, Ideogram)
-  - Cloudflare Workers AI image models: `@cf/black-forest-labs/flux-1-schnell`, `@cf/bytedance/stable-diffusion-xl-lightning`, `@cf/lykon/dreamshaper-8-lcm`
-  - Midjourney via proxy (community pattern)
-- **`ahd eval-image`** — image-first eval pipeline: saves generated PNGs directly, no HTML intermediary, scored by the vision critic against illustration / graphic tells
-- **Extended taxonomy** — tells specific to image generation: six-finger hands, shiny 3D-blob characters, Midjourney face-symmetry, over-sampled rule-of-thirds, decorative cursive in renders. Each with exemplars and critic prompt.
-- **SVG / vector linter** — source-level checker for SVG output: monoline-uniform stroke, symmetry heuristics, palette-bounds against the token's OKLCH palette
-- **Image-surface style tokens** — `editorial-photo`, `product-shot`, `ad-creative`, `zine-collage` etc., calibrated for image generators rather than web
+## v0.6.x — image generation follow-ups (not yet shipped)
+
+- Additional runners: Replicate (FLUX.1 dev / pro, Ideogram), OpenAI gpt-image-1 / DALL·E 3, Google Imagen 3, Adobe Firefly, Midjourney proxy.
+- Expanded image-specific taxonomy: hand-anatomy family (distinct from generic malformed anatomy), shiny 3D-blob characters as a distinct tell, over-sampled rule-of-thirds composition, decorative cursive specifically in product shots.
+- More image-surface tokens: `editorial-photo`, `product-shot`, `zine-collage`.
 
 ## v0.7 — larger-n, peer-reviewable eval
 
