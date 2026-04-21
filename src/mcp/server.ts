@@ -129,7 +129,7 @@ export function createTools(options: McpServerOptions): McpTool[] {
     {
       name: "ahd.vision_rules",
       description:
-        "Return the nine vision-only slop rules (for use when an agent has access to a screenshot or rendered page).",
+        "Return the thirteen vision-only slop rules (9 web/graphic + 4 image-specific), for use when an agent has access to a screenshot or rendered page.",
       inputSchema: { type: "object", properties: {} },
       handler: async () => VISION_RULES,
     },
