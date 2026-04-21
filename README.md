@@ -6,7 +6,7 @@
 
 <br>
 
-**AHD** is Ad Astra's open-source framework aimed at making LLMs produce design that does not look like it was produced by an LLM. v0.1 ships a brief compiler and a style-token library. The linter and the empirical eval harness that measures whether we're actually moving models off their shared median are specified in this repo but not yet built — see [docs/ROADMAP.md](docs/ROADMAP.md). The goal is specific, referenced, asymmetric, typographically honest design, compiled from a structured brief and enforced in CI. Today we have the first two pieces and the spec for the rest.
+**AHD** is Ad Astra's open-source framework aimed at making LLMs produce design that does not look like it was produced by an LLM. Today it ships a brief compiler, a five-token seed library, a deterministic slop linter covering ten of the thirty-eight taxonomy tells, and an eval harness that aggregates lint scores across raw and compiled LLM output. The remaining twenty-eight rules, the vision-critic pass and live-model calling are on the roadmap — see [docs/ROADMAP.md](docs/ROADMAP.md) — but the scoring substrate is real and testable now.
 
 The thesis sits in one page: [docs/SLOP_TAXONOMY.md](docs/SLOP_TAXONOMY.md). Thirty-eight concrete tells that mark LLM-generated design as generated. Everything else in this repo exists to make those tells uneconomical.
 
@@ -56,9 +56,12 @@ Requires Node 20 or newer.
 ## Use
 
 ```bash
-ahd list                      # seed tokens shipped with v0.1
-ahd show swiss-editorial      # inspect a token
-ahd compile brief.yml --out . # per-model prompts + spec.json
+ahd list                              # seed tokens shipped with v0.1
+ahd show swiss-editorial              # inspect a token
+ahd compile brief.yml --out .         # per-model prompts + spec.json
+ahd lint page.html                    # run the slop linter (ten rules today)
+ahd lint-rules                        # list every lint rule with severity
+ahd eval swiss-editorial --samples e/ # aggregate lint scores across samples
 ```
 
 A minimal brief:
@@ -115,5 +118,3 @@ Every week a new product ships that lets an LLM generate a UI. Every product shi
 Code is released under the **Functional Source License 1.1, Apache 2.0 Future License** (FSL-1.1-Apache-2.0). You can use, modify and redistribute AHD for any purpose except building a commercial product that competes with AHD itself. Internal use, client work, education, research and downstream non-competing products are all unrestricted from day one. Two years after each release, that release automatically converts to Apache-2.0 with its patent grant.
 
 Style tokens in `tokens/` and documentation artwork in `docs/artwork/` are released under **CC-BY-4.0**, unless an individual token's `licence:` field says otherwise. Tokens are meant to proliferate — use them on client work, in your own products, wherever. Attribution strings are in `LICENSE-tokens` and `NOTICE`.
-
-Repo: `ssh://forgejo@perdurabo.ussuri-elevator.ts.net:2222/Ad_Astra_Computing_Inc/ahd.git`

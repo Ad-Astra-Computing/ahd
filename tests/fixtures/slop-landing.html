@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+<head>
+<style>
+body { background: #0a0a0a; color: #d4d4d8; font-family: Inter, system-ui, sans-serif; }
+h1, h2, p, li { font-family: Inter, system-ui, sans-serif; font-weight: 600; }
+.hero-bg { background: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%); }
+.gradient-text { background: linear-gradient(to right, #a855f7, #22d3ee); -webkit-background-clip: text; color: transparent; }
+.card { border-radius: 16px; }
+.pill { border-radius: 16px; }
+.btn { border-radius: 16px; }
+.shimmer { animation: shimmer 2s infinite; }
+@keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+</style>
+</head>
+<body class="bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500">
+  <section class="hero-bg">
+    <span class="pill">✨ Now in beta</span>
+    <h1 class="gradient-text">Build the future of AI</h1>
+    <p>Ship faster. Seamless. AI-native. The cutting-edge way to unleash your team.</p>
+    <a class="btn shimmer">Get started</a>
+  </section>
+
+  <section class="features">
+    <ul>
+      <li>✨ Lightning fast</li>
+      <li>🚀 Ready to ship</li>
+      <li>⚡ Built for scale</li>
+    </ul>
+  </section>
+
+  <section class="testimonials">
+    <figure>
+      <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=John" alt="">
+      <blockquote>Best-in-class tool. Game-changing.</blockquote>
+      <figcaption>John D., CEO at Acme</figcaption>
+    </figure>
+    <figure>
+      <img src="https://i.pravatar.cc/64?u=jane" alt="">
+      <blockquote>Next-generation.</blockquote>
+      <figcaption>Jane S., CTO at Initech</figcaption>
+    </figure>
+  </section>
+</body>
+</html>
