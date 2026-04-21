@@ -71,6 +71,12 @@ Full report with per-tell counts and the prompts used: [docs/evals/2026-04-21-ed
 
 ---
 
+## What AHD does not do
+
+AHD does not generate design on your behalf. There is no `ahd generate` command that hands you a page or an image. The framework compiles a brief into prompts and a spec (`ahd compile`), exposes that spec to any MCP-capable agent (`ahd mcp-serve`), and scores whatever a generator produces afterward (`ahd lint`, `ahd eval-live`, `ahd eval-image`, `ahd critique`). Generation itself is someone else's concern: your agent, your editor, a direct API call using the compiled prompt fragments. This is a deliberate product line. The value AHD adds is the taxonomy and the scoring; a generator is a separate product.
+
+The result-oriented flow looks like this. Run `ahd compile briefs/your-brief.yml --out ./out`. Take `out/prompt.generic.md` (or the `claude` / `gpt` / `gemini` variant) and pass it to your model of choice as a system prompt. Then run `ahd lint` on what comes back.
+
 ## Prior art
 
 Pieces of AHD exist. The combination does not.
