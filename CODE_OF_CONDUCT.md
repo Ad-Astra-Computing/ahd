@@ -26,7 +26,7 @@ Examples of unacceptable behaviour:
 
 ## Enforcement
 
-Instances of abusive, harassing, or otherwise unacceptable behaviour may be reported to the project maintainers at `jason@adastra.computer`. All complaints will be reviewed and investigated promptly and fairly.
+Instances of abusive, harassing, or otherwise unacceptable behaviour may be reported to the project maintainers at `jason@adastracomputing.com`. All complaints will be reviewed and investigated promptly and fairly.
 
 All maintainers are obliged to respect the privacy and security of the reporter of any incident.
 

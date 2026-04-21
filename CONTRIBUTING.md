@@ -70,7 +70,7 @@ New maintainers are added by unanimous vote of existing maintainers. Maintainer 
 
 ## Security
 
-Report vulnerabilities privately to `security@adastra.computer`. See `SECURITY.md`.
+Report vulnerabilities privately to `security@adastracomputing.com`. See `SECURITY.md`.
 
 ## Licence
 
