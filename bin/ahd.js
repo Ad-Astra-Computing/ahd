@@ -11,7 +11,8 @@ import { rules as lintRules } from "../dist/lint/rules/index.js";
 import { runEval, formatEvalReport } from "../dist/eval/runner.js";
 import { runLiveEval } from "../dist/eval/live.js";
 import { runStdioServer } from "../dist/mcp/server.js";
-import { VISION_RULES } from "../dist/critique/critic.js";
+import { VISION_RULES, anthropicVisionCritic, mockCritic } from "../dist/critique/critic.js";
+import { runCritiqueOnDir, formatCritiqueReport } from "../dist/critique/runner.js";
 
 const ROOT = resolve(new URL("..", import.meta.url).pathname);
 const TOKENS = resolve(ROOT, "tokens");
@@ -150,6 +151,43 @@ async function main() {
       return;
     }
 
+    case "critique": {
+      const token = rest[0];
+      const samplesDir = flag(rest, "--samples") ?? "evals";
+      const outDir = flag(rest, "--out") ?? "critiques";
+      const reportFile = flag(rest, "--report");
+      const critic = flag(rest, "--critic") ?? "anthropic";
+      const max = parseInt(flag(rest, "--max") ?? "0", 10);
+      if (!token)
+        exit(
+          "usage: ahd critique <token> [--samples <dir>] [--out <dir>] [--critic anthropic|mock] [--max <n>] [--report <file.md>]",
+        );
+      let criticImpl;
+      if (critic === "mock") {
+        criticImpl = mockCritic({});
+      } else {
+        const key = process.env.ANTHROPIC_API_KEY;
+        if (!key) exit("ANTHROPIC_API_KEY is not set (needed for --critic anthropic)");
+        criticImpl = anthropicVisionCritic({ apiKey: key });
+      }
+      await mkdir(outDir, { recursive: true });
+      const report = await runCritiqueOnDir({
+        samplesDir: resolve(samplesDir, token),
+        token,
+        critic: criticImpl,
+        outDir,
+        max: max > 0 ? max : undefined,
+      });
+      const text = formatCritiqueReport(report);
+      if (reportFile) {
+        await writeFile(reportFile, text);
+        console.log(`wrote ${reportFile}`);
+      } else {
+        console.log(text);
+      }
+      return;
+    }
+
     default:
       console.log(`ahd — Artificial Human Design
 
@@ -165,6 +203,8 @@ commands:
   ahd eval-live <token> --brief b.yml --models <spec,...> [--n 3] [--out dir] [--report r.md]
                                         run a brief through live models, score, aggregate
   ahd mcp-serve                         run the AHD MCP server over stdio
+  ahd critique <token> [--samples d] [--critic anthropic|mock] [--max n] [--out dir] [--report r.md]
+                                        render each sample, run the vision critic on the screenshot
 
 live-eval model specs:
   mock-slop, mock-swiss                 deterministic, offline

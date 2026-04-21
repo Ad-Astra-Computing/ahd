@@ -118,11 +118,21 @@ ${rules}
 Be strict. When unsure, do not fire. Do not include any rule id not in the list above.`;
 }
 
-export function anthropicVisionCritic(options: {
+interface AnthropicVisionOptions {
   apiKey: string;
   model?: string;
-}): Critic {
-  const model = options.model ?? "claude-opus-4-7";
+  maxRetries?: number;
+  baseDelayMs?: number;
+}
+
+function sleep(ms: number): Promise<void> {
+  return new Promise((r) => setTimeout(r, ms));
+}
+
+export function anthropicVisionCritic(options: AnthropicVisionOptions): Critic {
+  const model = options.model ?? "claude-haiku-4-5-20251001";
+  const maxRetries = options.maxRetries ?? 5;
+  const baseDelay = options.baseDelayMs ?? 5000;
   return {
     id: `${model}-critic`,
     async critique(input) {
@@ -130,67 +140,85 @@ export function anthropicVisionCritic(options: {
         throw new Error("anthropicVisionCritic requires an imageBase64 input");
       }
       const systemPrompt = buildCriticPrompt(input.token);
-      const res = await fetch("https://api.anthropic.com/v1/messages", {
-        method: "POST",
-        headers: {
-          "x-api-key": options.apiKey,
-          "anthropic-version": "2023-06-01",
-          "content-type": "application/json",
-        },
-        body: JSON.stringify({
-          model,
-          max_tokens: 2048,
-          system: systemPrompt,
-          messages: [
-            {
-              role: "user",
-              content: [
-                {
-                  type: "image",
-                  source: {
-                    type: "base64",
-                    media_type: "image/png",
-                    data: input.imageBase64,
-                  },
+      const body = JSON.stringify({
+        model,
+        max_tokens: 1024,
+        system: systemPrompt,
+        messages: [
+          {
+            role: "user",
+            content: [
+              {
+                type: "image",
+                source: {
+                  type: "base64",
+                  media_type: "image/png",
+                  data: input.imageBase64,
                 },
-                {
-                  type: "text",
-                  text: "Critique the above screenshot. Reply with JSON only.",
-                },
-              ],
-            },
-          ],
-        }),
+              },
+              {
+                type: "text",
+                text: "Critique the above screenshot. Reply with JSON only.",
+              },
+            ],
+          },
+        ],
       });
-      if (!res.ok) {
-        throw new Error(`vision critic ${model}: ${res.status} ${await res.text()}`);
+
+      let attempt = 0;
+      let lastErr = "";
+      while (attempt <= maxRetries) {
+        const res = await fetch("https://api.anthropic.com/v1/messages", {
+          method: "POST",
+          headers: {
+            "x-api-key": options.apiKey,
+            "anthropic-version": "2023-06-01",
+            "content-type": "application/json",
+          },
+          body,
+        });
+        if (res.ok) {
+          const data: any = await res.json();
+          const text = (data.content ?? [])
+            .filter((c: any) => c.type === "text")
+            .map((c: any) => c.text)
+            .join("\n");
+          const jsonMatch = text.match(/\{[\s\S]*\}/);
+          if (!jsonMatch) return [];
+          let parsed: any = {};
+          try {
+            parsed = JSON.parse(jsonMatch[0]);
+          } catch {
+            return [];
+          }
+          const fired = Array.isArray(parsed.fired) ? parsed.fired : [];
+          return fired
+            .filter((id: unknown): id is string => typeof id === "string")
+            .filter((id: string) => VISION_RULES.some((r) => r.id === id))
+            .map((id: string) => ({
+              ruleId: id,
+              severity: "warn" as const,
+              file: input.url ?? "<screenshot>",
+              message:
+                parsed.rationale?.[id] ??
+                VISION_RULES.find((r) => r.id === id)?.description ??
+                "Vision rule fired",
+            }));
+        }
+        const errText = await res.text();
+        lastErr = `${res.status} ${errText.slice(0, 300)}`;
+        if (res.status === 429 || res.status === 529 || res.status >= 500) {
+          const retryAfter = parseFloat(res.headers.get("retry-after") ?? "0");
+          const delay = retryAfter > 0
+            ? retryAfter * 1000
+            : baseDelay * Math.pow(2, attempt);
+          await sleep(delay);
+          attempt++;
+          continue;
+        }
+        throw new Error(`vision critic ${model}: ${lastErr}`);
       }
-      const data: any = await res.json();
-      const text = (data.content ?? [])
-        .filter((c: any) => c.type === "text")
-        .map((c: any) => c.text)
-        .join("\n");
-      const jsonMatch = text.match(/\{[\s\S]*\}/);
-      if (!jsonMatch) return [];
-      let parsed: any = {};
-      try {
-        parsed = JSON.parse(jsonMatch[0]);
-      } catch {
-        return [];
-      }
-      const fired = Array.isArray(parsed.fired) ? parsed.fired : [];
-      return fired
-        .filter((id: unknown): id is string => typeof id === "string")
-        .filter((id: string) => VISION_RULES.some((r) => r.id === id))
-        .map((id: string) => ({
-          ruleId: id,
-          severity: "warn" as const,
-          file: input.url ?? "<screenshot>",
-          message:
-            parsed.rationale?.[id] ??
-            VISION_RULES.find((r) => r.id === id)?.description ??
-            "Vision rule fired",
-        }));
+      throw new Error(`vision critic ${model}: gave up after ${maxRetries} retries; last error: ${lastErr}`);
     },
   };
 }
