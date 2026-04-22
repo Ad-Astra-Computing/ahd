@@ -1,4 +1,4 @@
-# ahd eval · swiss-editorial · 2026-04-22T01:27:53.225Z
+# ahd eval · swiss-editorial · 2026-04-22T02:16:35.535Z
 
 ## Run
 
@@ -20,21 +20,24 @@
 | `@cf/mistralai/mistral-small-3.1-24b-instruct` | 5 → 5 | 5 → 5 | 3.40 | 1.40 | 2.00 | 58.8% |
 | `claude-opus-4-7` | 5 → 5 | 5 → 5 | 1.40 | 0.80 | 0.60 | 42.9% |
 | `deepseek-ai/DeepSeek-R1` | 5 → 3 | 5 → 3 | 2.00 | 1.00 | 1.00 | 50.0% |
+| `gemini-2.5-pro` | 5 → 4 | 5 → 0 | 2.75 | — | — | inconclusive |
+| `gpt-5-codex` | 5 → 5 | 5 → 5 | 1.40 | 0.40 | 1.00 | 71.4% |
 | `meta-llama/Llama-3.3-70B-Instruct` | 5 → 5 | 5 → 5 | 0.40 | 1.20 | -0.80 | -200.0% |
 
 ## Per-tell frequency (scored samples only)
 
-| tell | Qwen/Qwen3-8B/raw | Qwen/Qwen3-8B/compiled | @cf/mistralai/mistral-small-3.1-24b-instruct/raw | @cf/mistralai/mistral-small-3.1-24b-instruct/compiled | claude-opus-4-7/raw | claude-opus-4-7/compiled | deepseek-ai/DeepSeek-R1/raw | deepseek-ai/DeepSeek-R1/compiled | meta-llama/Llama-3.3-70B-Instruct/raw | meta-llama/Llama-3.3-70B-Instruct/compiled |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| ahd/line-height-per-size | 100% | 80% | 60% | 20% | 0% | 0% | 67% | 0% | 0% | 40% |
-| ahd/no-default-grotesque | 0% | 0% | 0% | 20% | 0% | 0% | 33% | 0% | 0% | 0% |
-| ahd/no-shimmer-decoration | 0% | 0% | 0% | 0% | 20% | 20% | 0% | 0% | 0% | 0% |
-| ahd/no-slop-copy | 0% | 0% | 0% | 0% | 0% | 0% | 0% | 67% | 0% | 0% |
-| ahd/radius-hierarchy | 60% | 60% | 100% | 0% | 40% | 0% | 33% | 0% | 0% | 0% |
-| ahd/require-named-grid | 0% | 20% | 100% | 20% | 0% | 0% | 0% | 33% | 40% | 60% |
-| ahd/require-type-pairing | 20% | 0% | 80% | 0% | 0% | 0% | 0% | 0% | 0% | 20% |
-| ahd/tracking-per-size | 0% | 60% | 0% | 60% | 0% | 60% | 0% | 0% | 0% | 0% |
-| ahd/weight-variety | 0% | 40% | 0% | 20% | 80% | 0% | 67% | 0% | 0% | 0% |
+| tell | Qwen/Qwen3-8B/raw | Qwen/Qwen3-8B/compiled | @cf/mistralai/mistral-small-3.1-24b-instruct/raw | @cf/mistralai/mistral-small-3.1-24b-instruct/compiled | claude-opus-4-7/raw | claude-opus-4-7/compiled | deepseek-ai/DeepSeek-R1/raw | deepseek-ai/DeepSeek-R1/compiled | gemini-2.5-pro/raw | gemini-2.5-pro/compiled | gpt-5-codex/raw | gpt-5-codex/compiled | meta-llama/Llama-3.3-70B-Instruct/raw | meta-llama/Llama-3.3-70B-Instruct/compiled |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| ahd/footer-not-four-col | 0% | 0% | 0% | 0% | 0% | 0% | 0% | 0% | 0% | 0% | 0% | 20% | 0% | 0% |
+| ahd/line-height-per-size | 100% | 80% | 60% | 20% | 0% | 0% | 67% | 0% | 100% | 0% | 0% | 0% | 0% | 40% |
+| ahd/no-default-grotesque | 0% | 0% | 0% | 20% | 0% | 0% | 33% | 0% | 0% | 0% | 0% | 0% | 0% | 0% |
+| ahd/no-shimmer-decoration | 0% | 0% | 0% | 0% | 20% | 20% | 0% | 0% | 0% | 0% | 0% | 0% | 0% | 0% |
+| ahd/no-slop-copy | 0% | 0% | 0% | 0% | 0% | 0% | 0% | 67% | 0% | 0% | 0% | 0% | 0% | 0% |
+| ahd/radius-hierarchy | 60% | 60% | 100% | 0% | 40% | 0% | 33% | 0% | 0% | 0% | 0% | 0% | 0% | 0% |
+| ahd/require-named-grid | 0% | 20% | 100% | 20% | 0% | 0% | 0% | 33% | 25% | 0% | 0% | 0% | 40% | 60% |
+| ahd/require-type-pairing | 20% | 0% | 80% | 0% | 0% | 0% | 0% | 0% | 50% | 0% | 0% | 0% | 0% | 20% |
+| ahd/tracking-per-size | 0% | 60% | 0% | 60% | 0% | 60% | 0% | 0% | 0% | 0% | 80% | 0% | 0% | 0% |
+| ahd/weight-variety | 0% | 40% | 0% | 20% | 80% | 0% | 67% | 0% | 100% | 0% | 60% | 20% | 0% | 0% |
 
 ## Caveats
 - Scoring runs the deterministic AHD linter (31 source-level rules) over every sample that passes a basic HTML sanity check.

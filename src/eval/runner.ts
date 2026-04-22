@@ -134,10 +134,15 @@ export function buildReport(token: string, cells: EvalCell[]): EvalReport {
     const compiled = cells.find(
       (c) => c.model === model && c.condition === "compiled",
     );
+    const rawScored = raw?.counts.scored ?? 0;
+    const compiledScored = compiled?.counts.scored ?? 0;
     const rawMean = raw?.meanTells ?? 0;
     const compMean = compiled?.meanTells ?? 0;
     const delta = rawMean - compMean;
-    const reductionPct = rawMean > 0 ? (delta / rawMean) * 100 : 0;
+    // Only claim a reduction if both cells have scored samples. If either
+    // side is 0/N the comparison is inconclusive, not a perfect victory.
+    const bothHaveData = rawScored > 0 && compiledScored > 0;
+    const reductionPct = bothHaveData && rawMean > 0 ? (delta / rawMean) * 100 : 0;
     return {
       model,
       canonicalModelId: raw?.canonicalModelId ?? compiled?.canonicalModelId ?? model,
@@ -219,8 +224,15 @@ export function formatEvalReport(r: EvalReport): string {
     );
     const rawCounts = rawCell?.counts;
     const compCounts = compCell?.counts;
+    const bothHaveData = (rawCounts?.scored ?? 0) > 0 && (compCounts?.scored ?? 0) > 0;
+    const reductionCell = bothHaveData
+      ? `${d.reductionPct.toFixed(1)}%`
+      : "inconclusive";
+    const deltaCell = bothHaveData ? d.delta.toFixed(2) : "—";
+    const compiledMeanCell = (compCounts?.scored ?? 0) > 0 ? d.compiledMeanTells.toFixed(2) : "—";
+    const rawMeanCell = (rawCounts?.scored ?? 0) > 0 ? d.rawMeanTells.toFixed(2) : "—";
     lines.push(
-      `| \`${d.canonicalModelId}\` | ${rawCounts?.attempted ?? 0} → ${rawCounts?.scored ?? 0} | ${compCounts?.attempted ?? 0} → ${compCounts?.scored ?? 0} | ${d.rawMeanTells.toFixed(2)} | ${d.compiledMeanTells.toFixed(2)} | ${d.delta.toFixed(2)} | ${d.reductionPct.toFixed(1)}% |`,
+      `| \`${d.canonicalModelId}\` | ${rawCounts?.attempted ?? 0} → ${rawCounts?.scored ?? 0} | ${compCounts?.attempted ?? 0} → ${compCounts?.scored ?? 0} | ${rawMeanCell} | ${compiledMeanCell} | ${deltaCell} | ${reductionCell} |`,
     );
   }
   lines.push("");
