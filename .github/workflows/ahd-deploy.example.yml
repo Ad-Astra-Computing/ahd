@@ -6,13 +6,15 @@
 #   - `CF_PAGES_PROJECT` in the deploy command (your Cloudflare Pages project name)
 #   - `NODE_VERSION` if you're not on 22
 #   - `CLOUDFLARE_API_TOKEN` in repo secrets.
-#     Create it as an **Account API Token** (not a User API Token) with
-#     scope limited to: `Account — Cloudflare Pages — Edit` on the one
-#     account that hosts your Pages project. An account-scoped token
-#     carries the account context, so you do NOT need a separate
-#     accountId input. If you use a User API Token (broader scope,
-#     spans multiple accounts), you must also add `accountId:
-#     ${{ vars.CLOUDFLARE_ACCOUNT_ID }}` to the wrangler-action step.
+#     **Recommended**: create an **Account API Token** (prefix `cfat_`)
+#     scoped narrowly to `Cloudflare Pages:Edit` on the one account
+#     that hosts your Pages project. Narrow blast radius if the token
+#     leaks; carries account context so `accountId` is optional.
+#     **Also works**: a User API Token (prefix `cfut_`) scoped to
+#     `Cloudflare Pages:Edit` on the target account. A user token
+#     spans multiple accounts, so `accountId` must be supplied
+#     alongside. The example below populates accountId in both cases
+#     so either token works, but Account tokens are the safer default.
 #
 # Assumes:
 #   - `npm run build` runs AHD's `scripts/ahd-provenance.mjs` as a post-build

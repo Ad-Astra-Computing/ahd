@@ -1,13 +1,30 @@
 import { readdir, readFile } from "node:fs/promises";
-import { join } from "node:path";
+import { join, resolve } from "node:path";
 import { parse as parseYaml } from "yaml";
 import { StyleTokenSchema, type StyleToken } from "./types.js";
+
+// Token IDs are kebab-case. Anything outside [a-z0-9-] would break
+// resolution or imply an attempt at path traversal — reject it at the
+// door rather than trust `path.join` to do the right thing.
+const TOKEN_ID_RE = /^[a-z0-9][a-z0-9-]*$/;
 
 export async function loadToken(
   tokensDir: string,
   id: string,
 ): Promise<StyleToken> {
-  const path = join(tokensDir, `${id}.yml`);
+  if (typeof id !== "string" || !TOKEN_ID_RE.test(id)) {
+    throw new Error(
+      `invalid token id: ${JSON.stringify(id)}. Token ids are kebab-case ([a-z0-9-]).`,
+    );
+  }
+  const base = resolve(tokensDir);
+  const path = resolve(base, `${id}.yml`);
+  // Defence-in-depth: even with the regex, ensure the resolved path stays
+  // inside the tokens directory. Path.resolve flattens ../ so a crafted
+  // id that slipped the regex could not escape here either.
+  if (!path.startsWith(base + "/") && path !== base) {
+    throw new Error(`token path escapes tokens directory: ${path}`);
+  }
   const raw = await readFile(path, "utf8");
   const data = parseYaml(raw);
   return StyleTokenSchema.parse(data);

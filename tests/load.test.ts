@@ -65,4 +65,34 @@ describe("compile", () => {
     );
     expect(result.spec.forbidden).toContain("any reference to cryptocurrency");
   });
+
+  describe("loadToken path traversal hardening", () => {
+    it("rejects ids containing ../", async () => {
+      await expect(loadToken(TOKENS, "../../../etc/passwd")).rejects.toThrow(
+        /invalid token id/,
+      );
+    });
+
+    it("rejects ids with slashes", async () => {
+      await expect(loadToken(TOKENS, "a/b")).rejects.toThrow(/invalid token id/);
+    });
+
+    it("rejects absolute paths", async () => {
+      await expect(loadToken(TOKENS, "/etc/passwd")).rejects.toThrow(
+        /invalid token id/,
+      );
+    });
+
+    it("rejects uppercase and dots", async () => {
+      await expect(loadToken(TOKENS, "Swiss")).rejects.toThrow(/invalid token id/);
+      await expect(loadToken(TOKENS, "swiss.editorial")).rejects.toThrow(
+        /invalid token id/,
+      );
+    });
+
+    it("accepts the documented kebab-case ids", async () => {
+      const token = await loadToken(TOKENS, "swiss-editorial");
+      expect(token).toBeTruthy();
+    });
+  });
 });
