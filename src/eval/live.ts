@@ -84,13 +84,30 @@ export async function runLiveEval(opts: LiveEvalOptions): Promise<EvalReport> {
     }
   }
 
+  // Merge with an existing manifest rather than overwrite it — partial
+  // re-runs (e.g. one model at a time) should preserve manifest entries
+  // for models not re-run in this invocation.
+  let previous: RunManifest | undefined;
+  const existingManifestPath = join(samplesRoot, "manifest.json");
+  if (existsSync(existingManifestPath)) {
+    try {
+      previous = JSON.parse(await readFile(existingManifestPath, "utf8"));
+    } catch {
+      previous = undefined;
+    }
+  }
+  const keepFromPrevious = (previous?.models ?? []).filter(
+    (p) => !manifestModels.some((m) => m.sanitizedId === p.sanitizedId),
+  );
+  const mergedModels = [...keepFromPrevious, ...manifestModels];
+
   const runManifest: RunManifest = {
     token: opts.token,
     briefPath: opts.briefPath,
     n: opts.n,
     maxTokens,
     runAt: new Date().toISOString(),
-    models: manifestModels,
+    models: mergedModels,
   };
   await mkdir(samplesRoot, { recursive: true });
   await writeFile(

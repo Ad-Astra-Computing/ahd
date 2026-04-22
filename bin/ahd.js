@@ -109,9 +109,9 @@ async function main() {
     case "eval": {
       const token = rest[0];
       const dir = flag(rest, "--samples") ?? "evals";
-      const outFile = flag(rest, "--out");
+      const outFile = flag(rest, "--report") ?? flag(rest, "--out");
       if (!token)
-        exit("usage: ahd eval <token> [--samples <dir>] [--out <file.md>]");
+        exit("usage: ahd eval <token> [--samples <dir>] [--report <file.md>]");
       const r = await runEval(token, resolve(dir, token));
       const text = formatEvalReport(r);
       if (outFile) {

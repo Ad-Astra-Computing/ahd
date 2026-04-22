@@ -182,7 +182,9 @@ export async function runEval(
       aggregateCell(c.model, c.canonicalId, c.condition, scored, counts),
     );
   }
-  return buildReport(token, evalCells);
+  const report = buildReport(token, evalCells);
+  report.runManifest = manifest;
+  return report;
 }
 
 export function formatEvalReport(r: EvalReport): string {
