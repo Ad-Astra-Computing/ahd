@@ -27,6 +27,7 @@ import { rule as ctaNotCanonical } from "./cta-not-canonical.js";
 import { rule as trackingPerSize } from "./tracking-per-size.js";
 import { rule as radiusHierarchy } from "./radius-hierarchy.js";
 import { rule as noInlineStyleAnimation } from "./no-inline-style-animation.js";
+import { rule as noEmDashesInProse } from "./no-em-dashes-in-prose.js";
 import { svgRulesAsRules } from "../svg/rules.js";
 import type { Rule } from "../types.js";
 
@@ -60,6 +61,7 @@ export const rules: Rule[] = [
   trackingPerSize,
   radiusHierarchy,
   noInlineStyleAnimation,
+  noEmDashesInProse,
   ...svgRulesAsRules,
 ];
 

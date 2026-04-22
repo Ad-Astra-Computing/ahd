@@ -388,7 +388,7 @@ commands:
   ahd show <id>                         print a style token as JSON
   ahd validate-tokens                   validate every token against the schema
   ahd compile <brief.yml> [--out d]     compile a brief into per-model prompts + spec.json
-  ahd lint <file.html|css> [...]        run the slop linter (29 source-level rules)
+  ahd lint <file.html|css> [...]        run the slop linter (30 source-level rules)
   ahd lint-rules                        list every source-level lint rule
   ahd vision-rules                      list every vision-only rule (run via the critic)
   ahd eval <token> [--samples dir]      aggregate lint scores across pre-rendered samples
