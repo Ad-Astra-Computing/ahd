@@ -8,9 +8,9 @@
 
 **AHD is a guardrail and evaluation layer for AI-generated design** — web UI, graphic design, illustration, image generation. Not a generator itself. Four pieces: a named taxonomy of AI design slop that spans web and graphic surfaces, style tokens as promptable design direction, a brief compiler that turns intent into constrained model instructions, and a reproducible eval loop that scores raw vs compiled output against the taxonomy. Positioning in full: [docs/POSITIONING.md](docs/POSITIONING.md).
 
-The product's one-line promise: **AHD measures and reduces specific, repeated AI design failures, across web and image generation.** The thirty-eight-tell taxonomy is named, versioned, and linted; per-token forbidden lists and required quirks are enforced in CI; every eval publishes attempted counts, canonical model ids, extraction failures, per-model deltas and negative results. That combination — taxonomy + reproducible scoring — is the moat, not the prompts.
+The product's one-line promise: **AHD measures and reduces specific, repeated AI design failures, across web and image generation.** The thirty-nine-tell taxonomy is named, versioned, and linted; per-token forbidden lists and required quirks are enforced in CI; every eval publishes attempted counts, canonical model ids, extraction failures, per-model deltas and negative results. That combination — taxonomy + reproducible scoring — is the moat, not the prompts.
 
-Today's shipped scope covers both verticals. **Web UI end-to-end**: text-to-HTML runners for Claude, GPT, Gemini and OSS models via Cloudflare Workers AI, a twenty-eight-rule source linter, a vision critic, Playwright screenshots, an MCP server and editor plugins. **Image generation end-to-end**: `ahd eval-image` pipeline with a Cloudflare Workers AI image runner (FLUX, SDXL, DreamShaper), four image-specific vision rules added to the critic (malformed anatomy, Midjourney face symmetry, decorative cursive in renders, stock diversity casting), a three-rule SVG source linter (uniform-stroke, palette-bounds, perfect-symmetry) and two image-first tokens (`editorial-illustration`, `ad-creative-collision`). Additional image runners (Replicate, DALL·E 3, Imagen, Firefly) are the remaining adapter work.
+Today's shipped scope covers both verticals. **Web UI end-to-end**: text-to-HTML runners for Claude, GPT, Gemini and OSS models via Cloudflare Workers AI, a twenty-nine-rule source linter, a vision critic, Playwright screenshots, an MCP server and editor plugins. **Image generation end-to-end**: `ahd eval-image` pipeline with a Cloudflare Workers AI image runner (FLUX, SDXL, DreamShaper), four image-specific vision rules added to the critic (malformed anatomy, Midjourney face symmetry, decorative cursive in renders, stock diversity casting), a three-rule SVG source linter (uniform-stroke, palette-bounds, perfect-symmetry) and two image-first tokens (`editorial-illustration`, `ad-creative-collision`). Additional image runners (Replicate, DALL·E 3, Imagen, Firefly) are the remaining adapter work.
 
 ---
 
@@ -38,7 +38,7 @@ A rendered raw vs compiled pair from the Mistral text run, same brief, same seed
 
 ## Image generation works the same way
 
-The v0.6 image-generation vertical is shipped. `ahd eval-image` runs a brief through any set of image models (Cloudflare Workers AI image models today, Replicate and frontier providers on the roadmap), saves raw and compiled PNGs, and scores each with the vision critic against the thirteen vision-only rules. Ran `briefs/editorial-illustration.yml` against two models on 21 April 2026, n=3 per cell.
+The v0.6 image-generation vertical is shipped. `ahd eval-image` runs a brief through any set of image models (Cloudflare Workers AI image models today, Replicate and frontier providers on the roadmap), saves raw and compiled PNGs, and scores each with the vision critic against the fourteen vision-only rules. Ran `briefs/editorial-illustration.yml` against two models on 21 April 2026, n=3 per cell.
 
 | Model | Raw mean tells | Compiled | Reduction |
 |---|---:|---:|---:|
@@ -55,11 +55,11 @@ Full report with per-tell counts and the prompts used: [docs/evals/2026-04-21-ed
 
 ## What AHD ships
 
-**Taxonomy.** Thirty-eight slop tells documented in [docs/SLOP_TAXONOMY.md](docs/SLOP_TAXONOMY.md) and [docs/LINTER_SPEC.md](docs/LINTER_SPEC.md). Enforced today by 28 HTML/CSS rules, 3 SVG rules, and 13 vision-critic rules. The rule count is higher than the taxonomy count because several taxonomy entries are covered by more than one rule (for example, "Corporate Memphis" is enforced by a vision rule on rendered pixels and by the `no-corporate-memphis` negative in the compiled image prompt).
+**Taxonomy.** Thirty-nine slop tells documented in [docs/SLOP_TAXONOMY.md](docs/SLOP_TAXONOMY.md) and [docs/LINTER_SPEC.md](docs/LINTER_SPEC.md). Enforced today by 29 HTML/CSS rules, 3 SVG rules, and 14 vision-critic rules. The rule count is higher than the taxonomy count because several taxonomy entries are covered by more than one rule (for example, "Corporate Memphis" is enforced by a vision rule on rendered pixels and by the `no-corporate-memphis` negative in the compiled image prompt).
 
 **Brief compiler.** `ahd compile <brief.yml>` takes a structured brief, resolves it against a named style token, emits a `spec.json` plus per-model system prompts. `--mode final` produces single-shot output constraints (used by `ahd try` and by `ahd eval-live`); default mode is `draft`, which asks the model for three divergent directions for human-in-the-loop exploration.
 
-**Slop linter.** `ahd lint <file.html|css|svg>` runs 28 HTML/CSS rules plus 3 SVG rules, in one pass against whatever input kind it's given. `eslint-plugin-ahd` and `stylelint-plugin-ahd` wrap the rule engine for editor integration.
+**Slop linter.** `ahd lint <file.html|css|svg>` runs 29 HTML/CSS rules plus 3 SVG rules, in one pass against whatever input kind it's given. `eslint-plugin-ahd` and `stylelint-plugin-ahd` wrap the rule engine for editor integration.
 
 **Live-model eval.** `ahd eval-live <token> --brief b.yml --models <specs> --n N --report r.md` runs a controlled raw-vs-compiled comparison across Claude, GPT, Gemini, OSS models via Cloudflare Workers AI (free tier), and deterministic mock runners. Reports attempted, extractionFailed, errored and scored counts per cell; canonical model ids preserved via `evals/<token>/manifest.json`.
 
@@ -109,7 +109,7 @@ Requires Node 20+. Screenshot rendering requires `chromium` available on `PATH`;
 ahd list                                      # style tokens
 ahd show swiss-editorial                      # inspect one
 ahd compile brief.yml --out ./out             # per-model prompts + spec.json
-ahd lint page.html                            # 28 HTML/CSS rules + 3 SVG rules
+ahd lint page.html                            # 29 HTML/CSS rules + 3 SVG rules
 ahd vision-rules                              # the 13 vision-only rules (9 web/graphic + 4 image)
 ahd mcp-serve                                 # MCP server over stdio
 

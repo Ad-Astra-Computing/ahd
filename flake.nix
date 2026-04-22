@@ -9,7 +9,10 @@
   outputs = { self, nixpkgs, flake-utils }:
     flake-utils.lib.eachDefaultSystem (system:
       let
-        pkgs = import nixpkgs { inherit system; };
+        # allowUnfree is required on darwin because playwright-driver.browsers
+        # bundles chromium under an unfree label in nixpkgs. Chromium itself
+        # is free software; the marker is conservative on the packaging side.
+        pkgs = import nixpkgs { inherit system; config.allowUnfree = true; };
         nodejs = pkgs.nodejs_22;
 
         ahd = pkgs.buildNpmPackage {
@@ -51,6 +54,24 @@
             platforms = platforms.unix;
           };
         };
+
+        # Chromium on Linux uses pkgs.chromium directly. On darwin
+        # pkgs.chromium is unsupported, so we fall back to playwright-driver's
+        # bundled chromium build, which nixpkgs ships on darwin.
+        isDarwin = pkgs.stdenv.isDarwin;
+        chromiumPkg =
+          if isDarwin
+          then pkgs.playwright-driver.browsers
+          else pkgs.chromium;
+        # playwright-driver.browsers on darwin ships
+        #   chromium-<rev>/chrome-mac-<arch>/Google Chrome for Testing.app/...
+        # where <arch> is arm64 or x64. On linux pkgs.chromium exposes a
+        # plain bin/chromium. We resolve the glob in the shellHook so the
+        # arch-specific directory doesn't need to be hardcoded here.
+        chromiumBinShell =
+          if isDarwin
+          then "${chromiumPkg}/chromium-*/chrome-mac-*/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing"
+          else "${chromiumPkg}/bin/chromium";
       in {
         packages = {
           default = ahd;
@@ -65,14 +86,28 @@
         devShells.default = pkgs.mkShell {
           buildInputs = [
             nodejs
-            pkgs.nodePackages.typescript
+            pkgs.typescript
             pkgs.prefetch-npm-deps
-            pkgs.chromium
+            chromiumPkg
           ];
           shellHook = ''
-            export AHD_CHROMIUM_PATH="${pkgs.chromium}/bin/chromium"
+            # On darwin the playwright-driver chromium path contains a
+            # version-dated directory; resolve it at shell entry.
+            if [ -z "$AHD_CHROMIUM_PATH" ]; then
+              # `find -L` follows symlinks — the nixpkgs playwright-driver
+              # links chromium-<rev>/ into the browser out-path rather than
+              # placing it inline, and the Chrome-for-Testing binary sits
+              # inside an .app bundle (path contains spaces).
+              export AHD_CHROMIUM_PATH="$(find -L "${chromiumPkg}" \
+                \( -name 'Google Chrome for Testing' -o -name chromium \) \
+                -type f 2>/dev/null | head -n1)"
+            fi
             echo "ahd dev shell · node $(node --version) · npm $(npm --version)"
-            echo "chromium: $AHD_CHROMIUM_PATH"
+            if [ -n "$AHD_CHROMIUM_PATH" ]; then
+              echo "chromium: $AHD_CHROMIUM_PATH"
+            else
+              echo "chromium: (not found — \`ahd critique\` will fail. export AHD_CHROMIUM_PATH manually)"
+            fi
             echo "tip: npm install && npm run build && npm test"
             echo "tip: after editing package-lock.json, regenerate the flake hash with:"
             echo "     prefetch-npm-deps package-lock.json"
