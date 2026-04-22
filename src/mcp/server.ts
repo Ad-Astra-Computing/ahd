@@ -118,11 +118,37 @@ export function createTools(options: McpServerOptions): McpTool[] {
         },
       },
       handler: async (args) => {
-        const res = lintSource({
-          file: String(args.file ?? "<inline>"),
-          html: String(args.html ?? ""),
-          css: String(args.css ?? ""),
-        });
+        // Size caps: stdio MCP doesn't bill the client for oversized
+        // requests, so a buggy or hostile client could stream a large
+        // string and stall the server on regex. 1 MB each for html and
+        // css is far above any realistic single-page lint and well
+        // below the Node string-length limit.
+        const MAX_BYTES = 1024 * 1024;
+        const html = String(args.html ?? "");
+        const css = String(args.css ?? "");
+        const file = String(args.file ?? "<inline>");
+        if (html.length > MAX_BYTES) {
+          throw new Error(
+            `ahd.lint: html argument exceeds ${MAX_BYTES} bytes (got ${html.length}). Split the input or lint files on disk via the CLI.`,
+          );
+        }
+        if (css.length > MAX_BYTES) {
+          throw new Error(
+            `ahd.lint: css argument exceeds ${MAX_BYTES} bytes (got ${css.length}).`,
+          );
+        }
+        if (file.length > 2048) {
+          throw new Error(
+            `ahd.lint: file argument exceeds 2048 characters.`,
+          );
+        }
+        if (typeof args.html !== "undefined" && typeof args.html !== "string") {
+          throw new Error(`ahd.lint: html must be a string`);
+        }
+        if (typeof args.css !== "undefined" && typeof args.css !== "string") {
+          throw new Error(`ahd.lint: css must be a string`);
+        }
+        const res = lintSource({ file, html, css });
         return res;
       },
     },

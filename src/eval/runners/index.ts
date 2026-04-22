@@ -4,6 +4,9 @@ import { geminiRunner } from "./gemini.js";
 import { ollamaRunner } from "./ollama.js";
 import { workersAiRunner } from "./workers-ai.js";
 import { huggingfaceRunner } from "./huggingface.js";
+import { claudeCodeCliRunner } from "./claude-code-cli.js";
+import { codexCliRunner } from "./codex-cli.js";
+import { geminiCliRunner } from "./gemini-cli.js";
 import { mockRunner, slopResponder, swissResponder } from "./mock.js";
 import { cfGatewayUrl } from "./gateway.js";
 import type { ModelRunner } from "./types.js";
@@ -11,6 +14,22 @@ import type { ModelRunner } from "./types.js";
 export async function runnerFromSpec(spec: string): Promise<ModelRunner> {
   if (spec === "mock-slop") return mockRunner("mock-slop", slopResponder);
   if (spec === "mock-swiss") return mockRunner("mock-swiss", swissResponder);
+  // Subscription-backed CLI runners. These MUST match before the bare
+  // "claude"/"gpt"/"gemini" API-key branches below, so a spec like
+  // "claude-code:claude-opus-4-7" routes to the CLI runner instead of
+  // being treated as an API model id.
+  if (spec.startsWith("claude-code:")) {
+    const model = spec.slice("claude-code:".length);
+    return claudeCodeCliRunner({ model });
+  }
+  if (spec.startsWith("codex-cli:")) {
+    const model = spec.slice("codex-cli:".length);
+    return codexCliRunner({ model });
+  }
+  if (spec.startsWith("gemini-cli:")) {
+    const model = spec.slice("gemini-cli:".length);
+    return geminiCliRunner({ model });
+  }
   if (spec.startsWith("claude")) {
     const key = process.env.ANTHROPIC_API_KEY;
     if (!key) throw new Error("ANTHROPIC_API_KEY is not set");
@@ -57,7 +76,7 @@ export async function runnerFromSpec(spec: string): Promise<ModelRunner> {
     });
   }
   throw new Error(
-    `Unknown model spec: ${spec}. Prefix with 'claude', 'gpt', 'gemini', 'cf:', 'ollama:', 'hf:' or use 'mock-slop' / 'mock-swiss'.`,
+    `Unknown model spec: ${spec}. Prefix with 'claude', 'gpt', 'gemini', 'cf:', 'ollama:', 'hf:', 'claude-code:', 'codex-cli:' or 'gemini-cli:', or use 'mock-slop' / 'mock-swiss'.`,
   );
 }
 
@@ -68,6 +87,9 @@ export {
   ollamaRunner,
   workersAiRunner,
   huggingfaceRunner,
+  claudeCodeCliRunner,
+  codexCliRunner,
+  geminiCliRunner,
   mockRunner,
   slopResponder,
   swissResponder,

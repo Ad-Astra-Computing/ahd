@@ -7,6 +7,10 @@ docs/critique-artifacts
 docs/critique-artifacts/**
 docs/evals
 docs/evals/**
+# Generated screenshot PNGs are ~2.4 MB and not needed by the
+# published package; the SVG artwork in docs/artwork/ still ships.
+docs/artwork/screenshots
+docs/artwork/screenshots/**
 evals
 evals/**
 critiques
