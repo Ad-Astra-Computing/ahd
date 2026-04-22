@@ -340,9 +340,10 @@ async function main() {
       const critic = flag(rest, "--critic") ?? "anthropic";
       const outPath = flag(rest, "--out") ?? "critique-url.json";
       const shotPath = flag(rest, "--screenshot") ?? "critique-url.png";
+      const allowUnsafeUrl = rest.includes("--allow-unsafe-url");
       if (!url || !/^https?:\/\//.test(url))
         exit(
-          "usage: ahd critique-url <url> [--token <id>] [--critic anthropic|mock] [--out <file.json>] [--screenshot <file.png>]",
+          "usage: ahd critique-url <url> [--token <id>] [--critic anthropic|mock] [--out <file.json>] [--screenshot <file.png>] [--allow-unsafe-url]",
         );
       let criticImpl;
       if (critic === "mock") {
@@ -353,7 +354,16 @@ async function main() {
         criticImpl = anthropicVisionCritic({ apiKey: key });
       }
       console.log(`rendering ${url} → ${shotPath}`);
-      await renderUrlToPng(url, shotPath);
+      try {
+        await renderUrlToPng(url, shotPath, { allowUnsafeUrl });
+      } catch (err) {
+        if (err && err.name === "UrlBlockedError") {
+          exit(
+            `refused to render ${url}: ${err.reason}. If you are certain you want to render a local / private URL, re-run with --allow-unsafe-url.`,
+          );
+        }
+        throw err;
+      }
       const imageBase64 = await fileToBase64(shotPath);
       console.log(`running ${critic} vision critic against token=${token}`);
       const violations = await criticImpl.critique({
@@ -387,9 +397,10 @@ async function main() {
       const shotPath = flag(rest, "--screenshot");
       const widthFlag = flag(rest, "--width");
       const heightFlag = flag(rest, "--height");
+      const allowUnsafeUrl = rest.includes("--allow-unsafe-url");
       if (!url || !/^https?:\/\//.test(url)) {
         exit(
-          "usage: ahd audit-mobile <url> [--out <file.json>] [--screenshot <file.png>] [--width 375] [--height 812]",
+          "usage: ahd audit-mobile <url> [--out <file.json>] [--screenshot <file.png>] [--width 375] [--height 812] [--allow-unsafe-url]",
         );
       }
       const viewport = {
@@ -397,11 +408,22 @@ async function main() {
         height: heightFlag ? parseInt(heightFlag, 10) : 812,
       };
       console.log(`auditing ${url} at ${viewport.width}x${viewport.height}`);
-      const report = await auditMobile({
-        url,
-        viewport,
-        screenshotPath: shotPath,
-      });
+      let report;
+      try {
+        report = await auditMobile({
+          url,
+          viewport,
+          screenshotPath: shotPath,
+          allowUnsafeUrl,
+        });
+      } catch (err) {
+        if (err && err.name === "UrlBlockedError") {
+          exit(
+            `refused to audit ${url}: ${err.reason}. If you are certain you want to render a local / private URL, re-run with --allow-unsafe-url.`,
+          );
+        }
+        throw err;
+      }
       if (outPath) {
         await writeFile(outPath, JSON.stringify(report, null, 2) + "\n");
         console.log(`wrote ${outPath}`);

@@ -2,11 +2,17 @@ import { chromium } from "playwright-core";
 import { existsSync } from "node:fs";
 import { MOBILE_RULES, type MobileRule } from "./rules.js";
 import type { Violation } from "../lint/types.js";
+import {
+  ensureUrlIsPublicOrThrow,
+  installRequestGuard,
+} from "../critique/url-safety.js";
 
 export interface MobileAuditOptions {
   url: string;
   viewport?: { width: number; height: number };
   screenshotPath?: string;
+  // Opt-out of the SSRF guard for local-dev testing. Never default.
+  allowUnsafeUrl?: boolean;
 }
 
 export interface MobileAuditReport {
@@ -50,6 +56,12 @@ async function resolveChromium(): Promise<string | undefined> {
 export async function auditMobile(
   options: MobileAuditOptions,
 ): Promise<MobileAuditReport> {
+  // Defence layers 1 + 2: syntactic + DNS guard on the user-supplied
+  // URL. Mirrors critique-url; see src/critique/url-safety.ts.
+  await ensureUrlIsPublicOrThrow(options.url, {
+    allowUnsafe: options.allowUnsafeUrl,
+  });
+
   const viewport = options.viewport ?? DEFAULT_VIEWPORT;
   const executablePath = await resolveChromium();
   const browser = await chromium.launch({ headless: true, executablePath });
@@ -65,6 +77,12 @@ export async function auditMobile(
       isMobile: true,
       hasTouch: true,
     });
+    // Defence layer 3: request-interceptor that aborts in-page
+    // requests to private addresses, catching DNS-rebinding and
+    // redirect-to-private cases.
+    if (!options.allowUnsafeUrl) {
+      await installRequestGuard(context);
+    }
     const page = await context.newPage();
     await page.goto(options.url, { waitUntil: "networkidle", timeout: 30000 });
 

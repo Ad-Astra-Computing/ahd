@@ -2,10 +2,25 @@ import { chromium } from "playwright-core";
 import { readFile } from "node:fs/promises";
 import { resolve as resolvePath } from "node:path";
 import { existsSync } from "node:fs";
+import {
+  ensureUrlIsPublicOrThrow,
+  installRequestGuard,
+  type UrlGuardOptions,
+} from "./url-safety.js";
 
 export interface ScreenshotOptions {
   viewport?: { width: number; height: number };
   fullPage?: boolean;
+  // For renderHtmlToPng: when true, the HTML is treated as untrusted
+  // sample content. JavaScript is disabled and subresource loading is
+  // blocked, so malicious scripts in a model-generated sample can't
+  // run or fetch anything.
+  untrustedSample?: boolean;
+  // For renderUrlToPng / auditMobile: when set, skip the public-URL
+  // guard. Intended for tests and for the rare case where a user
+  // explicitly wants to audit a local dev server. Never default to
+  // true.
+  allowUnsafeUrl?: boolean;
 }
 
 const DEFAULT_VIEWPORT = { width: 1280, height: 1600 };
@@ -51,10 +66,23 @@ export async function renderHtmlToPng(
     executablePath,
   });
   try {
+    // When the caller flags the HTML as an untrusted sample (model-
+    // generated content we're critiquing), turn off JS and block every
+    // subresource request so a hostile sample can't exfiltrate anything
+    // or fingerprint the runner. When trusted (the site's own compiled
+    // output), keep defaults.
     const context = await browser.newContext({
       viewport: options.viewport ?? DEFAULT_VIEWPORT,
       deviceScaleFactor: 2,
+      javaScriptEnabled: !options.untrustedSample,
     });
+    if (options.untrustedSample) {
+      // Block every outbound request — the sample gets rendered from
+      // its own HTML only, no images, fonts, stylesheets-via-CDN, XHRs.
+      // Screenshots may look less complete; that's the correct tradeoff
+      // for untrusted input.
+      await context.route("**/*", (route) => route.abort("blockedbyclient"));
+    }
     const page = await context.newPage();
     await page.setContent(html, { waitUntil: "networkidle", timeout: 20000 });
     await page.screenshot({
@@ -81,6 +109,12 @@ export async function renderUrlToPng(
   outPath: string,
   options: ScreenshotOptions = {},
 ): Promise<void> {
+  // Defence layer 1+2: syntactic + DNS guard on the user-supplied URL.
+  // Throws UrlBlockedError if the target is localhost, any private /
+  // link-local / metadata range, or a public name that DNS-resolves
+  // into those ranges.
+  await ensureUrlIsPublicOrThrow(url, { allowUnsafe: options.allowUnsafeUrl });
+
   const executablePath = await resolveChromiumExecutable();
   const browser = await chromium.launch({
     headless: true,
@@ -91,6 +125,14 @@ export async function renderUrlToPng(
       viewport: options.viewport ?? DEFAULT_VIEWPORT,
       deviceScaleFactor: 2,
     });
+    // Defence layer 3: belt-and-braces request interceptor that
+    // aborts any in-page request (main, subresource, redirect) whose
+    // target URL is itself a private address. Catches DNS-rebinding
+    // attacks that flipped the DNS answer between layer 2 and
+    // navigation.
+    if (!options.allowUnsafeUrl) {
+      await installRequestGuard(context);
+    }
     const page = await context.newPage();
     await page.goto(url, { waitUntil: "networkidle", timeout: 30000 });
     await page.screenshot({

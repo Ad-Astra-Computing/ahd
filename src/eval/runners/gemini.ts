@@ -31,11 +31,19 @@ export function geminiRunner(options: {
           parts: [{ text: input.systemPrompt }],
         };
       }
+      // Send the API key as a header rather than a query parameter.
+      // Query strings end up in proxy logs, server access logs, browser
+      // history and telemetry far more readily than headers; the
+      // x-goog-api-key header is the Gemini API's documented header
+      // alternative and closes that leakage surface.
       const res = await fetch(
-        `${baseURL}/models/${model}:generateContent?key=${options.apiKey}`,
+        `${baseURL}/models/${model}:generateContent`,
         {
           method: "POST",
-          headers: { "content-type": "application/json" },
+          headers: {
+            "content-type": "application/json",
+            "x-goog-api-key": options.apiKey,
+          },
           body: JSON.stringify(body),
         },
       );

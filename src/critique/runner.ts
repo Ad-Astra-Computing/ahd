@@ -70,7 +70,10 @@ export async function runCritiqueOnDir(opts: CritiqueRunOptions): Promise<Critiq
       `${sample.model}_${sample.condition}_${basename(sample.path, ".html")}.png`,
     );
     try {
-      await renderFileToPng(sample.path, shotPath);
+      // Samples are model-generated HTML — untrusted by definition.
+      // Disable JS and block subresource loading so a hostile sample
+      // cannot fetch anything or fingerprint the runner.
+      await renderFileToPng(sample.path, shotPath, { untrustedSample: true });
     } catch (err) {
       await writeFile(
         shotPath + ".error.txt",
