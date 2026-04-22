@@ -1,0 +1,102 @@
+# Drop-in deploy workflow for a project that wants the full AHD pipeline:
+# source linter + vision critic on rendered pixels, both gating deploy.
+# Uses the AHD Nix flake devShell to get a deterministic Chromium build
+# without touching `npx playwright install`.
+#
+# Requires:
+#   - CLOUDFLARE_API_TOKEN, CLOUDFLARE_ACCOUNT_ID in repo secrets
+#   - ANTHROPIC_API_KEY in repo secrets (vision critic needs a multimodal LLM)
+#   - Your project's package.json `build` script ends with
+#     `node scripts/ahd-provenance.mjs` (writes dist/ahd.json from source lint)
+#   - Your `flake.nix` exports AHD_CHROMIUM_PATH in its shellHook — copy from
+#     the AHD repo's `flake.nix`, or add the AHD flake as an input and
+#     re-export the var.
+#
+# This is the heavier workflow. Most projects want ahd-deploy.example.yml
+# (source lint only). Reach for this one when the project makes aesthetic
+# claims strong enough that catching rendered-pixel slop — Corporate
+# Memphis, iridescent blobs, dead-space layouts — is part of the shipping
+# contract.
+#
+# The critic runs against a localhost preview of the built dist, not against
+# the deployed URL, so the job self-contains: no race between deploy landing
+# and critic firing.
+
+name: deploy (with vision critic)
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: pages-deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      deployments: write
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      # Determinate Systems' installer is the GH-Actions-native way to
+      # land Nix on an ephemeral runner. Flakes enabled by default.
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@main
+
+      # Content-addressed caching of flake inputs + build artifacts across
+      # workflow runs. Turns a 5-minute cold nix develop into seconds.
+      - name: Attach Nix cache
+        uses: DeterminateSystems/magic-nix-cache-action@main
+
+      # Everything below runs inside the flake devShell so AHD_CHROMIUM_PATH
+      # is populated (Linux: pkgs.chromium; darwin: playwright-driver.browsers,
+      # but runners are Linux here). node / npm / typescript all come from
+      # the shell too, so no separate setup-node step.
+      - name: Source lint (runs as part of npm run build)
+        run: nix develop --command bash -c "npm ci && npm run build"
+
+      # Serve the built dist on localhost so the vision critic can hit it.
+      # `npx serve` is already in node_modules after `npm ci` for most
+      # projects; add it as a devDep if not: `npm i -D serve`.
+      - name: Start preview server
+        run: nix develop --command bash -c "npx serve dist -l 4321 --no-clipboard &" &
+      - name: Wait for preview
+        run: npx --yes wait-on http://localhost:4321 --timeout 60000
+
+      # Vision critique: screenshots the home page via the flake's Chromium,
+      # runs the multimodal critic against the 14 vision rules, writes a
+      # report. Exit non-zero if any vision rule fires.
+      - name: Vision critic
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          nix develop --command bash -c "
+            ahd critique-url http://localhost:4321 \
+              --token swiss-editorial \
+              --critic anthropic \
+              --out dist/ahd-vision.json \
+              --screenshot dist/ahd-vision.png
+          "
+
+      - name: Fail on vision tells
+        run: |
+          fires=$(node -e 'console.log(JSON.parse(require("fs").readFileSync("dist/ahd-vision.json")).violations.length)')
+          echo "vision tells: $fires"
+          if [ "$fires" -gt 0 ]; then
+            echo "::error::Vision critic fired $fires tell(s). See dist/ahd-vision.json."
+            exit 1
+          fi
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy dist --project-name=CF_PAGES_PROJECT --branch=main
