@@ -23,27 +23,80 @@ export interface MobileRule {
   check: () => Array<Omit<Violation, "ruleId" | "severity" | "file">>;
 }
 
-// No-horizontal-overflow: the document itself must not scroll sideways
-// at mobile widths. Any page that does has a layout bug — a pre that
-// isn't clipped, a nav that didn't wrap, a table with no responsive
-// treatment. Error-severity because horizontal scroll on a phone is
-// actively hostile to users.
+// No-horizontal-overflow: nothing visible should extend past the right
+// edge of a 375px viewport. Original rule only looked at
+// document.scrollWidth > innerWidth, which misses the common pattern
+// where a global `html, body { overflow-x: hidden }` safety net clips
+// the overflow and silently hides the broken layout. That's exactly
+// what happened on /timeline: a display headline was rendering past
+// the viewport edge and getting chopped, but the document wasn't
+// scrolling so the naive check passed.
+//
+// Now we:
+//   1. Still catch genuine document-level scroll.
+//   2. Walk every rendered element and flag those whose bounding rect
+//      extends past the viewport right edge. Skip elements inside a
+//      scrollable parent (those are legitimate horizontal-scroll
+//      regions like <pre> code blocks with overflow-x: auto).
+//   3. Skip elements that are clipped-but-invisible (display: none,
+//      0×0 rects, aria-hidden off-screen menus).
 const noHorizontalOverflow: MobileRule = {
   id: "ahd/mobile/no-horizontal-overflow",
   severity: "error",
   description:
-    "The document must not scroll horizontally at 375px viewport. Catches unwrapped nav, overflowing pre blocks, fixed-width tables.",
+    "Content extends past the right edge of a 375px viewport. Catches unwrapped nav, overflowing pre blocks, fixed-width tables, and display-size headlines that don't scale with the viewport.",
   check: () => {
-    const docWidth = document.documentElement.scrollWidth;
-    const viewportWidth = window.innerWidth;
-    if (docWidth > viewportWidth + 1) {
-      return [
-        {
-          message: `Document is ${docWidth}px wide at a ${viewportWidth}px viewport. Something inside main content is forcing horizontal scroll; find the element and clip / wrap / scroll it.`,
-        },
-      ];
+    const out: Array<{ message: string; snippet?: string }> = [];
+    const vw = window.innerWidth;
+    const tolerance = 1; // sub-pixel rounding slack
+
+    // (1) Document-level scroll — the original check, still useful.
+    if (document.documentElement.scrollWidth > vw + tolerance) {
+      out.push({
+        message: `Document is ${document.documentElement.scrollWidth}px wide at a ${vw}px viewport. Something in the page forces horizontal scroll.`,
+      });
     }
-    return [];
+
+    // (2) Element-level overflow — new. A parent with overflow: hidden
+    // will silently clip children, but the clipped bit is still a
+    // layout bug. Walk the tree and flag elements whose bounding rect
+    // extends past the viewport right edge.
+    function hasScrollableAncestor(el: Element): boolean {
+      let cur: Element | null = el.parentElement;
+      while (cur && cur !== document.documentElement) {
+        const s = window.getComputedStyle(cur);
+        if (s.overflowX === "auto" || s.overflowX === "scroll") return true;
+        cur = cur.parentElement;
+      }
+      return false;
+    }
+
+    const flagged = new Set<Element>();
+    // Skip SCRIPT / STYLE / HEAD children and content that's hidden.
+    const skipTags = new Set(["script", "style", "head", "meta", "link", "title"]);
+    for (const el of document.querySelectorAll("body *")) {
+      if (skipTags.has(el.tagName.toLowerCase())) continue;
+      const rect = (el as HTMLElement).getBoundingClientRect();
+      if (rect.width < 1 || rect.height < 1) continue; // hidden / zero-size
+      if (rect.right <= vw + tolerance) continue;     // fits
+      // Skip if any ancestor has horizontal scroll — legitimate region.
+      if (hasScrollableAncestor(el)) continue;
+      // Skip if parent already flagged — avoid duplicate parent + child fires.
+      if (el.parentElement && flagged.has(el.parentElement)) continue;
+      flagged.add(el);
+      if (out.length < 6) {
+        const text = ((el as HTMLElement).innerText || "")
+          .slice(0, 60)
+          .replace(/\s+/g, " ")
+          .trim();
+        out.push({
+          message: `<${el.tagName.toLowerCase()}> extends to ${Math.round(rect.right)}px (viewport ${vw}px). Content is being clipped; find the element and make it scale / wrap.`,
+          snippet: text || (el as HTMLElement).outerHTML.slice(0, 120),
+        });
+      }
+    }
+
+    return out;
   },
 };
 

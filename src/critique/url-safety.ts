@@ -219,22 +219,63 @@ export async function assertUrlResolvesPublic(parsed: URL): Promise<void> {
 type RouteHandler = (route: Route, request: PlaywrightRequest) => unknown;
 type Routable = { route: (url: string, handler: RouteHandler) => Promise<unknown> };
 
+// Negative-only verdict cache: once a hostname has been flagged as
+// resolving into private space we can short-circuit subsequent
+// requests to it without re-resolving. We explicitly do NOT cache
+// positive verdicts — that's the window a DNS-rebinding attacker
+// exploits: hostname resolves public on first check, gets cached
+// ok, then flips to private while the browser fires subresource
+// requests that hit the cached "ok" verdict. Re-resolving on every
+// request closes the window at the cost of one lookup per request,
+// which DNS caching at the OS / resolver layer already absorbs.
+const BLOCKED_TTL_MS = 60_000;
+
+interface BlockedVerdict {
+  reason: string;
+  expiresAt: number;
+}
+
 export async function installRequestGuard(context: Routable): Promise<void> {
+  const blockedCache = new Map<string, BlockedVerdict>();
+
   await context.route("**/*", async (route, request) => {
     const reqUrl = request.url();
+    let parsed: URL;
     try {
-      // We can't synchronously DNS-resolve here without stalling the
-      // page. The syntactic guard catches IP literals + named
-      // localhost/private suffixes, which covers the DNS-rebinding
-      // case where the attacker's cooperating DNS returns a private
-      // IP on the second resolution (because the browser would then
-      // navigate to that IP literal in a subsequent request, and
-      // that IP literal fails the syntactic check here).
-      assertUrlSyntacticallyPublic(reqUrl);
-      await route.continue();
+      // Layer 1 (syntactic): catches IP literals in private ranges
+      // and named localhost / DNS-rebinding suffixes without any I/O.
+      parsed = assertUrlSyntacticallyPublic(reqUrl);
     } catch {
-      await route.abort("blockedbyclient");
+      return route.abort("blockedbyclient");
     }
+
+    const host = parsed.hostname.toLowerCase();
+
+    // Fast-path the already-blocked case. If this hostname resolved
+    // into private space in the last minute, abort without asking
+    // DNS again.
+    const cached = blockedCache.get(host);
+    if (cached && cached.expiresAt > Date.now()) {
+      return route.abort("blockedbyclient");
+    }
+
+    // Layer 2 (DNS): resolve on every request for this hostname until
+    // it either stays ok or trips the block list. Re-resolving keeps
+    // the DNS-rebinding window closed — attacker can't flip a cached
+    // "ok" into a live "private" since we never cache "ok".
+    try {
+      await assertUrlResolvesPublic(parsed);
+    } catch (err) {
+      const reason =
+        err instanceof UrlBlockedError ? err.reason : "resolution-failed";
+      blockedCache.set(host, {
+        reason,
+        expiresAt: Date.now() + BLOCKED_TTL_MS,
+      });
+      return route.abort("blockedbyclient");
+    }
+
+    return route.continue();
   });
 }
 

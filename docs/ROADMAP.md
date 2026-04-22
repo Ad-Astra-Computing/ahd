@@ -42,7 +42,7 @@ Source of truth for what's shipped, what's scaffolded, and what's gated on exter
 
 - Ten style tokens: `swiss-editorial`, `manual-sf`, `neubrutalist-gumroad`, `post-digital-green`, `memphis-clash` (draft), `heisei-retro` (draft), `monochrome-editorial`, `bauhaus-revival` (draft), `editorial-illustration` (draft), `ad-creative-collision` (draft)
 - `eslint-plugin-ahd` + `stylelint-plugin-ahd` split into standalone packages under `packages/`, derived programmatically from the shared rule engine in `@adastra/ahd`
-- Community contribution flow shipped: `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `SECURITY.md`, issue templates, PR template, DCO sign-off requirement
+- Community contribution flow shipped: [CONTRIBUTING.md](../CONTRIBUTING.md), [CODE_OF_CONDUCT.md](../CODE_OF_CONDUCT.md), [SECURITY.md](../SECURITY.md), issue templates, PR template, DCO sign-off requirement
 - Per-token exemplar references under `tokens/exemplars/*/reference.md` sourced from public-domain archives (Wikimedia, LOC, MoMA Open Access, Rijksmuseum, Cooper Hewitt, Letterform Archive)
 
 ## v0.6 — image generation vertical · shipped

@@ -51,7 +51,7 @@ export function createStylelintPlugin() {
   }
 
   return {
-    meta: { name: "stylelint-plugin-ahd", version: "0.1.0" },
+    meta: { name: "stylelint-plugin-ahd", version: "0.5.0-beta.1" },
     plugins,
     rules: Object.fromEntries(plugins.map((p) => [p.ruleName, p.rule])),
   };

@@ -150,7 +150,7 @@ mustAvoid:
 
 ---
 
-## Limits, honestly
+## Limits
 
 - **n=5 is under-powered.** Per-model percentages have ±35pp Wilson intervals. The published numbers point at directions, not at precision. Bigger n requires budget.
 - **Vision coverage is partial.** 21 of 48 samples critiqued; rate-limit retry is now in place for future runs to reach 100%.
@@ -164,6 +164,6 @@ Roadmap: [docs/ROADMAP.md](docs/ROADMAP.md). Testing strategy: [docs/TESTING.md]
 
 ## Licence
 
-Code is released under the **Functional Source License 1.1, Apache 2.0 Future License** (FSL-1.1-Apache-2.0). Free for any non-competing purpose including internal use, client work, education and research; the one restriction is building a commercial AHD-alike product. Each release auto-converts to Apache-2.0 on its second anniversary.
+Code is released under the **Functional Source License 1.1, Apache 2.0 Future License** (FSL-1.1-Apache-2.0). Full text in [LICENSE](LICENSE). Free for any non-competing purpose including internal use, client work, education and research; the one restriction is building a commercial AHD-alike product. Each release auto-converts to Apache-2.0 on its second anniversary.
 
-Style tokens in `tokens/` and documentation artwork in `docs/artwork/` are **CC-BY-4.0**, unless an individual token's `licence:` field says otherwise. Tokens are meant to proliferate — use them on client work, in your own products, wherever. Attribution strings are in `LICENSE-tokens` and `NOTICE`.
+Style tokens in [tokens/](tokens/) and documentation artwork in [docs/artwork/](docs/artwork/) are **CC-BY-4.0**, unless an individual token's `licence:` field says otherwise. Tokens are meant to proliferate, use them on client work, in your own products, wherever. Attribution strings are in [LICENSE-tokens](LICENSE-tokens) and [NOTICE](NOTICE).

@@ -149,7 +149,7 @@ export async function handleStdioLine(
         result: {
           protocolVersion: "2024-11-05",
           capabilities: { tools: {} },
-          serverInfo: { name: "ahd-mcp", version: "0.1.0" },
+          serverInfo: { name: "ahd-mcp", version: "0.5.0-beta.1" },
         },
       });
     }
