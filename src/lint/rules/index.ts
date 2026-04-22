@@ -28,6 +28,10 @@ import { rule as trackingPerSize } from "./tracking-per-size.js";
 import { rule as radiusHierarchy } from "./radius-hierarchy.js";
 import { rule as noInlineStyleAnimation } from "./no-inline-style-animation.js";
 import { rule as noEmDashesInProse } from "./no-em-dashes-in-prose.js";
+import { rule as a11yImgWithoutAlt } from "./a11y-img-without-alt.js";
+import { rule as a11yButtonWithoutLabel } from "./a11y-button-without-label.js";
+import { rule as a11yLinkWithoutText } from "./a11y-link-without-text.js";
+import { rule as a11yHeadingSkip } from "./a11y-heading-skip.js";
 import { svgRulesAsRules } from "../svg/rules.js";
 import type { Rule } from "../types.js";
 
@@ -62,6 +66,10 @@ export const rules: Rule[] = [
   radiusHierarchy,
   noInlineStyleAnimation,
   noEmDashesInProse,
+  a11yImgWithoutAlt,
+  a11yButtonWithoutLabel,
+  a11yLinkWithoutText,
+  a11yHeadingSkip,
   ...svgRulesAsRules,
 ];
 
