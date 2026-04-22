@@ -5,7 +5,14 @@
 # Copy this into your project's `.github/workflows/deploy.yml` and adjust:
 #   - `CF_PAGES_PROJECT` in the deploy command (your Cloudflare Pages project name)
 #   - `NODE_VERSION` if you're not on 22
-#   - CF_API_TOKEN and CF_ACCOUNT_ID secrets in repo settings
+#   - `CLOUDFLARE_API_TOKEN` in repo secrets.
+#     Create it as an **Account API Token** (not a User API Token) with
+#     scope limited to: `Account — Cloudflare Pages — Edit` on the one
+#     account that hosts your Pages project. An account-scoped token
+#     carries the account context, so you do NOT need a separate
+#     accountId input. If you use a User API Token (broader scope,
+#     spans multiple accounts), you must also add `accountId:
+#     ${{ vars.CLOUDFLARE_ACCOUNT_ID }}` to the wrangler-action step.
 #
 # Assumes:
 #   - `npm run build` runs AHD's `scripts/ahd-provenance.mjs` as a post-build
@@ -62,5 +69,10 @@ jobs:
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          # accountId is optional when CLOUDFLARE_API_TOKEN is an
+          # Account API Token. Include it if you used a User API Token,
+          # or just keep it as a defensive default either way.
+          # Stored as a secret or as a repo variable — both work;
+          # the ID itself is not sensitive.
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: pages deploy dist --project-name=CF_PAGES_PROJECT --branch=main

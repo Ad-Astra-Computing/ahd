@@ -4,8 +4,19 @@
 # without touching `npx playwright install`.
 #
 # Requires:
-#   - CLOUDFLARE_API_TOKEN, CLOUDFLARE_ACCOUNT_ID in repo secrets
-#   - ANTHROPIC_API_KEY in repo secrets (vision critic needs a multimodal LLM)
+#   - `CLOUDFLARE_API_TOKEN` in repo secrets.
+#     Cloudflare has two API-token types: **Account API Token** (scoped
+#     to one account) and **User API Token** (broader, spans every account
+#     the user can access). Either works here. An Account API Token
+#     scoped to `Cloudflare Pages: Edit` is the recommended default
+#     because the token carries the account context, so `accountId`
+#     below becomes optional. With a User API Token, `accountId` is
+#     required. Keeping it populated in both cases is defensive and
+#     costs nothing.
+#   - `CLOUDFLARE_ACCOUNT_ID` in repo secrets or repo variables. The
+#     account ID itself is not sensitive (it appears in dash URLs),
+#     so either storage works.
+#   - `ANTHROPIC_API_KEY` in repo secrets (vision critic needs a multimodal LLM)
 #   - Your project's package.json `build` script ends with
 #     `node scripts/ahd-provenance.mjs` (writes dist/ahd.json from source lint)
 #   - Your `flake.nix` exports AHD_CHROMIUM_PATH in its shellHook — copy from
