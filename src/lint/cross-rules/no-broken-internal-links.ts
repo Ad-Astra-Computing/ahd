@@ -58,9 +58,10 @@ export const rule: CrossFileRule = {
     const out: ReturnType<CrossFileRule["check"]> = [];
     for (const input of inputs) {
       if (!input.html) continue;
-      const pattern = /\bhref\s*=\s*"([^"]+)"/gi;
+      // Accept both double- and single-quoted href values.
+      const pattern = /\bhref\s*=\s*(?:"([^"]+)"|'([^']+)')/gi;
       for (const m of findAll(input.html, pattern)) {
-        const raw = m[1];
+        const raw = m[1] ?? m[2];
         if (!raw.startsWith("/")) continue;
         if (ASSET_PREFIXES.some((p) => raw.startsWith(p))) continue;
         if (STATIC_EXTENSIONS.test(raw.split("?")[0].split("#")[0])) continue;

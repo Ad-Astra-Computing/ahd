@@ -15,13 +15,18 @@ export const rule: Rule = {
     "Inline style=\"animation:...\" or style=\"transition:...\" attributes on elements. Motion belongs in stylesheets where reduced-motion can be respected.",
   check: (input) => {
     const out = [];
-    const pattern = /\bstyle\s*=\s*"[^"]*\b(animation|transition)\s*:[^"]*"/gi;
+    // Match both double- and single-quoted style attributes. Regex is split
+    // by quote style so the [^"]* / [^']* body can't eat the closing quote.
+    const pattern =
+      /\bstyle\s*=\s*(?:"[^"]*\b(animation|transition)\s*:[^"]*"|'[^']*\b(animation|transition)\s*:[^']*')/gi;
     for (const m of findAll(input.html, pattern)) {
+      // m[1] is populated for the double-quoted branch, m[2] for single-quoted.
+      const kind = m[1] ?? m[2];
       out.push(
         violation(
           rule,
           input,
-          `Inline style attribute declares ${m[1]}. Move this to a stylesheet so prefers-reduced-motion and the rest of the design system can reach it.`,
+          `Inline style attribute declares ${kind}. Move this to a stylesheet so prefers-reduced-motion and the rest of the design system can reach it.`,
           {
             line: lineOf(input.html, m.index),
             snippet: m[0].slice(0, 140),

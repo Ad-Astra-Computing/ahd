@@ -79,13 +79,20 @@ async function main() {
     }
 
     case "lint": {
-      const target = rest[0];
-      if (!target) exit("usage: ahd lint <file.html|file.css> [...] [--config <path>] [--json] [--root <dist>]");
       const configFlag = flag(rest, "--config");
       const rootFlag = flag(rest, "--root");
       const jsonMode = rest.includes("--json");
+      // Whole-site mode enables cross-file rules (broken-internal-links, etc)
+      // that only make sense when the caller passes every file in the build.
+      // Implicit when --root is set (the flag signals a site-scoped run),
+      // explicit via --whole-site. Single-file `ahd lint page.html` runs
+      // per-file rules only so normal invocations don't false-fire.
+      const wholeSiteMode = rest.includes("--whole-site") || !!rootFlag;
       const files = rest
         .filter((a, i) => !a.startsWith("--") && rest[i - 1] !== "--config" && rest[i - 1] !== "--root");
+      if (files.length === 0) {
+        exit("usage: ahd lint <file.html|file.css> [...] [--config <path>] [--json] [--root <dist>] [--whole-site]\n  At least one file must be provided.");
+      }
       const configPath = configFlag ?? (await findProjectConfig(process.cwd()));
       const config = configPath ? await loadConfig(configPath) : undefined;
       // Build LintInput[] from files; when --root is given, strip it from
@@ -105,7 +112,10 @@ async function main() {
           return { file: rooted, html: isCss ? "" : raw, css: isCss ? raw : "" };
         }),
       );
-      const merged = lintSources(inputs, undefined, undefined, config);
+      // Empty cross-rule list for single-file mode so we don't false-fire
+      // broken-links against callers who only passed one page.
+      const crossRules = wholeSiteMode ? undefined : [];
+      const merged = lintSources(inputs, undefined, crossRules, config);
       if (jsonMode) {
         const bySev = { error: 0, warn: 0, info: 0 };
         for (const v of merged.violations) bySev[v.severity]++;
@@ -357,7 +367,7 @@ async function main() {
         runAt: new Date().toISOString(),
         screenshot: shotPath,
         violations,
-        vionRuleset: VISION_RULES.map((r) => r.id),
+        visionRuleset: VISION_RULES.map((r) => r.id),
       };
       await writeFile(outPath, JSON.stringify(result, null, 2) + "\n");
       if (violations.length === 0) {

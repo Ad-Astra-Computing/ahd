@@ -45,6 +45,17 @@ describe("cross-file · ahd/no-broken-internal-links", () => {
     expect(fired).toHaveLength(0);
   });
 
+  it("catches single-quoted hrefs too", () => {
+    const inputs = [
+      { file: "/index.html", html: `<a href='/pricing'>single</a>`, css: "" },
+    ];
+    const report = lintSources(inputs);
+    const fired = report.violations.filter(
+      (v) => v.ruleId === "ahd/no-broken-internal-links",
+    );
+    expect(fired).toHaveLength(1);
+  });
+
   it("honours trailing-slash equivalence", () => {
     const inputs = [
       { file: "/index.html", html: `<a href="/pricing/">with slash</a>`, css: "" },
