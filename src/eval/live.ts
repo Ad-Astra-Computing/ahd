@@ -35,7 +35,7 @@ export async function runLiveEval(opts: LiveEvalOptions): Promise<EvalReport> {
   const manifestModels: RunManifest["models"] = [];
 
   for (const spec of opts.models) {
-    const runner = runnerFromSpec(spec);
+    const runner = await runnerFromSpec(spec);
     const canonicalId = runner.id;
     const safeId = sanitizeId(canonicalId);
     manifestModels.push({

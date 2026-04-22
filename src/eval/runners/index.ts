@@ -3,11 +3,12 @@ import { openaiRunner } from "./openai.js";
 import { geminiRunner } from "./gemini.js";
 import { ollamaRunner } from "./ollama.js";
 import { workersAiRunner } from "./workers-ai.js";
+import { huggingfaceRunner } from "./huggingface.js";
 import { mockRunner, slopResponder, swissResponder } from "./mock.js";
 import { cfGatewayUrl } from "./gateway.js";
 import type { ModelRunner } from "./types.js";
 
-export function runnerFromSpec(spec: string): ModelRunner {
+export async function runnerFromSpec(spec: string): Promise<ModelRunner> {
   if (spec === "mock-slop") return mockRunner("mock-slop", slopResponder);
   if (spec === "mock-swiss") return mockRunner("mock-swiss", swissResponder);
   if (spec.startsWith("claude")) {
@@ -22,6 +23,10 @@ export function runnerFromSpec(spec: string): ModelRunner {
   if (spec.startsWith("ollama:")) {
     const model = spec.slice("ollama:".length);
     return ollamaRunner({ model });
+  }
+  if (spec.startsWith("hf:")) {
+    const model = spec.slice("hf:".length);
+    return huggingfaceRunner({ model });
   }
   if (spec.startsWith("cf:")) {
     const model = spec.slice("cf:".length);
@@ -52,7 +57,7 @@ export function runnerFromSpec(spec: string): ModelRunner {
     });
   }
   throw new Error(
-    `Unknown model spec: ${spec}. Prefix with 'claude', 'gpt', 'gemini', 'cf:', 'ollama:' or use 'mock-slop' / 'mock-swiss'.`,
+    `Unknown model spec: ${spec}. Prefix with 'claude', 'gpt', 'gemini', 'cf:', 'ollama:', 'hf:' or use 'mock-slop' / 'mock-swiss'.`,
   );
 }
 
@@ -62,6 +67,7 @@ export {
   geminiRunner,
   ollamaRunner,
   workersAiRunner,
+  huggingfaceRunner,
   mockRunner,
   slopResponder,
   swissResponder,
