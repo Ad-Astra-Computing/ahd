@@ -16,6 +16,7 @@ import { runStdioServer } from "../dist/mcp/server.js";
 import { VISION_RULES, anthropicVisionCritic, mockCritic } from "../dist/critique/critic.js";
 import { runCritiqueOnDir, formatCritiqueReport } from "../dist/critique/runner.js";
 import { renderUrlToPng, fileToBase64 } from "../dist/critique/screenshot.js";
+import { auditMobile, formatMobileReport } from "../dist/mobile/audit.js";
 import { runLiveImageEval, formatImageEvalReport } from "../dist/eval/image-live.js";
 import { WORKERS_AI_IMAGE_DEFAULTS } from "../dist/eval/runners/workers-ai-image.js";
 import { runTry, runTryImage } from "../dist/try.js";
@@ -380,8 +381,39 @@ async function main() {
       return;
     }
 
+    case "audit-mobile": {
+      const url = rest[0];
+      const outPath = flag(rest, "--out");
+      const shotPath = flag(rest, "--screenshot");
+      const widthFlag = flag(rest, "--width");
+      const heightFlag = flag(rest, "--height");
+      if (!url || !/^https?:\/\//.test(url)) {
+        exit(
+          "usage: ahd audit-mobile <url> [--out <file.json>] [--screenshot <file.png>] [--width 375] [--height 812]",
+        );
+      }
+      const viewport = {
+        width: widthFlag ? parseInt(widthFlag, 10) : 375,
+        height: heightFlag ? parseInt(heightFlag, 10) : 812,
+      };
+      console.log(`auditing ${url} at ${viewport.width}x${viewport.height}`);
+      const report = await auditMobile({
+        url,
+        viewport,
+        screenshotPath: shotPath,
+      });
+      if (outPath) {
+        await writeFile(outPath, JSON.stringify(report, null, 2) + "\n");
+        console.log(`wrote ${outPath}`);
+      }
+      console.log(formatMobileReport(report));
+      const hasErrors = report.violations.some((v) => v.severity === "error");
+      process.exit(hasErrors ? 1 : 0);
+      return;
+    }
+
     default:
-      console.log(`ahd — Artificial Human Design
+      console.log(`ahd · Artificial Human Design
 
 commands:
   ahd list                              list every style token
@@ -401,6 +433,8 @@ commands:
   ahd try-image <brief.yml>             demo: generate one image via cfimg:<model> (needs CF_API_TOKEN + CF_ACCOUNT_ID)
   ahd critique <token> [--samples d] [--critic anthropic|mock] [--max n] [--out dir] [--report r.md]
                                         render each sample, run the vision critic on the screenshot
+  ahd audit-mobile <url> [--width 375] [--height 812] [--out f.json] [--screenshot f.png]
+                                        render a URL at mobile viewport and run deterministic layout rules
 
 live-eval model specs:
   mock-slop, mock-swiss                 deterministic, offline
