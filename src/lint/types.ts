@@ -26,4 +26,5 @@ export interface LintReport {
   violations: Violation[];
   rulesRun: string[];
   filesLinted: number;
+  overrides?: Array<{ ruleId: string; severity: "error" | "warn" | "info" | "off"; reason: string }>;
 }

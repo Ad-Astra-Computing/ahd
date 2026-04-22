@@ -1,10 +1,20 @@
 import { readFile } from "node:fs/promises";
 import { rules as defaultRules } from "./rules/index.js";
 import type { LintInput, LintReport, Rule, Violation } from "./types.js";
+import {
+  applyConfig,
+  type AhdProjectConfig,
+  type RuleOverride,
+} from "./config.js";
 
-export function lintSource(input: LintInput, rules: Rule[] = defaultRules): LintReport {
+export function lintSource(
+  input: LintInput,
+  rules: Rule[] = defaultRules,
+  config?: AhdProjectConfig,
+): LintReport {
+  const { rules: effectiveRules, applied } = applyConfig(rules, config);
   const violations: Violation[] = [];
-  for (const rule of rules) {
+  for (const rule of effectiveRules) {
     try {
       violations.push(...rule.check(input));
     } catch (err) {
@@ -18,17 +28,23 @@ export function lintSource(input: LintInput, rules: Rule[] = defaultRules): Lint
   }
   return {
     violations,
-    rulesRun: rules.map((r) => r.id),
+    rulesRun: effectiveRules.map((r) => r.id),
     filesLinted: 1,
+    overrides: applied,
   };
 }
 
-export async function lintFile(path: string, rules?: Rule[]): Promise<LintReport> {
+export async function lintFile(
+  path: string,
+  rules?: Rule[],
+  config?: AhdProjectConfig,
+): Promise<LintReport> {
   const raw = await readFile(path, "utf8");
   const isCss = /\.css$/i.test(path);
   return lintSource(
     { file: path, html: isCss ? "" : raw, css: isCss ? raw : "" },
     rules,
+    config,
   );
 }
 
