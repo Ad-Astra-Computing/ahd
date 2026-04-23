@@ -16,7 +16,7 @@ Today's shipped scope covers both verticals. **Web UI end-to-end**: text-to-HTML
 
 ## Measured, controlled, published
 
-<img src="docs/artwork/slop-distribution.svg" alt="Measured slop-tell reduction by model, raw vs AHD-compiled" width="100%">
+<img src="docs/artwork/slop-distribution-n30.svg" alt="Measured slop-tell reduction by model, raw vs AHD-compiled, 22 April 2026 n=30" width="100%">
 
 Ran `briefs/landing.yml` against **ten models, n=30 per cell, six hundred samples** on 22 April 2026. Raw and compiled conditions differ only in the AHD system-prompt layer. Three frontier cells used subscription CLIs (Claude Code, Codex, Gemini CLI); seven OSS cells used the Cloudflare Workers AI free tier. Full report, per-cell attempted/scored counts, per-tell frequency tables, run manifest: [docs/evals/2026-04-22-swiss-n30.md](docs/evals/2026-04-22-swiss-n30.md).
 
@@ -40,6 +40,10 @@ The Llama 3.3 70B regression reproduces the same-direction result seen in the 21
 Scope: one brief, one token, one surface, source-linter only. External-validity passes (different-token-same-brief, different-brief-same-token, vision-critic coverage over the existing 600 samples) are queued. The 21 April cross-provider run with seven models is preserved at [docs/evals/2026-04-21-swiss-cross.md](docs/evals/2026-04-21-swiss-cross.md); the 21 April five-model narrow-roster run is at [docs/evals/2026-04-21-swiss.md](docs/evals/2026-04-21-swiss.md).
 
 A partial vision-critic pass in the earlier run (21 of 48 screenshots, limited by Anthropic's 30k tok/min rate cap at the time) found **only one vision-only rule fire** (`mesh-has-counterforce` on a single raw sample). Interpretation: the editorial-landing brief does not elicit the iridescent-blob / Corporate-Memphis / laptop-stock-photo failure modes the vision layer was built to catch; the source linter already covers the failure modes these models exhibit on this brief. Full vision report: [docs/evals/2026-04-21-swiss-vision.md](docs/evals/2026-04-21-swiss-vision.md).
+
+The original **21 April 2026 n=5 narrow-roster run** is preserved below as the baseline the n=30 run replaced. Same brief, same seed, five models, n=5 per cell. The Claude 100% reduction visible there has an implicit ±35-point Wilson interval; the n=30 figure above (59%) is the tighter, quotable number, and the picture it paints is the same shape seen at wider resolution.
+
+<img src="docs/artwork/slop-distribution.svg" alt="First run · 21 April 2026 · five models · n=5 per cell" width="100%">
 
 A rendered raw vs compiled pair from the Mistral text run, same brief, same seed:
 
