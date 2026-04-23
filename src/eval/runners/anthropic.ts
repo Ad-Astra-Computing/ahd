@@ -8,14 +8,19 @@ import { extractHtmlBlock } from "./types.js";
 export function anthropicRunner(options: {
   apiKey: string;
   model?: string;
+  baseURL?: string;
 }): ModelRunner {
   const model = options.model ?? "claude-opus-4-7";
+  const baseURL = (options.baseURL ?? "https://api.anthropic.com").replace(
+    /\/+$/,
+    "",
+  );
   return {
     id: model,
     provider: "anthropic",
     async run(input: ModelRunnerInput): Promise<ModelRunnerOutput> {
       const start = Date.now();
-      const res = await fetch("https://api.anthropic.com/v1/messages", {
+      const res = await fetch(`${baseURL}/v1/messages`, {
         method: "POST",
         headers: {
           "x-api-key": options.apiKey,
