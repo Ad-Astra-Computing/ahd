@@ -1,0 +1,46 @@
+# Core CI: typecheck + tests + token validation on every push to main
+# and every pull request.
+#
+# Dependabot PRs auto-merge by default when they're eligible. Without
+# this gate, a bad dep bump lands on main before anyone runs the
+# tests. With this gate, GitHub blocks auto-merge until ci.yml goes
+# green.
+#
+# Deliberately minimal. Heavier jobs (weekly eval, vision critique,
+# release publish) live in their own workflows.
+
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node (pinned)
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22.22.2"
+
+      - name: Install
+        run: npm ci
+
+      - name: Typecheck
+        run: npx tsc --noEmit
+
+      - name: Test
+        run: npm test --silent
+
+      - name: Validate style tokens
+        run: node ./bin/ahd.js validate-tokens
