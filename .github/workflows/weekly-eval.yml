@@ -1,0 +1,165 @@
+# Weekly automated eval against the current Cloudflare Workers AI OSS roster.
+#
+# Why this exists: model hosts change serving defaults between releases (new
+# chat templates, new quantizations, new default generation parameters). A
+# run from six weeks ago may not reproduce today. This workflow catches
+# those changes within a week of when they happen, without anyone having to
+# remember to re-run the suite.
+#
+# Scope: one brief, one token, n=30 per cell, OSS models only. Frontier
+# cells (Claude / GPT / Gemini via subscription CLIs) need an interactive
+# CLI session that can't run in CI, so they stay out of the weekly run and
+# get re-run manually when we care about them specifically.
+#
+# Cost: zero. Cloudflare Workers AI free tier covers 10k neurons/day; a
+# five-cell n=30 run is well inside that bound. No Anthropic / OpenAI /
+# Gemini API spend.
+#
+# Secrets required on the repo:
+#   - CF_API_TOKEN: Cloudflare API token with Workers AI read scope
+#   - CF_ACCOUNT_ID: the account that owns the Workers AI usage
+#
+# Output: a dated report committed to docs/evals/weekly/<YYYY-MM-DD>.md
+# and an Issue labelled 'drift' opened when the week-over-week aggregate
+# reduction moves outside a tolerance band.
+
+name: weekly-eval
+
+on:
+  schedule:
+    # Monday 06:07 UTC (~Sunday night US, Monday morning EU). Off-peak
+    # and an off-zero minute so we're not firing with every other cron
+    # at the top of the hour.
+    - cron: "7 6 * * 1"
+  # Manual trigger for ad-hoc debug runs; same steps, same budget.
+  workflow_dispatch:
+    inputs:
+      note:
+        description: "Optional note to include in the generated report header"
+        required: false
+        default: ""
+
+permissions:
+  contents: write          # commit the report
+  issues: write            # open a drift issue if the run moves outside tolerance
+
+jobs:
+  eval:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install
+        run: npm ci
+
+      - name: Build (tsc -> dist/)
+        run: npm run build
+
+      - name: Run eval-live (CF OSS only, n=30)
+        env:
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+          CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+        run: |
+          # Five OSS cells at n=30 = 300 raw + 300 compiled = 600 calls.
+          # Well within CF Workers AI free tier (10k neurons/day). If the
+          # model list needs updating, bump the comma list below; the
+          # workflow is intentionally explicit rather than auto-discovered
+          # so a model-registry change on CF's side doesn't silently
+          # change what we measure.
+          OUT_DIR="evals"
+          REPORT_DATE=$(date -u +%Y-%m-%d)
+          REPORT_PATH="docs/evals/weekly/${REPORT_DATE}.md"
+          mkdir -p docs/evals/weekly
+          node ./bin/ahd.js eval-live swiss-editorial \
+            --brief briefs/landing.yml \
+            --models cf:@cf/google/gemma-4-26b-a4b-it,cf:@cf/meta/llama-4-scout-17b-16e-instruct,cf:@cf/mistralai/mistral-small-3.1-24b-instruct,cf:@cf/openai/gpt-oss-120b,cf:@cf/qwen/qwen3-30b-a3b-fp8 \
+            --n 30 \
+            --out "$OUT_DIR" \
+            --report "$REPORT_PATH"
+          echo "REPORT_PATH=$REPORT_PATH" >> "$GITHUB_ENV"
+          echo "REPORT_DATE=$REPORT_DATE" >> "$GITHUB_ENV"
+
+      - name: Compare to previous weekly report (drift check)
+        id: drift
+        continue-on-error: true
+        run: |
+          # Very small bash-only comparator: extract the aggregate
+          # reduction percentage from the new report and the most recent
+          # prior one, then flag if the delta moves more than 20 points
+          # in either direction. Not a rigorous statistical test — that
+          # would live in a proper diff tool; this is a tripwire.
+          NEW="$REPORT_PATH"
+          PREV=$(ls -1 docs/evals/weekly/*.md 2>/dev/null | grep -v "$REPORT_DATE" | sort | tail -n 1 || true)
+          if [ -z "$PREV" ]; then
+            echo "No prior weekly report; skipping drift check."
+            echo "drift=no-baseline" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          extract_mean() {
+            grep -oE "[0-9]+\.[0-9]+ → [0-9]+\.[0-9]+" "$1" \
+              | awk -F'→' '{ raw += $1; comp += $2; n += 1 } END { if (n>0) printf "%.2f %.2f %d\n", raw/n, comp/n, n; else print "0 0 0" }'
+          }
+          read NEW_RAW NEW_COMP NEW_N <<< $(extract_mean "$NEW")
+          read PREV_RAW PREV_COMP PREV_N <<< $(extract_mean "$PREV")
+          echo "new:  raw=$NEW_RAW compiled=$NEW_COMP cells=$NEW_N"
+          echo "prev: raw=$PREV_RAW compiled=$PREV_COMP cells=$PREV_N"
+          if [ "$NEW_N" = "0" ] || [ "$PREV_N" = "0" ]; then
+            echo "drift=unparseable" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          delta=$(awk -v a="$NEW_COMP" -v b="$PREV_COMP" 'BEGIN { printf "%.2f", (a-b) }')
+          abs_delta=$(awk -v d="$delta" 'BEGIN { if (d<0) d=-d; printf "%.2f", d }')
+          echo "Compiled-condition mean delta: $delta"
+          if awk -v d="$abs_delta" 'BEGIN { exit !(d > 0.5) }'; then
+            echo "drift=flagged" >> "$GITHUB_OUTPUT"
+            echo "drift_delta=$delta" >> "$GITHUB_OUTPUT"
+            echo "prev_report=$PREV" >> "$GITHUB_OUTPUT"
+          else
+            echo "drift=stable" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Commit weekly report
+        run: |
+          git config user.email "noreply@adastracomputing.com"
+          git config user.name "ahd-weekly-eval"
+          git add docs/evals/weekly/
+          if git diff --cached --quiet; then
+            echo "No report changes to commit."
+          else
+            git commit -m "docs(evals): weekly run ${{ env.REPORT_DATE }}" -m "Automated weekly eval against Cloudflare Workers AI OSS roster. See the report for per-cell numbers."
+            git push
+          fi
+
+      - name: Open drift issue if flagged
+        if: steps.drift.outputs.drift == 'flagged'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh issue create \
+            --title "Weekly eval drift detected (${{ env.REPORT_DATE }})" \
+            --label "drift" \
+            --body "$(cat <<EOF
+          The automated weekly eval on ${{ env.REPORT_DATE }} produced a
+          compiled-condition mean that moved more than 0.5 tells/page
+          from the previous weekly baseline.
+
+          - Delta: ${{ steps.drift.outputs.drift_delta }} tells/page
+          - New report: [docs/evals/weekly/${{ env.REPORT_DATE }}.md](./docs/evals/weekly/${{ env.REPORT_DATE }}.md)
+          - Previous baseline: ${{ steps.drift.outputs.prev_report }}
+
+          Possible causes, in likelihood order:
+          1. A model host updated default generation parameters or chat template
+          2. A serving-path quirk (new serving-tell candidate — see docs/SERVING_TELLS.md)
+          3. A legitimate shift in model behaviour since last run
+          4. A regression in AHD's compile output
+
+          Investigate by diffing the two reports' per-tell tables and
+          checking the run manifest for model version ids.
+          EOF
+          )"

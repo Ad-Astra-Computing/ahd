@@ -76,8 +76,12 @@ jobs:
           TARBALL="$(npm pack | tail -n 1)"
           echo "tarball=$TARBALL" >> "$GITHUB_OUTPUT"
 
-      - name: Publish to npm with provenance (OIDC, no token)
-        run: npm publish --access public --provenance
+      - name: Publish root + workspace plugins to npm with provenance
+        # --workspaces + --include-workspace-root publishes all three
+        # packages together: @adastracomputing/ahd (root), eslint-plugin-ahd,
+        # stylelint-plugin-ahd. Each gets its own provenance attestation
+        # tied to the same commit and workflow run.
+        run: npm publish --workspaces --include-workspace-root --access public --provenance
 
       - name: Extract version from tag
         id: version
