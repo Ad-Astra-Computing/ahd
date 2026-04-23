@@ -1,0 +1,88 @@
+# Tag-driven release workflow.
+#
+# Trigger: push a semver tag like v0.7.0. Everything else is a no-op.
+#
+# What runs:
+#   1. Full gate (tsc, tests, token validation) so a broken HEAD
+#      cannot ship by accident.
+#   2. Build the npm tarball from dist/.
+#   3. Publish to npm with --access public and --provenance so the
+#      resulting package carries an attestation linking it back to
+#      the exact commit and workflow run.
+#   4. Create a GitHub Release, attach the tarball, and generate
+#      release notes from commits since the previous tag.
+#
+# Prereqs, set once on the repo:
+#   - NPM_TOKEN secret: an npm automation token with publish rights
+#     on the @adastra scope. Scoped to publish only; no read-user.
+#   - id-token: write permission (granted below) for OIDC-based
+#     provenance attestations.
+#
+# Not wired (intentional): deploy, npm-tag routing (latest vs next),
+# post-publish smoke test. Add when we have a need.
+
+name: release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+permissions:
+  contents: write          # create the GitHub Release + attach artifact
+  id-token: write          # sign npm provenance attestation via OIDC
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout (with full history for release-note generation)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node and configure npm registry
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Typecheck
+        run: npx tsc --noEmit
+
+      - name: Test
+        run: npm test --silent
+
+      - name: Validate every style token against the schema
+        run: npx ahd validate-tokens
+
+      - name: Build (tsc -> dist/)
+        run: npm run build
+
+      - name: Pack tarball for the GitHub Release
+        run: npm pack
+
+      - name: Publish to npm with provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm publish --access public --provenance
+
+      - name: Extract version from tag
+        id: version
+        run: |
+          TAG="${GITHUB_REF#refs/tags/}"
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          echo "version=${TAG#v}" >> "$GITHUB_OUTPUT"
+
+      - name: Create GitHub Release and attach tarball
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "${{ steps.version.outputs.tag }}" \
+            "adastra-ahd-${{ steps.version.outputs.version }}.tgz" \
+            --title "${{ steps.version.outputs.tag }}" \
+            --generate-notes \
+            --verify-tag
