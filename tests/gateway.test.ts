@@ -29,11 +29,21 @@ describe("CF AI Gateway resolution", () => {
     );
   });
 
-  it("accepts a full URL override (for self-hosted gateways)", () => {
-    process.env.CF_AI_GATEWAY = "https://gw.example.com/v1/acc/gw";
+  it("accepts a full URL only when the host is gateway.ai.cloudflare.com", () => {
+    process.env.CF_AI_GATEWAY = "https://gateway.ai.cloudflare.com/v1/acc/gw";
     expect(cfGatewayUrl("anthropic")).toBe(
-      "https://gw.example.com/v1/acc/gw/anthropic",
+      "https://gateway.ai.cloudflare.com/v1/acc/gw/anthropic",
     );
+  });
+
+  it("rejects a full URL on a non-Cloudflare host (credential-exfil defence)", () => {
+    process.env.CF_AI_GATEWAY = "https://gw.example.com/v1/acc/gw";
+    expect(() => cfGatewayUrl("anthropic")).toThrow(/gateway\.ai\.cloudflare\.com/);
+  });
+
+  it("rejects a non-https URL (provider keys go through it)", () => {
+    process.env.CF_AI_GATEWAY = "http://gateway.ai.cloudflare.com/v1/acc/gw";
+    expect(() => cfGatewayUrl("anthropic")).toThrow(/https/);
   });
 
   it("rejects a bare account id without gateway id", () => {

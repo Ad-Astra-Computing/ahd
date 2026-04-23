@@ -1,0 +1,42 @@
+# npm pack uses .npmignore when present, or falls back to .gitignore,
+# or the package.json "files" allow-list when either of the above is
+# too broad. This file is a defence-in-depth layer on top of "files":
+# even if the allow-list regresses, runtime artifacts never ship.
+
+docs/critique-artifacts
+docs/critique-artifacts/**
+docs/evals
+docs/evals/**
+evals
+evals/**
+critiques
+critiques/**
+out
+out/**
+coverage
+coverage/**
+result
+tests
+tests/**
+.env
+.env.*
+!.env.example
+*.log
+.DS_Store
+
+# Nix + dev tooling
+flake.lock
+flake.nix
+.editorconfig
+.nvmrc
+
+# CI + repo meta — consumers don't need these
+.github
+.github/**
+packages/**/node_modules
+
+# TypeScript sources — dist/ carries the shipped artifacts
+src
+src/**
+tsconfig.json
+vitest.config.ts
