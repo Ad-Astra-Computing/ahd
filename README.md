@@ -16,21 +16,30 @@ Today's shipped scope covers both verticals. **Web UI end-to-end**: text-to-HTML
 
 ## Measured, controlled, published
 
-<img src="docs/artwork/slop-distribution.svg" alt="Measured slop-tell reduction by model, raw vs AHD-compiled, 21 April 2026" width="100%">
+<img src="docs/artwork/slop-distribution.svg" alt="Measured slop-tell reduction by model, raw vs AHD-compiled" width="100%">
 
-Ran `briefs/landing.yml` against five models on 21 April 2026, n=5 per cell, raw and compiled conditions differing only in the AHD system-prompt layer. Full report, manifest, prompts, attempted-vs-scored counts: [docs/evals/2026-04-21-swiss.md](docs/evals/2026-04-21-swiss.md).
+Ran `briefs/landing.yml` against **ten models, n=30 per cell, six hundred samples** on 22 April 2026. Raw and compiled conditions differ only in the AHD system-prompt layer. Three frontier cells used subscription CLIs (Claude Code, Codex, Gemini CLI); seven OSS cells used the Cloudflare Workers AI free tier. Full report, per-cell attempted/scored counts, per-tell frequency tables, run manifest: [docs/evals/2026-04-22-swiss-n30.md](docs/evals/2026-04-22-swiss-n30.md).
 
 | Model | Raw → compiled | Reduction | Notes |
 |---|---:|---:|---|
-| `claude-opus-4-7` | 1.20 → 0.00 | 100% | 5/5 scored, zero tells under compiled |
-| `cf:@cf/mistralai/mistral-small-3.1-24b-instruct` | 3.25 → 1.25 | 62% | 4/5 scored per cell; 1 extraction failure each |
-| `cf:@cf/meta/llama-4-scout-17b-16e-instruct` | 2.40 → 1.20 | 50% | 5/5 scored |
-| `cf:@cf/qwen/qwen2.5-coder-32b-instruct` | 2.80 → 2.80 | 0% | 5/5 scored; compiled prompt produced no movement |
-| `cf:@cf/meta/llama-3.3-70b-instruct-fp8-fast` | 0.40 → **1.00** | **−150%** | 5/5 scored; **regressed under compiled** |
+| `cf:@cf/openai/gpt-oss-120b` | 3.50 → 0.77 | **78.1%** | 30/30 scored; best reduction in the run |
+| `cf:@cf/mistralai/mistral-small-3.1-24b-instruct` | 3.47 → 1.30 | 62.5% | 30/30 scored |
+| `cf:@cf/moonshotai/kimi-k2.6` | 2.67 → 1.00 | 62.5% | 30/30 after a chat-template fix for thinking-mode; see [docs/SERVING_TELLS.md](docs/SERVING_TELLS.md) |
+| `gemini-3.1-pro-preview` (Gemini CLI) | 2.97 → 1.13 | 61.8% | 30/30 scored |
+| `claude-opus-4-7` (Claude Code CLI) | 1.80 → 0.73 | 59.3% | 30/30 scored |
+| `cf:@cf/google/gemma-4-26b-a4b-it` | 2.67 → 1.37 | 48.7% | 30/30 scored |
+| `cf:@cf/meta/llama-4-scout-17b-16e-instruct` | 2.17 → 1.40 | 35.4% | 30/30 scored |
+| `gpt-5.4` (Codex CLI) | 1.23 → 1.00 | 18.9% | 30/30; inside the Wilson interval, read as flat |
+| `cf:@cf/qwen/qwen3-30b-a3b-fp8` | 1.90 → 1.73 | 8.8% | 30/30; flat |
+| `cf:@cf/meta/llama-3.3-70b-instruct-fp8-fast` | 0.28 → **0.60** | **−117.5%** | 30/30; **regressed**, reproduces the 21 April cross-provider result |
 
-Three models moved in the direction the framework promises; one stayed put; one actively regressed. We publish this because a framework that only surfaces wins isn't worth using. With n=5 per cell the confidence intervals are wide — a follow-up n≥30 run is on the roadmap as a budget decision.
+Eight of ten cells move in the direction the framework promises. One flat, one regression. The top four cells span four model families and four serving paths (gpt-oss via CF, Mistral via CF, Claude via Claude Code CLI, Gemini via Gemini CLI), so the result is not a single-provider artefact. At n=30 the Wilson interval tightens from roughly ±35 points at n=5 to roughly ±18 points; the top four cells sit well outside that band.
 
-A partial vision-critic pass (21 of 48 screenshots, limited by Anthropic's 30k tok/min rate cap) found **only one vision-only rule fire** (`mesh-has-counterforce` on a single raw sample). Interpretation: the editorial-landing brief does not elicit the iridescent-blob / Corporate-Memphis / laptop-stock-photo failure modes the vision layer was built to catch; the source linter already covers the failure modes these models actually exhibit here. Full vision report: [docs/evals/2026-04-21-swiss-vision.md](docs/evals/2026-04-21-swiss-vision.md).
+The Llama 3.3 70B regression reproduces the same-direction result seen in the 21 April n=5 cross-provider run on two independent serving paths. The framework correctly reports that compiled does not help every model, and the 22 April run upgrades that from a single-n=5 signal to a multi-provider, n=30 finding.
+
+Scope: one brief, one token, one surface, source-linter only. External-validity passes (different-token-same-brief, different-brief-same-token, vision-critic coverage over the existing 600 samples) are queued. The 21 April cross-provider run with seven models is preserved at [docs/evals/2026-04-21-swiss-cross.md](docs/evals/2026-04-21-swiss-cross.md); the 21 April five-model narrow-roster run is at [docs/evals/2026-04-21-swiss.md](docs/evals/2026-04-21-swiss.md).
+
+A partial vision-critic pass in the earlier run (21 of 48 screenshots, limited by Anthropic's 30k tok/min rate cap at the time) found **only one vision-only rule fire** (`mesh-has-counterforce` on a single raw sample). Interpretation: the editorial-landing brief does not elicit the iridescent-blob / Corporate-Memphis / laptop-stock-photo failure modes the vision layer was built to catch; the source linter already covers the failure modes these models exhibit on this brief. Full vision report: [docs/evals/2026-04-21-swiss-vision.md](docs/evals/2026-04-21-swiss-vision.md).
 
 A rendered raw vs compiled pair from the Mistral text run, same brief, same seed:
 
