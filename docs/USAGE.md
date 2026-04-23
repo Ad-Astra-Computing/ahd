@@ -28,7 +28,7 @@ This is the cheapest integration. No model calls, no API keys. You treat AHD the
 ### Install
 
 ```bash
-npm install --save-dev @adastra/ahd
+npm install --save-dev @adastracomputing/ahd
 ```
 
 ### Run it locally

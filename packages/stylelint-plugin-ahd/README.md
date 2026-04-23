@@ -1,6 +1,6 @@
 # stylelint-plugin-ahd
 
-Stylelint plugin that enforces the CSS-side rules of the AHD slop taxonomy. Wraps the shared rule engine in [@adastra/ahd](https://www.npmjs.com/package/@adastra/ahd).
+Stylelint plugin that enforces the CSS-side rules of the AHD slop taxonomy. Wraps the shared rule engine in [@adastracomputing/ahd](https://www.npmjs.com/package/@adastracomputing/ahd).
 
 ## Install
 

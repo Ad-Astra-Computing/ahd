@@ -1,5 +1,5 @@
 {
-  "name": "@adastra/ahd",
+  "name": "@adastracomputing/ahd",
   "version": "0.5.0-beta.1",
   "description": "Artificial Human Design — a brief compiler, linter and style-token library that forces LLMs out of design slop.",
   "license": "SEE LICENSE IN LICENSE",
