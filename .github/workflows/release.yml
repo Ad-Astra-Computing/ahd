@@ -81,6 +81,15 @@ jobs:
         # packages together: @adastracomputing/ahd (root), eslint-plugin-ahd,
         # stylelint-plugin-ahd. Each gets its own provenance attestation
         # tied to the same commit and workflow run.
+        #
+        # TEMPORARY: bootstrap token via NPM_TOKEN until Trusted Publisher
+        # config is re-added on the published packages (TP was wiped when
+        # @adastracomputing/ahd got unpublished). After the next successful
+        # publish, re-add TP on all three package pages, then drop
+        # NODE_AUTH_TOKEN from this step and the NPM_TOKEN secret from the
+        # repo. Tracked in the current session's to-do.
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npm publish --workspaces --include-workspace-root --access public --provenance
 
       - name: Extract version from tag
