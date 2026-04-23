@@ -77,20 +77,26 @@ jobs:
           echo "tarball=$TARBALL" >> "$GITHUB_OUTPUT"
 
       - name: Publish root + workspace plugins to npm with provenance
-        # --workspaces + --include-workspace-root publishes all three
-        # packages together: @adastracomputing/ahd (root), eslint-plugin-ahd,
-        # stylelint-plugin-ahd. Each gets its own provenance attestation
-        # tied to the same commit and workflow run.
+        # Serialize publishes: npm returns 409 'Failed to save packument'
+        # when a second publish PUT races the first one's registry
+        # processing. Loop over each package and sleep between them so
+        # the registry is fully settled before the next publish lands.
         #
         # TEMPORARY: bootstrap token via NPM_TOKEN until Trusted Publisher
         # config is re-added on the published packages (TP was wiped when
         # @adastracomputing/ahd got unpublished). After the next successful
         # publish, re-add TP on all three package pages, then drop
-        # NODE_AUTH_TOKEN from this step and the NPM_TOKEN secret from the
-        # repo. Tracked in the current session's to-do.
+        # NODE_AUTH_TOKEN from this step and the NPM_TOKEN secret.
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npm publish --workspaces --include-workspace-root --access public --provenance
+        run: |
+          set -e
+          for pkg_dir in . packages/eslint-plugin-ahd packages/stylelint-plugin-ahd; do
+            echo "::group::publish $pkg_dir"
+            (cd "$pkg_dir" && npm publish --access public --provenance)
+            echo "::endgroup::"
+            sleep 5
+          done
 
       - name: Extract version from tag
         id: version
