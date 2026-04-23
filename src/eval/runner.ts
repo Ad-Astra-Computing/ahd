@@ -3,6 +3,7 @@ import { existsSync } from "node:fs";
 import { join, extname } from "node:path";
 import { lintSource } from "../lint/engine.js";
 import { rules } from "../lint/rules/index.js";
+import { VISION_RULES } from "../critique/critic.js";
 import type {
   CellCounts,
   Condition,
@@ -163,7 +164,7 @@ export function buildReport(token: string, cells: EvalCell[]): EvalReport {
       `Scoring runs the deterministic AHD linter (${rules.length} source-level rules) over every sample that passes a basic HTML sanity check.`,
       `Counts reported per cell: attempted (runs initiated) / errored (API / runtime errors) / extractionFailed (response contained no usable HTML) / scored (linted). A large gap between attempted and scored is a signal that the model is struggling with the instruction, not that it passed the taxonomy.`,
       `Raw condition: the brief is expanded as plain prose (intent + audience + surfaces + mustInclude + mustAvoid) with no AHD system prompt, no style token, no forbidden list. Compiled condition: same brief plus the AHD-compiled system prompt. The only thing that differs between conditions is the AHD intervention.`,
-      `Vision-only tells (9 rules in the critic) are not scored in this pipeline; run the critic on rendered screenshots for full taxonomy coverage.`,
+      `Vision-only tells (${VISION_RULES.length} rules in the critic) are not scored in this pipeline; run the critic on rendered screenshots for full taxonomy coverage.`,
       `Tells-per-page is a proxy metric: a thin page has little surface for rules to fire against. Read the Δ alongside the actual rendered HTML, not in isolation.`,
       `Model versions change. See the run manifest for exact canonical model ids.`,
     ],
