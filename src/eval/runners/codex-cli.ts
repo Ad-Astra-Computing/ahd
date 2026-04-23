@@ -1,5 +1,6 @@
 import { spawn } from "node:child_process";
-import { mkdtemp, rm } from "node:fs/promises";
+import { mkdtemp, mkdir, rm, copyFile, chmod } from "node:fs/promises";
+import { existsSync } from "node:fs";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
 import type {
@@ -67,21 +68,23 @@ export function codexCliRunner(options: CodexCliOptions = {}): ModelRunner {
       const minimalEnv: NodeJS.ProcessEnv = {
         PATH: process.env.PATH ?? "/usr/bin:/bin",
         HOME: workdir,
-        // Codex stores auth under ~/.codex; point HOME at the workdir
-        // and symlink .codex in so auth still works without leaking
-        // the rest of HOME.
       };
       try {
+        // Bring only auth.json into the workdir's fake ~/.codex —
+        // NOT history.json / history.jsonl / logs / cache / config.
+        // A prompt-injected tool call can't reach the user's prior
+        // Codex sessions or configuration this way. The auth token
+        // itself isn't newly exposed: Codex is already using it on
+        // the user's behalf for the inference calls we asked it to
+        // make.
         if (process.env.HOME) {
-          const { symlink } = await import("node:fs/promises");
-          try {
-            await symlink(
-              join(process.env.HOME, ".codex"),
-              join(workdir, ".codex"),
-            );
-          } catch {
-            // no-op if .codex doesn't exist; auth will fail and the
-            // outer runner will surface that.
+          const realAuth = join(process.env.HOME, ".codex", "auth.json");
+          if (existsSync(realAuth)) {
+            const fakeCodex = join(workdir, ".codex");
+            await mkdir(fakeCodex, { recursive: true });
+            const fakeAuth = join(fakeCodex, "auth.json");
+            await copyFile(realAuth, fakeAuth);
+            await chmod(fakeAuth, 0o600);
           }
         }
 

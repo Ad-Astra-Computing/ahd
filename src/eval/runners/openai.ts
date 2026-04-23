@@ -9,6 +9,16 @@ export function openaiRunner(options: {
   apiKey: string;
   model?: string;
   baseURL?: string;
+  /**
+   * Vendor-specific body fields spread into the chat/completions
+   * payload. Used to send model-family-specific knobs that aren't
+   * in the OpenAI schema (e.g. Cloudflare Workers AI's
+   * `chat_template_kwargs: { thinking: false }` for Kimi k2.6 to
+   * prevent reasoning-mode from eating the entire output budget).
+   * The OpenAI-compatible endpoint on CF forwards unknown top-level
+   * fields to the underlying model as extra generation params.
+   */
+  extraBody?: Record<string, unknown>;
 }): ModelRunner {
   const model = options.model ?? "gpt-5";
   const baseURL = options.baseURL ?? "https://api.openai.com/v1";
@@ -32,6 +42,7 @@ export function openaiRunner(options: {
           messages,
           max_completion_tokens: input.maxTokens ?? 4096,
           seed: input.seed,
+          ...(options.extraBody ?? {}),
         }),
       });
       if (!res.ok) {
