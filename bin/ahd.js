@@ -15,6 +15,7 @@ import { VISION_RULES, anthropicVisionCritic, mockCritic } from "../dist/critiqu
 import { runCritiqueOnDir, formatCritiqueReport } from "../dist/critique/runner.js";
 import { runLiveImageEval, formatImageEvalReport } from "../dist/eval/image-live.js";
 import { WORKERS_AI_IMAGE_DEFAULTS } from "../dist/eval/runners/workers-ai-image.js";
+import { runTry, runTryImage } from "../dist/try.js";
 
 const ROOT = resolve(new URL("..", import.meta.url).pathname);
 const TOKENS = resolve(ROOT, "tokens");
@@ -153,6 +154,39 @@ async function main() {
       return;
     }
 
+    case "try": {
+      const briefPath = rest[0];
+      if (!briefPath)
+        exit(
+          "usage: ahd try <brief.yml> [--token <id>] [--model <spec>] [--out <dir>] [--no-lint]",
+        );
+      await runTry({
+        tokensDir: TOKENS,
+        briefPath,
+        tokenOverride: flag(rest, "--token"),
+        modelSpec: flag(rest, "--model"),
+        outDir: flag(rest, "--out"),
+        skipLint: rest.includes("--no-lint"),
+      });
+      return;
+    }
+
+    case "try-image": {
+      const briefPath = rest[0];
+      if (!briefPath)
+        exit(
+          "usage: ahd try-image <brief.yml> [--token <id>] [--model <spec>] [--out <dir>]",
+        );
+      await runTryImage({
+        tokensDir: TOKENS,
+        briefPath,
+        tokenOverride: flag(rest, "--token"),
+        modelSpec: flag(rest, "--model"),
+        outDir: flag(rest, "--out"),
+      });
+      return;
+    }
+
     case "eval-image": {
       const token = rest[0];
       const briefPath = flag(rest, "--brief");
@@ -239,6 +273,8 @@ commands:
   ahd eval-image <token> --brief b.yml [--models <cfimg:@cf/...,...>] [--n 3] [--report r.md]
                                         run a brief through live image-generation models, score via vision critic
   ahd mcp-serve                         run the AHD MCP server over stdio
+  ahd try <brief.yml> [--model <spec>]  demo: generate one HTML page (default mock-swiss offline, or CF OSS if keys are set)
+  ahd try-image <brief.yml>             demo: generate one image via cfimg:<model> (needs CF_API_TOKEN + CF_ACCOUNT_ID)
   ahd critique <token> [--samples d] [--critic anthropic|mock] [--max n] [--out dir] [--report r.md]
                                         render each sample, run the vision critic on the screenshot
 
