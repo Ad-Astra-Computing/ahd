@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+# AHD pre-commit hook.
+#
+# Runs the same checks CI does: typecheck, tests, token validation.
+# Tracked in-repo so every maintainer gets the same gate without
+# installing husky or pre-commit.com. Enable once per clone with:
+#
+#   git config core.hooksPath .githooks
+#
+# Skip in emergencies with `git commit --no-verify`, but don't.
+
+set -euo pipefail
+
+# Only check if there are staged changes that could affect correctness.
+# If the only staged paths are pure-markdown docs with no runtime impact,
+# skip the expensive checks. Adjust the regex if new source dirs land.
+STAGED="$(git diff --cached --name-only --diff-filter=ACMR)"
+if [ -z "$STAGED" ]; then
+  exit 0
+fi
+
+NEEDS_CHECK=0
+while IFS= read -r path; do
+  case "$path" in
+    src/*|bin/*|tests/*|tokens/*|briefs/*|package.json|tsconfig.json|*.ts|*.js|*.mjs|*.cjs)
+      NEEDS_CHECK=1 ;;
+  esac
+done <<< "$STAGED"
+
+if [ "$NEEDS_CHECK" -eq 0 ]; then
+  exit 0
+fi
+
+echo "ahd pre-commit · running gate..."
+
+echo "  [1/3] tsc --noEmit"
+npx tsc --noEmit
+
+echo "  [2/3] npm test"
+npm test --silent
+
+echo "  [3/3] ahd validate-tokens"
+node ./bin/ahd.js validate-tokens
+
+echo "ahd pre-commit · passed"

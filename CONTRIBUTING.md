@@ -35,6 +35,53 @@ We publish measured runs. If you have budget and keys, you can add to the record
 - Commit the run manifest (`evals/<token>/manifest.json`) alongside the report if the raw samples are not also committed.
 - Name every caveat in the report. Negative results are first-class.
 
+#### Submission requirements for contributor-run evals
+
+Because an eval report is a factual claim about how a model behaved, a contributed report must be independently verifiable without the maintainer having to trust the contributor. A PR that does not meet these requirements will be asked for the missing pieces before review.
+
+**1. Submit the full manifest, not just rendered samples.**
+The output directory from `ahd eval-live` (or `ahd eval-image`) is the unit of submission. That means, per cell:
+
+- `manifest.json` with canonical model identifier, exact serving path (e.g. `https://api.anthropic.com/v1/messages`, `@cf/<org>/<model>` on Workers AI), brief path, token ID, seed, temperature, `max_completion_tokens`, timestamp, CLI version, and runner version.
+- The raw per-sample JSON envelopes (`raw/NN.json`, `compiled/NN.json`) containing attempted-byte count, extracted HTML, finish reason, token usage, and any provider metadata the runner captured. HTML alone is not enough; the envelope is what proves the sample came from the model, not a text editor.
+- The compiled prompt bytes (`compiled-prompt.txt` or equivalent) exactly as sent to the provider.
+
+**2. Include provider request-IDs when the provider exposes one.**
+The runner records these automatically when the provider returns them. Keep them in the manifest:
+
+- Anthropic: `request-id` response header.
+- OpenAI / OpenAI-compatible (including Cloudflare Workers AI OpenAI endpoint): `x-request-id`.
+- Cloudflare Workers AI native endpoint: `cf-ray`.
+- Google / Vertex: `x-guploader-uploadid` or `x-goog-api-client-request-id` where present.
+
+A maintainer can use these to verify through the provider that the request actually occurred, without needing to re-run the eval. This is the single strongest signal we accept.
+
+**3. Submit n ≥ 3 per cell, same prompt, different seeds.**
+A single sample per cell is not submittable. A stochastic model returning identical or near-identical output across three different seeds is the canonical fabrication / cherry-pick fingerprint. Running at `n ≥ 3` minimum makes that fingerprint visible without expensive review.
+
+**4. Do not post-process the samples.**
+Do not reformat HTML, strip whitespace, pretty-print, or re-wrap. The envelope should reflect the model's raw output. If the runner's extractor produced the HTML from a larger response, keep the full `raw_response` field in the envelope.
+
+**5. Report negative results with the same detail as positive ones.**
+A cell where compiled lost to raw, or where extraction failed, or where the model produced zero-byte output, is first-class data. Don't drop cells to make the report look cleaner. Name the failure mode; a cell that failed for a serving-layer reason (see `docs/SERVING_TELLS.md`) is worth reporting for that reason alone.
+
+**6. Include a short runbook.**
+Name every environment detail a re-runner would need: CLI versions, model version strings, any region or endpoint pinning, any feature flags, and the exact `ahd eval-live` invocation including flags. One shell block is enough. If the report's claims depend on running the eval in a specific way, that way must be written down.
+
+#### What happens on review
+
+- The maintainer spot-checks two or three randomly-selected samples by re-running the manifest against the same provider, using the runbook. The goal is distributional agreement, not bit-exact reproduction; stochastic sampling means output will differ. If the re-run produces a tell-count meaningfully outside the submitted distribution, we'll ask for clarification.
+- If the provider exposes a request-log API and the contributor provided request-IDs, the maintainer may use those to confirm the requests occurred.
+- We don't automate re-run-on-PR in CI. That would need maintainer-held keys and budget, and we'd rather spend both on new eval axes than on PR verification. The manifest-first policy above is designed to make fabrication costly enough that good-faith contribution is the cheaper path.
+
+#### What we won't accept
+
+- A report that includes only rendered HTML or screenshots without the envelope manifest.
+- A report with `n = 1` per cell.
+- A report that drops the cells where compiled lost.
+- A report from a provider or model version the runner cannot address with a canonical identifier.
+- "Summary" reports that elide attempted-vs-scored counts. Every column in the `ahd eval-live` report table has a reason to be there; don't remove any.
+
 ## Developer Certificate of Origin
 
 AHD uses the [Developer Certificate of Origin 1.1](https://developercertificate.org/). By signing off your commits, you certify that you wrote the code or otherwise have the right to submit it under the project's licence.
@@ -57,6 +104,14 @@ npm test
 ```
 
 Tests must pass. `npx tsc --noEmit` must pass. `npx ahd validate-tokens` must pass.
+
+The repo ships a pre-commit hook that runs these checks automatically. Enable it once per clone:
+
+```bash
+git config core.hooksPath .githooks
+```
+
+After that every `git commit` runs `tsc --noEmit`, `npm test`, and `ahd validate-tokens` before the commit lands. Skip in emergencies with `git commit --no-verify`, but the gate exists because every check has caught at least one real defect; bypassing it is a last resort, not a shortcut.
 
 For live eval work, put keys in `.env` (already gitignored). Never commit a key. Never paste one into a PR description or issue.
 

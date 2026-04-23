@@ -31,7 +31,7 @@ Two corpora live under `tests/fixtures/`:
 - `slop/` — known-bad landing pages curated from public sources. Expected to trip a documented set of rules per fixture.
 - `clean/` — canonical-good pages (a Müller-Brockmann-flavoured landing, a Gumroad-era page, a post-digital terminal page). Expected to pass with zero violations.
 
-Each fixture ships with a sibling `.expected.json` listing the rule ids it must hit. Tests fail if the linter over-reports (false positives on `clean/`) or under-reports (false negatives on `slop/`). This is how the 38-tell taxonomy graduates from a document into a test oracle.
+Each fixture ships with a sibling `.expected.json` listing the rule ids it must hit. Tests fail if the linter over-reports (false positives on `clean/`) or under-reports (false negatives on `slop/`). This is how the 39-tell taxonomy graduates from a document into a test oracle.
 
 ## Tier 3 — empirical eval (v0.2 roadmap)
 
@@ -43,7 +43,7 @@ Shape:
 ahd eval <token> --models claude,gpt,gemini,llama --n 30
 ```
 
-For each model, two conditions: **raw** (the unadorned user brief) and **compiled** (the same brief run through `ahd compile`). N samples per cell. Each sample scored against the 38-tell taxonomy using the Tier-2 linter for source-level rules and a vision-critic LLM call for rules that can only be judged from the rendered output.
+For each model, two conditions: **raw** (the unadorned user brief) and **compiled** (the same brief run through `ahd compile`). N samples per cell. Each sample scored against the 39-tell taxonomy using the Tier-2 linter for source-level rules and a vision-critic LLM call for rules that can only be judged from the rendered output.
 
 Metrics reported:
 
@@ -62,7 +62,7 @@ Caveats baked in from day one:
 
 ## What is not tested
 
-- Visual aesthetics beyond the 38 tells. "Does it look nice" is a human call. AHD narrows the answer; it does not deliver it.
+- Visual aesthetics beyond the 39 tells. "Does it look nice" is a human call. AHD narrows the answer; it does not deliver it.
 - Brand alignment. Every token is a design direction, not a specific brand. Brand fit remains a human review gate.
 - Copy quality beyond banned phrases. The framework can forbid "build the future of"; it cannot write a good headline.
 

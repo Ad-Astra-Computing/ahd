@@ -13,9 +13,9 @@ Four pieces, one purpose:
 
 ## What's shipped today
 
-- **Web UI, end-to-end.** Brief compiler → compiled prompts → text-to-HTML runners (Anthropic Claude, OpenAI GPT, Google Gemini, and OSS models via Cloudflare Workers AI) → Playwright screenshots → source linter (28 rules) + vision critic (9 rules) → per-cell reports. Measured run: [docs/evals/2026-04-21-swiss.md](docs/evals/2026-04-21-swiss.md).
+- **Web UI, end-to-end.** Brief compiler → compiled prompts → text-to-HTML runners (Anthropic Claude, OpenAI GPT, Google Gemini, and OSS models via Cloudflare Workers AI) → Playwright screenshots → source linter (38 rules) + vision critic (14 rules) → per-cell reports. Measured run: [docs/evals/2026-04-22-swiss-n30.md](docs/evals/2026-04-22-swiss-n30.md).
 - **Graphic-direction tokens.** Memphis Clash, Bauhaus Revival, Heisei Retro, Monochrome Editorial exist and validate; their prompt fragments anchor illustration and identity work, not only web.
-- **Illustration tells in the taxonomy.** Corporate Memphis, AI illustration with subsurface-scatter glow, iridescent 3D blobs, stock team-at-laptop photography, monoline default icon sets — five of the 38 rules are graphic / illustration tells, checked by the vision critic.
+- **Illustration tells in the taxonomy.** Corporate Memphis, AI illustration with subsurface-scatter glow, iridescent 3D blobs, stock team-at-laptop photography, monoline default icon sets, seven of the 39 taxonomy entries are graphic / illustration tells, checked by the vision critic.
 - **Image-agnostic vision critic.** Accepts any rendered PNG, so it already works on generated illustration or ad creative — not only on rendered HTML.
 
 ## What's shipped for image generation
@@ -23,7 +23,7 @@ Four pieces, one purpose:
 - **Image-generation runner** for Cloudflare Workers AI image models via `cfimg:<@cf/vendor/model>` specs. Ships today with FLUX.1 schnell, SDXL Lightning, SDXL base, and DreamShaper.
 - **Image-first eval pipeline.** `ahd eval-image <token> --brief <brief.yml> --models <cfimg-specs> --n N` saves generated PNGs directly (no HTML intermediary) and scores each with the vision critic against the taxonomy's illustration and graphic tells. `--critic mock` runs offline; `--critic anthropic` runs live with `ANTHROPIC_API_KEY`.
 - **SVG / vector linter.** Three source-level rules (`ahd/svg/no-uniform-stroke`, `ahd/svg/palette-bounds`, `ahd/svg/no-perfect-symmetry`) score SVG output alongside HTML/CSS. The engine runs them automatically when it sees a `<svg>` in the input.
-- **Image-specific vision rules.** Four additions to the vision critic: `ahd/image/no-malformed-anatomy`, `ahd/image/no-midjourney-face-symmetry`, `ahd/image/no-decorative-cursive-in-render`, `ahd/image/no-stock-diversity-casting`. Total vision ruleset is thirteen.
+- **Image-specific vision rules.** Four additions to the vision critic: `ahd/image/no-malformed-anatomy`, `ahd/image/no-midjourney-face-symmetry`, `ahd/image/no-decorative-cursive-in-render`, `ahd/image/no-stock-diversity-casting`. Total vision ruleset is fourteen.
 - **Image-surface style tokens.** `editorial-illustration` and `ad-creative-collision` ship authored for image prompts, not web layouts. Both carry `compileImagePrompt` fragments so the compiler emits a positive + negative prompt pair rather than an HTML system prompt.
 
 Measured run published 21 April 2026: see [2026-04-21-editorial-image.md](./evals/2026-04-21-editorial-image.md). FLUX schnell dropped 50% of vision tells under the compiled prompt, Corporate Memphis fires went from 67% of raw samples to 0% compiled; SDXL Lightning ignored the negative entirely. Both results are in the report.
@@ -69,7 +69,7 @@ We promise:
 
 - An honest, versioned taxonomy that spans web, graphic and illustration surfaces.
 - A deterministic source-level linter covering every taxonomy entry that can be decided from code: 28 rules for HTML/CSS and 3 for SVG, with more source-level coverage of image-generation output planned as image-specific formats are added.
-- A vision-critic pipeline (13 rules) that works on any rendered image — web screenshot or generated illustration.
+- A vision-critic pipeline (14 rules) that works on any rendered image, web screenshot or generated illustration.
 - An eval harness that publishes attempted / extracted / scored counts, canonical model ids, per-model deltas — including negative results. Runs today for text-to-HTML (`ahd eval-live`) and for image generation (`ahd eval-image`).
 - Style tokens that declare their forbidden lists, required quirks and references publicly, across both web and image surfaces.
 
