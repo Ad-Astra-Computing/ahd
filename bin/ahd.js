@@ -14,6 +14,9 @@ import { runEval, formatEvalReport } from "../dist/eval/runner.js";
 import { runLiveEval } from "../dist/eval/live.js";
 import { runStdioServer } from "../dist/mcp/server.js";
 import { VISION_RULES, anthropicVisionCritic, mockCritic } from "../dist/critique/critic.js";
+import { resolveCritic } from "../dist/critique/critics/index.js";
+import { renderBanner } from "../dist/cli/banner.js";
+import { COMMAND_HELP, resolveCommandHelp, argsRequestHelp } from "../dist/cli/help.js";
 import { runCritiqueOnDir, formatCritiqueReport } from "../dist/critique/runner.js";
 import { renderUrlToPng, fileToBase64 } from "../dist/critique/screenshot.js";
 import { auditMobile, formatMobileReport } from "../dist/mobile/audit.js";
@@ -25,6 +28,24 @@ const ROOT = resolve(new URL("..", import.meta.url).pathname);
 const TOKENS = resolve(ROOT, "tokens");
 
 const [, , cmd, ...rest] = process.argv;
+
+// `ahd help <cmd>` and `ahd <cmd> --help` / `-h` both route here.
+// Map + resolution logic lives in src/cli/help.ts so it is
+// unit-testable without spawning the CLI.
+if (cmd === "help") {
+  const r = resolveCommandHelp(rest[0]);
+  if (r.ok) {
+    console.log(r.text);
+    process.exit(0);
+  } else {
+    console.error(r.error);
+    process.exit(2);
+  }
+}
+if (cmd && COMMAND_HELP[cmd] && argsRequestHelp(rest)) {
+  console.log(COMMAND_HELP[cmd]);
+  process.exit(0);
+}
 
 async function main() {
   switch (cmd) {
@@ -89,10 +110,37 @@ async function main() {
       // explicit via --whole-site. Single-file `ahd lint page.html` runs
       // per-file rules only so normal invocations don't false-fire.
       const wholeSiteMode = rest.includes("--whole-site") || !!rootFlag;
-      const files = rest
+      // --allow-source-only-spa acknowledges the operator has read the
+      // SPA-shell note: source lint can't see what JS renders, so a
+      // "clean" result on a shell document is a source-only pass, not
+      // a full design audit. Without this flag, the run still succeeds
+      // (the rule is info-level) but we annotate the summary so
+      // downstream badge issuers can downgrade accordingly.
+      const allowSourceOnlySpa = rest.includes("--allow-source-only-spa");
+      const explicitFiles = rest
         .filter((a, i) => !a.startsWith("--") && rest[i - 1] !== "--config" && rest[i - 1] !== "--root");
+      // --whole-site walks the root (or cwd when --root is omitted)
+      // and lints every .html / .css / .svg found. Combine-safely
+      // with explicit args: explicit paths are always included, any
+      // duplicates deduped against the walk. If neither is given,
+      // bail with the usage message.
+      let files = explicitFiles;
+      if (rest.includes("--whole-site")) {
+        const walkRoot = rootFlag ? resolve(rootFlag) : process.cwd();
+        const walked = await walkSiteFiles(walkRoot);
+        const seen = new Set(files.map((f) => resolve(f)));
+        for (const w of walked) {
+          if (!seen.has(w)) {
+            files.push(w);
+            seen.add(w);
+          }
+        }
+        if (files.length === 0) {
+          exit(`ahd lint --whole-site: no .html / .css / .svg files under ${walkRoot}`);
+        }
+      }
       if (files.length === 0) {
-        exit("usage: ahd lint <file.html|file.css> [...] [--config <path>] [--json] [--root <dist>] [--whole-site]\n  At least one file must be provided.");
+        exit("usage: ahd lint <file.html|file.css> [...] [--config <path>] [--json] [--root <dist>] [--whole-site] [--allow-source-only-spa]\n  Pass at least one file, or use --whole-site with --root to lint a tree.");
       }
       const configPath = configFlag ?? (await findProjectConfig(process.cwd()));
       const config = configPath ? await loadConfig(configPath) : undefined;
@@ -117,6 +165,11 @@ async function main() {
       // broken-links against callers who only passed one page.
       const crossRules = wholeSiteMode ? undefined : [];
       const merged = lintSources(inputs, undefined, crossRules, config);
+      const spaShellHit = merged.violations.some(
+        (v) => v.ruleId === "ahd/spa-shell-detected",
+      );
+      const sourceOnlySpa = spaShellHit;
+      const badge = sourceOnlySpa ? "source-only (SPA)" : "full";
       if (jsonMode) {
         const bySev = { error: 0, warn: 0, info: 0 };
         for (const v of merged.violations) bySev[v.severity]++;
@@ -131,6 +184,9 @@ async function main() {
               warn: bySev.warn,
               info: bySev.info,
               files: merged.filesLinted,
+              badge,
+              sourceOnlySpa,
+              allowSourceOnlySpa,
             },
             null,
             2,
@@ -144,6 +200,17 @@ async function main() {
           );
           for (const o of merged.overrides) {
             console.log(`  ${o.severity.padEnd(5)} ${o.ruleId}\n    reason: ${o.reason}`);
+          }
+        }
+        if (sourceOnlySpa) {
+          if (allowSourceOnlySpa) {
+            console.log(
+              `\nbadge: source-only (SPA) · operator acknowledged via --allow-source-only-spa`,
+            );
+          } else {
+            console.log(
+              `\nbadge: source-only (SPA) · this result does not cover JS-rendered design. Run \`ahd critique <url>\` for a full audit, or pass --allow-source-only-spa to acknowledge.`,
+            );
           }
         }
       }
@@ -258,23 +325,19 @@ async function main() {
       const n = parseInt(flag(rest, "--n") ?? "3", 10);
       const outDir = flag(rest, "--out") ?? "evals";
       const reportFile = flag(rest, "--report");
-      const criticChoice = flag(rest, "--critic") ?? (process.env.ANTHROPIC_API_KEY ? "anthropic" : "mock");
+      const criticChoice = flag(rest, "--critic") ?? "claude-code";
       if (!token || !briefPath)
         exit(
-          "usage: ahd eval-image <token> --brief <brief.yml> [--models <cfimg:@cf/...,...>] [--n <count>] [--critic anthropic|mock] [--out <dir>] [--report <file.md>]",
+          "usage: ahd eval-image <token> --brief <brief.yml> [--models <cfimg:@cf/...,...>] [--n <count>] [--critic claude-code|anthropic|mock] [--out <dir>] [--report <file.md>]",
         );
-      if (criticChoice !== "anthropic" && criticChoice !== "mock") {
-        exit("--critic must be 'anthropic' or 'mock'");
+      let criticImpl;
+      try {
+        criticImpl = resolveCritic(criticChoice, {
+          anthropicModel: process.env.AHD_VISION_MODEL ?? "claude-haiku-4-5-20251001",
+        });
+      } catch (err) {
+        exit(err instanceof Error ? err.message : String(err));
       }
-      if (criticChoice === "anthropic" && !process.env.ANTHROPIC_API_KEY) {
-        exit("--critic anthropic requires ANTHROPIC_API_KEY; pass --critic mock for offline scoring");
-      }
-      const criticImpl = criticChoice === "mock"
-        ? mockCritic({})
-        : anthropicVisionCritic({
-            apiKey: process.env.ANTHROPIC_API_KEY,
-            model: process.env.AHD_VISION_MODEL ?? "claude-haiku-4-5-20251001",
-          });
       const models = modelsCsv
         ? modelsCsv.split(",").map((s) => s.trim()).filter(Boolean)
         : WORKERS_AI_IMAGE_DEFAULTS.slice(0, 2).map((m) => `cfimg:${m}`);
@@ -302,19 +365,17 @@ async function main() {
       const samplesDir = flag(rest, "--samples") ?? "evals";
       const outDir = flag(rest, "--out") ?? "critiques";
       const reportFile = flag(rest, "--report");
-      const critic = flag(rest, "--critic") ?? "anthropic";
+      const critic = flag(rest, "--critic") ?? "claude-code";
       const max = parseInt(flag(rest, "--max") ?? "0", 10);
       if (!token)
         exit(
-          "usage: ahd critique <token> [--samples <dir>] [--out <dir>] [--critic anthropic|mock] [--max <n>] [--report <file.md>]",
+          "usage: ahd critique <token> [--samples <dir>] [--out <dir>] [--critic claude-code|anthropic|mock] [--max <n>] [--report <file.md>]",
         );
       let criticImpl;
-      if (critic === "mock") {
-        criticImpl = mockCritic({});
-      } else {
-        const key = process.env.ANTHROPIC_API_KEY;
-        if (!key) exit("ANTHROPIC_API_KEY is not set (needed for --critic anthropic)");
-        criticImpl = anthropicVisionCritic({ apiKey: key });
+      try {
+        criticImpl = resolveCritic(critic, {});
+      } catch (err) {
+        exit(err instanceof Error ? err.message : String(err));
       }
       await mkdir(outDir, { recursive: true });
       const report = await runCritiqueOnDir({
@@ -337,21 +398,19 @@ async function main() {
     case "critique-url": {
       const url = rest[0];
       const token = flag(rest, "--token") ?? "swiss-editorial";
-      const critic = flag(rest, "--critic") ?? "anthropic";
+      const critic = flag(rest, "--critic") ?? "claude-code";
       const outPath = flag(rest, "--out") ?? "critique-url.json";
       const shotPath = flag(rest, "--screenshot") ?? "critique-url.png";
       const allowUnsafeUrl = rest.includes("--allow-unsafe-url");
       if (!url || !/^https?:\/\//.test(url))
         exit(
-          "usage: ahd critique-url <url> [--token <id>] [--critic anthropic|mock] [--out <file.json>] [--screenshot <file.png>] [--allow-unsafe-url]",
+          "usage: ahd critique-url <url> [--token <id>] [--critic claude-code|anthropic|mock] [--out <file.json>] [--screenshot <file.png>] [--allow-unsafe-url]",
         );
       let criticImpl;
-      if (critic === "mock") {
-        criticImpl = mockCritic({});
-      } else {
-        const key = process.env.ANTHROPIC_API_KEY;
-        if (!key) exit("ANTHROPIC_API_KEY is not set (needed for --critic anthropic)");
-        criticImpl = anthropicVisionCritic({ apiKey: key });
+      try {
+        criticImpl = resolveCritic(critic, {});
+      } catch (err) {
+        exit(err instanceof Error ? err.message : String(err));
       }
       console.log(`rendering ${url} → ${shotPath}`);
       try {
@@ -435,14 +494,16 @@ async function main() {
     }
 
     default:
-      console.log(`ahd · Artificial Human Design
+      console.log(`${renderBanner()}ahd · Artificial Human Design
 
 commands:
+  ahd help <cmd>                        per-command help (or: ahd <cmd> --help)
   ahd list                              list every style token
   ahd show <id>                         print a style token as JSON
   ahd validate-tokens                   validate every token against the schema
   ahd compile <brief.yml> [--out d]     compile a brief into per-model prompts + spec.json
-  ahd lint <file.html|css> [...]        run the slop linter (34 source-level rules)
+  ahd lint <file.html|css|svg> [...]    run the slop linter (38 source-level rules: 35 HTML/CSS + 3 SVG)
+                                        flags: --config, --json, --root, --whole-site, --allow-source-only-spa
   ahd lint-rules                        list every source-level lint rule
   ahd vision-rules                      list every vision-only rule (run via the critic)
   ahd eval <token> [--samples dir]      aggregate lint scores across pre-rendered samples
@@ -453,8 +514,10 @@ commands:
   ahd mcp-serve                         run the AHD MCP server over stdio
   ahd try <brief.yml> [--model <spec>]  demo: generate one HTML page (default mock-swiss offline, or CF OSS if keys are set)
   ahd try-image <brief.yml>             demo: generate one image via cfimg:<model> (needs CF_API_TOKEN + CF_ACCOUNT_ID)
-  ahd critique <token> [--samples d] [--critic anthropic|mock] [--max n] [--out dir] [--report r.md]
+  ahd critique <token> [--samples d] [--critic claude-code|anthropic|mock] [--max n] [--out dir] [--report r.md]
                                         render each sample, run the vision critic on the screenshot
+  ahd critique-url <url> [--token <id>] [--critic claude-code|anthropic|mock] [--out <file.json>] [--screenshot <file.png>]
+                                        render a live URL, run the vision critic against the screenshot
   ahd audit-mobile <url> [--width 375] [--height 812] [--out f.json] [--screenshot f.png]
                                         render a URL at mobile viewport and run deterministic layout rules
 
@@ -483,6 +546,30 @@ docs: docs/SLOP_TAXONOMY.md, docs/LINTER_SPEC.md, docs/STYLE_TOKEN_SCHEMA.md, do
 function flag(args, name) {
   const i = args.indexOf(name);
   return i >= 0 ? args[i + 1] : undefined;
+}
+
+// Walk a directory tree collecting lintable files. Skips dotfiles
+// and common build-artefact dirs so a whole-site run doesn't dig
+// into node_modules or .git. Returns absolute paths.
+async function walkSiteFiles(rootDir) {
+  const SKIP_DIRS = new Set(["node_modules", ".git", ".next", ".astro", "coverage", ".cache"]);
+  const LINTABLE = /\.(html|css|svg)$/i;
+  const out = [];
+  async function walk(dir) {
+    const entries = await readdir(dir, { withFileTypes: true }).catch(() => []);
+    for (const e of entries) {
+      if (e.name.startsWith(".") && e.name !== "." && e.name !== "..") continue;
+      if (SKIP_DIRS.has(e.name)) continue;
+      const p = join(dir, e.name);
+      if (e.isDirectory()) {
+        await walk(p);
+      } else if (e.isFile() && LINTABLE.test(e.name)) {
+        out.push(p);
+      }
+    }
+  }
+  await walk(rootDir);
+  return out.sort();
 }
 
 function exit(msg) {
