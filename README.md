@@ -95,7 +95,7 @@ What nobody else ships: a named AI-slop taxonomy + token-driven brief compiler +
 ```bash
 npm install -g @adastra/ahd
 # or, from source (reproducible):
-git clone ssh://forgejo@perdurabo.ussuri-elevator.ts.net:2222/Ad_Astra_Computing_Inc/ahd.git
+git clone https://github.com/Ad-Astra-Computing/ahd.git
 cd ahd && nix develop . && npm install && npm run build
 ```
 
