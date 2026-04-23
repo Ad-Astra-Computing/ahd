@@ -94,7 +94,7 @@ In Claude Code, the `.mcp.json` entry looks like this.
 
 ### Tools the server exposes
 
-The server speaks JSON-RPC over stdio and registers eight tools. `ahd.list_tokens` returns every style token in the library. `ahd.get_token` returns one token as JSON. `ahd.brief` takes a brief plus a token id and returns a compiled spec plus per-model prompts. `ahd.palette` returns just the OKLCH palette and role assignments for a token. `ahd.type_system` returns the type scale, families, pairing rules, tracking and measure. `ahd.reference` returns the movement, studio and designer anchors the token draws from. `ahd.lint` runs the twenty-nine-rule source linter on an HTML and CSS pair. `ahd.vision_rules` lists the fourteen vision-only rules the agent can use when it has access to a rendered screenshot.
+The server speaks JSON-RPC over stdio and registers eight tools. `ahd.list_tokens` returns every style token in the library. `ahd.get_token` returns one token as JSON. `ahd.brief` takes a brief plus a token id and returns a compiled spec plus per-model prompts. `ahd.palette` returns just the OKLCH palette and role assignments for a token. `ahd.type_system` returns the type scale, families, pairing rules, tracking and measure. `ahd.reference` returns the movement, studio and designer anchors the token draws from. `ahd.lint` runs the thirty-rule source linter on an HTML and CSS pair. `ahd.vision_rules` lists the fourteen vision-only rules the agent can use when it has access to a rendered screenshot.
 
 The canonical agent loop is three steps. Call `ahd.brief` to get a token-anchored system prompt. Generate. Call `ahd.lint` on the output and iterate until the linter is clean.
 

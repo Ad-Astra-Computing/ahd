@@ -39,6 +39,38 @@ describe("lint · slop fixture", () => {
   });
 });
 
+describe("lint · no-em-dashes-in-prose", () => {
+  it("fires on an em-dash inside a <p>", () => {
+    const html = `<p>This is fine — this is not.</p>`;
+    const report = lintSource({ file: "x.html", html, css: "" });
+    const ids = report.violations.map((v) => v.ruleId);
+    expect(ids).toContain("ahd/no-em-dashes-in-prose");
+  });
+
+  it("fires on em-dash inside headings and list items", () => {
+    const html = `<h2>Why AHD — why not a prompt?</h2><li>Item — detail</li>`;
+    const report = lintSource({ file: "x.html", html, css: "" });
+    const fired = report.violations.filter(
+      (v) => v.ruleId === "ahd/no-em-dashes-in-prose",
+    );
+    expect(fired.length).toBeGreaterThanOrEqual(2);
+  });
+
+  it("does not fire on en-dashes used for ranges", () => {
+    const html = `<p>Spans 2017–2026, pp. 9–11.</p>`;
+    const report = lintSource({ file: "x.html", html, css: "" });
+    const ids = report.violations.map((v) => v.ruleId);
+    expect(ids).not.toContain("ahd/no-em-dashes-in-prose");
+  });
+
+  it("does not fire on em-dashes inside <code> within a <p>", () => {
+    const html = `<p>Use <code>node --flag</code> and not <code>--em—dash</code>.</p>`;
+    const report = lintSource({ file: "x.html", html, css: "" });
+    const ids = report.violations.map((v) => v.ruleId);
+    expect(ids).not.toContain("ahd/no-em-dashes-in-prose");
+  });
+});
+
 describe("lint · no-inline-style-animation", () => {
   it("fires on inline style=\"animation:...\" attributes", () => {
     const html = `<!doctype html><html><body>
