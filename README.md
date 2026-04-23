@@ -6,9 +6,11 @@
 
 <br>
 
-**AHD is a guardrail and evaluation layer for AI-generated UI.** Not a design generator. Four pieces: a named taxonomy of AI design slop, style tokens as promptable design direction, a brief compiler that turns intent into constrained model instructions, and a reproducible eval loop that measures raw vs compiled output against the taxonomy. Positioning in full: [docs/POSITIONING.md](docs/POSITIONING.md).
+**AHD is a guardrail and evaluation layer for AI-generated design** — web UI, graphic design, illustration, image generation. Not a generator itself. Four pieces: a named taxonomy of AI design slop that spans web and graphic surfaces, style tokens as promptable design direction, a brief compiler that turns intent into constrained model instructions, and a reproducible eval loop that scores raw vs compiled output against the taxonomy. Positioning in full: [docs/POSITIONING.md](docs/POSITIONING.md).
 
-The product's one-line promise: **AHD measures and reduces specific, repeated AI design failures.** The thirty-eight-tell taxonomy is named, versioned, and linted; per-token forbidden lists and required quirks are enforced in CI; every eval publishes attempted counts, canonical model ids, extraction failures, per-model deltas and negative results. That combination — taxonomy + reproducible scoring — is the moat, not the prompts.
+The product's one-line promise: **AHD measures and reduces specific, repeated AI design failures, across web and image generation.** The thirty-eight-tell taxonomy is named, versioned, and linted; per-token forbidden lists and required quirks are enforced in CI; every eval publishes attempted counts, canonical model ids, extraction failures, per-model deltas and negative results. That combination — taxonomy + reproducible scoring — is the moat, not the prompts.
+
+Today's shipped scope is **web UI end-to-end** (text-to-HTML runners for Claude / GPT / Gemini / Cloudflare Workers AI / Ollama, 28-rule source linter, vision critic, Playwright screenshots, MCP server, editor plugins). The taxonomy and vision critic already cover illustration and graphic tells (Corporate Memphis, AI-illustration glow, iridescent blobs, stock photography, monoline icon sets). **Image-generation model runners** (FLUX, SDXL, Imagen, DALL·E 3, Firefly, CF Workers AI image models) and an **image-first eval pipeline** are the next vertical on the roadmap — the substrate already spans both modalities; the remaining work is adapters and an SVG/vector linter.
 
 ---
 
