@@ -49,7 +49,7 @@ export async function runTry(options: {
   const token = await loadToken(options.tokensDir, tokenId);
   const compiled = compile(brief, token, "final");
   const modelSpec = options.modelSpec ?? pickDefaultTextModel();
-  const runner = runnerFromSpec(modelSpec);
+  const runner = await runnerFromSpec(modelSpec);
 
   const outDir = options.outDir ?? "out";
   await mkdir(outDir, { recursive: true });

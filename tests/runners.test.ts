@@ -27,17 +27,22 @@ describe("model runners · mock", () => {
 });
 
 describe("runnerFromSpec", () => {
-  it("resolves mock specs without network", () => {
-    expect(runnerFromSpec("mock-slop").provider).toBe("mock");
-    expect(runnerFromSpec("mock-swiss").provider).toBe("mock");
+  it("resolves mock specs without network", async () => {
+    expect((await runnerFromSpec("mock-slop")).provider).toBe("mock");
+    expect((await runnerFromSpec("mock-swiss")).provider).toBe("mock");
   });
 
-  it("throws for provider-prefixed specs without API key env", () => {
-    const prevA = process.env.ANTHROPIC_API_KEY;
-    const prevO = process.env.OPENAI_API_KEY;
-    const prevG = process.env.GEMINI_API_KEY;
-    const prevCF = process.env.CF_API_TOKEN;
-    const prevCFA = process.env.CF_ACCOUNT_ID;
+  it("throws for provider-prefixed specs without API key env", async () => {
+    const prev = {
+      A: process.env.ANTHROPIC_API_KEY,
+      O: process.env.OPENAI_API_KEY,
+      G: process.env.GEMINI_API_KEY,
+      CF: process.env.CF_API_TOKEN,
+      CFA: process.env.CF_ACCOUNT_ID,
+      HF: process.env.HF_TOKEN,
+      HFH: process.env.HUGGINGFACE_API_TOKEN,
+      HFH2: process.env.HUGGING_FACE_HUB_TOKEN,
+    };
     delete process.env.ANTHROPIC_API_KEY;
     delete process.env.OPENAI_API_KEY;
     delete process.env.GEMINI_API_KEY;
@@ -46,25 +51,33 @@ describe("runnerFromSpec", () => {
     delete process.env.CLOUDFLARE_API_TOKEN;
     delete process.env.CF_ACCOUNT_ID;
     delete process.env.CLOUDFLARE_ACCOUNT_ID;
+    delete process.env.HF_TOKEN;
+    delete process.env.HUGGINGFACE_API_TOKEN;
+    delete process.env.HUGGING_FACE_HUB_TOKEN;
     try {
-      expect(() => runnerFromSpec("claude-opus-4-7")).toThrow();
-      expect(() => runnerFromSpec("gpt-5")).toThrow();
-      expect(() => runnerFromSpec("gemini-3-pro")).toThrow();
-      expect(() => runnerFromSpec("cf:@cf/meta/llama-3.3-70b-instruct-fp8-fast")).toThrow();
+      await expect(runnerFromSpec("claude-opus-4-7")).rejects.toThrow();
+      await expect(runnerFromSpec("gpt-5")).rejects.toThrow();
+      await expect(runnerFromSpec("gemini-3-pro")).rejects.toThrow();
+      await expect(
+        runnerFromSpec("cf:@cf/meta/llama-3.3-70b-instruct-fp8-fast"),
+      ).rejects.toThrow();
     } finally {
-      if (prevA) process.env.ANTHROPIC_API_KEY = prevA;
-      if (prevO) process.env.OPENAI_API_KEY = prevO;
-      if (prevG) process.env.GEMINI_API_KEY = prevG;
-      if (prevCF) process.env.CF_API_TOKEN = prevCF;
-      if (prevCFA) process.env.CF_ACCOUNT_ID = prevCFA;
+      if (prev.A) process.env.ANTHROPIC_API_KEY = prev.A;
+      if (prev.O) process.env.OPENAI_API_KEY = prev.O;
+      if (prev.G) process.env.GEMINI_API_KEY = prev.G;
+      if (prev.CF) process.env.CF_API_TOKEN = prev.CF;
+      if (prev.CFA) process.env.CF_ACCOUNT_ID = prev.CFA;
+      if (prev.HF) process.env.HF_TOKEN = prev.HF;
+      if (prev.HFH) process.env.HUGGINGFACE_API_TOKEN = prev.HFH;
+      if (prev.HFH2) process.env.HUGGING_FACE_HUB_TOKEN = prev.HFH2;
     }
   });
 
-  it("cf: spec constructs a runner when env is present", () => {
+  it("cf: spec constructs a runner when env is present", async () => {
     process.env.CF_API_TOKEN = "test-token";
     process.env.CF_ACCOUNT_ID = "test-account";
     try {
-      const runner = runnerFromSpec("cf:@cf/meta/llama-3.3-70b-instruct-fp8-fast");
+      const runner = await runnerFromSpec("cf:@cf/meta/llama-3.3-70b-instruct-fp8-fast");
       expect(runner.provider).toBe("cloudflare-workers-ai");
       expect(runner.id).toBe("@cf/meta/llama-3.3-70b-instruct-fp8-fast");
     } finally {
@@ -73,8 +86,25 @@ describe("runnerFromSpec", () => {
     }
   });
 
-  it("rejects unknown spec", () => {
-    expect(() => runnerFromSpec("weird-provider-x")).toThrow(/Unknown/);
+  it("hf: spec constructs a runner when HF_TOKEN is set", async () => {
+    process.env.HF_TOKEN = "hf_test_token_xyz";
+    try {
+      const runner = await runnerFromSpec("hf:microsoft/Phi-3.5-mini-instruct");
+      expect(runner.provider).toBe("huggingface");
+      expect(runner.id).toBe("microsoft/Phi-3.5-mini-instruct");
+    } finally {
+      delete process.env.HF_TOKEN;
+    }
+  });
+
+  it("ollama: spec does not collide with openai o-series match", async () => {
+    const runner = await runnerFromSpec("ollama:mistral:7b-instruct-v0.2-q4_0");
+    expect(runner.provider).toBe("ollama");
+    expect(runner.id).toBe("mistral:7b-instruct-v0.2-q4_0");
+  });
+
+  it("rejects unknown spec", async () => {
+    await expect(runnerFromSpec("weird-provider-x")).rejects.toThrow(/Unknown/);
   });
 });
 
