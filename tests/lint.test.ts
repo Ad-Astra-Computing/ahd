@@ -58,6 +58,13 @@ describe("lint · no-inline-style-animation", () => {
     expect(ids).toContain("ahd/no-inline-style-animation");
   });
 
+  it("also fires on single-quoted style attributes", () => {
+    const html = `<div style='animation: pulse 1s infinite'></div>`;
+    const report = lintSource({ file: "sq.html", html, css: "" });
+    const ids = report.violations.map((v) => v.ruleId);
+    expect(ids).toContain("ahd/no-inline-style-animation");
+  });
+
   it("does not fire when animation lives in a <style> block instead", () => {
     const html = `<div class="x"></div>`;
     const css = `.x { animation: spin 2s; } @media (prefers-reduced-motion: reduce) { .x { animation: none; } }`;
