@@ -45,17 +45,16 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup Node
-        # Intentionally NOT setting registry-url. When registry-url is
-        # set without a matching NODE_AUTH_TOKEN, setup-node writes an
-        # .npmrc with an empty `_authToken=` line that npm treats as
-        # a failed auth config, breaking OIDC publish via Trusted
-        # Publisher. Default registry (https://registry.npmjs.org) is
-        # what npm publish targets anyway, so dropping registry-url
-        # keeps auth resolution clean for OIDC.
+      - name: Setup Node (pinned)
+        # Pinned to a specific 22.x LTS release so CI reproducibility
+        # doesn't depend on whichever minor setup-node resolves today.
+        # registry-url is necessary so setup-node writes an .npmrc
+        # that points at the public registry; without it, npm publish
+        # returns ENEEDAUTH.
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "22.22.2"
+          registry-url: "https://registry.npmjs.org"
 
       - name: Install dependencies
         run: npm ci
@@ -96,9 +95,16 @@ jobs:
         # package's Trusted Publisher config.
         run: |
           set -e
+          # npm 10 (bundled with Node 22) cannot use OIDC as the
+          # publish credential via Trusted Publisher; the token
+          # exchange step between GitHub's OIDC and an npm short-
+          # lived publish bearer was added in npm 11.5.1. Pinning
+          # via npx rather than a global install so the runner
+          # doesn't need write access to the hosted tool cache.
+          NPM_VERSION=11.5.1
           for pkg_dir in . packages/eslint-plugin-ahd packages/stylelint-plugin-ahd; do
             echo "::group::publish $pkg_dir"
-            (cd "$pkg_dir" && npm publish --access public --provenance)
+            (cd "$pkg_dir" && npx "npm@${NPM_VERSION}" publish --access public --provenance)
             echo "::endgroup::"
             sleep 5
           done
