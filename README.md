@@ -32,7 +32,7 @@ LLMs do not hallucinate design choices. They regress to them. Ask four models fo
 
 **Slop linter.** `ahd lint <file.html|css>` runs twenty-nine deterministic source-level rules (covering every slop tell that can be decided from HTML or CSS text). `ahd vision-rules` lists the nine vision-only rules that live behind the critic. Full rule spec: [docs/LINTER_SPEC.md](docs/LINTER_SPEC.md).
 
-**Live-model eval.** `ahd eval-live <token> --brief b.yml --models claude-opus-4-7,gpt-5,gemini-3-pro --n 10 --report docs/evals/latest.md` runs the brief through each model, raw vs compiled, scores every sample with the linter, and writes a Markdown report with per-model deltas and per-tell frequency. Mock runners (`mock-slop`, `mock-swiss`) let you exercise the pipeline offline. Live runs need API keys in `.env`.
+**Live-model eval.** `ahd eval-live <token> --brief b.yml --models <specs> --n 10 --report docs/evals/latest.md` runs the brief through each model, raw vs compiled, scores every sample with the linter, and writes a Markdown report with per-model deltas and per-tell frequency. Supports Claude, GPT, Gemini, **Cloudflare Workers AI** (`cf:@cf/meta/llama-3.3-70b-instruct-fp8-fast`, Llama 4 Scout, DeepSeek R1, Qwen QwQ, Mistral — free tier, OSS models only), local Ollama, and deterministic mock runners (`mock-slop`, `mock-swiss`) for offline pipeline tests. Live runs need API keys in `.env`; CF Workers AI only needs `CF_API_TOKEN` + `CF_ACCOUNT_ID` and will run on the free tier for small sweeps.
 
 **Vision critic.** `src/critique/critic.ts` ships the prompt scaffold, the nine vision-only rules, a mock critic for tests, and an Anthropic image-input adapter. Plug into a screenshot pipeline to finish the taxonomy coverage.
 
