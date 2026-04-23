@@ -5,14 +5,15 @@
 #
 # Requires:
 #   - `CLOUDFLARE_API_TOKEN` in repo secrets.
-#     Cloudflare has two API-token types: **Account API Token** (scoped
-#     to one account) and **User API Token** (broader, spans every account
-#     the user can access). Either works here. An Account API Token
-#     scoped to `Cloudflare Pages: Edit` is the recommended default
-#     because the token carries the account context, so `accountId`
-#     below becomes optional. With a User API Token, `accountId` is
-#     required. Keeping it populated in both cases is defensive and
-#     costs nothing.
+#     **Recommended**: create an **Account API Token** (prefix `cfat_`)
+#     scoped narrowly to `Cloudflare Pages:Edit` on the one account
+#     that hosts your Pages project. Narrow blast radius if the token
+#     leaks; carries account context so `accountId` is optional.
+#     **Also works**: a User API Token (prefix `cfut_`) scoped to
+#     `Cloudflare Pages:Edit` on the target account. A user token
+#     spans multiple accounts, so `accountId` must be supplied
+#     alongside. The example populates accountId so either works,
+#     but Account tokens are the safer default.
 #   - `CLOUDFLARE_ACCOUNT_ID` in repo secrets or repo variables. The
 #     account ID itself is not sensitive (it appears in dash URLs),
 #     so either storage works.
