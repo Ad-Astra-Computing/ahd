@@ -1,6 +1,6 @@
 {
-  "name": "stylelint-plugin-ahd",
-  "version": "0.7.4",
+  "name": "@adastracomputing/stylelint-plugin-ahd",
+  "version": "0.7.5",
   "description": "Stylelint plugin wrapping the AHD (Artificial Human Design) slop-linter rules for CSS.",
   "license": "SEE LICENSE IN LICENSE",
   "type": "module",

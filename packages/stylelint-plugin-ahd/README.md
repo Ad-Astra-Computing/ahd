@@ -5,7 +5,7 @@ Stylelint plugin that enforces the CSS-side rules of the AHD slop taxonomy. Wrap
 ## Install
 
 ```bash
-npm install --save-dev stylelint stylelint-plugin-ahd
+npm install --save-dev stylelint @adastracomputing/stylelint-plugin-ahd
 ```
 
 ## Config

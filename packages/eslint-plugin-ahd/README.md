@@ -5,7 +5,7 @@ ESLint plugin that enforces the AHD slop-linter rules against JSX and HTML-in-so
 ## Install
 
 ```bash
-npm install --save-dev eslint eslint-plugin-ahd
+npm install --save-dev eslint @adastracomputing/eslint-plugin-ahd
 ```
 
 ## Flat config (ESLint 9+)
@@ -22,7 +22,7 @@ export default [
 
 ```json
 {
-  "plugins": ["ahd"],
+  "plugins": ["@adastracomputing/ahd"],
   "extends": ["plugin:ahd/recommended"]
 }
 ```
