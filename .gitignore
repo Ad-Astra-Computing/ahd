@@ -11,3 +11,4 @@ docs/critique-artifacts/
 .env.*
 !.env.example
 coverage
+*.tgz

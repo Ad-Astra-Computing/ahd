@@ -12,11 +12,15 @@
 #   4. Create a GitHub Release, attach the tarball, and generate
 #      release notes from commits since the previous tag.
 #
-# Prereqs, set once on the repo:
-#   - NPM_TOKEN secret: an npm automation token with publish rights
-#     on the @adastracomputing scope. Scoped to publish only; no read-user.
-#   - id-token: write permission (granted below) for OIDC-based
-#     provenance attestations.
+# Prereqs, set once on the package:
+#   - Trusted Publisher configured on the npm package pointing at
+#     this repo + workflow filename. No long-lived NPM_TOKEN: npm
+#     authenticates the publish via GitHub's short-lived OIDC
+#     token, the same mechanism that signs the provenance
+#     attestation. Config lives at
+#     https://www.npmjs.com/package/<pkg>/access.
+#   - id-token: write permission (granted below) so the runner
+#     can mint the OIDC token npm and provenance both consume.
 #
 # Not wired (intentional): deploy, npm-tag routing (latest vs next),
 # post-publish smoke test. Add when we have a need.
@@ -72,9 +76,7 @@ jobs:
           TARBALL="$(npm pack | tail -n 1)"
           echo "tarball=$TARBALL" >> "$GITHUB_OUTPUT"
 
-      - name: Publish to npm with provenance
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Publish to npm with provenance (OIDC, no token)
         run: npm publish --access public --provenance
 
       - name: Extract version from tag
