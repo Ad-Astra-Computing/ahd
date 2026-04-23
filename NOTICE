@@ -1,0 +1,15 @@
+AHD — Artificial Human Design
+Copyright 2026 Ad Astra Computing Inc.
+
+This product includes software developed by Ad Astra Computing Inc.
+(https://adastra.computer).
+
+Code in this repository is licensed under the Apache License, Version 2.0.
+Style tokens in `tokens/` and documentation artwork in `docs/artwork/` are
+licensed under the Creative Commons Attribution 4.0 International licence
+(CC-BY-4.0) unless an individual token's `licence:` field specifies otherwise.
+
+Style tokens draw on and reference the work of named designers, studios and
+movements. References are declared in each token's `provenance.references`
+field. Attribution under CC-BY-4.0 applies to the AHD authors and to any
+additional attribution declared in the token itself.

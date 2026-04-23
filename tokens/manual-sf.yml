@@ -1,0 +1,107 @@
+id: manual-sf
+name: "Manual SF (Editorial Modernist)"
+version: 0.1.0
+status: stable
+licence: CC-BY-4.0
+authors:
+  - "Ad Astra Computing"
+
+provenance:
+  movement: "Editorial Modernist / West Coast Studio Practice"
+  references:
+    - { name: "Manual", kind: studio, url: "https://manualcreative.com" }
+    - { name: "Instrument", kind: studio, url: "https://instrument.com" }
+    - { name: "Collins", kind: studio }
+  exemplars:
+    - { path: "exemplars/manual-portfolio.png", caption: "Manual SF portfolio" }
+
+mood:
+  keywords: [editorial, confident, warm, photographic, literate]
+  anti-keywords: [techy, neon, generic, flat]
+
+type:
+  families:
+    display: { name: "Söhne Breit", fallback: ["GT America Expanded", "Inter Tight"] }
+    text:    { name: "Tiempos Text", fallback: ["Source Serif Pro", "Newsreader"] }
+  pairing-rule: grotesque-display-plus-serif-text
+  scale:
+    base: 18
+    ratio: 1.333
+    steps: [-2, -1, 0, 1, 2, 3, 4, 5]
+  weights: [300, 400, 500, 700]
+  tracking:
+    display: "-0.03em"
+    body: "0"
+    allcaps: "0.1em"
+  line-height:
+    display: 1.0
+    h2: 1.15
+    body: 1.6
+  measure: 64ch
+
+colour:
+  space: oklch
+  palette:
+    cream:    "oklch(0.97 0.015 85)"
+    ink:      "oklch(0.2 0.01 60)"
+    oxblood:  "oklch(0.38 0.1 25)"
+    olive:    "oklch(0.55 0.08 110)"
+    stone:    "oklch(0.78 0.01 70)"
+  roles:
+    background: cream
+    foreground: ink
+    accent: oxblood
+    border: stone
+  contrast-tier: WCAG-AA
+
+grid:
+  kind: asymmetric-12
+  columns: 12
+  gutter: 32
+  baseline: 8
+
+space:
+  scale: [0, 4, 8, 12, 16, 24, 32, 48, 64, 96, 160, 240]
+
+surface:
+  radius:
+    scale: [0, 4]
+    rule: "sharp editorial; small radii on media only"
+  border:
+    weight: 1
+    style: solid
+    colour: stone
+  shadow:
+    policy: "forbidden"
+  motion:
+    policy: "scroll-linked typographic moments permitted; no generic fade-ups"
+
+forbidden:
+  - "centred hero"
+  - "rounded-2xl"
+  - "purple-to-blue gradients"
+  - "three equal feature cards"
+  - "AI shimmer"
+  - "glassmorphism"
+  - "Lucide icons"
+  - "stock laptop photography"
+
+required-quirks:
+  - "display type set at 120–200px"
+  - "one oversized photographic element spanning >= 8 columns"
+  - "one pullquote set in Tiempos italic at a dramatically larger size"
+
+copy:
+  voice: "editorial, sentence-cased, confident, slightly literary"
+
+prompt-fragments:
+  system: |
+    Design in the editorial modernist lineage of Manual SF and Instrument.
+    Grotesque display paired with a serif text face. Cream paper, ink body,
+    oxblood as the single spot. Asymmetric 12-col grid with 32px gutters.
+    Display type at 120–200px with -0.03em tracking. At least one oversized
+    photograph spanning most of the page. One pullquote in serif italic at
+    display scale. Sharp edges. No shadows.
+  negative: |
+    Do not centre the hero. Do not use rounded-2xl, purple/blue gradients,
+    three equal feature cards, AI shimmer, glassmorphism or Lucide icons.

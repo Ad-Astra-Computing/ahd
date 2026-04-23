@@ -1,0 +1,141 @@
+id: swiss-editorial
+name: "Swiss Editorial"
+version: 0.1.0
+status: stable
+licence: CC-BY-4.0
+authors:
+  - "Ad Astra Computing"
+
+provenance:
+  movement: "Swiss / International Typographic Style"
+  period: "1950–1975, revived"
+  references:
+    - { name: "Josef Müller-Brockmann", kind: designer }
+    - { name: "Armin Hofmann", kind: designer }
+    - { name: "Massimo Vignelli", kind: designer }
+    - { name: "Helvetica", kind: typeface }
+    - { name: "Pentagram", kind: studio, url: "https://pentagram.com" }
+    - { name: "Manual", kind: studio, url: "https://manualcreative.com" }
+    - { name: "Order", kind: studio, url: "https://orderdesign.com" }
+  exemplars:
+    - { path: "exemplars/brockmann-concert-poster.jpg", caption: "Beethoven poster, 1955" }
+    - { path: "exemplars/order-homepage.html", caption: "Order (NYC) editorial treatment" }
+
+mood:
+  keywords: [restrained, rational, left-aligned, typographic, confident]
+  anti-keywords: [decorative, rounded, centred, pastel, playful]
+
+type:
+  families:
+    display: { name: "Neue Haas Grotesk Display", fallback: ["Helvetica Now Display", "Inter Tight"] }
+    text:    { name: "Neue Haas Grotesk Text", fallback: ["Helvetica Now Text", "Inter"] }
+  pairing-rule: single-family-two-optical-sizes
+  scale:
+    base: 17
+    ratio: 1.333
+    steps: [-2, -1, 0, 1, 2, 3, 4, 5]
+  weights: [300, 400, 700, 900]
+  tracking:
+    display: "-0.02em"
+    body: "0"
+    allcaps: "0.08em"
+  line-height:
+    display: 1.05
+    h2: 1.2
+    body: 1.5
+  measure: 62ch
+
+colour:
+  space: oklch
+  palette:
+    ink:   "oklch(0.18 0 0)"
+    paper: "oklch(0.98 0.005 95)"
+    spot:  "oklch(0.58 0.22 27)"
+    rule:  "oklch(0.18 0 0)"
+    muted: "oklch(0.55 0 0)"
+  roles:
+    background: paper
+    foreground: ink
+    accent: spot
+    border: rule
+  contrast-tier: WCAG-AAA
+
+grid:
+  kind: swiss-12
+  columns: 12
+  gutter: 24
+  baseline: 8
+  margin: { min: 32, preferred: "calc(100vw / 24)" }
+
+space:
+  scale: [0, 4, 8, 12, 16, 24, 32, 48, 64, 96, 160]
+  rhythm-note: "Require one dramatic jump per section (160 between sections)."
+
+surface:
+  radius:
+    scale: [0, 2]
+    rule: "sharp by default; pills (999) allowed for status tags only"
+  border:
+    weight: 1
+    style: solid
+    colour: rule
+  shadow:
+    policy: "forbidden; depth via rule, space and colour"
+  motion:
+    policy: "structural only; no entrance animations; respects prefers-reduced-motion"
+
+forbidden:
+  - "purple-to-blue gradients"
+  - "rounded-2xl on everything"
+  - "centred heroes"
+  - "three equal feature cards"
+  - "Lucide icons in a gradient square"
+  - "emoji bullets"
+  - "glassmorphism"
+  - "gradient text on AI or future"
+  - "fake testimonials"
+  - "soft drop shadows"
+  - "fade-up-on-scroll"
+  - "AI shimmer"
+  - "corporate Memphis illustration"
+  - "iridescent 3D blob"
+
+required-quirks:
+  - "at least one element bleeds past the 12-col grid on purpose"
+  - "one section anchored by a single word at display >= 120px with -0.02em tracking"
+  - "spot colour used exactly once"
+
+copy:
+  voice: "declarative, short sentences, no hedges, no Oxford commas"
+  banned-phrases:
+    - "build the future of"
+    - "ship faster"
+    - "AI-native"
+    - "seamless"
+    - "best-in-class"
+    - "revolutionize"
+
+lint-overrides:
+  enable-strict:
+    - ahd/require-named-grid
+    - ahd/body-measure
+    - ahd/weight-variety
+  disable: []
+
+prompt-fragments:
+  system: |
+    Design in the Swiss / International Typographic Style. Work on a 12-column
+    grid with 24px gutters and an 8px baseline. Set display type in Neue Haas
+    Grotesk Display at 96–160px with tracking -0.02em. Body in Neue Haas
+    Grotesk Text at 17px, measure 62ch, line-height 1.5. Palette is ink on
+    paper (warm off-white) with a single spot red used exactly once on the
+    page. No shadows. No rounded corners except small status pills. Structural
+    motion only. Asymmetric left-aligned composition. One intentional element
+    must bleed past the grid.
+  negative: |
+    Do not centre the hero. Do not use purple, violet or blue gradients. Do not
+    apply rounded-2xl. Do not place three equal feature cards in a row. Do not
+    apply glassmorphism. Do not use Lucide icons in gradient squares. Do not
+    use emoji bullets. Do not use soft drop shadows. Do not animate entrances.
+    Do not use the word seamless, AI-native, ship faster or build the future.
+  few-shot: []

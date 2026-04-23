@@ -1,0 +1,109 @@
+id: memphis-clash
+name: "Memphis Clash"
+version: 0.1.0
+status: draft
+licence: CC-BY-4.0
+authors:
+  - "Ad Astra Computing"
+
+provenance:
+  movement: "Memphis Group (1981–1987) revival, clash-colour variant"
+  references:
+    - { name: "Ettore Sottsass", kind: designer }
+    - { name: "Nathalie Du Pasquier", kind: designer }
+    - { name: "Milton Glaser", kind: designer }
+  exemplars:
+    - { path: "exemplars/memphis-pattern-1982.jpg", caption: "Sottsass pattern study" }
+
+mood:
+  keywords: [playful, clashing, patterned, geometric, loud]
+  anti-keywords: [minimal, monochrome, corporate, restrained]
+
+type:
+  families:
+    display: { name: "Clash Display", fallback: ["Space Grotesk", "Inter Tight"] }
+    text:    { name: "Satoshi", fallback: ["Inter"] }
+  pairing-rule: geometric-display-plus-humanist-text
+  scale:
+    base: 17
+    ratio: 1.25
+    steps: [-1, 0, 1, 2, 3, 4]
+  weights: [400, 500, 700]
+  tracking:
+    display: "-0.015em"
+    body: "0"
+    allcaps: "0.06em"
+  line-height:
+    display: 1.0
+    h2: 1.2
+    body: 1.55
+  measure: 60ch
+
+colour:
+  space: oklch
+  palette:
+    cream:    "oklch(0.97 0.02 80)"
+    ink:      "oklch(0.18 0 0)"
+    hotpink:  "oklch(0.7 0.25 10)"
+    acid:     "oklch(0.92 0.22 130)"
+    cobalt:   "oklch(0.5 0.22 260)"
+    tangerine: "oklch(0.75 0.2 45)"
+  roles:
+    background: cream
+    foreground: ink
+    accent: hotpink
+    border: ink
+  contrast-tier: WCAG-AA
+
+grid:
+  kind: modular-broken
+  columns: 12
+  gutter: 20
+  baseline: 8
+
+space:
+  scale: [0, 4, 8, 16, 24, 32, 48, 64, 96]
+
+surface:
+  radius:
+    scale: [0, 999]
+    rule: "sharp rectangles or full circles; nothing in between"
+  border:
+    weight: 2
+    style: solid
+    colour: ink
+  shadow:
+    policy: "hard offset shadows in clash colours permitted"
+  motion:
+    policy: "deliberate, squash-and-stretch style transforms allowed; no generic fades"
+
+forbidden:
+  - "purple-to-blue gradients"
+  - "rounded-2xl"
+  - "glassmorphism"
+  - "AI shimmer"
+  - "Lucide monoline icons"
+  - "soft drop shadows"
+  - "corporate Memphis illustration (the flat pastel floating-figures kind)"
+  - "stock photography"
+
+required-quirks:
+  - "at least two pattern blocks (squiggle, grid-dot, checker)"
+  - "clashing adjacent colours on two elements"
+  - "one element is a pure geometric primitive (circle, triangle) at oversized scale"
+
+copy:
+  voice: "warm, playful, sentence fragments allowed, no hedging"
+
+prompt-fragments:
+  system: |
+    Design in a Memphis Group revival direction with clash colours. Cream
+    background, ink body, clashing hotpink / acid / cobalt / tangerine used
+    adjacently. Sharp rectangles or full circles, nothing in between. Two
+    pattern blocks (squiggle, dot-grid, checker). Geometric primitive at
+    oversized scale as an anchor. Hard offset shadows in clash colours. Bold
+    grotesque display paired with a humanist text face.
+  negative: |
+    Do not produce flat pastel corporate Memphis floating-figures illustration.
+    Do not use purple/blue gradients, rounded-2xl, glassmorphism, AI shimmer,
+    Lucide icons, soft drop shadows or stock photography.
