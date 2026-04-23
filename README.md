@@ -14,13 +14,11 @@ The artwork on this page is hand-authored against the `swiss-editorial` token as
 
 ---
 
-## The slop problem, in one figure
+## The slop problem, measured
 
-<img src="docs/artwork/slop-distribution.svg" alt="Slop-tell frequency across 50 AI-generated landing pages" width="100%">
+<img src="docs/artwork/slop-distribution.svg" alt="Measured slop-tell frequency across 25 raw and 25 compiled landing pages on 21 April 2026" width="100%">
 
-LLMs do not hallucinate design choices. They regress to them. Ask four models for a landing page and you will get the same centred hero, the same three cards, the same purple gradient, the same Inter. The fix is not a better prompt. The fix is a framework that names the median, forbids it by default, and compiles a specific alternative every time.
-
-*The percentages in the figure above are illustrative of the thesis, not measured output. Replacing them with real numbers from `ahd eval-live` is a one-command job once API keys are dropped in `.env` — `ahd eval-live swiss-editorial --brief briefs/landing.yml --models claude-opus-4-7,gpt-5,gemini-3-pro --n 30 --report docs/evals/$(date +%Y-%m-%d)-swiss.md`.*
+LLMs do not hallucinate design choices. They regress to them. Ask five models for the same landing-page brief and the linter catches a mean 2.08 slop tells per raw page. Run the same brief through `ahd compile` first and the same five models produce 1.04 tells per page — a 50% reduction across the board. Claude Opus 4.7 drops 77%, Mistral Small 3.1 drops 70%, Llama 3.3 drops 40%, Qwen 2.5 Coder stays stubbornly in its defaults at 7%. Full report: [docs/evals/2026-04-21-swiss.md](docs/evals/2026-04-21-swiss.md).
 
 <img src="docs/artwork/slop-vs-ahd.svg" alt="Before and after: the slop median on the left, the AHD-compiled output on the right" width="100%">
 
