@@ -21,8 +21,7 @@ Source of truth for what's shipped, what's scaffolded, and what's gated on exter
 ## v0.3 — shipped
 
 - `ahd eval-live` end-to-end pipeline: brief → compile → per-model calls → score → report
-- Runners: **Anthropic** (Claude), **OpenAI** (GPT / o-series), **Google** (Gemini), **Cloudflare Workers AI** (Llama 3.3 / Llama 4 / DeepSeek R1 / Qwen QwQ / Mistral via `cf:@cf/vendor/model`)
-- Unverified in-tree: **Ollama** (local OSS). Code ships with unit tests against a mocked HTTP layer, but no end-to-end run against a live Ollama daemon has been performed. Treat as experimental until v0.6.1 verifies it against a running instance.
+- Runners: **Anthropic** (Claude), **OpenAI** (GPT / o-series), **Google** (Gemini), **Cloudflare Workers AI** (Llama 3.3 / Llama 4 / DeepSeek R1 / Qwen QwQ / Mistral via `cf:@cf/vendor/model`), **Ollama** (local OSS via `ollama:<model>` spec, remote via `OLLAMA_HOST` env). Ollama verified end-to-end on 21 April 2026 against a CPU-backend daemon running qwen2.5:0.5b — ran through `ahd try`, linter scored the output against all thirty-one source rules. Known upstream Ollama issue on AMD Strix Halo / Radeon 8060S (gfx1151): the default ROCm backend crashes during post-load GPU discovery and the llama runner exits (exit status 2). Workaround: force CPU via `HIP_VISIBLE_DEVICES=""`, `ROCR_VISIBLE_DEVICES=""`, `OLLAMA_LLM_LIBRARY=cpu`. Tracked for upstream resolution as the ROCm runtime grows real gfx1151 support.
 - CF AI Gateway routing via `CF_AI_GATEWAY` env for caching / rate-limit / spend tracking on frontier-provider calls
 - Deterministic **mock runners** (`mock-slop`, `mock-swiss`) for offline testing of the full pipeline
 - Runners respect env vars: `ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, `GEMINI_API_KEY` / `GOOGLE_API_KEY`, `CF_API_TOKEN` + `CF_ACCOUNT_ID`
