@@ -1,16 +1,29 @@
-# Monthly vision-critic eval.
+# Monthly vision + image-gen eval.
 #
-# Extends the weekly source-only eval with a vision pass over the
-# rendered samples. Different cadence (monthly vs weekly) because
-# vision scoring costs real money: Anthropic vision API is billed
-# per image input token. At Claude Haiku defaults (~$0.001/image)
-# the 600-sample run comes to roughly $1-2/month; we rerun at
-# month cadence instead of weekly to keep the annual bill bounded
-# and still catch drift well ahead of the source-only signal.
+# Three passes per run, all against fresh samples, all committed to
+# docs/evals/monthly/<date>-{source,vision,image}.md:
 #
-# Runs a full ahd eval-live to generate fresh samples, then
-# critiques each rendered sample with the Anthropic vision critic.
-# Commits the report to docs/evals/monthly/<date>.md.
+#   1. Text source-lint eval     — same roster as weekly, n=30
+#   2. Text vision-critic eval   — renders each text sample, scores
+#                                   against the 14 vision rules
+#   3. Image-generation eval     — CF image models (FLUX, SDXL,
+#                                   DreamShaper), n=5, vision
+#                                   critic against the 14 rules
+#
+# Why monthly not weekly: vision scoring costs real money
+# (Anthropic vision API, billed per image input token). At Haiku
+# defaults ~$0.001/image; 600 text images + 40 image-gen images
+# ~= $0.60-$1.00/run. Monthly cadence keeps the annual bill
+# bounded and still catches drift well ahead of any six-month
+# signal loss.
+#
+# Budget breakdown:
+#   - Text gen (600 samples):      free (CF OSS)
+#   - Text vision (600 images):    ~$0.60
+#   - Image gen (40 images):       free (CF free tier, <10k
+#                                  neurons/day)
+#   - Image vision (40 images):    ~$0.04
+#   Total: ~$0.60-$1 / month
 #
 # Secrets required on the repo:
 #   - CF_API_TOKEN + CF_ACCOUNT_ID: text generation via CF Workers AI
@@ -98,7 +111,31 @@ jobs:
             --out critiques \
             --report "docs/evals/monthly/${{ env.REPORT_DATE }}-vision.md"
 
-      - name: Commit both reports
+      - name: Run image-generation eval (CF image models, scored via vision critic)
+        env:
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+          CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          # Image-gen vertical: same methodology as text, against
+          # CF Workers AI image models on the free tier. Raw and
+          # compiled conditions produce PNGs; vision critic scores
+          # each against the 14 vision rules (4 of which are
+          # image-specific: malformed anatomy, Midjourney-face
+          # symmetry, decorative cursive, stock diversity casting).
+          #
+          # Four cells × 2 conditions × n=5 = 40 images. CF charges
+          # ~100 neurons per image, total ~4k neurons, well inside
+          # the 10k/day free-tier limit. Vision scoring of 40
+          # images is ~\$0.04 at Haiku prices.
+          node ./bin/ahd.js eval-image editorial-illustration \
+            --brief briefs/editorial-illustration.yml \
+            --models cfimg:@cf/black-forest-labs/flux-1-schnell,cfimg:@cf/bytedance/stable-diffusion-xl-lightning,cfimg:@cf/stabilityai/stable-diffusion-xl-base-1.0,cfimg:@cf/lykon/dreamshaper-8-lcm \
+            --n 5 \
+            --critic anthropic \
+            --report "docs/evals/monthly/${{ env.REPORT_DATE }}-image.md"
+
+      - name: Commit all three reports
         run: |
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
@@ -106,6 +143,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "No report changes to commit."
           else
-            git commit -m "docs(evals): monthly source + vision run ${{ env.REPORT_DATE }}" -m "Automated monthly eval. Source-only report plus vision-critic report produced from the same samples. See the two files for per-cell numbers."
+            git commit -m "docs(evals): monthly source + vision + image-gen run ${{ env.REPORT_DATE }}" -m "Automated monthly eval across all three verticals: text source linter, text rendered-pixel vision critic, and image-generation vision critic. See the three files for per-cell numbers."
             git push
           fi
