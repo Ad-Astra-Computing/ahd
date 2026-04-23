@@ -27,7 +27,7 @@ version: 0.1.0
 status: stable | draft | deprecated
 licence: CC-BY-4.0
 authors:
-  - "Jason Odoom <jason@adastra.computer>"
+  - "Jason Odoom <jason@adastracomputing.com>"
 provenance:
   movement: "Swiss / International Typographic Style"
   period: "1950–1975, revived"

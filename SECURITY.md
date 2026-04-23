@@ -4,7 +4,7 @@
 
 If you have found a security vulnerability in AHD, please report it privately. Do not open a public issue.
 
-Email: `security@adastra.computer`
+Email: `security@adastracomputing.com`
 
 Include:
 
