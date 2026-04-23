@@ -1,6 +1,6 @@
 {
   "name": "stylelint-plugin-ahd",
-  "version": "0.5.0-beta.1",
+  "version": "0.7.0",
   "description": "Stylelint plugin wrapping the AHD (Artificial Human Design) slop-linter rules for CSS.",
   "license": "SEE LICENSE IN LICENSE",
   "type": "module",
@@ -8,13 +8,24 @@
   "exports": {
     ".": "./index.js"
   },
-  "files": ["index.js", "LICENSE", "README.md"],
-  "keywords": ["stylelint", "stylelint-plugin", "ahd", "design", "ai-design-slop", "linter"],
+  "files": [
+    "index.js",
+    "LICENSE",
+    "README.md"
+  ],
+  "keywords": [
+    "stylelint",
+    "stylelint-plugin",
+    "ahd",
+    "design",
+    "ai-design-slop",
+    "linter"
+  ],
   "peerDependencies": {
     "stylelint": ">=15 <17"
   },
   "dependencies": {
-    "@adastracomputing/ahd": "0.5.0-beta.1"
+    "@adastracomputing/ahd": "0.7.0"
   },
   "repository": {
     "type": "git",

@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-ahd",
-  "version": "0.5.0-beta.1",
+  "version": "0.7.0",
   "description": "ESLint plugin wrapping the AHD (Artificial Human Design) slop-linter rules — catches the 35 source-level AI design tells in HTML-in-JSX.",
   "license": "SEE LICENSE IN LICENSE",
   "type": "module",
@@ -8,13 +8,25 @@
   "exports": {
     ".": "./index.js"
   },
-  "files": ["index.js", "LICENSE", "README.md"],
-  "keywords": ["eslint", "eslintplugin", "eslint-plugin", "ahd", "design", "ai-design-slop", "linter"],
+  "files": [
+    "index.js",
+    "LICENSE",
+    "README.md"
+  ],
+  "keywords": [
+    "eslint",
+    "eslintplugin",
+    "eslint-plugin",
+    "ahd",
+    "design",
+    "ai-design-slop",
+    "linter"
+  ],
   "peerDependencies": {
     "eslint": ">=8 <10"
   },
   "dependencies": {
-    "@adastracomputing/ahd": "0.5.0-beta.1"
+    "@adastracomputing/ahd": "0.7.0"
   },
   "repository": {
     "type": "git",
