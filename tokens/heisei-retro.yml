@@ -1,0 +1,117 @@
+id: heisei-retro
+name: "Heisei Retro (PC-98)"
+version: 0.1.0
+status: draft
+licence: CC-BY-4.0
+authors:
+  - "Ad Astra Computing"
+
+provenance:
+  movement: "Japanese PC-98 / Heisei-era computer graphics (1989–2019)"
+  period: "1989–1999, revived 2020–"
+  references:
+    - { name: "NEC PC-98 software packaging", kind: work }
+    - { name: "Cowboy Bebop title cards", kind: work }
+    - { name: "Serial Experiments Lain UI", kind: work }
+    - { name: "Kid606 / Omodaka record sleeves", kind: work }
+  exemplars:
+    - { path: "exemplars/pc98-desktop.png", caption: "PC-98 idle screen, 1994" }
+
+mood:
+  keywords: [dithered, neon, kanji, low-res, diegetic]
+  anti-keywords: [smooth, pastel, corporate, gradient]
+
+type:
+  families:
+    display: { name: "PP Neue Machina", fallback: ["Space Grotesk", "Inter Tight"] }
+    text:    { name: "JetBrains Mono", fallback: ["IBM Plex Mono", "Berkeley Mono"] }
+  pairing-rule: angular-display-plus-mono
+  scale:
+    base: 14
+    ratio: 1.2
+    steps: [-1, 0, 1, 2, 3, 4]
+  weights: [400, 500, 700]
+  tracking:
+    display: "0"
+    body: "0"
+    allcaps: "0.04em"
+  line-height:
+    display: 1.05
+    h2: 1.2
+    body: 1.5
+  measure: 70ch
+
+colour:
+  space: oklch
+  palette:
+    bg:     "oklch(0.14 0.03 260)"
+    fg:     "oklch(0.88 0.06 260)"
+    cyan:   "oklch(0.82 0.2 220)"
+    magenta: "oklch(0.6 0.28 340)"
+    amber:  "oklch(0.78 0.18 75)"
+    rule:   "oklch(0.35 0.04 260)"
+  roles:
+    background: bg
+    foreground: fg
+    accent: magenta
+    border: rule
+  contrast-tier: WCAG-AA
+
+grid:
+  kind: char-grid
+  columns: 80
+  gutter: 1
+  baseline: 8
+
+space:
+  scale: [0, 4, 8, 12, 16, 24, 32, 48, 64]
+
+surface:
+  radius:
+    scale: [0]
+    rule: "no radii; scanlines allowed as decoration"
+  border:
+    weight: 1
+    style: solid
+    colour: rule
+  shadow:
+    policy: "pixel-offset shadow allowed in cyan or magenta only"
+  motion:
+    policy: "scanline shimmer allowed on one element at most"
+
+forbidden:
+  - "purple-to-blue gradients (the modern SaaS kind)"
+  - "rounded-2xl"
+  - "Inter as display"
+  - "glassmorphism"
+  - "Lucide icons"
+  - "AI shimmer"
+  - "soft drop shadows"
+  - "stock photography"
+  - "corporate Memphis illustration"
+
+required-quirks:
+  - "at least one block of kanji or Japanese characters used typographically"
+  - "one element rendered with a 4-colour dither pattern"
+  - "one section framed by ASCII-or-box-drawing border characters"
+
+copy:
+  voice: "terse, technical, occasional katakana"
+  banned-phrases:
+    - "seamless"
+    - "build the future of"
+    - "AI-native"
+
+prompt-fragments:
+  system: |
+    Design in a Heisei-era PC-98 revival direction. Deep indigo background,
+    pale blue foreground, cyan and magenta as accent, occasional amber. 80
+    character grid, monospace or angular geometric display. One block of
+    kanji used typographically. One dithered element. At least one panel
+    framed in ASCII box-drawing characters. Pixel-offset shadow allowed in
+    cyan or magenta only. No radii, no soft shadows, no gradients of the
+    modern SaaS variety.
+  negative: |
+    Do not produce clean Apple-style minimalism. Do not use rounded-2xl,
+    purple-to-blue SaaS gradients, glassmorphism, Lucide icons, AI shimmer,
+    soft drop shadows or stock photography.

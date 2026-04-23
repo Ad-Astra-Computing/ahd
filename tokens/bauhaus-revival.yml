@@ -1,0 +1,110 @@
+id: bauhaus-revival
+name: "Bauhaus Revival"
+version: 0.1.0
+status: draft
+licence: CC-BY-4.0
+authors:
+  - "Ad Astra Computing"
+
+provenance:
+  movement: "Bauhaus / Constructivism (1919–1933)"
+  references:
+    - { name: "Herbert Bayer", kind: designer }
+    - { name: "László Moholy-Nagy", kind: designer }
+    - { name: "El Lissitzky", kind: designer }
+    - { name: "Paula Scher (modern Bauhaus practice)", kind: designer }
+    - { name: "Futura (typeface)", kind: typeface }
+  exemplars:
+    - { path: "exemplars/bayer-poster.jpg", caption: "Bayer, Bauhaus Exhibition poster" }
+
+mood:
+  keywords: [geometric, primary, constructed, political, modernist]
+  anti-keywords: [organic, pastel, playful, decorative]
+
+type:
+  families:
+    display: { name: "Futura", fallback: ["ABC Favorit", "Inter Tight"] }
+    text:    { name: "Futura", fallback: ["ABC Favorit", "Inter"] }
+  pairing-rule: single-geometric-optical-sizes
+  scale:
+    base: 16
+    ratio: 1.333
+    steps: [-1, 0, 1, 2, 3, 4, 5]
+  weights: [400, 700, 900]
+  tracking:
+    display: "-0.01em"
+    body: "0"
+    allcaps: "0.1em"
+  line-height:
+    display: 1.0
+    h2: 1.15
+    body: 1.5
+  measure: 65ch
+
+colour:
+  space: oklch
+  palette:
+    paper:  "oklch(0.97 0.01 85)"
+    ink:    "oklch(0.18 0 0)"
+    red:    "oklch(0.55 0.22 27)"
+    yellow: "oklch(0.87 0.18 95)"
+    blue:   "oklch(0.5 0.2 250)"
+  roles:
+    background: paper
+    foreground: ink
+    accent: red
+    border: ink
+  contrast-tier: WCAG-AAA
+
+grid:
+  kind: modular
+  columns: 12
+  gutter: 24
+  baseline: 8
+
+space:
+  scale: [0, 4, 8, 16, 24, 32, 48, 64, 96, 160]
+
+surface:
+  radius:
+    scale: [0, 999]
+    rule: "only circles and rectangles; nothing in between"
+  border:
+    weight: 2
+    style: solid
+    colour: ink
+  shadow:
+    policy: "forbidden; depth via colour and composition"
+  motion:
+    policy: "deliberate geometric transforms permitted; no fade-ups"
+
+forbidden:
+  - "purple-to-blue gradients"
+  - "rounded-2xl"
+  - "glassmorphism"
+  - "AI shimmer"
+  - "Lucide icons"
+  - "soft drop shadows"
+  - "stock photography"
+  - "pastel-only palettes"
+
+required-quirks:
+  - "at least two primaries (red, yellow, blue) used as flat blocks"
+  - "one circle or triangle at oversized scale as a compositional anchor"
+  - "headline set in a geometric sans (Futura or equivalent)"
+
+copy:
+  voice: "declarative, politically aware, confident"
+
+prompt-fragments:
+  system: |
+    Design in a Bauhaus revival direction. Warm paper background, deep ink
+    body, primary red, yellow and blue used as flat colour blocks. Geometric
+    sans (Futura) used for everything, two weights minimum. One oversized
+    circle or triangle as a compositional anchor. Sharp rectangles or full
+    circles only. 2px ink borders where borders exist. No shadows, no
+    gradients, no radii between 0 and 999.
+  negative: |
+    Do not use pastel-only palettes, rounded-2xl, purple-to-blue gradients,
+    glassmorphism, AI shimmer, Lucide icons, soft drop shadows or stock
+    photography.

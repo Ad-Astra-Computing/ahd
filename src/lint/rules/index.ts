@@ -8,6 +8,24 @@ import { rule as requireTypePairing } from "./require-type-pairing.js";
 import { rule as noFakeTestimonials } from "./no-fake-testimonials.js";
 import { rule as noFlatDarkMode } from "./no-flat-dark-mode.js";
 import { rule as noShimmerDecoration } from "./no-shimmer-decoration.js";
+import { rule as noUniformRadius } from "./no-uniform-radius.js";
+import { rule as noThreeEqualCards } from "./no-three-equal-cards.js";
+import { rule as noLucideInRoundedSquare } from "./no-lucide-in-rounded-square.js";
+import { rule as noIndiscriminateGlass } from "./no-indiscriminate-glass.js";
+import { rule as singleShadowStyle } from "./single-shadow-style.js";
+import { rule as noCenteredHero } from "./no-centered-hero.js";
+import { rule as respectReducedMotion } from "./respect-reduced-motion.js";
+import { rule as lineHeightPerSize } from "./line-height-per-size.js";
+import { rule as bodyMeasure } from "./body-measure.js";
+import { rule as requireNamedGrid } from "./require-named-grid.js";
+import { rule as noDefaultSpline } from "./no-default-spline.js";
+import { rule as pricingNotThree } from "./pricing-not-three.js";
+import { rule as footerNotFourCol } from "./footer-not-four-col.js";
+import { rule as motionHasIntent } from "./motion-has-intent.js";
+import { rule as noFakeTrustBar } from "./no-fake-trust-bar.js";
+import { rule as ctaNotCanonical } from "./cta-not-canonical.js";
+import { rule as trackingPerSize } from "./tracking-per-size.js";
+import { rule as radiusHierarchy } from "./radius-hierarchy.js";
 import type { Rule } from "../types.js";
 
 export const rules: Rule[] = [
@@ -21,6 +39,24 @@ export const rules: Rule[] = [
   noFakeTestimonials,
   noFlatDarkMode,
   noShimmerDecoration,
+  noUniformRadius,
+  noThreeEqualCards,
+  noLucideInRoundedSquare,
+  noIndiscriminateGlass,
+  singleShadowStyle,
+  noCenteredHero,
+  respectReducedMotion,
+  lineHeightPerSize,
+  bodyMeasure,
+  requireNamedGrid,
+  noDefaultSpline,
+  pricingNotThree,
+  footerNotFourCol,
+  motionHasIntent,
+  noFakeTrustBar,
+  ctaNotCanonical,
+  trackingPerSize,
+  radiusHierarchy,
 ];
 
 export function rulesById(): Record<string, Rule> {

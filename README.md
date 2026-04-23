@@ -6,7 +6,7 @@
 
 <br>
 
-**AHD** is Ad Astra's open-source framework aimed at making LLMs produce design that does not look like it was produced by an LLM. Today it ships a brief compiler, a five-token seed library, a deterministic slop linter covering ten of the thirty-eight taxonomy tells, and an eval harness that aggregates lint scores across raw and compiled LLM output. The remaining twenty-eight rules, the vision-critic pass and live-model calling are on the roadmap — see [docs/ROADMAP.md](docs/ROADMAP.md) — but the scoring substrate is real and testable now.
+**AHD** is Ad Astra's open-source framework aimed at making LLMs produce design that does not look like it was produced by an LLM. Today it ships a brief compiler, an eight-token seed library, a deterministic slop linter covering all twenty-nine source-checkable rules of the thirty-eight-tell taxonomy, a vision-critic scaffold for the remaining nine, runners for Claude / GPT / Gemini / Ollama, an MCP server, and eslint + stylelint plugin wrappers. Live-model calls and live vision critique are gated on you providing API keys; everything is testable offline via mock runners. See [docs/ROADMAP.md](docs/ROADMAP.md) for exactly what's shipped versus blocked on external resources.
 
 The thesis sits in one page: [docs/SLOP_TAXONOMY.md](docs/SLOP_TAXONOMY.md). Thirty-eight concrete tells that mark LLM-generated design as generated. Everything else in this repo exists to make those tells uneconomical.
 
@@ -20,7 +20,7 @@ The artwork on this page is hand-authored against the `swiss-editorial` token as
 
 LLMs do not hallucinate design choices. They regress to them. Ask four models for a landing page and you will get the same centred hero, the same three cards, the same purple gradient, the same Inter. The fix is not a better prompt. The fix is a framework that names the median, forbids it by default, and compiles a specific alternative every time.
 
-*The percentages in the figure above are illustrative of the thesis, not measured output. Replacing them with real numbers from `ahd eval` is the v0.2 milestone.*
+*The percentages in the figure above are illustrative of the thesis, not measured output. Replacing them with real numbers from `ahd eval-live` is a one-command job once API keys are dropped in `.env` — `ahd eval-live swiss-editorial --brief briefs/landing.yml --models claude-opus-4-7,gpt-5,gemini-3-pro --n 30 --report docs/evals/$(date +%Y-%m-%d)-swiss.md`.*
 
 <img src="docs/artwork/slop-vs-ahd.svg" alt="Before and after: the slop median on the left, the AHD-compiled output on the right" width="100%">
 
@@ -28,15 +28,19 @@ LLMs do not hallucinate design choices. They regress to them. Ask four models fo
 
 ## What AHD ships
 
-Three cuts, in order of leverage. v0.1 is in the repo; v0.2 and v0.3 are specified, not built.
+**Brief compiler.** `ahd compile <brief.yml>` takes a structured brief, resolves it against a named style token, and emits a `spec.json` plus per-model system prompts (Claude, GPT, Gemini, generic). Nothing model-specific is hardcoded. Bring any model.
 
-**v0.1 — brief compiler.** `ahd compile <brief.yml>` takes a structured brief, resolves it against a named style token, and emits a `spec.json` plus per-model system prompts (Claude, GPT, Gemini, generic). Nothing model-specific is hardcoded. Bring any model.
+**Slop linter.** `ahd lint <file.html|css>` runs twenty-nine deterministic source-level rules (covering every slop tell that can be decided from HTML or CSS text). `ahd vision-rules` lists the nine vision-only rules that live behind the critic. Full rule spec: [docs/LINTER_SPEC.md](docs/LINTER_SPEC.md).
 
-**v0.2 — MCP server.** The same library exposed as MCP tools: `ahd.brief`, `ahd.palette`, `ahd.type_system`, `ahd.reference`, `ahd.lint`, `ahd.critique`. Any MCP-capable agent picks it up without changing the user's workflow.
+**Live-model eval.** `ahd eval-live <token> --brief b.yml --models claude-opus-4-7,gpt-5,gemini-3-pro --n 10 --report docs/evals/latest.md` runs the brief through each model, raw vs compiled, scores every sample with the linter, and writes a Markdown report with per-model deltas and per-tell frequency. Mock runners (`mock-slop`, `mock-swiss`) let you exercise the pipeline offline. Live runs need API keys in `.env`.
 
-**v0.3 — linter.** `eslint-plugin-ahd` and `stylelint-plugin-ahd` encode the thirty-eight tells. Enforcement survives the LLM. CI fails when your agent slips back into the median. Rule spec: [docs/LINTER_SPEC.md](docs/LINTER_SPEC.md).
+**Vision critic.** `src/critique/critic.ts` ships the prompt scaffold, the nine vision-only rules, a mock critic for tests, and an Anthropic image-input adapter. Plug into a screenshot pipeline to finish the taxonomy coverage.
 
-Across all three the real product is the style-token library. Tokens are the atomic unit of AHD: named, versioned, licence-clean, schema-validated bundles that fully describe a design direction (grid, type, colour, space, surface, forbidden list, required quirks, exemplars, per-model prompt fragments). The schema lives in [docs/STYLE_TOKEN_SCHEMA.md](docs/STYLE_TOKEN_SCHEMA.md). The community curates. The framework delivers.
+**MCP server.** `ahd mcp-serve` exposes `ahd.brief`, `ahd.list_tokens`, `ahd.get_token`, `ahd.palette`, `ahd.type_system`, `ahd.reference`, `ahd.lint`, `ahd.vision_rules` over stdio JSON-RPC. Any MCP-capable agent (Claude Code, Cursor, Windsurf, Zed) picks it up without a workflow change.
+
+**Editor plugins.** `eslint-plugin-ahd` and `stylelint-plugin-ahd` wrap the rule engine for standard editor integration, with a recommended config that promotes error-severity rules to CI failures.
+
+Across all of this the real product is the style-token library. Tokens are the atomic unit of AHD: named, versioned, licence-clean, schema-validated bundles that fully describe a design direction (grid, type, colour, space, surface, forbidden list, required quirks, exemplars, per-model prompt fragments). Eight ship today: `swiss-editorial`, `manual-sf`, `neubrutalist-gumroad`, `post-digital-green`, `monochrome-editorial`, `memphis-clash`, `heisei-retro`, `bauhaus-revival`. The schema lives in [docs/STYLE_TOKEN_SCHEMA.md](docs/STYLE_TOKEN_SCHEMA.md). The community curates. The framework delivers.
 
 ---
 
