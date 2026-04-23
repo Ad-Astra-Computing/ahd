@@ -108,7 +108,33 @@ function runClaude(
   stdin: string,
 ): Promise<string> {
   return new Promise((resolve, reject) => {
-    const proc = spawn(bin, args, { stdio: ["pipe", "pipe", "pipe"] });
+    // Minimal env allow-list. Claude Code processes model-controlled
+    // prompts; if a prompt-injected tool use tries to exfiltrate
+    // environment variables, anything in the subprocess env is in
+    // scope. We carry PATH, HOME, TMPDIR and the claude-specific
+    // knobs the CLI reads itself; every other parent env (every API
+    // key, every AHD_* flag, every CF_* token) stays out. Anthropic
+    // auth comes from the user's claude-code config in HOME, not
+    // from ANTHROPIC_API_KEY, so stripping that also keeps the CLI
+    // on subscription rather than falling back to API mode.
+    const parent = process.env;
+    const env: NodeJS.ProcessEnv = {
+      PATH: parent.PATH ?? "/usr/bin:/bin",
+      HOME: parent.HOME ?? "/",
+      TMPDIR: parent.TMPDIR,
+      LANG: parent.LANG,
+      LC_ALL: parent.LC_ALL,
+      // Preserve CLAUDE_* knobs the CLI itself reads (config dir
+      // override, TTY detection, etc.) without forwarding unrelated
+      // variables.
+      ...Object.fromEntries(
+        Object.entries(parent).filter(([k]) => k.startsWith("CLAUDE_")),
+      ),
+    };
+    const proc = spawn(bin, args, {
+      stdio: ["pipe", "pipe", "pipe"],
+      env,
+    });
     proc.stdin.write(stdin);
     proc.stdin.end();
     let stdout = "";
