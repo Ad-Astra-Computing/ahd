@@ -1,0 +1,70 @@
+name: Bug report
+description: Report a defect in the CLI, the linter, the MCP server, or the eval pipeline
+title: "[bug] "
+labels: [bug, triage]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please fill in as much of this as you can. Bugs in the linter are especially welcome — false positives and false negatives are both worth reporting.
+
+  - type: input
+    id: version
+    attributes:
+      label: AHD version or commit
+      description: Output of `ahd --version` or the commit SHA you're on
+      placeholder: "0.1.0 / a353bdf"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      multiple: false
+      options:
+        - cli
+        - linter (source-level rule)
+        - vision critic
+        - compile
+        - eval-live (text)
+        - eval-image
+        - mcp server
+        - editor plugins
+        - style token schema
+        - flake / build
+        - docs
+      default: 0
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Reproduce
+      description: The smallest possible input that triggers the bug. Paste a minimal HTML or token YAML if helpful.
+      render: markdown
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: OS, node version, any relevant env vars (never paste an API key)
+    validations:
+      required: false

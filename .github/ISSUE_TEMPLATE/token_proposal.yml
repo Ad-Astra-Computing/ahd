@@ -1,0 +1,49 @@
+name: Token proposal
+description: Propose a new style token for the AHD library
+title: "[token] "
+labels: [token, triage]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Tokens enter the library at `status: draft`. See `CONTRIBUTING.md` for the path to `stable` and `tokens/exemplars/README.md` for the exemplar sourcing policy.
+
+  - type: input
+    id: id
+    attributes:
+      label: Proposed token id (kebab-case)
+      placeholder: "y2k-frutiger-aero"
+    validations:
+      required: true
+
+  - type: input
+    id: movement
+    attributes:
+      label: Movement or lineage
+      placeholder: "early-2000s Frutiger Aero, bubble chrome, glossy skeuomorph"
+    validations:
+      required: true
+
+  - type: textarea
+    id: references
+    attributes:
+      label: Reference designers, studios, works
+      description: Name at least three. Provide URLs to public-domain or CC-licensed exemplars where possible.
+    validations:
+      required: true
+
+  - type: textarea
+    id: forbidden
+    attributes:
+      label: Forbidden list (at least eight tells)
+      description: What MUST this token never produce? Draw from the taxonomy in docs/SLOP_TAXONOMY.md.
+    validations:
+      required: true
+
+  - type: textarea
+    id: quirks
+    attributes:
+      label: Required quirks (at least one)
+      description: One intentional imperfection the token must include.
+    validations:
+      required: true
