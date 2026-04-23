@@ -82,11 +82,15 @@ jobs:
         # processing. Loop over each package with a small sleep between
         # so the registry settles before the next publish lands.
         #
-        # Auth: no NPM_TOKEN. All three packages carry Trusted Publisher
-        # config pointing at this repo + workflow, so npm accepts the
-        # OIDC token GitHub mints for the runner (id-token: write is
-        # granted in the permissions block above). Same mechanism that
-        # signs the provenance attestation, one credential, no rotation.
+        # Auth: NPM_TOKEN still in play. Trusted Publisher was
+        # configured on all three packages, but OIDC-only publishes
+        # returned the same 404 the unpublish/reserve window did. Needs
+        # investigation on the npm side (TP might not have persisted,
+        # workflow-filename field might have whitespace, or the
+        # org-level "disallow tokens" setting might be gating OIDC).
+        # Staying on the bootstrap token until that's sorted.
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           set -e
           for pkg_dir in . packages/eslint-plugin-ahd packages/stylelint-plugin-ahd; do
