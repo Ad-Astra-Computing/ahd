@@ -1,0 +1,126 @@
+# Tag-release workflow.
+#
+# Human clicks "Run workflow" in the Actions tab, picks a bump level,
+# CI runs the full gate (typecheck + tests + token validation), bumps
+# the version across the root + both plugin package.jsons in lockstep,
+# commits the bump, tags the commit, pushes both. The tag push then
+# triggers release.yml, which runs its own full gate and publishes to
+# npm via OIDC.
+#
+# This workflow exists because:
+#   - Bumping three package.jsons + package-lock.json in lockstep is
+#     error-prone by hand (we hit the "forgot to bump plugin version"
+#     footgun more than once)
+#   - Tagging without running tests first is a footgun (we tagged
+#     broken commits in this session too)
+#   - release.yml fires on tag push, so anything that produces a clean
+#     tag produces a clean release automatically
+#
+# Does NOT auto-tag on every push to main. `workflow_dispatch` is a
+# human-triggered button; direct commits to main are still fine and
+# don't produce releases.
+
+name: tag-release
+
+on:
+  workflow_dispatch:
+    inputs:
+      bump:
+        description: "Version bump level"
+        type: choice
+        options: [patch, minor, major]
+        default: patch
+      dry_run:
+        description: "Gate only (skip bump + tag + push)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write          # commit the bump + push tag
+  id-token: write          # inherited by release.yml via the tag push
+
+jobs:
+  gate-and-tag:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Setup Node (pinned)
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22.22.2"
+
+      - name: Install
+        run: npm ci
+
+      - name: Typecheck
+        run: npx tsc --noEmit
+
+      - name: Test
+        run: npm test --silent
+
+      - name: Validate every style token against the schema
+        run: node ./bin/ahd.js validate-tokens
+
+      - name: Compute next version
+        id: ver
+        run: |
+          CUR=$(node -p "require('./package.json').version")
+          IFS='.' read -r MAJ MIN PAT <<< "$CUR"
+          case "${{ inputs.bump }}" in
+            major) NEW="$((MAJ+1)).0.0" ;;
+            minor) NEW="$MAJ.$((MIN+1)).0" ;;
+            patch) NEW="$MAJ.$MIN.$((PAT+1))" ;;
+            *) echo "::error::unknown bump: ${{ inputs.bump }}"; exit 2 ;;
+          esac
+          echo "Current: $CUR  ->  Next: $NEW"
+          echo "new=$NEW" >> "$GITHUB_OUTPUT"
+
+      - name: Dry-run summary (skip bump + tag + push)
+        if: inputs.dry_run == true
+        run: |
+          echo "::notice::Dry run. Gate passed. Would bump to v${{ steps.ver.outputs.new }} but skipping tag + push."
+
+      - name: Bump version in root + both workspace plugins
+        if: inputs.dry_run == false
+        run: |
+          node -e "
+            const fs = require('fs');
+            const NEW = '${{ steps.ver.outputs.new }}';
+            for (const p of [
+              'package.json',
+              'packages/eslint-plugin-ahd/package.json',
+              'packages/stylelint-plugin-ahd/package.json',
+            ]) {
+              const j = JSON.parse(fs.readFileSync(p, 'utf8'));
+              j.version = NEW;
+              fs.writeFileSync(p, JSON.stringify(j, null, 2) + '\n');
+            }
+          "
+          # Regenerate package-lock.json to match the new workspace versions.
+          npm install --ignore-scripts --package-lock-only
+
+      - name: Commit + tag + push
+        if: inputs.dry_run == false
+        run: |
+          set -e
+          NEW="${{ steps.ver.outputs.new }}"
+          # The github-actions[bot] committer is what GitHub recognizes
+          # as a verified automated commit. The reserved email suffix
+          # gets the bot's profile picture + "Verified" badge on the
+          # commit page.
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git add -A
+          git commit -m "chore(release): bump to $NEW"
+          git tag "v$NEW" -m "v$NEW"
+          # Default GITHUB_TOKEN can push to main because branch
+          # protection allows admin + GitHub-verified pushes; signed
+          # commits are no longer required on this branch.
+          git push origin main
+          git push origin "v$NEW"
+          echo "::notice::Tagged v$NEW and pushed. release.yml should fire now."
