@@ -13,7 +13,7 @@ Four pieces, one purpose:
 
 ## What's shipped today
 
-- **Web UI, end-to-end.** Brief compiler → compiled prompts → text-to-HTML runners (Claude, GPT, Gemini, Cloudflare Workers AI OSS models, Ollama) → Playwright screenshots → source linter (28 rules) + vision critic (9 rules) → per-cell reports. Measured run: [docs/evals/2026-04-21-swiss.md](docs/evals/2026-04-21-swiss.md).
+- **Web UI, end-to-end.** Brief compiler → compiled prompts → text-to-HTML runners (Anthropic Claude, OpenAI GPT, Google Gemini, and OSS models via Cloudflare Workers AI) → Playwright screenshots → source linter (28 rules) + vision critic (9 rules) → per-cell reports. Measured run: [docs/evals/2026-04-21-swiss.md](docs/evals/2026-04-21-swiss.md).
 - **Graphic-direction tokens.** Memphis Clash, Bauhaus Revival, Heisei Retro, Monochrome Editorial exist and validate; their prompt fragments anchor illustration and identity work, not only web.
 - **Illustration tells in the taxonomy.** Corporate Memphis, AI illustration with subsurface-scatter glow, iridescent 3D blobs, stock team-at-laptop photography, monoline default icon sets — five of the 38 rules are graphic / illustration tells, checked by the vision critic.
 - **Image-agnostic vision critic.** Accepts any rendered PNG, so it already works on generated illustration or ad creative — not only on rendered HTML.
