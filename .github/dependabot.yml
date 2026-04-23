@@ -1,0 +1,59 @@
+# Dependabot configuration for the AHD framework repo.
+#
+# Covers all three ecosystems this repo ships in:
+#   - nix: flake inputs (nixpkgs, flake-utils) pinned in flake.lock
+#   - npm: runtime deps in package.json / package-lock.json
+#   - github-actions: versions pinned in .github/workflows/*.yml
+#
+# Weekly cadence across the board — AHD's deps don't churn fast enough
+# to justify daily noise, and weekly gives enough signal to catch
+# breaking upstream changes without burying the PR queue.
+#
+# Note: `package-ecosystem: nix` requires GitHub's native Nix flake
+# support in Dependabot (shipped 2026). No external action needed.
+
+version: 2
+
+updates:
+  - package-ecosystem: nix
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    commit-message:
+      prefix: "deps(nix)"
+    labels:
+      - dependencies
+      - nix
+    open-pull-requests-limit: 3
+
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    commit-message:
+      prefix: "deps(npm)"
+    labels:
+      - dependencies
+      - npm
+    # Group patch-level bumps into one PR to reduce review churn.
+    groups:
+      patch-bumps:
+        update-types: [patch]
+    open-pull-requests-limit: 5
+    # Test runner, typechecker and build tool get their own ungrouped PRs
+    # so a breaking bump is easy to isolate.
+    ignore: []
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    commit-message:
+      prefix: "deps(actions)"
+    labels:
+      - dependencies
+      - github-actions
+    open-pull-requests-limit: 3
