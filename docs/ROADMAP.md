@@ -6,14 +6,14 @@ Source of truth for what's shipped, what's scaffolded, and what's gated on exter
 
 - `ahd compile` CLI: brief + style token → `spec.json` + per-model prompts
 - Style-token schema and validator (`zod`-backed)
-- Slop taxonomy documented (39 tells, enforced by 30 HTML/CSS rules, 3 SVG rules, and 14 vision-critic rules)
+- Slop taxonomy documented (39 tells, enforced by 34 HTML/CSS rules, 3 SVG rules, and 14 vision-critic rules)
 - Dogfooded README artwork rendered against `swiss-editorial`
 - Nix flake for reproducible builds of the `ahd` binary
 - TypeScript → `dist/` build via `tsc`
 
 ## v0.2 — shipped
 
-- `ahd lint <file.html|css>` with **30 source-level rules**
+- `ahd lint <file.html|css>` with **34 source-level rules**
 - Slop-fixture and clean-fixture HTML corpus with per-rule assertions
 - `ahd eval <token> --samples <dir>` scoring across pre-rendered samples
 - Per-cell attempted / errored / extractionFailed / scored counts, canonical model ids via `evals/<token>/manifest.json`
