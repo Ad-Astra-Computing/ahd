@@ -10,7 +10,7 @@
 
 The product's one-line promise: **AHD measures and reduces specific, repeated AI design failures, across web and image generation.** The thirty-nine-tell taxonomy is named, versioned, and linted; per-token forbidden lists and required quirks are enforced in CI; every eval publishes attempted counts, canonical model ids, extraction failures, per-model deltas and negative results. That combination — taxonomy + reproducible scoring — is the moat, not the prompts.
 
-Today's shipped scope covers both verticals. **Web UI end-to-end**: text-to-HTML runners for Claude, GPT, Gemini and OSS models via Cloudflare Workers AI, a thirty-four-rule source linter, a vision critic, Playwright screenshots, an MCP server and editor plugins. **Image generation end-to-end**: `ahd eval-image` pipeline with a Cloudflare Workers AI image runner (FLUX, SDXL, DreamShaper), four image-specific vision rules added to the critic (malformed anatomy, Midjourney face symmetry, decorative cursive in renders, stock diversity casting), a three-rule SVG source linter (uniform-stroke, palette-bounds, perfect-symmetry) and two image-first tokens (`editorial-illustration`, `ad-creative-collision`). Additional image runners (Replicate, DALL·E 3, Imagen, Firefly) are the remaining adapter work.
+Today's shipped scope covers both verticals. **Web UI end-to-end**: text-to-HTML runners for Claude, GPT, Gemini and OSS models via Cloudflare Workers AI (plus subscription-CLI variants for the frontier three), a thirty-eight-rule source linter (35 HTML/CSS + 3 SVG), a vision critic, Playwright screenshots, an MCP server and scoped ESLint / Stylelint plugins. **Image generation end-to-end**: `ahd eval-image` pipeline with a Cloudflare Workers AI image runner (FLUX, SDXL, DreamShaper), four image-specific vision rules added to the critic (malformed anatomy, Midjourney face symmetry, decorative cursive in renders, stock diversity casting), a three-rule SVG source linter (uniform-stroke, palette-bounds, perfect-symmetry) and two image-first tokens (`editorial-illustration`, `ad-creative-collision`). Additional image runners (Replicate, DALL·E 3, Imagen, Firefly) are the remaining adapter work.
 
 ---
 
@@ -137,7 +137,7 @@ CF_API_TOKEN=… CF_ACCOUNT_ID=… \
 # Plus frontier via provider API keys (CF_AI_GATEWAY optional proxy)
 ahd eval-live swiss-editorial \
   --brief briefs/landing.yml \
-  --models claude-opus-4-7,gpt-5,gemini-3-pro,cf:@cf/mistralai/mistral-small-3.1-24b-instruct \
+  --models claude-opus-4-7,gpt-5,gemini-3.1-pro-preview,cf:@cf/mistralai/mistral-small-3.1-24b-instruct \
   --n 10 \
   --report docs/evals/latest.md
 
@@ -145,7 +145,7 @@ ahd eval-live swiss-editorial \
 # no API billing; requires the CLIs on PATH and logged in)
 ahd eval-live swiss-editorial \
   --brief briefs/landing.yml \
-  --models claude-code:claude-opus-4-7,codex-cli:gpt-5.4,gemini-cli:gemini-3-pro,cf:@cf/meta/llama-3.3-70b-instruct-fp8-fast \
+  --models claude-code:claude-opus-4-7,codex-cli:gpt-5.4,gemini-cli:gemini-3.1-pro-preview,cf:@cf/meta/llama-3.3-70b-instruct-fp8-fast \
   --n 10 \
   --report docs/evals/latest.md
 
@@ -173,11 +173,11 @@ mustAvoid:
 
 ## Limits
 
-- **n=5 is under-powered.** Per-model percentages have ±35pp Wilson intervals. The published numbers point at directions, not at precision. Bigger n requires budget.
-- **Vision coverage is partial.** 21 of 48 samples critiqued; rate-limit retry is now in place for future runs to reach 100%.
-- **The linter is a proxy metric.** Fewer tells is not identical to better design. A page can pass every rule and still be bad. AHD narrows; a human still picks.
-- **Some models regress under compile.** Llama 3.3 70B gets worse, not better, with the long system prompt. We do not bury that; the chart shows it.
-- **Taxonomy is calibrated for AI UI slop, not all design failure modes.** Accessibility, performance, copy quality beyond banned phrases, brand fit — these are not AHD's domain.
+- **Scope of the published numbers.** The 22 April n=30 run is one brief (`landing.yml`) against one token (`swiss-editorial`) against one surface. External-validity passes (different-token-same-brief, different-brief-same-token) are queued. Do not read one row as "model X is better than model Y at design" in general; different tokens and briefs produce different orderings.
+- **Source-linter only in the published run.** The 38 source-level rules scored here cover roughly three quarters of the taxonomy. The 14 vision rules on rendered pixels are run on a monthly cadence via the automated eval workflow, not inside every live-eval pass; a cell that looks clean by source can still fire vision tells.
+- **The linter is a proxy metric.** Fewer tells is not identical to better design. A page can pass every rule and still be bad. AHD narrows the output; a human still picks.
+- **Some models regress under compile.** Llama 3.3 70B gets worse, not better, with the long system prompt. We do not bury that; the chart shows it, and the finding reproduces across two independent serving paths.
+- **Taxonomy is calibrated for AI design slop, not all failure modes.** Accessibility, performance, copy quality beyond banned phrases, brand fit are not AHD's domain.
 
 Roadmap: [docs/ROADMAP.md](docs/ROADMAP.md). Testing strategy: [docs/TESTING.md](docs/TESTING.md).
 
