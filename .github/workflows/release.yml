@@ -45,11 +45,17 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup Node and configure npm registry
+      - name: Setup Node
+        # Intentionally NOT setting registry-url. When registry-url is
+        # set without a matching NODE_AUTH_TOKEN, setup-node writes an
+        # .npmrc with an empty `_authToken=` line that npm treats as
+        # a failed auth config, breaking OIDC publish via Trusted
+        # Publisher. Default registry (https://registry.npmjs.org) is
+        # what npm publish targets anyway, so dropping registry-url
+        # keeps auth resolution clean for OIDC.
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-          registry-url: "https://registry.npmjs.org"
 
       - name: Install dependencies
         run: npm ci

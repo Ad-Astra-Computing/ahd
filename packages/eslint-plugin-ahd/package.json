@@ -1,6 +1,6 @@
 {
   "name": "@adastracomputing/eslint-plugin-ahd",
-  "version": "0.7.9",
+  "version": "0.7.10",
   "description": "ESLint plugin wrapping the AHD (Artificial Human Design) slop-linter rules — catches the 35 source-level AI design tells in HTML-in-JSX.",
   "license": "SEE LICENSE IN LICENSE",
   "type": "module",

@@ -1,6 +1,6 @@
 {
   "name": "@adastracomputing/ahd",
-  "version": "0.7.9",
+  "version": "0.7.10",
   "description": "Artificial Human Design — a brief compiler, linter and style-token library that forces LLMs out of design slop.",
   "license": "SEE LICENSE IN LICENSE",
   "type": "module",
