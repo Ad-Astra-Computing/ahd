@@ -1,6 +1,12 @@
 import type { Brief, CompiledBrief, StyleToken } from "./types.js";
 
-export function compile(brief: Brief, token: StyleToken): CompiledBrief {
+export type CompileMode = "draft" | "final";
+
+export function compile(
+  brief: Brief,
+  token: StyleToken,
+  mode: CompileMode = "draft",
+): CompiledBrief {
   const spec = {
     intent: brief.intent,
     audience: brief.audience,
@@ -25,12 +31,27 @@ export function compile(brief: Brief, token: StyleToken): CompiledBrief {
     token,
     spec,
     prompts: {
-      claude: assemble("claude", userFrame, positive, negative, spec),
-      gpt: assemble("gpt", userFrame, positive, negative, spec),
-      gemini: assemble("gemini", userFrame, positive, negative, spec),
-      generic: assemble("generic", userFrame, positive, negative, spec),
+      claude: assemble("claude", userFrame, positive, negative, spec, mode),
+      gpt: assemble("gpt", userFrame, positive, negative, spec, mode),
+      gemini: assemble("gemini", userFrame, positive, negative, spec, mode),
+      generic: assemble("generic", userFrame, positive, negative, spec, mode),
     },
   };
+}
+
+export function briefAsProse(brief: Brief): string {
+  const parts: string[] = [`Design intent: ${brief.intent.trim()}`];
+  if (brief.audience) parts.push(`Audience: ${brief.audience.trim()}`);
+  if (brief.surfaces?.length) parts.push(`Surfaces: ${brief.surfaces.join(", ")}`);
+  if (brief.mustInclude?.length) {
+    parts.push("Must include:");
+    for (const item of brief.mustInclude) parts.push(`- ${item}`);
+  }
+  if (brief.mustAvoid?.length) {
+    parts.push("Must avoid:");
+    for (const item of brief.mustAvoid) parts.push(`- ${item}`);
+  }
+  return parts.join("\n");
 }
 
 function framing(brief: Brief): string {
@@ -53,11 +74,29 @@ function assemble(
   positive: string,
   negative: string,
   spec: Record<string, unknown>,
+  mode: CompileMode,
 ): string {
-  const header = `# AHD Compiled Prompt — target: ${model}`;
+  const header = `# AHD Compiled Prompt — target: ${model} — mode: ${mode}`;
   const citeRule =
     "Every design decision in your output must cite the brief rule it follows, as an inline comment (HTML: <!-- rule: ... -->, CSS: /* rule: ... */, JSX: {/* rule: ... */}).";
-  const forbidLine = "Violating the FORBIDDEN list is a bug. If you feel yourself reaching for a forbidden pattern, stop and pick a different solution.";
+  const forbidLine =
+    "Violating the FORBIDDEN list is a bug. If you feel yourself reaching for a forbidden pattern, stop and pick a different solution.";
+
+  const workingRules = [`- ${citeRule}`, `- ${forbidLine}`];
+  if (mode === "draft") {
+    workingRules.push(
+      "- Produce three divergent directions before settling on one. Name the movement anchor each direction draws from.",
+    );
+  } else {
+    workingRules.push(
+      "- Return a single, self-contained, valid HTML5 document. No prose, no fenced code, no multiple directions. Start with <!doctype html> and end with </html>.",
+    );
+  }
+  workingRules.push(
+    "- Include at least one intentional imperfection from the required-quirks list.",
+    "- When in doubt, remove.",
+  );
+
   return [
     header,
     "",
@@ -76,10 +115,6 @@ function assemble(
     "```",
     "",
     "## Working rules",
-    `- ${citeRule}`,
-    `- ${forbidLine}`,
-    "- Produce three divergent directions before settling on one. Name the movement anchor each direction draws from.",
-    "- Include at least one intentional imperfection from the required-quirks list.",
-    "- When in doubt, remove.",
+    ...workingRules,
   ].join("\n");
 }

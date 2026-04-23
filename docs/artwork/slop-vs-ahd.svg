@@ -1,58 +1,43 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 520" role="img" aria-label="Slop versus AHD">
-  <!-- rule: split canvas; left = slop median, right = swiss-editorial compile -->
-  <rect width="600" height="520" fill="#0a0a0a"/>
-  <rect x="600" width="600" height="520" fill="#f8f5ee"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 780" role="img" aria-label="Mistral Small 3.1 on briefs/landing.yml — raw output on the left, AHD-compiled on the right, measured 21 April 2026">
+  <!-- rule: swiss-editorial; paper bg, ink, single spot red, hairline rules, asymmetric -->
+  <rect width="1280" height="780" fill="#f8f5ee"/>
 
-  <!-- LEFT: the slop median, dramatised -->
-  <defs>
-    <linearGradient id="slop-grad" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#6366f1"/>
-      <stop offset="0.5" stop-color="#a855f7"/>
-      <stop offset="1" stop-color="#ec4899"/>
-    </linearGradient>
-    <linearGradient id="slop-text" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0" stop-color="#a855f7"/>
-      <stop offset="1" stop-color="#22d3ee"/>
-    </linearGradient>
-  </defs>
-  <circle cx="300" cy="260" r="260" fill="url(#slop-grad)" opacity="0.35"/>
-  <rect x="232" y="112" width="136" height="28" rx="14" fill="#1f1f1f" stroke="#2a2a2a"/>
-  <text x="300" y="130" text-anchor="middle" font-family="Inter,system-ui,sans-serif"
-        font-size="12" fill="#d4d4d8">✨ Now in beta</text>
-  <text x="300" y="210" text-anchor="middle" font-family="Inter,system-ui,sans-serif"
-        font-size="48" font-weight="600" fill="url(#slop-text)">Build the future of AI</text>
-  <text x="300" y="244" text-anchor="middle" font-family="Inter,system-ui,sans-serif"
-        font-size="16" fill="#a1a1aa">Ship faster. Seamless. AI-native.</text>
-  <!-- three equal rounded cards -->
-  <g font-family="Inter,system-ui,sans-serif" fill="#d4d4d8">
-    <rect x="80" y="300" width="140" height="140" rx="16" fill="#111" stroke="#262626"/>
-    <rect x="230" y="300" width="140" height="140" rx="16" fill="#111" stroke="#262626"/>
-    <rect x="380" y="300" width="140" height="140" rx="16" fill="#111" stroke="#262626"/>
-    <rect x="96" y="316" width="28" height="28" rx="8" fill="#312e81"/>
-    <rect x="246" y="316" width="28" height="28" rx="8" fill="#312e81"/>
-    <rect x="396" y="316" width="28" height="28" rx="8" fill="#312e81"/>
-    <text x="96" y="380" font-size="14" font-weight="600">Fast</text>
-    <text x="246" y="380" font-size="14" font-weight="600">Secure</text>
-    <text x="396" y="380" font-size="14" font-weight="600">Magic</text>
+  <!-- top kicker -->
+  <line x1="64" y1="48" x2="64" y2="720" stroke="#141414" stroke-width="1"/>
+  <text x="80" y="72" font-family="'Neue Haas Grotesk Display',Inter,sans-serif"
+        font-size="11" letter-spacing="0.14em" fill="#141414">FIG. 2 · SAME BRIEF · SAME MODEL · SAME SEED · 21 APR 2026</text>
+  <text x="80" y="108" font-family="'Neue Haas Grotesk Display',Inter,sans-serif"
+        font-size="30" font-weight="700" letter-spacing="-0.02em" fill="#141414">
+    Mistral Small 3.1 on briefs/landing.yml.
+  </text>
+  <text x="80" y="136" font-family="'Neue Haas Grotesk Text',Inter,sans-serif"
+        font-size="14" fill="#6b6b6b">
+    Left: raw (3.25 tells). Right: AHD-compiled (1.25 tells). Both rendered by Playwright at 1280×1280, deviceScaleFactor 2.
+  </text>
+
+  <!-- BEFORE label -->
+  <text x="80" y="180" font-family="'Neue Haas Grotesk Display',Inter,sans-serif"
+        font-size="10" letter-spacing="0.16em" fill="#6b6b6b">BEFORE · RAW BRIEF, NO AHD</text>
+  <!-- AFTER label -->
+  <text x="680" y="180" font-family="'Neue Haas Grotesk Display',Inter,sans-serif"
+        font-size="10" letter-spacing="0.16em" fill="#c53a1a">AFTER · SAME BRIEF, COMPILED VIA AHD</text>
+
+  <!-- before frame + screenshot -->
+  <rect x="80" y="196" width="520" height="520" fill="#ffffff" stroke="#141414" stroke-width="1"/>
+  <image href="screenshots/mistral-raw-001.png" x="81" y="197" width="518" height="518" preserveAspectRatio="xMidYMid slice"/>
+
+  <!-- after frame + screenshot + spot stripe -->
+  <rect x="680" y="196" width="520" height="520" fill="#ffffff" stroke="#141414" stroke-width="1"/>
+  <image href="screenshots/mistral-compiled-001.png" x="681" y="197" width="518" height="518" preserveAspectRatio="xMidYMid slice"/>
+  <rect x="1200" y="196" width="8" height="520" fill="#c53a1a"/>
+
+  <!-- before stats -->
+  <g font-family="'Neue Haas Grotesk Text',Inter,sans-serif" font-size="12" fill="#141414">
+    <text x="80" y="740">3.25 mean tells / page · n=4 raw samples scored</text>
+    <text x="80" y="758" fill="#6b6b6b">fires: require-type-pairing · radius-hierarchy · require-named-grid · line-height-per-size</text>
   </g>
-  <text x="20" y="500" font-family="Inter,system-ui,sans-serif" font-size="10"
-        letter-spacing="0.1em" fill="#52525b">BEFORE / MEDIAN OUTPUT</text>
-
-  <!-- RIGHT: compiled via swiss-editorial -->
-  <line x1="660" y1="60" x2="660" y2="460" stroke="#141414" stroke-width="1"/>
-  <text x="676" y="84" font-family="'Neue Haas Grotesk Display',Inter,sans-serif"
-        font-size="11" letter-spacing="0.14em" fill="#141414">AHD / COMPILED · SWISS-EDITORIAL</text>
-  <text x="676" y="220" font-family="'Neue Haas Grotesk Display',Inter,sans-serif"
-        font-size="112" font-weight="700" letter-spacing="-0.035em" fill="#141414">Specific.</text>
-  <text x="676" y="272" font-family="'Neue Haas Grotesk Display',Inter,sans-serif"
-        font-size="112" font-weight="300" letter-spacing="-0.035em" fill="#141414" font-style="italic">Not generic.</text>
-  <rect x="1176" y="60" width="8" height="400" fill="#c53a1a"/>
-  <text x="676" y="332" font-family="'Neue Haas Grotesk Text',Inter,sans-serif"
-        font-size="16" fill="#141414">The same brief, compiled through a style token.</text>
-  <text x="676" y="356" font-family="'Neue Haas Grotesk Text',Inter,sans-serif"
-        font-size="16" fill="#141414">12-col grid. Sharp edges. One spot colour.</text>
-  <text x="676" y="380" font-family="'Neue Haas Grotesk Text',Inter,sans-serif"
-        font-size="16" fill="#141414">No gradients. No shimmer. No three cards.</text>
-  <text x="676" y="500" font-family="'Neue Haas Grotesk Text',Inter,sans-serif"
-        font-size="10" letter-spacing="0.1em" fill="#6b6b6b">AFTER / AHD COMPILED OUTPUT</text>
+  <g font-family="'Neue Haas Grotesk Text',Inter,sans-serif" font-size="12" fill="#141414">
+    <text x="680" y="740" fill="#c53a1a">1.25 mean tells / page · 61% reduction</text>
+    <text x="680" y="758" fill="#6b6b6b">compiled prompt adds: grid, type pairing, OKLCH palette, rule citations inline</text>
+  </g>
 </svg>

@@ -1,73 +1,70 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 500" role="img" aria-label="Slop-tell frequency across 25 AI-generated landing pages, raw vs compiled">
-  <!-- rule: data viz, swiss, left-aligned, one spot colour only, hairline rules -->
-  <rect width="1200" height="500" fill="#f8f5ee"/>
-  <line x1="80" y1="48" x2="80" y2="448" stroke="#141414" stroke-width="1"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 560" role="img" aria-label="Measured slop-tell reduction by model, same brief raw vs AHD-compiled, 21 April 2026">
+  <rect width="1200" height="560" fill="#f8f5ee"/>
+  <line x1="80" y1="48" x2="80" y2="500" stroke="#141414" stroke-width="1"/>
   <text x="96" y="72" font-family="'Neue Haas Grotesk Display',Inter,sans-serif"
-        font-size="11" letter-spacing="0.14em" fill="#141414">FIG. 1 · MEASURED · n = 25 raw / 25 compiled · 21 APR 2026</text>
-  <text x="96" y="104" font-family="'Neue Haas Grotesk Display',Inter,sans-serif"
+        font-size="11" letter-spacing="0.14em" fill="#141414">FIG. 1 · MEASURED · CONTROLLED · n = 5 per cell · 21 APR 2026</text>
+  <text x="96" y="108" font-family="'Neue Haas Grotesk Display',Inter,sans-serif"
         font-size="30" font-weight="700" letter-spacing="-0.02em" fill="#141414">
-    Landing-page brief, five models, raw vs compiled.
+    Same brief, same seed, raw vs AHD-compiled.
   </text>
-  <text x="96" y="134" font-family="'Neue Haas Grotesk Text',Inter,sans-serif"
+  <text x="96" y="136" font-family="'Neue Haas Grotesk Text',Inter,sans-serif"
         font-size="13" fill="#6b6b6b">
-    Claude Opus 4.7 · Mistral Small 3.1 · Llama 3.3 70B · Llama 4 Scout 17B · Qwen 2.5 Coder 32B. Mean slop-tells per page, lower is better.
+    Mean slop-tells per page. The only thing that differs between conditions is the AHD system-prompt layer.
   </text>
 
-  <!-- legend -->
   <g font-family="'Neue Haas Grotesk Text',Inter,sans-serif" font-size="11" fill="#141414">
-    <rect x="96" y="156" width="14" height="10" fill="#141414"/>
-    <text x="116" y="165">raw</text>
-    <rect x="160" y="156" width="14" height="10" fill="#c53a1a"/>
-    <text x="180" y="165">compiled via ahd</text>
+    <rect x="96" y="158" width="14" height="10" fill="#141414"/>
+    <text x="116" y="167">raw</text>
+    <rect x="160" y="158" width="14" height="10" fill="#c53a1a"/>
+    <text x="180" y="167">compiled via ahd</text>
   </g>
 
-  <!-- bars: per-model mean-tells, raw vs compiled -->
-  <!-- x scale: 0 tells at x=420, 4 tells at x=1060 → 160px per tell -->
+  <!-- x scale: 0 tells at 460, 4 tells at 1080 → 155px per tell -->
   <g font-family="'Neue Haas Grotesk Text',Inter,sans-serif" font-size="13" fill="#141414">
-    <!-- Claude Opus 4.7 -->
-    <text x="96" y="206">Claude Opus 4.7</text>
-    <rect x="420" y="192" width="416" height="11" fill="#141414"/>
-    <text x="842" y="202" fill="#6b6b6b">2.60 raw</text>
-    <rect x="420" y="206" width="96" height="11" fill="#c53a1a"/>
-    <text x="522" y="216" fill="#c53a1a">0.60 compiled · 77%↓</text>
+    <!-- Claude Opus 4.7: 1.20 -> 0.00 -->
+    <text x="96" y="210">Claude Opus 4.7</text>
+    <rect x="460" y="196" width="186" height="11" fill="#141414"/>
+    <text x="652" y="206" fill="#6b6b6b">1.20 raw</text>
+    <rect x="460" y="210" width="1" height="11" fill="#c53a1a"/>
+    <text x="466" y="220" fill="#c53a1a">0.00 compiled · 100%↓</text>
 
-    <!-- Mistral Small 3.1 -->
-    <text x="96" y="254">Mistral Small 3.1</text>
-    <rect x="420" y="240" width="640" height="11" fill="#141414"/>
-    <text x="1066" y="250" fill="#6b6b6b">4.00 raw</text>
-    <rect x="420" y="254" width="192" height="11" fill="#c53a1a"/>
-    <text x="618" y="264" fill="#c53a1a">1.20 compiled · 70%↓</text>
+    <!-- Mistral Small 3.1: 3.25 -> 1.25 -->
+    <text x="96" y="258">Mistral Small 3.1</text>
+    <rect x="460" y="244" width="504" height="11" fill="#141414"/>
+    <text x="970" y="254" fill="#6b6b6b">3.25 raw (4/5 scored)</text>
+    <rect x="460" y="258" width="194" height="11" fill="#c53a1a"/>
+    <text x="660" y="268" fill="#c53a1a">1.25 compiled · 62%↓ (4/5 scored)</text>
 
-    <!-- Llama 3.3 70B -->
-    <text x="96" y="302">Llama 3.3 70B</text>
-    <rect x="420" y="288" width="160" height="11" fill="#141414"/>
-    <text x="586" y="298" fill="#6b6b6b">1.00 raw</text>
-    <rect x="420" y="302" width="96" height="11" fill="#c53a1a"/>
-    <text x="522" y="312" fill="#c53a1a">0.60 compiled · 40%↓</text>
+    <!-- Llama 4 Scout: 2.40 -> 1.20 -->
+    <text x="96" y="306">Llama 4 Scout 17B</text>
+    <rect x="460" y="292" width="372" height="11" fill="#141414"/>
+    <text x="838" y="302" fill="#6b6b6b">2.40 raw</text>
+    <rect x="460" y="306" width="186" height="11" fill="#c53a1a"/>
+    <text x="652" y="316" fill="#c53a1a">1.20 compiled · 50%↓</text>
 
-    <!-- Qwen 2.5 Coder -->
-    <text x="96" y="350">Qwen 2.5 Coder 32B</text>
-    <rect x="420" y="336" width="448" height="11" fill="#141414"/>
-    <text x="874" y="346" fill="#6b6b6b">2.80 raw</text>
-    <rect x="420" y="350" width="416" height="11" fill="#c53a1a"/>
-    <text x="842" y="360" fill="#c53a1a">2.60 compiled · 7%↓</text>
+    <!-- Qwen 2.5 Coder: 2.80 -> 2.80 -->
+    <text x="96" y="354">Qwen 2.5 Coder 32B</text>
+    <rect x="460" y="340" width="434" height="11" fill="#141414"/>
+    <text x="900" y="350" fill="#6b6b6b">2.80 raw</text>
+    <rect x="460" y="354" width="434" height="11" fill="#c53a1a"/>
+    <text x="900" y="364" fill="#141414">2.80 compiled · 0%↓ · stubborn</text>
 
-    <!-- Llama 4 Scout -->
-    <text x="96" y="398">Llama 4 Scout 17B</text>
-    <rect x="420" y="384" width="1" height="11" fill="#141414"/>
-    <text x="426" y="394" fill="#6b6b6b">0.00 raw · output too thin to score</text>
-    <rect x="420" y="398" width="32" height="11" fill="#c53a1a"/>
-    <text x="458" y="408" fill="#c53a1a">0.20 compiled</text>
+    <!-- Llama 3.3 70B: 0.40 -> 1.00 (regressed) -->
+    <text x="96" y="402">Llama 3.3 70B</text>
+    <rect x="460" y="388" width="62" height="11" fill="#141414"/>
+    <text x="528" y="398" fill="#6b6b6b">0.40 raw</text>
+    <rect x="460" y="402" width="155" height="11" fill="#c53a1a"/>
+    <text x="620" y="412" fill="#c53a1a">1.00 compiled · regressed 150%↑</text>
   </g>
 
   <!-- separator + aggregate -->
-  <line x1="80" y1="432" x2="1120" y2="432" stroke="#141414" stroke-width="1"/>
-  <text x="96" y="460" font-family="'Neue Haas Grotesk Display',Inter,sans-serif"
-        font-size="22" font-weight="700" letter-spacing="-0.02em" fill="#141414">
-    Aggregate: 2.08 → 1.04 tells / page.
+  <line x1="80" y1="444" x2="1120" y2="444" stroke="#141414" stroke-width="1"/>
+  <text x="96" y="476" font-family="'Neue Haas Grotesk Display',Inter,sans-serif"
+        font-size="24" font-weight="700" letter-spacing="-0.02em" fill="#141414">
+    Three models helped, one unmoved, one regressed.
   </text>
-  <text x="96" y="484" font-family="'Neue Haas Grotesk Text',Inter,sans-serif"
+  <text x="96" y="500" font-family="'Neue Haas Grotesk Text',Inter,sans-serif"
         font-size="11" letter-spacing="0.08em" fill="#c53a1a">
-    50% REDUCTION ACROSS ALL FIVE MODELS · 28 DETERMINISTIC SOURCE-LEVEL RULES · see docs/evals/2026-04-21-swiss.md for raw data and caveats
+    28 DETERMINISTIC SOURCE RULES · 9 VISION RULES (PARTIAL, 21/48 SAMPLES CRITIQUED) · SEE docs/evals/ FOR MANIFEST, PROMPTS, COUNTS
   </text>
 </svg>

@@ -18,18 +18,21 @@
           src = ./.;
           inherit nodejs;
 
-          npmDepsHash = "sha256-qaR7QF73nXsDzeAl0LH2Rge7OGXXeUre4USzNUF+nb8=";
+          npmDepsHash = "sha256-c2D+KZ8UKl7CoD7lSjTURO+gLdnw6tYRF3hqCJl53yc=";
 
-          dontNpmBuild = true;
+          # Run `tsc` to produce dist/; bin/*.js imports from dist/.
+          npmBuildScript = "build";
 
           installPhase = ''
             runHook preInstall
             mkdir -p $out/lib/node_modules/ahd
-            cp -r bin src tokens docs package.json $out/lib/node_modules/ahd/
+            cp -r bin src dist tokens docs package.json $out/lib/node_modules/ahd/
             cp -r node_modules $out/lib/node_modules/ahd/node_modules
             mkdir -p $out/bin
             makeWrapper ${nodejs}/bin/node $out/bin/ahd \
               --add-flags "$out/lib/node_modules/ahd/bin/ahd.js"
+            makeWrapper ${nodejs}/bin/node $out/bin/ahd-mcp \
+              --add-flags "$out/lib/node_modules/ahd/bin/ahd-mcp.js"
             runHook postInstall
           '';
 
@@ -37,7 +40,7 @@
 
           meta = with pkgs.lib; {
             description = "Artificial Human Design — force LLMs out of design slop";
-            homepage = "https://github.com/Ad-Astra-Computing/ahd";
+            homepage = "https://ahd.adastra.computer";
             license = {
               spdxId = "LicenseRef-FSL-1.1-Apache-2.0";
               fullName = "Functional Source License 1.1 with Apache 2.0 Future License";
@@ -64,10 +67,13 @@
             nodejs
             pkgs.nodePackages.typescript
             pkgs.prefetch-npm-deps
+            pkgs.chromium
           ];
           shellHook = ''
+            export AHD_CHROMIUM_PATH="${pkgs.chromium}/bin/chromium"
             echo "ahd dev shell · node $(node --version) · npm $(npm --version)"
-            echo "tip: npm install && npm test"
+            echo "chromium: $AHD_CHROMIUM_PATH"
+            echo "tip: npm install && npm run build && npm test"
             echo "tip: after editing package-lock.json, regenerate the flake hash with:"
             echo "     prefetch-npm-deps package-lock.json"
           '';

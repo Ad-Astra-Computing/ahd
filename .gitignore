@@ -3,6 +3,8 @@ dist
 out
 result
 /evals/
+/critiques/
+docs/critique-artifacts/
 .DS_Store
 *.log
 .env
