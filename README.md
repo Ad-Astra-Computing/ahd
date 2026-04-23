@@ -55,15 +55,15 @@ Full report with per-tell counts and the prompts used: [docs/evals/2026-04-21-ed
 
 ## What AHD ships
 
-**Taxonomy.** Thirty-nine slop tells documented in [docs/SLOP_TAXONOMY.md](docs/SLOP_TAXONOMY.md) and [docs/LINTER_SPEC.md](docs/LINTER_SPEC.md). Enforced today by 34 HTML/CSS rules, 3 SVG rules, and 14 vision-critic rules. The rule count is higher than the taxonomy count because several taxonomy entries are covered by more than one rule (for example, "Corporate Memphis" is enforced by a vision rule on rendered pixels and by the `no-corporate-memphis` negative in the compiled image prompt).
+**Taxonomy.** Thirty-nine slop tells documented in [docs/SLOP_TAXONOMY.md](docs/SLOP_TAXONOMY.md) and [docs/LINTER_SPEC.md](docs/LINTER_SPEC.md). Enforced today by 35 HTML/CSS rules, 3 SVG rules, and 14 vision-critic rules. The rule count is higher than the taxonomy count because several taxonomy entries are covered by more than one rule (for example, "Corporate Memphis" is enforced by a vision rule on rendered pixels and by the `no-corporate-memphis` negative in the compiled image prompt).
 
 **Brief compiler.** `ahd compile <brief.yml>` takes a structured brief, resolves it against a named style token, emits a `spec.json` plus per-model system prompts. `--mode final` produces single-shot output constraints (used by `ahd try` and by `ahd eval-live`); default mode is `draft`, which asks the model for three divergent directions for human-in-the-loop exploration.
 
-**Slop linter.** `ahd lint <file.html|css|svg>` runs 34 HTML/CSS rules plus 3 SVG rules, in one pass against whatever input kind it's given. `eslint-plugin-ahd` and `stylelint-plugin-ahd` wrap the rule engine for editor integration.
+**Slop linter.** `ahd lint <file.html|css|svg>` runs 35 HTML/CSS rules plus 3 SVG rules, in one pass against whatever input kind it's given. `eslint-plugin-ahd` and `stylelint-plugin-ahd` wrap the rule engine for editor integration.
 
 **Live-model eval.** `ahd eval-live <token> --brief b.yml --models <specs> --n N --report r.md` runs a controlled raw-vs-compiled comparison across Claude, GPT, Gemini, OSS models via Cloudflare Workers AI (free tier), and deterministic mock runners. Reports attempted, extractionFailed, errored and scored counts per cell; canonical model ids preserved via `evals/<token>/manifest.json`.
 
-**Vision critic.** `ahd critique <token>` renders each sample via headless Chromium and runs an Anthropic vision model against 13 vision-only rules (9 web/graphic, 4 image-specific), with rate-limit-aware retry/backoff. `--critic mock` runs offline for deterministic tests; `--critic anthropic` runs live and needs `ANTHROPIC_API_KEY`. Chromium is resolved via `AHD_CHROMIUM_PATH` / `PATH`; use `nix-shell` (the flake's devShell provides `pkgs.chromium`) rather than `npx playwright install`.
+**Vision critic.** `ahd critique <token>` renders each sample via headless Chromium and runs a multimodal vision model against 14 vision-only rules (9 web/graphic, 4 image-specific, 1 layout), with rate-limit-aware retry/backoff. `--critic claude-code` (default) runs via Claude Code subscription for zero API cost; `--critic anthropic` runs via HTTP API and needs `ANTHROPIC_API_KEY`; `--critic mock` runs offline for deterministic tests. Chromium is resolved via `AHD_CHROMIUM_PATH` / `PATH`; use `nix-shell` (the flake's devShell provides `pkgs.chromium`) rather than `npx playwright install`.
 
 **MCP server.** `ahd mcp-serve` exposes `ahd.brief`, `ahd.list_tokens`, `ahd.get_token`, `ahd.palette`, `ahd.type_system`, `ahd.reference`, `ahd.lint`, `ahd.vision_rules` over stdio JSON-RPC for any MCP-capable agent (Claude Code, Cursor, Windsurf, Zed).
 
@@ -109,8 +109,8 @@ Requires Node 20+. Screenshot rendering requires `chromium` available on `PATH`;
 ahd list                                      # style tokens
 ahd show swiss-editorial                      # inspect one
 ahd compile brief.yml --out ./out             # per-model prompts + spec.json
-ahd lint page.html                            # 34 HTML/CSS rules + 3 SVG rules
-ahd vision-rules                              # the 13 vision-only rules (9 web/graphic + 4 image)
+ahd lint page.html                            # 35 HTML/CSS rules + 3 SVG rules
+ahd vision-rules                              # the 14 vision-only rules (9 web/graphic + 4 image + 1 layout)
 ahd mcp-serve                                 # MCP server over stdio
 
 # Controlled eval, OSS-only (free tier, no Anthropic/OpenAI account needed)
@@ -121,10 +121,18 @@ CF_API_TOKEN=… CF_ACCOUNT_ID=… \
     --n 5 \
     --report docs/evals/$(date +%Y-%m-%d)-oss.md
 
-# Plus frontier (needs provider keys; CF_AI_GATEWAY optional proxy)
+# Plus frontier via provider API keys (CF_AI_GATEWAY optional proxy)
 ahd eval-live swiss-editorial \
   --brief briefs/landing.yml \
   --models claude-opus-4-7,gpt-5,gemini-3-pro,cf:@cf/mistralai/mistral-small-3.1-24b-instruct \
+  --n 10 \
+  --report docs/evals/latest.md
+
+# Frontier via subscription CLIs (Claude Code / Codex / Gemini CLI,
+# no API billing; requires the CLIs on PATH and logged in)
+ahd eval-live swiss-editorial \
+  --brief briefs/landing.yml \
+  --models claude-code:claude-opus-4-7,codex-cli:gpt-5.4,gemini-cli:gemini-3-pro,cf:@cf/meta/llama-3.3-70b-instruct-fp8-fast \
   --n 10 \
   --report docs/evals/latest.md
 

@@ -29,7 +29,7 @@ export default [
 
 ## What it catches
 
-Every source-level rule in the AHD slop taxonomy. The current set of 28 is listed in [`docs/LINTER_SPEC.md`](https://github.com/Ad-Astra-Computing/ahd/blob/main/docs/LINTER_SPEC.md) in the parent repository.
+Every source-level rule in the AHD slop taxonomy. The current set of 38 (35 HTML/CSS plus 3 SVG) is listed in [`docs/LINTER_SPEC.md`](https://github.com/Ad-Astra-Computing/ahd/blob/main/docs/LINTER_SPEC.md) in the parent repository. Run `ahd lint-rules` for the live list.
 
 ## Licence
 

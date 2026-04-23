@@ -6,14 +6,14 @@ Source of truth for what's shipped, what's scaffolded, and what's gated on exter
 
 - `ahd compile` CLI: brief + style token → `spec.json` + per-model prompts
 - Style-token schema and validator (`zod`-backed)
-- Slop taxonomy documented (39 tells, enforced by 34 HTML/CSS rules, 3 SVG rules, and 14 vision-critic rules)
+- Slop taxonomy documented (39 tells, enforced by 35 HTML/CSS rules, 3 SVG rules, and 14 vision-critic rules)
 - Dogfooded README artwork rendered against `swiss-editorial`
 - Nix flake for reproducible builds of the `ahd` binary
 - TypeScript → `dist/` build via `tsc`
 
 ## v0.2 — shipped
 
-- `ahd lint <file.html|css>` with **34 source-level rules**
+- `ahd lint <file.html|css>` with **35 source-level rules**
 - Slop-fixture and clean-fixture HTML corpus with per-rule assertions
 - `ahd eval <token> --samples <dir>` scoring across pre-rendered samples
 - Per-cell attempted / errored / extractionFailed / scored counts, canonical model ids via `evals/<token>/manifest.json`
@@ -31,7 +31,7 @@ Source of truth for what's shipped, what's scaffolded, and what's gated on exter
 
 ## v0.4 — shipped
 
-- **Vision critic** (`ahd critique`) — renders each sample via headless Chromium, runs multimodal critic over 13 vision rules (9 web/graphic + 4 image-specific)
+- **Vision critic** (`ahd critique`) — renders each sample via headless Chromium, runs multimodal critic over 14 vision rules (9 web/graphic + 4 image-specific + 1 layout)
 - Rate-limit-aware retry / exponential backoff; default model `claude-haiku-4-5` for higher rate ceilings
 - Anthropic vision adapter + mock critic for deterministic tests
 - Partial run published 21 April 2026 (21 of 48 samples, rate-limit bound): [2026-04-21-swiss-vision.md](./evals/2026-04-21-swiss-vision.md)
@@ -51,7 +51,7 @@ Source of truth for what's shipped, what's scaffolded, and what's gated on exter
 - **`ahd eval-image`** — image-first eval pipeline saves generated PNGs directly with no HTML intermediary, scored by the vision critic against illustration and graphic tells. `--critic mock|anthropic` flag added to the CLI so users without `ANTHROPIC_API_KEY` can score offline rather than getting a report full of `.critique-error.txt` files.
 - **`ahd try-image`** — single-shot image demo command, parallel to `ahd try` for text.
 - **SVG / vector linter** — three source-level rules shipped (`ahd/svg/no-uniform-stroke`, `ahd/svg/palette-bounds`, `ahd/svg/no-perfect-symmetry`). Engine runs them automatically when the input contains an `<svg>`.
-- **Four image-specific vision rules** added to the critic: `ahd/image/no-malformed-anatomy`, `ahd/image/no-midjourney-face-symmetry`, `ahd/image/no-decorative-cursive-in-render`, `ahd/image/no-stock-diversity-casting`. Total vision ruleset is thirteen.
+- **Four image-specific vision rules** added to the critic: `ahd/image/no-malformed-anatomy`, `ahd/image/no-midjourney-face-symmetry`, `ahd/image/no-decorative-cursive-in-render`, `ahd/image/no-stock-diversity-casting`. Total vision ruleset is fourteen.
 - **Two image-surface style tokens** (`editorial-illustration`, `ad-creative-collision`) authored for image prompts, not web layouts. `compileImagePrompt` emits a positive + negative prompt pair rather than an HTML system prompt.
 - **Measured image run** published 21 April 2026 with real numbers: FLUX.1 schnell dropped 50% of vision tells compiled vs raw (Corporate Memphis fires: 67% → 0%); SDXL Lightning ignored the negative and stayed put. See `docs/evals/2026-04-21-editorial-image.md`.
 
