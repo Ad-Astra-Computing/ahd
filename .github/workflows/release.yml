@@ -63,7 +63,14 @@ jobs:
         run: npm run build
 
       - name: Pack tarball for the GitHub Release
-        run: npm pack
+        id: pack
+        run: |
+          # npm pack emits the tarball name on stdout (last line).
+          # Capture it so the release step doesn't hardcode the
+          # scope-or-name pattern. --json would be cleaner but
+          # requires newer npm and mixes well-formed output.
+          TARBALL="$(npm pack | tail -n 1)"
+          echo "tarball=$TARBALL" >> "$GITHUB_OUTPUT"
 
       - name: Publish to npm with provenance
         env:
@@ -82,7 +89,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh release create "${{ steps.version.outputs.tag }}" \
-            "adastra-ahd-${{ steps.version.outputs.version }}.tgz" \
+            "${{ steps.pack.outputs.tarball }}" \
             --title "${{ steps.version.outputs.tag }}" \
             --generate-notes \
             --verify-tag
