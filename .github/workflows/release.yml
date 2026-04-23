@@ -82,15 +82,12 @@ jobs:
         # processing. Loop over each package with a small sleep between
         # so the registry settles before the next publish lands.
         #
-        # Auth: NPM_TOKEN still in play. Trusted Publisher was
-        # configured on all three packages, but OIDC-only publishes
-        # returned the same 404 the unpublish/reserve window did. Needs
-        # investigation on the npm side (TP might not have persisted,
-        # workflow-filename field might have whitespace, or the
-        # org-level "disallow tokens" setting might be gating OIDC).
-        # Staying on the bootstrap token until that's sorted.
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        # Auth: OIDC via Trusted Publisher. All three packages require
+        # 2FA on publish, which the automation token can't satisfy
+        # (token bypasses 2FA, npm rejects). OIDC is 2FA-equivalent and
+        # the only accepted path. id-token: write in the permissions
+        # block mints the token; npm matches the claim against each
+        # package's Trusted Publisher config.
         run: |
           set -e
           for pkg_dir in . packages/eslint-plugin-ahd packages/stylelint-plugin-ahd; do
