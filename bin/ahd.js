@@ -1,19 +1,21 @@
 #!/usr/bin/env node
-import { readFile, writeFile, mkdir } from "node:fs/promises";
-import { resolve } from "node:path";
+import { readFile, writeFile, mkdir, readdir, stat } from "node:fs/promises";
+import { resolve, join } from "node:path";
 import { parse as parseYaml } from "yaml";
 import { loadDotEnv } from "../dist/env.js";
 await loadDotEnv();
 import { compile } from "../dist/compile.js";
 import { loadToken, listTokens, validateAll } from "../dist/load.js";
-import { lintFile, formatReport } from "../dist/lint/engine.js";
+import { lintFile, lintSource, lintSources, formatReport } from "../dist/lint/engine.js";
 import { rules as lintRules } from "../dist/lint/rules/index.js";
+import { crossFileRules as lintCrossRules } from "../dist/lint/cross-rules/index.js";
 import { loadConfig, findProjectConfig } from "../dist/lint/config.js";
 import { runEval, formatEvalReport } from "../dist/eval/runner.js";
 import { runLiveEval } from "../dist/eval/live.js";
 import { runStdioServer } from "../dist/mcp/server.js";
 import { VISION_RULES, anthropicVisionCritic, mockCritic } from "../dist/critique/critic.js";
 import { runCritiqueOnDir, formatCritiqueReport } from "../dist/critique/runner.js";
+import { renderUrlToPng, fileToBase64 } from "../dist/critique/screenshot.js";
 import { runLiveImageEval, formatImageEvalReport } from "../dist/eval/image-live.js";
 import { WORKERS_AI_IMAGE_DEFAULTS } from "../dist/eval/runners/workers-ai-image.js";
 import { runTry, runTryImage } from "../dist/try.js";
@@ -78,27 +80,60 @@ async function main() {
 
     case "lint": {
       const target = rest[0];
-      if (!target) exit("usage: ahd lint <file.html|file.css> [...] [--config <path>]");
+      if (!target) exit("usage: ahd lint <file.html|file.css> [...] [--config <path>] [--json] [--root <dist>]");
       const configFlag = flag(rest, "--config");
+      const rootFlag = flag(rest, "--root");
+      const jsonMode = rest.includes("--json");
       const files = rest
-        .filter((a, i) => !a.startsWith("--") && rest[i - 1] !== "--config");
+        .filter((a, i) => !a.startsWith("--") && rest[i - 1] !== "--config" && rest[i - 1] !== "--root");
       const configPath = configFlag ?? (await findProjectConfig(process.cwd()));
       const config = configPath ? await loadConfig(configPath) : undefined;
-      const reports = [];
-      for (const f of files) reports.push(await lintFile(f, undefined, config));
-      const merged = {
-        violations: reports.flatMap((r) => r.violations),
-        rulesRun: reports[0]?.rulesRun ?? [],
-        filesLinted: reports.length,
-        overrides: reports[0]?.overrides ?? [],
-      };
-      console.log(formatReport(merged));
-      if (config && merged.overrides.length > 0) {
-        console.log(
-          `\nActive overrides from ${configPath}${config.project ? ` (project: ${config.project})` : ""}:`,
+      // Build LintInput[] from files; when --root is given, strip it from
+      // each file path so cross-file rules (broken-links) see site-rooted
+      // paths like /index.html instead of absolute filesystem paths.
+      const absRoot = rootFlag ? resolve(rootFlag) : null;
+      const inputs = await Promise.all(
+        files.map(async (f) => {
+          const raw = await readFile(f, "utf8");
+          const isCss = /\.css$/i.test(f);
+          const abs = resolve(f);
+          let rooted = abs;
+          if (absRoot && abs.startsWith(absRoot)) {
+            rooted = abs.slice(absRoot.length) || "/";
+            if (!rooted.startsWith("/")) rooted = "/" + rooted;
+          }
+          return { file: rooted, html: isCss ? "" : raw, css: isCss ? raw : "" };
+        }),
+      );
+      const merged = lintSources(inputs, undefined, undefined, config);
+      if (jsonMode) {
+        const bySev = { error: 0, warn: 0, info: 0 };
+        for (const v of merged.violations) bySev[v.severity]++;
+        process.stdout.write(
+          JSON.stringify(
+            {
+              violations: merged.violations,
+              rulesRun: merged.rulesRun,
+              filesLinted: merged.filesLinted,
+              overrides: merged.overrides,
+              error: bySev.error,
+              warn: bySev.warn,
+              info: bySev.info,
+              files: merged.filesLinted,
+            },
+            null,
+            2,
+          ) + "\n",
         );
-        for (const o of merged.overrides) {
-          console.log(`  ${o.severity.padEnd(5)} ${o.ruleId}\n    reason: ${o.reason}`);
+      } else {
+        console.log(formatReport(merged));
+        if (config && merged.overrides.length > 0) {
+          console.log(
+            `\nActive overrides from ${configPath}${config.project ? ` (project: ${config.project})` : ""}:`,
+          );
+          for (const o of merged.overrides) {
+            console.log(`  ${o.severity.padEnd(5)} ${o.ruleId}\n    reason: ${o.reason}`);
+          }
         }
       }
       const hasErrors = merged.violations.some((v) => v.severity === "error");
@@ -288,6 +323,53 @@ async function main() {
       return;
     }
 
+    case "critique-url": {
+      const url = rest[0];
+      const token = flag(rest, "--token") ?? "swiss-editorial";
+      const critic = flag(rest, "--critic") ?? "anthropic";
+      const outPath = flag(rest, "--out") ?? "critique-url.json";
+      const shotPath = flag(rest, "--screenshot") ?? "critique-url.png";
+      if (!url || !/^https?:\/\//.test(url))
+        exit(
+          "usage: ahd critique-url <url> [--token <id>] [--critic anthropic|mock] [--out <file.json>] [--screenshot <file.png>]",
+        );
+      let criticImpl;
+      if (critic === "mock") {
+        criticImpl = mockCritic({});
+      } else {
+        const key = process.env.ANTHROPIC_API_KEY;
+        if (!key) exit("ANTHROPIC_API_KEY is not set (needed for --critic anthropic)");
+        criticImpl = anthropicVisionCritic({ apiKey: key });
+      }
+      console.log(`rendering ${url} → ${shotPath}`);
+      await renderUrlToPng(url, shotPath);
+      const imageBase64 = await fileToBase64(shotPath);
+      console.log(`running ${critic} vision critic against token=${token}`);
+      const violations = await criticImpl.critique({
+        imageBase64,
+        token,
+        url,
+      });
+      const result = {
+        url,
+        token,
+        critic: criticImpl.id,
+        runAt: new Date().toISOString(),
+        screenshot: shotPath,
+        violations,
+        vionRuleset: VISION_RULES.map((r) => r.id),
+      };
+      await writeFile(outPath, JSON.stringify(result, null, 2) + "\n");
+      if (violations.length === 0) {
+        console.log(`✓ no vision tells · wrote ${outPath}`);
+      } else {
+        console.log(`${violations.length} vision tell(s):`);
+        for (const v of violations) console.log(`  · ${v.ruleId}: ${v.message}`);
+        console.log(`wrote ${outPath}`);
+      }
+      return;
+    }
+
     default:
       console.log(`ahd — Artificial Human Design
 
@@ -296,7 +378,7 @@ commands:
   ahd show <id>                         print a style token as JSON
   ahd validate-tokens                   validate every token against the schema
   ahd compile <brief.yml> [--out d]     compile a brief into per-model prompts + spec.json
-  ahd lint <file.html|css> [...]        run the slop linter (28 source-level rules)
+  ahd lint <file.html|css> [...]        run the slop linter (29 source-level rules)
   ahd lint-rules                        list every source-level lint rule
   ahd vision-rules                      list every vision-only rule (run via the critic)
   ahd eval <token> [--samples dir]      aggregate lint scores across pre-rendered samples

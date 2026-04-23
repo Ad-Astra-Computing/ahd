@@ -19,6 +19,17 @@ function candidateChromiumPaths(): string[] {
   out.push("/usr/bin/chromium");
   out.push("/usr/bin/chromium-browser");
   out.push("/opt/homebrew/bin/chromium");
+  // macOS fallbacks: pkgs.chromium isn't supported on darwin, so on Macs
+  // we fall back to Chromium.app or Google Chrome if installed. The flake
+  // also ships playwright-driver.browsers on darwin (see flake.nix) which
+  // exports AHD_CHROMIUM_PATH when used via `nix develop`.
+  out.push("/Applications/Chromium.app/Contents/MacOS/Chromium");
+  out.push("/Applications/Google Chrome.app/Contents/MacOS/Google Chrome");
+  const home = process.env.HOME;
+  if (home) {
+    out.push(`${home}/Applications/Chromium.app/Contents/MacOS/Chromium`);
+    out.push(`${home}/Applications/Google Chrome.app/Contents/MacOS/Google Chrome`);
+  }
   return out;
 }
 
@@ -63,6 +74,33 @@ export async function renderFileToPng(
 ): Promise<void> {
   const html = await readFile(resolvePath(htmlPath), "utf8");
   await renderHtmlToPng(html, resolvePath(outPath), options);
+}
+
+export async function renderUrlToPng(
+  url: string,
+  outPath: string,
+  options: ScreenshotOptions = {},
+): Promise<void> {
+  const executablePath = await resolveChromiumExecutable();
+  const browser = await chromium.launch({
+    headless: true,
+    executablePath,
+  });
+  try {
+    const context = await browser.newContext({
+      viewport: options.viewport ?? DEFAULT_VIEWPORT,
+      deviceScaleFactor: 2,
+    });
+    const page = await context.newPage();
+    await page.goto(url, { waitUntil: "networkidle", timeout: 30000 });
+    await page.screenshot({
+      path: resolvePath(outPath),
+      fullPage: options.fullPage ?? true,
+      type: "png",
+    });
+  } finally {
+    await browser.close();
+  }
 }
 
 export async function fileToBase64(path: string): Promise<string> {

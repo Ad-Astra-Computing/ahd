@@ -4,7 +4,7 @@ Most of what an LLM produces when you ask it for a landing page looks the same. 
 
 This is not a failure of the models. It is what the models are for. An LLM emits the distributional centre of its training data, and the training data is a decade of SaaS landing pages converging on shadcn defaults. "Good design" in that corpus is a statistical majority, and the majority is slop.
 
-The goal of Artificial Human Design is to make LLMs deliver what the distribution will not: specificity, asymmetry, voice, restraint, risk. Before we can force the models out of the centre, we need to name the centre precisely. The list below is that centre. Thirty-eight tells, catalogued across web, graphic design, and typography. If you can tick more than four in a row on a page, you are looking at slop.
+The goal of Artificial Human Design is to make LLMs deliver what the distribution will not: specificity, asymmetry, voice, restraint, risk. Before we can force the models out of the centre, we need to name the centre precisely. The list below is that centre. Thirty-nine tells, catalogued across web, graphic design, and typography. If you can tick more than four in a row on a page, you are looking at slop.
 
 ## Web and UI
 
@@ -34,34 +34,35 @@ The easiest slop to spot, because the sample size is in the billions.
 22. A scroll-jacked hero with a looping 3D blob behind it. Usually the Spline default scene. Iridescent. Inexplicable.
 23. `prefers-reduced-motion` unrespected. Motion that nobody asked for and that nobody can opt out of.
 24. The house style of SaaS copy. "Build the future of X." "Ship faster." "Your AI-native Y." The hedge "may" used to avoid saying anything.
+25. Inline `style="animation:..."` on individual elements. An LLM shortcut for putting motion into an SVG or card without round-tripping to a stylesheet. Bypasses `prefers-reduced-motion`, bypasses the design-token system, concentrates motion policy inside a single HTML attribute where humans and linters both miss it.
 
 ## Graphic and Brand
 
 Slop that predates the current wave but which LLMs have enthusiastically adopted.
 
-25. Corporate Memphis. Flat illustration, pastel palette, one accent colour, big-headed figures floating through space. Already a cliché in 2018, still the default in 2026.
-26. The AI illustration look. Marginally too smooth, slightly too symmetrical, subsurface scatter on everything, six fingers when you zoom in.
-27. The iridescent 3D blob as hero art. A Stripe reference lifted out of Stripe's reasons for using it.
-28. Stock photography of a diverse team looking at a laptop in a sunlit office. If the laptop is open to a dashboard, the tell is complete.
-29. Mesh gradient backdrops deployed with no typographic counter-force. Stripe's grammar without Stripe's sentences.
-30. The wordmark that is a lowercase grotesque with a coloured dot or bracket. `productname.` Every Y Combinator batch since 2021.
-31. A monoline icon set with uniform 1.5px stroke and rounded caps. Feather, Lucide, the same set renamed. Zero visual authorship.
+26. Corporate Memphis. Flat illustration, pastel palette, one accent colour, big-headed figures floating through space. Already a cliché in 2018, still the default in 2026.
+27. The AI illustration look. Marginally too smooth, slightly too symmetrical, subsurface scatter on everything, six fingers when you zoom in.
+28. The iridescent 3D blob as hero art. A Stripe reference lifted out of Stripe's reasons for using it.
+29. Stock photography of a diverse team looking at a laptop in a sunlit office. If the laptop is open to a dashboard, the tell is complete.
+30. Mesh gradient backdrops deployed with no typographic counter-force. Stripe's grammar without Stripe's sentences.
+31. The wordmark that is a lowercase grotesque with a coloured dot or bracket. `productname.` Every Y Combinator batch since 2021.
+32. A monoline icon set with uniform 1.5px stroke and rounded caps. Feather, Lucide, the same set renamed. Zero visual authorship.
 
 ## Typography and System
 
 The quietest tells and the most reliable. Slop is almost always typographically thin.
 
-32. Two weights in the whole system. Regular and semibold. No thin, no black, no italic, no small caps, no tabular figures.
-33. Line-height 1.5 on everything. Body, headline, caption, button. One number does not fit all sizes.
-34. Measure blown out to 80–100 characters per line. Text is set for screens instead of for reading.
-35. Default tracking everywhere. No negative tracking on display sizes. No opened tracking on all-caps labels. Letters sit where the font delivered them.
-36. One typeface for the whole page. No pairing, no contrast of genre, no moment where type changes voice.
-37. Tailwind's default spacing scale applied flatly. 4, 8, 16, 24, 32, 48, 64. No compressed rhythms. No dramatic jumps. No reason for any one section to feel different from any other.
-38. A single column with no underlying grid. Elements stacked but not aligned to a shared structure. Every page is a todo list.
+33. Two weights in the whole system. Regular and semibold. No thin, no black, no italic, no small caps, no tabular figures.
+34. Line-height 1.5 on everything. Body, headline, caption, button. One number does not fit all sizes.
+35. Measure blown out to 80–100 characters per line. Text is set for screens instead of for reading.
+36. Default tracking everywhere. No negative tracking on display sizes. No opened tracking on all-caps labels. Letters sit where the font delivered them.
+37. One typeface for the whole page. No pairing, no contrast of genre, no moment where type changes voice.
+38. Tailwind's default spacing scale applied flatly. 4, 8, 16, 24, 32, 48, 64. No compressed rhythms. No dramatic jumps. No reason for any one section to feel different from any other.
+39. A single column with no underlying grid. Elements stacked but not aligned to a shared structure. Every page is a todo list.
 
 ## What this list is for
 
-The taxonomy is the negative space of the framework. Every rule in Artificial Human Design exists to force an LLM out of one of these defaults: a forbidden list at the prompt layer, a constraint in the brief, a lint rule in CI. You do not teach a model taste by asking nicely. You teach it by naming the thirty-eight things it should never do, and by checking its work against that list before a human ever sees it.
+The taxonomy is the negative space of the framework. Every rule in Artificial Human Design exists to force an LLM out of one of these defaults: a forbidden list at the prompt layer, a constraint in the brief, a lint rule in CI. You do not teach a model taste by asking nicely. You teach it by naming the thirty-nine things it should never do, and by checking its work against that list before a human ever sees it.
 
 Slop is a distributional problem. The answer is distributional too: shift the model off its median, and keep it there.
 

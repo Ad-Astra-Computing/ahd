@@ -6,7 +6,7 @@ AHD is a **guardrail and evaluation layer for AI-generated design** — web UI, 
 
 Four pieces, one purpose:
 
-1. **A named taxonomy of AI design slop.** Thirty-eight concrete tells across web, graphic and typographic surfaces, enforced today by 28 HTML/CSS rules, 3 SVG rules, and 13 vision-critic rules on rendered pixels (9 web/graphic + 4 image-specific). Rule count is higher than the taxonomy count because some entries are covered by more than one rule — for example, "Corporate Memphis" is caught both by the vision critic on rendered imagery and by the image compiler's negative prompt. The taxonomy is the product's spine; every rule and every token traces back to it.
+1. **A named taxonomy of AI design slop.** Thirty-nine concrete tells across web, graphic and typographic surfaces, enforced today by 29 HTML/CSS rules, 3 SVG rules, and 14 vision-critic rules on rendered pixels (9 web/graphic + 4 image-specific + 1 layout). Rule count is higher than the taxonomy count because some entries are covered by more than one rule — for example, "Corporate Memphis" is caught both by the vision critic on rendered imagery and by the image compiler's negative prompt. The taxonomy is the product's spine; every rule and every token traces back to it.
 2. **Style tokens as promptable design direction.** Ten curated bundles (Swiss-Editorial, Neubrutalist-Gumroad, Post-Digital-Green, Manual-SF, Memphis-Clash, Heisei-Retro, Monochrome-Editorial, Bauhaus-Revival, Editorial-Illustration, Ad-Creative-Collision) spanning web, editorial, identity, illustration and image-generation surfaces. Each declares grid or composition, type, palette, forbidden list, required quirks, reference lineage and per-model prompt fragments.
 3. **A brief compiler.** Turns a structured intent into constrained model instructions for any surface (`surfaces: [web, print, identity, illustration]`), with a `final` mode for single-shot output and a `draft` mode for human-in-the-loop exploration.
 4. **An empirical eval loop.** A controlled raw-vs-compiled comparison across any set of text or image generators, scored against the taxonomy, with attempted vs scored counts, canonical model ids, per-model deltas and per-tell frequency. Vision critique on rendered pixels via a multimodal critic.
@@ -40,7 +40,7 @@ See [docs/ROADMAP.md](docs/ROADMAP.md) for sequencing.
 
 - **Not a prompt pack.** Prompt packs sell style recipes. AHD's value is the reproducible scoring that tells you whether any recipe — ours or yours — actually moves a given model off its median.
 - **Not a canvas product.** Galileo, Subframe, v0, Lovable, Bolt, Magic Patterns all optimise "prompt → shipped UI"; Midjourney / Krea / Lovart optimise "prompt → image". AHD sits *beside* any of them as an enforcement layer.
-- **Not a design system.** Design systems (Material, shadcn, etc.) prescribe components; AHD prescribes *negatives* — the thirty-eight patterns a page or image must not exhibit — and measures compliance.
+- **Not a design system.** Design systems (Material, shadcn, etc.) prescribe components; AHD prescribes *negatives* — the thirty-nine patterns a page or image must not exhibit — and measures compliance.
 
 ## What makes this defensible
 
@@ -52,7 +52,7 @@ The moat is not the prompts. The moat is **the taxonomy plus reproducible scorin
 
 ## Prior art
 
-Pieces of AHD exist in the wild. The combination — across both web and image generation — does not.
+Pieces of AHD exist in the wild. This combination — across both web and image generation — does not.
 
 - **Prompt libraries for AI UI generation** — [uiprompt.io](https://uiprompt.io/), [Promter](https://promter.dev/), GenDesigns, WebGardens. Structured prompts and style recipes targeting v0, Lovable, Bolt, Claude, Cursor. Overlap: they encode style direction; they do not carry a taxonomy or an eval.
 - **Prompt libraries for image generation** — Lexica, Civitai prompt packs, PromptHero. Overlap: curated directions. Divergence: no evaluation of whether the generator actually follows them, no slop taxonomy for images.

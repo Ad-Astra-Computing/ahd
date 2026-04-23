@@ -1,6 +1,6 @@
 # AHD Linter Rule Spec
 
-Thirty-eight rules, one per slop tell. Each rule has an id, a surface (where it runs), a detection method, a severity and a suggested remediation. Rules ship as `eslint-plugin-ahd` for JSX/TSX and `stylelint-plugin-ahd` for CSS/Tailwind/vanilla. A subset (`ahd-vision/*`) ships as a screenshot-based critic pass for rules that cannot be decided from source alone.
+Thirty-nine rules, one per slop tell. Each rule has an id, a surface (where it runs), a detection method, a severity and a suggested remediation. Rules ship as `eslint-plugin-ahd` for JSX/TSX and `stylelint-plugin-ahd` for CSS/Tailwind/vanilla. A subset (`ahd-vision/*`) ships as a screenshot-based critic pass for rules that cannot be decided from source alone.
 
 ## Rule format
 

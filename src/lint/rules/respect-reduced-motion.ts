@@ -20,7 +20,7 @@ export const rule: Rule = {
         violation(
           rule,
           input,
-          `Animation declared but no @media (prefers-reduced-motion: reduce) block. People who disable motion deserve a still page.`,
+          `Animation declared but no @media (prefers-reduced-motion: reduce) block in the same stylesheet or scoped style. People who disable motion deserve a still page. Note: a global reduced-motion guard does not propagate into scoped component styles — each chunk that declares animation needs its own guard.`,
         ),
       ];
     }

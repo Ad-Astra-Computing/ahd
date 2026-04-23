@@ -39,6 +39,34 @@ describe("lint · slop fixture", () => {
   });
 });
 
+describe("lint · no-inline-style-animation", () => {
+  it("fires on inline style=\"animation:...\" attributes", () => {
+    const html = `<!doctype html><html><body>
+      <svg style="animation:dispatch-bob 2.8s ease-in-out infinite;opacity:0.42"></svg>
+    </body></html>`;
+    const report = lintSource({ file: "inline.html", html, css: "" });
+    const fired = report.violations
+      .filter((v) => v.ruleId === "ahd/no-inline-style-animation")
+      .map((v) => v.severity);
+    expect(fired).toContain("error");
+  });
+
+  it("fires on inline style=\"transition:...\" attributes too", () => {
+    const html = `<div style="transition: opacity 300ms"></div>`;
+    const report = lintSource({ file: "t.html", html, css: "" });
+    const ids = report.violations.map((v) => v.ruleId);
+    expect(ids).toContain("ahd/no-inline-style-animation");
+  });
+
+  it("does not fire when animation lives in a <style> block instead", () => {
+    const html = `<div class="x"></div>`;
+    const css = `.x { animation: spin 2s; } @media (prefers-reduced-motion: reduce) { .x { animation: none; } }`;
+    const report = lintSource({ file: "style.html", html, css });
+    const ids = report.violations.map((v) => v.ruleId);
+    expect(ids).not.toContain("ahd/no-inline-style-animation");
+  });
+});
+
 describe("lint · clean fixture", () => {
   it("produces zero violations on a swiss-editorial-style page", async () => {
     const report = await lint(CLEAN);
