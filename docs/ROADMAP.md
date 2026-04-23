@@ -6,7 +6,7 @@ Source of truth for what's shipped, what's scaffolded, and what's gated on exter
 
 - `ahd compile` CLI: brief + style token → `spec.json` + per-model prompts
 - Style-token schema and validator (`zod`-backed)
-- Slop taxonomy documented (38 tells: 28 source-checkable, 9 vision-only)
+- Slop taxonomy documented (38 tells, enforced by 28 HTML/CSS rules, 3 SVG rules, and 13 vision-critic rules)
 - Dogfooded README artwork rendered against `swiss-editorial`
 - Nix flake for reproducible builds of the `ahd` binary
 - TypeScript → `dist/` build via `tsc`
@@ -27,14 +27,14 @@ Source of truth for what's shipped, what's scaffolded, and what's gated on exter
 - Runners respect env vars: `ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, `GEMINI_API_KEY` / `GOOGLE_API_KEY`, `CF_API_TOKEN` + `CF_ACCOUNT_ID`
 - Controlled methodology: raw condition gets full brief-as-prose, compiled condition adds only the AHD system prompt
 - Compile `draft | final` modes; eval uses `final` to prevent "three divergent directions" fighting single-output constraints
-- Measured run published 21 April 2026: [docs/evals/2026-04-21-swiss.md](evals/2026-04-21-swiss.md)
+- Measured run published 21 April 2026: [2026-04-21-swiss.md](./evals/2026-04-21-swiss.md)
 
 ## v0.4 — shipped
 
-- **Vision critic** (`ahd critique`) — renders each sample via headless Chromium, runs multimodal critic over the 9 vision-only rules
+- **Vision critic** (`ahd critique`) — renders each sample via headless Chromium, runs multimodal critic over 13 vision rules (9 web/graphic + 4 image-specific)
 - Rate-limit-aware retry / exponential backoff; default model `claude-haiku-4-5` for higher rate ceilings
 - Anthropic vision adapter + mock critic for deterministic tests
-- Partial run published 21 April 2026 (21 of 48 samples, rate-limit bound): [docs/evals/2026-04-21-swiss-vision.md](evals/2026-04-21-swiss-vision.md)
+- Partial run published 21 April 2026 (21 of 48 samples, rate-limit bound): [2026-04-21-swiss-vision.md](./evals/2026-04-21-swiss-vision.md)
 - **MCP server** (`ahd mcp-serve`): 8 tools over stdio JSON-RPC, full initialize / tools/list / tools/call lifecycle tested
 - Chromium resolved via `AHD_CHROMIUM_PATH` / `PATH`; nix flake devShell provides `pkgs.chromium`
 
@@ -86,7 +86,7 @@ Budget is the gate, not engineering.
 
 1. **Live eval budget for n=30.** Substrate ready, budget is the gate.
 2. **Full vision coverage** — rate-limit retry now in place, re-run will finish all 48 samples.
-3. **Image runners** — no engineering blockers; a v0.6 sprint.
+3. **Additional image runners** — Cloudflare Workers AI image models ship today (FLUX, SDXL, DreamShaper). Replicate, OpenAI gpt-image-1 / DALL·E 3, Imagen, Firefly and Midjourney proxy are a v0.6.x sprint. No engineering blockers.
 
 ## How to unblock
 
