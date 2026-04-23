@@ -59,7 +59,7 @@ jobs:
       - run: npx ahd lint dist/**/*.html src/**/*.css
 ```
 
-A fuller example with token validation and a dry-run mock eval lives at `.github/workflows/ahd-lint.example.yml` in this repo. A Nix-based variant that uses the flake devShell is at `.github/workflows/ahd-nix.example.yml`.
+A fuller example with token validation and a dry-run mock eval lives at [`docs/workflow-examples/ahd-lint.example.yml`](workflow-examples/ahd-lint.example.yml). A Nix-based variant that uses the flake devShell is at [`docs/workflow-examples/ahd-nix.example.yml`](workflow-examples/ahd-nix.example.yml). These are consumer templates; copy them into `.github/workflows/` in your own repository.
 
 ### As a pre-commit hook
 
