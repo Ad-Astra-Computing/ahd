@@ -104,6 +104,42 @@ jobs:
           # Regenerate package-lock.json to match the new workspace versions.
           npm install --ignore-scripts --package-lock-only
 
+      - name: Prepend CHANGELOG.md entry
+        if: inputs.dry_run == false
+        run: |
+          # Find the previous tag (if any); the script understands a
+          # commit SHA fallback for the first-ever release.
+          PREV_TAG=$(git tag --sort=-v:refname | head -n 1 || true)
+          if [ -z "$PREV_TAG" ]; then
+            PREV_TAG=$(git rev-list --max-parents=0 HEAD)
+          fi
+          NEW_TAG="v${{ steps.ver.outputs.new }}"
+          TODAY=$(date -u +%Y-%m-%d)
+          SECTION=$(mktemp)
+          {
+            echo "## $NEW_TAG · $TODAY"
+            echo
+            ./scripts/gen-release-notes.sh "$PREV_TAG" HEAD
+          } > "$SECTION"
+
+          if [ -f CHANGELOG.md ]; then
+            # Prepend the new section above whatever's there. Preserve
+            # any hand-written top-level heading if one exists.
+            if head -n 1 CHANGELOG.md | grep -qE '^# '; then
+              HEADER=$(head -n 1 CHANGELOG.md)
+              TAIL=$(tail -n +2 CHANGELOG.md)
+              { echo "$HEADER"; echo; cat "$SECTION"; echo "$TAIL"; } > CHANGELOG.md.new
+            else
+              { cat "$SECTION"; cat CHANGELOG.md; } > CHANGELOG.md.new
+            fi
+            mv CHANGELOG.md.new CHANGELOG.md
+          else
+            { echo "# Changelog"; echo; cat "$SECTION"; } > CHANGELOG.md
+          fi
+          echo "::group::new CHANGELOG.md top"
+          head -n 40 CHANGELOG.md
+          echo "::endgroup::"
+
       - name: Commit + tag + push
         if: inputs.dry_run == false
         run: |
