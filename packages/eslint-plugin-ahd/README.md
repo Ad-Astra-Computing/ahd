@@ -1,6 +1,6 @@
 # eslint-plugin-ahd
 
-ESLint plugin that enforces the AHD slop-linter rules against JSX and HTML-in-source. Every rule in this plugin is derived programmatically from the shared rule engine in [@adastra/ahd](https://www.npmjs.com/package/@adastra/ahd), so it stays in lockstep with the CLI, the MCP server, and the eval pipeline.
+ESLint plugin that enforces the AHD slop-linter rules against JSX and HTML-in-source. Every rule in this plugin is derived programmatically from the shared rule engine in [@adastracomputing/ahd](https://www.npmjs.com/package/@adastracomputing/ahd), so it stays in lockstep with the CLI, the MCP server, and the eval pipeline.
 
 ## Install
 
