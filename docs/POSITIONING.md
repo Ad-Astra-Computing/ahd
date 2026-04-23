@@ -6,8 +6,8 @@ AHD is a **guardrail and evaluation layer for AI-generated design** — web UI, 
 
 Four pieces, one purpose:
 
-1. **A named taxonomy of AI design slop.** Thirty-eight concrete tells across web, graphic and typographic surfaces. 28 decidable from source (HTML / CSS / SVG), 9 decidable only from rendered pixels. The taxonomy is the product's spine; every rule and every token traces back to it.
-2. **Style tokens as promptable design direction.** Eight curated bundles (Swiss-Editorial, Neubrutalist-Gumroad, Post-Digital-Green, Manual-SF, Memphis-Clash, Heisei-Retro, Monochrome-Editorial, Bauhaus-Revival) that span web, editorial, identity and illustration. Each declares grid, type, palette, forbidden list, required quirks, reference lineage and per-model prompt fragments.
+1. **A named taxonomy of AI design slop.** Thirty-eight concrete tells across web, graphic and typographic surfaces, enforced today by 28 HTML/CSS rules, 3 SVG rules, and 13 vision-critic rules on rendered pixels (9 web/graphic + 4 image-specific). Rule count is higher than the taxonomy count because some entries are covered by more than one rule — for example, "Corporate Memphis" is caught both by the vision critic on rendered imagery and by the image compiler's negative prompt. The taxonomy is the product's spine; every rule and every token traces back to it.
+2. **Style tokens as promptable design direction.** Ten curated bundles (Swiss-Editorial, Neubrutalist-Gumroad, Post-Digital-Green, Manual-SF, Memphis-Clash, Heisei-Retro, Monochrome-Editorial, Bauhaus-Revival, Editorial-Illustration, Ad-Creative-Collision) spanning web, editorial, identity, illustration and image-generation surfaces. Each declares grid or composition, type, palette, forbidden list, required quirks, reference lineage and per-model prompt fragments.
 3. **A brief compiler.** Turns a structured intent into constrained model instructions for any surface (`surfaces: [web, print, identity, illustration]`), with a `final` mode for single-shot output and a `draft` mode for human-in-the-loop exploration.
 4. **An empirical eval loop.** A controlled raw-vs-compiled comparison across any set of text or image generators, scored against the taxonomy, with attempted vs scored counts, canonical model ids, per-model deltas and per-tell frequency. Vision critique on rendered pixels via a multimodal critic.
 
@@ -68,16 +68,16 @@ The differentiator, plainly: **nobody else bundles a named AI-slop taxonomy span
 We promise:
 
 - An honest, versioned taxonomy that spans web, graphic and illustration surfaces.
-- A deterministic, source-level linter for every taxonomy entry that can be decided from code (HTML / CSS today; SVG and vector on the roadmap).
-- A vision-critic pipeline that works on any rendered image — web screenshot or generated illustration.
-- An eval harness that publishes attempted / extracted / scored counts, canonical model ids, per-model deltas — including negative results.
-- Style tokens that declare their forbidden lists, required quirks and references publicly.
+- A deterministic source-level linter covering every taxonomy entry that can be decided from code: 28 rules for HTML/CSS and 3 for SVG, with more source-level coverage of image-generation output planned as image-specific formats are added.
+- A vision-critic pipeline (13 rules) that works on any rendered image — web screenshot or generated illustration.
+- An eval harness that publishes attempted / extracted / scored counts, canonical model ids, per-model deltas — including negative results. Runs today for text-to-HTML (`ahd eval-live`) and for image generation (`ahd eval-image`).
+- Style tokens that declare their forbidden lists, required quirks and references publicly, across both web and image surfaces.
 
 We do not promise:
 
-- That the compiled brief beats the raw brief for every model. It does not. Published results include Claude Opus 4.7 dropping slop tells to zero, Qwen 2.5 Coder being unmoved, and Llama 3.3 70B *regressing* under the long compiled prompt. The framework exposes these differences; it does not paper over them.
+- That the compiled brief beats the raw brief for every model. It does not. Published results include Claude Opus 4.7 dropping slop tells to zero, Qwen 2.5 Coder being unmoved, Llama 3.3 70B *regressing* under the long compiled prompt, and SDXL Lightning ignoring the image negative entirely. The framework exposes these differences; it does not paper over them.
 - Aesthetic judgement. The linter catches *tells*, not *taste*. A page or image can pass every rule and still be bad design. AHD narrows the output; a human still picks.
-- Coverage of every modality at once. Web is end-to-end today; image generation is on the roadmap as the next vertical with honest boundaries on what's shipped versus shipping.
+- Coverage of every runner at once. CF Workers AI text and image models are wired today; Replicate, OpenAI image, Imagen, Firefly and Midjourney are on the v0.6.x follow-up list.
 
 ## The one-line version
 

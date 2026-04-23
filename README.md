@@ -67,7 +67,7 @@ Full report with per-tell counts and the prompts used: [docs/evals/2026-04-21-ed
 
 **MCP server.** `ahd mcp-serve` exposes `ahd.brief`, `ahd.list_tokens`, `ahd.get_token`, `ahd.palette`, `ahd.type_system`, `ahd.reference`, `ahd.lint`, `ahd.vision_rules` over stdio JSON-RPC for any MCP-capable agent (Claude Code, Cursor, Windsurf, Zed).
 
-**Eight style tokens.** `swiss-editorial`, `manual-sf`, `neubrutalist-gumroad`, `post-digital-green`, `monochrome-editorial`, `memphis-clash`, `heisei-retro`, `bauhaus-revival`. Each declares grid, type, OKLCH palette, forbidden list, required quirks, reference lineage and per-model prompt fragments. Schema in [docs/STYLE_TOKEN_SCHEMA.md](docs/STYLE_TOKEN_SCHEMA.md).
+**Ten style tokens.** `swiss-editorial`, `manual-sf`, `neubrutalist-gumroad`, `post-digital-green`, `monochrome-editorial`, `memphis-clash`, `heisei-retro`, `bauhaus-revival`, `editorial-illustration`, `ad-creative-collision`. Eight target web/editorial surfaces; the last two target image generation. Each declares grid (or composition, for image tokens), type, OKLCH palette, forbidden list, required quirks, reference lineage and per-model prompt fragments. Schema in [docs/STYLE_TOKEN_SCHEMA.md](docs/STYLE_TOKEN_SCHEMA.md).
 
 ---
 
@@ -109,8 +109,8 @@ Requires Node 20+. Screenshot rendering requires `chromium` available on `PATH`;
 ahd list                                      # style tokens
 ahd show swiss-editorial                      # inspect one
 ahd compile brief.yml --out ./out             # per-model prompts + spec.json
-ahd lint page.html                            # 28 source-level slop rules
-ahd vision-rules                              # the 9 vision-only rules (run via the critic)
+ahd lint page.html                            # 28 HTML/CSS rules + 3 SVG rules
+ahd vision-rules                              # the 13 vision-only rules (9 web/graphic + 4 image)
 ahd mcp-serve                                 # MCP server over stdio
 
 # Controlled eval, OSS-only (free tier, no Anthropic/OpenAI account needed)
