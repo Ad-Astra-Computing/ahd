@@ -24,18 +24,18 @@
         font-size="18" fill="#141414">
     forces LLMs out of design slop.
   </text>
-  <!-- Ad Astra Computing mark: the twin-ellipse orbit + four-point
-       star glyph pulled from the canonical brand logo, scaled to
-       ~16px tall and placed before the metadata row. Strokes use
-       non-scaling-stroke so the thin orbit lines stay readable at
-       this size. Ink colour matches the page; this is the org
-       identity, not a spot-colour accent. -->
-  <g transform="translate(96, 344) scale(0.125)">
-    <ellipse cx="64" cy="68" rx="60" ry="24" stroke="#141414" stroke-width="4" fill="none"
-             vector-effect="non-scaling-stroke" transform="rotate(-15, 64, 68)"/>
-    <ellipse cx="64" cy="68" rx="60" ry="24" stroke="#141414" stroke-width="4" fill="none"
-             vector-effect="non-scaling-stroke" transform="rotate(15, 64, 68)"/>
-    <path d="M64 8C64.6 28 67 34 88 35C67 36 64.6 42 64 62C63.4 42 61 36 40 35C61 34 63.4 28 64 8Z" fill="#141414"/>
+  <!-- Ad Astra Computing mark: twin-ellipse orbit + four-point star,
+       geometry taken verbatim from adastracomputing.com/favicon.svg
+       so the ahd-mark and the live brand stay bit-identical. Ink
+       colour substituted for white to sit on the swiss-editorial
+       paper; stroke uses non-scaling-stroke so the orbit lines
+       stay crisp at small scale. -->
+  <g transform="translate(96, 346) scale(0.5)">
+    <ellipse cx="16" cy="18" rx="15" ry="6" stroke="#141414" stroke-width="2"
+             vector-effect="non-scaling-stroke" fill="none" transform="rotate(-15, 16, 18)"/>
+    <ellipse cx="16" cy="18" rx="15" ry="6" stroke="#141414" stroke-width="2"
+             vector-effect="non-scaling-stroke" fill="none" transform="rotate(15, 16, 18)"/>
+    <path d="M16 2C16.3 8 17 10 24 10.5C17 11 16.3 13 16 19C15.7 13 15 11 8 10.5C15 10 15.7 8 16 2Z" fill="#141414"/>
   </g>
   <!-- rule: metadata row, tabular feel, micro scale, left-aligned to grid
        (shifted right to sit past the Ad Astra Computing mark). -->
