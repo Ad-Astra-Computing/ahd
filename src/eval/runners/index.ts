@@ -19,7 +19,21 @@ export function runnerFromSpec(spec: string): ModelRunner {
       baseURL: cfGatewayUrl("anthropic"),
     });
   }
-  if (spec.startsWith("gpt") || spec.startsWith("o")) {
+  if (spec.startsWith("ollama:")) {
+    const model = spec.slice("ollama:".length);
+    return ollamaRunner({ model });
+  }
+  if (spec.startsWith("cf:")) {
+    const model = spec.slice("cf:".length);
+    const token = process.env.CF_API_TOKEN ?? process.env.CLOUDFLARE_API_TOKEN;
+    const account =
+      process.env.CF_ACCOUNT_ID ?? process.env.CLOUDFLARE_ACCOUNT_ID;
+    if (!token) throw new Error("CF_API_TOKEN is not set");
+    if (!account) throw new Error("CF_ACCOUNT_ID is not set");
+    return workersAiRunner({ apiToken: token, accountId: account, model });
+  }
+  // OpenAI 'o-series' specs must match /^o[1-9]/ so we don't steal 'ollama:*'.
+  if (spec.startsWith("gpt") || /^o[1-9]/.test(spec)) {
     const key = process.env.OPENAI_API_KEY;
     if (!key) throw new Error("OPENAI_API_KEY is not set");
     return openaiRunner({
@@ -36,19 +50,6 @@ export function runnerFromSpec(spec: string): ModelRunner {
       model: spec,
       baseURL: cfGatewayUrl("google-ai-studio"),
     });
-  }
-  if (spec.startsWith("ollama:")) {
-    const model = spec.slice("ollama:".length);
-    return ollamaRunner({ model });
-  }
-  if (spec.startsWith("cf:")) {
-    const model = spec.slice("cf:".length);
-    const token = process.env.CF_API_TOKEN ?? process.env.CLOUDFLARE_API_TOKEN;
-    const account =
-      process.env.CF_ACCOUNT_ID ?? process.env.CLOUDFLARE_ACCOUNT_ID;
-    if (!token) throw new Error("CF_API_TOKEN is not set");
-    if (!account) throw new Error("CF_ACCOUNT_ID is not set");
-    return workersAiRunner({ apiToken: token, accountId: account, model });
   }
   throw new Error(
     `Unknown model spec: ${spec}. Prefix with 'claude', 'gpt', 'gemini', 'cf:', 'ollama:' or use 'mock-slop' / 'mock-swiss'.`,
