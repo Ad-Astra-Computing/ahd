@@ -1,0 +1,111 @@
+# Monthly vision-critic eval.
+#
+# Extends the weekly source-only eval with a vision pass over the
+# rendered samples. Different cadence (monthly vs weekly) because
+# vision scoring costs real money: Anthropic vision API is billed
+# per image input token. At Claude Haiku defaults (~$0.001/image)
+# the 600-sample run comes to roughly $1-2/month; we rerun at
+# month cadence instead of weekly to keep the annual bill bounded
+# and still catch drift well ahead of the source-only signal.
+#
+# Runs a full ahd eval-live to generate fresh samples, then
+# critiques each rendered sample with the Anthropic vision critic.
+# Commits the report to docs/evals/monthly/<date>.md.
+#
+# Secrets required on the repo:
+#   - CF_API_TOKEN + CF_ACCOUNT_ID: text generation via CF Workers AI
+#   - ANTHROPIC_API_KEY: the vision critic's model access
+#
+# Output: a dated report at docs/evals/monthly/<YYYY-MM-DD>.md with
+# per-cell vision-tell counts, per-tell frequency, and comparison
+# to source-only numbers from the same samples.
+
+name: monthly-vision-eval
+
+on:
+  schedule:
+    # First Monday of each month, 06:13 UTC. Falls between day 1 and
+    # day 7; the 'Mon' filter selects only Mondays so the effective
+    # cadence is once per month. Off-zero minute to avoid the herd.
+    - cron: "13 6 1-7 * 1"
+  workflow_dispatch:
+    inputs:
+      note:
+        description: "Optional note to include in the generated report header"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+
+jobs:
+  vision-eval:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node (pinned)
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22.22.2"
+
+      - name: Install
+        run: npm ci
+
+      - name: Build (tsc -> dist/)
+        run: npm run build
+
+      - name: Install chromium for the vision-critic render step
+        # Vision critic renders each HTML sample via headless
+        # chromium before scoring. Playwright's install is the
+        # most portable path in CI today; when ahd-site moves to
+        # GitHub and we add nix-in-CI for reproducible chromium,
+        # swap this for the flake's pkgs.chromium binary.
+        run: npx playwright install --with-deps chromium
+
+      - name: Run eval-live (fresh samples for this run)
+        env:
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+          CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+        run: |
+          # Same roster as weekly-eval. Fresh samples give a point-in-
+          # time snapshot rather than stacking drift on top of last
+          # week's run.
+          REPORT_DATE=$(date -u +%Y-%m-%d)
+          mkdir -p docs/evals/monthly
+          node ./bin/ahd.js eval-live swiss-editorial \
+            --brief briefs/landing.yml \
+            --models cf:@cf/google/gemma-4-26b-a4b-it,cf:@cf/meta/llama-4-scout-17b-16e-instruct,cf:@cf/mistralai/mistral-small-3.1-24b-instruct,cf:@cf/openai/gpt-oss-120b,cf:@cf/qwen/qwen3-30b-a3b-fp8 \
+            --n 30 \
+            --out evals \
+            --report "docs/evals/monthly/${REPORT_DATE}-source.md"
+          echo "REPORT_DATE=$REPORT_DATE" >> "$GITHUB_ENV"
+
+      - name: Run vision critique (Anthropic, Haiku default)
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          # Score each rendered sample against the 14 vision rules.
+          # --critic anthropic uses the Anthropic HTTP API because
+          # Claude Code CLI can't authenticate on a headless runner
+          # without a subscription session. Haiku is the default
+          # critic model (lowest cost at reasonable fidelity).
+          node ./bin/ahd.js critique swiss-editorial \
+            --samples evals \
+            --critic anthropic \
+            --out critiques \
+            --report "docs/evals/monthly/${{ env.REPORT_DATE }}-vision.md"
+
+      - name: Commit both reports
+        run: |
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git add docs/evals/monthly/
+          if git diff --cached --quiet; then
+            echo "No report changes to commit."
+          else
+            git commit -m "docs(evals): monthly source + vision run ${{ env.REPORT_DATE }}" -m "Automated monthly eval. Source-only report plus vision-critic report produced from the same samples. See the two files for per-cell numbers."
+            git push
+          fi
