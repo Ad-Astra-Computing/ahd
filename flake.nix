@@ -17,7 +17,7 @@
 
         ahd = pkgs.buildNpmPackage {
           pname = "ahd";
-          version = "0.1.0";
+          version = "0.5.0-beta.1";
           src = ./.;
           inherit nodejs;
 

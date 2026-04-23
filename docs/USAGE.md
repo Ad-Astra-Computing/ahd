@@ -63,9 +63,9 @@ A fuller example with token validation and a dry-run mock eval lives at `.github
 
 ### As a pre-commit hook
 
-The reference hook is at `.github/examples/pre-commit.example.sh`. Copy it to `.git/hooks/pre-commit` and make it executable. It lints only the staged HTML and CSS files, so the hook stays fast.
+The reference hook is at [.github/examples/pre-commit.example.sh](../.github/examples/pre-commit.example.sh). Copy it to `.git/hooks/pre-commit` and make it executable. It lints only the staged HTML and CSS files, so the hook stays fast.
 
-For projects that use husky, add the same one-liner under `.husky/pre-commit`. For projects that use lefthook, a `lefthook.yml` template is at `.github/examples/lefthook.example.yml`.
+For projects that use husky, add the same one-liner under `.husky/pre-commit`. For projects that use lefthook, a `lefthook.yml` template is at [.github/examples/lefthook.example.yml](../.github/examples/lefthook.example.yml).
 
 ## 2. Inside a design agent, via MCP
 
@@ -100,7 +100,7 @@ The canonical agent loop is three steps. Call `ahd.brief` to get a token-anchore
 
 ## 3. As an evaluation loop
 
-This integration is the most involved and the highest signal. You run the same brief through several models in both raw and compiled conditions, let the source linter and the vision critic score the output, and publish the report. This is how the numbers in `README.md` were produced.
+This integration is the most involved and the highest signal. You run the same brief through several models in both raw and compiled conditions, let the source linter and the vision critic score the output, and publish the report. This is how the numbers in [README.md](../README.md) were produced.
 
 ### Text to HTML
 

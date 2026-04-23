@@ -27,6 +27,6 @@
   <!-- rule: metadata row, tabular feel, micro scale, left-aligned to grid -->
   <text x="96" y="360" font-family="'Neue Haas Grotesk Text','Helvetica Now Text','Inter',sans-serif"
         font-size="11" letter-spacing="0.08em" fill="#6b6b6b">
-    v0.1.0  ·  Ad Astra Computing  ·  FSL-1.1-Apache-2.0
+    Ad Astra Computing  ·  FSL-1.1-Apache-2.0
   </text>
 </svg>

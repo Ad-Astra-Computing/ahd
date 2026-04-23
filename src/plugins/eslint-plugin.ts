@@ -50,7 +50,7 @@ export function createEslintPlugin() {
   }
 
   return {
-    meta: { name: "eslint-plugin-ahd", version: "0.1.0" },
+    meta: { name: "eslint-plugin-ahd", version: "0.5.0-beta.1" },
     rules: eslintRules,
     configs: {
       recommended: {

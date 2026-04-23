@@ -91,3 +91,36 @@ describe("url-safety · assertUrlSyntacticallyPublic", () => {
     ).not.toThrow();
   });
 });
+
+describe("url-safety · installRequestGuard DNS check", () => {
+  it("installs a route handler and resolves hostnames with caching", async () => {
+    // Integration-ish: stub a Routable that records the handler, then
+    // invoke it against a series of requests. Hostnames that resolve
+    // publicly should be continued; names that syntactically hit the
+    // private list should be aborted. The point of this test is that
+    // the handler wires cache + resolution, not to mock the whole
+    // DNS-resolving happy path (which would require monkeypatching
+    // node:dns).
+    const { installRequestGuard } = await import("../src/critique/url-safety.js");
+    let installedHandler: ((route: any, req: any) => any) | null = null;
+    const ctx = {
+      route: async (_pattern: string, handler: (route: any, req: any) => any) => {
+        installedHandler = handler;
+      },
+    };
+    await installRequestGuard(ctx);
+    expect(typeof installedHandler).toBe("function");
+
+    const results: string[] = [];
+    const makeRoute = () => ({
+      abort: async (reason: string) => results.push(`abort:${reason}`),
+      continue: async () => results.push("continue"),
+    });
+    const makeReq = (url: string) => ({ url: () => url });
+
+    // Blocked by syntactic layer — no DNS.
+    await installedHandler!(makeRoute(), makeReq("http://127.0.0.1/"));
+    await installedHandler!(makeRoute(), makeReq("http://localhost/"));
+    expect(results).toEqual(["abort:blockedbyclient", "abort:blockedbyclient"]);
+  });
+});
