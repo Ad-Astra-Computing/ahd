@@ -32,6 +32,7 @@ import { rule as a11yImgWithoutAlt } from "./a11y-img-without-alt.js";
 import { rule as a11yButtonWithoutLabel } from "./a11y-button-without-label.js";
 import { rule as a11yLinkWithoutText } from "./a11y-link-without-text.js";
 import { rule as a11yHeadingSkip } from "./a11y-heading-skip.js";
+import { rule as spaShellDetected } from "./spa-shell-detected.js";
 import { svgRulesAsRules } from "../svg/rules.js";
 import type { Rule } from "../types.js";
 
@@ -70,6 +71,7 @@ export const rules: Rule[] = [
   a11yButtonWithoutLabel,
   a11yLinkWithoutText,
   a11yHeadingSkip,
+  spaShellDetected,
   ...svgRulesAsRules,
 ];
 
