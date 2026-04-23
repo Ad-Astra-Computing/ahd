@@ -2,7 +2,7 @@
   "name": "@adastra/ahd",
   "version": "0.1.0",
   "description": "Artificial Human Design — a brief compiler, linter and style-token library that forces LLMs out of design slop.",
-  "license": "Apache-2.0",
+  "license": "SEE LICENSE IN LICENSE",
   "type": "module",
   "bin": {
     "ahd": "./bin/ahd.js"
