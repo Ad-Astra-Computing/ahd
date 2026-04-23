@@ -105,6 +105,8 @@ Every week a new product ships that lets an LLM generate a UI. Every product shi
 - [docs/SLOP_TAXONOMY.md](docs/SLOP_TAXONOMY.md) — the thirty-eight tells, sourced and annotated
 - [docs/LINTER_SPEC.md](docs/LINTER_SPEC.md) — every lint rule, its surface and its severity
 - [docs/STYLE_TOKEN_SCHEMA.md](docs/STYLE_TOKEN_SCHEMA.md) — the token schema and contribution rules
+- [docs/TESTING.md](docs/TESTING.md) — what we test today, what we test at v0.3, what we measure at v0.2
+- [docs/ROADMAP.md](docs/ROADMAP.md) — v0.2 through v0.5
 
 ---
 
