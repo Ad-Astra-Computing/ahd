@@ -25,7 +25,7 @@
     "stylelint": ">=15 <17"
   },
   "dependencies": {
-    "@adastracomputing/ahd": "0.7.0"
+    "@adastracomputing/ahd": "file:../.."
   },
   "repository": {
     "type": "git",
