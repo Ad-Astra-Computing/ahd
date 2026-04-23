@@ -10,7 +10,7 @@
 
 The product's one-line promise: **AHD measures and reduces specific, repeated AI design failures, across web and image generation.** The thirty-eight-tell taxonomy is named, versioned, and linted; per-token forbidden lists and required quirks are enforced in CI; every eval publishes attempted counts, canonical model ids, extraction failures, per-model deltas and negative results. That combination — taxonomy + reproducible scoring — is the moat, not the prompts.
 
-Today's shipped scope is **web UI end-to-end** (text-to-HTML runners for Claude / GPT / Gemini / Cloudflare Workers AI / Ollama, 28-rule source linter, vision critic, Playwright screenshots, MCP server, editor plugins). The taxonomy and vision critic already cover illustration and graphic tells (Corporate Memphis, AI-illustration glow, iridescent blobs, stock photography, monoline icon sets). **Image-generation model runners** (FLUX, SDXL, Imagen, DALL·E 3, Firefly, CF Workers AI image models) and an **image-first eval pipeline** are the next vertical on the roadmap — the substrate already spans both modalities; the remaining work is adapters and an SVG/vector linter.
+Today's shipped scope covers both verticals. **Web UI end-to-end**: text-to-HTML runners for Claude, GPT, Gemini, Cloudflare Workers AI and Ollama, a twenty-eight-rule source linter, a vision critic, Playwright screenshots, an MCP server and editor plugins. **Image generation end-to-end**: `ahd eval-image` pipeline with a Cloudflare Workers AI image runner (FLUX, SDXL, DreamShaper), four image-specific vision rules added to the critic (malformed anatomy, Midjourney face symmetry, decorative cursive in renders, stock diversity casting), a three-rule SVG source linter (uniform-stroke, palette-bounds, perfect-symmetry) and two image-first tokens (`editorial-illustration`, `ad-creative-collision`). Additional image runners (Replicate, DALL·E 3, Imagen, Firefly) are the remaining adapter work.
 
 ---
 
@@ -32,9 +32,24 @@ Three models moved in the direction the framework promises; one stayed put; one 
 
 A partial vision-critic pass (21 of 48 screenshots, limited by Anthropic's 30k tok/min rate cap) found **only one vision-only rule fire** (`mesh-has-counterforce` on a single raw sample). Interpretation: the editorial-landing brief does not elicit the iridescent-blob / Corporate-Memphis / laptop-stock-photo failure modes the vision layer was built to catch; the source linter already covers the failure modes these models actually exhibit here. Full vision report: [docs/evals/2026-04-21-swiss-vision.md](docs/evals/2026-04-21-swiss-vision.md).
 
-A rendered raw vs compiled pair from the Mistral run, same brief, same seed:
+A rendered raw vs compiled pair from the Mistral text run, same brief, same seed:
 
 <img src="docs/artwork/slop-vs-ahd.svg" alt="Mistral Small 3.1, same brief, same seed — raw on the left, AHD-compiled on the right" width="100%">
+
+## Image generation works the same way
+
+The v0.6 image-generation vertical is shipped. `ahd eval-image` runs a brief through any set of image models (Cloudflare Workers AI image models today, Replicate and frontier providers on the roadmap), saves raw and compiled PNGs, and scores each with the vision critic against the thirteen vision-only rules. Ran `briefs/editorial-illustration.yml` against two models on 21 April 2026, n=3 per cell.
+
+| Model | Raw mean tells | Compiled | Reduction |
+|---|---:|---:|---:|
+| `cfimg:@cf/black-forest-labs/flux-1-schnell` | 1.33 | 0.67 | 50% |
+| `cfimg:@cf/bytedance/stable-diffusion-xl-lightning` | 1.33 | 1.33 | 0% |
+
+FLUX respected the compiled prompt's negative and went from 67% Corporate-Memphis-fire on raw to 0% on compiled. SDXL Lightning ignored the negative entirely. This is a real finding: image-generation models vary in how seriously they take a negative-prompt list, and a framework that treats them as equivalent would lie about the numbers.
+
+<img src="docs/artwork/flux-image-before-after.svg" alt="FLUX.1 schnell, editorial illustration brief, raw vs AHD-compiled, 21 April 2026" width="100%">
+
+Full report with per-tell counts and the prompts used: [docs/evals/2026-04-21-editorial-image.md](docs/evals/2026-04-21-editorial-image.md).
 
 ---
 

@@ -1,0 +1,30 @@
+intent: |
+  An editorial illustration for a feature story about compound interest as
+  a quiet superpower. The image runs at the top of the article. Readers
+  should get the metaphor at a glance: small shapes, simple colour, one
+  visual pun. The page is ink on warm paper; the illustration is inset at
+  60% width, landscape. No figure, no mascot, no hands — just a geometric
+  reduction of the idea. Signed by the illustrator with a three-character
+  monogram in the bottom right at 11px.
+
+audience: |
+  Readers of a serious long-form publication (Economist / New Yorker / Reuters
+  audience). They are the reason illustration exists to visualise the thesis
+  of the piece before the body copy.
+
+token: editorial-illustration
+
+surfaces:
+  - illustration
+
+mustInclude:
+  - "a single semantic pun that plays on accumulation (stacking, layering, nesting, or branching)"
+  - "a strictly limited palette of ink + paper + one spot colour"
+  - "asymmetric composition, no mirror-axis balance"
+
+mustAvoid:
+  - "any human figure"
+  - "any hands"
+  - "any decorative typography overlaid on the artwork"
+  - "any soft shadows or gradient fills"
+  - "any pastel palette"

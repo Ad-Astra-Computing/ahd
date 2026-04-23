@@ -39,6 +39,47 @@ export function compile(
   };
 }
 
+export function compileImagePrompt(
+  brief: Brief,
+  token: StyleToken,
+): { prompt: string; negativePrompt: string } {
+  const fragments = token["prompt-fragments"];
+  const styleDirection = fragments.system.trim();
+  const forbidden = fragments.negative.trim();
+  const required = (token["required-quirks"] ?? []).join(". ");
+  const bannedPhrases = token.copy?.["banned-phrases"] ?? [];
+  const tokenForbidden = token.forbidden ?? [];
+
+  const positive = [
+    brief.intent.trim(),
+    "",
+    "Style direction:",
+    styleDirection,
+    required ? `Required qualities: ${required}.` : "",
+    brief.mustInclude?.length ? `Must include: ${brief.mustInclude.join("; ")}.` : "",
+  ]
+    .filter(Boolean)
+    .join("\n");
+
+  const negative = [
+    forbidden,
+    tokenForbidden.length ? `Absolutely avoid: ${tokenForbidden.join(", ")}.` : "",
+    bannedPhrases.length ? `No text containing: ${bannedPhrases.join(", ")}.` : "",
+    brief.mustAvoid?.length ? `Also avoid: ${brief.mustAvoid.join(", ")}.` : "",
+    "corporate memphis, alegria, pastel big-head figures with noodle limbs",
+    "six-finger hands, malformed anatomy",
+    "iridescent 3D blob, Spline default",
+    "AI-smooth subsurface-scatter glow",
+    "decorative cursive overlaid on render",
+    "midjourney face symmetry",
+    "stock laptop-in-office photography",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  return { prompt: positive, negativePrompt: negative };
+}
+
 export function briefAsProse(brief: Brief): string {
   const parts: string[] = [`Design intent: ${brief.intent.trim()}`];
   if (brief.audience) parts.push(`Audience: ${brief.audience.trim()}`);

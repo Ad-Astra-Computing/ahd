@@ -69,6 +69,34 @@ export const VISION_RULES: VisionRule[] = [
     prompt:
       "Is the icon set entirely monoline with 1.5px stroke and rounded caps? If yes, fire (info).",
   },
+  {
+    id: "ahd/image/no-malformed-anatomy",
+    description:
+      "Image-generation tells: six-finger hands, twisted limbs, doubled teeth, merged fingers, extra joints.",
+    prompt:
+      "Are there anatomical errors — hands with the wrong finger count, malformed teeth, doubled pupils, limbs that merge or vanish? If yes, fire.",
+  },
+  {
+    id: "ahd/image/no-midjourney-face-symmetry",
+    description:
+      "Impossibly symmetrical, glossy, age-smoothed human faces are a generator fingerprint.",
+    prompt:
+      "Are any human faces impossibly symmetrical, age-smoothed to porcelain, and glossy in the way that signals Midjourney / SDXL default rendering? If yes, fire.",
+  },
+  {
+    id: "ahd/image/no-decorative-cursive-in-render",
+    description:
+      "Fake cursive or unreadable script lettering overlaid on renders is a slop tell.",
+    prompt:
+      "Is there any calligraphic / cursive text rendered as part of the image itself that is unreadable or obviously AI-hallucinated? If yes, fire.",
+  },
+  {
+    id: "ahd/image/no-stock-diversity-casting",
+    description:
+      "Generic 'diverse team of five smiling professionals' casting pattern is a stock / Corporate-Memphis hand-me-down.",
+    prompt:
+      "Is the composition a generic diverse group of smiling professionals, evenly lit, each with a stock-style differentiating feature? If yes, fire.",
+  },
 ];
 
 export interface Critic {
@@ -129,6 +157,15 @@ function sleep(ms: number): Promise<void> {
   return new Promise((r) => setTimeout(r, ms));
 }
 
+function detectImageMime(base64: string): "image/png" | "image/jpeg" | "image/webp" | "image/gif" {
+  const head = base64.slice(0, 24);
+  if (head.startsWith("iVBORw0KGgo")) return "image/png";
+  if (head.startsWith("/9j/")) return "image/jpeg";
+  if (head.startsWith("UklGR") && base64.slice(24, 32).includes("V0VCUE")) return "image/webp";
+  if (head.startsWith("R0lGOD")) return "image/gif";
+  return "image/jpeg";
+}
+
 export function anthropicVisionCritic(options: AnthropicVisionOptions): Critic {
   const model = options.model ?? "claude-haiku-4-5-20251001";
   const maxRetries = options.maxRetries ?? 5;
@@ -140,6 +177,7 @@ export function anthropicVisionCritic(options: AnthropicVisionOptions): Critic {
         throw new Error("anthropicVisionCritic requires an imageBase64 input");
       }
       const systemPrompt = buildCriticPrompt(input.token);
+      const mediaType = detectImageMime(input.imageBase64);
       const body = JSON.stringify({
         model,
         max_tokens: 1024,
@@ -152,7 +190,7 @@ export function anthropicVisionCritic(options: AnthropicVisionOptions): Critic {
                 type: "image",
                 source: {
                   type: "base64",
-                  media_type: "image/png",
+                  media_type: mediaType,
                   data: input.imageBase64,
                 },
               },

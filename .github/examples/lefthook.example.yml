@@ -1,0 +1,16 @@
+# Example lefthook config for projects consuming AHD.
+# https://evilmartians.com/products/lefthook
+#
+# Install: cp this to lefthook.yml at the repo root, then `lefthook install`.
+
+pre-commit:
+  parallel: true
+  commands:
+    ahd-lint:
+      glob: "*.{html,css}"
+      run: npx ahd lint {staged_files}
+
+pre-push:
+  commands:
+    ahd-validate-tokens:
+      run: npx ahd validate-tokens

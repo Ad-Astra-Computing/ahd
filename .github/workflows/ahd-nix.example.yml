@@ -1,0 +1,34 @@
+# Example GitHub Actions workflow that uses the nix flake devShell.
+# Copy into your own repo and rename.
+#
+# Gives you the exact same chromium + node + tsc + prefetch-npm-deps
+# environment AHD uses locally, so CI output matches local output.
+
+name: ahd · nix
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: install nix
+        uses: DeterminateSystems/nix-installer-action@main
+
+      - name: cache nix store
+        uses: DeterminateSystems/magic-nix-cache-action@main
+
+      - name: dev shell · build + test
+        run: |
+          nix develop --command bash -c '
+            set -e
+            npm ci
+            npm run build
+            npm test
+            npx ahd validate-tokens
+          '

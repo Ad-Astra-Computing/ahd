@@ -1,0 +1,114 @@
+id: editorial-illustration
+name: "Editorial Illustration"
+version: 0.1.0
+status: draft
+licence: CC-BY-4.0
+authors:
+  - "Ad Astra Computing"
+
+provenance:
+  movement: "Editorial illustration in the New York Times / New Yorker lineage"
+  references:
+    - { name: "Christoph Niemann", kind: designer }
+    - { name: "Tom Gauld", kind: designer }
+    - { name: "Noma Bar", kind: designer }
+    - { name: "Malika Favre", kind: designer }
+    - { name: "Push Pin Studios (1960s)", kind: studio }
+  exemplars:
+    - { path: "exemplars/niemann-ted.jpg", caption: "Niemann TED cover" }
+
+mood:
+  keywords: [semantic, reductive, witty, flat, considered]
+  anti-keywords: [decorative, floating, noodle-limbed, pastel]
+
+type:
+  families:
+    display: { name: "Söhne Breit", fallback: ["GT America", "Inter Tight"] }
+    text:    { name: "Tiempos Text", fallback: ["Newsreader", "Source Serif"] }
+  pairing-rule: grotesque-display-plus-serif-caption
+  scale:
+    base: 16
+    ratio: 1.25
+    steps: [-1, 0, 1, 2, 3, 4]
+  weights: [400, 700]
+  tracking:
+    display: "-0.02em"
+    body: "0"
+    allcaps: "0.08em"
+  line-height:
+    display: 1.1
+    h2: 1.2
+    body: 1.5
+  measure: 52ch
+
+colour:
+  space: oklch
+  palette:
+    paper:   "oklch(0.96 0.01 75)"
+    ink:     "oklch(0.2 0 0)"
+    spot:    "oklch(0.55 0.2 25)"
+    accent:  "oklch(0.6 0.15 230)"
+  roles:
+    background: paper
+    foreground: ink
+    accent: spot
+    border: ink
+  contrast-tier: WCAG-AAA
+
+grid:
+  kind: single-frame
+  columns: 1
+  gutter: 0
+  baseline: 8
+
+space:
+  scale: [0, 4, 8, 16, 32, 64]
+
+surface:
+  radius:
+    scale: [0]
+    rule: "geometric primitives only; no soft radii"
+  border:
+    weight: 2
+    style: solid
+    colour: ink
+  shadow:
+    policy: "forbidden; depth via flat occlusion"
+  motion:
+    policy: "static; this is an illustration, not animation"
+
+forbidden:
+  - "corporate memphis, alegria, big-head noodle-limb figures"
+  - "pastel-only palettes"
+  - "iridescent 3D blobs"
+  - "subsurface-scatter AI glow"
+  - "stock photography"
+  - "decorative cursive overlaid on the image"
+  - "midjourney face symmetry"
+  - "six-finger hands"
+  - "monoline-uniform stroke vector illustration"
+
+required-quirks:
+  - "one semantic visual pun (the illustration must mean two things at once)"
+  - "flat geometric reduction: a concept expressed in 3–5 shapes"
+  - "asymmetric composition: no mirror-axis balance"
+
+copy:
+  voice: "wry, literate, understated"
+  banned-phrases:
+    - "build the future of"
+    - "AI-native"
+
+prompt-fragments:
+  system: |
+    Design an editorial illustration in the lineage of Christoph Niemann,
+    Noma Bar, Tom Gauld and Malika Favre. Flat vector reduction, no
+    gradients, no shadows, 3-5 shapes carrying one semantic pun.
+    Ink-on-warm-paper palette with a single spot colour (oxblood or muted
+    blue). Sharp geometric primitives only. Asymmetric composition. No
+    decorative typography overlaid on the image.
+  negative: |
+    No corporate memphis, no Alegria floating big-head figures, no pastel
+    palettes, no iridescent 3D blobs, no subsurface-scatter AI glow, no
+    stock photography, no decorative cursive text, no Midjourney face
+    symmetry, no six-finger hands, no monoline-uniform vector illustration.
