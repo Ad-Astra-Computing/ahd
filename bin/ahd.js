@@ -8,6 +8,7 @@ import { compile } from "../dist/compile.js";
 import { loadToken, listTokens, validateAll } from "../dist/load.js";
 import { lintFile, formatReport } from "../dist/lint/engine.js";
 import { rules as lintRules } from "../dist/lint/rules/index.js";
+import { loadConfig, findProjectConfig } from "../dist/lint/config.js";
 import { runEval, formatEvalReport } from "../dist/eval/runner.js";
 import { runLiveEval } from "../dist/eval/live.js";
 import { runStdioServer } from "../dist/mcp/server.js";
@@ -77,16 +78,29 @@ async function main() {
 
     case "lint": {
       const target = rest[0];
-      if (!target) exit("usage: ahd lint <file.html|file.css> [...]");
-      const files = rest.filter((a) => !a.startsWith("--"));
+      if (!target) exit("usage: ahd lint <file.html|file.css> [...] [--config <path>]");
+      const configFlag = flag(rest, "--config");
+      const files = rest
+        .filter((a, i) => !a.startsWith("--") && rest[i - 1] !== "--config");
+      const configPath = configFlag ?? (await findProjectConfig(process.cwd()));
+      const config = configPath ? await loadConfig(configPath) : undefined;
       const reports = [];
-      for (const f of files) reports.push(await lintFile(f));
+      for (const f of files) reports.push(await lintFile(f, undefined, config));
       const merged = {
         violations: reports.flatMap((r) => r.violations),
         rulesRun: reports[0]?.rulesRun ?? [],
         filesLinted: reports.length,
+        overrides: reports[0]?.overrides ?? [],
       };
       console.log(formatReport(merged));
+      if (config && merged.overrides.length > 0) {
+        console.log(
+          `\nActive overrides from ${configPath}${config.project ? ` (project: ${config.project})` : ""}:`,
+        );
+        for (const o of merged.overrides) {
+          console.log(`  ${o.severity.padEnd(5)} ${o.ruleId}\n    reason: ${o.reason}`);
+        }
+      }
       const hasErrors = merged.violations.some((v) => v.severity === "error");
       process.exit(hasErrors ? 1 : 0);
       return;

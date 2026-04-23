@@ -97,6 +97,13 @@ export const VISION_RULES: VisionRule[] = [
     prompt:
       "Is the composition a generic diverse group of smiling professionals, evenly lit, each with a stock-style differentiating feature? If yes, fire.",
   },
+  {
+    id: "ahd/layout-deadspace",
+    description:
+      "A two-column section where one column is significantly taller than the other produces visible dead space in the shorter neighbour. Happens most commonly when a left column of text sits beside a right column of product cards that grow over time.",
+    prompt:
+      "Is there a horizontal section where one column is clearly much taller than the other, creating a stretch of empty space in the shorter column? Pay particular attention to editorial-style two-column layouts (headline/intro on one side, cards or images on the other). If the shorter column is visibly empty for more than roughly 40% of the section's rendered height while the taller column is still going, fire.",
+  },
 ];
 
 export interface Critic {
