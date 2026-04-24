@@ -125,6 +125,10 @@ export function geminiCliRunner(options: GeminiCliOptions = {}): ModelRunner {
       const minimalEnv: NodeJS.ProcessEnv = {
         PATH: process.env.PATH ?? "/usr/bin:/bin",
         HOME: process.env.HOME ?? "",
+        // USER / LOGNAME required on macOS for keychain-backed
+        // subscription auth. See note in claude-code-cli.ts.
+        USER: process.env.USER,
+        LOGNAME: process.env.LOGNAME,
         GEMINI_SYSTEM_MD: sysPath,
       };
 

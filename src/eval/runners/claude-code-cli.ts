@@ -124,6 +124,13 @@ function runClaude(
       TMPDIR: parent.TMPDIR,
       LANG: parent.LANG,
       LC_ALL: parent.LC_ALL,
+      // `USER` is required for subscription-auth to reach the macOS
+      // keychain. Without it Claude Code falls through to "Not logged
+      // in" and exits 1 even though the keychain entry is present.
+      // Stripping it breaks the subscription path on current CLI
+      // builds; earlier versions tolerated its absence.
+      USER: parent.USER,
+      LOGNAME: parent.LOGNAME,
       // Preserve CLAUDE_* knobs the CLI itself reads (config dir
       // override, TTY detection, etc.) without forwarding unrelated
       // variables.

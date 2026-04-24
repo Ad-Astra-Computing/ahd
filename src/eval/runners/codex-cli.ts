@@ -68,6 +68,11 @@ export function codexCliRunner(options: CodexCliOptions = {}): ModelRunner {
       const minimalEnv: NodeJS.ProcessEnv = {
         PATH: process.env.PATH ?? "/usr/bin:/bin",
         HOME: workdir,
+        // USER / LOGNAME required on macOS for keychain lookups even
+        // when the CLI reads auth from a file; the OpenAI CLI's TLS /
+        // certificate verification path touches Keychain too.
+        USER: process.env.USER,
+        LOGNAME: process.env.LOGNAME,
       };
       try {
         // Bring only auth.json into the workdir's fake ~/.codex —
