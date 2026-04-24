@@ -71,9 +71,13 @@ export function parseHtml(input: LintInput): Parse5Node {
   const cached = _htmlCache.get(input);
   if (cached) return cached;
   const looksLikeDoc = /<!doctype\s|<html[\s>]/i.test(input.html);
+  // sourceCodeLocationInfo populates `startLine` on every element so
+  // rules can report line numbers alongside violations. Without it the
+  // viewer can't highlight the offending line in a sample.
+  const opts = { sourceCodeLocationInfo: true } as const;
   const tree = looksLikeDoc
-    ? (parseHtml5(input.html) as Parse5Node)
-    : (parseFragment(input.html) as Parse5Node);
+    ? (parseHtml5(input.html, opts) as Parse5Node)
+    : (parseFragment(input.html, opts) as Parse5Node);
   _htmlCache.set(input, tree);
   return tree;
 }

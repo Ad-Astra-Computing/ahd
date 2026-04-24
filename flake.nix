@@ -17,11 +17,11 @@
 
         ahd = pkgs.buildNpmPackage {
           pname = "ahd";
-          version = "0.8.2";
+          version = "0.8.3";
           src = ./.;
           inherit nodejs;
 
-          npmDepsHash = "sha256-mTJetv7JMotPdrt0+zFNCUY2h2JsB7Nk2b11Le4YTl8=";
+          npmDepsHash = "sha256-E2UV1vH4DozubPUdHsNmAy1bZC+r6YNMNJySVV36MUM=";
 
           # Run `tsc` to produce dist/; bin/*.js imports from dist/.
           npmBuildScript = "build";

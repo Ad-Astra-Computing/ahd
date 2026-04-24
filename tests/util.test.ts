@@ -69,6 +69,17 @@ describe("util · parseHtml + proseText", () => {
     expect(tags).toContain("strong");
   });
 
+  it("reports source-code location (startLine) on yielded elements", () => {
+    const html = "<div>\n  <p>First</p>\n  <p>Second</p>\n</div>";
+    const tree = parseHtml(input(html));
+    const entries = Array.from(proseText(tree)).filter(
+      (e) => e.element.tagName === "p",
+    );
+    expect(entries.length).toBe(2);
+    expect(entries[0].sourceLine).toBe(2);
+    expect(entries[1].sourceLine).toBe(3);
+  });
+
   it("handles document-level input as well as fragments", () => {
     const doc = parseHtml(
       input("<!doctype html><html><body><p>Hi</p></body></html>"),
