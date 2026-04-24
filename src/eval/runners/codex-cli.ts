@@ -110,25 +110,36 @@ export function codexCliRunner(options: CodexCliOptions = {}): ModelRunner {
         // Parse JSONL. We want the LAST agent_message event; Codex may
         // emit several (tool-call narration, intermediate reasoning).
         // The final agent_message is the authoritative completion.
+        // Codex's actual emitted shape for finished messages is
+        // `{"type":"item.completed","item":{"type":"agent_message","text":"..."}}`
+        // — read `evt.item.text` first. Earlier versions of this runner
+        // missed that field and fell through to stdout scanning, which
+        // pulled JSON-escaped HTML out of the raw event stream verbatim
+        // (every `\n` and `\"` written to disk as two characters). That
+        // bug is why gpt-5.4 samples in the 22 April 2026 n=30 run were
+        // stored as escaped strings; fixed in the taxonomy-page errata
+        // on ahd.adastra.computer and re-linted against decoded HTML.
         let finalText = "";
         for (const line of stdout.split("\n")) {
           if (!line.trim().startsWith("{")) continue;
           try {
             const evt = JSON.parse(line);
-            if (
+            const isAgentMessage =
               evt?.type === "agent_message" ||
               evt?.event === "agent_message" ||
-              (evt?.item?.type === "agent_message" && evt?.item?.content)
-            ) {
-              const text =
-                evt.text ??
-                evt.content ??
-                evt.item?.content ??
-                (Array.isArray(evt.item?.content)
-                  ? evt.item.content.map((c: any) => c.text ?? "").join("")
-                  : "");
-              if (typeof text === "string" && text.length) finalText = text;
-            }
+              evt?.item?.type === "agent_message";
+            if (!isAgentMessage) continue;
+
+            const raw =
+              evt.item?.text ??
+              evt.text ??
+              evt.content ??
+              evt.item?.content ??
+              (Array.isArray(evt.item?.content)
+                ? evt.item.content.map((c: any) => c.text ?? "").join("")
+                : "");
+            const text = typeof raw === "string" ? raw : "";
+            if (text.length) finalText = text;
           } catch {
             // Non-JSON lines get ignored; Codex occasionally prints
             // warnings before the event stream.
