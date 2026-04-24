@@ -1,7 +1,7 @@
 {
   "name": "@adastracomputing/ahd",
-  "version": "0.7.12",
-  "description": "Artificial Human Design — a brief compiler, linter and style-token library that forces LLMs out of design slop.",
+  "version": "0.8.0",
+  "description": "Artificial Human Design \u2014 a brief compiler, linter and style-token library that forces LLMs out of design slop.",
   "license": "SEE LICENSE IN LICENSE",
   "type": "module",
   "workspaces": [
@@ -47,7 +47,9 @@
   },
   "homepage": "https://ahd.adastra.computer",
   "dependencies": {
+    "parse5": "^8.0.1",
     "playwright-core": "^1.59.1",
+    "postcss": "^8.5.10",
     "yaml": "^2.6.1",
     "zod": "^3.24.1"
   },

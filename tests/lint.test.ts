@@ -69,6 +69,43 @@ describe("lint · no-em-dashes-in-prose", () => {
     const ids = report.violations.map((v) => v.ruleId);
     expect(ids).not.toContain("ahd/no-em-dashes-in-prose");
   });
+
+  // Regression: the prior regex-based implementation (pre-0.8.0) used
+  // lazy matching with a unioned open/close tag set. Inside a <li>
+  // that contained a nested <strong>, the regex terminated at the
+  // first </strong> and never scanned the text after it — so an
+  // em-dash that followed the nested element slipped past the rule.
+  // The parse5-based rewrite handles nesting correctly. Found in the
+  // wild on ahd.adastra.computer/usage before the 0.8.0 release.
+  it("fires on an em-dash that follows a nested <strong> inside a <li>", () => {
+    const html = `<ul><li><strong>CLI paths</strong> are not bit-identical to API paths — the harness adds framing.</li></ul>`;
+    const report = lintSource({ file: "x.html", html, css: "" });
+    const fired = report.violations.filter(
+      (v) => v.ruleId === "ahd/no-em-dashes-in-prose",
+    );
+    expect(fired.length).toBeGreaterThanOrEqual(1);
+  });
+
+  it("fires on an em-dash that follows a nested <em> inside a <p>", () => {
+    const html = `<p>The subscription <em>CLI</em> is the real model surface — not the raw API.</p>`;
+    const report = lintSource({ file: "x.html", html, css: "" });
+    const fired = report.violations.filter(
+      (v) => v.ruleId === "ahd/no-em-dashes-in-prose",
+    );
+    expect(fired.length).toBeGreaterThanOrEqual(1);
+  });
+
+  it("reports one violation per prose block, not one per nested element", () => {
+    const html = `<ul><li><strong>A</strong> — one em-dash here.</li></ul>`;
+    const report = lintSource({ file: "x.html", html, css: "" });
+    const fired = report.violations.filter(
+      (v) => v.ruleId === "ahd/no-em-dashes-in-prose",
+    );
+    // The outer <li> yields the full text including "— one em-dash
+    // here."; the nested <strong> yields only "A". Dedup by (line,
+    // snippet) leaves one report.
+    expect(fired.length).toBe(1);
+  });
 });
 
 describe("lint · no-inline-style-animation", () => {
