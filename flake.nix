@@ -30,6 +30,10 @@
             runHook preInstall
             mkdir -p $out/lib/node_modules/ahd
             cp -r bin src dist tokens docs package.json $out/lib/node_modules/ahd/
+            # workspace plugins live under packages/; node_modules contains
+            # @adastracomputing/eslint-plugin-ahd → packages/eslint-plugin-ahd
+            # symlinks that dangle without this copy.
+            cp -r packages $out/lib/node_modules/ahd/packages
             cp -r node_modules $out/lib/node_modules/ahd/node_modules
             mkdir -p $out/bin
             makeWrapper ${nodejs}/bin/node $out/bin/ahd \
