@@ -95,6 +95,18 @@ required-quirks:
 copy:
   voice: "technical, lowercase by default, terse"
 
+# Lint rules this token explicitly overrides. The compiled output is
+# token-faithful when these rules fire, so the linter should not penalise
+# their firings under this token.
+lint-overrides:
+  disable:
+    - id: ahd/require-type-pairing
+      reason: "post-digital-green specifies a single monospace face; pairing rules do not apply."
+    - id: ahd/weight-variety
+      reason: "Token mandates a conservative weight palette (typically two weights). Variety rule fires by design."
+    - id: ahd/radius-hierarchy
+      reason: "Token mandates border-radius: 0 across all elements. Radius hierarchy is intentionally absent."
+
 prompt-fragments:
   system: |
     Design post-digital. Everything in monospace. Dark green-black background,

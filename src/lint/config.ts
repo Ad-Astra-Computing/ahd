@@ -12,6 +12,7 @@ import { readFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { resolve } from "node:path";
 import type { Rule, Severity } from "./types.js";
+import type { StyleToken } from "../types.js";
 
 export interface RuleOverride {
   ruleId: string;
@@ -70,6 +71,79 @@ export async function findProjectConfig(
     const candidate = resolve(startDir, name);
     if (existsSync(candidate)) return candidate;
   }
+  return undefined;
+}
+
+/**
+ * Translate a style token's `lint-overrides` block into an AhdProjectConfig
+ * shape so the existing override pipeline can apply it. Tokens declare
+ * which rules they intentionally do not satisfy (single-monospace tokens
+ * suppress require-type-pairing, etc.); without this translation the
+ * linter scores token-correct output against rules the token explicitly
+ * rejects.
+ */
+export function tokenToLintConfig(
+  token: StyleToken,
+): AhdProjectConfig | undefined {
+  const lintOverrides = token["lint-overrides"];
+  if (!lintOverrides) return undefined;
+  const overrides: RuleOverride[] = [];
+  if (lintOverrides.disable) {
+    for (const d of lintOverrides.disable) {
+      overrides.push({ ruleId: d.id, severity: "off", reason: d.reason });
+    }
+  }
+  if (lintOverrides["enable-strict"]) {
+    for (const id of lintOverrides["enable-strict"]) {
+      overrides.push({
+        ruleId: id,
+        severity: "error",
+        reason: `Token ${token.id} marks ${id} enable-strict.`,
+      });
+    }
+  }
+  return overrides.length > 0
+    ? { project: `token:${token.id}`, overrides }
+    : undefined;
+}
+
+/**
+ * Merge a project config with a token-derived config. Project config
+ * always wins on rule-id collisions: a hand-authored .ahd.json represents
+ * an explicit choice that should override token defaults.
+ */
+export function mergeConfigs(
+  primary: AhdProjectConfig | undefined,
+  fallback: AhdProjectConfig | undefined,
+): AhdProjectConfig | undefined {
+  if (!primary) return fallback;
+  if (!fallback) return primary;
+  const seen = new Set(primary.overrides.map((o) => o.ruleId));
+  const merged = [
+    ...primary.overrides,
+    ...fallback.overrides.filter((o) => !seen.has(o.ruleId)),
+  ];
+  return { project: primary.project ?? fallback.project, overrides: merged };
+}
+
+/**
+ * Detect an active AHD token reference in HTML. Looks for, in order:
+ *   <meta name="ahd-token" content="<id>">
+ *   <!-- ahd:token=<id> -->
+ * Returns the token id when found, undefined otherwise.
+ */
+export function detectActiveToken(html: string): string | undefined {
+  if (!html) return undefined;
+  const meta = html.match(
+    /<meta[^>]+name=["']ahd-token["'][^>]+content=["']([a-z0-9-]+)["']/i,
+  );
+  if (meta) return meta[1];
+  const reverseMeta = html.match(
+    /<meta[^>]+content=["']([a-z0-9-]+)["'][^>]+name=["']ahd-token["']/i,
+  );
+  if (reverseMeta) return reverseMeta[1];
+  const comment = html.match(/<!--\s*ahd:token=([a-z0-9-]+)\s*-->/i);
+  if (comment) return comment[1];
   return undefined;
 }
 

@@ -24,6 +24,7 @@ usage: ahd compile <brief.yml> [--out <dir>] [--mode draft|final]
   lint: `ahd lint · run the slop linter over HTML, CSS or SVG input.
 usage: ahd lint <file> [<file>...] [flags]
   --config <path>              use an explicit config file
+  --token <id>                  apply that token's lint-overrides; auto-detected from <meta name="ahd-token"> when omitted
   --root <dir>                  project root for cross-file rules
   --whole-site                  walk root and lint every .html/.css/.svg (cross-file rules too)
   --json                        emit JSON report (includes sourceOnlySpa badge)

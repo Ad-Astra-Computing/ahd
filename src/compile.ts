@@ -122,8 +122,16 @@ function assemble(
     "Every design decision in your output must cite the brief rule it follows, as an inline comment (HTML: <!-- rule: ... -->, CSS: /* rule: ... */, JSX: {/* rule: ... */}).";
   const forbidLine =
     "Violating the FORBIDDEN list is a bug. If you feel yourself reaching for a forbidden pattern, stop and pick a different solution.";
+  const tokenAnchor =
+    spec.token && typeof spec.token === "object" && "id" in (spec.token as Record<string, unknown>)
+      ? `Include exactly this meta tag in the document head, verbatim, so downstream tools recognise the active style token: <meta name="ahd-token" content="${(spec.token as { id: string }).id}">.`
+      : null;
+  const motionRule =
+    'Any animation or transition longer than 200ms must be wrapped in `@media (prefers-reduced-motion: no-preference)`, or provide an equivalent path that respects `prefers-reduced-motion: reduce`. WCAG 2.3.3.';
 
   const workingRules = [`- ${citeRule}`, `- ${forbidLine}`];
+  if (tokenAnchor) workingRules.push(`- ${tokenAnchor}`);
+  workingRules.push(`- ${motionRule}`);
   if (mode === "draft") {
     workingRules.push(
       "- Produce three divergent directions before settling on one. Name the movement anchor each direction draws from.",

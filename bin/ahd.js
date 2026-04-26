@@ -9,7 +9,13 @@ import { loadToken, listTokens, validateAll } from "../dist/load.js";
 import { lintFile, lintSource, lintSources, formatReport } from "../dist/lint/engine.js";
 import { rules as lintRules } from "../dist/lint/rules/index.js";
 import { crossFileRules as lintCrossRules } from "../dist/lint/cross-rules/index.js";
-import { loadConfig, findProjectConfig } from "../dist/lint/config.js";
+import {
+  loadConfig,
+  findProjectConfig,
+  tokenToLintConfig,
+  mergeConfigs,
+  detectActiveToken,
+} from "../dist/lint/config.js";
 import { runEval, formatEvalReport } from "../dist/eval/runner.js";
 import { runLiveEval } from "../dist/eval/live.js";
 import { runStdioServer } from "../dist/mcp/server.js";
@@ -103,6 +109,7 @@ async function main() {
     case "lint": {
       const configFlag = flag(rest, "--config");
       const rootFlag = flag(rest, "--root");
+      const tokenFlag = flag(rest, "--token");
       const jsonMode = rest.includes("--json");
       // Whole-site mode enables cross-file rules (broken-internal-links, etc)
       // that only make sense when the caller passes every file in the build.
@@ -118,7 +125,13 @@ async function main() {
       // downstream badge issuers can downgrade accordingly.
       const allowSourceOnlySpa = rest.includes("--allow-source-only-spa");
       const explicitFiles = rest
-        .filter((a, i) => !a.startsWith("--") && rest[i - 1] !== "--config" && rest[i - 1] !== "--root");
+        .filter(
+          (a, i) =>
+            !a.startsWith("--") &&
+            rest[i - 1] !== "--config" &&
+            rest[i - 1] !== "--root" &&
+            rest[i - 1] !== "--token",
+        );
       // --whole-site walks the root (or cwd when --root is omitted)
       // and lints every .html / .css / .svg found. Combine-safely
       // with explicit args: explicit paths are always included, any
@@ -140,10 +153,10 @@ async function main() {
         }
       }
       if (files.length === 0) {
-        exit("usage: ahd lint <file.html|file.css> [...] [--config <path>] [--json] [--root <dist>] [--whole-site] [--allow-source-only-spa]\n  Pass at least one file, or use --whole-site with --root to lint a tree.");
+        exit("usage: ahd lint <file.html|file.css> [...] [--config <path>] [--token <id>] [--json] [--root <dist>] [--whole-site] [--allow-source-only-spa]\n  Pass at least one file, or use --whole-site with --root to lint a tree.\n  --token <id> applies that token's lint-overrides; auto-detected from <meta name=\"ahd-token\"> when omitted.");
       }
       const configPath = configFlag ?? (await findProjectConfig(process.cwd()));
-      const config = configPath ? await loadConfig(configPath) : undefined;
+      const projectConfig = configPath ? await loadConfig(configPath) : undefined;
       // Build LintInput[] from files; when --root is given, strip it from
       // each file path so cross-file rules (broken-links) see site-rooted
       // paths like /index.html instead of absolute filesystem paths.
@@ -161,6 +174,32 @@ async function main() {
           return { file: rooted, html: isCss ? "" : raw, css: isCss ? raw : "" };
         }),
       );
+      // Token-aware lint: explicit --token wins; otherwise sniff every input
+      // for a meta or comment marker. The first detected id is authoritative
+      // for the run (mixed-token batches are rare and the user can split the
+      // run when they happen).
+      let activeTokenId = tokenFlag;
+      if (!activeTokenId) {
+        for (const input of inputs) {
+          const id = detectActiveToken(input.html);
+          if (id) {
+            activeTokenId = id;
+            break;
+          }
+        }
+      }
+      let tokenConfig;
+      if (activeTokenId) {
+        try {
+          const token = await loadToken(TOKENS, activeTokenId);
+          tokenConfig = tokenToLintConfig(token);
+        } catch (err) {
+          process.stderr.write(
+            `ahd lint: --token "${activeTokenId}" not loadable (${err instanceof Error ? err.message : err}); proceeding without token-aware overrides.\n`,
+          );
+        }
+      }
+      const config = mergeConfigs(projectConfig, tokenConfig);
       // Empty cross-rule list for single-file mode so we don't false-fire
       // broken-links against callers who only passed one page.
       const crossRules = wholeSiteMode ? undefined : [];
@@ -237,9 +276,25 @@ async function main() {
       const token = rest[0];
       const dir = flag(rest, "--samples") ?? "evals";
       const outFile = flag(rest, "--report") ?? flag(rest, "--out");
+      // Token-aware lint is opt-in on `ahd eval`. The --raw-rules flag
+      // disables it for pre-vs-post comparison passes (re-lint addenda).
+      const tokenAware = !rest.includes("--raw-rules");
       if (!token)
-        exit("usage: ahd eval <token> [--samples <dir>] [--report <file.md>]");
-      const r = await runEval(token, resolve(dir, token));
+        exit("usage: ahd eval <token> [--samples <dir>] [--report <file.md>] [--raw-rules]\n  By default the active token's lint-overrides apply. --raw-rules scores against the unmodified ruleset (used for pre-vs-post comparisons).");
+      let tokenConfig;
+      if (tokenAware) {
+        try {
+          const tk = await loadToken(TOKENS, token);
+          tokenConfig = tokenToLintConfig(tk);
+        } catch (err) {
+          process.stderr.write(
+            `ahd eval: token "${token}" not loadable (${err instanceof Error ? err.message : err}); scoring without token-aware overrides.\n`,
+          );
+        }
+      }
+      const r = await runEval(token, resolve(dir, token), {
+        config: tokenConfig,
+      });
       const text = formatEvalReport(r);
       if (outFile) {
         await writeFile(outFile, text);

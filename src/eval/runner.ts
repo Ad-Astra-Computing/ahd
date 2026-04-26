@@ -2,6 +2,7 @@ import { readdir, readFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { join, extname } from "node:path";
 import { lintSource } from "../lint/engine.js";
+import type { AhdProjectConfig } from "../lint/config.js";
 import { rules } from "../lint/rules/index.js";
 import { VISION_RULES } from "../critique/critic.js";
 import type {
@@ -60,7 +61,10 @@ function looksLikeUsableHtml(html: string): boolean {
   return /<(!doctype|html|head|body)\b/i.test(html);
 }
 
-export async function scoreCell(cell: CellFiles): Promise<{
+export async function scoreCell(
+  cell: CellFiles,
+  config?: AhdProjectConfig,
+): Promise<{
   counts: CellCounts;
   scored: ScoredSample[];
 }> {
@@ -77,11 +81,15 @@ export async function scoreCell(cell: CellFiles): Promise<{
       counts.extractionFailed++;
       continue;
     }
-    const report = lintSource({
-      file: path,
-      html,
-      css: "",
-    });
+    const report = lintSource(
+      {
+        file: path,
+        html,
+        css: "",
+      },
+      undefined,
+      config,
+    );
     const tellsFired = Array.from(new Set(report.violations.map((v) => v.ruleId)));
     scored.push({
       sample: {
@@ -174,6 +182,7 @@ export function buildReport(token: string, cells: EvalCell[]): EvalReport {
 export async function runEval(
   token: string,
   samplesDir: string,
+  options?: { config?: AhdProjectConfig },
 ): Promise<EvalReport> {
   let manifest: RunManifest | undefined;
   const manifestPath = join(samplesDir, "manifest.json");
@@ -183,7 +192,7 @@ export async function runEval(
   const cells = await loadCells(samplesDir, manifest);
   const evalCells: EvalCell[] = [];
   for (const c of cells) {
-    const { counts, scored } = await scoreCell(c);
+    const { counts, scored } = await scoreCell(c, options?.config);
     evalCells.push(
       aggregateCell(c.model, c.canonicalId, c.condition, scored, counts),
     );
