@@ -36,6 +36,13 @@ jobs:
       - name: Install
         run: npm ci
 
+      - name: Build
+        # tsc + schema regen + rules manifest. Required before Test
+        # because cli-int-flags spawns bin/ahd.js which imports from
+        # dist/. The npm prepare hook used to do this implicitly;
+        # v0.9 split it out so the Nix sandbox build does not break.
+        run: npm run build
+
       - name: Typecheck
         run: npx tsc --noEmit
 
