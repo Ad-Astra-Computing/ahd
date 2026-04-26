@@ -1,10 +1,9 @@
 import { mkdir, writeFile, readFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { join, resolve } from "node:path";
-import { parse as parseYaml } from "yaml";
 import { imageRunnerFromSpec } from "./runners/image-index.js";
 import { compileImagePrompt, briefAsProse } from "../compile.js";
-import { loadToken } from "../load.js";
+import { loadToken, loadBrief } from "../load.js";
 import { anthropicVisionCritic, mockCritic, type Critic } from "../critique/critic.js";
 
 function resolveDefaultCritic(): Critic {
@@ -69,7 +68,7 @@ export async function runLiveImageEval(
   opts: LiveImageEvalOptions,
 ): Promise<ImageEvalReport> {
   const token = await loadToken(opts.tokensDir, opts.token);
-  const brief = parseYaml(await readFile(opts.briefPath, "utf8"));
+  const brief = await loadBrief(opts.briefPath);
   const { prompt: compiledPrompt, negativePrompt } = compileImagePrompt(brief, token);
   const rawPrompt = briefAsProse(brief);
 

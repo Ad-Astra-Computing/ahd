@@ -223,21 +223,52 @@ export function anthropicVisionCritic(options: AnthropicVisionOptions): Critic {
           body,
         });
         if (res.ok) {
+          // Parse failures must not masquerade as "no tells fired."
+          // Returning an empty array silently undercounts vision
+          // violations and lets a broken critic run look like a clean
+          // pass in the aggregated report. Emit an explicit
+          // ahd/critic-parse-failed violation instead so the
+          // per-tell frequency table shows the sample as
+          // scored-but-unparsed and the operator can act (rerun,
+          // bump model, investigate prompt). Mirrors the claude-code
+          // critic's pattern in src/critique/critics/claude-code.ts.
+          const makeParseFailure = (reason: string): Violation[] => [
+            {
+              ruleId: "ahd/critic-parse-failed",
+              severity: "warn",
+              file: input.url ?? "<screenshot>",
+              message: `anthropic vision critic parse failure: ${reason}`,
+            },
+          ];
           const data: any = await res.json();
           const text = (data.content ?? [])
             .filter((c: any) => c.type === "text")
             .map((c: any) => c.text)
             .join("\n");
           const jsonMatch = text.match(/\{[\s\S]*\}/);
-          if (!jsonMatch) return [];
+          if (!jsonMatch) {
+            return makeParseFailure(
+              `no JSON object in response (raw: ${text.slice(0, 200)})`,
+            );
+          }
           let parsed: any = {};
           try {
             parsed = JSON.parse(jsonMatch[0]);
-          } catch {
-            return [];
+          } catch (err) {
+            return makeParseFailure(
+              `JSON.parse failed: ${err instanceof Error ? err.message : String(err)}`,
+            );
           }
-          const fired = Array.isArray(parsed.fired) ? parsed.fired : [];
-          return fired
+          if (!parsed || typeof parsed !== "object") {
+            return makeParseFailure(`parsed value is not an object`);
+          }
+          if (!("fired" in parsed)) {
+            return makeParseFailure(`response missing 'fired' field`);
+          }
+          if (!Array.isArray(parsed.fired)) {
+            return makeParseFailure(`'fired' is not an array`);
+          }
+          return parsed.fired
             .filter((id: unknown): id is string => typeof id === "string")
             .filter((id: string) => VISION_RULES.some((r) => r.id === id))
             .map((id: string) => ({

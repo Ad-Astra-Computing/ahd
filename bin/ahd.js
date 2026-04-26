@@ -372,11 +372,8 @@ async function main() {
       const token = rest[0];
       const briefPath = flag(rest, "--brief");
       const modelsCsv = flag(rest, "--models");
-      const n = parseInt(flag(rest, "--n") ?? "1", 10);
-      const sampleConcurrency = parseInt(
-        flag(rest, "--sample-concurrency") ?? "1",
-        10,
-      );
+      const n = intFlag(rest, "--n", 1);
+      const sampleConcurrency = intFlag(rest, "--sample-concurrency", 1, { max: 32 });
       const outDir = flag(rest, "--out") ?? "evals";
       const reportFile = flag(rest, "--report");
       if (!token || !briefPath || !modelsCsv)
@@ -445,7 +442,7 @@ async function main() {
       const token = rest[0];
       const briefPath = flag(rest, "--brief");
       const modelsCsv = flag(rest, "--models");
-      const n = parseInt(flag(rest, "--n") ?? "3", 10);
+      const n = intFlag(rest, "--n", 3);
       const outDir = flag(rest, "--out") ?? "evals";
       const reportFile = flag(rest, "--report");
       const criticChoice = flag(rest, "--critic") ?? "claude-code";
@@ -489,7 +486,7 @@ async function main() {
       const outDir = flag(rest, "--out") ?? "critiques";
       const reportFile = flag(rest, "--report");
       const critic = flag(rest, "--critic") ?? "claude-code";
-      const max = parseInt(flag(rest, "--max") ?? "0", 10);
+      const max = intFlag(rest, "--max", 0, { allowZero: true });
       if (!token)
         exit(
           "usage: ahd critique <token> [--samples <dir>] [--out <dir>] [--critic claude-code|anthropic|mock] [--max <n>] [--report <file.md>]",
@@ -586,8 +583,10 @@ async function main() {
         );
       }
       const viewport = {
-        width: widthFlag ? parseInt(widthFlag, 10) : 375,
-        height: heightFlag ? parseInt(heightFlag, 10) : 812,
+        // Viewports between 320 and 3840 cover phone-min through 4K-max;
+        // anything outside that range is almost certainly a typo.
+        width: intFlag(rest, "--width", 375, { min: 320, max: 3840 }),
+        height: intFlag(rest, "--height", 812, { min: 320, max: 3840 }),
       };
       console.log(`auditing ${url} at ${viewport.width}x${viewport.height}`);
       let report;
@@ -669,6 +668,40 @@ docs: docs/SLOP_TAXONOMY.md, docs/LINTER_SPEC.md, docs/STYLE_TOKEN_SCHEMA.md, do
 function flag(args, name) {
   const i = args.indexOf(name);
   return i >= 0 ? args[i + 1] : undefined;
+}
+
+// Numeric flag parsing with explicit validation. parseInt-then-use
+// would let NaN, zero, and negatives slip through and degrade into
+// confusing downstream behaviour (n=NaN passed to runLiveEval would
+// loop zero times silently; --max=-5 would send a negative cap to a
+// downstream slice). This helper rejects at the boundary with a
+// clean usage error. Pass `{ allowZero: true }` for flags where 0
+// is a meaningful "no cap" value (--max).
+function intFlag(args, name, fallback, options = {}) {
+  const raw = flag(args, name);
+  const allowZero = options.allowZero ?? false;
+  const min = options.min ?? (allowZero ? 0 : 1);
+  const max = options.max;
+  if (raw === undefined) return fallback;
+  if (typeof raw !== "string" || raw.trim() === "") {
+    exit(`${name}: expected an integer, got empty value`);
+  }
+  // /^-?\d+$/ rejects "5px", "1e2", "1.5", whitespace-padded inputs,
+  // and anything Number.parseInt would silently coerce.
+  if (!/^-?\d+$/.test(raw.trim())) {
+    exit(`${name}: expected an integer, got "${raw}"`);
+  }
+  const n = Number.parseInt(raw, 10);
+  if (!Number.isFinite(n)) {
+    exit(`${name}: not a finite integer ("${raw}")`);
+  }
+  if (n < min) {
+    exit(`${name}: must be >= ${min}, got ${n}`);
+  }
+  if (typeof max === "number" && n > max) {
+    exit(`${name}: must be <= ${max}, got ${n}`);
+  }
+  return n;
 }
 
 // Walk a directory tree collecting lintable files. Skips dotfiles
