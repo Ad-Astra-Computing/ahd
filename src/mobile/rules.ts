@@ -11,9 +11,9 @@
 // that's the narrowest widely-used device in 2026 and the width where
 // layout errors surface first.
 
-import type { Severity, Violation } from "../lint/types.js";
+import type { RuleMetadata, Severity, Violation } from "../lint/types.js";
 
-export interface MobileRule {
+export interface MobileRule extends RuleMetadata {
   id: string;
   severity: Severity;
   description: string;
@@ -206,6 +206,8 @@ const bodyFontSize: MobileRule = {
 const scrollableNoAffordance: MobileRule = {
   id: "ahd/mobile/scrollable-no-affordance",
   severity: "warn",
+  status: "experimental",
+  introducedAt: "0.9.0",
   description:
     "A horizontally-scrollable region hides its scrollbar without a replacement cue. Add scroll-snap, an edge-fade mask, or a data-scroll-affordance opt-out so touch users can see that more content exists.",
   check: () => {

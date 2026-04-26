@@ -1,0 +1,507 @@
+{
+  "version": "1",
+  "generatedAt": "2026-04-26T02:38:24.643Z",
+  "counts": {
+    "total": 58,
+    "experimental": 1,
+    "stable": 57,
+    "deprecated": 0,
+    "byEngine": {
+      "source": 38,
+      "cross": 1,
+      "vision": 14,
+      "mobile": 5
+    }
+  },
+  "rules": [
+    {
+      "id": "ahd/a11y/button-without-label",
+      "engine": "source",
+      "severity": "error",
+      "status": "stable",
+      "introducedAt": "<= 0.8.x",
+      "description": "<button> with no accessible name. Add text content, aria-label or aria-labelledby so screen-reader users hear what the button does.",
+      "surface": [
+        "html",
+        "jsx"
+      ]
+    },
+    {
+      "id": "ahd/a11y/heading-skip",
+      "engine": "source",
+      "severity": "warn",
+      "status": "stable",
+      "introducedAt": "<= 0.8.x",
+      "description": "Heading hierarchy skips a level (e.g. h1 followed by h3 with no h2). Screen-reader users rely on outline depth; don't skip.",
+      "surface": [
+        "html",
+        "jsx"
+      ]
+    },
+    {
+      "id": "ahd/a11y/img-without-alt",
+      "engine": "source",
+      "severity": "error",
+      "status": "stable",
+      "introducedAt": "<= 0.8.x",
+      "description": "<img> element without an alt attribute. Screen readers will narrate the filename. Use alt=\"\" for decorative images, otherwise describe the image.",
+      "surface": [
+        "html",
+        "jsx"
+      ]
+    },
+    {
+      "id": "ahd/a11y/link-without-text",
+      "engine": "source",
+      "severity": "error",
+      "status": "stable",
+      "introducedAt": "<= 0.8.x",
+      "description": "<a> with no accessible name. Icon-only or empty anchors need aria-label, visible text, or a labelled child image/svg.",
+      "surface": [
+        "html",
+        "jsx"
+      ]
+    },
+    {
+      "id": "ahd/body-measure",
+      "engine": "source",
+      "severity": "warn",
+      "status": "stable",
+      "introducedAt": "<= 0.8.x",
+      "description": "Body-level text width must sit inside the readable 55–75ch band (tolerance 45–85) at the primary breakpoint. Only fires on body/main/article/content selectors."
+    },
+    {
+      "id": "ahd/cta-not-canonical",
+      "engine": "source",
+      "severity": "info",
+      "status": "stable",
+      "introducedAt": "<= 0.8.x",
+      "description": "The canonical 44px gradient-fill + trailing arrow CTA is the template button."
+    },
+    {
+      "id": "ahd/footer-not-four-col",
+      "engine": "source",
+      "severity": "info",
+      "status": "stable",
+      "introducedAt": "<= 0.8.x",
+      "description": "The Product / Company / Resources / Legal footer is reflexive."
+    },
+    {
+      "id": "ahd/line-height-per-size",
+      "engine": "source",
+      "severity": "warn",
+      "status": "stable",
+      "introducedAt": "<= 0.8.x",
+      "description": "A single line-height across display, body and caption reads as untuned type."
+    },
+    {
+      "id": "ahd/motion-has-intent",
+      "engine": "source",
+      "severity": "warn",
+      "status": "stable",
+      "introducedAt": "<= 0.8.x",
+      "description": "Fade-up on everything with no stagger reason is decoration."
+    },
+    {
+      "id": "ahd/no-centered-hero",
+      "engine": "source",
+      "severity": "warn",
+      "status": "stable",
+      "introducedAt": "<= 0.8.x",
+      "description": "The centred pill + headline + subhead + two CTAs is the median landing page."
+    },
+    {
+      "id": "ahd/no-default-grotesque",
+      "engine": "source",
+      "severity": "error",
+      "status": "stable",
+      "introducedAt": "<= 0.8.x",
+      "description": "Ban the ten most-defaulted-to grotesques as the only font on the page."
+    },
+    {
+      "id": "ahd/no-default-spline",
+      "engine": "source",
+      "severity": "warn",
+      "status": "stable",
+      "introducedAt": "<= 0.8.x",
+      "description": "Stock 3D hero blobs and default Spline scenes are visual fillers."
+    },
+    {
+      "id": "ahd/no-em-dashes-in-prose",
+      "engine": "source",
+      "severity": "warn",
+      "status": "stable",
+      "introducedAt": "<= 0.8.x",
+      "description": "Em-dashes in prose (U+2014). The single most recognizable AI-writing tell. Rewrite with commas, colons, periods, parentheses or middle dots as each sentence demands. En-dashes (–) are fine for ranges."
+    },
+    {
+      "id": "ahd/no-emoji-bullets",
+      "engine": "source",
+      "severity": "error",
+      "status": "stable",
+      "introducedAt": "<= 0.8.x",
+      "description": "A <li> or list paragraph that opens with an emoji is a slop tell."
+    },
+    {
+      "id": "ahd/no-fake-testimonials",
+      "engine": "source",
+      "severity": "warn",
+      "status": "stable",
+      "introducedAt": "<= 0.8.x",
+      "description": "Stock-avatar services betray fabricated testimonials."
+    },
+    {
+      "id": "ahd/no-fake-trust-bar",
+      "engine": "source",
+      "severity": "info",
+      "status": "stable",
+      "introducedAt": "<= 0.8.x",
+      "description": "A 'Trusted by' strip whose logos are not declared customers reads as theatre."
+    },
+    {
+      "id": "ahd/no-flat-dark-mode",
+      "engine": "source",
+      "severity": "warn",
+      "status": "stable",
+      "introducedAt": "<= 0.8.x",
+      "description": "Pure-black background plus a single high-chroma accent is the stock dark-mode slop."
+    },
+    {
+      "id": "ahd/no-gradient-text",
+      "engine": "source",
+      "severity": "error",
+      "status": "stable",
+      "introducedAt": "<= 0.8.x",
+      "description": "Gradient text on bait words (AI, future, tomorrow) is the canonical overreach."
+    },
+    {
+      "id": "ahd/no-indiscriminate-glass",
+      "engine": "source",
+      "severity": "warn",
+      "status": "stable",
+      "introducedAt": "<= 0.8.x",
+      "description": "Glassmorphism on more than one distinct component type is decoration, not design."
+    },
+    {
+      "id": "ahd/no-inline-style-animation",
+      "engine": "source",
+      "severity": "error",
+      "status": "stable",
+      "introducedAt": "<= 0.8.x",
+      "description": "Inline style=\"animation:...\" or style=\"transition:...\" attributes on elements. Motion belongs in stylesheets where reduced-motion can be respected."
+    },
+    {
+      "id": "ahd/no-lucide-in-rounded-square",
+      "engine": "source",
+      "severity": "warn",
+      "status": "stable",
+      "introducedAt": "<= 0.8.x",
+      "description": "Lucide icon in a rounded-square gradient tile is the feature-card canonical."
+    },
+    {
+      "id": "ahd/no-purple-blue-gradient",
+      "engine": "source",
+      "severity": "error",
+      "status": "stable",
+      "introducedAt": "<= 0.8.x",
+      "description": "Detect purple/blue/pink gradient triangles in raw CSS or Tailwind classes."
+    },
+    {
+      "id": "ahd/no-shimmer-decoration",
+      "engine": "source",
+      "severity": "warn",
+      "status": "stable",
+      "introducedAt": "<= 0.8.x",
+      "description": "The silver diagonal sweep used on any non-loading surface is the AI shimmer tell."
+    },
+    {
+      "id": "ahd/no-slop-copy",
+      "engine": "source",
+      "severity": "warn",
+      "status": "stable",
+      "introducedAt": "<= 0.8.x",
+      "description": "Banned marketing phrases that signal median SaaS copy."
+    },
+    {
+      "id": "ahd/no-three-equal-cards",
+      "engine": "source",
+      "severity": "warn",
+      "status": "stable",
+      "introducedAt": "<= 0.8.x",
+      "description": "A row of exactly three similar cards is the canonical feature-section slop."
+    },
+    {
+      "id": "ahd/no-uniform-radius",
+      "engine": "source",
+      "severity": "warn",
+      "status": "stable",
+      "introducedAt": "<= 0.8.x",
+      "description": "A page where every interactive surface shares one medium radius (rounded-xl / 2xl / 12–16px) reads as shadcn default."
+    },
+    {
+      "id": "ahd/pricing-not-three",
+      "engine": "source",
+      "severity": "info",
+      "status": "stable",
+      "introducedAt": "<= 0.8.x",
+      "description": "Three pricing tiers with a 'Most Popular' middle is the SaaS cliché."
+    },
+    {
+      "id": "ahd/radius-hierarchy",
+      "engine": "source",
+      "severity": "warn",
+      "status": "stable",
+      "introducedAt": "<= 0.8.x",
+      "description": "Buttons, cards and media sharing one medium radius flattens hierarchy. Sharp-only or sharp + pill are deliberate decisions and don't fire."
+    },
+    {
+      "id": "ahd/require-named-grid",
+      "engine": "source",
+      "severity": "warn",
+      "status": "stable",
+      "introducedAt": "<= 0.8.x",
+      "description": "A page with no CSS grid or explicit column structure usually means flex-stacked slop."
+    },
+    {
+      "id": "ahd/require-type-pairing",
+      "engine": "source",
+      "severity": "error",
+      "status": "stable",
+      "introducedAt": "<= 0.8.x",
+      "description": "A page needs at least two distinct font families."
+    },
+    {
+      "id": "ahd/respect-reduced-motion",
+      "engine": "source",
+      "severity": "error",
+      "status": "stable",
+      "introducedAt": "<= 0.8.x",
+      "description": "Animations declared without a prefers-reduced-motion escape hatch."
+    },
+    {
+      "id": "ahd/single-shadow-style",
+      "engine": "source",
+      "severity": "info",
+      "status": "stable",
+      "introducedAt": "<= 0.8.x",
+      "description": "One shadow on every card is a token fingerprint, not a shadow system."
+    },
+    {
+      "id": "ahd/spa-shell-detected",
+      "engine": "source",
+      "severity": "info",
+      "status": "stable",
+      "introducedAt": "<= 0.8.x",
+      "description": "The document is a JS-rendered SPA shell. Source lint cannot score design that is produced at runtime."
+    },
+    {
+      "id": "ahd/svg/no-perfect-symmetry",
+      "engine": "source",
+      "severity": "info",
+      "status": "stable",
+      "introducedAt": "<= 0.8.x",
+      "description": "A perfectly mirrored composition is the stock-illustration / Alegria default. Tokens require at least one asymmetric element.",
+      "surface": [
+        "svg"
+      ]
+    },
+    {
+      "id": "ahd/svg/no-uniform-stroke",
+      "engine": "source",
+      "severity": "warn",
+      "status": "stable",
+      "introducedAt": "<= 0.8.x",
+      "description": "Monoline illustration (every stroke the same width) is a Feather/Lucide default tell.",
+      "surface": [
+        "svg"
+      ]
+    },
+    {
+      "id": "ahd/svg/palette-bounds",
+      "engine": "source",
+      "severity": "info",
+      "status": "stable",
+      "introducedAt": "<= 0.8.x",
+      "description": "Every colour used in the SVG should trace back to the token's declared palette.",
+      "surface": [
+        "svg"
+      ]
+    },
+    {
+      "id": "ahd/tracking-per-size",
+      "engine": "source",
+      "severity": "warn",
+      "status": "stable",
+      "introducedAt": "<= 0.8.x",
+      "description": "No negative tracking on display type, no opened tracking on all-caps labels."
+    },
+    {
+      "id": "ahd/weight-variety",
+      "engine": "source",
+      "severity": "warn",
+      "status": "stable",
+      "introducedAt": "<= 0.8.x",
+      "description": "A page with only two font-weights (typically 400 and 600) lacks typographic voice."
+    },
+    {
+      "id": "ahd/no-broken-internal-links",
+      "engine": "cross",
+      "severity": "error",
+      "status": "stable",
+      "introducedAt": "<= 0.8.x",
+      "description": "Internal link whose target does not exist in the linted file set. AI writers hallucinate navigation; this catches links pointing at pages that were never built."
+    },
+    {
+      "id": "ahd/bento-has-anchor",
+      "engine": "vision",
+      "severity": "warn",
+      "status": "stable",
+      "introducedAt": "<= 0.8.x",
+      "description": "Bento grids need a cell of visual dominance."
+    },
+    {
+      "id": "ahd/icons-not-monoline-default",
+      "engine": "vision",
+      "severity": "warn",
+      "status": "stable",
+      "introducedAt": "<= 0.8.x",
+      "description": "Monoline Feather/Lucide icons with uniform 1.5px stroke fire info."
+    },
+    {
+      "id": "ahd/image/no-decorative-cursive-in-render",
+      "engine": "vision",
+      "severity": "warn",
+      "status": "stable",
+      "introducedAt": "<= 0.8.x",
+      "description": "Fake cursive or unreadable script lettering overlaid on renders is a slop tell."
+    },
+    {
+      "id": "ahd/image/no-malformed-anatomy",
+      "engine": "vision",
+      "severity": "warn",
+      "status": "stable",
+      "introducedAt": "<= 0.8.x",
+      "description": "Image-generation tells: six-finger hands, twisted limbs, doubled teeth, merged fingers, extra joints."
+    },
+    {
+      "id": "ahd/image/no-midjourney-face-symmetry",
+      "engine": "vision",
+      "severity": "warn",
+      "status": "stable",
+      "introducedAt": "<= 0.8.x",
+      "description": "Impossibly symmetrical, glossy, age-smoothed human faces are a generator fingerprint."
+    },
+    {
+      "id": "ahd/image/no-stock-diversity-casting",
+      "engine": "vision",
+      "severity": "warn",
+      "status": "stable",
+      "introducedAt": "<= 0.8.x",
+      "description": "Generic 'diverse team of five smiling professionals' casting pattern is a stock / Corporate-Memphis hand-me-down."
+    },
+    {
+      "id": "ahd/layout-deadspace",
+      "engine": "vision",
+      "severity": "warn",
+      "status": "stable",
+      "introducedAt": "<= 0.8.x",
+      "description": "A two-column section where one column is significantly taller than the other produces visible dead space in the shorter neighbour. Happens most commonly when a left column of text sits beside a right column of product cards that grow over time."
+    },
+    {
+      "id": "ahd/mesh-has-counterforce",
+      "engine": "vision",
+      "severity": "warn",
+      "status": "stable",
+      "introducedAt": "<= 0.8.x",
+      "description": "Mesh gradient backdrops require a typographic counter-force."
+    },
+    {
+      "id": "ahd/no-ai-illustration",
+      "engine": "vision",
+      "severity": "warn",
+      "status": "stable",
+      "introducedAt": "<= 0.8.x",
+      "description": "AI-rendered illustration with subsurface-scatter glow is forbidden."
+    },
+    {
+      "id": "ahd/no-corporate-memphis",
+      "engine": "vision",
+      "severity": "warn",
+      "status": "stable",
+      "introducedAt": "<= 0.8.x",
+      "description": "Corporate Memphis illustration style is forbidden."
+    },
+    {
+      "id": "ahd/no-iridescent-blob",
+      "engine": "vision",
+      "severity": "warn",
+      "status": "stable",
+      "introducedAt": "<= 0.8.x",
+      "description": "3D hero blobs with iridescent shader are forbidden."
+    },
+    {
+      "id": "ahd/no-laptop-office-stock",
+      "engine": "vision",
+      "severity": "warn",
+      "status": "stable",
+      "introducedAt": "<= 0.8.x",
+      "description": "Stock photo of a diverse team at a laptop is forbidden."
+    },
+    {
+      "id": "ahd/require-asymmetry",
+      "engine": "vision",
+      "severity": "warn",
+      "status": "stable",
+      "introducedAt": "<= 0.8.x",
+      "description": "Page composition must not be perfectly symmetrical."
+    },
+    {
+      "id": "ahd/wordmark-not-dot-grotesque",
+      "engine": "vision",
+      "severity": "warn",
+      "status": "stable",
+      "introducedAt": "<= 0.8.x",
+      "description": "Lowercase grotesque + dot wordmark is a Y Combinator cliché."
+    },
+    {
+      "id": "ahd/mobile/body-font-size",
+      "engine": "mobile",
+      "severity": "warn",
+      "status": "stable",
+      "introducedAt": "<= 0.8.x",
+      "description": "Body text should be at least 14px at mobile widths. Below that, one-handed reading becomes work."
+    },
+    {
+      "id": "ahd/mobile/no-horizontal-overflow",
+      "engine": "mobile",
+      "severity": "error",
+      "status": "stable",
+      "introducedAt": "<= 0.8.x",
+      "description": "Content extends past the right edge of a 375px viewport. Catches unwrapped nav, overflowing pre blocks, fixed-width tables, and display-size headlines that don't scale with the viewport."
+    },
+    {
+      "id": "ahd/mobile/scrollable-no-affordance",
+      "engine": "mobile",
+      "severity": "warn",
+      "status": "experimental",
+      "introducedAt": "0.9.0",
+      "description": "A horizontally-scrollable region hides its scrollbar without a replacement cue. Add scroll-snap, an edge-fade mask, or a data-scroll-affordance opt-out so touch users can see that more content exists."
+    },
+    {
+      "id": "ahd/mobile/tap-target-size",
+      "engine": "mobile",
+      "severity": "warn",
+      "status": "stable",
+      "introducedAt": "<= 0.8.x",
+      "description": "Interactive elements should be at least 32px tall at mobile widths. Targets below this trip the fat-finger threshold and tank one-handed usability."
+    },
+    {
+      "id": "ahd/mobile/viewport-meta-present",
+      "engine": "mobile",
+      "severity": "error",
+      "status": "stable",
+      "introducedAt": "<= 0.8.x",
+      "description": "<meta name=\"viewport\" content=\"width=device-width, ...\"> must be present. Without it, mobile browsers render the page at desktop width and scale down, defeating every other mobile treatment."
+    }
+  ]
+}

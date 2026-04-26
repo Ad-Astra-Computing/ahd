@@ -79,6 +79,15 @@ export function createEslintPlugin() {
   const recommendedConfig: Record<string, string> = {};
   for (const rule of ahdRules) {
     const ruleKey = rule.id.replace(/^ahd\//, "ahd/");
+    // Layer 3 governance: experimental and deprecated rules are
+    // excluded from the recommended config. Consumers opt into
+    // experimental rules explicitly via project config when they
+    // want the bleeding edge; deprecated rules emit elsewhere and
+    // do not graduate back to recommended.
+    if (rule.status === "experimental" || rule.status === "deprecated") {
+      recommendedConfig[ruleKey] = "off";
+      continue;
+    }
     recommendedConfig[ruleKey] =
       rule.severity === "error" ? "error" : rule.severity === "warn" ? "warn" : "off";
   }

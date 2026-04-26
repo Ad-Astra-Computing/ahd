@@ -1,4 +1,4 @@
-import type { Violation } from "../lint/types.js";
+import type { RuleMetadata, Violation } from "../lint/types.js";
 
 export interface CritiqueInput {
   imageBase64?: string;
@@ -8,7 +8,7 @@ export interface CritiqueInput {
   context?: string;
 }
 
-export interface VisionRule {
+export interface VisionRule extends RuleMetadata {
   id: string;
   description: string;
   prompt: string;
