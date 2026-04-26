@@ -26,17 +26,6 @@
           # Run `tsc` to produce dist/; bin/*.js imports from dist/.
           npmBuildScript = "build";
 
-          # The package's `prepare` script runs the same build pipeline
-          # so consumers installing from git (no tarball) get the
-          # generated dist/, schema/ and rules.manifest.json. That hook
-          # fires during npm ci and breaks inside the Nix sandbox
-          # because the freshly-installed node_modules/.bin/tsc shebang
-          # `#!/usr/bin/env node` does not resolve here. Skipping
-          # install-time scripts is safe because `npmBuildScript`
-          # below runs the same `npm run build` content explicitly in
-          # the build phase, where the path patches have applied.
-          npmFlags = [ "--ignore-scripts" ];
-
           installPhase = ''
             runHook preInstall
             mkdir -p $out/lib/node_modules/ahd
