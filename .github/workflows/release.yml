@@ -59,6 +59,14 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Build (tsc + schemas + rules manifest)
+        # Required before Test because cli-int-flags spawns
+        # bin/ahd.js which imports from dist/, and rules-manifest.test
+        # asserts the on-disk manifest matches Zod regeneration.
+        # Previously prepare did this implicitly; v0.9 split it out
+        # to keep the Nix sandbox build clean.
+        run: npm run build
+
       - name: Typecheck
         run: npx tsc --noEmit
 
@@ -67,9 +75,6 @@ jobs:
 
       - name: Validate every style token against the schema
         run: npx ahd validate-tokens
-
-      - name: Build (tsc -> dist/)
-        run: npm run build
 
       - name: Pack tarball for the GitHub Release
         id: pack
