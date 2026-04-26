@@ -179,6 +179,85 @@ const bodyFontSize: MobileRule = {
   },
 };
 
+// Scrollable-no-affordance: a horizontally-scrollable region with the
+// scrollbar hidden and no other scroll cue is a usability dead end on
+// touch devices. The user can swipe to discover the content but
+// nothing in the visual signals that more content exists. The pattern
+// shows up constantly in LLM-generated nav rows, tab bars and chip
+// lists where the model emits `overflow-x: auto; scrollbar-width:
+// none; ::-webkit-scrollbar { display: none }` because that is what
+// it has seen on shadcn / Tailwind blocks, and forgets that a
+// hidden-scrollbar pattern needs an alternative affordance.
+//
+// Affordances we accept (rule does NOT fire when any of these is
+// present):
+//   - `scroll-snap-type` non-none on the scroller (snap is itself a
+//     tactile cue)
+//   - a `mask-image` / `-webkit-mask-image` linear-gradient on the
+//     scroller (the canonical edge-fade)
+//   - a `data-scroll-affordance` attribute, value `true|fade|cue`
+//     (explicit operator opt-out: "I've handled this another way")
+//   - the scrollbar is *visible* (scrollbar-width auto/thin and the
+//     webkit pseudo not display:none)
+//
+// Detection pattern: for every element, if its computed overflow-x
+// is auto/scroll AND scrollWidth > clientWidth AND the scrollbar is
+// hidden AND no affordance is present, fire.
+const scrollableNoAffordance: MobileRule = {
+  id: "ahd/mobile/scrollable-no-affordance",
+  severity: "warn",
+  description:
+    "A horizontally-scrollable region hides its scrollbar without a replacement cue. Add scroll-snap, an edge-fade mask, or a data-scroll-affordance opt-out so touch users can see that more content exists.",
+  check: () => {
+    const out: Array<{ message: string; snippet?: string }> = [];
+    const seen = new Set<string>();
+
+    function hasEdgeFadeMask(s: CSSStyleDeclaration): boolean {
+      const mask = s.maskImage || (s as any).webkitMaskImage || "";
+      return /linear-gradient/i.test(mask);
+    }
+
+    function hasVisibleScrollbar(s: CSSStyleDeclaration): boolean {
+      // scrollbar-width values: auto | thin | none. auto/thin = visible.
+      // We treat anything that isn't 'none' as visible enough.
+      const sw = (s as any).scrollbarWidth ?? "";
+      return sw !== "none";
+    }
+
+    function hasSnap(s: CSSStyleDeclaration): boolean {
+      const snap = (s as any).scrollSnapType ?? "";
+      return snap.trim() !== "" && snap !== "none";
+    }
+
+    for (const el of document.querySelectorAll("body *")) {
+      const s = window.getComputedStyle(el);
+      const ox = s.overflowX;
+      if (ox !== "auto" && ox !== "scroll") continue;
+      const he = el as HTMLElement;
+      // Has actual overflow content?
+      if (he.scrollWidth <= he.clientWidth + 1) continue;
+      // Has any of the accepted affordances?
+      if (hasSnap(s)) continue;
+      if (hasEdgeFadeMask(s)) continue;
+      if (hasVisibleScrollbar(s)) continue;
+      const opt = he.getAttribute("data-scroll-affordance");
+      if (opt && /^(true|fade|cue|snap)$/i.test(opt)) continue;
+      // Dedup by tag + first-class for short reports.
+      const key = `${el.tagName.toLowerCase()}|${(he.className || "").slice(0, 30)}`;
+      if (seen.has(key)) continue;
+      seen.add(key);
+      const text = (he.innerText || "").slice(0, 60).replace(/\s+/g, " ").trim();
+      out.push({
+        message: `<${el.tagName.toLowerCase()}> scrolls (${he.scrollWidth}px content in ${he.clientWidth}px) with hidden scrollbar and no scroll-snap, edge-fade mask or data-scroll-affordance opt-out. Touch users have no cue that more content exists.`,
+        snippet: text || he.outerHTML.slice(0, 120),
+      });
+      if (out.length >= 6) break;
+    }
+
+    return out;
+  },
+};
+
 // Viewport-meta-present: this is the one source-level check that
 // belongs in the mobile bundle because without it the other checks
 // would fire constantly (desktop render in a mobile viewport = every
@@ -215,4 +294,5 @@ export const MOBILE_RULES: MobileRule[] = [
   noHorizontalOverflow,
   tapTargetSize,
   bodyFontSize,
+  scrollableNoAffordance,
 ];
