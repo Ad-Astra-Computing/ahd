@@ -104,6 +104,34 @@ jobs:
           # Regenerate package-lock.json to match the new workspace versions.
           npm install --ignore-scripts --package-lock-only
 
+      # The release tag should point at a tree whose flake.nix matches
+      # the bumped package.json + package-lock.json. Without this step,
+      # `nix build github:Ad-Astra-Computing/ahd/vX.Y.Z` would resolve a
+      # stale derivation until flake-sync.yml races a follow-up commit
+      # in. Atomic at the tag boundary is cleaner.
+      - name: Install Nix (for flake.nix update)
+        if: inputs.dry_run == false
+        uses: cachix/install-nix-action@v31
+        with:
+          nix_path: nixpkgs=channel:nixos-unstable
+
+      - name: Sync flake.nix version + npmDepsHash
+        if: inputs.dry_run == false
+        run: |
+          set -euo pipefail
+          NEW="${{ steps.ver.outputs.new }}"
+          NEW_HASH=$(nix --extra-experimental-features 'nix-command flakes' \
+            run nixpkgs#prefetch-npm-deps -- package-lock.json)
+          sed -i -E "s|version = \"[^\"]+\";|version = \"${NEW}\";|" flake.nix
+          sed -i -E "s|npmDepsHash = \"[^\"]+\";|npmDepsHash = \"${NEW_HASH}\";|" flake.nix
+          # Verify the flake actually builds before we commit. A bad
+          # hash here would publish a release tag at a tree where
+          # nix build fails: same blast radius as the tag-then-fail
+          # error mode the broader release process is designed to
+          # avoid.
+          nix --extra-experimental-features 'nix-command flakes' \
+            build .# --no-link --print-build-logs
+
       - name: Prepend CHANGELOG.md entry
         if: inputs.dry_run == false
         run: |
