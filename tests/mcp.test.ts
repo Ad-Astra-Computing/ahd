@@ -125,4 +125,54 @@ describe("mcp server", () => {
     expect(res.id).toBe(101);
     expect(res.error.code).toBe(-32600);
   });
+
+  // Input-validation hardening: every tool's args parse via Zod at
+  // the boundary. Loose String() coercion is gone; bad args produce
+  // structured -32602 invalid-params with a path-aware message.
+  for (const [tool, badArgs] of [
+    ["ahd.get_token", { id: "Has_Underscores_Bad" }],
+    ["ahd.palette", { token: "Has_Underscores_Bad" }],
+    ["ahd.type_system", { token: 12345 }],
+    ["ahd.reference", { token: "../../escape" }],
+    ["ahd.list_tokens", { unexpected: "extra-arg" }],
+    ["ahd.vision_rules", { unexpected: "extra-arg" }],
+    ["ahd.lint", { html: 12345 }],
+  ] as const) {
+    it(`${tool} returns invalid-params on malformed args`, async () => {
+      const req = JSON.stringify({
+        jsonrpc: "2.0",
+        id: 200,
+        method: "tools/call",
+        params: { name: tool, arguments: badArgs },
+      });
+      const res = JSON.parse(await handleStdioLine(req, tools));
+      expect(res.id).toBe(200);
+      expect(res.error.code).toBe(-32602);
+    });
+  }
+
+  it("ahd.lint enforces the 1 MiB size cap on html via the schema", async () => {
+    const big = "<div>".repeat(300_000); // > 1 MiB
+    const req = JSON.stringify({
+      jsonrpc: "2.0",
+      id: 300,
+      method: "tools/call",
+      params: { name: "ahd.lint", arguments: { html: big } },
+    });
+    const res = JSON.parse(await handleStdioLine(req, tools));
+    expect(res.id).toBe(300);
+    expect(res.error.code).toBe(-32602);
+  });
+
+  it("ahd.get_token rejects an additional/unknown property", async () => {
+    const req = JSON.stringify({
+      jsonrpc: "2.0",
+      id: 301,
+      method: "tools/call",
+      params: { name: "ahd.get_token", arguments: { id: "swiss-editorial", extra: 1 } },
+    });
+    const res = JSON.parse(await handleStdioLine(req, tools));
+    expect(res.id).toBe(301);
+    expect(res.error.code).toBe(-32602);
+  });
 });

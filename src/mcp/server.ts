@@ -1,8 +1,47 @@
+import { z } from "zod";
 import { listTokens, loadToken } from "../load.js";
 import { compile } from "../compile.js";
 import { lintSource } from "../lint/engine.js";
 import { VISION_RULES } from "../critique/critic.js";
 import { BriefSchema, type StyleToken, type Brief } from "../types.js";
+
+// Every tool's args parsed at the boundary. The MCP protocol surface
+// is a user-controlled input, so it follows the same architectural
+// rule as briefs and tokens: schema-validated at the entry point, no
+// silent String() coercion. ahd.brief composes BriefSchema; the
+// rest are tool-specific.
+const TOKEN_ID_RE = /^[a-z0-9][a-z0-9-]*$/;
+const TokenIdSchema = z
+  .string()
+  .regex(TOKEN_ID_RE, {
+    message: "must be a kebab-case token id (a-z, 0-9, hyphen).",
+  });
+
+const GetTokenArgsSchema = z.object({ id: TokenIdSchema }).strict();
+const TokenOnlyArgsSchema = z.object({ token: TokenIdSchema }).strict();
+const NoArgsSchema = z.object({}).strict();
+
+const MCP_LINT_MAX_BYTES = 1024 * 1024;
+const LintArgsSchema = z
+  .object({
+    html: z.string().max(MCP_LINT_MAX_BYTES).optional(),
+    css: z.string().max(MCP_LINT_MAX_BYTES).optional(),
+    file: z.string().max(2048).optional(),
+  })
+  .strict();
+
+function parseArgs<T>(
+  toolName: string,
+  schema: z.ZodSchema<T>,
+  args: unknown,
+): T {
+  const r = schema.safeParse(args);
+  if (r.success) return r.data;
+  const issues = r.error.issues
+    .map((i) => `${i.path.join(".") || "<root>"}: ${i.message}`)
+    .join("; ");
+  throw new InvalidParamsError(`${toolName}: ${issues}`);
+}
 
 // JSON-RPC 2.0 standard error codes. Distinct codes let MCP clients
 // tell parse/protocol errors from app-level invocation errors, which
@@ -47,18 +86,25 @@ export function createTools(options: McpServerOptions): McpTool[] {
     {
       name: "ahd.list_tokens",
       description: "List every style token available in the AHD library.",
-      inputSchema: { type: "object", properties: {} },
-      handler: async () => ({ tokens: await listTokens(TOKENS) }),
+      inputSchema: { type: "object", properties: {}, additionalProperties: false },
+      handler: async (args) => {
+        parseArgs("ahd.list_tokens", NoArgsSchema, args);
+        return { tokens: await listTokens(TOKENS) };
+      },
     },
     {
       name: "ahd.get_token",
       description: "Return a single style token by id.",
       inputSchema: {
         type: "object",
-        properties: { id: { type: "string" } },
+        properties: { id: { type: "string", pattern: TOKEN_ID_RE.source } },
         required: ["id"],
+        additionalProperties: false,
       },
-      handler: async (args) => loadToken(TOKENS, String(args.id)),
+      handler: async (args) => {
+        const { id } = parseArgs("ahd.get_token", GetTokenArgsSchema, args);
+        return loadToken(TOKENS, id);
+      },
     },
     {
       name: "ahd.brief",
@@ -100,11 +146,13 @@ export function createTools(options: McpServerOptions): McpTool[] {
         "Return the OKLCH palette declared by a style token, with role assignments.",
       inputSchema: {
         type: "object",
-        properties: { token: { type: "string" } },
+        properties: { token: { type: "string", pattern: TOKEN_ID_RE.source } },
         required: ["token"],
+        additionalProperties: false,
       },
       handler: async (args) => {
-        const t: StyleToken = await loadToken(TOKENS, String(args.token));
+        const { token } = parseArgs("ahd.palette", TokenOnlyArgsSchema, args);
+        const t: StyleToken = await loadToken(TOKENS, token);
         return { palette: t.colour.palette, roles: t.colour.roles };
       },
     },
@@ -113,11 +161,13 @@ export function createTools(options: McpServerOptions): McpTool[] {
       description: "Return the type scale, families, weights and tracking for a token.",
       inputSchema: {
         type: "object",
-        properties: { token: { type: "string" } },
+        properties: { token: { type: "string", pattern: TOKEN_ID_RE.source } },
         required: ["token"],
+        additionalProperties: false,
       },
       handler: async (args) => {
-        const t: StyleToken = await loadToken(TOKENS, String(args.token));
+        const { token } = parseArgs("ahd.type_system", TokenOnlyArgsSchema, args);
+        const t: StyleToken = await loadToken(TOKENS, token);
         return t.type;
       },
     },
@@ -127,11 +177,13 @@ export function createTools(options: McpServerOptions): McpTool[] {
         "Return the movement, references and exemplars for a token (so the model can anchor in a specific lineage).",
       inputSchema: {
         type: "object",
-        properties: { token: { type: "string" } },
+        properties: { token: { type: "string", pattern: TOKEN_ID_RE.source } },
         required: ["token"],
+        additionalProperties: false,
       },
       handler: async (args) => {
-        const t: StyleToken = await loadToken(TOKENS, String(args.token));
+        const { token } = parseArgs("ahd.reference", TokenOnlyArgsSchema, args);
+        const t: StyleToken = await loadToken(TOKENS, token);
         return {
           provenance: t.provenance,
           mood: t.mood,
@@ -147,52 +199,46 @@ export function createTools(options: McpServerOptions): McpTool[] {
       inputSchema: {
         type: "object",
         properties: {
-          html: { type: "string" },
-          css: { type: "string" },
-          file: { type: "string" },
+          html: {
+            type: "string",
+            maxLength: MCP_LINT_MAX_BYTES,
+            description: "HTML source. Up to 1 MiB.",
+          },
+          css: {
+            type: "string",
+            maxLength: MCP_LINT_MAX_BYTES,
+            description: "CSS source. Up to 1 MiB.",
+          },
+          file: {
+            type: "string",
+            maxLength: 2048,
+            description: "Optional path label for the report.",
+          },
         },
+        additionalProperties: false,
       },
       handler: async (args) => {
-        // Size caps: stdio MCP doesn't bill the client for oversized
-        // requests, so a buggy or hostile client could stream a large
-        // string and stall the server on regex. 1 MB each for html and
-        // css is far above any realistic single-page lint and well
-        // below the Node string-length limit.
-        const MAX_BYTES = 1024 * 1024;
-        const html = String(args.html ?? "");
-        const css = String(args.css ?? "");
-        const file = String(args.file ?? "<inline>");
-        if (html.length > MAX_BYTES) {
-          throw new Error(
-            `ahd.lint: html argument exceeds ${MAX_BYTES} bytes (got ${html.length}). Split the input or lint files on disk via the CLI.`,
-          );
-        }
-        if (css.length > MAX_BYTES) {
-          throw new Error(
-            `ahd.lint: css argument exceeds ${MAX_BYTES} bytes (got ${css.length}).`,
-          );
-        }
-        if (file.length > 2048) {
-          throw new Error(
-            `ahd.lint: file argument exceeds 2048 characters.`,
-          );
-        }
-        if (typeof args.html !== "undefined" && typeof args.html !== "string") {
-          throw new Error(`ahd.lint: html must be a string`);
-        }
-        if (typeof args.css !== "undefined" && typeof args.css !== "string") {
-          throw new Error(`ahd.lint: css must be a string`);
-        }
-        const res = lintSource({ file, html, css });
-        return res;
+        // Size caps enforced by LintArgsSchema. stdio MCP doesn't bill
+        // the client for oversized requests, so a buggy or hostile
+        // client could stream a large string and stall the server on
+        // regex. The 1 MiB cap on html and css is far above any
+        // realistic single-page lint.
+        const parsed = parseArgs("ahd.lint", LintArgsSchema, args);
+        const html = parsed.html ?? "";
+        const css = parsed.css ?? "";
+        const file = parsed.file ?? "<inline>";
+        return lintSource({ file, html, css });
       },
     },
     {
       name: "ahd.vision_rules",
       description:
         "Return the fourteen vision-only slop rules (9 web/graphic + 4 image-specific + 1 layout), for use when an agent has access to a screenshot or rendered page.",
-      inputSchema: { type: "object", properties: {} },
-      handler: async () => VISION_RULES,
+      inputSchema: { type: "object", properties: {}, additionalProperties: false },
+      handler: async (args) => {
+        parseArgs("ahd.vision_rules", NoArgsSchema, args);
+        return VISION_RULES;
+      },
     },
   ];
 }

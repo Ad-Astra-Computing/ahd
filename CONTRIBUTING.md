@@ -94,6 +94,49 @@ Sign off commits with `git commit -s`. The sign-off appears as a `Signed-off-by:
 - Present tense, imperative mood, under 70 characters for the subject.
 - Body explains *why*, not *what*.
 
+## Architectural rules
+
+A small set of rules every contributor change should follow. These
+exist because past defects came from the absence of one of them; they
+are not aspirational style.
+
+**1. Schema-validate every user-controlled input at the boundary.**
+
+Every entry point that takes data from outside the process gets a
+Zod parser at the entry. No silent `String()` coercion, no type
+assertions on unparsed objects. Today this covers:
+
+- Briefs (`BriefSchema`, validated by `loadBrief`)
+- Style tokens (`StyleTokenSchema`, validated by `loadToken`)
+- Project config (`AhdProjectConfig`, validated by `loadConfig`)
+- Submission manifests (`ManifestCurrentSchema` / `ManifestTargetSchema`,
+  consumed by `ahd validate-submission`)
+- Every MCP tool's arguments (per-tool Zod schema in `src/mcp/server.ts`)
+
+CLI flag parsing remains imperative (each subcommand parses its own
+flags with explicit `flag()` reads and explicit `exit()` on missing
+required flags). This is best-effort by design: the CLI's input
+surface is small, declarative-flag-parsing libraries add a dep, and
+the explicit checks read straightforwardly. If a CLI subcommand grows
+beyond a few flags or starts taking structured input, lift it to a
+schema.
+
+**2. Doc surface follows code, not the other way around.**
+
+`docs/LINTER_SPEC.md`, `docs/SLOP_TAXONOMY.md`, README rule counts,
+CLI help text, and JSON Schema files are all build artefacts of the
+code. When a rule lands or moves status, the doc lands in the same
+commit. The `tests/submission-schema.test.ts` parity test catches one
+class of drift; the others rely on this rule plus review.
+
+**3. Schema files are generated, never hand-edited.**
+
+`schema/*.schema.json` is regenerated from the Zod source by
+`scripts/build-schemas.mjs` on every build. Hand-edits are caught by
+the parity test in `tests/submission-schema.test.ts`. Touch the Zod
+declarations in `src/eval/types.ts` (or wherever the source lives)
+and let the build emit the JSON.
+
 ## Development
 
 ```bash

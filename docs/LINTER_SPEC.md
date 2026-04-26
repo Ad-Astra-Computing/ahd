@@ -1,6 +1,6 @@
 # AHD Linter Rule Spec
 
-Thirty-nine slop tells across two surfaces: thirty-five source-level rules in the `ahd lint` engine (HTML/CSS/JSX detection plus three SVG-source rules) and fourteen vision rules in the `ahd critique` engine (screenshot detection). Each rule has an id, a surface, a detection method, a severity and a suggested remediation. Source rules also ship as `eslint-plugin-ahd` (JSX/TSX) and `stylelint-plugin-ahd` (CSS/Tailwind/vanilla); vision rules run only via the critic.
+Thirty-nine slop tells in the catalogued taxonomy. Two engines enforce them: thirty-eight source-level rules in `ahd lint` (HTML/CSS/JSX detection across web, brand, typography, accessibility, plus a small SVG-source set and one cross-file rule) and fourteen vision rules in `ahd critique` (screenshot detection). Each rule has an id, a surface, a detection method, a severity and a suggested remediation. Source rules also ship as `eslint-plugin-ahd` (JSX/TSX) and `stylelint-plugin-ahd` (CSS/Tailwind/vanilla); vision rules run only via the critic. Some taxonomy entries are vision-only and have no source-level counterpart; some entries live in the brief compiler's negative-prompt layer and are caught at generation time rather than after.
 
 ## Rule format
 
@@ -69,6 +69,21 @@ rationale: <one-line reason, links to SLOP_TAXONOMY tell>
 | `ahd/tracking-per-size` | css | warn | No negative tracking on text ≥ 48px; no positive tracking on all-caps labels. |
 | `ahd/require-type-pairing` | css | error | Fewer than two font families used across display and text. |
 | `ahd/require-named-grid` | css, jsx | warn | No declared grid system (`ahd.grid`) in config; or layout uses only stacked flex columns with no shared column structure. Named grid is design opinion, not correctness, so this stays at warn. |
+
+### Accessibility
+
+| id | surface | severity | detect |
+|---|---|---|---|
+| `ahd/a11y/heading-skip` | html, jsx | warn | Heading levels skip a step (h1 → h3). Screen-reader navigation breaks on skipped levels. |
+| `ahd/a11y/img-without-alt` | html, jsx | error | `<img>` element with neither `alt` attribute nor `role="presentation"`. |
+| `ahd/a11y/button-without-label` | html, jsx | error | `<button>` element with no text content, no `aria-label`, and no labelled child icon. |
+| `ahd/a11y/link-without-text` | html, jsx | error | `<a>` element with no text content, no `aria-label`, and no labelled child icon. |
+
+### Cross-file (whole-site mode only)
+
+| id | surface | severity | detect |
+|---|---|---|---|
+| `ahd/no-broken-internal-links` | html | warn | An internal `href` references a path that does not resolve to any file in the site root. Fires only when `ahd lint --whole-site --root <dist>` is invoked; single-file lint cannot see other files in the build. |
 
 ## Severity policy
 
