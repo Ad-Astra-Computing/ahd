@@ -13,7 +13,6 @@
   },
   "scripts": {
     "build": "tsc && node scripts/build-schemas.mjs && node scripts/build-rules-manifest.mjs",
-    "prepare": "tsc",
     "prepublishOnly": "tsc && node scripts/build-schemas.mjs && node scripts/build-rules-manifest.mjs",
     "test": "vitest run",
     "test:watch": "vitest",
