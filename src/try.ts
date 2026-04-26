@@ -1,8 +1,7 @@
-import { readFile, writeFile, mkdir } from "node:fs/promises";
+import { writeFile, mkdir } from "node:fs/promises";
 import { resolve, join } from "node:path";
-import { parse as parseYaml } from "yaml";
 import { compile } from "./compile.js";
-import { loadToken } from "./load.js";
+import { loadToken, loadBrief } from "./load.js";
 import { runnerFromSpec } from "./eval/runners/index.js";
 import { imageRunnerFromSpec } from "./eval/runners/image-index.js";
 import { compileImagePrompt, briefAsProse } from "./compile.js";
@@ -41,7 +40,7 @@ export async function runTry(options: {
   outDir?: string;
   skipLint?: boolean;
 }): Promise<{ outPath: string; violations: number }> {
-  const brief = parseYaml(await readFile(options.briefPath, "utf8"));
+  const brief = await loadBrief(options.briefPath);
   const tokenId = options.tokenOverride ?? brief.token;
   if (!tokenId) {
     throw new Error("Brief has no `token:` field and no --token override was given");
@@ -100,7 +99,7 @@ export async function runTryImage(options: {
   modelSpec?: string;
   outDir?: string;
 }): Promise<{ outPath: string }> {
-  const brief = parseYaml(await readFile(options.briefPath, "utf8"));
+  const brief = await loadBrief(options.briefPath);
   const tokenId = options.tokenOverride ?? brief.token;
   if (!tokenId) {
     throw new Error("Brief has no `token:` field and no --token override was given");

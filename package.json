@@ -1,7 +1,7 @@
 {
   "name": "@adastracomputing/ahd",
   "version": "0.8.3",
-  "description": "Artificial Human Design \u2014 a brief compiler, linter and style-token library that forces LLMs out of design slop.",
+  "description": "Artificial Human Design — a brief compiler, linter and style-token library that forces LLMs out of design slop.",
   "license": "SEE LICENSE IN LICENSE",
   "type": "module",
   "workspaces": [
@@ -12,7 +12,7 @@
     "ahd-mcp": "./bin/ahd-mcp.js"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && node scripts/build-schemas.mjs",
     "prepare": "tsc",
     "test": "vitest run",
     "test:watch": "vitest",
@@ -51,7 +51,8 @@
     "playwright-core": "^1.59.1",
     "postcss": "^8.5.10",
     "yaml": "^2.6.1",
-    "zod": "^3.24.1"
+    "zod": "^3.24.1",
+    "zod-to-json-schema": "^3.25.2"
   },
   "devDependencies": {
     "@types/node": "^22.10.5",

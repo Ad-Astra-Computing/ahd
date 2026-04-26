@@ -1,7 +1,12 @@
 import { readdir, readFile } from "node:fs/promises";
 import { join, resolve } from "node:path";
 import { parse as parseYaml } from "yaml";
-import { StyleTokenSchema, type StyleToken } from "./types.js";
+import {
+  StyleTokenSchema,
+  type StyleToken,
+  BriefSchema,
+  type Brief,
+} from "./types.js";
 
 // Token IDs are kebab-case. Anything outside [a-z0-9-] would break
 // resolution or imply an attempt at path traversal — reject it at the
@@ -28,6 +33,28 @@ export async function loadToken(
   const raw = await readFile(path, "utf8");
   const data = parseYaml(raw);
   return StyleTokenSchema.parse(data);
+}
+
+/**
+ * Load a brief from a YAML path and validate it against BriefSchema.
+ * Throws with a Zod-formatted message when the brief is missing
+ * required fields or has invalid surfaces / token id. Use this at
+ * every CLI entry point that takes a brief; calling parseYaml + cast
+ * directly creates a deep-stack failure when the brief is malformed.
+ */
+export async function loadBrief(briefPath: string): Promise<Brief> {
+  const raw = await readFile(briefPath, "utf8");
+  const data = parseYaml(raw);
+  const result = BriefSchema.safeParse(data);
+  if (!result.success) {
+    const issues = result.error.issues
+      .map((i) => `  - ${i.path.join(".") || "<root>"}: ${i.message}`)
+      .join("\n");
+    throw new Error(
+      `Invalid brief at ${briefPath}:\n${issues}\nSee docs/USAGE.md for the brief schema.`,
+    );
+  }
+  return result.data;
 }
 
 export async function listTokens(tokensDir: string): Promise<string[]> {

@@ -1,10 +1,9 @@
 import { mkdir, writeFile, readFile, readdir } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { join, resolve } from "node:path";
-import { parse as parseYaml } from "yaml";
 import { runnerFromSpec } from "./runners/index.js";
 import { compile, briefAsProse } from "../compile.js";
-import { loadToken } from "../load.js";
+import { loadToken, loadBrief } from "../load.js";
 import { runEval } from "./runner.js";
 import type { EvalReport, RunManifest } from "./types.js";
 
@@ -24,7 +23,7 @@ function sanitizeId(id: string): string {
 
 export async function runLiveEval(opts: LiveEvalOptions): Promise<EvalReport> {
   const token = await loadToken(opts.tokensDir, opts.token);
-  const brief = parseYaml(await readFile(opts.briefPath, "utf8"));
+  const brief = await loadBrief(opts.briefPath);
   const compiled = compile(brief, token, "final");
 
   const samplesRoot = resolve(opts.outDir, opts.token);

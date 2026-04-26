@@ -1,0 +1,80 @@
+{
+  "type": "object",
+  "properties": {
+    "token": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]*$"
+    },
+    "briefPath": {
+      "type": "string",
+      "minLength": 1
+    },
+    "n": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "maxTokens": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "runAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "models": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "spec": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Runner-prefixed model spec (e.g. claude-code:claude-opus-4-7, cf:@cf/openai/gpt-oss-120b)."
+          },
+          "canonicalId": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Exact model id as the provider names it; whatever the provider returns when asked, verbatim."
+          },
+          "sanitizedId": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Filesystem-safe form of canonicalId. Used for sample directory names."
+          },
+          "provider": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Runner type that produced the samples (claude-code-cli, codex-cli, gemini-cli, cloudflare-workers-ai, anthropic, openai)."
+          },
+          "addedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "note": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "spec",
+          "canonicalId",
+          "sanitizedId",
+          "provider"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1
+    }
+  },
+  "required": [
+    "token",
+    "briefPath",
+    "n",
+    "runAt",
+    "models"
+  ],
+  "additionalProperties": false,
+  "description": "AHD eval submission manifest, current shape. Validates what the shipped CLI emits today; passing this schema is the minimum bar for review.",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ahd.adastra.computer/schema/manifest.current.schema.json",
+  "title": "AHD eval submission manifest (current shape)"
+}

@@ -1,11 +1,33 @@
-import { readFile } from "node:fs/promises";
-import { resolve } from "node:path";
-import { parse as parseYaml } from "yaml";
 import { listTokens, loadToken } from "../load.js";
 import { compile } from "../compile.js";
 import { lintSource } from "../lint/engine.js";
 import { VISION_RULES } from "../critique/critic.js";
-import type { StyleToken } from "../types.js";
+import { BriefSchema, type StyleToken, type Brief } from "../types.js";
+
+// JSON-RPC 2.0 standard error codes. Distinct codes let MCP clients
+// tell parse/protocol errors from app-level invocation errors, which
+// the prior single-catch implementation collapsed into -32700.
+const JSONRPC = {
+  PARSE_ERROR: -32700,
+  INVALID_REQUEST: -32600,
+  METHOD_NOT_FOUND: -32601,
+  INVALID_PARAMS: -32602,
+  INTERNAL_ERROR: -32603,
+  // Reserved server-error range: -32000 to -32099. -32001 marks
+  // tool-handler exceptions (file IO, schema validation in handler,
+  // anything that surfaced from inside a tool call).
+  TOOL_INVOCATION_ERROR: -32001,
+} as const;
+
+// Custom error a tool handler throws to surface a structured
+// invalid-params error to the caller without collapsing it into a
+// generic 500.
+class InvalidParamsError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "InvalidParamsError";
+  }
+}
 
 export interface McpTool {
   name: string;
@@ -55,8 +77,21 @@ export function createTools(options: McpServerOptions): McpTool[] {
         required: ["intent", "token", "surfaces"],
       },
       handler: async (args) => {
-        const token = await loadToken(TOKENS, String(args.token));
-        return compile(args as any, token);
+        const parsed = BriefSchema.safeParse(args);
+        if (!parsed.success) {
+          const issues = parsed.error.issues
+            .map((i) => `${i.path.join(".") || "<root>"}: ${i.message}`)
+            .join("; ");
+          throw new InvalidParamsError(`ahd.brief: ${issues}`);
+        }
+        const brief: Brief = parsed.data;
+        if (!brief.token) {
+          throw new InvalidParamsError(
+            "ahd.brief: brief.token is required when calling this tool.",
+          );
+        }
+        const token = await loadToken(TOKENS, brief.token);
+        return compile(brief, token);
       },
     },
     {
@@ -166,12 +201,43 @@ export async function handleStdioLine(
   line: string,
   tools: McpTool[],
 ): Promise<string> {
+  // Parse phase: failure here means the input was not valid JSON, so
+  // the request id is unknowable. Only this branch can return id:null
+  // legitimately (per JSON-RPC 2.0 §5.1).
+  let req: { id?: unknown; method?: string; params?: any };
   try {
-    const req = JSON.parse(line);
+    req = JSON.parse(line);
+  } catch (err) {
+    return JSON.stringify({
+      jsonrpc: "2.0",
+      id: null,
+      error: {
+        code: JSONRPC.PARSE_ERROR,
+        message: err instanceof Error ? err.message : String(err),
+      },
+    });
+  }
+
+  // Once the request parsed, we have an id (or null). Every subsequent
+  // error path preserves it so the client can correlate.
+  const reqId = (req.id ?? null) as string | number | null;
+
+  if (typeof req.method !== "string") {
+    return JSON.stringify({
+      jsonrpc: "2.0",
+      id: reqId,
+      error: {
+        code: JSONRPC.INVALID_REQUEST,
+        message: "request missing required `method` string field",
+      },
+    });
+  }
+
+  try {
     if (req.method === "initialize") {
       return JSON.stringify({
         jsonrpc: "2.0",
-        id: req.id,
+        id: reqId,
         result: {
           protocolVersion: "2024-11-05",
           capabilities: { tools: {} },
@@ -182,7 +248,7 @@ export async function handleStdioLine(
     if (req.method === "tools/list") {
       return JSON.stringify({
         jsonrpc: "2.0",
-        id: req.id,
+        id: reqId,
         result: {
           tools: tools.map((t) => ({
             name: t.name,
@@ -197,32 +263,59 @@ export async function handleStdioLine(
       if (!tool) {
         return JSON.stringify({
           jsonrpc: "2.0",
-          id: req.id,
-          error: { code: -32601, message: `unknown tool ${req.params?.name}` },
+          id: reqId,
+          error: {
+            code: JSONRPC.METHOD_NOT_FOUND,
+            message: `unknown tool ${req.params?.name}`,
+          },
         });
       }
-      const result = await tool.handler(req.params?.arguments ?? {});
-      return JSON.stringify({
-        jsonrpc: "2.0",
-        id: req.id,
-        result: {
-          content: [
-            { type: "text", text: JSON.stringify(result, null, 2) },
-          ],
-        },
-      });
+      // Inner try: a tool handler throwing must surface as a tool
+      // invocation error tied to the same request id, not as a parse
+      // error with id:null.
+      try {
+        const result = await tool.handler(req.params?.arguments ?? {});
+        return JSON.stringify({
+          jsonrpc: "2.0",
+          id: reqId,
+          result: {
+            content: [
+              { type: "text", text: JSON.stringify(result, null, 2) },
+            ],
+          },
+        });
+      } catch (err) {
+        const isInvalidParams =
+          err instanceof Error && err.name === "InvalidParamsError";
+        return JSON.stringify({
+          jsonrpc: "2.0",
+          id: reqId,
+          error: {
+            code: isInvalidParams
+              ? JSONRPC.INVALID_PARAMS
+              : JSONRPC.TOOL_INVOCATION_ERROR,
+            message: err instanceof Error ? err.message : String(err),
+            data: { tool: req.params?.name },
+          },
+        });
+      }
     }
     return JSON.stringify({
       jsonrpc: "2.0",
-      id: req.id ?? null,
-      error: { code: -32601, message: `unknown method ${req.method}` },
+      id: reqId,
+      error: {
+        code: JSONRPC.METHOD_NOT_FOUND,
+        message: `unknown method ${req.method}`,
+      },
     });
   } catch (err) {
+    // Fallback for anything outside a tool call: still preserve the
+    // request id rather than collapsing to null.
     return JSON.stringify({
       jsonrpc: "2.0",
-      id: null,
+      id: reqId,
       error: {
-        code: -32700,
+        code: JSONRPC.INTERNAL_ERROR,
         message: err instanceof Error ? err.message : String(err),
       },
     });

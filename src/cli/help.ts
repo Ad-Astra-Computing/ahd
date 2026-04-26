@@ -16,6 +16,10 @@ usage: ahd show <token-id>`,
   "validate-tokens": `ahd validate-tokens · validate every token against the schema.
 usage: ahd validate-tokens`,
 
+  "validate-submission": `ahd validate-submission · validate a contribution envelope against the manifest schemas.
+usage: ahd validate-submission <dir>
+  Parses <dir>/manifest.json against the current schema (must pass) and the target schema (warn-only). Exit code is 1 if the current schema fails. Use this before opening a contribution PR.`,
+
   compile: `ahd compile · compile a brief into per-model prompts plus spec.json.
 usage: ahd compile <brief.yml> [--out <dir>] [--mode draft|final]
   --out <dir>    directory to write prompt.*.md + spec.json (default: ./out)

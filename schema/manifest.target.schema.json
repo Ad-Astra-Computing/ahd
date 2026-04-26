@@ -1,0 +1,104 @@
+{
+  "type": "object",
+  "properties": {
+    "token": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]*$"
+    },
+    "briefPath": {
+      "type": "string",
+      "minLength": 1
+    },
+    "n": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "maxTokens": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "runAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "models": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "spec": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Runner-prefixed model spec (e.g. claude-code:claude-opus-4-7, cf:@cf/openai/gpt-oss-120b)."
+          },
+          "canonicalId": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Exact model id as the provider names it; whatever the provider returns when asked, verbatim."
+          },
+          "sanitizedId": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Filesystem-safe form of canonicalId. Used for sample directory names."
+          },
+          "provider": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Runner type that produced the samples (claude-code-cli, codex-cli, gemini-cli, cloudflare-workers-ai, anthropic, openai)."
+          },
+          "addedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "note": {
+            "type": "string"
+          },
+          "servingPath": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Provider URL or canonical path (https://api.anthropic.com/v1/messages, @cf/<org>/<model>, gemini-cli://<binary-path>)."
+          },
+          "cliVersion": {
+            "type": "string",
+            "description": "Version string of the CLI binary used to invoke the model, where applicable."
+          },
+          "runnerVersion": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Version of the @adastracomputing/ahd runner that produced the samples."
+          },
+          "requestIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "description": "Provider request-IDs captured from response headers (Anthropic request-id, OpenAI x-request-id, Cloudflare cf-ray, Google x-goog-api-client-request-id). Best-effort; populated when the provider exposes one."
+          }
+        },
+        "required": [
+          "spec",
+          "canonicalId",
+          "sanitizedId",
+          "provider",
+          "servingPath",
+          "runnerVersion"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1
+    }
+  },
+  "required": [
+    "token",
+    "briefPath",
+    "n",
+    "runAt",
+    "models"
+  ],
+  "additionalProperties": false,
+  "description": "AHD eval submission manifest, target shape. Adds the per-cell fields the contract aspires to; fields are required at the target layer but accepted as missing on a current submission.",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ahd.adastra.computer/schema/manifest.target.schema.json",
+  "title": "AHD eval submission manifest (target shape)"
+}

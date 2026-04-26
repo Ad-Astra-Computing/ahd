@@ -89,14 +89,31 @@ export const StyleTokenSchema = z.object({
 
 export type StyleToken = z.infer<typeof StyleTokenSchema>;
 
-export interface Brief {
-  intent: string;
-  audience?: string;
-  token: string;
-  surfaces: Array<"web" | "print" | "identity" | "illustration">;
-  mustInclude?: string[];
-  mustAvoid?: string[];
-}
+// Briefs are the primary user input alongside tokens. They drive the
+// compiler and the eval-live runner. Validating them at load time
+// (parity with token validation in src/load.ts) gives users a clear
+// schema error instead of a deep stack trace from `surfaces.join`
+// when a field is missing or malformed.
+export const BriefSchema = z.object({
+  intent: z.string().min(1, "brief.intent must be a non-empty string"),
+  audience: z.string().optional(),
+  // Token may be omitted when the caller passes one explicitly
+  // (eval-live, ahd try --token <id>). When present in the file it
+  // must be a valid kebab-case id.
+  token: z
+    .string()
+    .regex(/^[a-z0-9][a-z0-9-]*$/, {
+      message: "brief.token must be a kebab-case token id (a-z, 0-9, hyphen).",
+    })
+    .optional(),
+  surfaces: z
+    .array(z.enum(["web", "print", "identity", "illustration"]))
+    .min(1, "brief.surfaces must list at least one surface."),
+  mustInclude: z.array(z.string()).optional(),
+  mustAvoid: z.array(z.string()).optional(),
+});
+
+export type Brief = z.infer<typeof BriefSchema>;
 
 export interface CompiledBrief {
   brief: Brief;

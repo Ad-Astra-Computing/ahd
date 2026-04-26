@@ -82,4 +82,47 @@ describe("mcp server", () => {
     expect(res.error).toBeDefined();
     expect(res.error.code).toBe(-32601);
   });
+
+  it("preserves the request id on tool invocation errors", async () => {
+    const req = JSON.stringify({
+      jsonrpc: "2.0",
+      id: 99,
+      method: "tools/call",
+      params: { name: "ahd.get_token", arguments: { id: "not-a-real-token" } },
+    });
+    const res = JSON.parse(await handleStdioLine(req, tools));
+    expect(res.id).toBe(99);
+    expect(res.error).toBeDefined();
+    expect(res.error.code).toBe(-32001);
+    expect(res.error.data?.tool).toBe("ahd.get_token");
+  });
+
+  it("returns invalid-params for ahd.brief with missing required fields", async () => {
+    const req = JSON.stringify({
+      jsonrpc: "2.0",
+      id: 100,
+      method: "tools/call",
+      params: {
+        name: "ahd.brief",
+        arguments: { intent: "" }, // missing token + surfaces; intent empty
+      },
+    });
+    const res = JSON.parse(await handleStdioLine(req, tools));
+    expect(res.id).toBe(100);
+    expect(res.error.code).toBe(-32602);
+    expect(res.error.message).toMatch(/intent|token|surfaces/);
+  });
+
+  it("returns parse error with id:null when input is not valid JSON", async () => {
+    const res = JSON.parse(await handleStdioLine("{not json", tools));
+    expect(res.id).toBeNull();
+    expect(res.error.code).toBe(-32700);
+  });
+
+  it("returns invalid-request when method is missing", async () => {
+    const req = JSON.stringify({ jsonrpc: "2.0", id: 101 });
+    const res = JSON.parse(await handleStdioLine(req, tools));
+    expect(res.id).toBe(101);
+    expect(res.error.code).toBe(-32600);
+  });
 });

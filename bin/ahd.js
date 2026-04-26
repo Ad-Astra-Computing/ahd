@@ -1,11 +1,10 @@
 #!/usr/bin/env node
 import { readFile, writeFile, mkdir, readdir, stat } from "node:fs/promises";
 import { resolve, join } from "node:path";
-import { parse as parseYaml } from "yaml";
 import { loadDotEnv } from "../dist/env.js";
 await loadDotEnv();
 import { compile } from "../dist/compile.js";
-import { loadToken, listTokens, validateAll } from "../dist/load.js";
+import { loadToken, listTokens, validateAll, loadBrief } from "../dist/load.js";
 import { lintFile, lintSource, lintSources, formatReport } from "../dist/lint/engine.js";
 import { rules as lintRules } from "../dist/lint/rules/index.js";
 import { crossFileRules as lintCrossRules } from "../dist/lint/cross-rules/index.js";
@@ -81,7 +80,10 @@ async function main() {
       if (modeFlag !== "draft" && modeFlag !== "final") {
         exit("--mode must be 'draft' or 'final'");
       }
-      const brief = parseYaml(await readFile(briefPath, "utf8"));
+      const brief = await loadBrief(briefPath);
+      if (!brief.token) {
+        exit("Brief is missing a `token:` field. Add one or use `ahd try --token <id>`.");
+      }
       const token = await loadToken(TOKENS, brief.token);
       const result = compile(brief, token, modeFlag);
       await mkdir(outDir, { recursive: true });
@@ -302,6 +304,67 @@ async function main() {
       } else {
         console.log(text);
       }
+      return;
+    }
+
+    case "validate-submission": {
+      const dir = rest[0];
+      if (!dir) {
+        exit(
+          "usage: ahd validate-submission <dir>\n  Validates <dir>/manifest.json against the current schema (must pass) and the target schema (warn-only). Use this before opening a contribution PR.",
+        );
+      }
+      const manifestPath = resolve(dir, "manifest.json");
+      const { existsSync } = await import("node:fs");
+      if (!existsSync(manifestPath)) {
+        exit(`ahd validate-submission: ${manifestPath} not found.`);
+      }
+      const raw = await readFile(manifestPath, "utf8");
+      let parsed;
+      try {
+        parsed = JSON.parse(raw);
+      } catch (err) {
+        exit(`ahd validate-submission: ${manifestPath} is not valid JSON: ${err instanceof Error ? err.message : err}`);
+      }
+      const { ManifestCurrentSchema, ManifestTargetSchema } = await import(
+        "../dist/eval/types.js"
+      );
+      const cur = ManifestCurrentSchema.safeParse(parsed);
+      const tgt = ManifestTargetSchema.safeParse(parsed);
+      const lines = [];
+      if (cur.success) {
+        lines.push(`current schema: PASS (${parsed.models?.length ?? 0} cell(s))`);
+      } else {
+        lines.push("current schema: FAIL");
+        for (const issue of cur.error.issues) {
+          lines.push(`  - ${issue.path.join(".") || "<root>"}: ${issue.message}`);
+        }
+      }
+      if (tgt.success) {
+        lines.push("target schema:  PASS");
+      } else {
+        const missing = tgt.error.issues
+          .filter((i) => i.code === "invalid_type" && i.received === "undefined")
+          .map((i) => i.path.join("."));
+        const other = tgt.error.issues.filter(
+          (i) => !(i.code === "invalid_type" && i.received === "undefined"),
+        );
+        lines.push(
+          `target schema:  ${other.length === 0 ? "MISSING aspirational fields" : "FAIL"}`,
+        );
+        if (missing.length) {
+          const unique = [...new Set(missing.map((m) => m.replace(/^models\.\d+\./, "models[].")))];
+          lines.push(`  missing: ${unique.join(", ")}`);
+        }
+        for (const issue of other) {
+          lines.push(`  - ${issue.path.join(".") || "<root>"}: ${issue.message}`);
+        }
+      }
+      console.log(lines.join("\n"));
+      // Exit non-zero only when the current schema fails. Missing
+      // target fields are warnings; the contract accepts current-shape
+      // submissions today.
+      if (!cur.success) process.exit(1);
       return;
     }
 
