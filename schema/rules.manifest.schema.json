@@ -1,0 +1,139 @@
+{
+  "type": "object",
+  "properties": {
+    "version": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Manifest format version. Independent of the framework version that generated it."
+    },
+    "generatedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "counts": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "experimental": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "stable": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "deprecated": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "byEngine": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "propertyNames": {
+            "enum": [
+              "source",
+              "cross",
+              "vision",
+              "mobile"
+            ]
+          }
+        }
+      },
+      "required": [
+        "total",
+        "experimental",
+        "stable",
+        "deprecated",
+        "byEngine"
+      ],
+      "additionalProperties": false,
+      "description": "Pre-computed counts for downstream consumers (parity CI, release notes, README). Derivable from `rules` but emitted to keep readers from having to recount."
+    },
+    "rules": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^ahd\\/[a-z0-9/-]+$"
+          },
+          "engine": {
+            "type": "string",
+            "enum": [
+              "source",
+              "cross",
+              "vision",
+              "mobile"
+            ]
+          },
+          "surface": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Subsurfaces the rule operates on (html, css, jsx, tsx, tailwind, svg, vision, mobile, etc.). Optional; mobile and vision rules typically omit since the engine implies the surface."
+          },
+          "severity": {
+            "type": "string",
+            "enum": [
+              "error",
+              "warn",
+              "info"
+            ],
+            "description": "error fails CI; warn prints; info advisory. Vision rules ship at warn by convention since they emit from a probabilistic critic."
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "experimental",
+              "stable",
+              "deprecated"
+            ]
+          },
+          "introducedAt": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Semver-shaped string identifying the version that first shipped the rule. Pre-0.9 rules use '<= 0.8.x'."
+          },
+          "deprecatedAt": {
+            "type": "string"
+          },
+          "deprecationReason": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "id",
+          "engine",
+          "severity",
+          "status",
+          "introducedAt",
+          "description"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1
+    }
+  },
+  "required": [
+    "version",
+    "generatedAt",
+    "counts",
+    "rules"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ahd.adastra.computer/schema/rules.manifest.schema.json",
+  "title": "AHD rules manifest (governance Layer 1)"
+}

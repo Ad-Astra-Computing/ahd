@@ -26,6 +26,7 @@ const {
   ManifestCurrentSchema,
   ManifestTargetSchema,
   SampleEnvelopeTargetSchema,
+  RulesManifestSchema,
 } = await import(pathToFileURL(distTypes).href);
 
 const schemaDir = resolve(root, "schema");
@@ -66,4 +67,10 @@ emit(
   SampleEnvelopeTargetSchema,
   "https://ahd.adastra.computer/schema/sample-envelope.target.schema.json",
   "AHD per-sample envelope (target shape)",
+);
+emit(
+  "rules.manifest",
+  RulesManifestSchema,
+  "https://ahd.adastra.computer/schema/rules.manifest.schema.json",
+  "AHD rules manifest (governance Layer 1)",
 );

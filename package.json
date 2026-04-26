@@ -13,7 +13,7 @@
   },
   "scripts": {
     "build": "tsc && node scripts/build-schemas.mjs && node scripts/build-rules-manifest.mjs",
-    "prepare": "tsc",
+    "prepare": "tsc && node scripts/build-schemas.mjs && node scripts/build-rules-manifest.mjs",
     "test": "vitest run",
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit",
@@ -35,6 +35,7 @@
     "docs/artwork/*.svg",
     "docs/artwork/README.md",
     "schema",
+    "rules.manifest.json",
     "README.md",
     "CHANGELOG.md",
     "LICENSE",
