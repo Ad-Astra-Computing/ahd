@@ -373,11 +373,15 @@ async function main() {
       const briefPath = flag(rest, "--brief");
       const modelsCsv = flag(rest, "--models");
       const n = parseInt(flag(rest, "--n") ?? "1", 10);
+      const sampleConcurrency = parseInt(
+        flag(rest, "--sample-concurrency") ?? "1",
+        10,
+      );
       const outDir = flag(rest, "--out") ?? "evals";
       const reportFile = flag(rest, "--report");
       if (!token || !briefPath || !modelsCsv)
         exit(
-          "usage: ahd eval-live <token> --brief <brief.yml> --models <spec,spec,...> [--n <count>] [--out <dir>] [--report <file.md>]",
+          "usage: ahd eval-live <token> --brief <brief.yml> --models <spec,spec,...> [--n <count>] [--sample-concurrency <count>] [--out <dir>] [--report <file.md>]\n  --sample-concurrency caps in-flight requests per (cell, condition). Default 1 (serial). 3+ is safe for CF-only runs; keep at 1 for subscription CLIs to avoid auth races.",
         );
       const models = modelsCsv.split(",").map((s) => s.trim()).filter(Boolean);
       const report = await runLiveEval({
@@ -387,6 +391,7 @@ async function main() {
         models,
         n,
         outDir,
+        sampleConcurrency,
       });
       const text = formatEvalReport(report);
       if (reportFile) {

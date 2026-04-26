@@ -15,6 +15,41 @@ interface LiveEvalOptions {
   n: number;
   outDir: string;
   maxTokens?: number;
+  // Cap on in-flight sample requests per (cell, condition).
+  // Default 1 (serial) preserves current behaviour and avoids
+  // subscription-CLI auth races. Bump to 3+ for CF-only runs to cut
+  // wall time without tripping rate limits. Models and conditions
+  // remain serial regardless (different providers, different rate
+  // budgets).
+  sampleConcurrency?: number;
+}
+
+// Run an array of producer functions with a concurrency cap.
+// Returns settled results in the same order as the input. Used so
+// one slow request doesn't head-of-line-block faster ones at the
+// same concurrency slot.
+async function withConcurrency<T>(
+  tasks: Array<() => Promise<T>>,
+  cap: number,
+): Promise<Array<{ ok: true; value: T } | { ok: false; error: unknown }>> {
+  const results: Array<
+    { ok: true; value: T } | { ok: false; error: unknown }
+  > = new Array(tasks.length);
+  let next = 0;
+  async function worker() {
+    while (true) {
+      const i = next++;
+      if (i >= tasks.length) return;
+      try {
+        results[i] = { ok: true, value: await tasks[i]() };
+      } catch (error) {
+        results[i] = { ok: false, error };
+      }
+    }
+  }
+  const workers = Array.from({ length: Math.max(1, cap) }, worker);
+  await Promise.all(workers);
+  return results;
 }
 
 function sanitizeId(id: string): string {
@@ -62,7 +97,7 @@ export async function runLiveEval(opts: LiveEvalOptions): Promise<EvalReport> {
         `Return a single, self-contained, valid HTML5 document only — nothing before it, nothing after it, no prose commentary, no reasoning, no fenced code blocks. Start with <!doctype html> and end with </html>.`,
       ].join("\n");
 
-      for (let i = 0; i < opts.n; i++) {
+      const tasks = Array.from({ length: opts.n }, (_, i) => async () => {
         const sampleBase = `sample-${String(i + 1).padStart(3, "0")}`;
         try {
           const out = await runner.run({
@@ -79,7 +114,8 @@ export async function runLiveEval(opts: LiveEvalOptions): Promise<EvalReport> {
             String(err),
           );
         }
-      }
+      });
+      await withConcurrency(tasks, opts.sampleConcurrency ?? 1);
     }
   }
 
