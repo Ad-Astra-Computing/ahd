@@ -1,6 +1,6 @@
 # AHD Linter Rule Spec
 
-Thirty-nine slop tells in the catalogued taxonomy. Two engines enforce them: thirty-eight source-level rules in `ahd lint` (HTML/CSS/JSX detection across web, brand, typography, accessibility, plus a small SVG-source set and one cross-file rule) and fourteen vision rules in `ahd critique` (screenshot detection). Each rule has an id, a surface, a detection method, a severity and a suggested remediation. Source rules also ship as `eslint-plugin-ahd` (JSX/TSX) and `stylelint-plugin-ahd` (CSS/Tailwind/vanilla); vision rules run only via the critic. Some taxonomy entries are vision-only and have no source-level counterpart; some entries live in the brief compiler's negative-prompt layer and are caught at generation time rather than after.
+Thirty-nine slop tells in the catalogued taxonomy. Three engines enforce them: thirty-eight source-level rules in `ahd lint` (HTML/CSS/JSX detection across web, brand, typography, accessibility, plus a small SVG-source set and one cross-file rule), fourteen vision rules in `ahd critique` (screenshot detection), and five mobile-layout rules in `ahd audit-mobile` (rendered-page checks against a 375px viewport). Each rule has an id, a surface, a detection method, a severity and a suggested remediation. Source rules also ship as `eslint-plugin-ahd` (JSX/TSX) and `stylelint-plugin-ahd` (CSS/Tailwind/vanilla); vision rules run only via the critic; mobile rules run only via the audit-mobile pipeline. Some taxonomy entries are vision-only and have no source-level counterpart; some entries live in the brief compiler's negative-prompt layer and are caught at generation time rather than after.
 
 ## Rule format
 
@@ -84,6 +84,16 @@ rationale: <one-line reason, links to SLOP_TAXONOMY tell>
 | id | surface | severity | detect |
 |---|---|---|---|
 | `ahd/no-broken-internal-links` | html | warn | An internal `href` references a path that does not resolve to any file in the site root. Fires only when `ahd lint --whole-site --root <dist>` is invoked; single-file lint cannot see other files in the build. |
+
+### Mobile (rendered-page, `ahd audit-mobile`)
+
+| id | surface | severity | detect |
+|---|---|---|---|
+| `ahd/mobile/viewport-meta-present` | html | error | `<meta name="viewport" content="width=device-width, ...">` is missing. Without it, mobile browsers render at desktop width and scale down, defeating every other mobile treatment. |
+| `ahd/mobile/no-horizontal-overflow` | rendered | error | Document or any visible element extends past the right edge of a 375px viewport. Catches unwrapped nav, overflowing pre blocks, fixed-width tables, and display-size headlines that don't scale. |
+| `ahd/mobile/tap-target-size` | rendered | warn | Interactive elements (buttons, nav links, form controls) below 32px tall at 375px viewport. Trips the fat-finger threshold. |
+| `ahd/mobile/body-font-size` | rendered | warn | Substantive `<p>` text rendering below 14px CSS pixels at 375px. Forces zoom for one-handed reading. |
+| `ahd/mobile/scrollable-no-affordance` | rendered | warn | Horizontally-scrollable region (`overflow-x: auto/scroll` with content > clientWidth) hides its scrollbar without a replacement cue (`scroll-snap-type`, edge-fade `mask-image`, or `data-scroll-affordance` opt-out). Touch users have no signal that more content exists. |
 
 ## Severity policy
 
