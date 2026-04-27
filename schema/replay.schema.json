@@ -1,0 +1,199 @@
+{
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "type": "number",
+      "const": 1,
+      "description": "Schema version of the Replay block itself. Bump on any breaking change to field shape; consumers should refuse to parse newer majors than they understand."
+    },
+    "ahd_version": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Framework version that produced the run, as reported by the package manifest at invocation time (or AHD_VERSION env override)."
+    },
+    "ahd_commit": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Full git SHA the framework was built from. Null when running outside a git repo (npm-installed package, distribution build)."
+    },
+    "git_dirty": {
+      "type": [
+        "boolean",
+        "null"
+      ],
+      "description": "True if the working tree had uncommitted changes at run time. Null when ahd_commit is null. Dirty + a SHA together mean the SHA is not the actual run state."
+    },
+    "node_version": {
+      "type": "string",
+      "minLength": 1,
+      "description": "process.version at invocation time."
+    },
+    "platform": {
+      "type": "string",
+      "minLength": 1,
+      "description": "`${process.platform}-${process.arch}` at invocation time."
+    },
+    "invoked_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "argv": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Full process.argv at invocation time, as a list. Replay tooling reconstructs the shell command from this; a single joined string would lose quoting."
+    },
+    "token": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "hash": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$"
+        }
+      },
+      "required": [
+        "path",
+        "hash"
+      ],
+      "additionalProperties": false,
+      "description": "Hash is taken over the canonical-JSON serialisation of the resolved token (recursive key sort, no whitespace)."
+    },
+    "brief": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "path": {
+              "type": "string",
+              "minLength": 1
+            },
+            "hash": {
+              "type": "string",
+              "pattern": "^sha256:[a-f0-9]{64}$"
+            }
+          },
+          "required": [
+            "path",
+            "hash"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Same hash discipline as token when the brief is structured (parsed YAML / JSON). For raw-bytes briefs (markdown body), the hash is over the file's exact bytes; the hash contract is documented per-entry-point in docs/REPLAY.md."
+    },
+    "sampling": {
+      "type": "object",
+      "properties": {
+        "n": {
+          "type": "integer",
+          "exclusiveMinimum": true,
+          "minimum": 0
+        },
+        "temperature": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "seed": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "n",
+        "temperature",
+        "seed"
+      ],
+      "additionalProperties": false
+    },
+    "models": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "provider": {
+            "type": "string",
+            "minLength": 1
+          },
+          "provider_request_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Every provider-side request id captured during the run for this model. Empty array allowed (mock runner, local model, provider that doesn't return one). Plural-safe: some providers return multiple relevant ids per call."
+          }
+        },
+        "required": [
+          "id",
+          "provider",
+          "provider_request_ids"
+        ],
+        "additionalProperties": false
+      },
+      "description": "Empty array allowed (mock-only runs)."
+    },
+    "conditions": {
+      "type": "object",
+      "properties": {
+        "requested": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "effective": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "requested",
+        "effective"
+      ],
+      "additionalProperties": false,
+      "description": "What the user asked for vs what actually ran. Diverges when the runner skips a condition (e.g. mock-only, partial-failure resume)."
+    }
+  },
+  "required": [
+    "schema_version",
+    "ahd_version",
+    "ahd_commit",
+    "git_dirty",
+    "node_version",
+    "platform",
+    "invoked_at",
+    "argv",
+    "token",
+    "brief",
+    "sampling",
+    "models",
+    "conditions"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ahd.adastra.computer/schema/replay.schema.json",
+  "title": "AHD eval replay block (reproducibility manifest)"
+}

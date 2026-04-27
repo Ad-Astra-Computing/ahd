@@ -267,3 +267,117 @@ export const RulesManifestSchema = z
 
 export type RulesManifestEntry = z.infer<typeof RulesManifestEntrySchema>;
 export type RulesManifest = z.infer<typeof RulesManifestSchema>;
+
+// ---------------------------------------------------------------------------
+// Replay schema (eval reproducibility tooling, task #24)
+//
+// Every published eval report carries a Replay block at the top: enough
+// information for a third party to (a) verify our claimed inputs match what we
+// actually fed the runner (token + brief hashes against the named commit), and
+// (b) re-run the same command at the named version. The block lands in two
+// surfaces — `<report>.replay.json` (canonical, schema-validated) and a fenced
+// YAML block in the markdown (human-friendly subset, derived from the JSON).
+//
+// True bit-for-bit reproducibility against frontier providers is impossible
+// (silent model updates), so the schema captures verifiability + replayability
+// as separate goals rather than promising determinism we can't enforce.
+//
+// See docs/REPLAY.md for the hash contract (canonical JSON ordering rule and
+// the fallback to raw bytes for non-JSON briefs).
+// ---------------------------------------------------------------------------
+
+export const ReplaySchema = z
+  .object({
+    schema_version: z
+      .literal(1)
+      .describe(
+        "Schema version of the Replay block itself. Bump on any breaking change to field shape; consumers should refuse to parse newer majors than they understand.",
+      ),
+    ahd_version: z
+      .string()
+      .min(1)
+      .describe(
+        "Framework version that produced the run, as reported by the package manifest at invocation time (or AHD_VERSION env override).",
+      ),
+    ahd_commit: z
+      .string()
+      .nullable()
+      .describe(
+        "Full git SHA the framework was built from. Null when running outside a git repo (npm-installed package, distribution build).",
+      ),
+    git_dirty: z
+      .boolean()
+      .nullable()
+      .describe(
+        "True if the working tree had uncommitted changes at run time. Null when ahd_commit is null. Dirty + a SHA together mean the SHA is not the actual run state.",
+      ),
+    node_version: z
+      .string()
+      .min(1)
+      .describe("process.version at invocation time."),
+    platform: z
+      .string()
+      .min(1)
+      .describe("`${process.platform}-${process.arch}` at invocation time."),
+    invoked_at: z
+      .string()
+      .datetime({ message: "invoked_at must be an ISO-8601 datetime string." }),
+    argv: z
+      .array(z.string())
+      .describe(
+        "Full process.argv at invocation time, as a list. Replay tooling reconstructs the shell command from this; a single joined string would lose quoting.",
+      ),
+    token: z
+      .object({
+        path: z.string().min(1),
+        hash: z.string().regex(/^sha256:[a-f0-9]{64}$/i),
+      })
+      .strict()
+      .describe(
+        "Hash is taken over the canonical-JSON serialisation of the resolved token (recursive key sort, no whitespace).",
+      ),
+    brief: z
+      .object({
+        path: z.string().min(1),
+        hash: z.string().regex(/^sha256:[a-f0-9]{64}$/i),
+      })
+      .strict()
+      .nullable()
+      .describe(
+        "Same hash discipline as token when the brief is structured (parsed YAML / JSON). For raw-bytes briefs (markdown body), the hash is over the file's exact bytes; the hash contract is documented per-entry-point in docs/REPLAY.md.",
+      ),
+    sampling: z
+      .object({
+        n: z.number().int().positive(),
+        temperature: z.number().nullable(),
+        seed: z.number().int().nullable(),
+      })
+      .strict(),
+    models: z
+      .array(
+        z
+          .object({
+            id: z.string().min(1),
+            provider: z.string().min(1),
+            provider_request_ids: z
+              .array(z.string())
+              .describe(
+                "Every provider-side request id captured during the run for this model. Empty array allowed (mock runner, local model, provider that doesn't return one). Plural-safe: some providers return multiple relevant ids per call.",
+              ),
+          })
+          .strict(),
+      )
+      .describe("Empty array allowed (mock-only runs)."),
+    conditions: z
+      .object({
+        requested: z.array(z.string()),
+        effective: z.array(z.string()),
+      })
+      .strict()
+      .describe(
+        "What the user asked for vs what actually ran. Diverges when the runner skips a condition (e.g. mock-only, partial-failure resume).",
+      ),
+  })
+  .strict();
+
+export type Replay = z.infer<typeof ReplaySchema>;

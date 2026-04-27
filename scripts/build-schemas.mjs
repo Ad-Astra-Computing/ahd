@@ -27,6 +27,7 @@ const {
   ManifestTargetSchema,
   SampleEnvelopeTargetSchema,
   RulesManifestSchema,
+  ReplaySchema,
 } = await import(pathToFileURL(distTypes).href);
 
 const schemaDir = resolve(root, "schema");
@@ -73,4 +74,10 @@ emit(
   RulesManifestSchema,
   "https://ahd.adastra.computer/schema/rules.manifest.schema.json",
   "AHD rules manifest (governance Layer 1)",
+);
+emit(
+  "replay",
+  ReplaySchema,
+  "https://ahd.adastra.computer/schema/replay.schema.json",
+  "AHD eval replay block (reproducibility manifest)",
 );
