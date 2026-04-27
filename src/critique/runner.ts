@@ -9,13 +9,22 @@ import {
 } from "./critic.js";
 import { fileToBase64, renderFileToPng } from "./screenshot.js";
 import type { Violation } from "../lint/types.js";
+import { captureReplay, renderReplayMarkdown } from "../eval/replay.js";
+import { loadToken } from "../load.js";
+import type { Replay } from "../eval/types.js";
 
 export interface CritiqueRunOptions {
   samplesDir: string;
   token: string;
   critic: Critic;
+  criticName?: string;
   outDir: string;
   max?: number;
+  // Captured at the bin layer; runner attaches the Replay to the
+  // returned report. Tokens dir is needed so the runner can load the
+  // resolved token JSON for hashing.
+  tokensDir?: string;
+  replayContext?: { invokedAt: Date; argv: string[] };
 }
 
 export interface CritiqueReport {
@@ -30,6 +39,7 @@ export interface CritiqueReport {
   }>;
   tellFrequency: Record<string, { raw: number; compiled: number }>;
   scored: { raw: number; compiled: number };
+  replay?: Replay;
 }
 
 async function collectHtmlSamples(
@@ -113,7 +123,7 @@ export async function runCritiqueOnDir(opts: CritiqueRunOptions): Promise<Critiq
     }
   }
 
-  return {
+  const report: CritiqueReport = {
     token: opts.token,
     critic: opts.critic.id,
     runAt: new Date().toISOString(),
@@ -121,6 +131,49 @@ export async function runCritiqueOnDir(opts: CritiqueRunOptions): Promise<Critiq
     tellFrequency,
     scored,
   };
+
+  if (opts.replayContext && opts.tokensDir) {
+    let resolvedToken: unknown = null;
+    try {
+      resolvedToken = await loadToken(opts.tokensDir, opts.token);
+    } catch {
+      // Token resolution is best-effort for replay; if it fails we
+      // still want the rest of the block. Hash a marker rather than
+      // surface a fake hash for the resolved-null case.
+      resolvedToken = { __unresolved__: opts.token };
+    }
+    report.replay = captureReplay({
+      kind: "critique",
+      token: { path: `${opts.tokensDir}/${opts.token}.yml`, resolved: resolvedToken },
+      brief: null,
+      sampling: {
+        n: scored.raw + scored.compiled,
+        temperature: null,
+        seed: null,
+      },
+      models: [
+        {
+          id: opts.critic.id,
+          provider: opts.criticName ?? "unknown",
+          provider_request_ids: [],
+        },
+      ],
+      conditions: {
+        requested: ["raw", "compiled"],
+        effective: scored.raw === 0
+          ? scored.compiled === 0
+            ? []
+            : ["compiled"]
+          : scored.compiled === 0
+            ? ["raw"]
+            : ["raw", "compiled"],
+      },
+      invokedAt: opts.replayContext.invokedAt,
+      argv: opts.replayContext.argv,
+    });
+  }
+
+  return report;
 }
 
 export function formatCritiqueReport(r: CritiqueReport): string {
@@ -128,6 +181,10 @@ export function formatCritiqueReport(r: CritiqueReport): string {
   lines.push(`# ahd critique · ${r.token} · ${r.runAt}`);
   lines.push(`critic: \`${r.critic}\``);
   lines.push("");
+  if (r.replay) {
+    lines.push(renderReplayMarkdown(r.replay));
+    lines.push("");
+  }
   lines.push("## Vision-only rules fired (critic vs. ruleset)");
   lines.push("");
   lines.push("| rule | raw (n=" + r.scored.raw + ") | compiled (n=" + r.scored.compiled + ") |");

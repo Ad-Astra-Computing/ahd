@@ -5,6 +5,7 @@ import { imageRunnerFromSpec } from "./runners/image-index.js";
 import { compileImagePrompt, briefAsProse } from "../compile.js";
 import { loadToken, loadBrief } from "../load.js";
 import { anthropicVisionCritic, mockCritic, type Critic } from "../critique/critic.js";
+import { captureReplay, renderReplayMarkdown } from "./replay.js";
 
 function resolveDefaultCritic(): Critic {
   const key = process.env.ANTHROPIC_API_KEY;
@@ -28,6 +29,9 @@ interface LiveImageEvalOptions {
   critic?: Critic;
   width?: number;
   height?: number;
+  // See note on LiveEvalOptions.replayContext — bin captures, runner
+  // attaches.
+  replayContext?: { invokedAt: Date; argv: string[] };
 }
 
 function sanitizeId(id: string): string {
@@ -62,6 +66,7 @@ export interface ImageEvalReport {
     compiledCritiqued: number;
   }>;
   caveats: string[];
+  replay?: import("./types.js").Replay;
 }
 
 export async function runLiveImageEval(
@@ -186,7 +191,7 @@ export async function runLiveImageEval(
     };
   });
 
-  return {
+  const report: ImageEvalReport = {
     token: opts.token,
     runAt: new Date().toISOString(),
     brief: opts.briefPath,
@@ -201,12 +206,38 @@ export async function runLiveImageEval(
       "The compiled negative prompt includes image-specific slop patterns (corporate memphis, malformed anatomy, iridescent blobs, decorative cursive). The raw condition does not.",
     ],
   };
+
+  if (opts.replayContext) {
+    report.replay = captureReplay({
+      kind: "eval-image",
+      token: { path: `${opts.tokensDir}/${opts.token}.yml`, resolved: token },
+      brief: { path: opts.briefPath, resolved: brief },
+      sampling: { n: opts.n, temperature: null, seed: null },
+      models: opts.imageModels.map((spec) => ({
+        id: spec,
+        provider: spec.split(":")[0] || "unknown",
+        provider_request_ids: [],
+      })),
+      conditions: {
+        requested: ["raw", "compiled"],
+        effective: ["raw", "compiled"],
+      },
+      invokedAt: opts.replayContext.invokedAt,
+      argv: opts.replayContext.argv,
+    });
+  }
+
+  return report;
 }
 
 export function formatImageEvalReport(r: ImageEvalReport): string {
   const lines: string[] = [];
   lines.push(`# ahd eval-image · ${r.token} · ${r.runAt}`);
   lines.push("");
+  if (r.replay) {
+    lines.push(renderReplayMarkdown(r.replay));
+    lines.push("");
+  }
   lines.push(`- Brief: \`${r.brief}\``);
   lines.push(`- Samples per cell: **${r.n}**`);
   lines.push("");

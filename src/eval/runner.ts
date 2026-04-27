@@ -5,6 +5,7 @@ import { lintSource } from "../lint/engine.js";
 import type { AhdProjectConfig } from "../lint/config.js";
 import { rules } from "../lint/rules/index.js";
 import { VISION_RULES } from "../critique/critic.js";
+import { renderReplayMarkdown } from "./replay.js";
 import type {
   CellCounts,
   Condition,
@@ -206,6 +207,10 @@ export function formatEvalReport(r: EvalReport): string {
   const lines: string[] = [];
   lines.push(`# ahd eval · ${r.token} · ${r.runAt}`);
   lines.push("");
+  if (r.replay) {
+    lines.push(renderReplayMarkdown(r.replay));
+    lines.push("");
+  }
   if (r.runManifest) {
     lines.push("## Run");
     lines.push("");

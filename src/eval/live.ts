@@ -6,6 +6,7 @@ import { compile, briefAsProse } from "../compile.js";
 import { loadToken, loadBrief } from "../load.js";
 import { runEval } from "./runner.js";
 import type { EvalReport, RunManifest } from "./types.js";
+import { captureReplay } from "./replay.js";
 
 interface LiveEvalOptions {
   tokensDir: string;
@@ -22,6 +23,11 @@ interface LiveEvalOptions {
   // remain serial regardless (different providers, different rate
   // budgets).
   sampleConcurrency?: number;
+  // When supplied, the runner builds a Replay block and attaches it
+  // to the returned report. The bin layer is the natural place to
+  // capture invokedAt + argv (the runner has no idea what the user
+  // typed), so the runner accepts these from the caller.
+  replayContext?: { invokedAt: Date; argv: string[] };
 }
 
 // Run an array of producer functions with a concurrency cap.
@@ -152,5 +158,26 @@ export async function runLiveEval(opts: LiveEvalOptions): Promise<EvalReport> {
 
   const report = await runEval(opts.token, samplesRoot);
   report.runManifest = runManifest;
+
+  if (opts.replayContext) {
+    report.replay = captureReplay({
+      kind: "eval-live",
+      token: { path: `${opts.tokensDir}/${opts.token}.yml`, resolved: token },
+      brief: { path: opts.briefPath, resolved: brief },
+      sampling: { n: opts.n, temperature: null, seed: null },
+      models: manifestModels.map((m) => ({
+        id: m.canonicalId,
+        provider: m.provider,
+        provider_request_ids: [],
+      })),
+      conditions: {
+        requested: ["raw", "compiled"],
+        effective: ["raw", "compiled"],
+      },
+      invokedAt: opts.replayContext.invokedAt,
+      argv: opts.replayContext.argv,
+    });
+  }
+
   return report;
 }

@@ -75,6 +75,7 @@ describe("hashBytes", () => {
 
 describe("captureReplay", () => {
   const baseInput = {
+    kind: "eval-live" as const,
     token: { path: "tokens/swiss-editorial.yml", resolved: { foo: "bar" } },
     brief: {
       path: "briefs/landing.yml",
@@ -139,6 +140,15 @@ describe("captureReplay", () => {
     expect(r.conditions.effective).toEqual(["raw"]);
   });
 
+  it("preserves the kind discriminator", () => {
+    const eval_ = captureReplay(baseInput);
+    const crit = captureReplay({ ...baseInput, kind: "critique" });
+    const img = captureReplay({ ...baseInput, kind: "eval-image" });
+    expect(eval_.kind).toBe("eval-live");
+    expect(crit.kind).toBe("critique");
+    expect(img.kind).toBe("eval-image");
+  });
+
   it("respects AHD_VERSION env override", () => {
     const prev = process.env.AHD_VERSION;
     process.env.AHD_VERSION = "9.9.9";
@@ -167,6 +177,7 @@ describe("captureReplay", () => {
 describe("ReplaySchema · rejects malformed blocks", () => {
   function valid() {
     return captureReplay({
+      kind: "eval-live" as const,
       token: { path: "t.yml", resolved: {} },
       brief: { path: "b.yml", resolved: {} },
       sampling: { n: 1, temperature: null, seed: null },
@@ -203,6 +214,7 @@ describe("ReplaySchema · rejects malformed blocks", () => {
 describe("renderReplayMarkdown", () => {
   it("produces a fenced ahd-replay block followed by a replay shell snippet", () => {
     const r = captureReplay({
+      kind: "eval-live",
       token: { path: "t.yml", resolved: { x: 1 } },
       brief: { path: "b.yml", resolved: { y: 2 } },
       sampling: { n: 30, temperature: 0.7, seed: null },
@@ -228,6 +240,7 @@ describe("renderReplayMarkdown", () => {
 
   it("redacts provider_request_ids to a count, not the values", () => {
     const r = captureReplay({
+      kind: "critique",
       token: { path: "t", resolved: {} },
       brief: null,
       sampling: { n: 1, temperature: null, seed: null },
@@ -249,6 +262,7 @@ describe("renderReplayMarkdown", () => {
 
   it("shell-quotes argv values that need it", () => {
     const r = captureReplay({
+      kind: "eval-live",
       token: { path: "t", resolved: {} },
       brief: null,
       sampling: { n: 1, temperature: null, seed: null },

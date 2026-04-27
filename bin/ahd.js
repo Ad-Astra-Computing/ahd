@@ -389,11 +389,17 @@ async function main() {
         n,
         outDir,
         sampleConcurrency,
+        replayContext: { invokedAt: new Date(), argv: process.argv },
       });
       const text = formatEvalReport(report);
       if (reportFile) {
         await writeFile(reportFile, text);
         console.log(`wrote ${reportFile}`);
+        if (report.replay) {
+          const sidecar = reportFile.replace(/(\.md)?$/, ".replay.json");
+          await writeFile(sidecar, JSON.stringify(report.replay, null, 2) + "\n");
+          console.log(`wrote ${sidecar}`);
+        }
       } else {
         console.log(text);
       }
@@ -469,11 +475,17 @@ async function main() {
         critic: criticImpl,
         n,
         outDir,
+        replayContext: { invokedAt: new Date(), argv: process.argv },
       });
       const text = formatImageEvalReport(report);
       if (reportFile) {
         await writeFile(reportFile, text);
         console.log(`wrote ${reportFile}`);
+        if (report.replay) {
+          const sidecar = reportFile.replace(/(\.md)?$/, ".replay.json");
+          await writeFile(sidecar, JSON.stringify(report.replay, null, 2) + "\n");
+          console.log(`wrote ${sidecar}`);
+        }
       } else {
         console.log(text);
       }
@@ -502,13 +514,21 @@ async function main() {
         samplesDir: resolve(samplesDir, token),
         token,
         critic: criticImpl,
+        criticName: critic,
         outDir,
         max: max > 0 ? max : undefined,
+        tokensDir: TOKENS,
+        replayContext: { invokedAt: new Date(), argv: process.argv },
       });
       const text = formatCritiqueReport(report);
       if (reportFile) {
         await writeFile(reportFile, text);
         console.log(`wrote ${reportFile}`);
+        if (report.replay) {
+          const sidecar = reportFile.replace(/(\.md)?$/, ".replay.json");
+          await writeFile(sidecar, JSON.stringify(report.replay, null, 2) + "\n");
+          console.log(`wrote ${sidecar}`);
+        }
       } else {
         console.log(text);
       }

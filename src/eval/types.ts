@@ -49,6 +49,7 @@ export interface EvalReport {
   }>;
   caveats: string[];
   runManifest?: RunManifest;
+  replay?: Replay;
 }
 
 export interface RunManifest {
@@ -292,6 +293,11 @@ export const ReplaySchema = z
       .literal(1)
       .describe(
         "Schema version of the Replay block itself. Bump on any breaking change to field shape; consumers should refuse to parse newer majors than they understand.",
+      ),
+    kind: z
+      .enum(["eval-live", "critique", "eval-image"])
+      .describe(
+        "Which entry point produced the run. Discriminator for verify-replay so it can apply per-kind interpretation rules (e.g. brief is always null on critique runs).",
       ),
     ahd_version: z
       .string()

@@ -11,6 +11,7 @@ import type { Replay } from "./types.js";
 // not know which subcommand it is serving.
 
 export interface CaptureReplayInput {
+  kind: "eval-live" | "critique" | "eval-image";
   token: { path: string; resolved: unknown };
   // For structured briefs (parsed YAML / JSON), pass `resolved` (object).
   // For raw-bytes briefs (markdown body), pass `raw` (string). One or the
@@ -55,6 +56,7 @@ export function captureReplay(input: CaptureReplayInput): Replay {
 
   return {
     schema_version: 1,
+    kind: input.kind,
     ahd_version: readAhdVersion(),
     ahd_commit: commit,
     git_dirty: dirty,
@@ -165,6 +167,7 @@ export function renderReplayMarkdown(replay: Replay): string {
   const lines: string[] = [];
   lines.push("```yaml ahd-replay");
   lines.push(`schema_version: ${replay.schema_version}`);
+  lines.push(`kind: ${replay.kind}`);
   lines.push(`ahd_version: ${replay.ahd_version}`);
   lines.push(`ahd_commit: ${replay.ahd_commit ?? "null"}`);
   if (replay.git_dirty === true) lines.push("git_dirty: true");

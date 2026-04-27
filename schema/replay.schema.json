@@ -6,6 +6,15 @@
       "const": 1,
       "description": "Schema version of the Replay block itself. Bump on any breaking change to field shape; consumers should refuse to parse newer majors than they understand."
     },
+    "kind": {
+      "type": "string",
+      "enum": [
+        "eval-live",
+        "critique",
+        "eval-image"
+      ],
+      "description": "Which entry point produced the run. Discriminator for verify-replay so it can apply per-kind interpretation rules (e.g. brief is always null on critique runs)."
+    },
     "ahd_version": {
       "type": "string",
       "minLength": 1,
@@ -179,6 +188,7 @@
   },
   "required": [
     "schema_version",
+    "kind",
     "ahd_version",
     "ahd_commit",
     "git_dirty",
