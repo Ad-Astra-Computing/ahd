@@ -7,8 +7,8 @@ import { MOBILE_RULES } from "../src/mobile/rules.js";
 // the metadata and that each rule shape is valid.
 
 describe("mobile rules · descriptors", () => {
-  it("ships five mobile rules", () => {
-    expect(MOBILE_RULES).toHaveLength(5);
+  it("ships six mobile rules", () => {
+    expect(MOBILE_RULES).toHaveLength(6);
   });
 
   it("every rule has an ahd/mobile/* id", () => {
@@ -24,13 +24,14 @@ describe("mobile rules · descriptors", () => {
     }
   });
 
-  it("includes the five named rules", () => {
+  it("includes the six named rules", () => {
     const ids = new Set(MOBILE_RULES.map((r) => r.id));
     expect(ids).toContain("ahd/mobile/no-horizontal-overflow");
     expect(ids).toContain("ahd/mobile/tap-target-size");
     expect(ids).toContain("ahd/mobile/body-font-size");
     expect(ids).toContain("ahd/mobile/viewport-meta-present");
     expect(ids).toContain("ahd/mobile/scrollable-no-affordance");
+    expect(ids).toContain("ahd/mobile/list-mark-alignment");
   });
 
   it("assigns error to overflow and viewport-meta, warn to the rest", () => {
@@ -40,5 +41,6 @@ describe("mobile rules · descriptors", () => {
     expect(byId["ahd/mobile/tap-target-size"].severity).toBe("warn");
     expect(byId["ahd/mobile/body-font-size"].severity).toBe("warn");
     expect(byId["ahd/mobile/scrollable-no-affordance"].severity).toBe("warn");
+    expect(byId["ahd/mobile/list-mark-alignment"].severity).toBe("warn");
   });
 });

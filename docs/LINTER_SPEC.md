@@ -1,6 +1,6 @@
 # AHD Linter Rule Spec
 
-Thirty-nine slop tells in the catalogued taxonomy. Three engines enforce them: thirty-eight source-level rules in `ahd lint` (HTML/CSS/JSX detection across web, brand, typography, accessibility, plus a small SVG-source set and one cross-file rule), fourteen vision rules in `ahd critique` (screenshot detection), and five mobile-layout rules in `ahd audit-mobile` (rendered-page checks against a 375px viewport). Each rule has an id, a surface, a detection method, a severity and a suggested remediation. Source rules also ship as `eslint-plugin-ahd` (JSX/TSX) and `stylelint-plugin-ahd` (CSS/Tailwind/vanilla); vision rules run only via the critic; mobile rules run only via the audit-mobile pipeline. Some taxonomy entries are vision-only and have no source-level counterpart; some entries live in the brief compiler's negative-prompt layer and are caught at generation time rather than after.
+Thirty-nine slop tells in the catalogued taxonomy. Three engines enforce them: thirty-eight source-level rules in `ahd lint` (HTML/CSS/JSX detection across web, brand, typography, accessibility, plus a small SVG-source set and one cross-file rule), fourteen vision rules in `ahd critique` (screenshot detection), and six mobile-layout rules in `ahd audit-mobile` (rendered-page checks against a 375px viewport). Each rule has an id, a surface, a detection method, a severity and a suggested remediation. Source rules also ship as `eslint-plugin-ahd` (JSX/TSX) and `stylelint-plugin-ahd` (CSS/Tailwind/vanilla); vision rules run only via the critic; mobile rules run only via the audit-mobile pipeline. Some taxonomy entries are vision-only and have no source-level counterpart; some entries live in the brief compiler's negative-prompt layer and are caught at generation time rather than after.
 
 ## Rule format
 
@@ -107,6 +107,7 @@ rationale: <one-line reason, links to SLOP_TAXONOMY tell>
 | `ahd/mobile/tap-target-size` | rendered | warn | Interactive elements (buttons, nav links, form controls) below 32px tall at 375px viewport. Trips the fat-finger threshold. |
 | `ahd/mobile/body-font-size` | rendered | warn | Substantive `<p>` text rendering below 14px CSS pixels at 375px. Forces zoom for one-handed reading. |
 | `ahd/mobile/scrollable-no-affordance` | rendered | warn | Horizontally-scrollable region (`overflow-x: auto/scroll` with content > clientWidth) hides its scrollbar without a replacement cue (`scroll-snap-type`, edge-fade `mask-image`, or `data-scroll-affordance` opt-out). Touch users have no signal that more content exists. |
+| `ahd/mobile/list-mark-alignment` | rendered | warn | A vertical list of rows starting with leading marks (bracketed glyph wrapper, icon, bullet) has misaligned post-mark content because the marks differ in rendered width and nothing reserves a fixed slot for them. Add `min-width` / `width` to the mark wrapper so all rows align. Detection: post-mark text x varies by more than 2px across same-tag, vertically-stacked siblings. |
 
 ## Severity policy
 

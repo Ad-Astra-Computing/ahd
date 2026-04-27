@@ -260,6 +260,165 @@ const scrollableNoAffordance: MobileRule = {
   },
 };
 
+// List-mark-alignment: in a vertical list of rows that each begin with
+// a leading "mark" (a bracketed glyph in a span, an svg icon, a bullet
+// inside a wrapper), the marks are visually meant to form a column.
+// When the marks have different rendered widths and nothing reserves a
+// fixed slot for them (`min-width`, `width`, a grid template), the
+// content after each mark lands at a different x and the column
+// alignment that the marks were meant to create breaks.
+//
+// Canonical case (the one the bug originated on): a Footer with two
+// `<a>` rows, each starting with `<span class="...mark">[¶]</span>` or
+// `<span class="...mark">[›_]</span>`. The two marks differ in
+// rendered width by a few pixels, so without `min-width: 4ch` on the
+// span wrapper, "Contribute" sits at a different x on each row.
+//
+// Detection pattern: walk every element with ≥2 direct same-tag
+// children that are visually stacked (each row's top > previous row's
+// bottom) and visible. For each row, find the x of the first text
+// content that is NOT inside the leading inline element. If the
+// post-mark text x differs across rows by more than 2px, fire on the
+// parent.
+//
+// Skips rows where there is no post-mark text (so a plain `<ul>` of
+// `<li>Apple</li>` rows doesn't fire — there is no "mark" to align).
+// Tolerance is 2px to absorb sub-pixel rounding without missing real
+// 4–8px offsets that read as obvious bugs.
+const listMarkAlignment: MobileRule = {
+  id: "ahd/mobile/list-mark-alignment",
+  severity: "warn",
+  status: "experimental",
+  introducedAt: "0.10.0",
+  description:
+    "A vertical list of rows that each start with a leading mark (bracketed glyph wrapper, icon, bullet) has misaligned post-mark content because the marks differ in rendered width and nothing reserves a fixed slot. Add min-width / width to the mark wrapper so all rows align.",
+  check: () => {
+    const out: Array<{ message: string; snippet?: string }> = [];
+
+    function postMarkTextX(row: Element): number | null {
+      // Find the first inline child (element or non-empty text node).
+      // That child is the candidate "mark"; we then measure the x of
+      // the first text that follows it. The candidate is rejected
+      // (rule does not apply) when:
+      //   - it is wider than half the row's width — it is not a
+      //     compact prefix, it is the row's content
+      //   - it is taller than ~1.5 line-heights — it is wrapping
+      //     prose, not a single-line mark
+      //   - the post-mark text's first line is not on the same
+      //     baseline as the mark — the post-mark content has wrapped
+      //     to its own line, so its x is determined by the parent's
+      //     content edge, not by the mark width
+      let firstInline: Node | null = null;
+      for (const c of Array.from(row.childNodes)) {
+        if (c.nodeType === 1) {
+          firstInline = c;
+          break;
+        }
+        if (c.nodeType === 3 && (c.nodeValue || "").trim()) {
+          firstInline = c;
+          break;
+        }
+      }
+      if (!firstInline) return null;
+
+      const rowRect = row.getBoundingClientRect();
+      let markRect: DOMRect | null = null;
+      if (firstInline.nodeType === 1) {
+        markRect = (firstInline as Element).getBoundingClientRect();
+      } else {
+        const r = document.createRange();
+        r.selectNodeContents(firstInline);
+        markRect = r.getBoundingClientRect();
+      }
+      if (markRect.width === 0 || markRect.height === 0) return null;
+      if (markRect.width > rowRect.width * 0.5) return null;
+      const lineHeight =
+        parseFloat(window.getComputedStyle(row).lineHeight) ||
+        parseFloat(window.getComputedStyle(row).fontSize) * 1.5 ||
+        24;
+      if (markRect.height > lineHeight * 1.5) return null;
+
+      const walker = document.createTreeWalker(row, NodeFilter.SHOW_TEXT);
+      let n: Node | null;
+      while ((n = walker.nextNode())) {
+        const t = (n.nodeValue || "").trim();
+        if (!t) continue;
+        if (firstInline.nodeType === 3 && n === firstInline) continue;
+        if (
+          firstInline.nodeType === 1 &&
+          (firstInline as Element).contains(n)
+        ) {
+          continue;
+        }
+        const r = document.createRange();
+        r.selectNodeContents(n);
+        const rects = r.getClientRects();
+        if (rects.length === 0) continue;
+        const firstLine = rects[0];
+        if (firstLine.width === 0 || firstLine.height === 0) continue;
+        // Post-mark text must share the mark's baseline; otherwise
+        // its x is whatever the parent's content edge is, not a
+        // function of the mark width.
+        if (Math.abs(firstLine.top - markRect.top) > lineHeight * 0.75) {
+          return null;
+        }
+        return firstLine.left;
+      }
+      return null;
+    }
+
+    const seen = new Set<Element>();
+    for (const parent of Array.from(document.querySelectorAll("body *"))) {
+      if (seen.has(parent)) continue;
+      const children = Array.from(parent.children);
+      if (children.length < 2) continue;
+      const tag = children[0].tagName;
+      if (!children.every((c) => c.tagName === tag)) continue;
+
+      // Visually stacked + visible.
+      const rects = children.map((c) => c.getBoundingClientRect());
+      let stacked = true;
+      for (let i = 0; i < rects.length; i++) {
+        if (rects[i].height === 0 || rects[i].width === 0) {
+          stacked = false;
+          break;
+        }
+        if (i > 0 && rects[i].top < rects[i - 1].bottom - 1) {
+          stacked = false;
+          break;
+        }
+      }
+      if (!stacked) continue;
+
+      const xs = children.map(postMarkTextX);
+      if (xs.some((x) => x === null)) continue;
+      const numeric = xs as number[];
+      const min = Math.min(...numeric);
+      const max = Math.max(...numeric);
+      if (max - min <= 2) continue;
+
+      // Mark this parent and all its ancestors as seen so a wrapper
+      // div doesn't double-report the same misalignment.
+      seen.add(parent);
+      let p: Element | null = parent.parentElement;
+      while (p) {
+        seen.add(p);
+        p = p.parentElement;
+      }
+
+      const parentTag = parent.tagName.toLowerCase();
+      const childTag = tag.toLowerCase();
+      out.push({
+        message: `Vertical list of <${childTag}> rows in <${parentTag}> has misaligned post-mark content (${(max - min).toFixed(1)}px spread). Reserve a fixed slot for the leading mark (min-width / width on the mark wrapper) so all rows align.`,
+        snippet: (parent.outerHTML || "").slice(0, 160),
+      });
+      if (out.length >= 6) break;
+    }
+
+    return out;
+  },
+};
+
 // Viewport-meta-present: this is the one source-level check that
 // belongs in the mobile bundle because without it the other checks
 // would fire constantly (desktop render in a mobile viewport = every
@@ -297,4 +456,5 @@ export const MOBILE_RULES: MobileRule[] = [
   tapTargetSize,
   bodyFontSize,
   scrollableNoAffordance,
+  listMarkAlignment,
 ];

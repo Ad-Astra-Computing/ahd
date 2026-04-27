@@ -119,7 +119,7 @@ describe("README.md rule counts ↔ rules.manifest.json", () => {
   const counts = manifest.counts.byEngine;
 
   // README says e.g. "thirty-eight-rule source linter (35 HTML/CSS + 3 SVG),
-  // a fourteen-rule vision critic, a five-rule mobile-layout audit".
+  // a fourteen-rule vision critic, a six-rule mobile-layout audit".
   // Spell-out → digit table for the cardinals AHD currently advertises.
   const NUM_WORDS: Record<string, number> = {
     "one": 1, "two": 2, "three": 3, "four": 4, "five": 5,
@@ -138,7 +138,7 @@ describe("README.md rule counts ↔ rules.manifest.json", () => {
 
   function findCount(label: string): number | undefined {
     // Match "thirty-eight-rule source linter" or "thirty-eight-rule
-    // vision critic" or "five-rule mobile-layout audit".
+    // vision critic" or "six-rule mobile-layout audit".
     const re = new RegExp(
       `([a-z]+(?:-[a-z]+)?)-rule\\s+${label}`,
       "i",

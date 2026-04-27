@@ -1,16 +1,16 @@
 {
   "version": "1",
-  "generatedAt": "2026-04-26T20:22:00.849Z",
+  "generatedAt": "2026-04-27T00:28:16.363Z",
   "counts": {
-    "total": 58,
-    "experimental": 1,
+    "total": 59,
+    "experimental": 2,
     "stable": 57,
     "deprecated": 0,
     "byEngine": {
       "source": 38,
       "cross": 1,
       "vision": 14,
-      "mobile": 5
+      "mobile": 6
     }
   },
   "rules": [
@@ -470,6 +470,14 @@
       "status": "stable",
       "introducedAt": "<= 0.8.x",
       "description": "Body text should be at least 14px at mobile widths. Below that, one-handed reading becomes work."
+    },
+    {
+      "id": "ahd/mobile/list-mark-alignment",
+      "engine": "mobile",
+      "severity": "warn",
+      "status": "experimental",
+      "introducedAt": "0.10.0",
+      "description": "A vertical list of rows that each start with a leading mark (bracketed glyph wrapper, icon, bullet) has misaligned post-mark content because the marks differ in rendered width and nothing reserves a fixed slot. Add min-width / width to the mark wrapper so all rows align."
     },
     {
       "id": "ahd/mobile/no-horizontal-overflow",

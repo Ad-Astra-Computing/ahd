@@ -184,3 +184,135 @@ if (skipReason) {
     it.skip(`skipped: ${skipReason}`, () => {});
   });
 }
+
+// Browser-behaviour smoke for ahd/mobile/list-mark-alignment. Each
+// fixture is a Footer-style two-row vertical list with bracketed
+// glyph marks: the "BAD" fixture uses unequal-width marks with no
+// reserved slot (the bug the rule was extracted from), and the "OK"
+// fixtures pin the mark width via min-width or width on the wrapper.
+const listRule = MOBILE_RULES.find(
+  (r) => r.id === "ahd/mobile/list-mark-alignment",
+);
+if (!listRule) {
+  throw new Error(
+    "ahd/mobile/list-mark-alignment is missing from MOBILE_RULES; the suite cannot run.",
+  );
+}
+
+const FIXTURE_LIST_BAD = `<!doctype html><html><head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  body { margin: 0; font: 16px/1.5 sans-serif; }
+  /* Footer-style stacked-link list. The .mark spans intentionally
+     have NO min-width: [¶] and [›_] are different widths so the
+     "Contribute" text after them lands at different x. This is the
+     exact failure mode the rule is for. */
+  nav.ftr { display: flex; flex-direction: column; gap: 8px; padding: 16px; }
+  nav.ftr a { display: block; text-decoration: none; }
+  nav.ftr .mark { display: inline-block; font-family: monospace; }
+</style>
+</head><body>
+<nav class="ftr">
+  <a href="/h"><span class="mark">[¶]</span> Contribute · for humans</a>
+  <a href="/a"><span class="mark">[›_]</span> Contribute · for agents</a>
+</nav>
+</body></html>`;
+
+const FIXTURE_LIST_OK_MIN_WIDTH = FIXTURE_LIST_BAD.replace(
+  "nav.ftr .mark { display: inline-block; font-family: monospace; }",
+  "nav.ftr .mark { display: inline-block; font-family: monospace; min-width: 4ch; }",
+);
+
+// A plain vertical list with no leading marks at all. Each <li> has
+// only one text node (no post-mark text), so the rule should skip the
+// entire list rather than fire on jagged content widths.
+const FIXTURE_LIST_OK_NO_MARKS = `<!doctype html><html><head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  body { margin: 0; font: 16px/1.5 sans-serif; }
+  ul { padding-left: 24px; }
+</style>
+</head><body>
+<ul>
+  <li>Apple</li>
+  <li>Banana but with a much longer name</li>
+  <li>Cherry</li>
+</ul>
+</body></html>`;
+
+describe.skipIf(!!skipReason)(
+  "ahd/mobile/list-mark-alignment · browser behaviour",
+  () => {
+    let browser: Browser;
+
+    it("opens a Chromium instance for the suite", async () => {
+      browser = await chromium.launch({
+        headless: true,
+        executablePath: chromiumPath,
+      });
+      expect(browser).toBeDefined();
+    }, 30_000);
+
+    it("fires when bracketed marks of unequal width misalign post-mark content", async () => {
+      const context = await browser.newContext({
+        viewport: { width: 375, height: 812 },
+        deviceScaleFactor: 2,
+      });
+      const page = await context.newPage();
+      try {
+        await page.setContent(FIXTURE_LIST_BAD, { waitUntil: "load" });
+        const fired = (await page.evaluate(listRule!.check)) as Array<{
+          message: string;
+          snippet?: string;
+        }>;
+        expect(fired.length).toBeGreaterThan(0);
+        expect(fired[0].message).toMatch(/misaligned post-mark content/i);
+        expect(fired[0].message).toMatch(/min-width|reserve/i);
+      } finally {
+        await context.close();
+      }
+    });
+
+    it("does NOT fire when the mark wrapper has min-width", async () => {
+      const context = await browser.newContext({
+        viewport: { width: 375, height: 812 },
+        deviceScaleFactor: 2,
+      });
+      const page = await context.newPage();
+      try {
+        await page.setContent(FIXTURE_LIST_OK_MIN_WIDTH, {
+          waitUntil: "load",
+        });
+        const fired = await page.evaluate(listRule!.check);
+        expect((fired as unknown[]).length).toBe(0);
+      } finally {
+        await context.close();
+      }
+    });
+
+    it("does NOT fire on a plain list with no leading marks", async () => {
+      const context = await browser.newContext({
+        viewport: { width: 375, height: 812 },
+        deviceScaleFactor: 2,
+      });
+      const page = await context.newPage();
+      try {
+        await page.setContent(FIXTURE_LIST_OK_NO_MARKS, { waitUntil: "load" });
+        const fired = await page.evaluate(listRule!.check);
+        expect((fired as unknown[]).length).toBe(0);
+      } finally {
+        await context.close();
+      }
+    });
+
+    it("closes the Chromium instance", async () => {
+      await browser?.close();
+    });
+  },
+);
+
+if (skipReason) {
+  describe("ahd/mobile/list-mark-alignment · browser behaviour", () => {
+    it.skip(`skipped: ${skipReason}`, () => {});
+  });
+}
