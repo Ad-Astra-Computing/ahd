@@ -28,6 +28,7 @@ import { auditMobile, formatMobileReport } from "../dist/mobile/audit.js";
 import { runLiveImageEval, formatImageEvalReport } from "../dist/eval/image-live.js";
 import { WORKERS_AI_IMAGE_DEFAULTS } from "../dist/eval/runners/workers-ai-image.js";
 import { runTry, runTryImage } from "../dist/try.js";
+import { verifyReplay, formatVerifyReport } from "../dist/eval/verify-replay.js";
 
 const ROOT = resolve(new URL("..", import.meta.url).pathname);
 const TOKENS = resolve(ROOT, "tokens");
@@ -365,6 +366,24 @@ async function main() {
       // target fields are warnings; the contract accepts current-shape
       // submissions today.
       if (!cur.success) process.exit(1);
+      return;
+    }
+
+    case "verify-replay": {
+      const reportPath = rest[0];
+      if (!reportPath) {
+        exit(
+          "usage: ahd verify-replay <report.md|report.replay.json>\n  Re-hashes the token + brief named in the replay sidecar and reports drift. Pass either the markdown or the sidecar path.",
+        );
+      }
+      let result;
+      try {
+        result = verifyReplay(reportPath);
+      } catch (err) {
+        exit(err instanceof Error ? err.message : String(err));
+      }
+      console.log(formatVerifyReport(result));
+      if (!result.ok) process.exit(1);
       return;
     }
 

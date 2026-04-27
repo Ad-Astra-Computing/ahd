@@ -20,6 +20,10 @@ usage: ahd validate-tokens`,
 usage: ahd validate-submission <dir>
   Parses <dir>/manifest.json against the current schema (must pass) and the target schema (warn-only). Exit code is 1 if the current schema fails. Use this before opening a contribution PR.`,
 
+  "verify-replay": `ahd verify-replay · check that a published report's named inputs still hash to the recorded values.
+usage: ahd verify-replay <report.md | report.replay.json>
+  Reads the .replay.json sidecar emitted alongside every report, re-hashes the token + brief on disk, reports drift. A passing check means the inputs you can read in the repo today are the inputs the run was given; a failure means someone edited the token or brief after publication and the recorded numbers no longer correspond to a runnable state.`,
+
   compile: `ahd compile · compile a brief into per-model prompts plus spec.json.
 usage: ahd compile <brief.yml> [--out <dir>] [--mode draft|final]
   --out <dir>    directory to write prompt.*.md + spec.json (default: ./out)

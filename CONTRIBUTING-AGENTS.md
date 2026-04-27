@@ -98,7 +98,11 @@ how clean the numbers look.
       sample-001.html
       sample-001.envelope.json
       …
+report.md                            # the markdown summary
+report.replay.json                   # ahd-emitted replay sidecar (REQUIRED)
 ```
+
+The replay sidecar (`report.replay.json`) is the verifiability contract: it carries SHA-256 hashes of the resolved token + brief, the ahd version + git commit, sampling parameters, and provider request ids. Reviewers run `ahd verify-replay report.md` to check that the inputs the report claims hash to the same values on disk now. A submission without the sidecar is incomplete; format details and hash discipline are in [docs/REPLAY.md](docs/REPLAY.md).
 
 Minimum `n` per cell is 30. Three is acceptable for a *probe* PR
 (`probe: …` in the title) but never for a publishable run.

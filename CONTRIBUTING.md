@@ -68,6 +68,9 @@ A cell where compiled lost to raw, or where extraction failed, or where the mode
 **6. Include a short runbook.**
 Name every environment detail a re-runner would need: CLI versions, model version strings, any region or endpoint pinning, any feature flags, and the exact `ahd eval-live` invocation including flags. One shell block is enough. If the report's claims depend on running the eval in a specific way, that way must be written down.
 
+**7. Ship the replay sidecar.**
+`ahd eval-live --report <file>` emits `<file>.replay.json` alongside the markdown. Commit both. The sidecar carries token + brief hashes, ahd version, git commit, sampling parameters and provider request ids; reviewers run `ahd verify-replay <file>` to confirm the inputs the report claims still hash to what is on disk. A submission without the sidecar is missing the cheapest part of the verifiability contract. Format details: [docs/REPLAY.md](docs/REPLAY.md).
+
 #### What happens on review
 
 - The maintainer spot-checks two or three randomly-selected samples by re-running the manifest against the same provider, using the runbook. The goal is distributional agreement, not bit-exact reproduction; stochastic sampling means output will differ. If the re-run produces a tell-count meaningfully outside the submitted distribution, we'll ask for clarification.
