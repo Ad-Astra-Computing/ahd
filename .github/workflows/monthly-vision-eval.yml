@@ -47,6 +47,11 @@ on:
         description: "Optional note to include in the generated report header"
         required: false
         default: ""
+      smoke_mode:
+        description: "Smoke test: 1 model, n=2 per vertical, no commit. Use to prove integration end-to-end (~5 min, ~$0.01) without consuming the monthly budget."
+        type: boolean
+        required: false
+        default: false
 
 permissions:
   contents: write
@@ -83,15 +88,23 @@ jobs:
           CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
           CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
         run: |
-          # Same roster as weekly-eval. Fresh samples give a point-in-
-          # time snapshot rather than stacking drift on top of last
-          # week's run.
+          set -x
+          # Smoke mode: one cheap model, n=2. The point of smoke is
+          # to exercise every step end-to-end, not to produce a
+          # publishable run. Full mode keeps the weekly roster, n=30.
           REPORT_DATE=$(date -u +%Y-%m-%d)
           mkdir -p docs/evals/monthly
+          if [ "${{ inputs.smoke_mode }}" = "true" ]; then
+            MODELS="cf:@cf/google/gemma-4-26b-a4b-it"
+            N=2
+          else
+            MODELS="cf:@cf/google/gemma-4-26b-a4b-it,cf:@cf/meta/llama-4-scout-17b-16e-instruct,cf:@cf/mistralai/mistral-small-3.1-24b-instruct,cf:@cf/openai/gpt-oss-120b,cf:@cf/qwen/qwen3-30b-a3b-fp8"
+            N=30
+          fi
           node ./bin/ahd.js eval-live swiss-editorial \
             --brief briefs/landing.yml \
-            --models cf:@cf/google/gemma-4-26b-a4b-it,cf:@cf/meta/llama-4-scout-17b-16e-instruct,cf:@cf/mistralai/mistral-small-3.1-24b-instruct,cf:@cf/openai/gpt-oss-120b,cf:@cf/qwen/qwen3-30b-a3b-fp8 \
-            --n 30 \
+            --models "$MODELS" \
+            --n "$N" \
             --out evals \
             --report "docs/evals/monthly/${REPORT_DATE}-source.md"
           echo "REPORT_DATE=$REPORT_DATE" >> "$GITHUB_ENV"
@@ -100,6 +113,7 @@ jobs:
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
+          set -x
           # Score each rendered sample against the 14 vision rules.
           # --critic anthropic uses the Anthropic HTTP API because
           # Claude Code CLI can't authenticate on a headless runner
@@ -128,14 +142,28 @@ jobs:
           # ~100 neurons per image, total ~4k neurons, well inside
           # the 10k/day free-tier limit. Vision scoring of 40
           # images is ~\$0.04 at Haiku prices.
+          set -x
+          if [ "${{ inputs.smoke_mode }}" = "true" ]; then
+            IMG_MODELS="cfimg:@cf/black-forest-labs/flux-1-schnell"
+            IMG_N=2
+          else
+            IMG_MODELS="cfimg:@cf/black-forest-labs/flux-1-schnell,cfimg:@cf/bytedance/stable-diffusion-xl-lightning,cfimg:@cf/stabilityai/stable-diffusion-xl-base-1.0,cfimg:@cf/lykon/dreamshaper-8-lcm"
+            IMG_N=5
+          fi
           node ./bin/ahd.js eval-image editorial-illustration \
             --brief briefs/editorial-illustration.yml \
-            --models cfimg:@cf/black-forest-labs/flux-1-schnell,cfimg:@cf/bytedance/stable-diffusion-xl-lightning,cfimg:@cf/stabilityai/stable-diffusion-xl-base-1.0,cfimg:@cf/lykon/dreamshaper-8-lcm \
-            --n 5 \
+            --models "$IMG_MODELS" \
+            --n "$IMG_N" \
             --critic anthropic \
             --report "docs/evals/monthly/${{ env.REPORT_DATE }}-image.md"
 
       - name: Commit all three reports
+        # Smoke runs prove integration; their numbers are not
+        # publishable (n=2 is well under any reportable threshold) so
+        # the smoke path skips the commit entirely. The reports still
+        # exist in the workflow's working tree if you need to inspect
+        # them via the Actions UI.
+        if: inputs.smoke_mode != true
         run: |
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
@@ -146,3 +174,8 @@ jobs:
             git commit -m "docs(evals): monthly source + vision + image-gen run ${{ env.REPORT_DATE }}" -m "Automated monthly eval across all three verticals: text source linter, text rendered-pixel vision critic, and image-generation vision critic. See the three files for per-cell numbers."
             git push
           fi
+
+      - name: Smoke-mode summary
+        if: inputs.smoke_mode == true
+        run: |
+          echo "::notice::Smoke run complete. All three steps reached without auth/rate-limit failures. Reports live in docs/evals/monthly/ in this workflow's working tree but are NOT committed (smoke n=2 is below any publishable threshold)."
