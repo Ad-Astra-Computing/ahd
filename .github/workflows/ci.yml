@@ -33,31 +33,9 @@ jobs:
         with:
           node-version: "22.22.2"
 
-      - name: Install
-        run: npm ci
-
-      - name: Build
-        # tsc + schema regen + rules manifest. Required before Test
-        # because cli-int-flags spawns bin/ahd.js which imports from
-        # dist/. The npm prepare hook used to do this implicitly;
-        # v0.9 split it out so the Nix sandbox build does not break.
-        run: npm run build
-
-      - name: Typecheck
-        run: npx tsc --noEmit
-
-      - name: Install chromium for mobile-rules behaviour tests
-        run: |
-          npx playwright install --with-deps chromium
-          CHROME=$(find "$HOME/.cache/ms-playwright" -type f -name chrome -path '*chromium-*' | head -1)
-          if [ -z "$CHROME" ]; then
-            echo "::error::chromium binary not found after install" >&2
-            exit 1
-          fi
-          echo "AHD_CHROMIUM_PATH=$CHROME" >> "$GITHUB_ENV"
-
-      - name: Test
-        run: npm test --silent
-
-      - name: Validate style tokens
-        run: node ./bin/ahd.js validate-tokens
+      - name: Run release gate (install, build, typecheck, test, validate)
+        # Composite action defined at .github/actions/gate. Single
+        # source of truth so tag-release.yml and release.yml exercise
+        # the same steps and a green tag-release implies a green
+        # release. Edits to the gate live in one place.
+        uses: ./.github/actions/gate

@@ -56,42 +56,12 @@ jobs:
           node-version: "22.22.2"
           registry-url: "https://registry.npmjs.org"
 
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build (tsc + schemas + rules manifest)
-        # Required before Test because cli-int-flags spawns
-        # bin/ahd.js which imports from dist/, and rules-manifest.test
-        # asserts the on-disk manifest matches Zod regeneration.
-        # Previously prepare did this implicitly; v0.9 split it out
-        # to keep the Nix sandbox build clean.
-        run: npm run build
-
-      - name: Typecheck
-        run: npx tsc --noEmit
-
-      - name: Install chromium for mobile-rules behaviour tests
-        # tests/mobile-rules-behaviour.test.ts launches chromium via
-        # playwright-core. playwright-core does NOT bundle browsers,
-        # so we install via the playwright package and then export the
-        # resolved binary path via AHD_CHROMIUM_PATH (which the test's
-        # findChromium() helper reads first). Without the env var the
-        # launch fails and downstream tests hit "browser undefined".
-        run: |
-          npx playwright install --with-deps chromium
-          CHROME=$(find "$HOME/.cache/ms-playwright" -type f -name chrome -path '*chromium-*' | head -1)
-          if [ -z "$CHROME" ]; then
-            echo "::error::chromium binary not found after install" >&2
-            exit 1
-          fi
-          echo "AHD_CHROMIUM_PATH=$CHROME" >> "$GITHUB_ENV"
-          echo "chromium at: $CHROME"
-
-      - name: Test
-        run: npm test --silent
-
-      - name: Validate every style token against the schema
-        run: npx ahd validate-tokens
+      - name: Run release gate (install, build, typecheck, test, validate)
+        # Composite action defined at .github/actions/gate. Single
+        # source of truth so tag-release.yml and release.yml exercise
+        # the same steps and a green tag-release implies a green
+        # release. Edits to the gate live in one place.
+        uses: ./.github/actions/gate
 
       - name: Pack tarball for the GitHub Release
         id: pack

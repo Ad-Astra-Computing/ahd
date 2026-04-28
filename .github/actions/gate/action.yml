@@ -1,0 +1,75 @@
+# AHD release gate (composite action).
+#
+# Single source of truth for the verification steps that must pass
+# before AHD ships. Used by:
+#   - ci.yml          (every push to main / PR)
+#   - tag-release.yml (the pre-tag gate)
+#   - release.yml     (re-checked at publish time)
+#
+# Why a composite action: tag-release.yml and release.yml had been
+# drifting in steps. v0.9.0 shipped on the second attempt because
+# tag-release lacked Build-before-Test; v0.10.0 shipped on the second
+# attempt because tag-release lacked the chromium install. Each cliff
+# is the same shape: tag-release's gate passes, the tag is pushed,
+# release.yml's gate (subtly different) fails. By extracting the gate
+# here, every workflow runs the SAME steps in the SAME order, so a
+# green tag-release implies a green release.
+#
+# Caller must do checkout + setup-node before calling this action.
+# Reasons:
+#   - release.yml's setup-node also configures registry-url for the
+#     publish step; that config is publish-specific, not gate-specific
+#   - tag-release.yml uses RELEASE_PAT for checkout so the bump push
+#     can bypass branch protection; that token is workflow-specific
+#
+# Exports `AHD_CHROMIUM_PATH` to $GITHUB_ENV so subsequent test steps
+# launch the playwright-bundled chromium rather than a system stub.
+
+name: AHD release gate
+description: "Install, build, typecheck, install chromium, test, validate tokens."
+
+runs:
+  using: composite
+  steps:
+    - name: Install dependencies
+      shell: bash
+      run: npm ci
+
+    - name: Build (tsc + schemas + rules manifest)
+      # Required before Test because cli-int-flags spawns bin/ahd.js
+      # which imports from dist/, and rules-manifest.test asserts the
+      # on-disk manifest matches Zod regeneration. v0.9 split this out
+      # of the npm prepare hook to keep the Nix sandbox build clean.
+      shell: bash
+      run: npm run build
+
+    - name: Typecheck
+      shell: bash
+      run: npx tsc --noEmit
+
+    - name: Install chromium for mobile-rules behaviour tests
+      # tests/mobile-rules-behaviour.test.ts launches chromium via
+      # playwright-core. playwright-core does NOT bundle browsers, so
+      # we install via the playwright package and resolve the binary
+      # path into AHD_CHROMIUM_PATH. Without this, findChromium() may
+      # latch onto a system /usr/bin/chromium-browser stub that does
+      # not speak Playwright's protocol, and downstream tests fail
+      # with "browser undefined".
+      shell: bash
+      run: |
+        npx playwright install --with-deps chromium
+        CHROME=$(find "$HOME/.cache/ms-playwright" -type f -name chrome -path '*chromium-*' | head -1)
+        if [ -z "$CHROME" ]; then
+          echo "::error::chromium binary not found after install" >&2
+          exit 1
+        fi
+        echo "AHD_CHROMIUM_PATH=$CHROME" >> "$GITHUB_ENV"
+        echo "chromium at: $CHROME"
+
+    - name: Test
+      shell: bash
+      run: npm test --silent
+
+    - name: Validate every style token against the schema
+      shell: bash
+      run: node ./bin/ahd.js validate-tokens
