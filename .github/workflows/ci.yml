@@ -46,6 +46,9 @@ jobs:
       - name: Typecheck
         run: npx tsc --noEmit
 
+      - name: Install chromium for mobile-rules behaviour tests
+        run: npx playwright install --with-deps chromium
+
       - name: Test
         run: npm test --silent
 

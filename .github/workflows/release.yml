@@ -70,6 +70,13 @@ jobs:
       - name: Typecheck
         run: npx tsc --noEmit
 
+      - name: Install chromium for mobile-rules behaviour tests
+        # tests/mobile-rules-behaviour.test.ts launches a real chromium
+        # via Playwright. The runner has no browser by default, so the
+        # tests would fail on launch (a stub path is found but cannot
+        # actually run). Installing here makes the tests deterministic.
+        run: npx playwright install --with-deps chromium
+
       - name: Test
         run: npm test --silent
 
