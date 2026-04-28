@@ -84,6 +84,17 @@ The markdown rendering omits `provider_request_ids` values and surfaces only a c
 
 The argv field is rendered as a quoted shell command in the markdown (in the trailing `replay this run` block) but stored as an array in the JSON to avoid quoting ambiguity.
 
+## Backfilled sidecars
+
+Reports published before the replay system existed carry a sidecar with `backfilled: true`. The hashes are reconstructed by `scripts/backfill-replay.mjs` from the token + brief contents at the report's git commit, so `ahd verify-replay` works against them as long as nobody has rewritten history. What backfilled blocks lack:
+
+- `argv` is `[]` (the original command was not stored).
+- `provider_request_ids` are empty (lost; never made it into the markdown).
+- `node_version` and `platform` are `"unknown"`.
+- `temperature` and `seed` are `null`.
+
+A backfilled block is informational about runs you cannot replay verbatim, but it is still verifiable: the hashes pin the inputs to a specific git state.
+
 ## When to bump `schema_version`
 
 Bump only on **breaking** schema changes (renamed/removed fields, changed semantics of an existing field). Adding optional fields does not require a bump; consumers should ignore unknown fields. Removing optional fields is breaking from the consumer's perspective, so bump.

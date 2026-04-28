@@ -383,6 +383,12 @@ export const ReplaySchema = z
       .describe(
         "What the user asked for vs what actually ran. Diverges when the runner skips a condition (e.g. mock-only, partial-failure resume).",
       ),
+    backfilled: z
+      .boolean()
+      .optional()
+      .describe(
+        "Set to true when the block was reconstructed by scripts/backfill-replay.mjs against a report that predates the replay system. Backfilled blocks rely on git history for hashes; verify-replay still works but argv is empty and provider_request_ids cannot be recovered.",
+      ),
   })
   .strict();
 

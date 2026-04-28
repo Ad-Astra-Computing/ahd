@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "kind": "critique",
+  "ahd_version": "0.1.0",
+  "ahd_commit": "4813e2c5a429bde5fe19f2d11891af13fd325cc3",
+  "git_dirty": false,
+  "node_version": "unknown",
+  "platform": "unknown",
+  "invoked_at": "2026-04-21T21:53:58.770Z",
+  "argv": [],
+  "token": {
+    "path": "tokens/swiss-editorial.yml",
+    "hash": "sha256:380a3d833d9463dbc681df7465993ab6413d8e77188f55f97359f60dc4b746b1"
+  },
+  "brief": null,
+  "sampling": {
+    "n": 21,
+    "temperature": null,
+    "seed": null
+  },
+  "models": [
+    {
+      "id": "claude-opus-4-7-critic",
+      "provider": "critic",
+      "provider_request_ids": []
+    }
+  ],
+  "conditions": {
+    "requested": [],
+    "effective": []
+  },
+  "backfilled": true
+}

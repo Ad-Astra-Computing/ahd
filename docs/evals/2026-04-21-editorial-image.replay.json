@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "kind": "eval-image",
+  "ahd_version": "0.1.0",
+  "ahd_commit": "cf71d753a41409855af8a819449efc4e38c625f3",
+  "git_dirty": false,
+  "node_version": "unknown",
+  "platform": "unknown",
+  "invoked_at": "2026-04-21T22:16:54.016Z",
+  "argv": [],
+  "token": {
+    "path": "tokens/editorial-illustration.yml",
+    "hash": "sha256:c2c79dec1b06fc45877d2b99be5c2a776aec12c226e0aeac38d384d698d9b721"
+  },
+  "brief": {
+    "path": "briefs/editorial-illustration.yml",
+    "hash": "sha256:ede77b5c41cf91ecac53272cf8d0e6c20ed5639ceb457c410a6cda03e7bca0f2"
+  },
+  "sampling": {
+    "n": 3,
+    "temperature": null,
+    "seed": null
+  },
+  "models": [],
+  "conditions": {
+    "requested": [
+      "raw",
+      "compiled"
+    ],
+    "effective": [
+      "raw",
+      "compiled"
+    ]
+  },
+  "backfilled": true
+}
