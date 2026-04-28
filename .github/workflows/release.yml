@@ -71,11 +71,21 @@ jobs:
         run: npx tsc --noEmit
 
       - name: Install chromium for mobile-rules behaviour tests
-        # tests/mobile-rules-behaviour.test.ts launches a real chromium
-        # via Playwright. The runner has no browser by default, so the
-        # tests would fail on launch (a stub path is found but cannot
-        # actually run). Installing here makes the tests deterministic.
-        run: npx playwright install --with-deps chromium
+        # tests/mobile-rules-behaviour.test.ts launches chromium via
+        # playwright-core. playwright-core does NOT bundle browsers,
+        # so we install via the playwright package and then export the
+        # resolved binary path via AHD_CHROMIUM_PATH (which the test's
+        # findChromium() helper reads first). Without the env var the
+        # launch fails and downstream tests hit "browser undefined".
+        run: |
+          npx playwright install --with-deps chromium
+          CHROME=$(find "$HOME/.cache/ms-playwright" -type f -name chrome -path '*chromium-*' | head -1)
+          if [ -z "$CHROME" ]; then
+            echo "::error::chromium binary not found after install" >&2
+            exit 1
+          fi
+          echo "AHD_CHROMIUM_PATH=$CHROME" >> "$GITHUB_ENV"
+          echo "chromium at: $CHROME"
 
       - name: Test
         run: npm test --silent

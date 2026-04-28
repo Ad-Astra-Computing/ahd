@@ -82,7 +82,14 @@ jobs:
         run: npx tsc --noEmit
 
       - name: Install chromium for mobile-rules behaviour tests
-        run: npx playwright install --with-deps chromium
+        run: |
+          npx playwright install --with-deps chromium
+          CHROME=$(find "$HOME/.cache/ms-playwright" -type f -name chrome -path '*chromium-*' | head -1)
+          if [ -z "$CHROME" ]; then
+            echo "::error::chromium binary not found after install" >&2
+            exit 1
+          fi
+          echo "AHD_CHROMIUM_PATH=$CHROME" >> "$GITHUB_ENV"
 
       - name: Test
         run: npm test --silent
