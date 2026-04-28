@@ -1,5 +1,27 @@
 # Changelog
 
+## v0.10.0 · 2026-04-28
+
+### Features
+
+- feat(eval): backfill replay sidecars for pre-0.10 reports ([15b641a](https://github.com/Ad-Astra-Computing/ahd/commit/15b641a))
+- feat(cli): ahd verify-replay subcommand + REPLAY hash contract ([8c5a127](https://github.com/Ad-Astra-Computing/ahd/commit/8c5a127))
+- feat(eval): wire replay capture into eval-live, critique, eval-image ([2c85f54](https://github.com/Ad-Astra-Computing/ahd/commit/2c85f54))
+- feat(eval): replay schema + captureReplay helper ([4e3e150](https://github.com/Ad-Astra-Computing/ahd/commit/4e3e150))
+- feat(mobile): add ahd/mobile/list-mark-alignment rule ([68d196e](https://github.com/Ad-Astra-Computing/ahd/commit/68d196e))
+
+### CI / tooling
+
+- ci: bump checkout + setup-node to v6 (Node 24 internal) ([25b478a](https://github.com/Ad-Astra-Computing/ahd/commit/25b478a))
+- ci(monthly-vision-eval): add smoke_mode input ([d8df8eb](https://github.com/Ad-Astra-Computing/ahd/commit/d8df8eb))
+- ci(release): use RELEASE_PAT for tag-release pushes ([8532c14](https://github.com/Ad-Astra-Computing/ahd/commit/8532c14))
+
+### Tests
+
+- test(parity): doc-vs-code drift checks for rules + CLI help ([5f1d56c](https://github.com/Ad-Astra-Computing/ahd/commit/5f1d56c))
+
+**Full changelog:** https://github.com/Ad-Astra-Computing/ahd/compare/v0.9.0...HEAD
+
 ## v0.9.0 · 2026-04-26
 
 ### Features
