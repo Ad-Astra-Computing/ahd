@@ -3,7 +3,7 @@ import type {
   ModelRunnerInput,
   ModelRunnerOutput,
 } from "./types.js";
-import { extractHtmlBlock } from "./types.js";
+import { extractHtmlBlock, extractProviderRequestId } from "./types.js";
 
 export function openaiRunner(options: {
   apiKey: string;
@@ -48,6 +48,7 @@ export function openaiRunner(options: {
       if (!res.ok) {
         throw new Error(`openai ${model}: ${res.status} ${await res.text()}`);
       }
+      const requestId = extractProviderRequestId(res.headers);
       const data: any = await res.json();
       const text = data.choices?.[0]?.message?.content ?? "";
       return {
@@ -59,6 +60,7 @@ export function openaiRunner(options: {
           out: data.usage?.completion_tokens ?? 0,
         },
         latencyMs: Date.now() - start,
+        requestId,
       };
     },
   };

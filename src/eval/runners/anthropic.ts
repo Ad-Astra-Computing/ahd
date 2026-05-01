@@ -3,7 +3,7 @@ import type {
   ModelRunnerInput,
   ModelRunnerOutput,
 } from "./types.js";
-import { extractHtmlBlock } from "./types.js";
+import { extractHtmlBlock, extractProviderRequestId } from "./types.js";
 
 export function anthropicRunner(options: {
   apiKey: string;
@@ -37,6 +37,7 @@ export function anthropicRunner(options: {
       if (!res.ok) {
         throw new Error(`anthropic ${model}: ${res.status} ${await res.text()}`);
       }
+      const requestId = extractProviderRequestId(res.headers);
       const data: any = await res.json();
       const text = (data.content ?? [])
         .filter((c: any) => c.type === "text")
@@ -51,6 +52,7 @@ export function anthropicRunner(options: {
           out: data.usage?.output_tokens ?? 0,
         },
         latencyMs: Date.now() - start,
+        requestId,
       };
     },
   };

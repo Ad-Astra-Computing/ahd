@@ -3,6 +3,7 @@ import type {
   ImageRunnerInput,
   ImageRunnerOutput,
 } from "./image-types.js";
+import { extractProviderRequestId } from "./types.js";
 
 export const WORKERS_AI_IMAGE_DEFAULTS = [
   "@cf/black-forest-labs/flux-1-schnell",
@@ -53,6 +54,7 @@ export function workersAiImageRunner(options: {
           `workers-ai-image ${options.model}: ${res.status} ${(await res.text()).slice(0, 500)}`,
         );
       }
+      const requestId = extractProviderRequestId(res.headers);
       const contentType = res.headers.get("content-type") ?? "";
       let pngBase64: string;
       let rawResponse: unknown;
@@ -76,6 +78,7 @@ export function workersAiImageRunner(options: {
         pngBase64,
         rawResponse,
         latencyMs: Date.now() - start,
+        requestId,
       };
     },
   };

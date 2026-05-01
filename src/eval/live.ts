@@ -73,6 +73,12 @@ export async function runLiveEval(opts: LiveEvalOptions): Promise<EvalReport> {
   const briefProse = briefAsProse(brief);
 
   const manifestModels: RunManifest["models"] = [];
+  // Provider request IDs accumulated per canonical model id across
+  // both conditions and all samples. Captured for the replay sidecar
+  // so a published claim can be tied back to the exact provider call.
+  // Keyed by canonicalId because the spec→canonical mapping is set
+  // once per runner; populated by ModelRunnerOutput.requestId.
+  const requestIdsByModel = new Map<string, string[]>();
 
   for (const spec of opts.models) {
     const runner = await runnerFromSpec(spec);
@@ -84,6 +90,9 @@ export async function runLiveEval(opts: LiveEvalOptions): Promise<EvalReport> {
       sanitizedId: safeId,
       provider: runner.provider,
     });
+    if (!requestIdsByModel.has(canonicalId)) {
+      requestIdsByModel.set(canonicalId, []);
+    }
 
     const modelDir = join(samplesRoot, safeId);
 
@@ -114,6 +123,9 @@ export async function runLiveEval(opts: LiveEvalOptions): Promise<EvalReport> {
           });
           await writeFile(join(condDir, `${sampleBase}.html`), out.html);
           await writeFile(join(condDir, `${sampleBase}.raw.txt`), out.rawResponse);
+          if (out.requestId) {
+            requestIdsByModel.get(canonicalId)!.push(out.requestId);
+          }
         } catch (err) {
           await writeFile(
             join(condDir, `${sampleBase}.error.txt`),
@@ -168,7 +180,7 @@ export async function runLiveEval(opts: LiveEvalOptions): Promise<EvalReport> {
       models: manifestModels.map((m) => ({
         id: m.canonicalId,
         provider: m.provider,
-        provider_request_ids: [],
+        provider_request_ids: requestIdsByModel.get(m.canonicalId) ?? [],
       })),
       conditions: {
         requested: ["raw", "compiled"],

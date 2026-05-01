@@ -106,21 +106,32 @@ export const VISION_RULES: VisionRule[] = [
   },
 ];
 
+// Result of a single critic call. Violations is the existing
+// surface; requestId is the provider-side identifier captured for
+// the replay sidecar (Anthropic `request-id`, OpenAI `x-request-id`,
+// Cloudflare `cf-ray`, Google `x-goog-request-id`). CLI-spawned
+// critics (claude-code-cli) leave it undefined — there is no HTTP
+// envelope to read.
+export interface CritiqueResult {
+  violations: Violation[];
+  requestId?: string;
+}
+
 export interface Critic {
   id: string;
-  critique(input: CritiqueInput): Promise<Violation[]>;
+  critique(input: CritiqueInput): Promise<CritiqueResult>;
 }
 
 export function mockCritic(fixture: Record<string, string[]> = {}): Critic {
   return {
     id: "mock-critic",
     async critique(input) {
-      const out: Violation[] = [];
+      const violations: Violation[] = [];
       const key = input.url ?? input.context ?? "default";
       const fired = fixture[key] ?? [];
       for (const ruleId of fired) {
         const spec = VISION_RULES.find((r) => r.id === ruleId);
-        out.push({
+        violations.push({
           ruleId,
           severity: "warn",
           file: input.url ?? "<screenshot>",
@@ -128,7 +139,7 @@ export function mockCritic(fixture: Record<string, string[]> = {}): Critic {
             spec?.description ?? `Vision rule ${ruleId} fired (mock critic).`,
         });
       }
-      return out;
+      return { violations };
     },
   };
 }
@@ -223,6 +234,13 @@ export function anthropicVisionCritic(options: AnthropicVisionOptions): Critic {
           body,
         });
         if (res.ok) {
+          // Anthropic returns a `request-id` header on every successful
+          // response; capture it for the replay sidecar so a published
+          // critique can be tied back to the exact provider call.
+          const requestId =
+            res.headers.get("request-id") ??
+            res.headers.get("x-request-id") ??
+            undefined;
           // Parse failures must not masquerade as "no tells fired."
           // Returning an empty array silently undercounts vision
           // violations and lets a broken critic run look like a clean
@@ -232,14 +250,17 @@ export function anthropicVisionCritic(options: AnthropicVisionOptions): Critic {
           // scored-but-unparsed and the operator can act (rerun,
           // bump model, investigate prompt). Mirrors the claude-code
           // critic's pattern in src/critique/critics/claude-code.ts.
-          const makeParseFailure = (reason: string): Violation[] => [
-            {
-              ruleId: "ahd/critic-parse-failed",
-              severity: "warn",
-              file: input.url ?? "<screenshot>",
-              message: `anthropic vision critic parse failure: ${reason}`,
-            },
-          ];
+          const makeParseFailure = (reason: string): CritiqueResult => ({
+            violations: [
+              {
+                ruleId: "ahd/critic-parse-failed",
+                severity: "warn",
+                file: input.url ?? "<screenshot>",
+                message: `anthropic vision critic parse failure: ${reason}`,
+              },
+            ],
+            requestId,
+          });
           const data: any = await res.json();
           const text = (data.content ?? [])
             .filter((c: any) => c.type === "text")
@@ -268,7 +289,7 @@ export function anthropicVisionCritic(options: AnthropicVisionOptions): Critic {
           if (!Array.isArray(parsed.fired)) {
             return makeParseFailure(`'fired' is not an array`);
           }
-          return parsed.fired
+          const violations: Violation[] = parsed.fired
             .filter((id: unknown): id is string => typeof id === "string")
             .filter((id: string) => VISION_RULES.some((r) => r.id === id))
             .map((id: string) => ({
@@ -280,6 +301,7 @@ export function anthropicVisionCritic(options: AnthropicVisionOptions): Critic {
                 VISION_RULES.find((r) => r.id === id)?.description ??
                 "Vision rule fired",
             }));
+          return { violations, requestId };
         }
         const errText = await res.text();
         lastErr = `${res.status} ${errText.slice(0, 300)}`;

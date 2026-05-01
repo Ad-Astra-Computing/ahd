@@ -1,7 +1,13 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi, afterEach } from "vitest";
 import { mockRunner, slopResponder, swissResponder, runnerFromSpec } from "../src/eval/runners/index.js";
 import { lintSource } from "../src/lint/engine.js";
-import { extractHtmlBlock } from "../src/eval/runners/types.js";
+import {
+  extractHtmlBlock,
+  extractProviderRequestId,
+} from "../src/eval/runners/types.js";
+import { anthropicRunner } from "../src/eval/runners/anthropic.js";
+import { openaiRunner } from "../src/eval/runners/openai.js";
+import { geminiRunner } from "../src/eval/runners/gemini.js";
 
 describe("model runners · mock", () => {
   it("mock runner returns deterministic HTML", async () => {
@@ -134,5 +140,108 @@ describe("extractHtmlBlock", () => {
 
   it("returns an empty string when the response is pure prose with no HTML", () => {
     expect(extractHtmlBlock("I recommend a restrained Swiss layout.")).toBe("");
+  });
+});
+
+// Provider request-id capture. The replay sidecar records these as
+// models[].provider_request_ids; an empty array means the runner did
+// not surface an id (CLI-spawned runners are the only legitimate
+// empty case once these tests pass).
+describe("provider request-id capture", () => {
+  const realFetch = globalThis.fetch;
+  afterEach(() => {
+    globalThis.fetch = realFetch;
+  });
+
+  it("extractProviderRequestId picks header order: request-id > x-request-id > cf-ray > x-goog-request-id", () => {
+    const h1 = new Headers({ "request-id": "anth", "x-request-id": "openai" });
+    expect(extractProviderRequestId(h1)).toBe("anth");
+    const h2 = new Headers({ "x-request-id": "openai", "cf-ray": "abc" });
+    expect(extractProviderRequestId(h2)).toBe("openai");
+    const h3 = new Headers({ "cf-ray": "ray-12345", "x-goog-request-id": "goog" });
+    expect(extractProviderRequestId(h3)).toBe("ray-12345");
+    expect(extractProviderRequestId(new Headers())).toBeUndefined();
+  });
+
+  it("anthropic runner surfaces request-id from response headers", async () => {
+    globalThis.fetch = vi.fn(async () => {
+      return new Response(
+        JSON.stringify({
+          content: [{ type: "text", text: "<!doctype html><html></html>" }],
+          usage: { input_tokens: 10, output_tokens: 20 },
+        }),
+        {
+          status: 200,
+          headers: {
+            "content-type": "application/json",
+            "request-id": "req_anth_test_123",
+          },
+        },
+      );
+    }) as any;
+    const r = anthropicRunner({ apiKey: "k", model: "claude-test" });
+    const out = await r.run({ userPrompt: "x" });
+    expect(out.requestId).toBe("req_anth_test_123");
+  });
+
+  it("openai runner surfaces x-request-id from response headers", async () => {
+    globalThis.fetch = vi.fn(async () => {
+      return new Response(
+        JSON.stringify({
+          choices: [{ message: { content: "<!doctype html><html></html>" } }],
+          usage: { prompt_tokens: 5, completion_tokens: 5 },
+        }),
+        {
+          status: 200,
+          headers: {
+            "content-type": "application/json",
+            "x-request-id": "req_oai_test_456",
+          },
+        },
+      );
+    }) as any;
+    const r = openaiRunner({ apiKey: "k", model: "gpt-test" });
+    const out = await r.run({ userPrompt: "x" });
+    expect(out.requestId).toBe("req_oai_test_456");
+  });
+
+  it("gemini runner surfaces x-goog-request-id from response headers", async () => {
+    globalThis.fetch = vi.fn(async () => {
+      return new Response(
+        JSON.stringify({
+          candidates: [
+            {
+              content: { parts: [{ text: "<!doctype html><html></html>" }] },
+            },
+          ],
+          usageMetadata: { promptTokenCount: 5, candidatesTokenCount: 5 },
+        }),
+        {
+          status: 200,
+          headers: {
+            "content-type": "application/json",
+            "x-goog-request-id": "goog_test_789",
+          },
+        },
+      );
+    }) as any;
+    const r = geminiRunner({ apiKey: "k", model: "gemini-test" });
+    const out = await r.run({ userPrompt: "x" });
+    expect(out.requestId).toBe("goog_test_789");
+  });
+
+  it("runner output requestId is undefined when no header is present", async () => {
+    globalThis.fetch = vi.fn(async () => {
+      return new Response(
+        JSON.stringify({
+          choices: [{ message: { content: "<!doctype html><html></html>" } }],
+          usage: { prompt_tokens: 0, completion_tokens: 0 },
+        }),
+        { status: 200, headers: { "content-type": "application/json" } },
+      );
+    }) as any;
+    const r = openaiRunner({ apiKey: "k", model: "gpt-test" });
+    const out = await r.run({ userPrompt: "x" });
+    expect(out.requestId).toBeUndefined();
   });
 });

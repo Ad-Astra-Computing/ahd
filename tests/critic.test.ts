@@ -31,7 +31,7 @@ describe("vision critic", () => {
     const critic = mockCritic({
       "sample-1": ["ahd/require-asymmetry", "ahd/no-corporate-memphis"],
     });
-    const v = await critic.critique({ token: "swiss-editorial", url: "sample-1" });
+    const v = (await critic.critique({ token: "swiss-editorial", url: "sample-1" })).violations;
     expect(v.map((x) => x.ruleId)).toEqual([
       "ahd/require-asymmetry",
       "ahd/no-corporate-memphis",
@@ -40,7 +40,7 @@ describe("vision critic", () => {
 
   it("mock critic returns empty when fixture has no entry", async () => {
     const critic = mockCritic({});
-    const v = await critic.critique({ token: "swiss-editorial", url: "unknown" });
+    const v = (await critic.critique({ token: "swiss-editorial", url: "unknown" })).violations;
     expect(v).toHaveLength(0);
   });
 });
@@ -73,10 +73,10 @@ describe("anthropic vision critic · parse failure surfaces ahd/critic-parse-fai
       apiKey: "test-key",
       model: "claude-haiku-4-5-20251001",
     });
-    const v = await critic.critique({
+    const v = (await critic.critique({
       token: "swiss-editorial",
       imageBase64: "iVBORw0K",
-    });
+    })).violations;
     expect(v).toHaveLength(1);
     expect(v[0].ruleId).toBe("ahd/critic-parse-failed");
     expect(v[0].message).toMatch(/no JSON object/i);
@@ -88,10 +88,10 @@ describe("anthropic vision critic · parse failure surfaces ahd/critic-parse-fai
       apiKey: "test-key",
       model: "claude-haiku-4-5-20251001",
     });
-    const v = await critic.critique({
+    const v = (await critic.critique({
       token: "swiss-editorial",
       imageBase64: "iVBORw0K",
-    });
+    })).violations;
     expect(v).toHaveLength(1);
     expect(v[0].ruleId).toBe("ahd/critic-parse-failed");
     expect(v[0].message).toMatch(/missing 'fired'/);
@@ -103,10 +103,10 @@ describe("anthropic vision critic · parse failure surfaces ahd/critic-parse-fai
       apiKey: "test-key",
       model: "claude-haiku-4-5-20251001",
     });
-    const v = await critic.critique({
+    const v = (await critic.critique({
       token: "swiss-editorial",
       imageBase64: "iVBORw0K",
-    });
+    })).violations;
     expect(v).toHaveLength(1);
     expect(v[0].ruleId).toBe("ahd/critic-parse-failed");
     expect(v[0].message).toMatch(/'fired' is not an array/);
@@ -118,10 +118,10 @@ describe("anthropic vision critic · parse failure surfaces ahd/critic-parse-fai
       apiKey: "test-key",
       model: "claude-haiku-4-5-20251001",
     });
-    const v = await critic.critique({
+    const v = (await critic.critique({
       token: "swiss-editorial",
       imageBase64: "iVBORw0K",
-    });
+    })).violations;
     expect(v).toHaveLength(1);
     expect(v[0].ruleId).toBe("ahd/critic-parse-failed");
     expect(v[0].message).toMatch(/JSON\.parse failed/);
@@ -135,12 +135,44 @@ describe("anthropic vision critic · parse failure surfaces ahd/critic-parse-fai
       apiKey: "test-key",
       model: "claude-haiku-4-5-20251001",
     });
-    const v = await critic.critique({
+    const v = (await critic.critique({
       token: "swiss-editorial",
       imageBase64: "iVBORw0K",
-    });
+    })).violations;
     expect(v).toHaveLength(1);
     expect(v[0].ruleId).toBe("ahd/no-corporate-memphis");
     expect(v[0].message).toBe("noodle limbs visible");
+  });
+
+  it("captures the anthropic request-id header for replay sidecar", async () => {
+    // Lock the contract that the critic surfaces the per-call provider
+    // request id. The replay block writes these into
+    // models[].provider_request_ids so a published critique can be
+    // tied back to the exact provider call.
+    globalThis.fetch = vi.fn(async () => {
+      return new Response(
+        JSON.stringify({
+          content: [
+            { type: "text", text: '{"fired": [], "rationale": {}}' },
+          ],
+        }),
+        {
+          status: 200,
+          headers: {
+            "content-type": "application/json",
+            "request-id": "req_01abcDEFghi",
+          },
+        },
+      );
+    }) as any;
+    const critic = anthropicVisionCritic({
+      apiKey: "test-key",
+      model: "claude-haiku-4-5-20251001",
+    });
+    const result = await critic.critique({
+      token: "swiss-editorial",
+      imageBase64: "iVBORw0K",
+    });
+    expect(result.requestId).toBe("req_01abcDEFghi");
   });
 });

@@ -2,7 +2,7 @@ import { spawn } from "node:child_process";
 import { writeFile, mkdtemp, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import type { Critic, CritiqueInput } from "../critic.js";
+import type { Critic, CritiqueInput, CritiqueResult } from "../critic.js";
 import { VISION_RULES, buildCriticPrompt } from "../critic.js";
 import type { Violation } from "../../lint/types.js";
 
@@ -43,7 +43,7 @@ export function claudeCodeVisionCritic(
 
   return {
     id: `${model}-claude-code-critic`,
-    async critique(input: CritiqueInput): Promise<Violation[]> {
+    async critique(input: CritiqueInput): Promise<CritiqueResult> {
       if (!input.imageBase64) {
         throw new Error("claudeCodeVisionCritic requires an imageBase64 input");
       }
@@ -83,7 +83,10 @@ export function claudeCodeVisionCritic(
           userPrompt,
           spawnImpl,
         );
-        return parseViolations(stdout, input, logger);
+        // CLI-spawned critic: no HTTP envelope, so no provider request
+        // id is available. Replay sidecar's provider_request_ids stays
+        // empty for this critic, which the verify path tolerates.
+        return { violations: parseViolations(stdout, input, logger) };
       } finally {
         await rm(dir, { recursive: true, force: true }).catch(() => {});
       }

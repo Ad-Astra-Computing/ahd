@@ -32,9 +32,11 @@ sampling:
 models:
   - id: cf:@cf/google/gemma-4-26b-a4b-it
     provider: cloudflare-workers-ai
-    provider_request_ids: []         # field reserved; runners not yet
-                                     # threading per-call ids through.
-                                     # Schema-stable, often empty in 0.10.
+    provider_request_ids: [ "req_..." ]  # one id per successful provider
+                                         # call. Empty for CLI-spawned
+                                         # runners (claude-code, gemini-
+                                         # cli, codex) since there is no
+                                         # HTTP envelope to read.
 conditions:
   requested: [ raw, compiled ]
   effective: [ raw, compiled ]
@@ -77,12 +79,12 @@ When `ahd verify-replay` says "drift detected," it means one of the **stable** f
 ## What replay does *not* guarantee
 
 - **Bit-for-bit reproduction.** Frontier providers update models silently; running the same command at the same git commit may produce different samples a week later. The block is a *verifiability* contract first and a *replayability* contract second.
-- **Provider-side audit.** The `provider_request_ids` field is reserved in the schema but not yet populated by the runners as of 0.10 — `eval-live`, `critique` and `eval-image` all emit empty arrays today. Once the runners are threaded to capture per-call ids from each provider's response envelope, the field will hold the values needed to ask a provider to verify a specific request existed at the recorded time. Even then, AHD does not save the provider's response payload, so the request id alone is not enough to recover the response.
+- **Provider-side audit.** The `provider_request_ids` array holds one id per successful provider call: anthropic `request-id`, openai `x-request-id`, cloudflare `cf-ray`, google `x-goog-request-id` (extraction order documented in `src/eval/runners/types.ts:extractProviderRequestId`). With those ids you can ask the provider to verify a specific request existed at the recorded time. AHD does not save the provider's response payload, so the request id alone is not enough to recover the response. CLI-spawned runners (claude-code, gemini-cli, codex) leave the array empty by design — there is no HTTP envelope to read.
 - **Determinism inside the runner.** AHD's per-sample seed is `i+1` today (incremental, not cryptographic). Different `n` will yield different sets of seeds. This is a known limitation; future versions may capture per-sample seeds.
 
 ## Markdown redactions
 
-The markdown rendering surfaces only a count (`provider_request_ids: 3 captured`) rather than the values. The redaction is in place ahead of the runners actually capturing ids, so when capture lands the ids stay out of the public markdown until the maintainer has confirmed each provider's are safe to publish. Today the count is almost always `0`. The (eventual) full ids will live in the JSON sidecar; if a published report's `.replay.json` is committed to a public repo, the ids are public.
+The markdown rendering surfaces only a count (`provider_request_ids: 3 captured`) rather than the values, until each provider's ids are confirmed safe to publish. The full ids live in the JSON sidecar; if a published report's `.replay.json` is committed to a public repo, the ids are public.
 
 The argv field is rendered as a quoted shell command in the markdown (in the trailing `replay this run` block) but stored as an array in the JSON to avoid quoting ambiguity.
 

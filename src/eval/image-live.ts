@@ -83,11 +83,20 @@ export async function runLiveImageEval(
   const critic = opts.critic ?? resolveDefaultCritic();
 
   const cells: ImageEvalCell[] = [];
+  // Spec → canonical → request-id list. Image runs are smaller (n
+  // typically 3 today, n=30 deferred on budget), but the same replay
+  // contract applies. See live.ts for the parallel structure.
+  const requestIdsByModel = new Map<string, string[]>();
+  const providerByModel = new Map<string, string>();
+  const canonicalBySpec = new Map<string, string>();
 
   for (const spec of opts.imageModels) {
     const runner = imageRunnerFromSpec(spec);
     const canonicalId = runner.id;
     const safeId = sanitizeId(canonicalId);
+    if (!requestIdsByModel.has(canonicalId)) requestIdsByModel.set(canonicalId, []);
+    providerByModel.set(canonicalId, runner.provider);
+    canonicalBySpec.set(spec, canonicalId);
 
     for (const condition of ["raw", "compiled"] as const) {
       const condDir = join(samplesRoot, safeId, condition);
@@ -119,14 +128,24 @@ export async function runLiveImageEval(
             join(condDir, `${base}.prompt.txt`),
             `prompt:\n${prompt}\n\nnegative:\n${negPrompt ?? ""}`,
           );
+          if (out.requestId) {
+            requestIdsByModel.get(canonicalId)!.push(out.requestId);
+          }
 
           try {
-            const violations: Violation[] = await critic.critique({
+            const result = await critic.critique({
               imageBase64: out.pngBase64,
               token: opts.token,
               url: pngPath,
               context: `${safeId}/${condition}/${base}`,
             });
+            const violations = result.violations;
+            // Critic-side request ids belong to the critic's own
+            // provider call, not to the image generator. We discard
+            // them here because the replay block for an image-eval
+            // run records image-generator IDs only; the critic's IDs
+            // would belong on a critique-mode replay block, captured
+            // separately by `ahd critique`.
             critiqued++;
             for (const v of violations) {
               tellCounts[v.ruleId] = (tellCounts[v.ruleId] ?? 0) + 1;
@@ -213,11 +232,15 @@ export async function runLiveImageEval(
       token: { path: `${opts.tokensDir}/${opts.token}.yml`, resolved: token },
       brief: { path: opts.briefPath, resolved: brief },
       sampling: { n: opts.n, temperature: null, seed: null },
-      models: opts.imageModels.map((spec) => ({
-        id: spec,
-        provider: spec.split(":")[0] || "unknown",
-        provider_request_ids: [],
-      })),
+      models: opts.imageModels.map((spec) => {
+        const canonicalId = canonicalBySpec.get(spec) ?? spec;
+        return {
+          id: canonicalId,
+          provider:
+            providerByModel.get(canonicalId) ?? spec.split(":")[0] ?? "unknown",
+          provider_request_ids: requestIdsByModel.get(canonicalId) ?? [],
+        };
+      }),
       conditions: {
         requested: ["raw", "compiled"],
         effective: ["raw", "compiled"],

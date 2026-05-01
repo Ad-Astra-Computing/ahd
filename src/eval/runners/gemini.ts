@@ -3,7 +3,7 @@ import type {
   ModelRunnerInput,
   ModelRunnerOutput,
 } from "./types.js";
-import { extractHtmlBlock } from "./types.js";
+import { extractHtmlBlock, extractProviderRequestId } from "./types.js";
 
 export function geminiRunner(options: {
   apiKey: string;
@@ -50,6 +50,7 @@ export function geminiRunner(options: {
       if (!res.ok) {
         throw new Error(`gemini ${model}: ${res.status} ${await res.text()}`);
       }
+      const requestId = extractProviderRequestId(res.headers);
       const data: any = await res.json();
       const text =
         data.candidates?.[0]?.content?.parts
@@ -65,6 +66,7 @@ export function geminiRunner(options: {
           out: data.usageMetadata?.candidatesTokenCount ?? 0,
         },
         latencyMs: Date.now() - start,
+        requestId,
       };
     },
   };

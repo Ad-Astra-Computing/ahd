@@ -12,6 +12,9 @@ export interface ImageRunnerOutput {
   pngBase64: string;
   rawResponse: unknown;
   latencyMs: number;
+  // Provider-side identifier for this image-gen call. See the
+  // text-runner equivalent in types.ts for the header order.
+  requestId?: string;
 }
 
 export interface ImageRunner {

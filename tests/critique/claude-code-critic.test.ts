@@ -99,11 +99,11 @@ describe("claudeCodeVisionCritic", () => {
       exitCode: 0,
     });
     const critic = claudeCodeVisionCritic({ spawnImpl });
-    const vs = await critic.critique({
+    const vs = (await critic.critique({
       token: "swiss-editorial",
       imageBase64: PNG_HEADER_BASE64,
       url: "https://example.com",
-    });
+    })).violations;
     expect(vs).toHaveLength(1);
     expect(vs[0].ruleId).toBe(ruleId);
     expect(vs[0].severity).toBe("warn");
@@ -117,10 +117,10 @@ describe("claudeCodeVisionCritic", () => {
       exitCode: 0,
     });
     const critic = claudeCodeVisionCritic({ spawnImpl });
-    const vs = await critic.critique({
+    const vs = (await critic.critique({
       token: "swiss-editorial",
       imageBase64: PNG_HEADER_BASE64,
-    });
+    })).violations;
     expect(vs).toHaveLength(0);
   });
 
@@ -134,10 +134,10 @@ describe("claudeCodeVisionCritic", () => {
       spawnImpl,
       logger: { warn: (m) => warned.push(m) },
     });
-    const vs = await critic.critique({
+    const vs = (await critic.critique({
       token: "swiss-editorial",
       imageBase64: PNG_HEADER_BASE64,
-    });
+    })).violations;
     // Explicit surface, not a silent []. A parse failure returning
     // [] would masquerade as "no tells fired" in aggregated reports.
     expect(vs).toHaveLength(1);
@@ -157,10 +157,10 @@ describe("claudeCodeVisionCritic", () => {
       spawnImpl,
       logger: { warn: (m) => warned.push(m) },
     });
-    const vs = await critic.critique({
+    const vs = (await critic.critique({
       token: "swiss-editorial",
       imageBase64: PNG_HEADER_BASE64,
-    });
+    })).violations;
     expect(vs).toHaveLength(1);
     expect(vs[0].ruleId).toBe("ahd/critic-parse-failed");
     expect(vs[0].message).toMatch(/JSON parse failed/);

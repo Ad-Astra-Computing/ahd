@@ -73,6 +73,7 @@ export async function runCritiqueOnDir(opts: CritiqueRunOptions): Promise<Critiq
   const critiques: CritiqueReport["critiques"] = [];
   const scored = { raw: 0, compiled: 0 };
   const tellFrequency: Record<string, { raw: number; compiled: number }> = {};
+  const requestIds: string[] = [];
 
   for (const sample of subset) {
     const shotPath = join(
@@ -95,12 +96,14 @@ export async function runCritiqueOnDir(opts: CritiqueRunOptions): Promise<Critiq
     const imageBase64 = await fileToBase64(shotPath);
     let violations: Violation[] = [];
     try {
-      violations = await opts.critic.critique({
+      const result = await opts.critic.critique({
         imageBase64,
         token: opts.token,
         url: shotPath,
         context: sample.model,
       });
+      violations = result.violations;
+      if (result.requestId) requestIds.push(result.requestId);
     } catch (err) {
       await writeFile(
         shotPath + ".critique-error.txt",
@@ -155,7 +158,7 @@ export async function runCritiqueOnDir(opts: CritiqueRunOptions): Promise<Critiq
         {
           id: opts.critic.id,
           provider: opts.criticName ?? "unknown",
-          provider_request_ids: [],
+          provider_request_ids: requestIds,
         },
       ],
       conditions: {
