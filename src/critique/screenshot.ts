@@ -104,7 +104,13 @@ export async function renderUrlToPng(
       await installRequestGuard(context);
     }
     const page = await context.newPage();
-    await page.goto(url, { waitUntil: "networkidle", timeout: 30000 });
+    // `load` is the right level for screenshot capture: DOM parsed,
+    // stylesheets applied, layout settled. `networkidle` blocked on
+    // production sites where analytics never let the network quiet
+    // down. Take a best-effort networkidle pass with a short budget,
+    // accept timeout — see the parallel comment in mobile/audit.ts.
+    await page.goto(url, { waitUntil: "load", timeout: 30000 });
+    await page.waitForLoadState("networkidle", { timeout: 3000 }).catch(() => {});
     await page.screenshot({
       path: resolvePath(outPath),
       fullPage: options.fullPage ?? true,

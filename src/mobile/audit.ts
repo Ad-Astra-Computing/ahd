@@ -59,7 +59,18 @@ export async function auditMobile(
       await installRequestGuard(context);
     }
     const page = await context.newPage();
-    await page.goto(options.url, { waitUntil: "networkidle", timeout: 30000 });
+    // `load` is the right wait condition for layout rules: by then
+    // the DOM is parsed, stylesheets applied, and layout has settled
+    // enough for scrollWidth / clientWidth / computed font sizes to
+    // be meaningful. `networkidle` (the previous default) timed out
+    // on production sites where analytics beacons or persistent
+    // connections never let the network go quiet — including, as it
+    // happens, ahd.adastra.computer behind Cloudflare. We then take
+    // a best-effort shot at networkidle with a short budget for the
+    // benefit of pages whose initial render does pivot on a deferred
+    // fetch, but accept timeout as success.
+    await page.goto(options.url, { waitUntil: "load", timeout: 30000 });
+    await page.waitForLoadState("networkidle", { timeout: 3000 }).catch(() => {});
 
     for (const rule of MOBILE_RULES) {
       try {
