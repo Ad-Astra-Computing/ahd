@@ -32,7 +32,9 @@ sampling:
 models:
   - id: cf:@cf/google/gemma-4-26b-a4b-it
     provider: cloudflare-workers-ai
-    provider_request_ids: [ "req-..." ]
+    provider_request_ids: []         # field reserved; runners not yet
+                                     # threading per-call ids through.
+                                     # Schema-stable, often empty in 0.10.
 conditions:
   requested: [ raw, compiled ]
   effective: [ raw, compiled ]
@@ -75,12 +77,12 @@ When `ahd verify-replay` says "drift detected," it means one of the **stable** f
 ## What replay does *not* guarantee
 
 - **Bit-for-bit reproduction.** Frontier providers update models silently; running the same command at the same git commit may produce different samples a week later. The block is a *verifiability* contract first and a *replayability* contract second.
-- **Provider-side audit.** AHD records provider request IDs but does not save the provider's response payload. If a number is disputed, you can ask the provider to verify the request id existed at the recorded time, but you cannot recover the response from the replay block alone.
+- **Provider-side audit.** The `provider_request_ids` field is reserved in the schema but not yet populated by the runners as of 0.10 — `eval-live`, `critique` and `eval-image` all emit empty arrays today. Once the runners are threaded to capture per-call ids from each provider's response envelope, the field will hold the values needed to ask a provider to verify a specific request existed at the recorded time. Even then, AHD does not save the provider's response payload, so the request id alone is not enough to recover the response.
 - **Determinism inside the runner.** AHD's per-sample seed is `i+1` today (incremental, not cryptographic). Different `n` will yield different sets of seeds. This is a known limitation; future versions may capture per-sample seeds.
 
 ## Markdown redactions
 
-The markdown rendering omits `provider_request_ids` values and surfaces only a count (`provider_request_ids: 3 captured`). Until the maintainer has confirmed each provider's request ids are safe to publish, the markdown stays redacted. The full ids live in the JSON sidecar; if a published report's `.replay.json` is committed to a public repo, the ids are public.
+The markdown rendering surfaces only a count (`provider_request_ids: 3 captured`) rather than the values. The redaction is in place ahead of the runners actually capturing ids, so when capture lands the ids stay out of the public markdown until the maintainer has confirmed each provider's are safe to publish. Today the count is almost always `0`. The (eventual) full ids will live in the JSON sidecar; if a published report's `.replay.json` is committed to a public repo, the ids are public.
 
 The argv field is rendered as a quoted shell command in the markdown (in the trailing `replay this run` block) but stored as an array in the JSON to avoid quoting ambiguity.
 

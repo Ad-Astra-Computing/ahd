@@ -4,6 +4,31 @@ import { parse as parseYaml } from "yaml";
 import { ReplaySchema, type Replay } from "./types.js";
 import { hashJsonCanonical, hashBytes } from "./replay.js";
 
+// Walk up from a report's directory looking for the ahd repo root,
+// identified by package.json with name "@adastracomputing/ahd". The
+// replay sidecar's token + brief paths are recorded relative to the
+// repo root that was cwd at capture time, so verifying against cwd
+// fails whenever the user runs `ahd verify-replay` from outside the
+// repo (or against an absolute report path in another checkout).
+// Falls back to null if no marker is found within six levels.
+function findAhdRepoRoot(startDir: string): string | null {
+  let dir = startDir;
+  for (let i = 0; i < 8; i++) {
+    try {
+      const pkg = JSON.parse(
+        readFileSync(resolve(dir, "package.json"), "utf8"),
+      ) as { name?: string };
+      if (pkg.name === "@adastracomputing/ahd") return dir;
+    } catch {
+      // not a package dir, keep walking
+    }
+    const parent = resolve(dir, "..");
+    if (parent === dir) break;
+    dir = parent;
+  }
+  return null;
+}
+
 // `ahd verify-replay <report>` checks that the inputs named in a
 // report's Replay block (token + brief paths) currently hash to the
 // recorded values at HEAD. A passing check means the report's claimed
@@ -164,7 +189,14 @@ export function verifyReplay(
   rootDir?: string,
 ): VerifyReplayResult {
   const { sidecarPath, replay } = loadReplaySidecar(reportPath);
-  const checks = verifyReplayInputs(replay, rootDir);
+  // Resolution order: explicit rootDir override (tests) → repo root
+  // discovered by walking up from the report → cwd. Walking up from
+  // the report is what makes `ahd verify-replay path/to/report.md`
+  // work from any cwd, and against any checkout, without requiring
+  // the user to first cd into the repo root.
+  const effectiveRoot =
+    rootDir ?? findAhdRepoRoot(dirname(resolve(reportPath))) ?? process.cwd();
+  const checks = verifyReplayInputs(replay, effectiveRoot);
   return {
     ok: checks.every((c) => c.ok),
     reportPath,

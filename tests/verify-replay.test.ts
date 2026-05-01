@@ -146,6 +146,35 @@ describe("verify-replay", () => {
     );
   });
 
+  it("resolves token + brief paths via the report's repo root, not cwd", () => {
+    // Without an explicit rootDir, verifyReplay used to default to
+    // process.cwd(). That broke `ahd verify-replay path/to/report.md`
+    // run from anywhere outside the repo root: token + brief paths
+    // were recorded relative to capture-time cwd (the repo root),
+    // and the verifier looked for them under the wrong directory.
+    // Now the verifier walks up from the report path until it finds
+    // a package.json named "@adastracomputing/ahd" and uses that.
+    writeFileSync(
+      join(tmp, "package.json"),
+      JSON.stringify({ name: "@adastracomputing/ahd", version: "0.10.0" }),
+    );
+    const { reportPath } = writeFixture({
+      tokenContent: "id: swiss\n",
+      briefContent: "y: 1\n",
+    });
+    const prevCwd = process.cwd();
+    const elsewhere = mkdtempSync(join(tmpdir(), "ahd-other-cwd-"));
+    try {
+      process.chdir(elsewhere);
+      // No rootDir override; the verifier must auto-discover.
+      const result = verifyReplay(reportPath);
+      expect(result.ok).toBe(true);
+    } finally {
+      process.chdir(prevCwd);
+      rmSync(elsewhere, { recursive: true, force: true });
+    }
+  });
+
   it("verifyReplayInputs canonicalises so reordered token keys still pass", () => {
     // The hash captured at run time is over canonical-JSON of the
     // resolved object. If the user reorders YAML keys (semantically
