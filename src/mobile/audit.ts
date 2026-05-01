@@ -1,7 +1,7 @@
 import { chromium } from "playwright-core";
-import { existsSync } from "node:fs";
 import { MOBILE_RULES, type MobileRule } from "./rules.js";
 import type { Violation } from "../lint/types.js";
+import { resolveChromiumExecutable } from "../core/chromium.js";
 import {
   ensureUrlIsPublicOrThrow,
   installRequestGuard,
@@ -28,31 +28,6 @@ export interface MobileAuditReport {
 // anything that renders at 375px renders at 390px + too.
 const DEFAULT_VIEWPORT = { width: 375, height: 812 };
 
-function candidateChromiumPaths(): string[] {
-  const out: string[] = [];
-  const env = process.env.AHD_CHROMIUM_PATH ?? process.env.CHROMIUM_PATH;
-  if (env) out.push(env);
-  out.push("/run/current-system/sw/bin/chromium");
-  out.push("/usr/bin/chromium");
-  out.push("/usr/bin/chromium-browser");
-  out.push("/opt/homebrew/bin/chromium");
-  out.push("/Applications/Chromium.app/Contents/MacOS/Chromium");
-  out.push("/Applications/Google Chrome.app/Contents/MacOS/Google Chrome");
-  const home = process.env.HOME;
-  if (home) {
-    out.push(`${home}/Applications/Chromium.app/Contents/MacOS/Chromium`);
-    out.push(`${home}/Applications/Google Chrome.app/Contents/MacOS/Google Chrome`);
-  }
-  return out;
-}
-
-async function resolveChromium(): Promise<string | undefined> {
-  for (const p of candidateChromiumPaths()) {
-    if (existsSync(p)) return p;
-  }
-  return undefined;
-}
-
 export async function auditMobile(
   options: MobileAuditOptions,
 ): Promise<MobileAuditReport> {
@@ -63,7 +38,7 @@ export async function auditMobile(
   });
 
   const viewport = options.viewport ?? DEFAULT_VIEWPORT;
-  const executablePath = await resolveChromium();
+  const executablePath = await resolveChromiumExecutable();
   const browser = await chromium.launch({ headless: true, executablePath });
   const violations: Violation[] = [];
   try {

@@ -1,7 +1,7 @@
 import { chromium } from "playwright-core";
 import { readFile } from "node:fs/promises";
 import { resolve as resolvePath } from "node:path";
-import { existsSync } from "node:fs";
+import { resolveChromiumExecutable } from "../core/chromium.js";
 import {
   ensureUrlIsPublicOrThrow,
   installRequestGuard,
@@ -24,36 +24,6 @@ export interface ScreenshotOptions {
 }
 
 const DEFAULT_VIEWPORT = { width: 1280, height: 1600 };
-
-function candidateChromiumPaths(): string[] {
-  const out: string[] = [];
-  const env = process.env.AHD_CHROMIUM_PATH ?? process.env.CHROMIUM_PATH;
-  if (env) out.push(env);
-  // nix-shell / nix build provides these
-  out.push("/run/current-system/sw/bin/chromium");
-  out.push("/usr/bin/chromium");
-  out.push("/usr/bin/chromium-browser");
-  out.push("/opt/homebrew/bin/chromium");
-  // macOS fallbacks: pkgs.chromium isn't supported on darwin, so on Macs
-  // we fall back to Chromium.app or Google Chrome if installed. The flake
-  // also ships playwright-driver.browsers on darwin (see flake.nix) which
-  // exports AHD_CHROMIUM_PATH when used via `nix develop`.
-  out.push("/Applications/Chromium.app/Contents/MacOS/Chromium");
-  out.push("/Applications/Google Chrome.app/Contents/MacOS/Google Chrome");
-  const home = process.env.HOME;
-  if (home) {
-    out.push(`${home}/Applications/Chromium.app/Contents/MacOS/Chromium`);
-    out.push(`${home}/Applications/Google Chrome.app/Contents/MacOS/Google Chrome`);
-  }
-  return out;
-}
-
-async function resolveChromiumExecutable(): Promise<string | undefined> {
-  for (const p of candidateChromiumPaths()) {
-    if (existsSync(p)) return p;
-  }
-  return undefined;
-}
 
 export async function renderHtmlToPng(
   html: string,
