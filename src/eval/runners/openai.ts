@@ -19,9 +19,20 @@ export function openaiRunner(options: {
    * fields to the underlying model as extra generation params.
    */
   extraBody?: Record<string, unknown>;
+  /**
+   * Per-request wall-clock cap in milliseconds. A request that hasn't
+   * resolved by this point is aborted so it surfaces as a caught error
+   * (the caller writes a `.error.txt` and moves on) rather than hanging
+   * the whole run. Without it a single stalled upstream connection
+   * blocks a serial eval forever — the failure mode that silently ate
+   * the full 60-minute CI ceiling. Defaults to 120s, comfortably above
+   * the slowest legitimate generation (~25-30s) observed on CF.
+   */
+  timeoutMs?: number;
 }): ModelRunner {
   const model = options.model ?? "gpt-5";
   const baseURL = options.baseURL ?? "https://api.openai.com/v1";
+  const timeoutMs = options.timeoutMs ?? 120_000;
   return {
     id: model,
     provider: "openai",
@@ -31,20 +42,29 @@ export function openaiRunner(options: {
       if (input.systemPrompt)
         messages.push({ role: "system", content: input.systemPrompt });
       messages.push({ role: "user", content: input.userPrompt });
-      const res = await fetch(`${baseURL}/chat/completions`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${options.apiKey}`,
-          "content-type": "application/json",
-        },
-        body: JSON.stringify({
-          model,
-          messages,
-          max_completion_tokens: input.maxTokens ?? 4096,
-          seed: input.seed,
-          ...(options.extraBody ?? {}),
-        }),
-      });
+      let res: Response;
+      try {
+        res = await fetch(`${baseURL}/chat/completions`, {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${options.apiKey}`,
+            "content-type": "application/json",
+          },
+          body: JSON.stringify({
+            model,
+            messages,
+            max_completion_tokens: input.maxTokens ?? 4096,
+            seed: input.seed,
+            ...(options.extraBody ?? {}),
+          }),
+          signal: AbortSignal.timeout(timeoutMs),
+        });
+      } catch (err) {
+        if (err instanceof Error && err.name === "TimeoutError") {
+          throw new Error(`openai ${model}: request timed out after ${timeoutMs}ms`);
+        }
+        throw err;
+      }
       if (!res.ok) {
         throw new Error(`openai ${model}: ${res.status} ${await res.text()}`);
       }

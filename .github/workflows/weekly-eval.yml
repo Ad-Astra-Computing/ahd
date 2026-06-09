@@ -67,7 +67,7 @@ jobs:
           CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
           CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
         run: |
-          # Five OSS cells at n=30 = 300 raw + 300 compiled = 600 calls.
+          # Five OSS models at n=30 = 150 raw + 150 compiled = 300 calls.
           # Well within CF Workers AI free tier (10k neurons/day). If the
           # model list needs updating, bump the comma list below; the
           # workflow is intentionally explicit rather than auto-discovered
@@ -81,6 +81,7 @@ jobs:
             --brief briefs/landing.yml \
             --models cf:@cf/google/gemma-4-26b-a4b-it,cf:@cf/meta/llama-4-scout-17b-16e-instruct,cf:@cf/mistralai/mistral-small-3.1-24b-instruct,cf:@cf/openai/gpt-oss-120b,cf:@cf/qwen/qwen3-30b-a3b-fp8 \
             --n 30 \
+            --sample-concurrency 6 \
             --out "$OUT_DIR" \
             --report "$REPORT_PATH"
           echo "REPORT_PATH=$REPORT_PATH" >> "$GITHUB_ENV"
