@@ -12,18 +12,18 @@
 #
 # Why monthly not weekly: vision scoring costs real money
 # (Anthropic vision API, billed per image input token). At Haiku
-# defaults ~$0.001/image; 600 text images + 40 image-gen images
-# ~= $0.60-$1.00/run. Monthly cadence keeps the annual bill
+# defaults ~$0.001/image; 300 text images + 40 image-gen images
+# ~= $0.30-$0.40/run. Monthly cadence keeps the annual bill
 # bounded and still catches drift well ahead of any six-month
 # signal loss.
 #
-# Budget breakdown:
-#   - Text gen (600 samples):      free (CF OSS)
-#   - Text vision (600 images):    ~$0.60
+# Budget breakdown (5 models, n=30, raw + compiled = 300 samples):
+#   - Text gen (300 samples):      free (CF OSS)
+#   - Text vision (300 images):    ~$0.30
 #   - Image gen (40 images):       free (CF free tier, <10k
 #                                  neurons/day)
 #   - Image vision (40 images):    ~$0.04
-#   Total: ~$0.60-$1 / month
+#   Total: ~$0.30-$0.40 / month
 #
 # Secrets required on the repo:
 #   - CF_API_TOKEN + CF_ACCOUNT_ID: text generation via CF Workers AI
@@ -105,6 +105,7 @@ jobs:
             --brief briefs/landing.yml \
             --models "$MODELS" \
             --n "$N" \
+            --sample-concurrency 6 \
             --out evals \
             --report "docs/evals/monthly/${REPORT_DATE}-source.md"
           echo "REPORT_DATE=$REPORT_DATE" >> "$GITHUB_ENV"
