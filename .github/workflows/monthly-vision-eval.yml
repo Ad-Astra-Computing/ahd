@@ -55,6 +55,7 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write     # open the auto-merge report PR
 
 jobs:
   vision-eval:
@@ -63,6 +64,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
+        with:
+          # RELEASE_PAT (not GITHUB_TOKEN) so the report PR triggers
+          # ci.yml's `test` check; GITHUB_TOKEN-opened PRs don't start
+          # workflow runs, leaving the required check pending forever.
+          token: ${{ secrets.RELEASE_PAT }}
 
       - name: Setup Node (pinned)
         uses: actions/setup-node@v6
@@ -158,23 +164,36 @@ jobs:
             --critic anthropic \
             --report "docs/evals/monthly/${{ env.REPORT_DATE }}-image.md"
 
-      - name: Commit all three reports
+      - name: Open report PR (auto-merge)
         # Smoke runs prove integration; their numbers are not
         # publishable (n=2 is well under any reportable threshold) so
-        # the smoke path skips the commit entirely. The reports still
+        # the smoke path skips the PR entirely. The reports still
         # exist in the workflow's working tree if you need to inspect
         # them via the Actions UI.
+        #
+        # main is protected (requires the `test` check), so push the
+        # reports to a dated branch and open a PR that auto-merges
+        # once ci.yml goes green.
         if: inputs.smoke_mode != true
+        env:
+          GH_TOKEN: ${{ secrets.RELEASE_PAT }}
         run: |
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
           git add docs/evals/monthly/
           if git diff --cached --quiet; then
             echo "No report changes to commit."
-          else
-            git commit -m "docs(evals): monthly source + vision + image-gen run ${{ env.REPORT_DATE }}" -m "Automated monthly eval across all three verticals: text source linter, text rendered-pixel vision critic, and image-generation vision critic. See the three files for per-cell numbers."
-            git push
+            exit 0
           fi
+          BRANCH="bot/monthly-vision-eval-${REPORT_DATE}"
+          git checkout -b "$BRANCH"
+          git commit -m "docs(evals): monthly source + vision + image-gen run ${REPORT_DATE}" -m "Automated monthly eval across all three verticals: text source linter, text rendered-pixel vision critic, and image-generation vision critic. See the three files for per-cell numbers."
+          git push -u origin "$BRANCH" --force-with-lease
+          gh pr create --base main --head "$BRANCH" \
+            --title "docs(evals): monthly run ${REPORT_DATE}" \
+            --body "Automated monthly eval report (source + vision + image-gen). Merges automatically once CI passes." \
+            || echo "PR already exists for $BRANCH"
+          gh pr merge "$BRANCH" --auto --squash --delete-branch
 
       - name: Smoke-mode summary
         if: inputs.smoke_mode == true
