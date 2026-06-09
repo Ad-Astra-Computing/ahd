@@ -40,8 +40,9 @@ on:
         default: ""
 
 permissions:
-  contents: write          # commit the report
+  contents: write          # push the report branch
   issues: write            # open a drift issue if the run moves outside tolerance
+  pull-requests: write     # open the auto-merge report PR
 
 jobs:
   eval:
@@ -50,6 +51,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
+        with:
+          # RELEASE_PAT (not GITHUB_TOKEN) so the report PR triggers
+          # ci.yml's `test` check. PRs opened by GITHUB_TOKEN don't
+          # start workflow runs, which would leave the required check
+          # forever pending and auto-merge stuck.
+          token: ${{ secrets.RELEASE_PAT }}
 
       - name: Setup Node
         uses: actions/setup-node@v6
@@ -125,17 +132,29 @@ jobs:
             echo "drift=stable" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Commit weekly report
+      - name: Open report PR (auto-merge)
+        env:
+          GH_TOKEN: ${{ secrets.RELEASE_PAT }}
         run: |
+          # main is protected (requires the `test` check), so the bot
+          # can't push reports directly. Instead push to a dated branch
+          # and open a PR that auto-merges once ci.yml goes green.
           git config user.email "noreply@adastracomputing.com"
           git config user.name "ahd-weekly-eval"
           git add docs/evals/weekly/
           if git diff --cached --quiet; then
             echo "No report changes to commit."
-          else
-            git commit -m "docs(evals): weekly run ${{ env.REPORT_DATE }}" -m "Automated weekly eval against Cloudflare Workers AI OSS roster. See the report for per-cell numbers."
-            git push
+            exit 0
           fi
+          BRANCH="bot/weekly-eval-${REPORT_DATE}"
+          git checkout -b "$BRANCH"
+          git commit -m "docs(evals): weekly run ${REPORT_DATE}" -m "Automated weekly eval against Cloudflare Workers AI OSS roster. See the report for per-cell numbers."
+          git push -u origin "$BRANCH" --force-with-lease
+          gh pr create --base main --head "$BRANCH" \
+            --title "docs(evals): weekly run ${REPORT_DATE}" \
+            --body "Automated weekly eval report. Merges automatically once CI passes." \
+            || echo "PR already exists for $BRANCH"
+          gh pr merge "$BRANCH" --auto --squash --delete-branch
 
       - name: Open drift issue if flagged
         if: steps.drift.outputs.drift == 'flagged'
