@@ -1,5 +1,26 @@
 # Changelog
 
+## v0.11.0 · 2026-05-01
+
+### Features
+
+- feat(replay): capture provider request IDs in eval and critique runners ([e1e8427](https://github.com/Ad-Astra-Computing/ahd/commit/e1e8427))
+
+### Fixes
+
+- fix(audit,screenshot): use load instead of networkidle for navigation ([972a0e4](https://github.com/Ad-Astra-Computing/ahd/commit/972a0e4))
+- fix(verify-replay): resolve token + brief paths via report's repo root ([36d6712](https://github.com/Ad-Astra-Computing/ahd/commit/36d6712))
+
+### CI / tooling
+
+- ci: extract release gate into composite action ([a67ea5e](https://github.com/Ad-Astra-Computing/ahd/commit/a67ea5e))
+
+### Refactoring
+
+- refactor(core): extract chromium executable resolution ([f1d370b](https://github.com/Ad-Astra-Computing/ahd/commit/f1d370b))
+
+**Full changelog:** https://github.com/Ad-Astra-Computing/ahd/compare/v0.10.0...HEAD
+
 ## v0.10.0 · 2026-04-28
 
 ### Features
