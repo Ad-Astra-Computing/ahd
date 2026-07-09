@@ -37,10 +37,16 @@ name: monthly-vision-eval
 
 on:
   schedule:
-    # First Monday of each month, 06:13 UTC. Falls between day 1 and
-    # day 7; the 'Mon' filter selects only Mondays so the effective
-    # cadence is once per month. Off-zero minute to avoid the herd.
-    - cron: "13 6 1-7 * 1"
+    # 1st of each month, 06:13 UTC. Off-zero minute to avoid the herd.
+    #
+    # The previous expression "13 6 1-7 * 1" was meant to be "first
+    # Monday", but cron ORs day-of-month with day-of-week when both are
+    # set, so it fired every day 1-7 AND every Monday, roughly 10 runs
+    # a month. This is the heaviest workflow (up to 120 min plus paid
+    # vision scoring), so that over-firing burned Actions minutes and
+    # spend. A fixed day-of-month with day-of-week left as * runs
+    # exactly once per month.
+    - cron: "13 6 1 * *"
   workflow_dispatch:
     inputs:
       note:
