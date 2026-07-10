@@ -16,6 +16,8 @@ Today's shipped scope covers both verticals. **Web UI end-to-end**: text-to-HTML
 
 ## Measured, controlled, published
 
+The eval also runs as a weekly CI workflow against the same roster: five Cloudflare Workers AI open-source models, n=30 per cell, each report merged through a gated pull request into [docs/evals/weekly/](docs/evals/weekly/). Three June runs a week apart (9, 15 and 22 June) reproduced the same split: gemma-4, mistral-small-3.1 and gpt-oss-120b reduce tells by 53 to 73 percent under the compiled prompt, while llama-4-scout stays flat and qwen3-30b straddles zero. Latest published run: [docs/evals/weekly/2026-06-22.md](docs/evals/weekly/2026-06-22.md).
+
 <img src="docs/artwork/slop-distribution-n30.svg" alt="Measured slop-tell reduction by model, raw vs AHD-compiled, 22 April 2026 n=30" width="100%">
 
 Ran `briefs/landing.yml` against **ten models, n=30 per cell, six hundred samples** on 22 April 2026. Raw and compiled conditions differ only in the AHD system-prompt layer. Three frontier cells used subscription CLIs (Claude Code, Codex, Gemini CLI); seven OSS cells used the Cloudflare Workers AI free tier. Full report, per-cell attempted/scored counts, per-tell frequency tables, run manifest: [docs/evals/2026-04-22-swiss-n30.md](docs/evals/2026-04-22-swiss-n30.md).
