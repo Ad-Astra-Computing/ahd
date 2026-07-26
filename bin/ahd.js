@@ -584,7 +584,9 @@ async function main() {
       }
       const imageBase64 = await fileToBase64(shotPath);
       console.log(`running ${critic} vision critic against token=${token}`);
-      const violations = await criticImpl.critique({
+      // Critics return a CritiqueResult envelope ({violations,
+      // requestId}), not a bare array.
+      const { violations, requestId } = await criticImpl.critique({
         imageBase64,
         token,
         url,
@@ -596,6 +598,7 @@ async function main() {
         runAt: new Date().toISOString(),
         screenshot: shotPath,
         violations,
+        ...(requestId ? { requestId } : {}),
         visionRuleset: VISION_RULES.map((r) => r.id),
       };
       await writeFile(outPath, JSON.stringify(result, null, 2) + "\n");
