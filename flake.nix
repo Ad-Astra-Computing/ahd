@@ -21,7 +21,7 @@
           src = ./.;
           inherit nodejs;
 
-          npmDepsHash = "sha256-Bw2AayHybNF9NJBcjm3cL6KgNz4cvF5WS/3esbJB1jQ=";
+          npmDepsHash = "sha256-8YZLai3dECjBbf8TZrNhO2cKUY5ch5lRSfXgLnJ+nY4=";
 
           # Run `tsc` to produce dist/; bin/*.js imports from dist/.
           npmBuildScript = "build";
