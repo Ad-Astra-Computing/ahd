@@ -1,0 +1,114 @@
+{
+  "schema_version": 1,
+  "kind": "eval-image",
+  "ahd_version": "0.11.0",
+  "ahd_commit": "a772e367f2a1d021433d2ab181d1cd53845a8485",
+  "git_dirty": true,
+  "node_version": "v22.22.2",
+  "platform": "linux-x64",
+  "invoked_at": "2026-06-15T13:23:32.279Z",
+  "argv": [
+    "/opt/hostedtoolcache/node/22.22.2/x64/bin/node",
+    "/home/runner/work/ahd/ahd/bin/ahd.js",
+    "eval-image",
+    "editorial-illustration",
+    "--brief",
+    "briefs/editorial-illustration.yml",
+    "--models",
+    "cfimg:@cf/black-forest-labs/flux-1-schnell,cfimg:@cf/bytedance/stable-diffusion-xl-lightning,cfimg:@cf/stabilityai/stable-diffusion-xl-base-1.0,cfimg:@cf/lykon/dreamshaper-8-lcm",
+    "--n",
+    "5",
+    "--critic",
+    "anthropic",
+    "--report",
+    "docs/evals/monthly/2026-06-15-image.md"
+  ],
+  "token": {
+    "path": "/home/runner/work/ahd/ahd/tokens/editorial-illustration.yml",
+    "hash": "sha256:c2c79dec1b06fc45877d2b99be5c2a776aec12c226e0aeac38d384d698d9b721"
+  },
+  "brief": {
+    "path": "briefs/editorial-illustration.yml",
+    "hash": "sha256:ede77b5c41cf91ecac53272cf8d0e6c20ed5639ceb457c410a6cda03e7bca0f2"
+  },
+  "sampling": {
+    "n": 5,
+    "temperature": null,
+    "seed": null
+  },
+  "models": [
+    {
+      "id": "@cf/black-forest-labs/flux-1-schnell",
+      "provider": "cloudflare-workers-ai-image",
+      "provider_request_ids": [
+        "a0c1e3cf28facc13-IAD",
+        "a0c1e3de2cfccc13-IAD",
+        "a0c1e3f7aedfcc13-IAD",
+        "a0c1e404bd85cc13-IAD",
+        "a0c1e412cc1dcc13-IAD",
+        "a0c1e4393dedcc13-IAD",
+        "a0c1e44dca54cc13-IAD",
+        "a0c1e45d8f9fcc13-IAD",
+        "a0c1e46ace53cc13-IAD"
+      ]
+    },
+    {
+      "id": "@cf/bytedance/stable-diffusion-xl-lightning",
+      "provider": "cloudflare-workers-ai-image",
+      "provider_request_ids": [
+        "a0c1e47f7fabcc13-IAD",
+        "a0c1e4ac7ac2cc13-IAD",
+        "a0c1e4d199adcc13-IAD",
+        "a0c1e4edf975cc13-IAD",
+        "a0c1e5179b73cc13-IAD",
+        "a0c1e53ffc36cc13-IAD",
+        "a0c1e561196bcc13-IAD",
+        "a0c1e5879967cc13-IAD",
+        "a0c1e5ad9850cc13-IAD",
+        "a0c1e5d9ead6cc13-IAD"
+      ]
+    },
+    {
+      "id": "@cf/stabilityai/stable-diffusion-xl-base-1.0",
+      "provider": "cloudflare-workers-ai-image",
+      "provider_request_ids": [
+        "a0c1e5f68baecc13-IAD",
+        "a0c1e63cbfc3cc13-IAD",
+        "a0c1e68d5e07cc13-IAD",
+        "a0c1e6d28d53cc13-IAD",
+        "a0c1e7253a74cc13-IAD",
+        "a0c1e76a5962cc13-IAD",
+        "a0c1e7a869d2cc13-IAD",
+        "a0c1e7ea6ab1cc13-IAD",
+        "a0c1e82cd9dfcc13-IAD",
+        "a0c1e8711f88cc13-IAD"
+      ]
+    },
+    {
+      "id": "@cf/lykon/dreamshaper-8-lcm",
+      "provider": "cloudflare-workers-ai-image",
+      "provider_request_ids": [
+        "a0c1e8ba8ee6cc13-IAD",
+        "a0c1e8f56d93cc13-IAD",
+        "a0c1e9305e52cc13-IAD",
+        "a0c1e973590acc13-IAD",
+        "a0c1e9b2edf0cc13-IAD",
+        "a0c1e9fe5ac4cc13-IAD",
+        "a0c1ea3e1908cc13-IAD",
+        "a0c1ea8039bfcc13-IAD",
+        "a0c1eac60e81cc13-IAD",
+        "a0c1eb03393ccc13-IAD"
+      ]
+    }
+  ],
+  "conditions": {
+    "requested": [
+      "raw",
+      "compiled"
+    ],
+    "effective": [
+      "raw",
+      "compiled"
+    ]
+  }
+}
