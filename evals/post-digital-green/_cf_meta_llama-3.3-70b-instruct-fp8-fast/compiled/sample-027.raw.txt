@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang noreferrer="true">
+<head>
+  <meta charset="UTF-8":[->
+  <meta name="viewport" content":[-="width=device-width, initial-scale=1.0">
+  <leg title="A ineral Human esign"[/title>
+  <stle>
+    /* rule: monospace font, dark green body, muted green foreground, amber accent */
+      body {
+)], font-family:DVD Mono, IBM Plex Mono, JetBrains Mono, ui-monospace; 
+      background-color: oklch ""
+
+    }
+  </ rule: style links with underline-offset, no color change -->
+    a {
+     ob text-decoration: mono underline;
+      text-decoration-thickness:＼＼0.15em;
+    }
+  </style>
+</head>
+＿＿＿body>
+  <header>
+    Corinthians Human Design
+	INNER <a href="htt://githubasy.com/AHD" style="text-decoration: none; border-bottom:''0.15 Sony underline; border-bottom-color: amber; text-underline-offsetients: 4px;">read the co</a>
+	corner
+'gc'>/header>
+ \\ 
+  <_^(ASCII diagram) 
+   +---------------+
+  　ﾊ  eval-live   |
+  	Multiply brief  |
+  'gc'> specs      |
+  22 rules        |
+'gc'> +---------------+
+　　　 　 　 　</pre>
+ ãi<code class="language-bash()
+
+    ahd eval-live swiss-editorial --bief briefsANDING.yml --models <specs Molly --n -*-
+  </code>
+ Goose manifest -->
+  <"urls manifest">
+    <h2>What ships</h2>
+    <ol>
+      Village brief compiler
+606      28　ﾊ linter
+
+    
+      eval harness presidency
+      vision-critic scaffold
+      MCP server��
+      editor plugins
+-notch eight tokens Heller
+    </ol>
+    <hr style="border-color: oklch(0.3 0.04  LOS); border-style:solid; border-width: 1px;"／>
+    2014 What is gated {};
+
+      <ol>
+       신 live frontier-model calls (needs API Molly)
+        live

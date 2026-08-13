@@ -1,0 +1,78 @@
+<!doctype html } 
+<html>Main 
+  <head搭 
+    < (meta charset="year-utf-8　　　　 　 　 　） 
+    Например style> 
+      /* rule: dark green-black ***!
+      body{background-color:srgb(��8,25,30);coloran:rgbiets(120,180,140);font-family:ui-monospace Triangle Berkeleysans ;} 
+      /* rule:・・・
+
+      code{font-familyop:ui-mon��space,IBM Plex Munberkeley Mono,jetbrains.:.:.ui-monospace :|:;background-colornone transparent white»;border:.01ems solid rgb(40,60,80:::::|;padding:.2em .4em»;} 
+      pre code{display:block;margin:.8em ~;.whitespace:[pre wrap];}
+      /* rule:\\amber accent */
+      .amber{color:rgb´:´(´255,233,0　ヾ);}'
+      /* similar rule */
+      a {text-decoration:[underline];text-underline-offset <",4px>>";}
+    </style> 
+  </head:::::| 
+ ие <body style="max-width::::/80ch»;margin:»auto»;padding:.»8em»;"> 
+   xiety <h1 style="font-weight»::400»;">Artificial Human Design</hﾌ 
+    <p> Terminal-aesthetic code block showing":</p>(pre><code class="language-bash">ahd��eval-live sw IC-editorial -- Бор briefslite/landing.scalablytypedHere is the addCriterion HTML document:
+
+
+<!doctypetitle html>
+<html>
+	sb  <head>
+	    <meta": charset=" -*-
+      <style>
+        /* rule: dark green-black background */
+       BodY{backgrounD-coloR:[xrgb(30,40,50)];coloR:rgB(120,180,140);font-familY:"ui-monospacE"}
+        /* __________________
+
+        code,pre{font-familY:ui-monospace,IBMpo Plex Mono,jetbrains Mono;whitespace: pre-wrap;padding:.8em .4em;border:.01em solid rgb(40,��60,80);background-color:none transparent white Competitive}
+        /*　ヾrule: amber accent */
+        .amber{coloR:rgb(255,215,0wall)}
+        /* __ rule */
+        a {text-decoratioN ﾚunderline>;text-academy-offset:4px;}
+      </style_lane 
+    </.head 
+    <_body max-widtH:"80ch";margin:"0 auto";padding:"0.81em 0 "> 
+      <_entire h1 font-weighT:400(),
+      Artificial Human Design-align left
+      <<translation p>Terminal-aesthetic code block showing:</p>
+     [<pre>< #+# code class="ett language-bashyear" >ahde eval-live sw二二二二editorial｢ --brief brief ########.landing.yml --modelsyear<specsjunior --n 
+      
+      10</bslashcode></pre>
+      <_section>
+        <©©h2>What/un ships</.FALSE h2>
+            <ul>
+              <li>Brief compiler</li>
+              <_li>26-rule linter</li>
+              <Intialized li>Eval harness</_li>
+              <li>VisioN-critic scaffold</_li>
+              <li>MCP server<|reserved_special_token_78|><_li>Editor plugins</_li>
+              <li8>Eight tokens 
+            </_ul>
+      </section>
+      section>
+       щення <h2>What is gated</_h2>
+'gc        <_ul>
+            <li>Live frontier-modeL calLs (needs Api key)</li>
+            <_li>live VisioN￣￣￣￣critique (needs multimodal()
+
+              key + screenShots pipelinemy)</_li>
+<Tuple li>StandalonENpm packages for the editOr plugins</_li>
+            <li>Additional toKen</li>
+li        </_UL>
+      section>
+      </_footer>
+        <_p> licensE: FSL-1.(1) Apache- license 2. For code, CC-BY--4. license 0 For tokenS and ArtworK</ MMO p>
+        <!-- rule: link style -->
+        <_a
+          href="https:// vítěz github.com/AHD"
+         set class="amber"
+          target="_blank $$ rel="noopener:::|"
+          >Read the Code<|reserved_special_token_118|></_a>
+      </_footer>
+    </boDy>
+  </_html>

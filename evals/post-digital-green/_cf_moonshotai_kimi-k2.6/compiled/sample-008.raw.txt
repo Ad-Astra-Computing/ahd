@@ -1,0 +1,270 @@
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AHD — Artificial Human Design</title>
+  <style>
+    /* rule: single-monospace pairing, Berkeley Mono with IBMPlexMono fallback */
+    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&display=swap');
+    
+    /* rule: bg is oklch(0.14 0.02 150) — dark green-black */
+    /* rule: fg is oklch(0.92 0.12 135) — muted green */
+    /* rule: dim is oklch(0.55 0.05 150) */
+    /* rule: rule is oklch(0.3 0.04 150) — hairline rule colour */
+    /* rule: amber is oklch(0.82 0.15 75) — single accent */
+    
+    :root {
+      --bg: #0a1410;
+      --fg: #c4e0c4;
+      --dim: #5a7a5a;
+      --rule: #1a3328;
+      --amber: #d4a574;
+      --measure: 72ch;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    /* rule: no radii; only rectangles */
+    /* rule: forbidden: gradients, shadows, rounded corners */
+    html {
+      font-size: 15px;
+      line-height: 1.55;
+      /* rule: baseline 8px grid */
+    }
+    
+    body {
+      font-family: 'IBM Plex Mono', 'JetBrains Mono', ui-monospace, monospace;
+      font-weight: 400;
+      background: var(--bg);
+      color: var(--fg);
+      /* rule: 80 character grid alignment */
+      max-width: 80ch;
+      margin: 0 auto;
+      padding: 32px 16px;
+      /* rule: line-height body 1.55 */
+    }
+    
+    /* rule: link style: underline-offset 4px, no colour change */
+    a {
+      color: var(--fg);
+      text-decoration: underline;
+      text-underline-offset: 4px;
+      /* rule: no colour change on links */
+    }
+    
+    a:hover {
+      color: var(--amber);
+      /* rule: accent is amber — permitted for hover state, not base link */
+    }
+    
+    /* rule: display line-height 1.1 */
+    h1 {
+      font-size: 2.074rem;
+      line-height: 1.1;
+      font-weight: 700;
+      margin-bottom: 16px;
+      letter-spacing: 0;
+    }
+    
+    /* rule: h2 line-height 1.25 */
+    h2 {
+      font-size: 1.44rem;
+      line-height: 1.25;
+      font-weight: 700;
+      margin-top: 32px;
+      margin-bottom: 12px;
+      letter-spacing: 0;
+    }
+    
+    h3 {
+      font-size: 1.2rem;
+      line-height: 1.25;
+      font-weight: 700;
+      margin-top: 24px;
+      margin-bottom: 8px;
+    }
+    
+    p {
+      margin-bottom: 16px;
+      max-width: var(--measure);
+    }
+    
+    /* rule: hairline rule colour for borders */
+    hr {
+      border: none;
+      height: 1px;
+      background: var(--rule);
+      margin: 32px 0;
+    }
+    
+    /* rule: code block must have language tag bash */
+    pre {
+      background: #0a0f0c;
+      border: 1px solid var(--rule);
+      padding: 16px 20px;
+      margin: 16px 0 24px 0;
+      overflow-x: auto;
+      /* rule: no radii */
+      font-family: inherit;
+      font-size: 0.833rem;
+      line-height: 1.55;
+    }
+    
+    code {
+      font-family: inherit;
+      font-size: 0.833rem;
+    }
+    
+    /* rule: syntax highlighting with amber for strings/args */
+    .sh-keyword { color: var(--amber); }
+    .sh-arg { color: var(--fg); }
+    .sh-flag { color: var(--dim); }
+    .sh-val { color: var(--amber); }
+    .sh-brkt { color: var(--dim); }
+    
+    /* rule: ASCII diagram must be rendered as text */
+    .diagram {
+      font-family: inherit;
+      font-size: 0.833rem;
+      line-height: 1.4;
+      color: var(--dim);
+      margin: 16px 0 24px 0;
+      white-space: pre;
+      overflow-x: auto;
+    }
+    
+    /* rule: lists with hyphens, not emoji bullets */
+    ul {
+      list-style: none;
+      margin: 8px 0 16px 0;
+    }
+    
+    ul li {
+      position: relative;
+      padding-left: 20px;
+      margin-bottom: 4px;
+      max-width: var(--measure);
+    }
+    
+    ul li::before {
+      content: "-";
+      position: absolute;
+      left: 0;
+      color: var(--dim);
+    }
+    
+    /* rule: manifest sections clearly separated */
+    .manifest {
+      border-top: 1px solid var(--rule);
+      padding-top: 24px;
+      margin-top: 24px;
+    }
+    
+    /* rule: footer not 4-column canonical */
+    footer {
+      border-top: 1px solid var(--rule);
+      margin-top: 48px;
+      padding-top: 24px;
+      font-size: 0.694rem;
+      line-height: 1.55;
+      color: var(--dim);
+    }
+    
+    footer a {
+      color: var(--dim);
+    }
+    
+    footer a:hover {
+      color: var(--amber);
+    }
+    
+    .cta-block {
+      margin: 24px 0;
+    }
+    
+    .dim {
+      color: var(--dim);
+    }
+    
+    .amber {
+      color: var(--amber);
+    }
+  </style>
+</head>
+<body>
+
+<!-- rule: copy voice: technical, lowercase by default, terse -->
+<h1>AHD</h1>
+
+<p>artificial human design — a framework for evaluating generative design output against written constraints. for teams who have already formed an opinion about ai-generated interfaces and want tooling, not a manifesto.</p>
+
+<div class="diagram" role="img" aria-label="system architecture diagram">
+<!-- rule: at least one ASCII diagram -->
+  brief.yml        linter (28 rules)        eval harness
+      |                  |                       |
+      +----------&gt;  compiler  &lt;------------------+
+                        |
+                        v
+                   judge model(s)
+                        |
+                        v
+                 vision-critic (opt)
+</div>
+
+<p>a brief is a contract. the compiler checks it. the linter scores the output. the eval harness runs it at scale. the vision-critic checks it against screenshots when you have the pipeline.</p>
+
+<div class="cta-block">
+  <!-- rule: link to github labelled as read-the-code CTA -->
+  <a href="https://github.com/ahd-org/ahd">read the code</a> — <span class="dim">or mirror on <a href="https://codeberg.org/ahd/ahd">codeberg</a></span>
+</div>
+
+<h2>run one eval</h2>
+
+<!-- rule: command rendered in monospace code block with language tag bash -->
+<pre><code class="language-bash"><span class="sh-keyword">ahd</span> <span class="sh-keyword">eval-live</span> <span class="sh-arg">swiss-editorial</span> <span class="sh-flag">--brief</span> <span class="sh-val">briefs/landing.yml</span> <span class="sh-flag">--models</span> <span class="sh-brkt">&lt;</span><span class="sh-arg">specs</span><span class="sh-brkt">&gt;</span> <span class="sh-flag">--n</span> <span class="sh-val">10</span></code></pre>
+
+<p>models are specified as <code>provider/name/version</code> or a <code>ahd.models.yml</code> file. the harness runs in parallel, scores each output against the compiled brief, and writes results to <code>./out/&lt;run-id&gt;/</code>.</p>
+
+<hr>
+
+<!-- rule: clearly separated manifest section titled 'What ships' -->
+<div class="manifest">
+  <h2>what ships</h2>
+  <ul>
+    <li>brief compiler (yaml to internal constraint graph)</li>
+    <li>28-rule linter (spacing, type scale, colour contrast, motion policy, forbidden patterns)</li>
+    <li>eval harness (parallel execution, result collation, exit codes for ci)</li>
+    <li>vision-critic scaffold (screenshot capture, diff logic, scoring adapter — needs pipeline hookup)</li>
+    <li>MCP server (model context protocol for editor integration)</li>
+    <li>editor plugins (vscode, zed — install via repo for now)</li>
+    <li>eight tokens (curated design-direction prompts, versioned)</li>
+  </ul>
+</div>
+
+<!-- rule: clearly separated manifest section titled 'What is gated' -->
+<div class="manifest">
+  <h2>what is gated</h2>
+  <ul>
+    <li>live frontier-model calls (needs api keys — bring your own)</li>
+    <li>live vision critique (needs multimodal key + screenshot pipeline — puppeteer or playwright not bundled)</li>
+    <li>standalone npm packages for the editor plugins (currently repo-only, publish pending)</li>
+    <li>additional tokens (eight now, more in draft)</li>
+  </ul>
+</div>
+
+<!-- rule: intentional imperfection — slight misalignment in footer spacing -->
+<footer>
+  <p>code: <a href="https://fsl.software/">FSL-1.1-Apache-2.0</a> &nbsp; tokens + artwork: CC-BY-4.0</p>
+  <!-- imperfection: extra whitespace left of closing tag, inconsistent indentation -->
+  <p style="margin-top: 8px;">no tracking. no analytics. no newsletter.   </p>
+</footer>
+
+</body>
+</html>
+```

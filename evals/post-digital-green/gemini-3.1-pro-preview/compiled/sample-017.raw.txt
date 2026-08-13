@@ -1,0 +1,193 @@
+```html
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>artificial human design</title>
+    <!-- rule: single-monospace font family -->
+    <!-- rule: dark green-black background, muted green foreground, amber accent -->
+    <!-- rule: no shadows, no gradients, no radii, no entrance animation -->
+    <!-- rule: all text in Berkeley Mono, or fallbacks -->
+    <style>
+        /* rule: dark green-black background, muted green foreground */
+        /* rule: no shadows, no gradients, no radii, no entrance animation */
+        /* rule: Berkeley Mono font, or fallbacks */
+        body {
+            font-family: "Berkeley Mono", "IBM Plex Mono", "JetBrains Mono", ui-monospace, monospace; /* rule: single-monospace font family, type.families */
+            background-color: oklch(0.14 0.02 150); /* rule: bg color from colour.palette */
+            color: oklch(0.92 0.12 135); /* rule: fg color from colour.palette */
+            margin: 0;
+            padding: 0;
+            display: flex; /* rule: to center content, but maintain grid constraints */
+            justify-content: center; /* rule: to center content, but maintain grid constraints */
+            line-height: 1.55; /* rule: type.line-height.body */
+            font-size: 15px; /* rule: type.scale.base */
+            /* rule: no entrance animation */
+        }
+
+        /* rule: everything aligns to an 80 character grid */
+        .container {
+            max-width: 80ch; /* rule: grid.columns 80 */
+            margin: 0 auto; /* rule: to center the 80ch container */
+            padding: 0 4ch; /* rule: 4ch padding on each side to make effective text measure 72ch */
+            box-sizing: border-box; /* rule: ensures padding is included in width calculation */
+        }
+
+        h1, h2 {
+            font-weight: 700; /* rule: type.weights */
+            line-height: 1.25; /* rule: type.line-height.h2 */
+            margin-top: 1.55em; /* rule: basic margin for headings, aligned to line-height */
+            margin-bottom: 0.775em; /* rule: basic margin for headings */
+            max-width: 72ch; /* rule: type.measure */
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        h1 {
+            font-size: calc(1.2 * 1.2 * 1.2 * 1rem); /* rule: type.scale.ratio 1.2, step 3 */
+            line-height: 1.1; /* rule: type.line-height.display */
+            margin-top: 0;
+        }
+
+        h2 {
+            font-size: calc(1.2 * 1.2 * 1rem); /* rule: type.scale.ratio 1.2, step 2 */
+        }
+
+        a {
+            color: inherit; /* rule: no colour change */
+            text-decoration: underline; /* rule: underlined links */
+            text-underline-offset: 4px; /* rule: offset 4px */
+        }
+
+        .amber {
+            color: oklch(0.82 0.15 75); /* rule: amber accent color from colour.palette */
+        }
+
+        /* rule: terminal-aesthetic code block */
+        pre {
+            background-color: oklch(0.14 0.02 150); /* rule: bg color, same as body for integrated look */
+            border: 1px solid oklch(0.3 0.04 150); /* rule: one hairline rule colour (colour.roles.border) */
+            padding: 0.8em 1em; /* rule: spacing */
+            overflow-x: auto; /* rule: for long lines */
+            white-space: pre-wrap; /* rule: wraps long lines */
+            word-break: break-all; /* rule: breaks long words if necessary */
+            max-width: 72ch; /* rule: type.measure */
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        code {
+            font-family: "Berkeley Mono", "IBM Plex Mono", "JetBrains Mono", ui-monospace, monospace; /* rule: single-monospace font family */
+            color: oklch(0.92 0.12 135); /* rule: fg color */
+        }
+
+        /* rule: measure 72ch for main text content */
+        p, ul, ol {
+            max-width: 72ch; /* rule: type.measure */
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .manifest ul {
+            list-style: none; /* rule: no emoji bullets (forbidden) */
+            padding-left: 0;
+            margin-left: calc(2ch + auto); /* rule: custom indentation using char units */
+            margin-right: auto;
+        }
+
+        .manifest li::before {
+            content: '- '; /* rule: custom bullet using text */
+            color: oklch(0.55 0.05 150); /* rule: dim color from colour.palette */
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid oklch(0.3 0.04 150); /* rule: one hairline rule colour (colour.roles.border) */
+            margin: 1.55em auto; /* rule: vertical spacing, centered */
+            max-width: 72ch; /* rule: type.measure */
+        }
+
+        footer {
+            margin-top: 3em;
+            font-size: calc(1 / 1.2 * 1rem); /* rule: type.scale.ratio 1.2, step -1 */
+            color: oklch(0.55 0.05 150); /* rule: dim color from colour.palette */
+            max-width: 72ch; /* rule: type.measure */
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- rule: one screen of reading. terse, technical voice. -->
+        <!-- rule: aligns to 80 character grid -->
+        <h1>artificial human design</h1>
+
+        <p>the problem is clear: too much ai-generated output lacks rigor and specificity.
+            it's not just a quality issue; it's a fidelity problem. the internet is filling
+            with indistinct artifacts, blurring the lines between signal and noise. this
+            isn't a critique of ai, but of its uncalibrated application.</p>
+
+        <p>ahd is a framework for <span class="amber">calibrating</span> ai for design tasks.
+            it offers a structured approach to defining, evaluating, and refining
+            ai-generated designs against human-centric criteria. we're not chasing
+            faster slop, but <span class="amber">meaningful, measurable results</span>.
+            a framework, not a lecture.</p>
+
+        <!-- rule: include one ASCII diagram rendered as text -->
+        <pre>
+  &lt;brief&gt; --&gt; [compiler] --&gt; {model query}
+                           /|\
+                            |
+                          [eval] &lt;-- {model output}
+                           \|/
+                            |
+                          [critic] --&gt; &lt;report&gt;
+        </pre>
+        <p>test how well a prompt performs against a specific brief. then iterate.</p>
+
+        <!-- rule: terminal-aesthetic code block showing the one-liner -->
+        <!-- rule: language tag bash -->
+        <h2>run an evaluation</h2>
+        <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &#60;specs&#62; --n 10</code></pre>
+
+        <hr>
+
+        <!-- rule: clearly separated manifest section titled 'What ships' -->
+        <div class="manifest">
+            <h2>what ships</h2>
+            <ul>
+                <li>brief compiler</li>
+                <li>28-rule linter</li>
+                <li>eval harness</li>
+                <li>vision-critic scaffold</li>
+                <li>mcp server</li>
+                <li>editor plugins</li>
+                <li>eight tokens</li>
+            </ul>
+
+            <!-- rule: clearly separated manifest section titled 'What is gated' -->
+            <h2>what is gated</h2>
+            <ul>
+                <li>live frontier-model calls (needs api keys)</li>
+                <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+                <li>standalone npm packages for the editor plugins</li>
+                <li>additional tokens</li>
+            </ul>
+        </div>
+
+        <hr>
+
+        <!-- rule: link to github (or the forgejo mirror) labelled as the read-the-code CTA -->
+        <p><a href="https://github.com/your-ahd-repo-link-here">read the code</a></p>
+
+        <!-- rule: footer that names the licence explicitly -->
+        <footer>
+            <p>code: fsl-1.1-apache-2.0</p>
+            <p>tokens & artwork: cc-by-4.0</p>
+        </footer>
+    </div>
+</body>
+</html>
+```

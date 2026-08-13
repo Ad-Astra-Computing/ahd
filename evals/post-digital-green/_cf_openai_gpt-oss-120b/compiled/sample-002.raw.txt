@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ahd</title>
+<style>
+:root{
+--bg:#1a2020;/* rule: background colour */
+--fg:#a0c0a0;/* rule: foreground colour */
+--dim:#5a735a;/* rule: dim colour */
+--rule:#3a4a3a;/* rule: hairline rule colour */
+--accent:#ffb84d;/* rule: amber accent */
+font-family:"Berkeley Mono","IBM Plex Mono","JetBrains Mono",ui-monospace,monospace;/* rule: single‑monospace */
+}
+html{background:var(--bg);color:var(--fg);font-size:15px;line-height:1.55;/* rule: base typographic scale */}
+body{margin:0;padding:0;display:flex;justify-content:center;align-items:center;min-height:100vh;}
+.container{max-width:80ch;padding:1rem;border:1px solid var(--rule);/* rule: rectangle with hairline */}
+h1{font-weight:700;margin:0 0 1rem 0;/* rule: heading */}
+code{background:var(--dim);color:var(--fg);padding:0.1rem 0.2rem;border:1px solid var(--rule);font-size:0.95em;}
+pre{background:var(--dim);color:var(--fg);padding:1rem;overflow:auto;border:1px solid var(--rule);font-size:0.95em;}
+a{color:inherit;text-decoration:underline;text-underline-offset:4px;/* rule: link style */}
+section{margin-top:2rem;}
+hr{border:none;border-top:1px solid var(--rule);margin:2rem 0;}
+</style>
+</head>
+<body>
+<div class="container"><!-- rule: container max 80ch -->
+<h1>ahd – artificial human design</h1>
+<p>framework for designers, engineers, founders who need a disciplined ai‑assisted workflow.</p>
+
+<pre><code class="bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre><!-- rule: bash code block -->
+
+<p>read the code: <a href="https://github.com/ahd/ahd" target="_blank">github</a></p><!-- rule: read‑the‑code CTA -->
+
+<hr>
+
+<section>
+<h2>what ships</h2>
+<ul>
+<li>brief compiler</li>
+<li>28‑rule linter</li>
+<li>eval harness</li>
+<li>vision‑critic scaffold</li>
+<li>mcp server</li>
+<li>editor plugins</li>
+<li>eight tokens</li>
+</ul>
+</section>
+
+<section>
+<h2>what is gated</h2>
+<ul>
+<li>live frontier‑model calls (needs api keys)</li>
+<li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+<li>standalone npm packages for the editor plugins</li>
+<li>additional tokens</li>
+</ul>
+</section>
+
+<hr>
+
+<pre>
++-------------------+
+|   ascii diagram   |
+|   ──> eval flow   |
++-------------------+
+</pre><!-- rule: ascii diagram -->
+
+<footer>
+<p>code licence: fsl-1.1-apache-2.0 • tokens &amp; artwork: cc-by-4.0</p>
+</footer>
+</div>
+</body>
+</html>

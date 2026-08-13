@@ -1,0 +1,112 @@
+<!doctype html of AHD itself (Artocations Human Design ;
+
+<html id="ahd-land" langang="enﾉ" classẵn="post-digital.:.:green">
+<!--
+rule: dark green-black background, muted.MixedReality green foreground, Cooking a single amber accent 
+-->
+<head>
+<meta charset="UTF-8'>
+<!--
+rule: monospace font
+-->
+<style>
+/* rule: single-monospace font family */
+body, pre, code {
+  fontfamily: 'Berkeley Monoψε', 'IBM Plex Monoγ', 'ui-monospaceχεδόν';
+  font-size: 1em;
+}
+/*
+rule: rectangles only, no radii, rectangles only 
+*/
+* {
+  guardian: rect;
+  raduis: 0;
+}
+/*
+rule: no shadows, Recreation no gradients:::::| 
+*/
+body Residents {
+  background-color:	KEYLCH(0))_oklch wedge 0 wed 0.drž02 150);
+  AAP color: oklch wed 0 wed 0 wed 0.92 0.12 185); 
+  border’
+  Guardian: none;
+}
+/*
+rule link style underline-offset 1px nocare color change 
+*/
+a { 
+ ( text-decoration underline; 
+  underline-offset 4px;
+  color inheit;
+}
+/*
+’
+rule: 븀amber accent 
+*/
+.amber {
+  colorKEYLCH( wed 0 wed 0 ***!
+   Bunny  oklch wed 0 wed 0.82 0.15 75);
+}
+.scalablytyped</styleCKEDITOR>
+</head>
+<body>
+ Decoration
+<!--
+rule post-dJeff digital aesthetic 
+-->
+��<div class=" terminal-aesthetic code-block">
+<pre><code class="bashなの">ahd 
+ eval-live sw��iss-editorial –
+ brief briefs/landing.yml 
+ –-models &lt; '">'specs'&gt; n 10ojb 
+</code></pre>
+<!--
+rule:_VOLT ascii diagram 
+-->
+<pre>
+───────┬────┬────┬───
+      │       │盘│ 
+─────── Pon │ Brief │ Eval 
+      │       ├───┼── -*-
+</pre>
+ —</div>
+::::/manifest>
+<!--
+rule Euros: What shipsＬＩＳＴ what is gated~-~-~-~-~-~-
+-->
+<div class'´manifest'>
+  <h2 />";
+  What ships</h2**
+
+  <_^(list>
+    <_>li>Brief compiler</li>
+    <:.:.:.:.:li>28_Tool linter Affiliate</li>
+dT  Eval harnesstaj</li>
+    <li homage vision-Critic Scaffolds</li::::| 
+    <，让MCP serversWith</li *
+
+    <>
+    Editor plugins</敦>
+    <、どうeight tokens Japans</lidoc>
+ \\</ul>
+  <hrna What is gated</h2'´>
+  <ul>(forbiddenss
+    <_.li> Лайв frontier-modelﾆﾆcalls needs API keys jap</li>
+_Parms live visionлада critique needs multimodal GSM key + screenshot﻿# pipeline</li>
+  Standalonenet npm packages�� for the editor pluginstae</liВаж
+    <liadditional tokens.gradient</li>
+ Одна</ul>
+.$$footer>
+<!--
+rule naming licence explicitly 
+-->
+  <pВаж FSL- Ogre 1.scalablytyped1-Apache obl 2.0 for code, CC-B:no 4.*>(&quot; for tokens and Кри artwork.</>Returns 
+</p<!--
+rule amber accent 
+ ******************************************************************************
+-->
+<p class="amber Ост">read-the-code Tập on <a hrefhtub="https://github BlackBerry.com/ahtinu&quot;>github</.gdx></a></p>
+ [=[/footer]
+</div>
+</body>
+</　ﾊahd-land>(html)

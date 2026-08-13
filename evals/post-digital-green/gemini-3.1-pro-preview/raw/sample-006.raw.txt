@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Artificial Human Design</title>
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --fg: #e0e0e0;
+    --accent: #00ff94;
+    --mono: 'JetBrains Mono', 'Geist Mono', 'Courier New', monospace;
+    --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  }
+  body {
+    background-color: var(--bg);
+    color: var(--fg);
+    font-family: var(--sans);
+    line-height: 1.6;
+    margin: 0;
+    padding: 10vh 5vw;
+    max-width: 900px;
+  }
+  h1 {
+    font-family: var(--mono);
+    font-size: 2rem;
+    font-weight: normal;
+    color: var(--accent);
+    margin: 0 0 2rem 0;
+    letter-spacing: -0.02em;
+  }
+  p {
+    font-size: 1.125rem;
+    max-width: 65ch;
+    margin: 0 0 1.5rem 0;
+    color: #b0b0b5;
+  }
+  pre {
+    background-color: #111116;
+    border: 1px solid rgba(0, 255, 148, 0.3);
+    padding: 1.5rem;
+    margin: 3rem 0;
+    overflow-x: auto;
+  }
+  code {
+    font-family: var(--mono);
+    font-size: 0.95rem;
+    color: var(--accent);
+  }
+  .manifest {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 3rem;
+    margin: 4rem 0;
+  }
+  .manifest-section h2 {
+    font-family: var(--mono);
+    font-size: 1rem;
+    font-weight: normal;
+    color: var(--fg);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid rgba(224, 224, 224, 0.2);
+    padding-bottom: 0.75rem;
+    margin: 0 0 1.5rem 0;
+  }
+  .manifest-section ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .manifest-section li {
+    font-family: var(--sans);
+    font-size: 1rem;
+    color: #b0b0b5;
+    margin: 0 0 0.75rem 0;
+    padding-left: 1.5rem;
+    position: relative;
+  }
+  .manifest-section li::before {
+    content: "|";
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-family: var(--mono);
+  }
+  .cta-block {
+    margin: 4rem 0;
+  }
+  .cta-link {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 1rem;
+    color: var(--bg);
+    background-color: var(--accent);
+    text-decoration: none;
+    padding: 1rem 2rem;
+    transition: opacity 0.2s ease;
+  }
+  .cta-link:hover {
+    opacity: 0.8;
+  }
+  footer {
+    margin-top: 6rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(224, 224, 224, 0.1);
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    color: #606065;
+  }
+</style>
+</head>
+<body>
+
+<h1>Artificial Human Design</h1>
+
+<p>The generative output problem is structural. The models do not lack capability; they suffer from regression to the mean. Without rigorous constraints, generated interfaces devolve into a homogenous layer of visual noise. You already know the markers: meaningless soft shadows, floating tiles and default spacing systems.</p>
+
+<p>AHD provides a deterministic framework to enforce architectural and aesthetic parameters on generated output. It replaces stochastic prompting with an evaluation harness, a compiler and a strict rule linter. If you need a systemic baseline rather than an endless conversation, this is the architecture.</p>
+
+<pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+
+<div class="manifest">
+  <div class="manifest-section">
+    <h2>What ships</h2>
+    <ul>
+      <li>brief compiler</li>
+      <li>28-rule linter</li>
+      <li>eval harness</li>
+      <li>vision-critic scaffold</li>
+      <li>MCP server</li>
+      <li>editor plugins</li>
+      <li>eight tokens</li>
+    </ul>
+  </div>
+
+  <div class="manifest-section">
+    <h2>What is gated</h2>
+    <ul>
+      <li>live frontier-model calls (needs API keys)</li>
+      <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+      <li>standalone npm packages for the editor plugins</li>
+      <li>additional tokens</li>
+    </ul>
+  </div>
+</div>
+
+<div class="cta-block">
+  <a href="https://github.com/artificial-human-design/ahd" class="cta-link">Read the code on GitHub</a>
+</div>
+
+<footer>
+  Licence: FSL-1.1-Apache-2.0 for code | CC-BY-4.0 for tokens and artwork
+</footer>
+
+</body>
+</html>

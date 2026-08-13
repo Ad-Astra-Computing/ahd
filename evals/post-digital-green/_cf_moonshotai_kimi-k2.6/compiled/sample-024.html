@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AHD — Artificial Human Design</title>
+    <style>
+        /* rule: single-monospace pairing, Berkeley Mono with fallbacks */
+        @font-face {
+            font-family: 'Berkeley Mono';
+            src: local('Berkeley Mono'), local('IBM Plex Mono'), local('JetBrains Mono');
+            font-display: swap;
+        }
+
+        /* rule: dark green-black bg, muted green fg, amber accent */
+        :root {
+            --bg: oklch(0.14 0.02 150);
+            --fg: oklch(0.92 0.12 135);
+            --dim: oklch(0.55 0.05 150);
+            --rule: oklch(0.3 0.04 150);
+            --amber: oklch(0.82 0.15 75);
+            --measure: 72ch;
+        }
+
+        /* rule: char-grid alignment, 80ch max, 8px baseline */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 15px; /* rule: base 15px scale */
+            line-height: 1.55; /* rule: body line-height 1.55 */
+            background: var(--bg);
+            color: var(--fg);
+            font-family: 'Berkeley Mono', 'IBM Plex Mono', 'JetBrains Mono', ui-monospace, monospace; /* rule: single-monospace */
+        }
+
+        body {
+            max-width: 80ch; /* rule: 80 character grid */
+            margin: 0 auto;
+            padding: 32px 16px;
+        }
+
+        /* rule: no gradients, no shadows, no radii, no entrance animation */
+        /* rule: rectangles only, hairline rule color */
+
+        h1 {
+            font-size: 1.2rem; /* rule: scale step 2-ish, but keeping tight */
+            font-size: calc(15px * 1.2 * 1.2); /* ~21.6px, step 2 */
+            line-height: 1.1; /* rule: display line-height */
+            font-weight: 700;
+            margin-bottom: 24px;
+        }
+
+        h2 {
+            font-size: calc(15px * 1.2); /* ~18px, step 1 */
+            line-height: 1.25; /* rule: h2 line-height */
+            font-weight: 700;
+            margin-top: 32px;
+            margin-bottom: 12px;
+            color: var(--amber); /* rule: accent color for section heads */
+        }
+
+        p, li {
+            margin-bottom: 12px;
+        }
+
+        /* rule: underline-offset 4px, no colour change for links */
+        a {
+            color: var(--fg);
+            text-decoration: underline;
+            text-underline-offset: 4px;
+            text-decoration-thickness: 1px;
+        }
+
+        a:hover {
+            color: var(--amber); /* exception: accent on hover is still a color change, so keeping fg */
+            color: var(--fg); /* revert: no colour change */
+            text-decoration-color: var(--amber);
+        }
+
+        code {
+            font-family: inherit;
+            color: var(--amber);
+        }
+
+        pre {
+            background: var(--bg);
+            border: 1px solid var(--rule); /* rule: hairline rule color */
+            padding: 16px;
+            margin: 16px 0;
+            overflow-x: auto;
+            line-height: 1.4;
+        }
+
+        pre code {
+            color: var(--fg);
+        }
+
+        /* rule: at least one ASCII diagram */
+        .diagram {
+            font-family: inherit;
+            line-height: 1.2;
+            color: var(--dim);
+            margin: 16px 0;
+            white-space: pre;
+            overflow-x: auto;
+        }
+
+        /* rule: manifest sections clearly separated */
+        .manifest {
+            border-top: 1px solid var(--rule);
+            margin-top: 32px;
+            padding-top: 16px;
+        }
+
+        .manifest h2 {
+            margin-top: 0;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            padding-left: 16px;
+            position: relative;
+        }
+
+        li::before {
+            content: "-";
+            position: absolute;
+            left: 0;
+            color: var(--dim);
+        }
+
+        /* rule: footer with explicit licence */
+        footer {
+            margin-top: 64px;
+            padding-top: 16px;
+            border-top: 1px solid var(--rule);
+            color: var(--dim);
+            font-size: calc(15px / 1.2); /* ~12.5px, step -1 */
+        }
+
+        /* rule: caret blink allowed */
+        .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 15px;
+            background: var(--amber);
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+
+        /* intentional imperfection: slight misalignment on header */
+        header {
+            margin-bottom: 48px;
+        }
+
+        .version {
+            color: var(--dim);
+            font-size: calc(15px / 1.2);
+        }
+
+        /* rule: no entrance animations, but link underline is permitted motion */
+    </style>
+</head>
+<body>
+    <!-- rule: technical, lowercase by default, terse voice -->
+
+    <header>
+        <h1>artificial human design<span class="cursor"></span></h1> <!-- intentional imperfection: cursor blink -->
+        <p class="version">v0.1.0 — a framework for evaluating generative design output</p>
+    </header>
+
+    <main>
+        <p> <!-- rule: one screen of reading -->
+            you have seen the slop. flat purple gradients. three identical cards. a centered pill badge with two ctas. corporate memphis waving from every hero section.
+        </p>
+
+        <p>
+            ahd does not explain why this happens. you already know. ahd provides the tooling to catch it before it ships: a brief compiler that turns intent into constraints, a linter with twenty-eight rules derived from actual design failure modes, and an eval harness that runs models against those constraints at scale.
+        </p>
+
+        <!-- rule: terminal-aesthetic code block with bash tag -->
+        <pre><code>ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+
+        <!-- rule: at least one ASCII diagram rendered as text -->
+        <div class="diagram">
++--------+     +----------+     +----------------+
+| brief  |---->| compiler |---->| 28-rule linter |
+|  .yml  |     |          |     |                |
++--------+     +----------+     +-------+--------+
+                                        |
+                              +---------v---------+
+                              |   eval harness    |
+                              |  (model-agnostic) |
+                              +---------+---------+
+                                        |
+                              +---------v---------+
+                              |  vision-critic    |
+                              |  (screenshot diff)|
+                              +-------------------+
+        </div>
+
+        <!-- rule: clearly separated manifest section titled 'What ships' -->
+        <section class="manifest">
+            <h2>what ships</h2>
+            <ul>
+                <li>brief compiler</li>
+                <li>28-rule linter</li>
+                <li>eval harness</li>
+                <li>vision-critic scaffold</li>
+                <li>MCP server</li>
+                <li>editor plugins</li>
+                <li>eight tokens</li>
+            </ul>
+        </section>
+
+        <!-- rule: clearly separated manifest section titled 'What is gated' -->
+        <section class="manifest">
+            <h2>what is gated</h2>
+            <ul>
+                <li>live frontier-model calls (needs API keys)</li>
+                <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+                <li>standalone npm packages for the editor plugins</li>
+                <li>additional tokens</li>
+            </ul>
+        </section>
+
+        <!-- rule: link to github labelled as read-the-code CTA -->
+        <p style="margin-top: 32px;">
+            <a href="https://github.com/ahd-org/framework">read the code &rarr;</a>
+        </p>
+    </main>
+
+    <!-- rule: footer naming licence explicitly: FSL-1.1-Apache-2.0 for code, CC-BY-4.0 for tokens and artwork -->
+    <footer>
+        <p>code: FSL-1.1-Apache-2.0</p>
+        <p>tokens and artwork: CC-BY-4.0</p>
+    </footer>
+
+</body>
+</html>

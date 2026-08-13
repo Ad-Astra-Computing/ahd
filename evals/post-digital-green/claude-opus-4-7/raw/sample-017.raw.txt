@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AHD — Artificial Human Design</title>
+<style>
+  :root{
+    --ink:#111;
+    --paper:#f4f1ea;
+    --rule:#111;
+    --dim:#5a5751;
+    --term-bg:#12130f;
+    --term-fg:#e8e4d8;
+    --term-dim:#8a8776;
+    --accent:#b4421c;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--paper);color:var(--ink);}
+  body{
+    font-family:"Söhne","Inter",ui-sans-serif,system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+    font-size:16px;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+  .wrap{
+    max-width:960px;
+    margin:0 auto;
+    padding:40px 32px 80px;
+  }
+  header.top{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    border-bottom:1px solid var(--ink);
+    padding-bottom:14px;
+    margin-bottom:48px;
+    font-feature-settings:"ss01","ss02";
+  }
+  .mark{
+    font-family:"Söhne Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+    font-weight:600;
+    letter-spacing:-0.01em;
+    font-size:15px;
+  }
+  .mark b{font-weight:700}
+  .mark span{color:var(--dim);font-weight:400;padding-left:10px}
+  .meta{
+    font-family:"Söhne Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+    font-size:12px;
+    color:var(--dim);
+    letter-spacing:0.02em;
+  }
+  .meta a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--ink);padding-bottom:1px}
+  .meta a:hover{color:var(--accent);border-color:var(--accent)}
+
+  h1{
+    font-size:54px;
+    line-height:1.02;
+    letter-spacing:-0.025em;
+    font-weight:500;
+    margin:0 0 22px;
+    max-width:14ch;
+  }
+  h1 em{
+    font-style:normal;
+    color:var(--dim);
+    font-weight:400;
+  }
+  .lede{
+    font-size:18px;
+    line-height:1.5;
+    max-width:62ch;
+    margin:0 0 18px;
+  }
+  .lede + .lede{color:var(--dim)}
+
+  .readcode{
+    display:inline-block;
+    margin-top:18px;
+    font-family:"Söhne Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+    font-size:14px;
+    text-decoration:none;
+    color:var(--ink);
+    border:1px solid var(--ink);
+    padding:9px 14px;
+    background:transparent;
+  }
+  .readcode:hover{background:var(--ink);color:var(--paper)}
+  .readcode::before{content:"→ "}
+
+  .section-rule{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    border-top:1px solid var(--ink);
+    margin-top:72px;
+    padding-top:10px;
+    font-family:"Söhne Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+    font-size:12px;
+    color:var(--dim);
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+  }
+  .section-rule b{color:var(--ink);font-weight:600}
+
+  h2{
+    font-size:28px;
+    letter-spacing:-0.015em;
+    font-weight:500;
+    margin:18px 0 22px;
+  }
+
+  /* terminal */
+  .term{
+    background:var(--term-bg);
+    color:var(--term-fg);
+    font-family:"Söhne Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+    font-size:13.5px;
+    line-height:1.55;
+    margin-top:12px;
+    border:1px solid var(--term-bg);
+  }
+  .term-bar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:8px 14px;
+    border-bottom:1px solid #2a2b25;
+    color:var(--term-dim);
+    font-size:11.5px;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+  }
+  .term-bar .dots{display:inline-flex;gap:6px}
+  .term-bar .dots i{width:9px;height:9px;border-radius:50%;background:#3a3b33;display:inline-block}
+  .term pre{
+    margin:0;
+    padding:18px 16px;
+    white-space:pre-wrap;
+    word-break:break-word;
+    overflow-x:auto;
+  }
+  .term .p{color:var(--term-dim)}
+  .term .c{color:#f0c674}
+  .term .f{color:#9fd59a}
+  .term .a{color:#cfcbb7}
+  .term .n{color:#e8a893}
+  .term-note{
+    padding:10px 14px;
+    border-top:1px solid #2a2b25;
+    color:var(--term-dim);
+    font-size:12px;
+  }
+
+  /* manifest */
+  .manifest{
+    display:grid;
+    grid-template-columns:minmax(170px,220px) 1fr;
+    gap:0;
+    border-top:1px solid var(--ink);
+    border-bottom:1px solid var(--ink);
+  }
+  .manifest .row{
+    display:contents;
+  }
+  .manifest .k,
+  .manifest .v{
+    padding:14px 0;
+    border-bottom:1px solid #cfc9ba;
+  }
+  .manifest .row:last-child .k,
+  .manifest .row:last-child .v{border-bottom:none}
+  .manifest .k{
+    font-family:"Söhne Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+    font-size:12px;
+    color:var(--dim);
+    padding-right:20px;
+    letter-spacing:0.02em;
+    text-transform:uppercase;
+  }
+  .manifest .v{
+    font-size:15.5px;
+    line-height:1.45;
+  }
+  .manifest .v .note{display:block;color:var(--dim);font-size:13px;margin-top:3px}
+  .gated .k{color:var(--accent)}
+  .gated .v .tag{
+    display:inline-block;
+    font-family:"Söhne Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+    font-size:11px;
+    color:var(--accent);
+    border:1px solid var(--accent);
+    padding:1px 6px;
+    margin-left:6px;
+    text-transform:uppercase;
+    letter-spacing:0.04em;
+    vertical-align:1px;
+  }
+
+  .stance{
+    margin-top:48px;
+    padding:22px 24px;
+    border-left:3px solid var(--ink);
+    background:rgba(0,0,0,0.02);
+    max-width:68ch;
+  }
+  .stance p{margin:0;font-size:15.5px;color:#1a1a1a}
+  .stance p + p{margin-top:10px;color:var(--dim)}
+
+  footer{
+    margin-top:72px;
+    border-top:1px solid var(--ink);
+    padding-top:18px;
+    font-family:"Söhne Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+    font-size:12px;
+    color:var(--dim);
+    display:flex;
+    flex-wrap:wrap;
+    gap:14px 28px;
+    justify-content:space-between;
+    align-items:baseline;
+  }
+  footer .lic b{color:var(--ink);font-weight:600}
+  footer a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--ink)}
+  footer a:hover{color:var(--accent);border-color:var(--accent)}
+
+  @media (max-width:640px){
+    h1{font-size:38px}
+    .wrap{padding:28px 20px 60px}
+    .manifest{grid-template-columns:1fr}
+    .manifest .k{padding:14px 0 4px;border-bottom:none}
+    .manifest .v{padding-top:0}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div class="mark"><b>AHD</b><span>// artificial human design</span></div>
+    <div class="meta">v0.4.2 · commit 8ad1f30 · 2026-04-24</div>
+  </header>
+
+  <section class="hero">
+    <h1>A framework for design that <em>doesn't read as slop.</em></h1>
+    <p class="lede">AHD is a compiler, a linter, and an eval harness for layout. You write a brief; it produces candidates under a Swiss-editorial grammar; a 28-rule linter rejects the obvious tells; a vision critic scores what's left. You already know why this matters.</p>
+    <p class="lede">No generative mysticism. The output is deterministic given the brief, the tokens, and the seed. Models are graded, not trusted.</p>
+    <a class="readcode" href="https://github.com/ahd/ahd">read the code on github</a>
+    <span style="display:inline-block;width:10px"></span>
+    <a class="readcode" href="https://code.ahd.dev/ahd/ahd" style="margin-left:4px">forgejo mirror</a>
+  </section>
+
+  <div class="section-rule"><span><b>01</b> · run the eval</span><span>terminal</span></div>
+  <h2>One command, ten samples, graded against the brief.</h2>
+  <div class="term" role="region" aria-label="shell example">
+    <div class="term-bar"><span class="dots"><i></i><i></i><i></i></span><span>bash</span></div>
+<pre><span class="p">$</span> <span class="c">ahd</span> <span class="f">eval-live</span> <span class="a">swiss-editorial</span> <span class="a">--brief</span> <span class="n">briefs/landing.yml</span> <span class="a">--models</span> <span class="n">&lt;specs&gt;</span> <span class="a">--n</span> <span class="n">10</span></pre>
+    <div class="term-note">requires AHD_OPENAI_KEY, AHD_ANTHROPIC_KEY, or equivalent in env. dry-run works offline.</div>
+  </div>
+
+  <div class="section-rule"><span><b>02</b> · what ships</span><span>today, in the repo</span></div>
+  <h2>What ships</h2>
+  <div class="manifest">
+    <div class="row"><div class="k">brief compiler</div><div class="v">YAML → typed intermediate representation; enforces constraint vocabulary before anything reaches a model.</div></div>
+    <div class="row"><div class="k">28-rule linter</div><div class="v">Catches centred hero stacks, pill-badge duplets, three equal feature cards, gradient-on-AI, shimmer, and 23 other known tells.</div></div>
+    <div class="row"><div class="k">eval harness</div><div class="v">Deterministic runs with seeds; N-sample comparisons; structured JSON + markdown reports.</div></div>
+    <div class="row"><div class="k">vision-critic scaffold</div><div class="v">Pluggable grader interface with a local heuristic baseline; wired for multimodal backends.</div></div>
+    <div class="row"><div class="k">MCP server</div><div class="v">Exposes the compiler, linter, and harness to any MCP-speaking editor or agent over stdio and SSE.</div></div>
+    <div class="row"><div class="k">editor plugins</div><div class="v">VS Code and Zed extensions, shipped in-tree, installable from source.</div></div>
+    <div class="row"><div class="k">eight tokens</div><div class="v">The starter token set: two typefaces, one scale, two neutrals, one accent, one rule, one measure. CC-BY-4.0.</div></div>
+  </div>
+
+  <div class="section-rule"><span><b>03</b> · what is gated</span><span>not in the tarball</span></div>
+  <h2>What is gated</h2>
+  <div class="manifest gated">
+    <div class="row"><div class="k">frontier-model calls</div><div class="v">Live inference against GPT-class and Claude-class models.<span class="tag">api keys</span><span class="note">The harness runs; the network round-trip is yours to pay for.</span></div></div>
+    <div class="row"><div class="k">live vision critique</div><div class="v">Real screenshot-in, score-out grading against a multimodal model.<span class="tag">multimodal + screenshot pipeline</span><span class="note">Requires a multimodal key and a working headless-render step.</span></div></div>
+    <div class="row"><div class="k">editor plugins (npm)</div><div class="v">Standalone, versioned npm packages for the VS Code and Zed extensions.<span class="tag">registry</span><span class="note">In-repo builds work today; published packages come later.</span></div></div>
+    <div class="row"><div class="k">additional tokens</div><div class="v">Beyond the eight-token starter: expanded scales, secondary families, alternate rule weights.<span class="tag">roadmap</span><span class="note">Authored under CC-BY-4.0; not in the current tree.</span></div></div>
+  </div>
+
+  <div class="stance">
+    <p>AHD is an opinion, compiled. The opinion is that generative systems, left to their defaults, regress toward the mean of last year's landing pages, and the mean is bad.</p>
+    <p>If you disagree, the linter rules are in <code>rules/</code>. Fork it.</p>
+  </div>
+
+  <footer>
+    <div class="lic">
+      <b>licence</b> &nbsp; FSL-1.1-Apache-2.0 for code &nbsp; · &nbsp; CC-BY-4.0 for tokens and artwork
+    </div>
+    <div>
+      <a href="https://github.com/ahd/ahd">github</a> &nbsp; <a href="https://code.ahd.dev/ahd/ahd">forgejo</a> &nbsp; <a href="mailto:hello@ahd.dev">hello@ahd.dev</a>
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>

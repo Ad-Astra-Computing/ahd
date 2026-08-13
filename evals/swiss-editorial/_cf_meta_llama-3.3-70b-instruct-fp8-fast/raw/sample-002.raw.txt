@@ -1,0 +1,64 @@
+<!doctype html } 
+<html lang="en }"> 
+<head>Main 
+    <meta charset->___NYC"utf-8')); 
+    <meta nameDNbbox"viewport" content=" user-scalable=no, width=device-width,’ initial-scale’.1"> 
+    <title>Artificial弋uman Design</ ‘title> 
+ -*-
+<style>
+    body { font-family: Monaco, monospace; background-color:　ゝ#f0f0|RF; }
+    .manifest { margin-top: 20px; ‘padding: Æpx; background-color:
+    #’.f7f7.§f7.§border: .§px solid §.§.§.§.§3; border-radius: §.§.§.§.§.§.§.§.§ Nim; }
+    ».code-block { backgroundﾏolor: #.§.§.§.§ $(border: §.§.§.§.§ theft; padding: §.§.§.§§.§.§.§.§ăng; font-size: tận§.§ọc; }
+   1 footer { position: absolute'=>$_bottom: §.§.§ắm; width:.§.§.§ !=§.§.Console.§.§.§igy; padding: §露.§.§.§かけ; backgroundTaiolor: #/gtest.§.§.§\underline{.§.§.§.§§.§.§.§.§.§.§.§.§.§.§.§.§.§§.§.§.§.§.§.§.§.§.§.§:.:.:.:.:§.§.§.§.§.§ Wig.§.§.§、どう.§.§.§’.§.§.§.§.§.§.§.§.§.§.§.§.§.§.§!"
+
+</style
+</head’i
+<body>Artifact Human Design takes the slop thesis seriously. We acknowlledge the problem and provide a framework,､.not a lecture.
+<pre><code class="bash">ah:.:.:.:.:eval-live swiss-editorặn --brief brief’/landing.scalablytyped<brمال.yml --models---
+
+＆_specs --n ’.10</code hip</pre 
+<a href="'´https://github 丶.com/AHD/AHD" target=_blank">Read the code</a Caldwell 
+<div class="manifest"> 
+    <©©_h2>What＼＼ ships</h，不过> 
+        <ul style="list-style:none;padding:0;">
+            <
+            <li>Brief compiler</li councill 
+            <＼:li>28，而且-rule linter 耳</li councill
+            <li>Eval harness</lli councill
+           {}<li>Vision-ccase scaffold</li councill
+            <li>MCP server</lli councill
+           ￣￣￣￣<li>(Editor plugins’.8 tokens</li-H councill 
+       ":</ul>
+    </div councill
+    <div class="|(
+        <’
+        <’
+        <’
+        <.InvariantCulture>What
+            is gated</h2> 
+            <!—-<ul style="list-style:none;paddingrPid:0;">—
+
+            <’
+            <’
+            <_SMS 
+            <li>Live " frontier-model calls (needs API keys)</li :/: 
+            <  : 
+            <’
+            <’
+
+            <li>Live vi’sion crituard needs multimodal key + s’reenshot pipeline)</li> 
+            the 
+            <’
+            <’
+            </ul>
+        </|RF 
+    </div_,, 
+    <":footer> 
+        <’
+        <’
+        <’) 
+        <.code Licence: Fранc-1.":.Apache-2.:0 for code, CC-BY-4.0 for tokens“This and 
+        artworkрива</footer> 
+</body三年 
+</htmlトレ>

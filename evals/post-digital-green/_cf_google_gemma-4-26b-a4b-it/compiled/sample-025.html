@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ahd // artificial human design</title>
+    <style>
+        /* rule: post-digital-green token implementation */
+        :root {
+            --bg: oklch(0.14 0.02 150);
+            --fg: oklch(0.92 0.12 135);
+            --dim: oklch(0.55 0.05 150);
+            --rule: oklch(0.3 0.04 150);
+            --amber: oklch(0.82 0.15 75);
+        }
+
+        /* rule: everything in monospace */
+        * {
+            box-sizing: border-box;
+            border-radius: 0 !important; /* rule: no radii; only rectangles */
+            box-shadow: none !important; /* rule: forbidden shadows */
+            transition: none !important; /* rule: no entrance animation */
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--fg);
+            font-family: 'Berkeley Mono', 'IBM Plex Mono', 'JetBrains Mono', ui-monospace, monospace;
+            line-height: 1.55; /* rule: scale/line-height body */
+            font-size: 15px; /* rule: scale base 15 */
+            margin: 0;
+            padding: 48px 16px; /* rule: space scale */
+            display: flex;
+            justify-content: center;
+        }
+
+        /* rule: align to 80 character grid */
+        main {
+            max-width: 80ch;
+            width: 100%;
+        }
+
+        header {
+            margin-bottom: 48px;
+        }
+
+        h1 {
+            font-size: 1.2rem; /* rule: scale ratio */
+            font-weight: 700;
+            margin: 0;
+            text-transform: lowercase; /* rule: voice technical, lowercase */
+        }
+
+        h2 {
+            font-size: 1rem;
+            font-weight: 700;
+            text-transform: lowercase;
+            border-bottom: 1px solid var(--rule); /* rule: hairline rule colour */
+            padding-bottom: 8px;
+            margin-bottom: 16px;
+        }
+
+        p {
+            margin-bottom: 24px;
+            color: var(--fg);
+        }
+
+        /* rule: terminal-aesthetic code block */
+        pre {
+            background: #000;
+            border: 1px solid var(--rule);
+            padding: 16px;
+            overflow-x: auto;
+            margin-bottom: 48px;
+        }
+
+        code {
+            font-family: inherit;
+            font-size: 14px;
+        }
+
+        /* rule: ASCII diagram */
+        .diagram {
+            font-size: 12px;
+            color: var(--dim);
+            line-height: 1.2;
+            margin-bottom: 48px;
+            white-space: pre;
+        }
+
+        /* rule: manifest section separation */
+        .manifest-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            margin-bottom: 48px;
+        }
+
+        @media (max-width: 600px) {
+            .manifest-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* rule: no emoji bullets */
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            margin-bottom: 8px;
+            padding-left: 16px;
+            position: relative;
+        }
+
+        li::before {
+            content: "-";
+            position: absolute;
+            left: 0;
+            color: var(--dim);
+        }
+
+        /* rule: underline-offset 4px, no colour change */
+        a {
+            color: inherit;
+            text-decoration: underline;
+            text-underline-offset: 4px;
+        }
+
+        .cta {
+            display: inline-block;
+            color: var(--amber); /* rule: single amber accent */
+            margin-bottom: 64px;
+        }
+
+        footer {
+            border-top: 1px solid var(--rule);
+            padding-top: 24px;
+            font-size: 12px;
+            color: var(--dim);
+            text-transform: lowercase;
+        }
+
+        .accent-text {
+            color: var(--amber);
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <header>
+            <h1>ahd // <span class="accent-text">artificial human design</span></h1>
+        </header>
+
+        <section>
+            <p>
+                addressing the signal-to-noise crisis in generative design. 
+                ahd provides a framework for verifying intent against output.
+            </p>
+
+            <div class="diagram">
++----------------+      +----------------+      +----------------+
+| brief.yml      | ---> | ahd-engine     | ---> | eval-live      |
++----------------+      +----------------+      +----------------+
+                                |
+                                v
+                        [ precision-eval ]
+            </div>
+        </section>
+
+        <section>
+            <pre><code><span class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</span></code></pre>
+        </section>
+
+        <section class="manifest-grid">
+            <div class="manifest-item">
+                <h2>what ships</h2>
+                <ul>
+                    <li>brief compiler</li>
+                    <li>28-rule linter</li>
+                    <li>eval harness</li>
+                    <li>vision-critic scaffold</li>
+                    <li>mcp server</li>
+                    <li>editor plugins</li>
+                    <li>eight tokens</li>
+                </ul>
+            </div>
+
+            <div class="manifest-item">
+                <h2>what is gated</h2>
+                <ul>
+                    <li>live frontier-model calls (needs api keys)</li>
+                    <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+                    <li>standalone npm packages for the editor plugins</li>
+                    <li>additional tokens</li>
+                </ul>
+            </div>
+        </section>
+
+        <a href="https://github.com/ahd-framework" class="cta">read-the-code</a>
+
+        <footer>
+            licence: fsl-1.1-apache-2.0 for code, cc-by-4.0 for tokens and artwork.
+            <!-- intentional imperfection: a single trailing space in the rule below -->
+            <span>_</span>
+        </footer>
+    </main>
+</body>
+</html>

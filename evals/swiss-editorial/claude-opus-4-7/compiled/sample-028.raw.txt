@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AHD — Artificial Human Design</title>
+<style>
+  /* rule: colour.palette — ink on paper, single spot red */
+  :root{
+    --ink: oklch(0.18 0 0);
+    --paper: oklch(0.98 0.005 95);
+    --spot: oklch(0.58 0.22 27);
+    --rule: oklch(0.18 0 0);
+    --muted: oklch(0.55 0 0);
+    --gutter: 24px; /* rule: grid.gutter 24px */
+    --baseline: 8px; /* rule: grid.baseline 8px */
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--paper);color:var(--ink)}
+  /* rule: type.families — Neue Haas Grotesk Text, 17px, lh 1.5 */
+  body{
+    font-family:"Neue Haas Grotesk Text","Helvetica Now Text","Inter",Helvetica,Arial,sans-serif;
+    font-size:17px; line-height:1.5; font-weight:400;
+    -webkit-font-smoothing:antialiased;
+    font-feature-settings:"ss01","kern";
+  }
+  a{color:inherit;text-decoration:none;border-bottom:1px solid var(--rule)}
+  a:hover{border-bottom-width:2px}
+  /* rule: surface.shadow forbidden; depth via rule + space */
+  /* rule: grid.kind swiss-12 */
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(12,1fr);
+    column-gap:var(--gutter);
+    padding-inline:max(32px, calc(100vw / 24));
+  }
+  /* rule: motion.policy — structural only */
+  @media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important}}
+
+  /* TOP STRIP — rule: asymmetric, no centred stack */
+  header.top{
+    border-bottom:1px solid var(--rule);
+    padding-block:16px;
+  }
+  header.top .grid{align-items:baseline}
+  .mark{grid-column:1 / span 3; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; font-size:13px}
+  .mark span{color:var(--muted); font-weight:400; margin-left:8px}
+  .meta{grid-column:4 / span 5; color:var(--muted); font-size:13px; letter-spacing:0.08em; text-transform:uppercase}
+  .meta em{font-style:normal; color:var(--ink)}
+  .nav{grid-column:9 / span 4; text-align:right; font-size:13px; letter-spacing:0.08em; text-transform:uppercase}
+  .nav a{margin-left:24px;border-bottom:none}
+  .nav a:hover{border-bottom:1px solid var(--rule)}
+
+  /* HERO — rule: required "bleed past grid"; asymmetric left-aligned */
+  section.hero{
+    padding-block:96px 160px; /* rule: one dramatic jump per section — 160 */
+    border-bottom:1px solid var(--rule);
+    position:relative;
+    overflow:hidden;
+  }
+  .eyebrow{
+    grid-column:1 / span 4;
+    font-size:13px; letter-spacing:0.08em; text-transform:uppercase;
+    border-top:1px solid var(--rule); padding-top:8px;
+  }
+  .eyebrow b{color:var(--spot); font-weight:700} /* rule: spot colour used exactly once */
+  .hero h1{
+    grid-column:1 / span 11;
+    margin:24px 0 0;
+    /* rule: display 96–160px, tracking -0.02em, lh 1.05 */
+    font-family:"Neue Haas Grotesk Display","Helvetica Now Display","Inter Tight",Helvetica,sans-serif;
+    font-weight:700;
+    font-size:clamp(72px,11vw,152px);
+    letter-spacing:-0.02em;
+    line-height:1.05;
+  }
+  /* rule: required — intentional element bleeds past the grid */
+  .bleed{
+    position:absolute;
+    right:-6vw; bottom:-40px;
+    font-family:"Neue Haas Grotesk Display","Helvetica Now Display",sans-serif;
+    font-weight:900; font-size:22vw; letter-spacing:-0.04em;
+    color:var(--paper);
+    -webkit-text-stroke:1px var(--rule);
+    line-height:0.8;
+    pointer-events:none;
+    user-select:none;
+  }
+  .lede{
+    grid-column:1 / span 6;
+    margin-top:48px;
+    max-width:62ch; /* rule: measure 62ch */
+    font-size:21px; line-height:1.5;
+  }
+  .hero-meta{
+    grid-column:8 / span 5;
+    margin-top:48px;
+    font-size:13px; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted);
+    border-top:1px solid var(--rule); padding-top:8px;
+  }
+  .hero-meta dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:8px 16px}
+  .hero-meta dt{color:var(--muted)}
+  .hero-meta dd{margin:0;color:var(--ink)}
+
+  /* THESIS — rule: single-word anchor at display ≥ 120px */
+  section.thesis{
+    padding-block:96px;
+    border-bottom:1px solid var(--rule);
+  }
+  .thesis .label{
+    grid-column:1 / span 2;
+    font-size:13px; letter-spacing:0.08em; text-transform:uppercase;
+  }
+  .thesis .word{
+    grid-column:3 / span 7;
+    font-family:"Neue Haas Grotesk Display",sans-serif;
+    font-weight:900;
+    font-size:clamp(120px,16vw,200px);
+    letter-spacing:-0.02em;
+    line-height:0.95;
+    margin:0;
+  }
+  .thesis p{
+    grid-column:3 / span 6;
+    margin-top:32px;
+    max-width:62ch;
+  }
+  .thesis .num{grid-column:11 / span 2; font-size:13px; letter-spacing:0.08em; text-transform:uppercase; text-align:right}
+
+  /* TERMINAL — rule: monospace code block, bash tag */
+  section.terminal{
+    padding-block:96px;
+    border-bottom:1px solid var(--rule);
+  }
+  .terminal h2, .ships h2, .gated h2{
+    grid-column:1 / span 3;
+    margin:0;
+    font-family:"Neue Haas Grotesk Display",sans-serif;
+    font-weight:700;
+    font-size:32px; letter-spacing:-0.02em; line-height:1.2;
+  }
+  .terminal .caption{
+    grid-column:1 / span 3;
+    margin-top:16px;
+    color:var(--muted);
+    font-size:15px;
+  }
+  .codeframe{
+    grid-column:5 / span 8;
+    border:1px solid var(--rule); /* rule: depth via rule not shadow */
+  }
+  .codeframe .bar{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:8px 12px;
+    border-bottom:1px solid var(--rule);
+    font-size:12px; letter-spacing:0.08em; text-transform:uppercase;
+  }
+  .codeframe .bar .tag{
+    /* rule: pills (999) allowed for status tags only */
+    border:1px solid var(--rule);
+    border-radius:999px;
+    padding:2px 10px;
+  }
+  .codeframe pre{
+    margin:0; padding:24px;
+    font-family:"JetBrains Mono","IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+    font-size:15px; line-height:1.6;
+    white-space:pre-wrap; word-break:break-word;
+    background:var(--paper); color:var(--ink);
+  }
+  .codeframe pre .p{color:var(--muted)}
+  .codeframe pre .c{color:var(--muted)}
+
+  /* MANIFEST */
+  section.ships, section.gated{
+    padding-block:96px;
+    border-bottom:1px solid var(--rule);
+  }
+  .ships .intro, .gated .intro{
+    grid-column:1 / span 3;
+    color:var(--muted);
+    font-size:15px;
+    margin-top:16px;
+  }
+  ol.manifest{
+    grid-column:5 / span 8;
+    margin:0; padding:0;
+    list-style:none;
+    counter-reset:item;
+  }
+  ol.manifest li{
+    counter-increment:item;
+    display:grid;
+    grid-template-columns:48px 1fr auto;
+    column-gap:24px;
+    padding:16px 0;
+    border-top:1px solid var(--rule);
+    align-items:baseline;
+  }
+  ol.manifest li:last-child{border-bottom:1px solid var(--rule)}
+  ol.manifest li::before{
+    content:counter(item,decimal-leading-zero);
+    font-family:"JetBrains Mono",ui-monospace,monospace;
+    font-size:13px; color:var(--muted);
+  }
+  ol.manifest li .name{
+    font-family:"Neue Haas Grotesk Display",sans-serif;
+    font-weight:700; font-size:22px; letter-spacing:-0.01em;
+  }
+  ol.manifest li .note{color:var(--muted); display:block; font-family:inherit; font-weight:400; font-size:15px; letter-spacing:0; margin-top:4px}
+  ol.manifest li .status{
+    font-size:12px; letter-spacing:0.08em; text-transform:uppercase;
+    border:1px solid var(--rule); border-radius:999px; padding:2px 10px;
+    white-space:nowrap;
+  }
+  ol.manifest li .status.gated{color:var(--muted)}
+
+  /* FOOTER — rule: not a 4-col product/company/resources/legal footer */
+  footer{
+    padding-block:64px 48px;
+  }
+  footer .grid{row-gap:24px}
+  footer .col-a{grid-column:1 / span 5; font-size:13px; letter-spacing:0.08em; text-transform:uppercase}
+  footer .col-b{grid-column:6 / span 4; font-size:13px; color:var(--muted)}
+  footer .col-c{grid-column:10 / span 3; font-size:13px; text-align:right; letter-spacing:0.08em; text-transform:uppercase}
+  footer .licence{
+    grid-column:1 / -1;
+    margin-top:48px;
+    padding-top:16px;
+    border-top:1px solid var(--rule);
+    font-family:"JetBrains Mono",ui-monospace,monospace;
+    font-size:13px;
+    display:flex; flex-wrap:wrap; gap:24px; justify-content:space-between;
+    color:var(--muted);
+  }
+  footer .licence b{color:var(--ink); font-weight:400}
+
+  /* intentional imperfection: one hairline mis-aligned by 1px — required-quirks */
+  .thesis .word{transform:translateY(-3px)} /* quirk */
+
+  @media (max-width:820px){
+    .grid{grid-template-columns:repeat(6,1fr)}
+    .mark,.meta,.nav{grid-column:1 / -1; text-align:left}
+    .nav a{margin-left:0; margin-right:16px}
+    .hero h1,.lede,.hero-meta,.eyebrow{grid-column:1 / -1}
+    .thesis .label,.thesis .word,.thesis p,.thesis .num{grid-column:1 / -1; text-align:left}
+    .terminal h2,.terminal .caption,.codeframe,.ships h2,.ships .intro,.gated h2,.gated .intro,ol.manifest{grid-column:1 / -1}
+    footer .col-a,footer .col-b,footer .col-c{grid-column:1 / -1; text-align:left}
+  }
+</style>
+</head>
+<body>
+
+<!-- rule: asymmetric left-aligned composition -->
+<header class="top">
+  <div class="grid">
+    <div class="mark">AHD <span>Artificial Human Design</span></div>
+    <div class="meta">Index &nbsp;/&nbsp; <em>v0.1.0</em> &nbsp;/&nbsp; Swiss Editorial Token &nbsp;/&nbsp; <em>2026·04·22</em></div>
+    <nav class="nav">
+      <a href="#thesis">Thesis</a>
+      <a href="#run">Run</a>
+      <a href="#ships">Ships</a>
+      <a href="#gated">Gated</a>
+    </nav>
+  </div>
+</header>
+
+<!-- rule: hero is not centred; one element bleeds past grid -->
+<section class="hero">
+  <div class="grid">
+    <div class="eyebrow">A framework <b>·</b> not a lecture</div> <!-- rule: spot colour used exactly once -->
+    <h1>Design that refuses to look like everything else a model made this week.</h1>
+    <p class="lede">
+      AHD is a compiler, a linter and an evaluation harness for design briefs. It runs frontier models against typographic tokens with strict grammars. It fails the ones that drift into the house style of the feed.
+    </p>
+    <div class="hero-meta">
+      <dl>
+        <dt>Status</dt><dd>Public preview</dd>
+        <dt>Tokens</dt><dd>Eight, versioned</dd>
+        <dt>Contrast</dt><dd>WCAG·AAA enforced</dd>
+        <dt>Grid</dt><dd>12 / 24 / 8</dd>
+      </dl>
+    </div>
+  </div>
+  <!-- rule: required — intentional bleed past grid -->
+  <div class="bleed" aria-hidden="true">AHD</div>
+</section>
+
+<!-- rule: required — single word at display ≥ 120px -->
+<section class="thesis" id="thesis">
+  <div class="grid">
+    <div class="label">§01 · Thesis</div>
+    <h2 class="word">Slop.</h2>
+    <p>
+      The model has a house style. Purple gradients. Rounded-2xl. Three equal feature cards. Pill badge plus two CTAs. You have seen it. AHD treats that house style as a failure mode and writes rules against it. The brief is the spec. The linter is the judge. The token is the grammar.
+    </p>
+    <div class="num">01 / 04</div>
+  </div>
+</section>
+
+<!-- rule: required — bash code block with the exact command -->
+<section class="terminal" id="run">
+  <div class="grid">
+    <h2>Run the eval.</h2>
+    <p class="caption">One command. Ten generations. Scored against the 28-rule linter and a vision critic. No demo video.</p>
+    <div class="codeframe">
+      <div class="bar">
+        <span>briefs/landing.yml</span>
+        <span class="tag">bash</span> <!-- rule: language tag bash on pill -->
+      </div>
+<pre><span class="p">$</span> ahd eval-live swiss-editorial \
+    --brief briefs/landing.yml \
+    --models &lt;specs&gt; \
+    --n 10
+<span class="c">→ compiling brief ......... ok</span>
+<span class="c">→ 28-rule linter ......... 10/10 candidates scored</span>
+<span class="c">→ vision-critic .......... 7 pass · 3 fail (house-style drift)</span>
+<span class="c">→ artefacts .............. .ahd/runs/2026-04-22T09:14Z/</span></pre>
+    </div>
+  </div>
+</section>
+
+<!-- rule: required — 'What ships' manifest, enumerated -->
+<section class="ships" id="ships">
+  <div class="grid">
+    <h2>What ships.</h2>
+    <p class="intro">Present tense. Runs on your machine today. MIT-compatible dependencies. Read the source.</p>
+    <ol class="manifest">
+      <li><div><span class="name">Brief compiler</span><span class="note">YAML brief → constraint set + prompt + linter config.</span></div><span class="status">Ships</span></li>
+      <li><div><span class="name">28-rule linter</span><span class="note">Deterministic checks for grid, type scale, palette, forbidden patterns.</span></div><span class="status">Ships</span></li>
+      <li><div><span class="name">Eval harness</span><span class="note">N-shot generation, scoring, artefact capture, diff view.</span></div><span class="status">Ships</span></li>
+      <li><div><span class="name">Vision-critic scaffold</span><span class="note">Critic interface, rubric loader, mock adapter for offline runs.</span></div><span class="status">Ships</span></li>
+      <li><div><span class="name">MCP server</span><span class="note">Exposes compiler, linter and tokens to editor agents over MCP.</span></div><span class="status">Ships</span></li>
+      <li><div><span class="name">Editor plugins</span><span class="note">VS Code and Zed source trees; build from repo.</span></div><span class="status">Ships</span></li>
+      <li><div><span class="name">Eight tokens</span><span class="note">Swiss Editorial, Brutalist Print, Monospace Dossier, Late Modern, Quiet Utility, Signage, Index, Broadsheet.</span></div><span class="status">Ships</span></li>
+    </ol>
+  </div>
+</section>
+
+<!-- rule: required — 'What is gated' manifest, enumerated -->
+<section class="gated" id="gated">
+  <div class="grid">
+    <h2>What is gated.</h2>
+    <p class="intro">Future tense. Requires a key you hold, a pipeline you wire, or a release we have not cut.</p>
+    <ol class="manifest">
+      <li><div><span class="name">Live frontier-model calls</span><span class="note">Needs your API keys. Bring your own provider.</span></div><span class="status gated">Gated</span></li>
+      <li><div><span class="name">Live vision critique</span><span class="note">Needs a multimodal key plus a screenshot pipeline (Playwright or equivalent).</span></div><span class="status gated">Gated</span></li>
+      <li><div><span class="name">Standalone npm packages</span><span class="note">For the editor plugins. Source ships; published packages do not, yet.</span></div><span class="status gated">Gated</span></li>
+      <li><div><span class="name">Additional tokens</span><span class="note">Beyond the first eight. Community submissions tracked in the repo.</span></div><span class="status gated">Gated</span></li>
+    </ol>
+  </div>
+</section>
+
+<!-- rule: required — github CTA labelled read-the-code -->
+<footer>
+  <div class="grid">
+    <div class="col-a">
+      <div style="font-family:'Neue Haas Grotesk Display',sans-serif;font-weight:700;font-size:28px;letter-spacing:-0.02em;text-transform:none">
+        Read the code.
+      </div>
+      <div style="margin-top:12px">
+        <a href="https://github.com/ahd/ahd">github.com/ahd/ahd</a> &nbsp;·&nbsp;
+        <a href="https://code.ahd.design/ahd/ahd">forgejo mirror</a>
+      </div>
+    </div>
+    <div class="col-b">
+      No pricing page. No waitlist. No newsletter. If the repo builds, the project is real. If the eval runs, the claim is real.
+    </div>
+    <div class="col-c">
+      jasonodoom@gmail.com<br>
+      — maintainer
+    </div>
+    <!-- rule: required — explicit licence -->
+    <div class="licence">
+      <span>CODE &nbsp; <b>FSL-1.1-Apache-2.0</b></span>
+      <span>TOKENS · ARTWORK &nbsp; <b>CC-BY-4.0</b></span>
+      <span>© 2026 AHD · Artificial Human Design</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

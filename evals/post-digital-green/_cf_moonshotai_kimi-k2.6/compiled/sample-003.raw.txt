@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AHD — Artificial Human Design</title>
+  <style>
+    /* rule: single-monospace — only berkeley mono + fallbacks */
+    font-family: "Berkeley Mono", "IBM Plex Mono", "JetBrains Mono", ui-monospace, monospace;
+    @font-face {
+      font-family: "Berkeley Mono";
+      src: local("Berkeley Mono"), local("IBM Plex Mono"), local("JetBrains Mono");
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    html {
+      /* rule: bg — oklch(0.14 0.02 150) */
+      background: oklch(0.14 0.02 150);
+      /* rule: fg — oklch(0.92 0.12 135) */
+      color: oklch(0.92 0.12 135);
+      /* rule: base 15px, ratio 1.2 */
+      font-size: 15px;
+      font-family: "Berkeley Mono", "IBM Plex Mono", "JetBrains Mono", ui-monospace, monospace;
+      line-height: 1.55;
+      /* rule: no radii; only rectangles */
+      border-radius: 0 !important;
+    }
+    
+    body {
+      /* rule: char-grid 80 columns */
+      max-width: 80ch;
+      margin: 0 auto;
+      padding: 32px 16px 64px 16px;
+    }
+    
+    /* rule: amber accent — oklch(0.82 0.15 75) */
+    ::selection {
+      background: oklch(0.82 0.15 75);
+      color: oklch(0.14 0.02 150);
+    }
+    
+    h1 {
+      /* rule: scale step 4 — 15 * 1.2^4 ≈ 31 */
+      font-size: 31px;
+      line-height: 1.1;
+      font-weight: 700;
+      margin-bottom: 8px;
+      /* rule: tracking display — 0 */
+      letter-spacing: 0;
+    }
+    
+    h2 {
+      /* rule: scale step 2 — 15 * 1.2^2 ≈ 21.6 */
+      font-size: 21.6px;
+      line-height: 1.25;
+      font-weight: 700;
+      margin-top: 48px;
+      margin-bottom: 16px;
+    }
+    
+    h3 {
+      /* rule: scale step 1 — 15 * 1.2 = 18 */
+      font-size: 18px;
+      font-weight: 700;
+      margin-top: 32px;
+      margin-bottom: 12px;
+    }
+    
+    p {
+      margin-bottom: 16px;
+      /* rule: measure 72ch */
+      max-width: 72ch;
+    }
+    
+    a {
+      /* rule: link style — underline-offset 4px, no colour change */
+      color: inherit;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+      /* rule: motion policy — caret blink and link underline only */
+    }
+    
+    a:hover {
+      color: inherit;
+      /* rule: amber accent for hover state, but no colour change per spec — using underline thickness */
+      text-decoration-thickness: 2px;
+    }
+    
+    /* rule: rule — oklch(0.3 0.04 150) */
+    hr {
+      border: none;
+      border-top: 1px solid oklch(0.3 0.04 150);
+      margin: 48px 0;
+    }
+    
+    pre {
+      /* rule: dim — oklch(0.55 0.05 150) for subtle bg */
+      background: oklch(0.18 0.03 150);
+      border: 1px solid oklch(0.3 0.04 150);
+      padding: 16px;
+      margin: 24px 0;
+      overflow-x: auto;
+      /* rule: code block monospace with bash tag */
+      font-family: inherit;
+      line-height: 1.55;
+      /* rule: char-grid alignment */
+      max-width: 80ch;
+    }
+    
+    code {
+      font-family: inherit;
+      font-size: 14px;
+      /* rule: dim for inline code */
+      color: oklch(0.82 0.15 75);
+    }
+    
+    pre code {
+      color: inherit;
+    }
+    
+    .comment {
+      /* rule: dim */
+      color: oklch(0.55 0.05 150);
+    }
+    
+    .prompt {
+      /* rule: amber accent */
+      color: oklch(0.82 0.15 75);
+    }
+    
+    /* rule: at least one ASCII diagram rendered as text */
+    .diagram {
+      /* rule: dim for diagram structure */
+      color: oklch(0.55 0.05 150);
+      line-height: 1.3;
+      margin: 24px 0;
+      /* rule: intentional imperfection — slightly misaligned comment */
+      white-space: pre;
+      overflow-x: auto;
+    }
+    
+    ul {
+      list-style: none;
+      margin: 16px 0;
+    }
+    
+    li {
+      position: relative;
+      padding-left: 20px;
+      margin-bottom: 8px;
+      max-width: 72ch;
+    }
+    
+    /* rule: no emoji bullets — using ascii dash */
+    li::before {
+      content: "-";
+      position: absolute;
+      left: 0;
+      /* rule: dim */
+      color: oklch(0.55 0.05 150);
+    }
+    
+    /* rule: forbidden — no canonical 4-column footer */
+    footer {
+      margin-top: 64px;
+      padding-top: 32px;
+      border-top: 1px solid oklch(0.3 0.04 150);
+      /* rule: dim */
+      color: oklch(0.55 0.05 150);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+    
+    footer a {
+      color: inherit;
+    }
+    
+    .spacer {
+      height: 8px;
+    }
+    
+    /* rule: forbidden — no entrance animations, but caret blink allowed */
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0; }
+    }
+    
+    .cursor {
+      display: inline-block;
+      width: 8px;
+      height: 15px;
+      background: oklch(0.82 0.15 75);
+      animation: blink 1s step-end infinite;
+      vertical-align: text-bottom;
+    }
+    
+    /* rule: intentional imperfection — slightly broken vertical rhythm on mobile */
+    @media (max-width: 600px) {
+      body {
+        padding: 24px 12px 48px 12px;
+      }
+      h1 {
+        font-size: 26px;
+        /* imperfection: slightly too tight line-height */
+        line-height: 1.05;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- rule: technical, lowercase by default -->
+  <h1>artificial human design<span class="cursor"></span></h1>
+  <!-- rule: dim for secondary info -->
+  <p style="color: oklch(0.55 0.05 150);">a framework for evaluating generative design systems against human criteria.</p>
+  
+  <p>you have seen the slop. the same curve, the same shadow, the same purple gradient. this is not a manifesto against tools — it is a method for forcing rigor into the loop.</p>
+  
+  <p>AHD compiles briefs, lints output, runs multimodal evals, and keeps a human in the chain. the human does not supervise. the human decides what good means, then the system checks if the machine got there.</p>
+  
+  <h2>how it works</h2>
+  
+  <!-- rule: at least one ASCII diagram rendered as text -->
+  <div class="diagram">
++--------+     +-----------+     +------------+     +--------+
+| brief  | --> | compiler  | --> | 28-rule    | --> | judge  |
+|  .yml  |     | (static)  |     | linter     |     | (you)  |
++--------+     +-----------+     +------------+     +--------+
+                    |                                    ^
+                    v                                    |
+               +-----------+                        +---------+
+               | eval-live | ---------------------> | scores  |
+               | (model)   |                        | + diff  |
+               +-----------+                        +---------+
+  </div>
+  
+  <p>the brief is a contract. the linter catches机械重复 before it ships. the eval harness runs the same prompt across models and versions. the vision critic takes a screenshot and compares against spec, not vibe.</p>
+  
+  <!-- rule: required — bash code block with specific command -->
+  <pre><code><span class="comment"># run evaluation against a brief, compare n model outputs</span>
+$ <span class="prompt">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</span></code></pre>
+  
+  <p>specs are provider:model tuples — openai:gpt-4o, anthropic:claude-sonnet-4-20250514, google:gemini-2.5-pro, etc. the harness handles concurrency, retries, cost tracking, and diff rendering.</p>
+  
+  <h2>what ships</h2>
+  <!-- rule: clearly separated manifest section -->
+  <ul>
+    <li>brief compiler — validates schema, inlines tokens, expands constraints</li>
+    <li>28-rule linter — catches banned patterns, measures entropy, flags repetition</li>
+    <li>eval harness — concurrent execution, cost accounting, structured output validation</li>
+    <li>vision-critic scaffold — screenshot-to-spec comparison pipeline (local inference)</li>
+    <li>MCP server — exposes lint and eval as tools for claude, zed, etc.</li>
+    <li>editor plugins — vscode and zed extensions for inline lint and brief preview</li>
+    <li>eight tokens — design tokens encoded as typed constraints, not values</li>
+  </ul>
+  
+  <h2>what is gated</h2>
+  <!-- rule: clearly separated manifest section -->
+  <ul>
+    <li>live frontier-model calls — needs API keys and rate-limit handling</li>
+    <li>live vision critique — needs multimodal key + screenshot pipeline (playwright/puppeteer)</li>
+    <li>standalone npm packages for the editor plugins — still monorepo-only</li>
+    <li>additional tokens — locked behind contributor agreement, not paywall</li>
+  </ul>
+  
+  <!-- rule: required — read-the-code CTA -->
+  <p><a href="https://github.com/artificialhumandesign/ahd">read the code &rarr;</a> (mirror on <a href="https://forgejo.org">forgejo</a>)</p>
+  
+  <hr>
+  
+  <!-- rule: forbidden — no canonical 4-column footer; flat text instead -->
+  <footer>
+    <p>code licence: <a href="https://fsl.software">FSL-1.1-Apache-2.0</a>. token and artwork licence: <a href="https://creativecommons.org/licenses/by/4.0/">CC-BY-4.0</a>.</p>
+    <p class="spacer"></p>
+    <!-- rule: intentional imperfection — trailing whitespace in footer -->
+    <p>compiled 2025. no tracking. no analytics. no cookies.    
+    </p>
+  </footer>
+  
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artificial Human Design</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+        code {
+            font-family: monospace;
+        }
+        .manifest {
+            margin-top: 40px;
+        }
+        .manifest section {
+            background-color: #f0f0f0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .manifest h2 {
+            margin-top: 0;
+        }
+        .manifest ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .manifest li {
+            padding: 5px;
+            border-bottom: 1px solid #ccc;
+        }
+        .manifest li:last-child {
+            border-bottom: none;
+        }
+        footer {
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <h1>Artificial Human Design</h1>
+    <p>A framework for designers, engineers, and founders who care about AI-generated design.</p>
+    <h2>Evaluation Command</h2>
+    <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+    <div class="manifest">
+        <section>
+            <h2>What ships</h2>
+            <ul>
+                <li>Brief compiler</li>
+                <li>28-rule linter</li>
+                <li>Eval harness</li>
+                <li>Vision-critic scaffold</li>
+                <li>MCP server</li>
+                <li>Editor plugins</li>
+                <li>Eight tokens</li>
+            </ul>
+        </section>
+        <section>
+            <h2>What is gated</h2>
+            <ul>
+                <li>Live frontier-model calls (needs API keys)</li>
+                <li>Live vision critique (needs multimodal key + screenshot pipeline)</li>
+                <li>Standalone npm packages for the editor plugins</li>
+                <li>Additional tokens</li>
+            </ul>
+        </section>
+    </div>
+    <p><a href="https://github.com/ArtificialHumanDesign/ahd">Read the code on GitHub</a></p>
+    <footer>
+        <p>Licence: <a href="https://opensource.org/licenses/FSL-1.1-Apache-2.0">FSL-1.1-Apache-2.0</a> for code, <a href="https://creativecommons.org/licenses/by/4.0/">CC-BY-4.0</a> for tokens and artwork.</p>
+    </footer>
+</body>
+</html>

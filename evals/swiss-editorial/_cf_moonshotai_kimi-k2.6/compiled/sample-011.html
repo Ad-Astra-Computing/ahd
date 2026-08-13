@@ -1,0 +1,443 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AHD — Artificial Human Design</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=Inter+Tight:wght@300;400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* rule: single-family-two-optical-sizes: Display uses Inter Tight, body uses Inter */
+        /* rule: surface.shadow.forbidden: no shadows anywhere */
+        /* rule: surface.radius.rule: sharp by default, pills only for status tags */
+        /* rule: surface.motion.policy: structural only, no entrance animations */
+        /* rule: colour.roles: ink on paper with one spot red */
+        /* rule: grid.kind.swiss-12: 12 columns with 24px gutters */
+        /* rule: measure.62ch: body text max-width */
+        
+        :root {
+            --ink: oklch(0.18 0 0);
+            --paper: oklch(0.98 0.005 95);
+            --spot: oklch(0.58 0.22 27);
+            --rule: oklch(0.18 0 0);
+            --muted: oklch(0.55 0 0);
+            --gutter: 24px;
+            --baseline: 8px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            font-size: 17px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        body {
+            font-family: 'Inter', 'Helvetica Now Text', Helvetica, Arial, sans-serif;
+            /* rule: type.family.text */
+            background: var(--paper);
+            color: var(--ink);
+            line-height: 1.5;
+            /* rule: type.line-height.body */
+        }
+        
+        /* rule: grid.margin.preferred: calc(100vw / 24) with 32px minimum */
+        .container {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 calc(100vw / 24);
+            /* rule: grid.margin */
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 32px;
+                /* rule: grid.margin.min */
+            }
+        }
+        
+        /* rule: grid.kind.swiss-12: 12 column grid */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: var(--gutter);
+            /* rule: grid.gutter */
+        }
+        
+        /* rule: section spacing: dramatic jump of 160px between sections */
+        section {
+            margin-bottom: 160px;
+            /* rule: space.rhythm-note */
+        }
+        
+        /* rule: type.tracking.display: -0.02em */
+        /* rule: type.line-height.display: 1.05 */
+        .display-xl {
+            font-family: 'Inter Tight', 'Helvetica Now Display', 'Inter', sans-serif;
+            /* rule: type.family.display */
+            font-size: clamp(96px, 10vw, 160px);
+            /* rule: type.scale.display 96-160px */
+            font-weight: 900;
+            letter-spacing: -0.02em;
+            /* rule: type.tracking.display */
+            line-height: 1.05;
+            /* rule: type.line-height.display */
+            text-transform: uppercase;
+        }
+        
+        .display-lg {
+            font-family: 'Inter Tight', 'Helvetica Now Display', 'Inter', sans-serif;
+            /* rule: type.family.display */
+            font-size: clamp(72px, 8vw, 120px);
+            /* rule: required.section anchored by single word >= 120px */
+            font-weight: 900;
+            letter-spacing: -0.02em;
+            /* rule: type.tracking.display */
+            line-height: 1.05;
+            /* rule: type.line-height.display */
+        }
+        
+        h2 {
+            font-family: 'Inter Tight', 'Helvetica Now Display', 'Inter', sans-serif;
+            /* rule: type.family.display */
+            font-size: 2.369rem;
+            /* rule: type.scale.step 4 */
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            /* rule: type.tracking.display */
+            line-height: 1.2;
+            /* rule: type.line-height.h2 */
+            margin-bottom: 48px;
+            /* rule: space.scale */
+        }
+        
+        h3 {
+            font-family: 'Inter Tight', 'Helvetica Now Display', 'Inter', sans-serif;
+            /* rule: type.family.display */
+            font-size: 1.333rem;
+            /* rule: type.scale.step 2 */
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            /* rule: type.tracking.display */
+            line-height: 1.2;
+            /* rule: type.line-height.h2 */
+            margin-bottom: 16px;
+            /* rule: space.scale */
+        }
+        
+        p, li {
+            max-width: 62ch;
+            /* rule: type.measure */
+            font-size: 1rem;
+            /* rule: type.scale.base 17px */
+            line-height: 1.5;
+            /* rule: type.line-height.body */
+        }
+        
+        p {
+            margin-bottom: 24px;
+            /* rule: space.scale */
+        }
+        
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        li {
+            position: relative;
+            padding-left: 24px;
+            /* rule: space.scale */
+            margin-bottom: 12px;
+            /* rule: space.scale */
+        }
+        
+        /* rule: no emoji bullets, use typographic dash */
+        li::before {
+            content: "—";
+            position: absolute;
+            left: 0;
+            color: var(--muted);
+        }
+        
+        a {
+            color: var(--ink);
+            text-decoration: none;
+            border-bottom: 1px solid var(--rule);
+            /* rule: surface.border */
+            transition: border-color 0.2s;
+            /* rule: surface.motion.structural */
+        }
+        
+        a:hover {
+            border-bottom-color: var(--spot);
+            /* rule: colour.accent used once in interaction */
+        }
+        
+        /* rule: required.github link as read-the-code CTA */
+        .cta {
+            display: inline-block;
+            font-family: 'JetBrains Mono', 'SF Mono', Monaco, monospace;
+            /* rule: monospace for code-related elements */
+            font-size: 0.75rem;
+            /* rule: type.scale.step -1 */
+            font-weight: 400;
+            letter-spacing: 0.08em;
+            /* rule: type.tracking.allcaps */
+            text-transform: uppercase;
+            padding: 8px 16px;
+            /* rule: space.scale */
+            border: 1px solid var(--rule);
+            /* rule: surface.border */
+            border-radius: 0;
+            /* rule: surface.radius.rule sharp */
+            margin-top: 32px;
+            /* rule: space.scale */
+        }
+        
+        .cta:hover {
+            background: var(--ink);
+            color: var(--paper);
+            border-color: var(--ink);
+        }
+        
+        /* rule: required.bash code block with terminal aesthetic */
+        pre {
+            background: var(--ink);
+            color: var(--paper);
+            padding: 32px;
+            /* rule: space.scale */
+            margin: 48px 0;
+            /* rule: space.scale */
+            overflow-x: auto;
+            font-family: 'JetBrains Mono', 'SF Mono', Monaco, monospace;
+            /* rule: monospace for code */
+            font-size: 0.875rem;
+            /* rule: type.scale.step -1 approx */
+            line-height: 1.6;
+            border-radius: 0;
+            /* rule: surface.radius.rule sharp */
+        }
+        
+        code {
+            font-family: 'JetBrains Mono', 'SF Mono', Monaco, monospace;
+            /* rule: monospace */
+        }
+        
+        /* rule: colour.spot used exactly once on the page */
+        .spot-once {
+            color: var(--spot);
+            /* rule: colour.accent */
+        }
+        
+        /* rule: required.bleed past grid: negative margin technique */
+        .bleed {
+            margin-left: calc(-1 * (100vw / 24));
+            margin-right: calc(-1 * (100vw / 24));
+            /* rule: grid.margin.preferred negated for bleed */
+            padding-left: calc(100vw / 24);
+            padding-right: calc(100vw / 24);
+        }
+        
+        @media (max-width: 768px) {
+            .bleed {
+                margin-left: -32px;
+                margin-right: -32px;
+                /* rule: grid.margin.min negated */
+                padding-left: 32px;
+                padding-right: 32px;
+            }
+        }
+        
+        /* rule: grid.kind.swiss-12: asymmetric left-aligned composition */
+        .hero-word {
+            grid-column: 1 / -1;
+            /* rule: asymmetric, bleeds full */
+        }
+        
+        .hero-context {
+            grid-column: 1 / 8;
+            /* rule: asymmetric, not centered */
+        }
+        
+        @media (max-width: 768px) {
+            .hero-context {
+                grid-column: 1 / -1;
+            }
+        }
+        
+        .command-section {
+            grid-column: 1 / 11;
+            /* rule: asymmetric */
+        }
+        
+        @media (max-width: 768px) {
+            .command-section {
+                grid-column: 1 / -1;
+            }
+        }
+        
+        .manifest-ships {
+            grid-column: 1 / 6;
+            /* rule: asymmetric, not equal cards */
+        }
+        
+        .manifest-gated {
+            grid-column: 7 / 12;
+            /* rule: asymmetric, not equal cards */
+        }
+        
+        @media (max-width: 768px) {
+            .manifest-ships,
+            .manifest-gated {
+                grid-column: 1 / -1;
+                margin-bottom: 64px;
+            }
+        }
+        
+        /* rule: no canonical 4-column footer */
+        footer {
+            border-top: 1px solid var(--rule);
+            /* rule: surface.border */
+            padding-top: 48px;
+            /* rule: space.scale */
+            margin-top: 160px;
+            /* rule: space.rhythm-note */
+        }
+        
+        footer p {
+            font-size: 0.875rem;
+            /* rule: type.scale.step -1 */
+            color: var(--muted);
+        }
+        
+        /* rule: surface.radius.rule pills allowed for status tags only */
+        .status {
+            display: inline-block;
+            font-family: 'JetBrains Mono', 'SF Mono', Monaco, monospace;
+            font-size: 0.625rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            /* rule: type.tracking.allcaps */
+            padding: 4px 12px;
+            border-radius: 999px;
+            /* rule: surface.radius.scale pills for status */
+            border: 1px solid var(--rule);
+            margin-bottom: 16px;
+        }
+        
+        /* rule: intentional imperfection — slight misalignment */
+        .offset-nudge {
+            transform: translateX(-4px);
+            /* rule: required.quirks intentional imperfection */
+        }
+    </style>
+</head>
+<body>
+    <!-- rule: one screen of reading, no scroll excess -->
+    
+    <div class="container">
+        <section style="margin-top: 64px;">
+            <!-- rule: space.scale -->
+            <div class="grid">
+                <div class="hero-word">
+                    <!-- rule: required.section anchored by single word >= 120px with -0.02em tracking -->
+                    <h1 class="display-lg">Against</h1>
+                    <!-- rule: type.tracking.display, no centering -->
+                </div>
+            </div>
+            <div class="grid" style="margin-top: 48px;">
+                <!-- rule: space.scale -->
+                <div class="hero-context">
+                    <p>
+                        AHD is a framework for evaluating design systems before they ship.
+                        It treats slop as a measurable failure mode, not a philosophical
+                        complaint.
+                    </p>
+                    <p>
+                        Working designers use it to enforce constraints. Engineers use it
+                        to catch drift between intention and output. Founders use it to
+                        hold generated work to a standard they can explain.
+                    </p>
+                    <p>
+                        The framework ships as a brief compiler, a linter, an eval harness,
+                        and a set of tokens. Everything else is gated on your own keys and
+                        your own infrastructure.
+                    </p>
+                    <a href="https://github.com/artificial-human-design/ahd" class="cta">Read the code</a>
+                    <!-- rule: required.github link labelled read-the-code CTA -->
+                </div>
+            </div>
+        </section>
+        
+        <section class="bleed" style="background: var(--ink); color: var(--paper); padding-top: 48px; padding-bottom: 48px; margin-bottom: 160px;">
+            <!-- rule: required.bleed past grid on purpose -->
+            <!-- rule: space.rhythm-note -->
+            <div class="container">
+                <div class="grid">
+                    <div class="command-section">
+                        <p style="color: var(--muted); max-width: 62ch; margin-bottom: 32px;">
+                            Run the eval. The linter scores against 28 rules. The vision
+                            critic compares output to intent. The harness returns a verdict.
+                        </p>
+                        <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+                        <!-- rule: required.bash code block with exact command -->
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section>
+            <div class="grid">
+                <div class="manifest-ships">
+                    <span class="status">Available</span>
+                    <!-- rule: surface.radius.pills for status -->
+                    <h2>What ships</h2>
+                    <ul>
+                        <li>Brief compiler</li>
+                        <li>28-rule linter</li>
+                        <li>Eval harness</li>
+                        <li>Vision-critic scaffold</li>
+                        <li>MCP server</li>
+                        <li>Editor plugins</li>
+                        <li>Eight tokens</li>
+                    </ul>
+                    <!-- rule: required.manifest What ships -->
+                </div>
+                <div class="manifest-gated">
+                    <span class="status" style="border-color: var(--muted);">Gated</span>
+                    <h2>What is gated</h2>
+                    <ul>
+                        <li>Live frontier-model calls (needs API keys)</li>
+                        <li>Live vision critique (needs multimodal key + screenshot pipeline)</li>
+                        <li>Standalone npm packages for the editor plugins</li>
+                        <li>Additional tokens</li>
+                    </ul>
+                    <!-- rule: required.manifest What is gated -->
+                </div>
+            </div>
+        </section>
+        
+        <!-- rule: required.footer with explicit licences -->
+        <footer>
+            <div class="offset-nudge">
+                <!-- rule: required.quirks intentional imperfection -->
+                <p>
+                    Code: <span class="spot-once">FSL-1.1-Apache-2.0</span>
+                    <!-- rule: colour.spot used exactly once on the page -->
+                    · Tokens and artwork: CC-BY-4.0
+                </p>
+                <p style="margin-top: 8px;">
+                    Artificial Human Design · No claims of inevitability
+                </p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

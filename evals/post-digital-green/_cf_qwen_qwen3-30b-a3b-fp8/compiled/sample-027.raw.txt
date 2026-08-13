@@ -1,0 +1,87 @@
+
+
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>AHD - Artificial Human Design</title>
+  <style>
+    body {
+      background: oklch(0.14 0.02 150);
+      color: oklch(0.92 0.12 135);
+      font-family: "Berkeley Mono", "IBM Plex Mono", "JetBrains Mono", ui-monospace;
+      line-height: 1.55;
+      margin: 0;
+      padding: 0;
+      max-width: 80ch;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    pre code {
+      background: oklch(0.14 0.02 150);
+      color: oklch(0.92 0.12 135);
+      padding: 1em;
+      display: block;
+      border: 1px solid oklch(0.3 0.04 150);
+      font-size: 0.9em;
+    }
+    .command {
+      color: oklch(0.82 0.15 75);
+    }
+    h2 {
+      color: oklch(0.92 0.12 135);
+      margin-top: 2em;
+      border-bottom: 1px solid oklch(0.3 0.04 150);
+      padding-bottom: 0.25em;
+    }
+    ul {
+      padding-left: 1.5em;
+      margin: 1em 0;
+    }
+    a {
+      text-decoration: underline;
+      text-underline-offset: 4px;
+      color: inherit;
+    }
+    footer {
+      margin-top: 3em;
+      font-size: 0.8em;
+      color: oklch(0.55 0.05 150);
+    }
+    .ascii {
+      font-size: 0.85em;
+      margin: 2em 0;
+      white-space: pre;
+    }
+  </style>
+</head>
+<body>
+  <div class="ascii">
++---------------------------------------------+
+| AHD - Artificial Human Design               |
++---------------------------------------------+
+  </div>
+  <pre><code><span class="command">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</span></code></pre>
+  <h2>What ships</h2>
+  <ul>
+    <li>brief compiler</li>
+    <li>28-rule linter</li>
+    <li>eval harness</li>
+    <li>vision-critic scaffold</li>
+    <li>MCP server</li>
+    <li>editor plugins</li>
+    <li>eight tokens</li>
+  </ul>
+  <h2>What is gated</h2>
+  <ul>
+    <li>live frontier-model calls (needs API keys)</li>
+    <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+    <li>standalone npm packages for the editor plugins</li>
+    <li>additional tokens</li>
+  </ul>
+  <p><a href="https://github.com/ahd" target="_blank">read-the-code</a></p>
+  <footer>
+    code: FSL-1.1-Apache-2.0 | tokens/artwork: CC-BY-4.0
+  </footer>
+</body>
+</html>

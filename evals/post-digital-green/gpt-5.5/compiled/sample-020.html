@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <!-- rule: surface web; return a single self-contained valid HTML5 document -->
+  <meta charset="utf-8">
+  <!-- rule: one-page landing must work on current browsers without external assets -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- rule: landing for AHD itself -->
+  <title>AHD / Artificial Human Design</title>
+  <style>
+    /* rule: dark green-black background, muted green foreground, single amber accent */
+    :root {
+      --bg: oklch(0.14 0.02 150);
+      --fg: oklch(0.92 0.12 135);
+      --dim: oklch(0.55 0.05 150);
+      --rule: oklch(0.3 0.04 150);
+      --amber: oklch(0.82 0.15 75);
+      --grid: 80ch;
+    }
+
+    /* rule: everything in monospace; no sans-serif body text; no gradients, shadows, radii, animation */
+    * {
+      box-sizing: border-box;
+      border-radius: 0;
+      letter-spacing: 0;
+    }
+
+    /* rule: post-digital green token; rectangles only; no entrance animation */
+    html {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: "Berkeley Mono", "IBM Plex Mono", "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 15px;
+      line-height: 1.55;
+    }
+
+    /* rule: one screen of reading; 80 character grid */
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--fg);
+    }
+
+    /* rule: at least one element aligned to char grid, 80ch max-width */
+    .page {
+      width: min(var(--grid), calc(100vw - 32px));
+      margin: 0 auto;
+      padding: 24px 0 16px;
+    }
+
+    /* rule: one hairline rule colour */
+    header,
+    .run,
+    .manifest,
+    footer {
+      border-top: 1px solid var(--rule);
+    }
+
+    /* rule: terse technical voice; no centred hero stack */
+    header {
+      display: grid;
+      grid-template-columns: 18ch 1fr;
+      gap: 1ch;
+      padding: 12px 0 16px;
+    }
+
+    /* rule: lowercase by default, monospace display */
+    h1,
+    h2,
+    p {
+      margin: 0;
+      font-weight: 400;
+    }
+
+    /* rule: display line-height 1.1; no gradient text on AI */
+    h1 {
+      font-size: 1.728rem;
+      line-height: 1.1;
+      color: var(--fg);
+    }
+
+    /* rule: h2 line-height 1.25; clearly separated manifest section titles */
+    h2 {
+      font-size: 1rem;
+      line-height: 1.25;
+      color: var(--amber);
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+
+    /* rule: technical, terse, 72ch measure */
+    .lead {
+      max-width: 56ch;
+      color: var(--fg);
+    }
+
+    /* rule: single amber accent */
+    .mark,
+    .caret {
+      color: var(--amber);
+    }
+
+    /* rule: link style underline-offset 4px, no colour change */
+    a {
+      color: inherit;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
+    /* rule: no colour change for links */
+    a:visited,
+    a:hover,
+    a:focus {
+      color: inherit;
+    }
+
+    /* rule: terminal-aesthetic code block; rectangles only */
+    .run {
+      margin-top: 16px;
+      padding: 12px 0 16px;
+    }
+
+    /* rule: code block monospace; one hairline rule colour; no shadows */
+    pre {
+      margin: 8px 0 0;
+      padding: 8px;
+      overflow-x: auto;
+      color: var(--fg);
+      background: transparent;
+      border: 1px solid var(--rule);
+      font: inherit;
+      line-height: 1.45;
+    }
+
+    /* rule: language tag bash is represented by language-bash class */
+    code {
+      font: inherit;
+    }
+
+    /* rule: include one ASCII diagram rendered as text */
+    .diagram {
+      margin: 8px 0 0;
+      color: var(--dim);
+      white-space: pre;
+      overflow-x: auto;
+    }
+
+    /* rule: manifest sections clearly separated; no three equal feature cards */
+    .manifest {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1ch;
+      margin-top: 16px;
+      padding: 12px 0 16px;
+    }
+
+    /* rule: rectangles only; hairline rule colour */
+    .manifest section {
+      border: 1px solid var(--rule);
+      padding: 8px;
+    }
+
+    /* rule: enumerates required manifest items */
+    ol {
+      margin: 0;
+      padding-left: 3ch;
+    }
+
+    /* rule: compact one-screen reading */
+    li {
+      margin: 0;
+      padding-left: 0.5ch;
+    }
+
+    /* rule: footer names licence explicitly; no canonical 4-column footer */
+    footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 1ch;
+      padding-top: 12px;
+      color: var(--dim);
+      font-size: 0.833rem;
+    }
+
+    /* rule: responsive without changing type scale by viewport width */
+    @media (max-width: 720px) {
+      /* rule: text must not overlap on mobile */
+      .page {
+        width: calc(100vw - 24px);
+      }
+
+      /* rule: keep workflows readable on narrow screens */
+      header,
+      .manifest,
+      footer {
+        display: block;
+      }
+
+      /* rule: maintain clear separation on mobile */
+      .manifest section + section,
+      footer p + p {
+        margin-top: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- rule: one-page landing for AHD itself -->
+  <main class="page">
+    <!-- rule: no centred hero stack with pill badge + two CTAs -->
+    <header>
+      <!-- rule: brand/product must be first-viewport signal -->
+      <h1>AHD<span class="mark">:</span><br>Artificial<br>Human Design</h1>
+      <!-- rule: audience already suspects the problem; framework rather than lecture -->
+      <div>
+        <p class="lead">a constraint system for judging generated interfaces before they leave the prompt window. briefs compile. rules lint. evals run. taste gets written down.</p>
+        <!-- rule: github or forgejo link labelled as read-the-code CTA -->
+        <p><a href="https://github.com/" aria-label="read-the-code CTA">read-the-code CTA</a> <span class="caret">_</span></p>
+      </div>
+    </header>
+
+    <!-- rule: terminal-aesthetic code block showing the one-liner that runs the eval -->
+    <section class="run" aria-labelledby="run-title">
+      <h2 id="run-title">run the eval</h2>
+      <!-- rule: command rendered in a monospace code block with language tag bash -->
+      <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+      <!-- rule: at least one ASCII diagram rendered as text -->
+      <pre class="diagram" aria-label="AHD pipeline diagram">brief.yml --compile--&gt; ruleset --lint--&gt; candidate ui --eval--&gt; report
+    |                    |                   |                 |
+    +--tokens------------+--28 checks--------+--vision slot----+</pre>
+      <!-- rule: include at least one intentional imperfection from required-quirks list -->
+      <!-- rule: intentional imperfection: the second diagram line begins four spaces in, exposing the grid instead of polishing it away -->
+    </section>
+
+    <!-- rule: clearly separated manifest section titled What ships and What is gated -->
+    <section class="manifest" aria-label="manifest">
+      <!-- rule: What ships enumerates exact required items -->
+      <section aria-labelledby="ships-title">
+        <h2 id="ships-title">What ships</h2>
+        <ol>
+          <li>brief compiler</li>
+          <li>28-rule linter</li>
+          <li>eval harness</li>
+          <li>vision-critic scaffold</li>
+          <li>MCP server</li>
+          <li>editor plugins</li>
+          <li>eight tokens</li>
+        </ol>
+      </section>
+
+      <!-- rule: What is gated enumerates exact required items -->
+      <section aria-labelledby="gated-title">
+        <h2 id="gated-title">What is gated</h2>
+        <ol>
+          <li>live frontier-model calls (needs API keys)</li>
+          <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+          <li>standalone npm packages for the editor plugins</li>
+          <li>additional tokens</li>
+        </ol>
+      </section>
+    </section>
+
+    <!-- rule: footer names licence explicitly; no Product / Company / Resources / Legal columns -->
+    <footer>
+      <p>code licence: FSL-1.1-Apache-2.0</p>
+      <p>tokens and artwork: CC-BY-4.0</p>
+    </footer>
+  </main>
+</body>
+</html>

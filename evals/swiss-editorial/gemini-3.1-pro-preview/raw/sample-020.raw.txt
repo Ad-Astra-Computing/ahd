@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Artificial Human Design (AHD)</title>
+<style>
+:root {
+  --bg: #0a0a0f;
+  --fg: #e2e2e5;
+  --accent: #00ff94;
+  --border: #22222a;
+  --mono: 'JetBrains Mono', 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --sans: 'Geist', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+body {
+  background-color: var(--bg);
+  color: var(--fg);
+  font-family: var(--sans);
+  line-height: 1.6;
+  margin: 0;
+  padding: 6rem 2rem;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.container {
+  max-width: 680px;
+  margin: 0 auto;
+}
+h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0 0 1rem 0;
+  letter-spacing: -0.02em;
+}
+.lead {
+  font-size: 1.125rem;
+  color: #a0a0a5;
+  margin: 0 0 3rem 0;
+}
+h2 {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #888890;
+  margin: 3rem 0 1rem 0;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+pre {
+  background-color: #000000;
+  border: 1px solid var(--border);
+  color: var(--accent);
+  padding: 1.5rem;
+  border-radius: 4px;
+  overflow-x: auto;
+  font-family: var(--mono);
+  font-size: 0.875rem;
+  margin: 0 0 3rem 0;
+}
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+li {
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.95rem;
+}
+li:last-child {
+  border-bottom: none;
+}
+.cta-container {
+  margin-top: 4rem;
+}
+.cta {
+  display: inline-block;
+  background-color: var(--accent);
+  color: #000000;
+  padding: 0.75rem 1.5rem;
+  font-family: var(--mono);
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  border-radius: 2px;
+  transition: background-color 0.2s;
+}
+.cta:hover {
+  background-color: #00cc77;
+}
+footer {
+  margin-top: 6rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: #666670;
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Artificial Human Design</h1>
+  <p class="lead">
+    Generative systems default to the average. AHD is a framework that enforces strict constraints on automated design outputs. It provides the tooling to evaluate and lint interfaces against specific design briefs, ensuring generated markup adheres to rigorous structural and aesthetic standards instead of producing generic patterns.
+  </p>
+
+  <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+
+  <h2>What ships</h2>
+  <ul>
+    <li>brief compiler</li>
+    <li>28-rule linter</li>
+    <li>eval harness</li>
+    <li>vision-critic scaffold</li>
+    <li>MCP server</li>
+    <li>editor plugins</li>
+    <li>eight tokens</li>
+  </ul>
+
+  <h2>What is gated</h2>
+  <ul>
+    <li>live frontier-model calls (needs API keys)</li>
+    <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+    <li>standalone npm packages for the editor plugins</li>
+    <li>additional tokens</li>
+  </ul>
+
+  <div class="cta-container">
+    <a href="https://github.com/artificial-human-design/ahd" class="cta">Read the code</a>
+  </div>
+
+  <footer>
+    Code is licensed under FSL-1.1-Apache-2.0 | Tokens and artwork are licensed under CC-BY-4.0
+  </footer>
+</div>
+</body>
+</html>

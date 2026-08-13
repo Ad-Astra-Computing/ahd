@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ahd / artificial human design</title>
+  <style>
+    /* rule: dark green-black background, muted green foreground, a single amber accent */
+    :root {
+      --bg: oklch(0.14 0.02 150);
+      --fg: oklch(0.92 0.12 135);
+      --dim: oklch(0.55 0.05 150);
+      --rule: oklch(0.3 0.04 150);
+      --amber: oklch(0.82 0.15 75);
+      --pad: 16px;
+    }
+
+    /* rule: everything in monospace */
+    * {
+      box-sizing: border-box;
+      font-family: "Berkeley Mono", "IBM Plex Mono", "JetBrains Mono", ui-monospace, monospace;
+    }
+
+    /* rule: no gradients, no shadows, no radii, no entrance animation */
+    html, body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--fg);
+      border-radius: 0;
+      box-shadow: none;
+      scroll-behavior: auto;
+    }
+
+    /* rule: one screen of reading, 80 character grid */
+    body {
+      min-height: 100vh;
+      padding: var(--pad);
+      font-size: 15px;
+      line-height: 1.55;
+    }
+
+    /* rule: at least one element aligned to the char grid (80ch max-width) */
+    .page {
+      width: min(100%, 80ch);
+      margin: 0 auto;
+    }
+
+    /* rule: rectangles only, one hairline rule colour */
+    .rule,
+    .panel,
+    .manifest,
+    .footer {
+      border: 1px solid var(--rule);
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    /* rule: technical, lowercase by default, terse */
+    .page {
+      text-transform: lowercase;
+    }
+
+    /* rule: no centred hero stack with pill badge + two CTAs */
+    .masthead {
+      display: grid;
+      grid-template-columns: 1.25fr 0.75fr;
+      gap: var(--pad);
+      align-items: start;
+      margin-bottom: var(--pad);
+    }
+
+    /* rule: ensure the page loads properly on both desktop and mobile */
+    @media (max-width: 760px) {
+      .masthead {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* rule: rectangles only */
+    .panel,
+    .manifest,
+    .footer {
+      padding: 12px;
+      background: transparent;
+      margin-bottom: var(--pad);
+    }
+
+    /* rule: single amber accent */
+    .accent,
+    .kicker,
+    .label {
+      color: var(--amber);
+    }
+
+    /* rule: underlined links with an offset, no colour change */
+    a,
+    a:visited,
+    a:hover,
+    a:active {
+      color: inherit;
+      text-decoration-line: underline;
+      text-decoration-color: currentColor;
+      text-underline-offset: 4px;
+    }
+
+    /* rule: everything aligns to an 80 character grid */
+    h1,
+    h2,
+    p,
+    pre,
+    ul {
+      margin: 0;
+      max-width: 72ch;
+    }
+
+    /* rule: single-monospace type system */
+    h1 {
+      font-size: 2.074rem;
+      line-height: 1.1;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    h2 {
+      font-size: 1rem;
+      line-height: 1.25;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    p + p {
+      margin-top: 8px;
+    }
+
+    .kicker {
+      margin-bottom: 8px;
+      letter-spacing: 0.04em;
+    }
+
+    .lede {
+      color: var(--fg);
+    }
+
+    .dim {
+      color: var(--dim);
+    }
+
+    /* rule: no three equal feature cards */
+    .manifest-wrap {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: var(--pad);
+      margin-bottom: var(--pad);
+    }
+
+    @media (max-width: 760px) {
+      .manifest-wrap {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* rule: manifest sections clearly separated */
+    .manifest ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 8px;
+    }
+
+    .manifest li + li {
+      margin-top: 4px;
+    }
+
+    /* rule: terminal-aesthetic code block */
+    pre,
+    code {
+      text-transform: none;
+    }
+
+    .terminal {
+      overflow-x: auto;
+      white-space: pre;
+      color: var(--fg);
+      background: transparent;
+      padding: 12px;
+      margin-top: 12px;
+      border: 1px solid var(--rule);
+    }
+
+    /* rule: at least one ASCII diagram rendered as text */
+    .diagram {
+      color: var(--dim);
+      padding: 12px;
+      margin-top: 12px;
+      border: 1px solid var(--rule);
+      overflow-x: auto;
+    }
+
+    .label {
+      display: inline-block;
+      margin-bottom: 8px;
+    }
+
+    .footer {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 16px;
+      justify-content: space-between;
+    }
+
+    .footer p {
+      max-width: none;
+    }
+
+    /* rule: forbidden motion except caret blink and link underline */
+    .caret::after {
+      content: "_";
+      color: var(--amber);
+      animation: blink 1s steps(1, end) infinite;
+    }
+
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+
+    /* rule: include at least one intentional imperfection */
+    .off-by-one {
+      margin-left: 1ch;
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <!-- rule: no centred hero stack with pill badge + two CTAs -->
+    <section class="masthead">
+      <div class="panel">
+        <!-- rule: technical, lowercase by default, terse -->
+        <div class="kicker">artificial human design / web / v0.1</div>
+        <!-- rule: one screen of reading -->
+        <h1>ahd is a design restraint system for teams that are tired of generated sameness<span class="caret" aria-hidden="true"></span></h1>
+        <!-- rule: audience already suspects the problem; show framework rather than lecture -->
+        <p class="lede">
+          ahd compiles a brief into constraints, lint rules, tokens, and evals.
+          the point is not to ask a model for taste. the point is to define the
+          boundaries where taste can survive contact with automation.
+        </p>
+        <p class="dim">
+          for working designers, senior engineers, and founders who do not need
+          another sermon about slop. they need a runnable way to reject it.
+        </p>
+        <p style="margin-top:12px;">
+          <!-- rule: link to github labelled as the read-the-code CTA -->
+          <a href="https://github.com/" aria-label="read the code on github">read the code</a>
+        </p>
+      </div>
+
+      <aside class="panel off-by-one">
+        <!-- rule: at least one ASCII diagram rendered as text -->
+        <pre class="diagram" aria-label="ascii diagram">+------------------+     +------------------+
+| brief compiler   | --> | 28-rule linter   |
++------------------+     +------------------+
+           |                         |
+           v                         v
++------------------+     +------------------+
+| token pack       | --> | eval harness     |
++------------------+     +------------------+
+           \_______________  _______________/
+                           \/
+                  +------------------+
+                  | human judgement  |
+                  +------------------+</pre>
+      </aside>
+    </section>
+
+    <section class="panel">
+      <!-- rule: terminal-aesthetic code block showing the one-liner that runs the eval -->
+      <div class="label">$ run the live eval</div>
+      <pre class="terminal"><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+    </section>
+
+    <!-- rule: manifest section that lists exactly what ships today versus what is gated -->
+    <section class="manifest-wrap">
+      <section class="manifest">
+        <h2>what ships</h2>
+        <ul>
+          <!-- rule: enumerate exact items -->
+          <li>brief compiler</li>
+          <li>28-rule linter</li>
+          <li>eval harness</li>
+          <li>vision-critic scaffold</li>
+          <li>mcp server</li>
+          <li>editor plugins</li>
+          <li>eight tokens</li>
+        </ul>
+      </section>
+
+      <section class="manifest">
+        <h2>what is gated</h2>
+        <ul>
+          <!-- rule: enumerate exact gated items -->
+          <li>live frontier-model calls (needs api keys)</li>
+          <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+          <li>standalone npm packages for the editor plugins</li>
+          <li>additional tokens</li>
+        </ul>
+      </section>
+    </section>
+
+    <section class="panel">
+      <!-- rule: one screen of reading; no testimonials, no pricing tier, no trusted by strip -->
+      <p>
+        this is not a style gallery and not a wrapper for generic prompts. ahd
+        treats design direction as executable policy: voice, grids, forbidden
+        moves, required artefacts, and visible gaps between what works locally
+        and what depends on external systems.
+      </p>
+    </section>
+
+    <footer class="footer">
+      <!-- rule: footer names the licence explicitly -->
+      <p>licence / code: FSL-1.1-Apache-2.0</p>
+      <p>licence / tokens and artwork: CC-BY-4.0</p>
+    </footer>
+  </main>
+</body>
+</html>

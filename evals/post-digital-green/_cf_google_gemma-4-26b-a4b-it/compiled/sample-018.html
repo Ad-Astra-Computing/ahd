@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ahd — artificial human design</title>
+  <style>
+    /* rule: post-digital green-black background, muted green foreground, amber accent */
+    /* rule: everything in monospace */
+    :root {
+      --bg: oklch(0.14 0.02 150);
+      --fg: oklch(0.92 0.12 135);
+      --dim: oklch(0.55 0.05 150);
+      --rule: oklch(0.3 0.04 150);
+      --amber: oklch(0.82 0.15 75);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    /* rule: no radii; only rectangles */
+    /* rule: no shadows, no gradients */
+    body {
+      background-color: var(--bg);
+      color: var(--fg);
+      font-family: 'Berkeley Mono', 'IBM Plex Mono', 'JetBrains Mono', ui-monospace, monospace;
+      font-size: 15px;
+      line-height: 1.55;
+      margin: 0;
+      padding: 48px 16px;
+    }
+
+    /* rule: everything aligns to an 80 character grid */
+    main {
+      max-width: 80ch;
+      margin: 0 auto;
+    }
+
+    h1 {
+      font-size: 2em;
+      font-weight: 700;
+      margin: 0;
+      text-transform: lowercase;
+    }
+
+    /* intentional imperfection: a single leading space in the subtitle */
+    .subtitle {
+      color: var(--dim);
+      margin: 4px 0 32px 1px;
+    }
+
+    /* rule: include one ASCII diagram */
+    .ascii {
+      font-size: 12px;
+      line-height: 1.2;
+      color: var(--dim);
+      white-space: pre;
+      margin-bottom: 32px;
+    }
+
+    /* rule: terminal-aesthetic code block */
+    pre {
+      background: var(--bg);
+      border: 1px solid var(--rule);
+      padding: 16px;
+      margin: 0 0 48px 0;
+      overflow-x: auto;
+    }
+
+    code {
+      font-family: inherit;
+      color: var(--fg);
+    }
+
+    /* rule: manifests clearly separated */
+    .manifest {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      border-top: 1px solid var(--rule);
+      padding-top: 32px;
+    }
+
+    h2 {
+      font-size: 1.2em;
+      color: var(--amber);
+      margin: 0 0 16px 0;
+      text-transform: lowercase;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    /* rule: no emoji bullets */
+    li {
+      margin-bottom: 8px;
+    }
+
+    li::before {
+      content: "+ ";
+      color: var(--dim);
+    }
+
+    /* rule: underlined links with an offset, no colour change */
+    a {
+      color: inherit;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
+    .cta-container {
+      margin-top: 48px;
+    }
+
+    .cta-link {
+      font-weight: 700;
+      color: var(--amber);
+    }
+
+    /* rule: footer names licence explicitly */
+    footer {
+      margin-top: 64px;
+      padding-top: 32px;
+      border-top: 1px solid var(--rule);
+      font-size: 13px;
+      color: var(--dim);
+    }
+
+    @media (max-width: 600px) {
+      .manifest {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<main>
+  <header>
+    <h1>ahd</h1>
+    <p class="subtitle">artificial human design</p>
+  </header>
+
+  <div class="ascii">
+[brief] -> [linter] -> [eval]
+                         |
+[tokens] <- [critic] <- [harness]
+  </div>
+
+  <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+
+  <section class="manifest">
+    <div>
+      <h2>what ships</h2>
+      <ul>
+        <li>brief compiler</li>
+        <li>28-rule linter</li>
+        <li>eval harness</li>
+        <li>vision-critic scaffold</li>
+        <li>mcp server</li>
+        <li>editor plugins</li>
+        <li>eight tokens</li>
+      </ul>
+    </div>
+    <div>
+      <h2>what is gated</h2>
+      <ul>
+        <li>live frontier-model calls (needs api keys)</li>
+        <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+        <li>standalone npm packages for the editor plugins</li>
+        <li>additional tokens</li>
+      </ul>
+    </div>
+  </section>
+
+  <nav class="cta-container">
+    <a href="https://github.com/ahd-project" class="cta-link">read-the-code</a>
+  </nav>
+
+  <footer>
+    fsl-1.1-apache-2.0 for code, cc-by-4.0 for tokens and artwork.
+  </footer>
+</main>
+
+</body>
+</html>

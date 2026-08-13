@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Artificial Human Design</title>
+<style>
+/* rule: colour palette */
+:root{
+  --ink: oklch(0.18 0 0);
+  --paper: oklch(0.98 0.005 95);
+  --spot: oklch(0.58 0.22 27);
+  --rule: oklch(0.18 0 0);
+  --baseline: 8px;
+  --gutter: 24px;
+}
+
+/* rule: base typography */
+body{
+  margin:0;
+  padding:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:"Neue Haas Grotesk Text",Helvetica,Arial,sans-serif;
+  line-height:1.5; /* rule: body line-height */
+  font-size:17px; /* rule: body base size */
+}
+
+/* rule: grid container */
+.container{
+  display:grid;
+  grid-template-columns:repeat(12,1fr);
+  gap:var(--gutter);
+  max-width:calc(100vw - 2*var(--gutter));
+  margin:0 auto;
+  padding:calc(var(--baseline)*2) var(--gutter);
+}
+
+/* rule: display heading */
+.display{
+  font-family:"Neue Haas Grotesk Display",Helvetica,Arial,sans-serif;
+  font-size:120px; /* >=120px as required */
+  line-height:1.05;
+  letter-spacing:-0.02em; /* rule: tracking */
+  grid-column:1 / span 8;
+}
+
+/* rule: status pill */
+.pill{
+  display:inline-block;
+  padding:0 8px;
+  font-size:0.75rem;
+  line-height:calc(var(--baseline)*2);
+  border-radius:999px; /* allowed for pills only */
+  background:var(--ink);
+  color:var(--paper);
+}
+
+/* rule: code block */
+pre{
+  background:#f0f0f0;
+  padding:calc(var(--baseline)*2);
+  overflow:auto;
+  font-family:monospace;
+  border:1px solid var(--rule);
+  grid-column:1 / span 10;
+}
+
+/* rule: link CTA */
+.cta{
+  color:var(--ink);
+  text-decoration:none;
+  font-weight:700;
+}
+
+/* rule: manifest sections */
+section{
+  grid-column:1 / span 12;
+  margin-top:calc(var(--baseline)*20); /* dramatic jump 160px approx */
+}
+
+/* rule: bleed element using spot exactly once */
+.bleed{
+  background:var(--spot); /* spot used exactly once */
+  height:var(--baseline);
+  margin-left:-var(--gutter);
+  margin-right:-var(--gutter);
+  grid-column:1 / -1;
+}
+
+/* rule: footer */
+footer{
+  font-size:0.875rem;
+  margin-top:calc(var(--baseline)*20);
+  grid-column:1 / span 12;
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <!-- rule: anchored single-word display -->
+  <h1 class="display">AHD</h1>
+  <span class="pill">beta</span>
+
+  <p style="grid-column:1 / span 8; margin-top:calc(var(--baseline)*4);">
+    A framework that treats design as code. No fluff. No promises. Just tools that work.
+  </p>
+
+  <a href="https://github.com/ahd/ahd" class="cta" style="grid-column:1 / span 8; margin-top:calc(var(--baseline)*2);">read the code</a>
+
+  <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+
+  <!-- rule: bleed past grid -->
+  <div class="bleed"></div>
+
+  <section>
+    <h2 style="font-family:'Neue Haas Grotesk Display',Helvetica,Arial,sans-serif; font-size:2rem; margin-bottom:calc(var(--baseline)*2);">What ships</h2>
+    <ul style="margin:0; padding-left:1.2rem;">
+      <li>brief compiler</li>
+      <li>28‑rule linter</li>
+      <li>eval harness</li>
+      <li>vision‑critic scaffold</li>
+      <li>MCP server</li>
+      <li>editor plugins</li>
+      <li>eight tokens</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2 style="font-family:'Neue Haas Grotesk Display',Helvetica,Arial,sans-serif; font-size:2rem; margin-bottom:calc(var(--baseline)*2);">What is gated</h2>
+    <ul style="margin:0; padding-left:1.2rem;">
+      <li>live frontier‑model calls (needs API keys)</li>
+      <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+      <li>standalone npm packages for the editor plugins</li>
+      <li>additional tokens</li>
+    </ul>
+  </section>
+
+  <footer>
+    Code licence: FSL‑1.1‑Apache‑2.0 • Tokens &amp; artwork licence: CC‑BY‑4.0
+  </footer>
+</div>
+</body>
+</html>

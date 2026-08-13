@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AHD | Artificial Human Design</title>
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --fg: #f4f4f5;
+    --dim: #a1a1aa;
+    --accent: #00ff94;
+    --mono: "Geist Mono", "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  body {
+    background-color: var(--bg);
+    color: var(--fg);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.6;
+    margin: 0;
+    padding: 6rem 2rem;
+    -webkit-font-smoothing: antialiased;
+  }
+  main {
+    max-width: 640px;
+    margin: 0 auto;
+  }
+  h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin-top: 0;
+    margin-bottom: 2rem;
+  }
+  p {
+    color: var(--dim);
+    margin-bottom: 1.5rem;
+    font-size: 1.125rem;
+    line-height: 1.6;
+  }
+  strong {
+    color: var(--fg);
+    font-weight: 500;
+  }
+  .terminal {
+    background-color: #000000;
+    border: 1px solid #1f1f2e;
+    padding: 1.25rem;
+    border-radius: 4px;
+    margin: 3rem 0;
+    overflow-x: auto;
+  }
+  pre {
+    margin: 0;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+  code {
+    font-family: var(--mono);
+    font-size: 0.875rem;
+    color: var(--accent);
+  }
+  .manifest {
+    margin: 4rem 0;
+  }
+  .manifest h2 {
+    font-size: 0.875rem;
+    font-family: var(--mono);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid #1f1f2e;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--fg);
+    font-weight: normal;
+  }
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 3rem 0;
+    font-family: var(--mono);
+    font-size: 0.875rem;
+    color: var(--dim);
+  }
+  li {
+    margin-bottom: 0.75rem;
+    display: flex;
+  }
+  li::before {
+    content: "|";
+    margin-right: 1rem;
+    color: #333344;
+  }
+  a {
+    color: var(--fg);
+    text-decoration: none;
+    border-bottom: 1px solid var(--dim);
+    padding-bottom: 1px;
+    transition: all 0.2s;
+  }
+  a:hover {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+  .links {
+    margin: 3rem 0;
+    font-family: var(--mono);
+    font-size: 0.875rem;
+  }
+  footer {
+    margin-top: 6rem;
+    padding-top: 2rem;
+    border-top: 1px solid #1f1f2e;
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: #666677;
+  }
+</style>
+</head>
+<body>
+<main>
+  <h1>Artificial Human Design</h1>
+  
+  <p>You already know what the baseline looks like. The models trend toward the statistical mean of generic interfaces. They produce the same layouts, the same padding structures and the same predictable components.</p>
+
+  <p>Prompting harder does not fix this. <strong>AHD</strong> treats design as a measurable specification rather than a vibe. It provides a compiler for intent, a linter for rules and an evaluation harness to enforce structural design constraints on generated code.</p>
+  
+  <div class="terminal">
+<pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+  </div>
+
+  <div class="manifest">
+    <h2>What ships</h2>
+    <ul>
+      <li>brief compiler</li>
+      <li>28-rule linter</li>
+      <li>eval harness</li>
+      <li>vision-critic scaffold</li>
+      <li>MCP server</li>
+      <li>editor plugins</li>
+      <li>eight tokens</li>
+    </ul>
+
+    <h2>What is gated</h2>
+    <ul>
+      <li>live frontier-model calls (needs API keys)</li>
+      <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+      <li>standalone npm packages for the editor plugins</li>
+      <li>additional tokens</li>
+    </ul>
+  </div>
+
+  <div class="links">
+    <a href="https://github.com/ahd-project/ahd">read-the-code</a>
+  </div>
+
+  <footer>
+    FSL-1.1-Apache-2.0 for code | CC-BY-4.0 for tokens and artwork
+  </footer>
+</main>
+</body>
+</html>

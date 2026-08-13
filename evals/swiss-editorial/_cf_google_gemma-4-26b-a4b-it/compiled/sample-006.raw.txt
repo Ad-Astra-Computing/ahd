@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AHD — Artificial Human Design</title>
+    <style>
+        /* rule: single-family-two-optical-sizes */
+        /* rule: palette is ink on paper (warm off-white) */
+        :root {
+            --paper: oklch(0.98 0.005 95);
+            --ink: oklch(0.18 0 0);
+            --spot: oklch(0.58 0.22 27);
+            --muted: oklch(0.55 0 0);
+            --rule: oklch(0.18 0 0);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--paper);
+            color: var(--ink);
+            /* rule: Neue Haas Grotesk Text at 17px, line-height 1.5 */
+            font-family: "Neue Haas Grotesk Text", "Inter", Helvetica, sans-serif;
+            font-size: 17px;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* rule: 12-column grid with 24px gutters and 8px baseline */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(12, minmax(0, 1fr));
+            column-gap: 24px;
+            /* rule: margin preferred: calc(100vw / 24) */
+            padding: 0 calc(100vw / 24);
+            max-width: 100%;
+        }
+
+        /* rule: Asymmetric left-aligned composition */
+        section {
+            padding: 160px 0; /* rule: dramatic jump per section (160) */
+        }
+
+        h1 {
+            /* rule: Neue Haas Grotesk Display at 96–160px with tracking -0.02em */
+            font-family: "Neue Haas Grotesk Display", "Inter Tight", Helvetica, sans-serif;
+            font-size: clamp(96px, 15vw, 160px);
+            font-weight: 900;
+            line-height: 1.05;
+            letter-spacing: -0.02em;
+            grid-column: 1 / span 10;
+            /* rule: One intentional element must bleed past the grid */
+            margin-right: -10vw; 
+        }
+
+        .hero-sub {
+            grid-column: 1 / span 6;
+            margin-top: 48px;
+            /* rule: measure 62ch */
+            max-width: 62ch;
+        }
+
+        /* rule: terminal-aesthetic code block */
+        .terminal {
+            grid-column: 1 / span 8;
+            background: var(--ink);
+            color: var(--paper);
+            padding: 32px;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            font-size: 14px;
+            line-height: 1.4;
+            margin-top: 96px;
+        }
+
+        .terminal code {
+            display: block;
+        }
+
+        .manifest {
+            display: grid;
+            grid-template-columns: repeat(12, minmax(0, 1fr));
+            gap: 24px;
+        }
+
+        .manifest-col {
+            grid-column: span 6;
+        }
+
+        h2 {
+            font-family: "Neue Haas Grotesk Display", sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 32px;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        li {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: baseline;
+        }
+
+        /* rule: No emoji bullets */
+        li::before {
+            content: "—";
+            margin-right: 12px;
+            color: var(--muted);
+        }
+
+        /* rule: small status pills (999) allowed for status tags only */
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            padding: 2px 8px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            gap: 6px;
+            /* rule: single spot red used exactly once on the page */
+            background-color: var(--spot);
+            color: var(--paper);
+            margin-bottom: 24px;
+        }
+        
+        .pill-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--paper);
+            border-radius: 50%;
+        }
+
+        .cta-link {
+            grid-column: 1 / span 12;
+            margin-top: 64px;
+            text-decoration: none;
+            color: var(--ink);
+            font-weight: 700;
+            border-bottom: 2px solid var(--ink);
+            display: inline-block;
+            width: fit-content;
+        }
+
+        footer {
+            padding: 64px calc(100vw / 24);
+            border-top: 1px solid var(--rule);
+            font-size: 14px;
+            color: var(--muted);
+            /* rule: Not a 4-column footer */
+        }
+
+        @media (max-width: 768px) {
+            h1 { grid-column: 1 / span 12; margin-right: 0; }
+            .hero-sub, .terminal, .manifest-col { grid-column: 1 / span 12; }
+            .manifest { display: block; }
+        }
+    </style>
+</head>
+<body>
+
+    <main class="grid">
+        <!-- Hero Section -->
+        <header>
+            <h1>AHD</h1>
+            <div class="hero-sub">
+                <div class="pill"><span class="pill-dot"></span>Live</div>
+                <p>Artificial Human Design. A framework for the rejection of generative sludge. We provide the constraints that models lack.</p>
+            </div>
+        </header>
+
+        <!-- Code Section -->
+        <section class="terminal">
+            <code><span style="color: var(--muted)">// run evaluation</span><br>
+            ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code>
+        </section>
+
+        <!-- Manifest Section -->
+        <section class="grid" style="padding-top: 0;">
+            <div class="manifest-col">
+                <h2>What ships</h2>
+                <ul>
+                    <li>brief compiler</li>
+                    <li>28-rule linter</li>
+                    <li>eval harness</li>
+                    <li>vision-critic scaffold</li>
+                    <li>MCP server</li>
+                    <li>editor plugins</li>
+                    <li>eight tokens</li>
+                </ul>
+            </div>
+            <div class="manifest-col">
+                <h2>What is gated</h2>
+                <ul>
+                    <li>live frontier-model calls (needs API keys)</li>
+                    <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+                    <li>standalone npm packages for the editor plugins</li>
+                    <li>additional tokens</li>
+                </ul>
+            </div>
+
+            <a href="https://github.com/ahd-org" class="cta-link">read-the-code</a>
+        </section>
+    </main>
+
+    <footer>
+        FSL-1.1-Apache-2.0 for code. CC-BY-4.0 for tokens and artwork.
+    </footer>
+
+</body>
+</html>

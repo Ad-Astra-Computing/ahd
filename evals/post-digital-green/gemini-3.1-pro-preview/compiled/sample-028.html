@@ -1,0 +1,233 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AHD: Artificial Human Design</title>
+    <!-- rule: Everything in monospace, dark green-black background, muted green foreground, single amber accent, rectangles only, one hairline rule colour -->
+    <style>
+        :root {
+            --bg-color: oklch(0.14 0.02 150); /* rule: colour.palette.bg */
+            --fg-color: oklch(0.92 0.12 135); /* rule: colour.palette.fg */
+            --dim-color: oklch(0.55 0.05 150); /* rule: colour.palette.dim */
+            --rule-color: oklch(0.3 0.04 150); /* rule: colour.palette.rule, one hairline rule colour */
+            --amber-color: oklch(0.82 0.15 75); /* rule: colour.palette.amber, single amber accent */
+            --base-font-size: 15px; /* rule: type.scale.base */
+            --line-height-body: 1.55; /* rule: type.line-height.body */
+            --measure: 72ch; /* rule: type.measure */
+            --grid-columns: 80; /* rule: grid.columns */
+        }
+
+        body {
+            /* rule: dark green-black background */
+            background-color: var(--bg-color);
+            /* rule: muted green foreground */
+            color: var(--fg-color);
+            /* rule: everything in monospace */
+            font-family: 'Berkeley Mono', 'IBM Plex Mono', 'JetBrains Mono', ui-monospace, monospace; /* rule: type.families.text */
+            font-size: var(--base-font-size); /* rule: type.scale.base */
+            line-height: var(--line-height-body); /* rule: type.line-height.body */
+            margin: 0;
+            padding: 0;
+            /* rule: No shadows, no gradients, no radii, no entrance animation. */
+            /* rule: No sans-serif body text. */
+        }
+
+        .container {
+            /* rule: Everything aligns to an 80 character grid. */
+            max-width: var(--grid-columns)ch;
+            margin: 0 auto;
+            padding: 2ch 0; /* rule: space.scale */
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            gap: 2ch; /* rule: space.scale */
+        }
+
+        h1 {
+            font-size: calc(var(--base-font-size) * 1.2 * 1.2 * 1.2 * 1.2); /* rule: type.scale.steps 4, ratio 1.2 */
+            line-height: 1.1; /* rule: type.line-height.display */
+            margin-top: 0;
+            margin-bottom: 0.5em;
+            font-weight: 700; /* rule: type.weights */
+        }
+
+        h2 {
+            font-size: calc(var(--base-font-size) * 1.2 * 1.2); /* rule: type.scale.steps 2, ratio 1.2 */
+            line-height: 1.25; /* rule: type.line-height.h2 */
+            margin-top: 2em;
+            margin-bottom: 0.5em;
+            font-weight: 700; /* rule: type.weights */
+            padding-bottom: 0.5em;
+            border-bottom: 1px solid var(--rule-color); /* rule: hairline rule colour */
+        }
+
+        a {
+            /* rule: Underlined links with an offset, no colour change. */
+            color: inherit;
+            text-decoration: underline;
+            text-underline-offset: 4px;
+        }
+
+        code {
+            background-color: var(--rule-color); /* rule: using rule color for code block background to give a terminal aesthetic */
+            padding: 1ch 2ch; /* rule: space.scale */
+            display: block;
+            white-space: pre-wrap; /* Allows text to wrap but preserves whitespace */
+            overflow-x: auto; /* For very long lines */
+            max-width: var(--measure); /* rule: type.measure */
+            margin: 1ch 0;
+            box-sizing: border-box;
+        }
+
+        pre {
+            margin: 0;
+            white-space: pre; /* rule: preserve whitespace for ASCII art */
+        }
+
+        ul {
+            list-style: none; /* rule: No emoji bullets */
+            padding: 0;
+            margin: 1em 0;
+        }
+
+        ul li::before {
+            content: "• "; /* rule: Simple bullet for list, not emoji */
+            color: var(--amber-color); /* rule: single amber accent for bullets */
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1ch 2ch; /* rule: space.scale */
+            background-color: var(--amber-color); /* rule: single amber accent */
+            color: var(--bg-color); /* Contrasting text color */
+            text-decoration: none;
+            border: 1px solid var(--amber-color); /* rule: rectangles only */
+            /* rule: No radii, no shadows */
+            text-transform: uppercase;
+            letter-spacing: 0.04em; /* rule: type.tracking.allcaps */
+            font-weight: 700; /* rule: type.weights */
+            line-height: 1;
+        }
+
+        .cta-button:hover {
+            background-color: var(--fg-color);
+            color: var(--bg-color);
+            border-color: var(--fg-color);
+        }
+
+        footer {
+            margin-top: 4ch; /* rule: space.scale */
+            font-size: calc(var(--base-font-size) * 0.8); /* rule: type.scale.steps -1 */
+            color: var(--dim-color);
+            padding-top: 1ch;
+            border-top: 1px solid var(--rule-color); /* rule: hairline rule colour */
+        }
+
+        /* rule: at least one ASCII diagram rendered as text */
+        .ascii-diagram {
+            font-size: calc(var(--base-font-size) * 0.9); /* Slightly smaller for ASCII detail */
+            line-height: 1; /* Tighter line height for ASCII art */
+            color: var(--dim-color); /* Subdued color */
+            margin: 2ch 0; /* rule: space.scale */
+            max-width: var(--measure); /* rule: type.measure */
+            box-sizing: border-box;
+            overflow-x: auto;
+        }
+
+        section {
+            margin-bottom: 2ch; /* rule: space.scale */
+        }
+
+        p {
+            max-width: var(--measure); /* rule: type.measure */
+        }
+    </style>
+</head>
+<body>
+    <!-- rule: Everything aligns to an 80 character grid. -->
+    <div class="container">
+        <!-- rule: design post-digital, rectangles only -->
+        <header>
+            <h1>AHD.<span style="color: var(--amber-color);">_</span></h1> <!-- rule: single amber accent -->
+        </header>
+
+        <main>
+            <!-- rule: one screen of reading -->
+            <p>
+                the flood of synthetic design is here. you've seen it.
+                you've dismissed it. but it's not going away.
+                artificial human design (ahd) is a framework to tame the deluge,
+                not to escape it. we give you the tools to
+                integrate agentic outputs into your workflow,
+                with precision, control, and a rigorous
+                quality baseline.
+            </p>
+
+            <!-- rule: include one ASCII diagram -->
+            <pre class="ascii-diagram">
+            ┌───────────────────────────────────────────────┐
+            │   brief ──► compiler ──► output (html/css)   │
+            │                  ▲                            │
+            │                  │                            │
+            │                  └──── linter ─────────┐      │
+            │                                         │      │
+            │   models ──────► eval harness ◄─────────┴──────┤
+            │                  ▲                            │
+            │                  └──── vision critic ◄── screenshot │
+            └───────────────────────────────────────────────┘
+            </pre>
+
+            <p>
+                ahd is not about replacing human creativity.
+                it's about augmenting it, providing a consistent
+                system for evaluating and refining agent-generated
+                design. we turn slop into signal.
+            </p>
+
+            <!-- rule: terminal-aesthetic code block showing the one-liner that runs the eval -->
+            <h2>eval harness</h2>
+            <p>
+                this is how ahd evaluates outputs against your briefs.
+                <span style="color: var(--dim-color);">it's verbose, but it's precise.</span>
+            </p>
+            <!-- rule: The command `ahd eval-live swiss-editorial --brief briefs/landing.yml --models <specs> --n 10` rendered in a monospace code block with the language tag `bash`. -->
+            <code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &#x3C;specs> --n 10</code>
+
+            <section>
+                <!-- rule: A link to github (or the forgejo mirror) labelled as the read-the-code CTA. -->
+                <a href="https://github.com/your-ahd-repo/ahd" class="cta-button">read the code</a>
+            </section>
+
+            <!-- rule: A clearly separated manifest section titled 'What ships' -->
+            <h2>what ships</h2>
+            <ul>
+                <!-- rule: brief compiler, 28-rule linter, eval harness, vision-critic scaffold, MCP server, editor plugins, eight tokens. -->
+                <li>brief compiler</li>
+                <li>28-rule linter</li>
+                <li>eval harness</li>
+                <li>vision-critic scaffold</li>
+                <li>mcp server</li>
+                <li>editor plugins</li>
+                <li>eight tokens</li>
+            </ul>
+
+            <!-- rule: A clearly separated manifest section titled 'What is gated' -->
+            <h2>what is gated</h2>
+            <ul>
+                <!-- rule: live frontier-model calls (needs API keys), live vision critique (needs multimodal key + screenshot pipeline), standalone npm packages for the editor plugins, additional tokens. -->
+                <li>live frontier-model calls <span style="color: var(--dim-color);">(needs api keys)</span></li>
+                <li>live vision critique <span style="color: var(--dim-color);">(needs multimodal key + screenshot pipeline)</span></li>
+                <li>standalone npm packages for editor plugins</li>
+                <li>additional tokens</li>
+            </ul>
+        </main>
+
+        <footer>
+            <!-- rule: A footer that names the licence explicitly: FSL-1.1-Apache-2.0 for code, CC-BY-4.0 for tokens and artwork. -->
+            code: <a href="https://fsl.io/licences/FSL-1.1-Apache-2.0" target="_blank">fsl-1.1-apache-2.0</a><br>
+            tokens + artwork: <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">cc-by-4.0</a>
+        </footer>
+    </div>
+</body>
+</html>

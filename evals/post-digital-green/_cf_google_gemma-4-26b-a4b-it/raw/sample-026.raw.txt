@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AHD | Artificial Human Design</title>
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --text: #e5e5e5;
+            --text-dim: #a1a1aa;
+            --code-bg: #161616;
+            --border: #262626;
+            --accent: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex: 1;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 80px 24px;
+            width: 100%;
+        }
+
+        header {
+            margin-bottom: 48px;
+        }
+
+        h1 {
+            font-size: 1.25rem;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: var(--text-dim);
+            font-size: 1.1rem;
+            max-width: 500px;
+        }
+
+        .terminal-container {
+            margin: 48px 0;
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .terminal-header {
+            background: #222;
+            height: 32px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            padding: 0 12px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .terminal-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #333;
+            margin-right: 6px;
+        }
+
+        pre {
+            padding: 20px;
+            overflow-x: auto;
+        }
+
+        code {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            font-size: 0.9rem;
+            color: #d1d5db;
+        }
+
+        .manifest-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            margin-bottom: 64px;
+        }
+
+        @media (max-width: 600px) {
+            .manifest-grid {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+        }
+
+        h2 {
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-dim);
+            margin-bottom: 16px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 8px;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        li {
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+            color: var(--text);
+        }
+
+        li .note {
+            color: var(--text-dim);
+            font-size: 0.85rem;
+            display: block;
+        }
+
+        .cta-container {
+            margin-top: 48px;
+        }
+
+        .cta-link {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-family: ui-monospace, monospace;
+            border-bottom: 1px solid var(--accent);
+            padding-bottom: 2px;
+            transition: opacity 0.2s ease;
+        }
+
+        .cta-link:hover {
+            opacity: 0.7;
+        }
+
+        footer {
+            padding: 40px 24px;
+            border-top: 1px solid var(--border);
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            text-align: left;
+        }
+
+        .license-info {
+            display: flex;
+            gap: 24px;
+        }
+
+        @media (max-width: 600px) {
+            .license-info {
+                flex-direction: column;
+                gap: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<main>
+    <header>
+        <h1>AHD</h1>
+        <p class="subtitle">Artificial Human Design. A rigorous framework for evaluating and enforcing design intent in automated pipelines.</p>
+    </header>
+
+    <div class="terminal-container">
+        <div class="terminal-header">
+            <div class="terminal-dot"></div>
+            <div class="terminal-dot"></div>
+            <div class="terminal-dot"></div>
+        </div>
+        <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+    </div>
+
+    <div class="manifest-grid">
+        <section>
+            <h2>What ships</h2>
+            <ul>
+                <li>brief compiler</li>
+                <li>28-rule linter</li>
+                <li>eval harness</li>
+                <li>vision-critic scaffold</li>
+                <li>MCP server</li>
+                <li>editor plugins</li>
+                <li>eight tokens</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>What is gated</h2>
+            <ul>
+                <li>live frontier-model calls<span class="note">(needs API keys)</span></li>
+                <li>live vision critique<span class="note">(needs multimodal key + screenshot pipeline)</span></li>
+                <li>standalone npm packages for the editor plugins</li>
+                <li>additional tokens</li>
+            </ul>
+        </section>
+    </div>
+
+    <div class="cta-container">
+        <a href="https://github.com/ahd-framework" class="cta-link">read-the-code</a>
+    </div>
+</main>
+
+<footer>
+    <div class="license-info">
+        <span>Code: FSL-1.1-Apache-2.0</span>
+        <span>Tokens & Artwork: CC-BY-4.0</span>
+    </div>
+</footer>
+
+</body>
+</html>

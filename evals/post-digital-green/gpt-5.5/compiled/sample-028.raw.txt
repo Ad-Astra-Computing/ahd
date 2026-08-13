@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <!-- rule: surfaces: web -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- rule: one-page landing for AHD itself -->
+  <title>ahd / artificial human design</title>
+  <style>
+    /* rule: everything in monospace; single-monospace pairing */
+    :root {
+      --bg: oklch(0.14 0.02 150); /* rule: colour.palette.bg */
+      --fg: oklch(0.92 0.12 135); /* rule: colour.palette.fg */
+      --dim: oklch(0.55 0.05 150); /* rule: colour.palette.dim */
+      --rule: oklch(0.3 0.04 150); /* rule: one hairline rule colour */
+      --amber: oklch(0.82 0.15 75); /* rule: a single amber accent */
+      --measure: 80ch; /* rule: grid.columns 80 */
+    }
+
+    /* rule: no gradients, no shadows, no radii, no entrance animation */
+    * {
+      box-sizing: border-box; /* rule: rectangular grid alignment */
+      border-radius: 0; /* rule: no radii; only rectangles */
+    }
+
+    html {
+      background: var(--bg); /* rule: dark green-black background */
+      color: var(--fg); /* rule: muted green foreground */
+      font-family: "Berkeley Mono", "IBM Plex Mono", "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; /* rule: type.families text/display */
+      font-size: 15px; /* rule: type.scale.base 15 */
+      line-height: 1.55; /* rule: type.line-height.body */
+      letter-spacing: 0; /* rule: tracking.body 0 */
+    }
+
+    body {
+      margin: 0; /* rule: remove non-grid browser margin */
+      min-height: 100vh; /* rule: one screen of reading */
+      background: var(--bg); /* rule: no purple-to-blue hero gradient */
+    }
+
+    main {
+      width: min(var(--measure), calc(100vw - 32px)); /* rule: at least one element aligned to 80ch max-width */
+      margin: 0 auto; /* rule: align to char grid, no centered hero stack with pill badge */
+      padding: 24px 0 16px; /* rule: space.scale uses 16/24 */
+    }
+
+    header {
+      display: grid; /* rule: everything aligns to an 80 character grid */
+      grid-template-columns: 1fr auto; /* rule: terse technical header */
+      gap: 1ch; /* rule: grid.gutter 1 */
+      border-bottom: 1px solid var(--rule); /* rule: one hairline rule colour */
+      padding-bottom: 8px; /* rule: baseline 8 */
+      margin-bottom: 16px; /* rule: space.scale 16 */
+    }
+
+    .mark {
+      font-weight: 700; /* rule: weights 700 */
+      color: var(--amber); /* rule: single amber accent */
+      text-transform: lowercase; /* rule: copy.voice lowercase by default */
+    }
+
+    .status {
+      color: var(--dim); /* rule: dim metadata */
+      text-align: right; /* rule: grid-aligned utility text */
+    }
+
+    h1,
+    h2,
+    p,
+    pre,
+    ul,
+    footer {
+      margin-top: 0; /* rule: remove loose vertical drift */
+    }
+
+    h1 {
+      max-width: 40ch; /* rule: measure remains terse */
+      margin-bottom: 16px; /* rule: baseline 8 */
+      font-size: 2.0736rem; /* rule: type.scale step 4, ratio 1.2 */
+      line-height: 1.1; /* rule: display line-height 1.1 */
+      font-weight: 700; /* rule: weights include 700 */
+      letter-spacing: 0; /* rule: tracking.display 0 */
+      text-transform: lowercase; /* rule: copy.voice lowercase by default */
+    }
+
+    .lede {
+      max-width: 72ch; /* rule: type.measure 72ch */
+      margin-bottom: 16px; /* rule: one screen of reading */
+      color: var(--fg); /* rule: muted green foreground */
+    }
+
+    a {
+      color: inherit; /* rule: underlined links with no colour change */
+      text-decoration-line: underline; /* rule: link style required */
+      text-underline-offset: 4px; /* rule: link style underline-offset 4px */
+      text-decoration-thickness: 1px; /* rule: hairline link underline */
+    }
+
+    a:focus-visible {
+      outline: 1px solid var(--amber); /* rule: single amber accent for focus */
+      outline-offset: 4px; /* rule: rectangular focus, no glow */
+    }
+
+    .cta-row {
+      display: flex; /* rule: no centered hero stack with two CTAs */
+      justify-content: flex-start; /* rule: left aligned technical layout */
+      margin-bottom: 16px; /* rule: space.scale 16 */
+    }
+
+    .cta {
+      border: 1px solid var(--rule); /* rule: rectangles only, one rule colour */
+      padding: 4px 1ch; /* rule: grid.gutter 1 and baseline 8 */
+      color: var(--amber); /* rule: single amber accent */
+      text-decoration-color: currentColor; /* rule: no colour change on links */
+    }
+
+    .terminal {
+      border: 1px solid var(--rule); /* rule: terminal-aesthetic code block */
+      padding: 8px 1ch; /* rule: baseline 8 and char grid */
+      margin-bottom: 16px; /* rule: one screen of reading */
+      overflow-x: auto; /* rule: command remains intact on small screens */
+      background: transparent; /* rule: no glassmorphism, no gradient */
+    }
+
+    pre,
+    code {
+      font: inherit; /* rule: everything in monospace */
+      letter-spacing: 0; /* rule: tracking.body 0 */
+    }
+
+    .diagram {
+      white-space: pre; /* rule: ASCII diagram rendered as text */
+      border-top: 1px solid var(--rule); /* rule: clearly separated section */
+      border-bottom: 1px solid var(--rule); /* rule: one hairline rule colour */
+      padding: 8px 0; /* rule: baseline 8 */
+      margin: 0 0 16px; /* rule: space.scale 16 */
+      color: var(--dim); /* rule: secondary diagram tone */
+    }
+
+    .manifests {
+      display: grid; /* rule: manifest sections clearly separated */
+      grid-template-columns: 1fr 1fr; /* rule: not three equal feature cards */
+      gap: 1ch; /* rule: grid.gutter 1 */
+      margin-bottom: 16px; /* rule: space.scale 16 */
+    }
+
+    section {
+      border-top: 1px solid var(--rule); /* rule: clearly separated manifest section */
+      padding-top: 8px; /* rule: baseline 8 */
+    }
+
+    h2 {
+      margin-bottom: 8px; /* rule: baseline 8 */
+      font-size: 1.2rem; /* rule: type.scale step 1 */
+      line-height: 1.25; /* rule: h2 line-height */
+      color: var(--amber); /* rule: single amber accent */
+      text-transform: lowercase; /* rule: copy.voice lowercase by default */
+    }
+
+    ul {
+      list-style: none; /* rule: no emoji bullets */
+      padding: 0; /* rule: char grid alignment */
+      margin-bottom: 0; /* rule: compact one-screen manifest */
+    }
+
+    li {
+      padding-left: 2ch; /* rule: grid-aligned list marker */
+      text-indent: -2ch; /* rule: rectangular list rhythm */
+    }
+
+    li::before {
+      content: "- "; /* rule: ASCII markers only */
+      color: var(--dim); /* rule: muted support text */
+    }
+
+    footer {
+      border-top: 1px solid var(--rule); /* rule: footer is not canonical 4-column */
+      padding-top: 8px; /* rule: baseline 8 */
+      margin-bottom: 0; /* rule: one-page close */
+      color: var(--dim); /* rule: secondary footer text */
+    }
+
+    .quirk {
+      width: 79ch; /* rule: intentional imperfection from required-quirks list */
+      max-width: 100%; /* rule: responsive within 80 character grid */
+    }
+
+    @media (max-width: 720px) {
+      main {
+        width: min(var(--measure), calc(100vw - 24px)); /* rule: preserve char grid on mobile */
+        padding-top: 16px; /* rule: space.scale 16 */
+      }
+
+      header,
+      .manifests {
+        grid-template-columns: 1fr; /* rule: text must not overlap on mobile */
+      }
+
+      .status {
+        text-align: left; /* rule: keep mobile alignment readable */
+      }
+
+      h1 {
+        font-size: 1.728rem; /* rule: type.scale step 3 */
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- rule: one-page landing, no testimonials, no pricing tier, no trusted-by strip -->
+  <main>
+    <!-- rule: terse technical header for working designers, senior engineers, founders -->
+    <header>
+      <div class="mark">ahd / artificial human design</div>
+      <div class="status">token: post-digital-green / 0.1.0</div>
+    </header>
+
+    <!-- rule: visitor already suspects the problem; show framework rather than lecture -->
+    <h1>design output needs an eval, not another sheen.</h1>
+
+    <!-- rule: technical, lowercase by default, terse -->
+    <p class="lede quirk">
+      ahd turns a brief into enforceable design constraints, runs candidates through
+      a linter and an eval harness, and leaves a trace you can inspect.
+    </p>
+
+    <!-- rule: read-the-code CTA link to github -->
+    <div class="cta-row">
+      <a class="cta" href="https://github.com/ahd-lab/ahd">read-the-code CTA</a>
+    </div>
+
+    <!-- rule: terminal-aesthetic code block showing the one-liner that runs the eval -->
+    <pre class="terminal"><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+
+    <!-- rule: at least one ASCII diagram rendered as text -->
+    <pre class="diagram" aria-label="ahd pipeline ascii diagram">brief.yml
+   |
+   v
+compiler -> linter(28) -> eval harness -> ranked evidence
+   |                         |
+   +---- tokens + mcp -------+</pre>
+
+    <!-- rule: clearly separated manifest sections; exactly what ships versus gated -->
+    <div class="manifests">
+      <section aria-labelledby="ships-title">
+        <!-- rule: manifest section titled 'What ships' -->
+        <h2 id="ships-title">What ships</h2>
+        <ul>
+          <li>brief compiler</li>
+          <li>28-rule linter</li>
+          <li>eval harness</li>
+          <li>vision-critic scaffold</li>
+          <li>MCP server</li>
+          <li>editor plugins</li>
+          <li>eight tokens</li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="gated-title">
+        <!-- rule: manifest section titled 'What is gated' -->
+        <h2 id="gated-title">What is gated</h2>
+        <ul>
+          <li>live frontier-model calls (needs API keys)</li>
+          <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+          <li>standalone npm packages for the editor plugins</li>
+          <li>additional tokens</li>
+        </ul>
+      </section>
+    </div>
+
+    <!-- rule: footer names licence explicitly; no canonical 4-column footer -->
+    <footer>
+      licence: FSL-1.1-Apache-2.0 for code, CC-BY-4.0 for tokens and artwork.
+    </footer>
+  </main>
+</body>
+</html>

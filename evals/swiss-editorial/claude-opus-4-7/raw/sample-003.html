@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AHD — Artificial Human Design</title>
+<style>
+  :root{
+    --bg:#f4f1ea;
+    --ink:#121212;
+    --mute:#5a5752;
+    --rule:#1a1a1a;
+    --accent:#b4452a;
+    --term-bg:#141311;
+    --term-ink:#e8e4d8;
+    --term-dim:#8a8578;
+    --term-accent:#d9a441;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);}
+  body{
+    font-family: "Iowan Old Style","Charter","Georgia",serif;
+    font-size:17px;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:780px;margin:0 auto;padding:40px 28px 72px;}
+  header.top{
+    display:flex;justify-content:space-between;align-items:baseline;
+    border-bottom:1px solid var(--rule);
+    padding-bottom:10px;margin-bottom:40px;
+    font-family: ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    font-size:13px;
+    text-transform:uppercase;letter-spacing:.08em;
+  }
+  header.top .mark{font-weight:700}
+  header.top nav a{color:var(--ink);text-decoration:none;margin-left:20px}
+  header.top nav a:hover{color:var(--accent)}
+  h1{
+    font-size:44px;line-height:1.05;margin:0 0 18px;
+    letter-spacing:-0.01em;font-weight:700;
+  }
+  h1 em{font-style:italic;color:var(--accent);font-weight:500}
+  .lede{font-size:19px;margin:0 0 14px;max-width:62ch}
+  .lede.secondary{color:var(--mute);margin-bottom:28px}
+  section{margin:44px 0;}
+  h2{
+    font-family: ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    font-size:12px;text-transform:uppercase;letter-spacing:.14em;
+    color:var(--mute);
+    border-top:1px solid var(--rule);
+    padding-top:10px;margin:0 0 18px;
+    font-weight:600;
+  }
+  p{margin:0 0 14px}
+  a{color:var(--accent)}
+  .terminal{
+    background:var(--term-bg);
+    color:var(--term-ink);
+    border-radius:4px;
+    padding:0;
+    font-family: ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    font-size:13.5px;
+    line-height:1.55;
+    overflow:hidden;
+    box-shadow:0 1px 0 rgba(0,0,0,.2);
+  }
+  .terminal .bar{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:8px 14px;
+    background:#0e0d0c;
+    color:var(--term-dim);
+    font-size:11px;
+    border-bottom:1px solid #26231e;
+  }
+  .terminal .bar .lang{color:var(--term-accent)}
+  .terminal pre{
+    margin:0;padding:16px 18px;
+    white-space:pre-wrap;word-break:break-word;
+  }
+  .terminal .prompt{color:var(--term-accent);user-select:none}
+  .terminal .flag{color:#89b4a0}
+  .terminal .arg{color:#e8e4d8}
+  .terminal .str{color:#c9b28a}
+  .run-note{
+    color:var(--mute);font-size:14px;margin-top:10px;
+    font-family: ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  dl.manifest{margin:0;padding:0}
+  dl.manifest > div{
+    display:grid;grid-template-columns:180px 1fr;gap:18px;
+    padding:10px 0;border-bottom:1px dotted #b9b4a8;
+  }
+  dl.manifest > div:last-child{border-bottom:none}
+  dl.manifest dt{
+    font-family: ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    font-size:12.5px;text-transform:uppercase;letter-spacing:.06em;
+    color:var(--ink);font-weight:600;
+  }
+  dl.manifest dd{margin:0;color:#2a2926}
+  .gated dt{color:var(--accent)}
+  .gated dd{color:var(--mute)}
+  .cta{
+    display:inline-block;
+    font-family: ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    font-size:13px;
+    border:1px solid var(--ink);
+    padding:10px 16px;
+    text-decoration:none;color:var(--ink);
+    background:var(--bg);
+  }
+  .cta:hover{background:var(--ink);color:var(--bg)}
+  .cta .arrow{color:var(--accent);margin-right:8px}
+  .cta:hover .arrow{color:var(--term-accent)}
+  footer{
+    margin-top:56px;padding-top:16px;
+    border-top:1px solid var(--rule);
+    font-family: ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    font-size:12px;color:var(--mute);
+    display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;
+  }
+  footer .lic span{color:var(--ink)}
+  @media (max-width:560px){
+    h1{font-size:34px}
+    dl.manifest > div{grid-template-columns:1fr;gap:4px}
+    header.top nav a{margin-left:12px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <div class="mark">AHD / Artificial Human Design</div>
+  <nav>
+    <a href="#manifest">Manifest</a>
+    <a href="#code">Code</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <h1>The slop has a <em>shape</em>. We measure it.</h1>
+  <p class="lede">AHD is a framework for evaluating generated interface design against a compiled brief — not vibes, not a leaderboard, not a thread. A 28-rule linter, a Swiss-editorial reference brief, and a harness that runs models head-to-head against it.</p>
+  <p class="lede secondary">You already know the problem. This is the working draft of a method.</p>
+</section>
+
+<section id="code">
+  <h2>Run the eval</h2>
+  <div class="terminal">
+    <div class="bar"><span class="lang">bash</span><span>ahd · v0.4.2</span></div>
+<pre><span class="prompt">$</span> ahd eval-live swiss-editorial <span class="flag">--brief</span> <span class="str">briefs/landing.yml</span> <span class="flag">--models</span> <span class="arg">&lt;specs&gt;</span> <span class="flag">--n</span> <span class="arg">10</span></pre>
+  </div>
+  <div class="run-note">› emits: lint report, rendered diffs, vision-critic notes (gated), JSONL trace</div>
+</section>
+
+<section id="manifest">
+  <h2>What ships — today, in the repo</h2>
+  <dl class="manifest">
+    <div><dt>brief compiler</dt><dd>YAML brief → structured constraints the linter and harness can both read.</dd></div>
+    <div><dt>28-rule linter</dt><dd>Deterministic checks against the compiled brief. No model calls.</dd></div>
+    <div><dt>eval harness</dt><dd>Runs N samples per model spec, captures artifacts, scores them.</dd></div>
+    <div><dt>vision-critic scaffold</dt><dd>Prompt templates, rubric, screenshot handoff — wiring only.</dd></div>
+    <div><dt>MCP server</dt><dd>Exposes the brief, linter, and harness as tools to an MCP client.</dd></div>
+    <div><dt>editor plugins</dt><dd>In-tree plugins for Zed and Neovim, loaded from source.</dd></div>
+    <div><dt>eight tokens</dt><dd>The canonical reference set: scale, measure, rule, ink, paper, accent, rhythm, weight.</dd></div>
+  </dl>
+</section>
+
+<section>
+  <h2>What is gated — requires something you bring</h2>
+  <dl class="manifest gated">
+    <div><dt>live frontier-model calls</dt><dd>The harness will not run against hosted models without your API keys in env.</dd></div>
+    <div><dt>live vision critique</dt><dd>Needs a multimodal key plus a working screenshot pipeline (Playwright or equivalent).</dd></div>
+    <div><dt>npm packages</dt><dd>Standalone published builds of the editor plugins are not cut yet; install from source.</dd></div>
+    <div><dt>additional tokens</dt><dd>Expansions beyond the eight — grid, motion, density — are scheduled, not shipped.</dd></div>
+  </dl>
+</section>
+
+<section>
+  <h2>Read it, don't take my word for it</h2>
+  <p>The whole thing is under 6k lines. The linter is the interesting part. Start at <code>/rules</code> and work outward.</p>
+  <p><a class="cta" href="https://github.com/ahd/ahd"><span class="arrow">→</span>Read the code on GitHub</a> &nbsp; <a href="https://code.ahd.dev/ahd/ahd" style="font-family:ui-monospace,Menlo,monospace;font-size:13px;">forgejo mirror</a></p>
+</section>
+
+<footer>
+  <div class="lic">Licence · <span>FSL-1.1-Apache-2.0</span> for code · <span>CC-BY-4.0</span> for tokens and artwork</div>
+  <div>AHD — Artificial Human Design</div>
+</footer>
+
+</div>
+</body>
+</html>

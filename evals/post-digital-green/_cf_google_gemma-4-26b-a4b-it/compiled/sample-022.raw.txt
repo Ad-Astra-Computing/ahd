@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ahd / artificial human design</title>
+<style>
+  /* rule: post-digital dark green-black background */
+  body {
+    background-color: oklch(0.14 0.02 150);
+    /* rule: muted green foreground */
+    color: oklch(0.92 0.12 135);
+    /* rule: everything in monospace */
+    font-family: 'Berkeley Mono', 'IBM Plex Mono', 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 15px;
+    line-height: 1.55;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+  }
+
+  /* rule: align to 80 character grid (measure 72ch) */
+  main {
+    max-width: 72ch;
+    width: 100%;
+    padding: 48px 16px;
+    box-sizing: border-box;
+  }
+
+  /* rule: single amber accent */
+  h1, .accent {
+    color: oklch(0.82 0.15 75);
+  }
+
+  h1 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    letter-spacing: 0;
+  }
+
+  h2 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-top: 48px;
+    margin-bottom: 16px;
+    text-transform: lowercase;
+  }
+
+  /* rule: rectangles only, no radii */
+  /* rule: one hairline rule colour */
+  .rule-box {
+    border: 1px solid oklch(0.3 0.04 150);
+    padding: 16px;
+    margin: 24px 0;
+  }
+
+  /* rule: terminal-aesthetic code block */
+  pre {
+    background-color: oklch(0.18 0.02 150);
+    border: 1px solid oklch(0.3 0.04 150);
+    padding: 16px;
+    overflow-x: auto;
+    margin: 0;
+  }
+
+  code {
+    font-family: inherit;
+    /* rule: technical, lowercase by default, terse */
+    color: oklch(0.92 0.12 135);
+  }
+
+  /* rule: bash language tag rendering */
+  .lang-tag {
+    color: oklch(0.55 0.05 150);
+    font-size: 12px;
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  /* rule: underline with offset, no colour change */
+  a {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  /* rule: no emoji bullets */
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  li {
+    margin-bottom: 8px;
+  }
+
+  li::before {
+    content: "> ";
+    color: oklch(0.55 0.05 150);
+  }
+
+  /* rule: ASCII diagram */
+  .ascii {
+    white-space: pre;
+    font-size: 12px;
+    color: oklch(0.55 0.05 150);
+    line-height: 1.2;
+    margin-bottom: 24px;
+  }
+
+  footer {
+    margin-top: 64px;
+    padding-top: 24px;
+    border-top: 1px solid oklch(0.3 0.04 150);
+    /* rule: terminal-style footer, not 4-column canonical */
+    font-size: 12px;
+    color: oklch(0.55 0.05 150);
+  }
+
+  .cta-container {
+    margin-top: 32px;
+  }
+
+  /* rule: intentional imperfection - slight asymmetry in spacing */
+  .asymmetric-gap {
+    margin-bottom: 37px;
+  }
+</style>
+</head>
+<body>
+
+<main>
+  <header>
+    <h1>ahd / <span class="accent">artificial human design</span></h1>
+    <p>a framework for systemic verification of generative output. preventing the degradation of interfaces via automated evaluation.</p>
+  </header>
+
+  <div class="asymmetric-gap">
+    <!-- rule: ascii diagram -->
+    <div class="ascii">
+[brief] --&gt; [compiler] --&gt; [linter]
+                               |
+                        [eval_harness] &lt;-- [critic]
+    </div>
+  </div>
+
+  <section>
+    <h2>execution</h2>
+    <div class="rule-box">
+      <span class="lang-tag">bash</span>
+      <pre><code>ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+    </div>
+  </section>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px;">
+    <section>
+      <h2>what ships</h2>
+      <ul>
+        <li>brief compiler</li>
+        <li>28-rule linter</li>
+        <li>eval harness</li>
+        <li>vision-critic scaffold</li>
+        <li>mcp server</li>
+        <li>editor plugins</li>
+        <li>eight tokens</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>what is gated</h2>
+      <ul>
+        <li>live frontier-model calls (needs api keys)</li>
+        <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+        <li>standalone npm packages for editor plugins</li>
+        <li>additional tokens</li>
+      </ul>
+    </section>
+  </div>
+
+  <div class="cta-container">
+    <a href="https://github.com/ahd-project">read-the-code</a>
+  </div>
+
+  <footer>
+    licence: fsl-1.1-apache-2.0 for code. cc-by-4.0 for tokens and artwork.
+  </footer>
+</main>
+
+</body>
+</html>

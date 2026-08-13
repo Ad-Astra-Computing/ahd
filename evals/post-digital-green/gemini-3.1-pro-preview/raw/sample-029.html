@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Artificial Human Design (AHD)</title>
+<style>
+:root {
+  --bg: #0a0a0f;
+  --fg: #e0e0e0;
+  --accent: #00ff94;
+  --border: #1f1f2e;
+  --font-mono: 'Geist Mono', 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-sans: 'Geist', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  margin: 0;
+  padding: 4rem 2rem;
+  display: flex;
+  justify-content: center;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container {
+  width: 100%;
+  max-width: 800px;
+}
+
+h1 {
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+  font-weight: normal;
+  color: var(--accent);
+  margin: 0 0 2.5rem 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+h1::before {
+  content: "> ";
+}
+
+p {
+  font-size: 1.125rem;
+  color: #a0a0b0;
+  max-width: 640px;
+  margin-bottom: 2rem;
+}
+
+.terminal {
+  background-color: #050508;
+  border: 1px solid var(--border);
+  border-left: 2px solid var(--accent);
+  padding: 1.25rem;
+  margin: 3rem 0;
+  overflow-x: auto;
+}
+
+pre {
+  margin: 0;
+}
+
+code {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+}
+
+.terminal code {
+  color: var(--fg);
+}
+
+.manifest {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+  margin-bottom: 4rem;
+}
+
+@media (min-width: 600px) {
+  .manifest {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+h2 {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #ffffff;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.75rem;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: #808090;
+  padding: 0.625rem 0;
+  border-bottom: 1px solid #111118;
+}
+
+li:last-child {
+  border-bottom: none;
+}
+
+li::before {
+  content: ":: ";
+  color: #404050;
+}
+
+.cta-container {
+  margin: 3rem 0;
+}
+
+.cta {
+  display: inline-block;
+  background: transparent;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  padding: 0.75rem 1.5rem;
+  text-decoration: none;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: all 0.2s ease;
+}
+
+.cta:hover {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+footer {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: #505060;
+  border-top: 1px solid var(--border);
+  padding-top: 2rem;
+  margin-top: 4rem;
+}
+</style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Artificial Human Design</h1>
+    </header>
+    
+    <main>
+      <p>You have seen the generated output of the last month. You already suspect the problem. Automated web generation defaults to indistinct, redundant and functionally fragile patterns. AHD provides a structural framework to enforce discipline on synthetic generation. We treat design constraints as compile-time errors.</p>
+      
+      <div class="cta-container">
+        <a href="https://github.com/ahd-project/ahd" class="cta">Read the code</a>
+      </div>
+
+      <div class="terminal">
+        <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+      </div>
+
+      <div class="manifest">
+        <section>
+          <h2>What ships</h2>
+          <ul>
+            <li>brief compiler</li>
+            <li>28-rule linter</li>
+            <li>eval harness</li>
+            <li>vision-critic scaffold</li>
+            <li>MCP server</li>
+            <li>editor plugins</li>
+            <li>eight tokens</li>
+          </ul>
+        </section>
+        <section>
+          <h2>What is gated</h2>
+          <ul>
+            <li>live frontier-model calls (needs API keys)</li>
+            <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+            <li>standalone npm packages for the editor plugins</li>
+            <li>additional tokens</li>
+          </ul>
+        </section>
+      </div>
+    </main>
+
+    <footer>
+      License: FSL-1.1-Apache-2.0 for code | CC-BY-4.0 for tokens and artwork.
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>artificial human design</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+/* rule: post-digital-green palette */
+:root {
+  --bg: oklch(0.14 0.02 150);
+  --fg: oklch(0.92 0.12 135);
+  --dim: oklch(0.55 0.05 150);
+  --rule: oklch(0.3 0.04 150);
+  --amber: oklch(0.82 0.15 75);
+  /* rule: single-monospace family */
+  --font-mono: 'Berkeley Mono', 'IBM Plex Mono', 'JetBrains Mono', ui-monospace, monospace;
+}
+
+/* rule: no sans-serif body text */
+body {
+  font-family: var(--font-mono);
+  background-color: var(--bg);
+  color: var(--fg);
+  font-size: 15px; /* rule: scale base 15 */
+  line-height: 1.55; /* rule: line-height body 1.55 */
+  margin: 0;
+  padding: 64px 24px;
+}
+
+/* rule: at least one element aligned to the char grid (e.g. 80ch max-width) */
+.grid-container {
+  max-width: 80ch;
+  margin: 0 auto;
+}
+
+/* rule: measure 72ch */
+.measure {
+  max-width: 72ch;
+}
+
+h1, h2 {
+  font-weight: 700;
+  margin: 0;
+  color: var(--fg);
+  text-transform: lowercase; /* rule: technical, lowercase by default, terse */
+}
+
+h1 {
+  font-size: calc(15px * 1.2 * 1.2 * 1.2); /* step 3 */
+  line-height: 1.1;
+  letter-spacing: 0; /* rule: tracking display 0 */
+  margin-bottom: 24px;
+}
+
+h2 {
+  font-size: calc(15px * 1.2 * 1.2); /* step 2 */
+  line-height: 1.25;
+  border-bottom: 1px solid var(--rule); /* rule: one hairline rule colour */
+  padding-bottom: 8px;
+  margin-top: 48px;
+  margin-bottom: 24px;
+}
+
+p {
+  margin-bottom: 16px;
+}
+
+/* rule: link style: underline-offset 4px, no colour change */
+a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+a:hover {
+  text-decoration-color: var(--amber);
+}
+
+/* rule: no radii; only rectangles */
+/* rule: shadow policy forbidden */
+pre {
+  border: 1px solid var(--rule);
+  padding: 16px;
+  background: transparent;
+  color: var(--amber);
+  overflow-x: auto;
+  border-radius: 0;
+  margin: 32px 0;
+}
+
+code {
+  font-family: inherit;
+  font-size: calc(15px / 1.2);
+}
+
+/* rule: emoji bullets forbidden */
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 32px 0;
+}
+
+li {
+  margin-bottom: 8px;
+  display: flex;
+}
+
+li::before {
+  content: ":: ";
+  color: var(--dim);
+  margin-right: 8px;
+}
+
+.ascii-art {
+  color: var(--dim);
+  white-space: pre;
+  font-size: calc(15px / 1.2);
+  line-height: 1.1;
+  margin-bottom: 48px;
+  /* rule: at least one ASCII diagram rendered as text */
+}
+
+/* rule: a canonical 4-column Product / Company / Resources / Legal footer forbidden */
+footer {
+  margin-top: 64px;
+  border-top: 1px solid var(--rule);
+  padding-top: 24px;
+  color: var(--dim);
+  font-size: calc(15px / 1.2);
+}
+
+.cta {
+  display: inline-block;
+  margin-top: 24px;
+}
+</style>
+</head>
+<body>
+
+<div class="grid-container">
+
+  <!-- rule: at least one ASCII diagram rendered as text -->
+  <div class="ascii-art">
++-----------------------+
+|  ahd_system_init      |
+|  target: generic      |
+|  mode: final          |
++-----------------------+
+  </div>
+
+  <div class="measure">
+    <!-- rule: technical, lowercase by default, terse -->
+    <h1>artificial human design</h1>
+    
+    <p>
+      a framework to enforce taste in generated interfaces.
+      if you are reading this, you already know the problem: the default output of frontier models is generic, rounded, and gradient-soaked. prompt engineering alone cannot override the reinforcement learning.
+    </p>
+    <p>
+      ahd imposes deterministic constraints on non-deterministic systems. it lints out the slop.
+    </p>
+
+    <!-- rule: A link to github (or the forgejo mirror) labelled as the read-the-code CTA. -->
+    <a href="https://github.com/artificial-human-design/ahd" class="cta">read the code on github</a>
+  </div>
+
+  <!-- rule: The command ... rendered in a monospace code block with the language tag bash -->
+  <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+
+  <!-- rule: A clearly separated manifest section titled 'What ships' -->
+  <h2>what ships</h2>
+  <ul>
+    <li>brief compiler</li>
+    <li>28-rule linter</li>
+    <li>eval harness</li>
+    <li>vision-critic scaffold</li>
+    <li>mcp server</li>
+    <li>editor plugins</li>
+    <li>eight tokens</li>
+  </ul>
+
+  <!-- rule: A clearly separated manifest section titled 'What is gated' -->
+  <h2>what is gated</h2>
+  <ul>
+    <li>live frontier-model calls (needs api keys)</li>
+    <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+    <li>standalone npm packages for the editor plugins</li>
+    <li>additional tokens</li>
+  </ul>
+
+  <!-- rule: A footer that names the licence explicitly -->
+  <footer>
+    <!-- rule: intentional imperfection: extra space before period -->
+    code licensed under fsl-1.1-apache-2.0 . tokens and artwork licensed under cc-by-4.0.
+  </footer>
+
+</div>
+
+</body>
+</html>

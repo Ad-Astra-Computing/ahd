@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>ahd : artificial human design</title>
+  <style>
+    /* rule: Design post-digital. Everything in monospace. */
+    /* rule: Dark green-black background, muted green foreground, single amber accent */
+    :root {
+      --bg: oklch(0.14 0.02 150);
+      --fg: oklch(0.92 0.12 135);
+      --dim: oklch(0.55 0.05 150);
+      --rule: oklch(0.3 0.04 150);
+      --amber: oklch(0.82 0.15 75);
+      --font-mono: 'Berkeley Mono', 'IBM Plex Mono', 'JetBrains Mono', ui-monospace, monospace;
+    }
+
+    /* rule: No gradients, no glassmorphism, no 3D imagery, sans-serif body forbidden */
+    body {
+      background-color: var(--bg);
+      color: var(--fg);
+      font-family: var(--font-mono);
+      font-size: 15px; /* rule: scale.base 15 */
+      line-height: 1.55; /* rule: line-height.body 1.55 */
+      margin: 0;
+      padding: 48px 24px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* rule: Everything aligns to an 80 character grid */
+    .grid-container {
+      max-width: 80ch;
+      margin: 0 auto;
+      border-left: 1px solid var(--rule); /* rule: One hairline rule colour */
+      padding-left: 24px;
+    }
+
+    /* rule: Underlined links with an offset, no colour change */
+    a {
+      color: var(--fg);
+      text-decoration: underline;
+      text-underline-offset: 4px;
+      text-decoration-thickness: 1px;
+    }
+    a:hover {
+      text-decoration-color: var(--amber); /* rule: colour change only applies to underline, not the text */
+    }
+
+    /* rule: Rectangles only. One hairline rule colour. */
+    hr {
+      border: none;
+      border-top: 1px solid var(--rule);
+      margin: 32px 0;
+    }
+
+    h1, h2, h3 {
+      font-weight: 700;
+      font-size: 15px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em; /* rule: tracking.allcaps 0.04em */
+      margin: 0 0 16px 0;
+      line-height: 1.25; /* rule: line-height.h2 1.25 */
+    }
+
+    p {
+      margin: 0 0 24px 0;
+      color: var(--fg);
+    }
+
+    .dim {
+      color: var(--dim);
+    }
+
+    /* rule: single amber accent */
+    .accent {
+      color: var(--amber);
+    }
+
+    /* rule: terminal-aesthetic code block showing the one-liner */
+    pre {
+      border: 1px solid var(--rule); /* rule: Rectangles only */
+      background: transparent;
+      padding: 16px;
+      margin: 24px 0;
+      position: relative;
+      overflow-x: auto;
+      color: var(--amber); /* terminal aesthetic */
+    }
+
+    /* rule: language tag bash */
+    pre::before {
+      content: 'bash';
+      position: absolute;
+      top: 0;
+      right: 0;
+      background: var(--rule);
+      color: var(--bg);
+      padding: 2px 8px;
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    code {
+      font-family: inherit;
+    }
+
+    .manifest-group {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      margin: 48px 0;
+    }
+
+    .manifest {
+      border: 1px solid var(--rule); /* rule: Rectangles only */
+      padding: 24px;
+    }
+
+    .manifest h2 {
+      border-bottom: 1px solid var(--rule);
+      padding-bottom: 8px;
+      margin-bottom: 16px;
+    }
+
+    /* rule: list without emoji bullets */
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    li {
+      margin-bottom: 8px;
+      position: relative;
+      padding-left: 2ch;
+    }
+
+    li::before {
+      content: "-";
+      position: absolute;
+      left: 0;
+      color: var(--dim);
+    }
+
+    /* rule: Must avoid a canonical 4-column Product / Company / Resources / Legal footer */
+    .footer {
+      margin-top: 64px;
+      border-top: 1px solid var(--rule);
+      padding-top: 24px;
+      color: var(--dim);
+      font-size: 15px;
+    }
+
+    /* rule: No radii, no shadows, no animations (except caret blink/underline) */
+    * {
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      animation: none !important;
+      transition: none !important;
+    }
+
+    /* rule: at least one ASCII diagram rendered as text */
+    .ascii-art {
+      color: var(--dim);
+      white-space: pre;
+      line-height: 1.1; /* rule: line-height.display 1.1 */
+      margin-bottom: 48px;
+      font-size: 12px;
+    }
+
+    .cta-block {
+      margin: 32px 0;
+    }
+
+  </style>
+</head>
+<body>
+  <!-- rule: Everything aligns to an 80 character grid -->
+  <div class="grid-container">
+    
+    <!-- rule: at least one ASCII diagram rendered as text -->
+    <div class="ascii-art">
+      +----------------+
+      |  brief source  |
+      +-------+--------+
+              |
+              v
+      +----------------+      +---------+
+      |  ahd compiler  |&lt;-----|  rules  |
+      +-------+--------+      +---------+
+              |
+              v
+      +----------------+
+      |  eval harness  |
+      +----------------+
+      <!-- intentional quirk: unaligned trailing connector -->
+             | 
+    </div>
+
+    <h1>artificial human design (ahd)</h1>
+
+    <!-- rule: voice: technical, lowercase by default, terse -->
+    <!-- rule: do not need to be sold on the slop thesis, need to be shown that AHD takes it seriously and does something about it. -->
+    <!-- rule: forbid: 'build the future of', 'ship faster', 'AI-native' -->
+    <p>
+      generative outputs default to slop. you already suspect this. ahd is a rigid, 
+      post-digital framework to enforce spatial and typographic intent mathematically.
+      it rejects the hallucination cycle by asserting a strict compilation and 
+      evaluation phase over model responses.
+    </p>
+
+    <p>
+      we do not generate components; we compile briefs against an immutable set of rules. 
+      if the output violates the char grid, fails the contrast tier, or introduces forbidden 
+      patterns, the linter fails it.
+    </p>
+
+    <!-- rule: A link to github (or the forgejo mirror) labelled as the read-the-code CTA. -->
+    <div class="cta-block">
+      <a href="https://github.com/artificial-human-design/ahd">[ read-the-code ]</a>
+    </div>
+
+    <!-- rule: terminal-aesthetic code block showing the one-liner that runs the eval. -->
+    <!-- rule: language tag `bash` -->
+    <pre><code>ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+
+    <div class="manifest-group">
+      <!-- rule: A clearly separated manifest section titled 'What ships' -->
+      <!-- rule: enumerates: brief compiler, 28-rule linter, eval harness, vision-critic scaffold, MCP server, editor plugins, eight tokens. -->
+      <div class="manifest">
+        <h2>what ships</h2>
+        <ul>
+          <li>brief compiler</li>
+          <li>28-rule linter</li>
+          <li>eval harness</li>
+          <li>vision-critic scaffold</li>
+          <li>mcp server</li>
+          <li>editor plugins</li>
+          <li>eight tokens</li>
+        </ul>
+      </div>
+
+      <!-- rule: A clearly separated manifest section titled 'What is gated' -->
+      <!-- rule: enumerates: live frontier-model calls (needs API keys), live vision critique (needs multimodal key + screenshot pipeline), standalone npm packages for the editor plugins, additional tokens. -->
+      <div class="manifest">
+        <h2>what is gated</h2>
+        <ul>
+          <li>live frontier-model calls (needs api keys)</li>
+          <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+          <li>standalone npm packages for the editor plugins</li>
+          <li>additional tokens</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- rule: A footer that names the licence explicitly: FSL-1.1-Apache-2.0 for code, CC-BY-4.0 for tokens and artwork. -->
+    <!-- rule: Must avoid a canonical 4-column Product / Company / Resources / Legal footer -->
+    <div class="footer">
+      <p>
+        licence: fsl-1.1-apache-2.0 for code, cc-by-4.0 for tokens and artwork.
+      </p>
+    </div>
+
+  </div>
+</body>
+</html>

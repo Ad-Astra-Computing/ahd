@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <!-- rule: return a single, self-contained, valid HTML5 document -->
+  <meta charset="utf-8">
+  <!-- rule: surface is web -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- rule: one-page landing for AHD itself -->
+  <title>AHD / Artificial Human Design</title>
+  <style>
+    /* rule: everything in monospace; single-monospace pairing */
+    :root {
+      /* rule: post-digital-green token palette */
+      --bg: oklch(0.14 0.02 150);
+      --fg: oklch(0.92 0.12 135);
+      --dim: oklch(0.55 0.05 150);
+      --rule: oklch(0.3 0.04 150);
+      --amber: oklch(0.82 0.15 75);
+      --measure: 80ch; /* rule: at least one element aligned to the char grid */
+      --baseline: 8px; /* rule: baseline grid is 8 */
+    }
+
+    /* rule: no gradients, no shadows, no radii, no entrance animation */
+    * {
+      box-sizing: border-box;
+      border-radius: 0;
+      box-shadow: none;
+      animation: none;
+    }
+
+    /* rule: dark green-black background, muted green foreground */
+    html {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: "Berkeley Mono", "IBM Plex Mono", "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 15px;
+      line-height: 1.55;
+      letter-spacing: 0;
+    }
+
+    /* rule: no sans-serif body text */
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--fg);
+    }
+
+    /* rule: everything aligns to an 80 character grid */
+    .page {
+      width: min(var(--measure), calc(100vw - 32px));
+      margin: 0 auto;
+      padding: 24px 0 16px;
+    }
+
+    /* rule: one hairline rule colour */
+    header,
+    .block,
+    footer {
+      border-top: 1px solid var(--rule);
+    }
+
+    /* rule: rectangles only */
+    header {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 1ch;
+      padding: 8px 0 12px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    /* rule: voice technical, lowercase by default, terse */
+    .mark,
+    .tag {
+      margin: 0;
+      font-size: 0.86rem;
+      line-height: 1.25;
+      text-transform: lowercase;
+      color: var(--dim);
+    }
+
+    /* rule: single amber accent */
+    .mark strong,
+    .accent {
+      color: var(--amber);
+      font-weight: 700;
+    }
+
+    /* rule: no centred hero stack with pill badge + two CTAs */
+    main {
+      display: grid;
+      grid-template-columns: 43ch 1fr;
+      gap: 3ch;
+      padding-top: 16px;
+    }
+
+    /* rule: h1 is the product name on branded page */
+    h1 {
+      margin: 0 0 8px;
+      max-width: 18ch;
+      font-size: 2.073rem;
+      line-height: 1.1;
+      font-weight: 700;
+      letter-spacing: 0;
+      text-transform: none;
+    }
+
+    /* rule: descriptive value props in supporting copy, not headline */
+    .lede {
+      margin: 0 0 16px;
+      max-width: 42ch;
+      color: var(--fg);
+    }
+
+    /* rule: underlined links with offset, no colour change */
+    a {
+      color: inherit;
+      text-decoration-line: underline;
+      text-underline-offset: 4px;
+      text-decoration-thickness: 1px;
+    }
+
+    /* rule: read-the-code CTA required */
+    .cta {
+      display: inline-block;
+      color: var(--amber);
+      font-weight: 700;
+    }
+
+    /* rule: terminal-aesthetic code block */
+    pre {
+      margin: 16px 0 0;
+      padding: 8px;
+      overflow-x: auto;
+      border: 1px solid var(--rule);
+      background: transparent;
+      color: var(--fg);
+      font: inherit;
+      line-height: 1.45;
+      white-space: pre;
+    }
+
+    /* rule: code remains monospace */
+    code {
+      font: inherit;
+    }
+
+    /* rule: clearly separated manifest sections */
+    .block {
+      padding: 8px 0 12px;
+      margin-top: 16px;
+    }
+
+    /* rule: display line-height h2 1.25 */
+    h2 {
+      margin: 0 0 8px;
+      color: var(--amber);
+      font-size: 1.2rem;
+      line-height: 1.25;
+      font-weight: 700;
+    }
+
+    /* rule: no emoji bullets */
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* rule: manifest enumerates exact shipped and gated items */
+    li {
+      margin: 0;
+      padding-left: 3ch;
+      text-indent: -3ch;
+    }
+
+    /* rule: rectangles only; ASCII diagram rendered as text */
+    .diagram {
+      margin: 0 0 16px;
+      padding: 8px;
+      border: 1px solid var(--rule);
+      color: var(--dim);
+      font: inherit;
+      line-height: 1.2;
+      white-space: pre;
+    }
+
+    /* rule: include one intentional imperfection from required quirks */
+    .diagram .quirk {
+      color: var(--amber);
+    }
+
+    /* rule: no canonical 4-column footer */
+    footer {
+      margin-top: 16px;
+      padding-top: 8px;
+      color: var(--dim);
+      font-size: 0.86rem;
+    }
+
+    /* rule: responsive without changing font size with viewport width */
+    @media (max-width: 760px) {
+      main {
+        grid-template-columns: 1fr;
+      }
+
+      header {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- rule: one screen of reading -->
+  <div class="page">
+    <!-- rule: branded page gives AHD first-viewport signal -->
+    <header>
+      <p class="mark"><strong>ahd</strong> / artificial human design</p>
+      <p class="tag">evals for generated interfaces</p>
+    </header>
+
+    <!-- rule: not a centred hero stack -->
+    <main>
+      <section aria-labelledby="intro-title">
+        <!-- rule: h1 is product name or literal category -->
+        <h1 id="intro-title">Artificial Human Design</h1>
+        <!-- rule: audience already suspects the problem; no lecture -->
+        <p class="lede">
+          a framework for testing generated design against briefs, tokens,
+          rules, screenshots, and human taste. less discourse. more failed
+          checks you can read.
+        </p>
+        <!-- rule: github or forgejo link labelled as the read-the-code CTA -->
+        <a class="cta" href="https://github.com/">read-the-code CTA</a>
+
+        <!-- rule: command rendered in a monospace code block with language tag bash -->
+        <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+      </section>
+
+      <aside aria-label="pipeline diagram">
+        <!-- rule: at least one ASCII diagram rendered as text -->
+        <pre class="diagram">+------------+   +---------+   +-------------+
+| brief.yml  |-->| linter  |-->| eval report |
++------------+   +---------+   +-------------+
+       |              |              |
+       v              v              v
++------------+   +---------+   +-------------+
+| tokens     |   | critic  |   | patches     |
++------------+   +---------+   +-------------+
+                  <span class="quirk">^</span>
+             off-grid caret: intentional</pre>
+
+        <!-- rule: clearly separated manifest section titled What ships -->
+        <section class="block" aria-labelledby="ships-title">
+          <h2 id="ships-title">What ships</h2>
+          <ul>
+            <li>01 brief compiler</li>
+            <li>02 28-rule linter</li>
+            <li>03 eval harness</li>
+            <li>04 vision-critic scaffold</li>
+            <li>05 MCP server</li>
+            <li>06 editor plugins</li>
+            <li>07 eight tokens</li>
+          </ul>
+        </section>
+
+        <!-- rule: clearly separated manifest section titled What is gated -->
+        <section class="block" aria-labelledby="gated-title">
+          <h2 id="gated-title">What is gated</h2>
+          <ul>
+            <li>01 live frontier-model calls (needs API keys)</li>
+            <li>02 live vision critique (needs multimodal key + screenshot pipeline)</li>
+            <li>03 standalone npm packages for the editor plugins</li>
+            <li>04 additional tokens</li>
+          </ul>
+        </section>
+      </aside>
+    </main>
+
+    <!-- rule: footer names licence explicitly -->
+    <footer>
+      licence: FSL-1.1-Apache-2.0 for code, CC-BY-4.0 for tokens and artwork.
+    </footer>
+  </div>
+</body>
+</html>

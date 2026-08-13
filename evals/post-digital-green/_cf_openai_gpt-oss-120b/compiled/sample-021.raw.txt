@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ahd – artificial human design</title>
+<style>
+/* rule: use single monospace family */
+:root{
+  --font-mono:"Berkeley Mono","IBM Plex Mono","JetBrains Mono",ui-monospace,monospace;
+  /* rule: colour palette */
+  --color-bg:oklch(0.14 0.02 150);
+  --color-fg:oklch(0.92 0.12 135);
+  --color-dim:oklch(0.55 0.05 150);
+  --color-rule:oklch(0.3 0.04 150);
+  --color-amber:oklch(0.82 0.15 75);
+}
+html{background:var(--color-bg);color:var(--color-fg);font-family:var(--font-mono);font-size:15px;line-height:1.55;}
+body{margin:0;padding:0;display:flex;justify-content:center;}
+.container{
+  max-width:80ch;/* rule: align to 80‑character grid */
+  margin:2rem;
+  padding:2rem;
+  border:1px solid var(--color-rule);/* rule: hairline rule colour, rectangles only */
+}
+h1,h2{
+  margin:0 0 .5rem 0;
+  font-weight:700;
+  line-height:1.1;
+}
+p{margin:0 0 1rem 0;}
+pre{
+  background:var(--color-dim);
+  padding:.5rem;
+  overflow:auto;
+}
+code{font-family:var(--font-mono);}
+a{
+  color:inherit;/* rule: no colour change on hover */
+  text-decoration:underline;
+  text-underline-offset:4px;/* rule: underline offset */
+}
+a.cta{
+  color:var(--color-amber);/* rule: amber accent for CTA */
+}
+footer{
+  margin-top:2rem;
+  font-size:0.9rem;
+  color:var(--color-dim);
+}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>ahd – artificial human design</h1>
+<p>framework for evaluating AI‑generated design artefacts. no fluff, just
+tools you can run locally.</p>
+
+<h2>quick start</h2>
+<pre><code class="bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10 </code></pre>
+<!-- rule: intentional trailing space as imperfection -->
+
+<h2>pipeline overview</h2>
+<pre>
++-------------------+   +----------------+   +-------------------+
+| brief compiler    |→→| 28‑rule linter |→→| eval harness      |
++-------------------+   +----------------+   +-------------------+
+        |                       |                       |
+        v                       v                       v
++-------------------+   +----------------+   +-------------------+
+| vision‑critic     |→→| mcp server     |→→| editor plugins    |
++-------------------+   +----------------+   +-------------------+
+</pre>
+<!-- rule: at least one ASCII diagram -->
+
+<h2>what ships</h2>
+<ul style="list-style:none;padding-left:0;">
+  <li>brief compiler</li>
+  <li>28‑rule linter</li>
+  <li>eval harness</li>
+  <li>vision‑critic scaffold</li>
+  <li>mcp server</li>
+  <li>editor plugins</li>
+  <li>eight tokens</li>
+</ul>
+
+<h2>what is gated</h2>
+<ul style="list-style:none;padding-left:0;">
+  <li>live frontier‑model calls (needs api keys)</li>
+  <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+  <li>standalone npm packages for the editor plugins</li>
+  <li>additional tokens</li>
+</ul>
+
+<p><a href="https://github.com/ahd/ahd" class="cta">read the code</a></p>
+
+<footer>
+code licence: fsl-1.1-apache-2.0 • tokens &amp; artwork: cc-by-4.0
+</footer>
+</div>
+</body>
+</html>

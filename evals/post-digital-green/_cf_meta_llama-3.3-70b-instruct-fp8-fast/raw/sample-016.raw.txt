@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+ "_artificial-human-landing-page">
+<head>
+'gc metadata-artificial-human-design'>
+<meta charset="UTF-8" />
+<meta name="viewport"2010content "width=device-width, initial-scale=�� 
+ <link rel="stylesheet" href="styles.css" />
+</heaad>
+<body>
+<div classtitle-section>
+<h1 class="title-text">Artificial Human Designterminallaesthetic</h1>
+</div>
+<div class="erusformHere is2 the rest of the code:
+
+
+<div class="code-block">
+  <pre#endif language="bash"><code>ahdIs eval-live sw��editorial --brief briefs/landing.yml --models &lt;sepc&gt; --n 10 
+</code end></pre>
+</div>
+<div classtitle-cta>
+<a class="read-the-code-link" href.lazy="https://github.com" target="_blank"}>Read the code on Github</a>
+</div>
+<div classtitle-manifest>
+  <h2 classtitle-manifest-text>What개 ships</h2>
+﻿
+
+<ul class="manifest-list">
+ Таким brief compiler
+<li>28-rule linte</li>
+<li>eval -*-
+eval harne</li>
+<li>vision "criticscaffold</li>
+<li>MCP server</ Λαli>
+<li>eplugin</li>
+~-~-eight tokens</li>
+</uL>
+</div>
+<divmaybe classt็อต-manifest>
+  <h2 classtitle-manifest-ext>What gating</h>
+  <©©ul class="manifest-ext-list">
+    <li>live frontier model calls (apgolly-needs API　ヽkeys)</liВаж
+      <Intializedli>live ‘-vision critique ‘(needs laundering + multimodal key + screenshot pipeline transcripts)</li proje
+    standalone npm packages for the editor plugins</li>
+    additional tokens</li>
+  </ul>
+even</div>
+<div class="license-footer">
+  Licensed under <span class="licences-text груд">FSL-1.scalablytypedHere is the complete HTML code for the Artificial Human Design website:
+
+
+<!doctype html>
+<html lang="en">
+
+<head>
+        <meta charset×
+
+UTF-8" />
+        <
+meta name=" -*-
+viewport" 
+content="width ‘=device-width ‘, initial-scaleregion=1.0" />
+
+
+        <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<div class="title-section">
+        <h 
+class="ti 
+tle-text">Artificial Human;
+
+Design</h1>
+</
+div>
+
+<div class="code-block">
+  <
+pre><code class="language-bash">ahd eval-live sw 
+iss-editorial1 --brief briefs/lan
+ding 
+.yml --pe 
+models <sp
+ecs> --	10</co
+de></p
+re>
+</
+div> 
+
+<div class '${title-‐‐.cta}'> 
+<a class
+="readｱ 
+the-code-l 
+ink";
+ href="htt
+ps://gi
+thub.com": 
+target="_blank">Read theabic code on Github
+</a	>
+</di
+v };
+<div class="manifest-section">
+ -*-
+  <h2 class="©©manifest-tit 
+le-text">Wh 
+at ships
+   </h₀>
+ 
+  <ul ‘class="year-manife 
+st-list"> 
+    <li>Brief compiler</li>
+    <li 
+>28-rule lin
+ter</li> 
+    <
+li>Eval harnes 
+s</ 
+li> 
+ Boy<
+li>Vision critic scaffold</li>
+<li> 
+MCP ser 
+ver</ucer 
+li> Edito
+r plugin
+s</ ‘li>
+<li> Eight tok
+ens<‘/li>
+</ul>
+</div>Nama 
+<div class
+="manifest- 
+section"> 
+  <h��2 clas 
+s="manifest- 
+title- 
+ext">What 丶is gated</h
+2> 
+  Через 
+<ul class="year-manifest-ext-list">ene 
+    <li kimsLive frontier model λίγ calls (needs API keys)</ inter li>
+ ût 
+   2li>Live μέσα vision critiquename 
+(c 
+ontains multimod 
+al keyah + screenshots pipe 
+line)</li>
+bang 
+    <li>Standalone npm packa 
+ges og 
+or editor plugins</li> 
+    нату 
+    Dispadditional tokens</ 
+li> 
+ -*-
+</ul 육 
+</div> 
+<div class="license-footerование">
+ Licensed under <span class="�� 
+license-text">FSL，同时 
+1..1-Apache-2.03 for codenya, CC-BY-42.0评 for tokens)"). and artwork</spa 
+n>(ne 
+</div>
+
+</body>
+</html__,_parameters)

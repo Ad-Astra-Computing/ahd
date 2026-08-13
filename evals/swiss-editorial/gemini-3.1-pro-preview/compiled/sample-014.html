@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en">
+<!-- rule: Return a single, self-contained, valid HTML5 document. -->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AHD — Artificial Human Design</title>
+  <style>
+    /* rule: Palette is ink on paper (warm off-white) with a single spot red */
+    :root {
+      --ink: oklch(0.18 0 0);
+      --paper: oklch(0.98 0.005 95);
+      --spot: oklch(0.58 0.22 27);
+      --rule: oklch(0.18 0 0);
+      --muted: oklch(0.55 0 0);
+
+      /* rule: 12-column grid with 24px gutters and an 8px baseline */
+      --grid-columns: 12;
+      --grid-gutter: 24px;
+      --baseline: 8px;
+      /* rule: margin min 32, preferred calc(100vw / 24) */
+      --margin: max(32px, calc(100vw / 24));
+
+      /* rule: Set display type in Neue Haas Grotesk Display... Body in Neue Haas Grotesk Text */
+      --font-display: 'Neue Haas Grotesk Display', 'Helvetica Now Display', 'Inter Tight', sans-serif;
+      --font-text: 'Neue Haas Grotesk Text', 'Helvetica Now Text', 'Inter', sans-serif;
+      --font-mono: ui-monospace, 'JetBrains Mono', 'Geist Mono', monospace;
+    }
+
+    /* rule: Structural motion only. No entrance animations. */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* rule: respects prefers-reduced-motion */
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        transition: none !important;
+      }
+    }
+
+    body {
+      background-color: var(--paper);
+      color: var(--ink);
+      font-family: var(--font-text);
+      /* rule: Body in Neue Haas Grotesk Text at 17px */
+      font-size: 17px;
+      /* rule: line-height 1.5 */
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* rule: Work on a 12-column grid with 24px gutters */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(var(--grid-columns), 1fr);
+      column-gap: var(--grid-gutter);
+      padding-left: var(--margin);
+      padding-right: var(--margin);
+    }
+
+    /* rule: Asymmetric left-aligned composition */
+    .section-hero {
+      margin-top: calc(var(--baseline) * 20); /* 160px */
+    }
+
+    /* rule: one section anchored by a single word at display >= 120px with -0.02em tracking */
+    .display-word {
+      font-family: var(--font-display);
+      font-size: 160px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      /* rule: line-height display 1.05 */
+      line-height: 1.05;
+      grid-column: 1 / 11;
+      margin-bottom: calc(var(--baseline) * 4);
+    }
+
+    .hero-text-block {
+      grid-column: 1 / 8;
+      margin-bottom: calc(var(--baseline) * 8);
+    }
+
+    /* rule: measure 62ch */
+    .measure {
+      max-width: 62ch;
+      /* rule: declarative, short sentences, no hedges, no Oxford commas */
+      margin-bottom: calc(var(--baseline) * 4);
+    }
+
+    /* rule: spot colour used exactly once */
+    /* rule: A link to github labelled as the read-the-code CTA. */
+    .cta {
+      color: var(--spot);
+      text-decoration: none;
+      font-weight: 700;
+      display: inline-block;
+      /* rule: Structural motion only */
+      transition: opacity 0.1s linear;
+    }
+
+    .cta:hover {
+      opacity: 0.7;
+    }
+
+    /* rule: Require one dramatic jump per section (160 between sections) */
+    .section-jump {
+      margin-top: calc(var(--baseline) * 20); /* 160px */
+    }
+
+    /* rule: A terminal-aesthetic code block */
+    .code-wrapper {
+      grid-column: 2 / 12;
+      background-color: var(--ink);
+      color: var(--paper);
+      padding: calc(var(--baseline) * 3);
+      /* rule: No rounded corners except small status pills */
+      border-radius: 0;
+      /* rule: No shadows */
+      box-shadow: none;
+      overflow-x: auto;
+    }
+
+    pre {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    /* rule: One intentional element must bleed past the grid */
+    .bleed-container {
+      margin-top: calc(var(--baseline) * 20);
+      position: relative;
+    }
+    
+    .bleed-rule {
+      grid-column: 8 / 13;
+      height: 1px;
+      background-color: var(--rule);
+      /* bleeds deliberately off the right viewport edge */
+      width: 100vw; 
+    }
+
+    /* rule: A clearly separated manifest section */
+    .manifest {
+      border-top: 1px solid var(--rule);
+      padding-top: calc(var(--baseline) * 6);
+      padding-bottom: calc(var(--baseline) * 6);
+    }
+
+    .manifest-block-ships {
+      grid-column: 1 / 6;
+    }
+
+    .manifest-block-gated {
+      grid-column: 7 / 12;
+    }
+
+    /* rule: line-height h2 1.2 */
+    h2 {
+      font-family: var(--font-display);
+      font-size: 22px; /* ~ 17 * 1.333 */
+      line-height: 1.2;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: calc(var(--baseline) * 3);
+    }
+
+    ul {
+      list-style-type: none;
+    }
+
+    li {
+      margin-bottom: calc(var(--baseline) * 1);
+    }
+
+    /* rule: no emoji bullets */
+    li::before {
+      content: "—";
+      margin-right: 8px;
+      color: var(--muted);
+    }
+
+    /* rule: A footer that names the licence explicitly */
+    /* rule: No canonical 4-column Product / Company / Resources / Legal footer */
+    .site-footer {
+      border-top: 1px solid var(--rule);
+      padding-top: calc(var(--baseline) * 4);
+      padding-bottom: calc(var(--baseline) * 8);
+    }
+
+    .footer-content {
+      grid-column: 1 / -1;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+
+  <main>
+    <section class="grid section-hero">
+      <!-- rule: one section anchored by a single word at display >= 120px -->
+      <h1 class="display-word">RIGOUR.</h1>
+      
+      <div class="hero-text-block">
+        <p class="measure">
+          Artificial Human Design replaces endless prompting with explicit structural constraints. We enforce typography and grid systems at compile time. Output parameters are strictly defined. Design decisions require intent.
+        </p>
+        <p class="measure">
+          The framework provides working designers, senior engineers and early-stage founders with an alternative to generic generation.
+        </p>
+        <!-- rule: spot colour used exactly once -->
+        <a href="https://github.com/ahd-project/ahd" class="cta">read-the-code</a>
+      </div>
+    </section>
+
+    <!-- rule: one dramatic jump per section -->
+    <section class="grid section-jump">
+      <div class="code-wrapper">
+        <!-- rule: rendered in a monospace code block with the language tag bash -->
+        <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+      </div>
+    </section>
+
+    <!-- rule: One intentional element must bleed past the grid -->
+    <div class="grid bleed-container">
+      <div class="bleed-rule"></div>
+    </div>
+
+    <!-- rule: clearly separated manifest sections -->
+    <section class="grid manifest">
+      <div class="manifest-block-ships">
+        <!-- rule: titled 'What ships' that enumerates exact items -->
+        <h2>What ships</h2>
+        <ul>
+          <li>brief compiler</li>
+          <li>28-rule linter</li>
+          <li>eval harness</li>
+          <li>vision-critic scaffold</li>
+          <li>MCP server</li>
+          <li>editor plugins</li>
+          <li>eight tokens</li>
+        </ul>
+      </div>
+
+      <div class="manifest-block-gated">
+        <!-- rule: titled 'What is gated' that enumerates exact items -->
+        <h2>What is gated</h2>
+        <ul>
+          <li>live frontier-model calls (needs API keys)</li>
+          <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+          <li>standalone npm packages for the editor plugins</li>
+          <li>additional tokens</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="grid site-footer">
+    <!-- rule: A footer that names the licence explicitly -->
+    <div class="footer-content">
+      Licence: FSL-1.1-Apache-2.0 for code, CC-BY-4.0 for tokens and artwork.
+    </div>
+  </footer>
+
+</body>
+</html>

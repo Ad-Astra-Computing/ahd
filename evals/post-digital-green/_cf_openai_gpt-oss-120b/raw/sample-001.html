@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Artificial Human Design – AHD</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body{margin:0;font-family:system-ui,sans-serif;line-height:1.6;color:#222;background:#f9f9f9}
+    header{background:#fff;padding:2rem 4rem;border-bottom:1px solid #e0e0e0}
+    h1{margin:0;font-size:2.2rem}
+    .tagline{margin-top:.5rem;font-size:1.2rem;color:#555}
+    main{max-width:960px;margin:auto;padding:2rem 4rem}
+    .code-block{background:#1e1e1e;color:#d4d4d4;padding:1rem;border-radius:4px;font-family:monospace;overflow:auto}
+    .cta{display:inline-block;margin-top:1.5rem;padding:.75rem 1.5rem;background:#0066cc;color:#fff;text-decoration:none;border-radius:4px}
+    section{margin-top:3rem}
+    h2{font-size:1.6rem;border-bottom:2px solid #0066cc;padding-bottom:.3rem}
+    ul{margin:1rem 0 0 1.5rem;padding:0}
+    li{margin-bottom:.5rem}
+    footer{background:#fff;padding:1rem 4rem;border-top:1px solid #e0e0e0;font-size:.9rem;color:#555}
+    a{color:#0066cc}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Artificial Human Design (AHD)</h1>
+    <p class="tagline">A framework that puts real design judgment back into the loop.</p>
+  </header>
+
+  <main>
+    <section>
+      <h2>One‑liner run</h2>
+      <pre class="code-block"><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+      <a href="https://github.com/ahd/ahd" class="cta">Read the code</a>
+    </section>
+
+    <section>
+      <h2>What ships</h2>
+      <ul>
+        <li>Brief compiler</li>
+        <li>28‑rule linter</li>
+        <li>Eval harness</li>
+        <li>Vision‑critic scaffold</li>
+        <li>MCP server</li>
+        <li>Editor plugins</li>
+        <li>Eight tokens</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>What is gated</h2>
+      <ul>
+        <li>Live frontier‑model calls (needs API keys)</li>
+        <li>Live vision critique (needs multimodal key + screenshot pipeline)</li>
+        <li>Standalone npm packages for the editor plugins</li>
+        <li>Additional tokens</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>Code licence: <strong>FSL-1.1‑Apache‑2.0</strong> • Tokens &amp; artwork licence: <strong>CC‑BY‑4.0</strong></p>
+  </footer>
+</body>
+</html>

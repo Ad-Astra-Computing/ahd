@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AHD | Artificial Human Design</title>
+    <style>
+        body {
+            background-color: #fcfcfc;
+            color: #111;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 8vh 6vw;
+            max-width: 800px;
+        }
+
+        h1 {
+            font-size: 2.25rem;
+            font-weight: 600;
+            letter-spacing: -0.03em;
+            margin: 0 0 2rem 0;
+            color: #000;
+        }
+
+        p {
+            font-size: 1.125rem;
+            margin: 0 0 1.5rem 0;
+            color: #333;
+        }
+
+        .terminal {
+            background-color: #0a0a0f;
+            border-radius: 4px;
+            margin: 3rem 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .terminal-header {
+            background-color: #1a1a24;
+            padding: 0.5rem 1rem;
+            border-top-left-radius: 4px;
+            border-top-right-radius: 4px;
+            border-bottom: 1px solid #333;
+        }
+
+        .lang-tag {
+            font-family: "JetBrains Mono", "Geist Mono", Menlo, Monaco, Consolas, monospace;
+            font-size: 0.75rem;
+            color: #888;
+            text-transform: uppercase;
+        }
+
+        .terminal pre {
+            margin: 0;
+            padding: 1.5rem;
+            overflow-x: auto;
+        }
+
+        .terminal code {
+            font-family: "JetBrains Mono", "Geist Mono", Menlo, Monaco, Consolas, monospace;
+            font-size: 0.875rem;
+            color: #00ff94;
+        }
+
+        .terminal code::before {
+            content: "$ ";
+            color: #555;
+        }
+
+        .manifest-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+            margin: 4rem 0;
+            border-top: 1px solid #ccc;
+            padding-top: 3rem;
+        }
+
+        @media (min-width: 640px) {
+            .manifest-container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .manifest-section h2 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin: 0 0 1.5rem 0;
+            color: #000;
+        }
+
+        .manifest-section ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .manifest-section li {
+            font-size: 0.95rem;
+            color: #444;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eaeaea;
+        }
+
+        .manifest-section li:last-child {
+            border-bottom: none;
+        }
+
+        .manifest-section li::before {
+            content: "▪";
+            color: #000;
+            margin-right: 0.75rem;
+            font-size: 0.8em;
+        }
+
+        .site-footer {
+            margin-top: 5rem;
+            padding-top: 2rem;
+            border-top: 1px solid #ccc;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        @media (min-width: 640px) {
+            .site-footer {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+        }
+
+        .cta a {
+            display: inline-block;
+            color: #000;
+            font-weight: 600;
+            text-decoration: none;
+            border-bottom: 2px solid #000;
+            padding-bottom: 1px;
+            transition: all 0.2s ease;
+        }
+
+        .cta a:hover {
+            background-color: #000;
+            color: #fff;
+        }
+
+        .licence {
+            font-size: 0.875rem;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>AHD | Artificial Human Design</h1>
+    </header>
+
+    <main>
+        <p>
+            The generative default is slop. You already know this. The output defaults to an uncanny frictionless average: homogeneous layouts, predictable patterns and an absence of structural rigor.
+        </p>
+        <p>
+            AHD does not attempt to lecture you on design theory. It is a strict opinionated evaluation framework. It enforces hard constraints on machine-generated interfaces by replacing probabilistic generation with rigorous linting against aesthetic and functional rules. It gives you the tools to test, score and reject.
+        </p>
+
+        <div class="terminal">
+            <div class="terminal-header"><span class="lang-tag">bash</span></div>
+            <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+        </div>
+
+        <section class="manifest-container">
+            <div class="manifest-section">
+                <h2>What ships</h2>
+                <ul>
+                    <li>brief compiler</li>
+                    <li>28-rule linter</li>
+                    <li>eval harness</li>
+                    <li>vision-critic scaffold</li>
+                    <li>MCP server</li>
+                    <li>editor plugins</li>
+                    <li>eight tokens</li>
+                </ul>
+            </div>
+            <div class="manifest-section">
+                <h2>What is gated</h2>
+                <ul>
+                    <li>live frontier-model calls (needs API keys)</li>
+                    <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+                    <li>standalone npm packages for the editor plugins</li>
+                    <li>additional tokens</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="cta">
+            <a href="https://github.com/artificial-human-design/ahd" target="_blank" rel="noopener noreferrer">Read the code on GitHub</a>
+        </div>
+        <div class="licence">
+            Licence: FSL-1.1-Apache-2.0 for code, CC-BY-4.0 for tokens and artwork.
+        </div>
+    </footer>
+
+</body>
+</html>

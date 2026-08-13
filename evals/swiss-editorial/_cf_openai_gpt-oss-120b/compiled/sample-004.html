@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>AHD Landing</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+/* rule: colour palette */
+:root{
+  --ink: oklch(0.18 0 0);
+  --paper: oklch(0.98 0.005 95);
+  --spot: oklch(0.58 0.22 27);
+  --rule: oklch(0.18 0 0);
+  --space-0:0px;
+  --space-1:4px;
+  --space-2:8px;
+  --space-3:12px;
+  --space-4:16px;
+  --space-5:24px;
+  --space-6:32px;
+  --space-7:48px;
+  --space-8:64px;
+  --space-9:96px;
+  --space-10:160px;
+  --grid-gutter:24px;
+  --baseline:8px;
+  --font-display:"Neue Haas Grotesk Display",Helvetica Neue,Helvetica,Arial,sans-serif;
+  --font-text:"Neue Haas Grotesk Text",Helvetica Neue,Helvetica,Arial,sans-serif;
+}
+
+/* rule: global layout */
+body{
+  margin:0;
+  padding:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--font-text);
+  font-size:17px; /* rule: base size */
+  line-height:1.5; /* rule: baseline */
+  max-width:100%;
+}
+
+/* rule: 12‑column grid */
+.container{
+  display:grid;
+  grid-template-columns:repeat(12,1fr);
+  gap:var(--grid-gutter);
+  padding:0 var(--space-6);
+  margin:auto;
+}
+
+/* rule: heading */
+.hero-word{
+  font-family:var(--font-display);
+  font-weight:900;
+  font-size:140px; /* >=120px */
+  letter-spacing:-0.02em; /* rule: tracking */
+  line-height:1.05;
+  grid-column:2 / 8;
+  margin-top:var(--space-8);
+}
+
+/* rule: subheading */
+.subhead{
+  grid-column:2 / 10;
+  margin-top:var(--space-4);
+}
+
+/* rule: code block */
+pre{
+  background:var(--paper);
+  border:1px solid var(--rule);
+  padding:var(--space-3);
+  overflow:auto;
+  grid-column:2 / 10;
+  margin-top:var(--space-5);
+}
+code{
+  font-family:monospace;
+  font-size:15px;
+}
+
+/* rule: CTA with spot colour used exactly once */
+.cta{
+  color:var(--spot);
+  text-decoration:none;
+  font-weight:700;
+  grid-column:2 / 6;
+  margin-top:var(--space-4);
+}
+
+/* rule: manifest sections */
+section{
+  grid-column:2 / 12;
+  margin-top:var(--space-9);
+}
+h2{
+  font-family:var(--font-display);
+  font-weight:700;
+  font-size:48px;
+  margin:0 0 var(--space-3);
+}
+ul{
+  margin:0;
+  padding-left:1.2em;
+}
+li{
+  margin-bottom:var(--space-2);
+}
+
+/* rule: bleed element */
+.bleed{
+  background:var(--ink);
+  color:var(--paper);
+  grid-column:1 / -1;
+  margin-left:-var(--space-6);
+  margin-right:-var(--space-6);
+  padding:var(--space-4) var(--space-6);
+}
+
+/* rule: footer */
+footer{
+  grid-column:2 / 12;
+  margin-top:var(--space-9);
+  padding:var(--space-4) 0;
+  border-top:1px solid var(--rule);
+  font-size:14px;
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <!-- rule: hero word anchored -->
+  <div class="hero-word">AHD</div>
+  <p class="subhead">Artificial Human Design. A framework, not a hype cycle.</p>
+  <pre><code class="bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+  <a href="https://github.com/ahd/ahd" class="cta">Read the code</a>
+  <!-- rule: bleed past grid -->
+  <div class="bleed">Open source. Transparent. No hidden layers.</div>
+
+  <!-- rule: what ships manifest -->
+  <section>
+    <h2>What ships</h2>
+    <ul>
+      <li>Brief compiler</li>
+      <li>28‑rule linter</li>
+      <li>Eval harness</li>
+      <li>Vision‑critic scaffold</li>
+      <li>MCP server</li>
+      <li>Editor plugins</li>
+      <li>Eight tokens</li>
+    </ul>
+  </section>
+
+  <!-- rule: what is gated manifest -->
+  <section>
+    <h2>What is gated</h2>
+    <ul>
+      <li>Live frontier‑model calls (needs API keys)</li>
+      <li>Live vision critique (needs multimodal key + screenshot pipeline)</li>
+      <li>Standalone npm packages for the editor plugins</li>
+      <li>Additional tokens</li>
+    </ul>
+  </section>
+
+  <footer>
+    Code licence: FSL‑1.1‑Apache‑2.0. Tokens &amp; artwork licence: CC‑BY‑4.0.
+  </footer>
+</div>
+</body>
+</html>

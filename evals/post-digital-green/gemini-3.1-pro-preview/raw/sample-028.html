@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AHD | Artificial Human Design</title>
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --fg: #e2e2e5;
+    --accent: #00ff94;
+    --dim: #8b8b93;
+    --border: #27272a;
+    --mono: "Geist Mono", "JetBrains Mono", "SFMono-Regular", Consolas, Menlo, monospace;
+    --sans: "Geist", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  
+  body {
+    background-color: var(--bg);
+    color: var(--fg);
+    font-family: var(--sans);
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  main {
+    max-width: 720px;
+    margin: 12vh auto;
+    padding: 0 24px;
+  }
+
+  h1 {
+    font-family: var(--mono);
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    color: var(--accent);
+    letter-spacing: -0.02em;
+  }
+
+  p {
+    font-size: 1.125rem;
+    color: var(--fg);
+    margin-bottom: 1.5rem;
+    max-width: 600px;
+  }
+
+  .lead {
+    font-size: 1.25rem;
+    color: #ffffff;
+    font-weight: 500;
+  }
+
+  pre {
+    background-color: #000000;
+    border: 1px solid var(--border);
+    padding: 1.25rem;
+    border-radius: 2px;
+    overflow-x: auto;
+    font-family: var(--mono);
+    font-size: 0.875rem;
+    margin: 3rem 0;
+  }
+
+  code.language-bash {
+    color: var(--accent);
+  }
+
+  .manifest {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    margin: 4rem 0;
+  }
+
+  @media (min-width: 600px) {
+    .manifest {
+      flex-direction: row;
+      gap: 4rem;
+    }
+  }
+
+  .manifest-group {
+    flex: 1;
+  }
+
+  h2 {
+    font-family: var(--mono);
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--dim);
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0.5rem;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  li {
+    font-size: 0.9375rem;
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: flex-start;
+    color: var(--fg);
+  }
+
+  li::before {
+    content: "::";
+    color: var(--dim);
+    font-family: var(--mono);
+    margin-right: 0.75rem;
+  }
+
+  .cta {
+    display: inline-block;
+    font-family: var(--mono);
+    color: var(--bg);
+    background-color: var(--accent);
+    padding: 0.75rem 1.5rem;
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 600;
+    border-radius: 2px;
+    margin-top: 1rem;
+    transition: opacity 0.2s ease;
+  }
+
+  .cta:hover {
+    opacity: 0.8;
+  }
+
+  footer {
+    margin-top: 6rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--dim);
+    padding-bottom: 4rem;
+  }
+</style>
+</head>
+<body>
+  <main>
+    <h1>AHD</h1>
+    
+    <p class="lead">
+      We have reached peak entropy in generative interfaces. The default output is generic, unconsidered and structurally weak.
+    </p>
+    
+    <p>
+      Artificial Human Design (AHD) is a framework to constrain output, evaluate structure and enforce typographic discipline. It replaces stochastic approximation with explicit intent. You do not need another lecture on design quality; you need a toolset that holds models accountable to rigid standards.
+    </p>
+
+    <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+
+    <div class="manifest">
+      <div class="manifest-group">
+        <h2>What ships</h2>
+        <ul>
+          <li>Brief compiler</li>
+          <li>28-rule linter</li>
+          <li>Eval harness</li>
+          <li>Vision-critic scaffold</li>
+          <li>MCP server</li>
+          <li>Editor plugins</li>
+          <li>Eight tokens</li>
+        </ul>
+      </div>
+
+      <div class="manifest-group">
+        <h2>What is gated</h2>
+        <ul>
+          <li>Live frontier-model calls (needs API keys)</li>
+          <li>Live vision critique (needs multimodal key + screenshot pipeline)</li>
+          <li>Standalone npm packages for the editor plugins</li>
+          <li>Additional tokens</li>
+        </ul>
+      </div>
+    </div>
+
+    <a href="https://github.com/ahd-project/ahd" class="cta">Read the code</a>
+
+    <footer>
+      Code is licensed under FSL-1.1-Apache-2.0 | Tokens and artwork are licensed under CC-BY-4.0
+    </footer>
+  </main>
+</body>
+</html>

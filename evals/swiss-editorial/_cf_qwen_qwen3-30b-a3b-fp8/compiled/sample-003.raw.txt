@@ -1,0 +1,169 @@
+
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AHD - Artificial Human Design</title>
+  <style>
+    :root {
+      --font-display: 'Neue Haas Grotesk Display', 'Helvetica Now Display', 'Inter Tight';
+      --font-text: 'Neue Haas Grotesk Text', 'Helvetica Now Text', 'Inter';
+      --ink: oklch(0.18 0 0);
+      --paper: oklch(0.98 0.005 95);
+      --spot: oklch(0.58 0.22 27);
+      --rule: oklch(0.18 0 0);
+      --baseline: 8px;
+      --gutter: 24px;
+      --margin: calc(100vw / 24);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font-text);
+      font-size: 17px;
+      line-height: 1.5;
+      color: var(--ink);
+      background: var(--paper);
+      padding: 0 var(--gutter);
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 64px;
+      padding-top: 64px;
+    }
+
+    h1 {
+      font-family: var(--font-display);
+      font-size: 96px;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+      grid-column: 1 / -1;
+    }
+
+    pre {
+      background: var(--ink);
+      color: var(--paper);
+      padding: 16px 24px;
+      border: 1px solid var(--rule);
+      font-family: 'Courier New', monospace;
+      font-size: 16px;
+      margin: 48px 0;
+      overflow-x: auto;
+    }
+
+    .manifest {
+      display: grid;
+      gap: 24px;
+    }
+
+    .manifest h2 {
+      font-size: 24px;
+      margin-bottom: 8px;
+      color: var(--ink);
+    }
+
+    .manifest ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .manifest li {
+      margin-bottom: 8px;
+    }
+
+    .cta {
+      color: var(--spot);
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    footer {
+      font-size: 14px;
+      color: var(--ink);
+      border-top: 1px solid var(--rule);
+      padding-top: 24px;
+      margin-top: 64px;
+    }
+
+    /* rule: 12-column grid with 24px gutters */
+    @media (min-width: 768px) {
+      body {
+        grid-template-columns: repeat(12, 1fr);
+        gap: 24px;
+        padding: 0;
+      }
+
+      body > * {
+        grid-column: 1 / -1;
+      }
+
+      h1 {
+        grid-column: 1 / 8;
+      }
+
+      pre {
+        grid-column: 1 / 13;
+      }
+
+      .manifest {
+        grid-column: 1 / 13;
+      }
+
+      footer {
+        grid-column: 1 / 13;
+      }
+    }
+
+    /* rule: one element bleeds past the grid */
+    pre {
+      grid-column: 1 / 14;
+      margin-left: -24px;
+      margin-right: -24px;
+    }
+
+    /* rule: spot color used exactly once */
+    .cta {
+      color: var(--spot);
+    }
+  </style>
+</head>
+<body>
+  <h1>AHD</h1>
+  <pre><code class="bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+  <div class="manifest">
+    <section>
+      <h2>What ships</h2>
+      <ul>
+        <li>brief compiler</li>
+        <li>28-rule linter</li>
+        <li>eval harness</li>
+        <li>vision-critic scaffold</li>
+        <li>MCP server</li>
+        <li>editor plugins</li>
+        <li>eight tokens</li>
+      </ul>
+    </section>
+    <section>
+      <h2>What is gated</h2>
+      <ul>
+        <li>live frontier-model calls (needs API keys)</li>
+        <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+        <li>standalone npm packages for the editor plugins</li>
+        <li>additional tokens</li>
+      </ul>
+    </section>
+  </div>
+  <footer>
+    <p>Code: FSL-1.1-Apache-2.0 | Tokens and artwork: CC-BY-4.0</p>
+    <p><a href="https://github.com/ahd" class="cta">Read the code</a></p>
+  </footer>
+</body>
+</html>

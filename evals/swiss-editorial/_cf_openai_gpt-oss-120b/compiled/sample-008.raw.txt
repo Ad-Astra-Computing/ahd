@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Artificial Human Design</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+/* rule: Swiss 12‑col grid, 24px gutters, 8px baseline */
+:root{
+  --grid-columns:12;
+  --grid-gutter:24px;
+  --baseline:8px;
+  --margin-min:32px;
+  --color-ink:oklch(0.18 0 0);
+  --color-paper:oklch(0.98 0.005 95);
+  --color-spot:oklch(0.58 0.22 27);
+  --color-rule:oklch(0.18 0 0);
+  --font-display:"Neue Haas Grotesk Display",Helvetica,Arial,sans-serif;
+  --font-text:"Neue Haas Grotesk Text",Helvetica,Arial,sans-serif;
+  --space-0:0;
+  --space-1:4px;
+  --space-2:8px;
+  --space-3:12px;
+  --space-4:16px;
+  --space-5:24px;
+  --space-6:32px;
+  --space-7:48px;
+  --space-8:64px;
+  --space-9:96px;
+  --space-10:160px;
+}
+html{
+  background:var(--color-paper);
+  color:var(--color-ink);
+  font-family:var(--font-text);
+  line-height:1.5; /* rule: body line-height */
+}
+body{
+  margin:0;
+  padding:var(--space-5) var(--margin-min);
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(var(--grid-columns),1fr);
+  gap:var(--grid-gutter);
+}
+h1{
+  font-family:var(--font-display);
+  font-size:128px; /* >=120px */
+  line-height:1.05;
+  letter-spacing:-0.02em; /* rule: tracking -0.02em */
+  margin:0;
+}
+h2{
+  font-family:var(--font-display);
+  font-size:48px;
+  line-height:1.2;
+  margin-top:var(--space-9);
+  margin-bottom:var(--space-5);
+}
+p{
+  max-width:62ch;
+  margin:0 0 var(--space-5) 0;
+}
+code{
+  font-family:ui-monospace,monospace;
+  background:var(--color-paper);
+  color:var(--color-ink);
+  padding:var(--space-2) var(--space-3);
+  display:block;
+  overflow-x:auto;
+}
+a.cta{
+  color:var(--color-spot); /* rule: spot colour used exactly once */
+  text-decoration:none;
+  border:1px solid var(--color-spot);
+  padding:var(--space-2) var(--space-4);
+  font-weight:700;
+  display:inline-block;
+  margin-top:var(--space-5);
+}
+.status{
+  background:var(--color-ink);
+  color:var(--color-paper);
+  padding:var(--space-1) var(--space-3);
+  border-radius:999px; /* rule: pills allowed for status tags only */
+  font-size:14px;
+  line-height:1;
+  display:inline-block;
+}
+.bleed{
+  position:relative;
+  left:50%;
+  right:50%;
+  margin-left:-50vw;
+  margin-right:-50vw;
+  background:var(--color-ink);
+  color:var(--color-paper);
+  padding:var(--space-4) 0;
+  text-align:center;
+  font-size:24px;
+  /* rule: intentional element bleeds past the grid */
+}
+footer{
+  border-top:1px solid var(--color-rule);
+  margin-top:var(--space-9);
+  padding-top:var(--space-5);
+  font-size:14px;
+}
+</style>
+</head>
+<body>
+<div class="grid">
+  <div class="col-span-8"><!-- rule: left‑aligned hero, not centered -->
+    <h1>AHD</h1><!-- rule: single word anchor, display >=120px -->
+    <p>Framework for design‑first AI. No fluff. No hidden layers. Code you can read, evaluate, and extend.</p>
+    <a href="https://github.com/ahd/ahd" class="cta">Read the code</a><!-- rule: read‑the‑code CTA -->
+    <div class="status">beta</div><!-- rule: allowed pill -->
+  </div>
+</div>
+
+<div class="bleed"><!-- rule: element bleeding past grid -->
+  <code class="bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code><!-- rule: bash code block -->
+</div>
+
+<div class="grid">
+  <div class="col-span-12">
+    <h2>What ships</h2><!-- rule: manifest section title -->
+    <ul>
+      <li>brief compiler</li>
+      <li>28‑rule linter</li>
+      <li>eval harness</li>
+      <li>vision‑critic scaffold</li>
+      <li>MCP server</li>
+      <li>editor plugins</li>
+      <li>eight tokens</li>
+    </ul>
+  </div>
+
+  <div class="col-span-12">
+    <h2>What is gated</h2><!-- rule: manifest section title -->
+    <ul>
+      <li>live frontier‑model calls (needs API keys)</li>
+      <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+      <li>standalone npm packages for the editor plugins</li>
+      <li>additional tokens</li>
+    </ul>
+  </div>
+</div>
+
+<footer>
+  Code: FSL‑1.1‑Apache‑2.0 • Tokens &amp; artwork: CC‑BY‑4.0
+</footer>
+</body>
+</html>

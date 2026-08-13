@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>AHD – Artificial Human Design</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root{
+  --bg:#f8f9fa;
+  --text:#212529;
+  --accent:#0069d9;
+  --code-bg:#1e1e1e;
+  --code-text:#d4d4d4;
+}
+body{
+  margin:0;
+  font-family:system-ui, -apple-system, sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.6;
+}
+header{
+  padding:3rem 1rem;
+  text-align:center;
+}
+h1{
+  font-size:2.5rem;
+  margin:0 0 .5rem;
+}
+h2{
+  font-size:1.2rem;
+  font-weight:400;
+  color:#555;
+  margin:0 0 2rem;
+}
+a.cta{
+  display:inline-block;
+  padding:.75rem 1.5rem;
+  margin-top:1rem;
+  background:var(--accent);
+  color:#fff;
+  text-decoration:none;
+  border-radius:4px;
+}
+section{
+  max-width:800px;
+  margin:0 auto 3rem;
+  padding:0 1rem;
+}
+pre{
+  background:var(--code-bg);
+  color:var(--code-text);
+  padding:1rem;
+  overflow:auto;
+  border-radius:4px;
+  font-size:0.95rem;
+}
+code{
+  font-family:monospace;
+}
+ul{
+  list-style:disc inside;
+  margin:0;
+  padding-left:1rem;
+}
+footer{
+  background:#e9ecef;
+  text-align:center;
+  padding:1rem;
+  font-size:0.9rem;
+}
+footer a{
+  color:inherit;
+  text-decoration:underline;
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>Artificial Human Design (AHD)</h1>
+  <h2>Design tools that keep the human in the loop.</h2>
+  <a href="https://github.com/your-org/ahd" class="cta">Read the code</a>
+</header>
+
+<section>
+  <h3>Run an evaluation</h3>
+  <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+</section>
+
+<section>
+  <h3>What ships</h3>
+  <ul>
+    <li>Brief compiler</li>
+    <li>28‑rule linter</li>
+    <li>Eval harness</li>
+    <li>Vision‑critic scaffold</li>
+    <li>MCP server</li>
+    <li>Editor plugins</li>
+    <li>Eight tokens</li>
+  </ul>
+</section>
+
+<section>
+  <h3>What is gated</h3>
+  <ul>
+    <li>Live frontier‑model calls (needs API keys)</li>
+    <li>Live vision critique (needs multimodal key + screenshot pipeline)</li>
+    <li>Standalone npm packages for the editor plugins</li>
+    <li>Additional tokens</li>
+  </ul>
+</section>
+
+<footer>
+  Code licensed under <a href="https://spdx.org/licenses/FSL-1.1-Apache-2.0.html">FSL‑1.1‑Apache‑2.0</a>. Tokens &amp; artwork under <a href="https://creativecommons.org/licenses/by/4.0/">CC‑BY‑4.0</a>.
+</footer>
+</body>
+</html>

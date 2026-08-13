@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AHD — Artificial Human Design</title>
+    <style>
+        /* rule: palette ink on paper (warm off-white) */
+        :root {
+            --color-paper: oklch(0.98 0.005 95);
+            --color-ink: oklch(0.18 0 0);
+            --color-spot: oklch(0.58 0.22 27); /* rule: single spot red */
+            --color-muted: oklch(0.55 0 0);
+            --color-rule: oklch(0.18 0 0);
+            
+            /* rule: 12-column grid with 24px gutters */
+            --gutter: 24px;
+            --margin: calc(100vw / 24);
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* rule: baseline 8px */
+        html, body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--color-paper);
+            color: var(--color-ink);
+            /* rule: body in Neue Haas Grotesk Text (fallback Inter) at 17px, line-height 1.5 */
+            font-family: "Neue Haas Grotesk Text", Inter, -apple-system, BlinkMacSystemFont, sans-serif;
+            font-size: 17px;
+            line-height: 1.5;
+            /* rule: 8px baseline rhythm */
+            line-height: 24px; 
+        }
+
+        /* rule: one intentional element must bleed past the grid */
+        .bleed-element {
+            position: absolute;
+            top: 0;
+            right: -100px; /* rule: bleed past grid */
+            bottom: 0;
+            width: 1px;
+            background-color: var(--color-ink);
+            z-index: -1;
+        }
+
+        /* rule: 12-column grid system */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(12, minmax(0, 1fr));
+            column-gap: var(--gutter);
+            padding-left: var(--margin);
+            padding-right: var(--margin);
+            max-width: 100%;
+        }
+
+        /* rule: display type in Neue Haas Grotesk Display at 96–160px with tracking -0.02em */
+        h1 {
+            grid-column: 1 / span 12;
+            font-family: "Neue Haas Grotesk Display", "Helvetica Now Display", Helvetica, sans-serif;
+            font-size: 160px;
+            font-weight: 900;
+            letter-spacing: -0.02em;
+            line-height: 1.05;
+            margin: 160px 0 0 0; /* rule: dramatic jump (160px) */
+            /* rule: asymmetric left-aligned composition */
+            text-align: left;
+        }
+
+        /* rule: section anchored by a single word at display >= 120px */
+        .hero-anchor {
+            grid-column: 1 / span 12;
+        }
+
+        .sub-headline {
+            grid-column: 1 / span 6;
+            margin-bottom: 160px;
+            font-size: 24px;
+            line-height: 1.2;
+            font-weight: 400;
+        }
+
+        /* rule: terminal-aesthetic code block */
+        .code-section {
+            grid-column: 1 / span 10;
+            margin-bottom: 160px;
+        }
+
+        pre {
+            background: none; /* rule: no glassmorphism/shadows */
+            border: 1px solid var(--color-ink);
+            padding: 32px;
+            margin: 0;
+            overflow-x: auto;
+        }
+
+        code {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+            font-size: 16px;
+            color: var(--color-ink);
+        }
+
+        /* rule: manifest section */
+        .manifest-section {
+            grid-column: 1 / span 12;
+            margin-bottom: 160px;
+            display: grid;
+            grid-template-columns: repeat(12, minmax(0, 1fr));
+            gap: var(--gutter);
+        }
+
+        .manifest-col {
+            grid-column: span 6;
+        }
+
+        h2 {
+            font-family: "Neue Haas Grotesk Display", sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 48px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: baseline;
+        }
+
+        /* rule: no emoji bullets */
+        li::before {
+            content: "";
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            background-color: var(--color-ink);
+            margin-right: 16px;
+            flex-shrink: 0;
+        }
+
+        /* rule: CTA link */
+        .cta-section {
+            grid-column: 1 / span 12;
+            margin-bottom: 160px;
+        }
+
+        .read-the-code {
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 18px;
+            /* rule: spot red used exactly once */
+            color: var(--color-spot);
+        }
+
+        /* rule: footer */
+        footer {
+            grid-column: 1 / span 12;
+            padding-top: 80px;
+            border-top: 1px solid var(--color-ink);
+            font-size: 14px;
+            color: var(--color-muted);
+            padding-bottom: 40px;
+        }
+
+        /* rule: no centered hero, no 3-column cards, no rounded-2xl */
+        @media (max-width: 768px) {
+            h1 { font-size: 80px; }
+            .manifest-col { grid-column: span 12; }
+            .sub-headline { grid-column: span 12; }
+        }
+    </style>
+</head>
+<body>
+    <!-- rule: intentional bleed past grid -->
+    <div class="bleed-element"></div>
+
+    <main class="grid">
+        <!-- rule: section anchored by a single word at display >= 120px -->
+        <section class="hero-anchor">
+            <h1>AHD</h1>
+        </section>
+
+        <section class="sub-headline">
+            A framework for rigorous design evaluation in an era of generated entropy.
+        </section>
+
+        <!-- rule: terminal-aesthetic code block with bash tag -->
+        <section class="code-section">
+            <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+        </section>
+
+        <!-- rule: manifest section 'What ships' and 'What is gated' -->
+        <section class="manifest-section">
+            <div class="manifest-col">
+                <h2>What ships</h2>
+                <ul>
+                    <li>brief compiler</li>
+                    <li>28-rule linter</li>
+                    <li>eval harness</li>
+                    <li>vision-critic scaffold</li>
+                    <li>MCP server</li>
+                    <li>editor plugins</li>
+                    <li>eight tokens</li>
+                </ul>
+            </div>
+            <div class="manifest-col">
+                <h2>What is gated</h2>
+                <ul>
+                    <li>live frontier-model calls (needs API keys)</li>
+                    <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+                    <li>standalone npm packages for the editor plugins</li>
+                    <li>additional tokens</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- rule: github link labelled as read-the-code CTA -->
+        <section class="cta-section">
+            <a href="https://github.com/ahd-design" class="read-the-code">read-the-code</a>
+        </section>
+
+        <!-- rule: explicit licence in footer -->
+        <footer>
+            FSL-1.1-Apache-2.0 for code, CC-BY-4.0 for tokens and artwork.
+        </footer>
+    </main>
+</body>
+</html>

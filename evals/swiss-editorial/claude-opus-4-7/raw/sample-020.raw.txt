@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AHD — Artificial Human Design</title>
+<style>
+  :root{
+    --bg:#f4f1ea;
+    --ink:#14130f;
+    --rule:#14130f;
+    --muted:#55524a;
+    --accent:#b3381c;
+    --term-bg:#111210;
+    --term-ink:#e8e4d8;
+    --term-green:#9bbf6a;
+    --term-dim:#7a7a6a;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink)}
+  body{
+    font-family: "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    font-size:17px;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:760px;margin:0 auto;padding:40px 28px 0}
+  header.top{
+    display:flex;align-items:baseline;justify-content:space-between;
+    padding-bottom:14px;border-bottom:1px solid var(--rule);
+    font-family: ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    font-size:13px;letter-spacing:.02em;
+  }
+  header.top .mark{font-weight:700}
+  header.top .mark em{font-style:normal;color:var(--accent)}
+  header.top nav a{color:var(--ink);text-decoration:none;margin-left:16px}
+  header.top nav a:hover{text-decoration:underline}
+  h1{
+    font-family: "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    font-weight:400;font-style:italic;
+    font-size:44px;line-height:1.08;
+    margin:40px 0 18px;letter-spacing:-.01em;
+  }
+  h1 .roman{font-style:normal}
+  .lede{font-size:19px;max-width:62ch;margin:0 0 10px}
+  .lede + .lede{margin-top:10px}
+  .lede strong{font-weight:600}
+  .kicker{
+    font-family: ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    font-size:12px;text-transform:uppercase;letter-spacing:.14em;
+    color:var(--muted);margin:52px 0 10px;
+    display:flex;align-items:center;gap:10px;
+  }
+  .kicker::before{content:"";height:1px;width:18px;background:var(--muted)}
+  section{margin-top:8px}
+  section p{max-width:62ch}
+  pre.term{
+    background:var(--term-bg);color:var(--term-ink);
+    font-family: ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    font-size:13.5px;line-height:1.55;
+    padding:18px 20px;margin:18px 0 0;
+    border-radius:4px;overflow-x:auto;
+    border:1px solid #000;
+    position:relative;
+  }
+  pre.term .taghead{
+    display:flex;justify-content:space-between;align-items:center;
+    color:var(--term-dim);font-size:11px;letter-spacing:.1em;
+    text-transform:uppercase;margin-bottom:10px;
+    border-bottom:1px dashed #2a2b27;padding-bottom:8px;
+  }
+  pre.term .prompt{color:var(--term-green);user-select:none}
+  pre.term .flag{color:#c9a24a}
+  pre.term .str{color:#d6a89a}
+  pre.term .cmt{color:var(--term-dim)}
+  .ships-grid{
+    display:grid;grid-template-columns:1fr 1fr;gap:0;
+    border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+    margin-top:14px;
+  }
+  .ships-grid > div{padding:18px 0}
+  .ships-grid > div + div{border-left:1px solid var(--rule);padding-left:22px}
+  .ships-grid > div:first-child{padding-right:22px}
+  .ships-grid h3{
+    margin:0 0 10px;font-size:13px;font-weight:700;
+    font-family: ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    text-transform:uppercase;letter-spacing:.12em;
+  }
+  .ships-grid h3 .dot{display:inline-block;width:7px;height:7px;background:var(--accent);margin-right:8px;transform:translateY(-2px)}
+  .ships-grid h3.gated .dot{background:transparent;border:1px solid var(--ink)}
+  ul.manifest{list-style:none;padding:0;margin:0;font-size:15px}
+  ul.manifest li{
+    padding:7px 0;border-top:1px dotted #bcb8ad;
+    display:flex;justify-content:space-between;gap:14px;
+  }
+  ul.manifest li:first-child{border-top:none}
+  ul.manifest .tag{
+    font-family: ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    font-size:11px;color:var(--muted);letter-spacing:.05em;
+    white-space:nowrap;
+  }
+  .cta-row{margin-top:22px;display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+  a.read-code{
+    font-family: ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    font-size:13px;
+    background:var(--ink);color:var(--bg);
+    padding:11px 16px;text-decoration:none;
+    border:1px solid var(--ink);
+    letter-spacing:.04em;
+  }
+  a.read-code:hover{background:var(--accent);border-color:var(--accent)}
+  a.mirror{
+    font-family: ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    font-size:13px;color:var(--ink);text-decoration:underline;
+    text-underline-offset:4px;
+  }
+  .note{
+    font-size:14px;color:var(--muted);max-width:62ch;margin-top:14px;
+    border-left:2px solid var(--accent);padding-left:14px;
+  }
+  footer{
+    margin-top:64px;border-top:1px solid var(--rule);
+    padding:20px 0 40px;
+    font-family: ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    font-size:12px;color:var(--muted);letter-spacing:.02em;
+    display:flex;flex-wrap:wrap;gap:10px 28px;justify-content:space-between;
+  }
+  footer span.lic{color:var(--ink)}
+  @media (max-width:620px){
+    h1{font-size:34px}
+    .ships-grid{grid-template-columns:1fr}
+    .ships-grid > div + div{border-left:none;border-top:1px solid var(--rule);padding-left:0;padding-top:18px}
+    .ships-grid > div:first-child{padding-right:0}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div class="mark">AHD<em>/</em>Artificial Human Design</div>
+    <nav>
+      <a href="#command">command</a>
+      <a href="#ships">ships</a>
+      <a href="#gated">gated</a>
+    </nav>
+  </header>
+
+  <h1>A framework for design that doesn't look <span class="roman">like every other</span> <em>prompted</em> website this month.</h1>
+
+  <p class="lede">You already know the pattern. Centred hero, pill badge, two CTAs, three equal cards, a purple-to-blue wash, a shimmer. AHD treats that output as a measurable regression, not a vibe.</p>
+
+  <p class="lede">It is a brief compiler, a linter, and an eval harness. You write a brief, the models draft against it, the harness scores drafts against a rubric grounded in Swiss editorial practice, and you read the diff. No lecture. A loop.</p>
+
+  <div class="kicker" id="command">the one-liner</div>
+  <p>Run the live eval against the landing brief, ten drafts per model, in a single call. Results land as a static report you can grep.</p>
+
+<pre class="term"><span class="taghead"><span>bash</span><span>ahd &middot; 0.4.2</span></span><span class="prompt">$</span> ahd eval-live swiss-editorial <span class="flag">--brief</span> briefs/landing.yml <span class="flag">--models</span> &lt;specs&gt; <span class="flag">--n</span> 10
+<span class="cmt"># writes ./out/&lt;run-id&gt;/{drafts,scores,diff.html}</span></pre>
+
+  <div class="cta-row">
+    <a class="read-code" href="https://github.com/ahd/ahd">Read the code on GitHub →</a>
+    <a class="mirror" href="https://code.ahd.dev/ahd/ahd">or the Forgejo mirror</a>
+  </div>
+
+  <p class="note">AHD does not generate a website for you. It generates a rubric, forces drafts through it, and shows you where each one fails. The output is legibility, not velocity.</p>
+
+  <div class="kicker" id="ships">Manifest &mdash; what ships</div>
+  <section>
+    <p>Everything in this column is in the repository today. Clone it, run the tests, read the rubric, disagree with it in a pull request.</p>
+    <div class="ships-grid">
+      <div>
+        <h3 class="ships"><span class="dot"></span>What ships</h3>
+        <ul class="manifest">
+          <li><span>Brief compiler</span><span class="tag">v0.4</span></li>
+          <li><span>28-rule linter</span><span class="tag">stable</span></li>
+          <li><span>Eval harness</span><span class="tag">stable</span></li>
+          <li><span>Vision-critic scaffold</span><span class="tag">v0.2</span></li>
+          <li><span>MCP server</span><span class="tag">stable</span></li>
+          <li><span>Editor plugins</span><span class="tag">in-tree</span></li>
+          <li><span>Eight tokens</span><span class="tag">CC-BY-4.0</span></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="gated" id="gated"><span class="dot"></span>What is gated</h3>
+        <ul class="manifest">
+          <li><span>Live frontier-model calls</span><span class="tag">API keys</span></li>
+          <li><span>Live vision critique</span><span class="tag">multimodal + screenshots</span></li>
+          <li><span>Standalone npm packages for the editor plugins</span><span class="tag">planned</span></li>
+          <li><span>Additional tokens</span><span class="tag">roadmap</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div>AHD &middot; Artificial Human Design</div>
+    <div>Licence: <span class="lic">FSL-1.1-Apache-2.0</span> for code &middot; <span class="lic">CC-BY-4.0</span> for tokens and artwork</div>
+  </footer>
+
+</div>
+</body>
+</html>

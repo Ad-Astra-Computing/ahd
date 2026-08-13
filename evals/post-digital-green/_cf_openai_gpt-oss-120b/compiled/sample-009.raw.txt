@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Artificial Human Design</title>
+<style>
+/* rule: colour palette */
+:root{
+  --bg: oklch(0.14 0.02 150);
+  --fg: oklch(0.92 0.12 135);
+  --dim: oklch(0.55 0.05 150);
+  --rule: oklch(0.3 0.04 150);
+  --accent: oklch(0.82 0.15 75);
+  --font-mono: "Berkeley Mono","IBM Plex Mono","JetBrains Mono",ui-monospace,monospace;
+}
+/* rule: body styling */
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--fg);
+  font-family:var(--font-mono);
+  line-height:1.55;
+  font-size:15px; /* base */
+  max-width:80ch; /* rule: char grid */
+  padding:2rem;
+  margin:auto;
+}
+/* rule: link style */
+a{
+  color:var(--fg);
+  text-decoration:underline;
+  text-underline-offset:4px;
+}
+a:hover{
+  text-decoration:none;
+}
+/* rule: hairline rule */
+hr{
+  border:none;
+  border-top:1px solid var(--rule);
+  margin:2rem 0;
+}
+/* rule: code block */
+pre{
+  background:var(--dim);
+  padding:1rem;
+  overflow:auto;
+}
+code{
+  font-family:var(--font-mono);
+}
+/* rule: accent colour */
+.accent{
+  color:var(--accent);
+}
+</style>
+</head>
+<body>
+<h1>artificial human design</h1>
+<p class="dim">a framework, not a lecture. we expose the mechanics that keep AI‑generated design honest.</p>
+
+<hr>
+
+<h2>quick start</h2>
+<pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+
+<p><a href="https://github.com/ahd/ahd" class="accent">read the code</a></p>
+
+<hr>
+
+<h2>what ships</h2>
+<ul>
+  <li>brief compiler</li>
+  <li>28‑rule linter</li>
+  <li>eval harness</li>
+  <li>vision‑critic scaffold</li>
+  <li>MCP server</li>
+  <li>editor plugins</li>
+  <li>eight tokens</li>
+</ul>
+
+<hr>
+
+<h2>what is gated</h2>
+<ul>
+  <li>live frontier‑model calls (needs API keys)</li>
+  <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+  <li>standalone npm packages for the editor plugins</li>
+  <li>additional tokens</li>
+</ul>
+
+<hr>
+
+<h2>pipeline overview</h2>
+<pre>
++-------------------+   +-------------------+   +-------------------+
+|  brief compiler   | → |  28‑rule linter   | → |  eval harness     |
++-------------------+   +-------------------+   +-------------------+
+        |                       |                       |
+        v                       v                       v
++-------------------+   +-------------------+   +-------------------+
+| vision‑critic     | → | MCP server        | → | editor plugins    |
++-------------------+   +-------------------+   +-------------------+
+</pre>
+
+<hr>
+
+<footer>
+  <p>code licence: <span class="accent">FSL-1.1‑Apache-2.0</span> • tokens & artwork: <span class="accent">CC‑BY‑4.0</span></p>
+</footer>
+</body>
+</html>

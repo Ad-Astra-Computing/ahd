@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>artificial human design</title>
+  <style>
+    /* rule: colour space oklch, palette definitions */
+    :root {
+      --bg: oklch(0.14 0.02 150);
+      --fg: oklch(0.92 0.12 135);
+      --dim: oklch(0.55 0.05 150);
+      --rule: oklch(0.3 0.04 150);
+      --amber: oklch(0.82 0.15 75);
+      /* rule: families display/text Berkeley Mono -> fallback IBM Plex Mono, JetBrains Mono, ui-monospace */
+      --font: 'Berkeley Mono', 'IBM Plex Mono', 'JetBrains Mono', ui-monospace, monospace;
+    }
+
+    /* rule: no entrance animations, no transitions except caret blink and link underline */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      transition: none; 
+    }
+
+    body {
+      background-color: var(--bg); /* rule: roles background bg */
+      color: var(--fg); /* rule: roles foreground fg */
+      font-family: var(--font); /* rule: pairing-rule single-monospace */
+      font-size: 15px; /* rule: scale base 15 */
+      line-height: 1.55; /* rule: line-height body 1.55 */
+      font-weight: 400; /* rule: weights 400 */
+      margin: 0;
+      padding: 64px 32px; /* rule: space scale */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      /* rule: forbid sans-serif body text */
+    }
+
+    main {
+      /* rule: at least one element aligned to the char grid (80ch max-width) */
+      width: 100%;
+      max-width: 80ch;
+      /* intentional imperfection: offset block layout by 1px */
+      margin-left: 1px;
+    }
+
+    h1 {
+      font-size: calc(15px * 1.2 * 1.2 * 1.2 * 1.2); /* rule: scale step 4 */
+      line-height: 1.1; /* rule: line-height display 1.1 */
+      font-weight: 700; /* rule: weights 700 */
+      letter-spacing: 0; /* rule: tracking display 0 */
+      margin: 0 0 32px 0; /* rule: space scale 32 */
+      color: var(--fg);
+    }
+
+    h2 {
+      font-size: calc(15px * 1.2 * 1.2); /* rule: scale step 2 */
+      line-height: 1.25; /* rule: line-height h2 1.25 */
+      font-weight: 700;
+      letter-spacing: 0;
+      margin: 48px 0 24px 0; /* rule: space scale */
+      padding-bottom: 8px; /* rule: space scale */
+      border-bottom: 1px solid var(--rule); /* rule: border weight 1, style solid, colour rule, no radii */
+      color: var(--fg);
+    }
+
+    p {
+      max-width: 72ch; /* rule: measure 72ch */
+      margin: 0 0 24px 0; /* rule: space scale */
+      letter-spacing: 0; /* rule: tracking body 0 */
+    }
+
+    a {
+      color: inherit; /* rule: no colour change */
+      text-decoration: underline;
+      text-underline-offset: 4px; /* rule: link style underline-offset 4px */
+    }
+
+    /* rule: terminal-aesthetic code block */
+    pre {
+      background-color: transparent; /* rule: no gradients or glassmorphism */
+      border: 1px solid var(--rule); /* rule: border solid rule */
+      border-radius: 0; /* rule: no radii; only rectangles */
+      padding: 16px; /* rule: space scale */
+      margin: 0 0 32px 0;
+      overflow-x: auto;
+      color: var(--amber); /* rule: accent amber */
+      /* rule: no drop shadows */
+    }
+
+    code {
+      font-family: var(--font);
+      font-size: calc(15px / 1.2); /* rule: scale step -1 */
+    }
+
+    ul {
+      list-style-type: square; /* rule: emoji bullets forbidden */
+      padding-left: 24px;
+      margin: 0 0 32px 0;
+      max-width: 72ch;
+    }
+
+    li {
+      margin-bottom: 8px; /* rule: space scale */
+    }
+
+    /* rule: at least one ASCII diagram rendered as text */
+    .ascii-diagram {
+      border: 1px solid var(--rule); /* rule: rectangles only */
+      padding: 24px; /* rule: space scale */
+      margin: 0 0 48px 0; /* rule: space scale */
+      color: var(--dim); /* rule: roles dim */
+      white-space: pre;
+      font-size: calc(15px / 1.2);
+      line-height: 1.1;
+      overflow-x: hidden;
+    }
+
+    footer {
+      border-top: 1px solid var(--rule); /* rule: 1px solid rule */
+      margin-top: 64px; /* rule: space scale */
+      padding-top: 24px; /* rule: space scale */
+      font-size: calc(15px / 1.2); /* rule: scale step -1 */
+      color: var(--dim);
+      /* rule: forbid canonical 4-column footer */
+    }
+
+    .cta-container {
+      margin: 32px 0; /* rule: space scale */
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <!-- rule: voice technical, lowercase by default, terse -->
+    <h1>artificial human design</h1>
+    
+    <p>
+      you already know the problem with generated outputs. ahd takes it seriously 
+      and applies rigid constraints. this is a framework rather than a lecture.
+    </p>
+
+    <div class="cta-container">
+      <!-- rule: link to github labelled as the read-the-code CTA -->
+      <a href="https://github.com/artificial-human-design/ahd">read the code</a>
+    </div>
+
+    <!-- rule: at least one ASCII diagram rendered as text -->
+    <div class="ascii-diagram">
++-------------+      +-------------+      +-------------+
+|    brief    |----->|  compiler   |----->|   linter    |
++-------------+      +-------------+      +-------------+
+                            |                    |
+                            v                    v
+                     +-------------+      +-------------+
+                     | mcp server  |&lt;-----| eval harness|
+                     +-------------+      +-------------+
+    </div>
+
+    <!-- rule: monospace code block with language tag bash -->
+    <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+
+    <!-- rule: clearly separated manifest section titled 'what ships' -->
+    <h2>what ships</h2>
+    <ul>
+      <li>brief compiler</li>
+      <li>28-rule linter</li>
+      <li>eval harness</li>
+      <li>vision-critic scaffold</li>
+      <li>mcp server</li>
+      <li>editor plugins</li>
+      <li>eight tokens</li>
+    </ul>
+
+    <!-- rule: clearly separated manifest section titled 'what is gated' -->
+    <h2>what is gated</h2>
+    <ul>
+      <li>live frontier-model calls (needs api keys)</li>
+      <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+      <li>standalone npm packages for the editor plugins</li>
+      <li>additional tokens</li>
+    </ul>
+
+    <!-- rule: explicit license statement -->
+    <footer>
+      licence: fsl-1.1-apache-2.0 for code | cc-by-4.0 for tokens and artwork.
+    </footer>
+  </main>
+</body>
+</html>

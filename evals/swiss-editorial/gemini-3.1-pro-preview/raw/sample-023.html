@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Artificial Human Design</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --fg: #000000;
+    --mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    --sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+  
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--sans);
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 20px;
+  }
+
+  .header {
+    grid-column: 1 / -1;
+    margin-bottom: 80px;
+  }
+
+  h1 {
+    font-size: 1.25rem;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    margin: 0;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--fg);
+  }
+
+  .intro {
+    grid-column: 1 / 10;
+    font-size: 2.25rem;
+    line-height: 1.15;
+    font-weight: 400;
+    letter-spacing: -0.03em;
+    margin-bottom: 80px;
+  }
+
+  @media (max-width: 768px) {
+    .intro {
+      grid-column: 1 / -1;
+      font-size: 1.75rem;
+    }
+  }
+
+  .terminal {
+    grid-column: 1 / -1;
+    background: var(--fg);
+    color: var(--bg);
+    padding: 40px;
+    margin-bottom: 80px;
+  }
+
+  pre {
+    margin: 0;
+    font-family: var(--mono);
+    font-size: 1rem;
+    line-height: 1.5;
+    overflow-x: auto;
+  }
+
+  .manifest {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 60px;
+    margin-bottom: 80px;
+  }
+
+  @media (max-width: 768px) {
+    .manifest {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+  }
+
+  .manifest section {
+    border-top: 1px solid var(--fg);
+    padding-top: 20px;
+  }
+
+  h2 {
+    font-size: 1rem;
+    font-weight: 500;
+    margin: 0 0 20px 0;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  li {
+    font-size: 1.125rem;
+    line-height: 1.4;
+    padding-bottom: 12px;
+    margin-bottom: 12px;
+    border-bottom: 1px solid #e5e5e5;
+  }
+
+  li:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+  }
+
+  .actions {
+    grid-column: 1 / -1;
+    margin-bottom: 80px;
+  }
+
+  a.cta {
+    display: inline-block;
+    border: 1px solid var(--fg);
+    color: var(--fg);
+    text-decoration: none;
+    padding: 16px 32px;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+
+  a.cta:hover {
+    background: var(--fg);
+    color: var(--bg);
+  }
+
+  .footer {
+    grid-column: 1 / -1;
+    border-top: 1px solid var(--fg);
+    padding-top: 20px;
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    color: #555;
+  }
+</style>
+</head>
+<body>
+  <div class="grid">
+    <div class="header">
+      <h1>Artificial Human Design</h1>
+    </div>
+
+    <div class="intro">
+      We know the current generative output is unacceptable. Artificial Human Design replaces raw generation with a rigorous framework of strict linguistic constraints and continuous structural evaluation.
+    </div>
+
+    <div class="terminal">
+      <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+    </div>
+
+    <div class="manifest">
+      <section>
+        <h2>What ships</h2>
+        <ul>
+          <li>Brief compiler</li>
+          <li>28-rule linter</li>
+          <li>Eval harness</li>
+          <li>Vision-critic scaffold</li>
+          <li>MCP server</li>
+          <li>Editor plugins</li>
+          <li>Eight tokens</li>
+        </ul>
+      </section>
+      
+      <section>
+        <h2>What is gated</h2>
+        <ul>
+          <li>Live frontier-model calls (needs API keys)</li>
+          <li>Live vision critique (needs multimodal key + screenshot pipeline)</li>
+          <li>Standalone npm packages for the editor plugins</li>
+          <li>Additional tokens</li>
+        </ul>
+      </section>
+    </div>
+
+    <div class="actions">
+      <a href="https://github.com/artificial-human-design/core" class="cta">Read the code (GitHub / Forgejo)</a>
+    </div>
+
+    <div class="footer">
+      Licence: FSL-1.1-Apache-2.0 for code, CC-BY-4.0 for tokens and artwork.
+    </div>
+  </div>
+</body>
+</html>

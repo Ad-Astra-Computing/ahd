@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ahd – artificial human design</title>
+<style>
+:root{
+  --bg:#0a0a0a;/* rule: background colour */
+  --fg:#a8d5a8;/* rule: foreground colour */
+  --dim:#5a7a5a;/* rule: dim colour */
+  --rule:#3c4c3c;/* rule: hairline rule colour */
+  --amber:#ffbf00;/* rule: accent colour */
+  --font-mono:"Berkeley Mono", "IBM Plex Mono","JetBrains Mono",ui-monospace;/* rule: monospace pairing */
+}
+html{background:var(--bg);color:var(--fg);font-family:var(--font-mono);font-size:15px;line-height:1.55;/* rule: base type */margin:0;padding:0;}
+body{margin:0;padding:2rem;max-width:80ch;/* rule: char‑grid alignment */margin-left:auto;margin-right:auto;}
+h1,h2{margin:0 0 .5rem 0;color:var(--amber);font-weight:700;line-height:1.1;}
+h1{font-size:1.8rem;/* rule: display scale */margin-top:0;}
+h2{font-size:1.4rem;margin-top:2rem;}
+p{margin:0 0 1rem 0;}
+a{color:inherit;text-decoration:underline;text-underline-offset:4px;/* rule: link style */}
+pre{background:var(--dim);padding:1rem;overflow:auto;border:1px solid var(--rule);/* rule: rectangle only */font-size:0.9rem;}
+code{font-family:var(--font-mono);font-weight:400;}
+section{margin-top:2rem;border-top:1px solid var(--rule);padding-top:1rem;/* rule: separator */}
+footer{margin-top:3rem;padding-top:1rem;border-top:1px solid var(--rule);font-size:0.85rem;color:var(--dim);}
+</style>
+</head>
+<body>
+<h1>ahd – artificial human design</h1>
+<p>framework for designers, engineers, founders who have seen the AI‑generated noise and need a disciplined, reproducible workflow.</p>
+
+<h2>quick‑run eval</h2>
+<pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre><!-- rule: code block -->
+
+<h2>pipeline diagram</h2>
+<pre>
++-------------------+   +-------------------+   +-------------------+
+| brief compiler    | → | 28‑rule linter    | → | eval harness      |
++-------------------+   +-------------------+   +-------------------+
+        |                       |                       |
+        v                       v                       v
++-------------------+   +-------------------+   +-------------------+
+| vision‑critic     | → | mcp server        | → | editor plugins    |
++-------------------+   +-------------------+   +-------------------+
+</pre><!-- rule: ascii diagram -->
+
+<h2>what ships</h2>
+<section>
+<ul>
+<li>brief compiler</li>
+<li>28‑rule linter</li>
+<li>eval harness</li>
+<li>vision‑critic scaffold</li>
+<li>mcp server</li>
+<li>editor plugins</li>
+<li>eight tokens</li>
+</ul>
+</section>
+
+<h2>what is gated</h2>
+<section>
+<ul>
+<li>live frontier‑model calls (needs api keys)</li>
+<li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+<li>standalone npm packages for the editor plugins</li>
+<li>additional tokens</li>
+</ul>
+</section>
+
+<p><a href="https://github.com/ahd/ahd" target="_blank">read‑the‑code</a></p><!-- rule: cta link -->
+
+<footer>
+code licence: fsl-1.1-apache-2.0 • tokens & artwork: cc-by-4.0
+</footer>
+</body>
+</html>

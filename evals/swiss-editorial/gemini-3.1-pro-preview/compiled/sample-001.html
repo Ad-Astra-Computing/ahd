@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>AHD | Artificial Human Design</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    /* rule: Palette is ink on paper (warm off-white) with a single spot red */
+    :root {
+      --color-ink: oklch(0.18 0 0);
+      --color-paper: oklch(0.98 0.005 95);
+      --color-spot: oklch(0.58 0.22 27);
+      --color-rule: oklch(0.18 0 0);
+      --color-muted: oklch(0.55 0 0);
+
+      /* rule: Work on a 12-column grid with 24px gutters and an 8px baseline */
+      --grid-cols: 12;
+      --grid-gutter: 24px;
+      /* rule: margin { min: 32, preferred: calc(100vw / 24) } */
+      --grid-margin: max(32px, calc(100vw / 24));
+      
+      --baseline: 8px;
+      --space-4: 4px;
+      --space-8: 8px;
+      --space-12: 12px;
+      --space-16: 16px;
+      --space-24: 24px;
+      --space-32: 32px;
+      --space-48: 48px;
+      --space-64: 64px;
+      --space-96: 96px;
+      --space-160: 160px;
+
+      /* rule: Set display type in Neue Haas Grotesk Display */
+      --font-display: "Neue Haas Grotesk Display", "Helvetica Now Display", "Inter Tight", sans-serif;
+      /* rule: Body in Neue Haas Grotesk Text */
+      --font-text: "Neue Haas Grotesk Text", "Helvetica Now Text", "Inter", sans-serif;
+      --font-mono: "JetBrains Mono", monospace;
+    }
+
+    /* rule: Structural motion only; respects prefers-reduced-motion */
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    body {
+      background-color: var(--color-paper);
+      color: var(--color-ink);
+      font-family: var(--font-text);
+      /* rule: Body at 17px, line-height 1.5 */
+      font-size: 17px;
+      line-height: 1.5;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden; /* Allows bleed element to overflow right without scrolling */
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(var(--grid-cols), 1fr);
+      column-gap: var(--grid-gutter);
+      padding-left: var(--grid-margin);
+      padding-right: var(--grid-margin);
+    }
+
+    .col-span-12 { grid-column: span 12; }
+    
+    @media (min-width: 768px) {
+      .md\:col-span-10 { grid-column: span 10; }
+      .md\:col-span-8 { grid-column: span 8; }
+      .md\:col-span-5 { grid-column: span 5; }
+      .md\:col-start-8 { grid-column-start: 8; }
+    }
+
+    .measure {
+      /* rule: measure 62ch */
+      max-width: 62ch;
+    }
+
+    .display-text {
+      font-family: var(--font-display);
+      /* rule: Display type at 96–160px with tracking -0.02em */
+      font-size: clamp(96px, 10vw, 160px);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+      margin: 0;
+    }
+
+    .anchor-text {
+      font-family: var(--font-display);
+      /* rule: one section anchored by a single word at display >= 120px with -0.02em tracking */
+      font-size: clamp(120px, 12vw, 160px);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+      margin: 0;
+      text-transform: uppercase;
+    }
+
+    h2 {
+      font-family: var(--font-display);
+      font-size: 30px;
+      line-height: 1.2;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin: 0 0 var(--space-24) 0;
+    }
+
+    p {
+      margin: 0 0 var(--space-24) 0;
+    }
+
+    .allcaps {
+      text-transform: uppercase;
+      /* rule: allcaps tracking 0.08em */
+      letter-spacing: 0.08em;
+    }
+
+    .small-text {
+      font-size: 13px;
+    }
+
+    ul {
+      list-style: none; /* rule: Do not use emoji bullets */
+      padding: 0;
+      margin: 0;
+    }
+
+    li {
+      position: relative;
+      padding-left: var(--space-24);
+      margin-bottom: var(--space-8);
+    }
+
+    li::before {
+      content: "—";
+      position: absolute;
+      left: 0;
+      color: var(--color-muted);
+    }
+
+    /* Structural elements */
+    .spot-block {
+      /* rule: single spot red used exactly once */
+      width: var(--space-24);
+      height: var(--space-24);
+      background-color: var(--color-spot);
+    }
+
+    .bleed-wrapper {
+      position: relative;
+      width: 100%;
+    }
+
+    .bleed-rule {
+      /* rule: One intentional element must bleed past the grid */
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 150vw;
+      height: 1px;
+      background-color: var(--color-rule);
+    }
+
+    .rule-top {
+      border-top: 1px solid var(--color-rule);
+      padding-top: var(--space-24);
+    }
+
+    .status-pill {
+      /* rule: No rounded corners except small status pills */
+      display: inline-block;
+      padding: 4px var(--space-12);
+      border-radius: 999px;
+      border: 1px solid var(--color-rule);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .cta {
+      display: inline-block;
+      font-family: var(--font-text);
+      font-weight: 700;
+      text-decoration: none;
+      color: var(--color-ink);
+      /* rule: sharp by default */
+      border: 1px solid var(--color-rule);
+      padding: var(--space-12) var(--space-24);
+      /* rule: Structural motion only */
+      transition: background-color 0.15s linear, color 0.15s linear;
+      cursor: pointer;
+    }
+
+    .cta:hover {
+      background-color: var(--color-ink);
+      color: var(--color-paper);
+    }
+
+    .terminal {
+      /* rule: A terminal-aesthetic code block */
+      background-color: var(--color-ink);
+      color: var(--color-paper);
+      font-family: var(--font-mono);
+      font-size: 14px;
+      /* rule: No shadows, sharp corners */
+      border: 1px solid var(--color-rule);
+      width: 100%;
+    }
+
+    .terminal-header {
+      padding: var(--space-8) var(--space-16);
+      border-bottom: 1px solid var(--color-muted);
+      color: var(--color-paper);
+      font-size: 12px;
+    }
+
+    .terminal-body {
+      padding: var(--space-32) var(--space-16);
+      overflow-x: auto;
+      white-space: pre;
+    }
+
+    /* Spacer Utilities */
+    .mt-24 { margin-top: var(--space-24); }
+    .mt-48 { margin-top: var(--space-48); }
+    .mt-160 { margin-top: var(--space-160); }
+    .mb-24 { margin-bottom: var(--space-24); }
+    .mb-48 { margin-bottom: var(--space-48); }
+    .pt-48 { padding-top: var(--space-48); }
+    .pt-160 { padding-top: var(--space-160); }
+    .pb-160 { padding-bottom: var(--space-160); }
+    
+    .mobile-mt-48 { margin-top: var(--space-48); }
+    @media (min-width: 768px) {
+      .md\:mt-0 { margin-top: 0; }
+    }
+  </style>
+</head>
+<body>
+  <!-- rule: Asymmetric left-aligned composition -->
+  <main>
+    <header class="grid pt-160">
+      <!-- rule: Do not centre the hero -->
+      <div class="col-span-12 md:col-span-8">
+        
+        <!-- rule: spot colour used exactly once -->
+        <div class="spot-block mb-48" aria-hidden="true"></div>
+        
+        <!-- rule: small status pills allowed -->
+        <div class="mb-24"><span class="status-pill allcaps">v0.1.0</span></div>
+        
+        <h1 class="display-text">ARTIFICIAL<br>HUMAN<br>DESIGN</h1>
+        
+        <!-- rule: One screen of reading -->
+        <!-- rule: voice declarative, short sentences, no hedges, no Oxford commas -->
+        <!-- rule: Do not use the word seamless, AI-native, ship faster or build the future -->
+        <p class="measure mt-48">
+          The output is slop because the input lacks constraints. AHD provides a strict enforcement layer for interface generation. It replaces vague prompts with rigid typographical rules and exact structural definitions. This is a framework for working designers and engineers who demand control.
+        </p>
+        
+        <!-- rule: A link to github labelled as the read-the-code CTA -->
+        <a href="https://github.com/ahd-project/ahd" class="cta allcaps small-text mt-24">Read the code</a>
+      </div>
+    </header>
+
+    <!-- rule: Require one dramatic jump per section (160 between sections) -->
+    <section class="grid mt-160">
+      <div class="col-span-12 bleed-wrapper">
+        <!-- rule: One intentional element must bleed past the grid -->
+        <div class="bleed-rule" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <section class="grid mt-160">
+      <div class="col-span-12">
+        <h2 class="anchor-text">EVALUATE</h2>
+      </div>
+      
+      <div class="col-span-12 md:col-span-10 mt-48">
+        <!-- rule: rendered in a monospace code block with the language tag bash -->
+        <div class="terminal">
+          <div class="terminal-header allcaps">bash</div>
+          <div class="terminal-body"><code>ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid mt-160 pb-160">
+      <div class="col-span-12 md:col-span-5">
+        <!-- rule: A clearly separated manifest section titled 'What ships' -->
+        <h2 class="rule-top">What ships</h2>
+        <ul>
+          <li>brief compiler</li>
+          <li>28-rule linter</li>
+          <li>eval harness</li>
+          <li>vision-critic scaffold</li>
+          <li>MCP server</li>
+          <li>editor plugins</li>
+          <li>eight tokens</li>
+        </ul>
+      </div>
+      
+      <div class="col-span-12 md:col-span-5 md:col-start-8 mobile-mt-48 md:mt-0">
+        <!-- rule: A clearly separated manifest section titled 'What is gated' -->
+        <h2 class="rule-top">What is gated</h2>
+        <ul>
+          <li>live frontier-model calls (needs API keys)</li>
+          <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+          <li>standalone npm packages for the editor plugins</li>
+          <li>additional tokens</li>
+        </ul>
+      </div>
+    </section>
+
+    <footer class="grid pt-48 pb-160">
+      <div class="col-span-12 rule-top">
+        <!-- rule: A footer that names the licence explicitly -->
+        <!-- rule: No canonical 4-column footer -->
+        <p class="small-text" style="color: var(--color-muted);">Licence: FSL-1.1-Apache-2.0 for code. CC-BY-4.0 for tokens and artwork.</p>
+      </div>
+    </footer>
+  </main>
+</body>
+</html>

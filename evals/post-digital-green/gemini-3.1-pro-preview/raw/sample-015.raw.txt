@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AHD | Artificial Human Design</title>
+<style>
+  :root {
+    --bg: #fafafa;
+    --fg: #111111;
+    --border: #e5e5e5;
+    --mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  
+  body {
+    background-color: var(--bg);
+    color: var(--fg);
+    font-family: var(--sans);
+    line-height: 1.6;
+    margin: 0;
+    padding: 4rem 2rem;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  main {
+    max-width: 48rem;
+    margin: 0 auto;
+  }
+  
+  header {
+    margin-bottom: 3rem;
+  }
+  
+  h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin: 0 0 0.5rem 0;
+  }
+  
+  .subtitle {
+    font-family: var(--mono);
+    font-size: 0.875rem;
+    color: #666;
+    margin: 0;
+  }
+  
+  .prose {
+    font-size: 1.125rem;
+    color: #222;
+    margin-bottom: 3rem;
+  }
+  
+  .prose p {
+    margin: 0 0 1.5rem 0;
+  }
+  
+  .prose p:last-child {
+    margin-bottom: 0;
+  }
+  
+  .terminal {
+    background: #111;
+    color: #f4f4f4;
+    padding: 1.25rem 1.5rem;
+    border-radius: 2px;
+    margin: 3rem 0;
+    overflow-x: auto;
+  }
+  
+  pre {
+    margin: 0;
+  }
+  
+  code {
+    font-family: var(--mono);
+    font-size: 0.875rem;
+  }
+  
+  .manifest-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    margin: 4rem 0;
+    border-top: 1px solid var(--border);
+    padding-top: 3rem;
+  }
+  
+  @media (min-width: 640px) {
+    .manifest-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  
+  h2 {
+    font-size: 0.875rem;
+    font-family: var(--mono);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0 0 1.5rem 0;
+    font-weight: 600;
+    color: #666;
+  }
+  
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-family: var(--mono);
+    font-size: 0.875rem;
+    line-height: 2;
+  }
+  
+  li::before {
+    content: "—";
+    margin-right: 0.75rem;
+    color: #999;
+  }
+  
+  .cta-section {
+    margin: 4rem 0;
+    padding-bottom: 4rem;
+    border-bottom: 1px solid var(--border);
+  }
+  
+  .cta-link {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--fg);
+    text-decoration: none;
+    border: 1px solid var(--fg);
+    padding: 0.75rem 1.5rem;
+    transition: all 0.2s ease;
+  }
+  
+  .cta-link:hover {
+    background-color: var(--fg);
+    color: var(--bg);
+  }
+  
+  footer {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: #666;
+  }
+  
+  footer p {
+    margin: 0 0 0.5rem 0;
+  }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Artificial Human Design</h1>
+    <p class="subtitle">A framework for structural intent</p>
+  </header>
+  
+  <div class="prose">
+    <p>The output is regressing to the mean. The current cycle of generated interfaces proves the underlying models can assemble components but cannot exercise care. They rely on statistical averages and produce indistinguishable slop. You do not need another thesis on why this is happening. You need a mechanism to enforce intent.</p>
+    
+    <p>AHD is a rigid evaluation harness for interface generation. It demands structure over decoration. It tests layouts against a hard set of rules to separate deliberate design choices from hallucinatory noise. This is a tool for enforcement rather than a lecture on aesthetics.</p>
+  </div>
+  
+  <div class="terminal">
+    <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+  </div>
+
+  <div class="manifest-grid">
+    <section>
+      <h2>What ships</h2>
+      <ul>
+        <li>brief compiler</li>
+        <li>28-rule linter</li>
+        <li>eval harness</li>
+        <li>vision-critic scaffold</li>
+        <li>MCP server</li>
+        <li>editor plugins</li>
+        <li>eight tokens</li>
+      </ul>
+    </section>
+    
+    <section>
+      <h2>What is gated</h2>
+      <ul>
+        <li>live frontier-model calls (needs API keys)</li>
+        <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+        <li>standalone npm packages for the editor plugins</li>
+        <li>additional tokens</li>
+      </ul>
+    </section>
+  </div>
+
+  <div class="cta-section">
+    <a href="https://github.com/ahd-framework/ahd" class="cta-link">Read the code (GitHub/Forgejo mirror)</a>
+  </div>
+
+  <footer>
+    <p>Licence: FSL-1.1-Apache-2.0 for code | CC-BY-4.0 for tokens and artwork.</p>
+  </footer>
+</main>
+</body>
+</html>

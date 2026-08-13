@@ -1,0 +1,228 @@
+<!doctype html>
+<!-- rule: Return a single, self-contained, valid HTML5 document. Start with <!doctype html> and end with </html>. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<!-- rule: voice: technical, lowercase by default, terse -->
+<title>ahd.</title>
+<style>
+/* rule: Every design decision in your output must cite the brief rule it follows */
+:root {
+  /* rule: Dark green-black background: oklch(0.14 0.02 150) */
+  --bg: oklch(0.14 0.02 150);
+  /* rule: muted green foreground: oklch(0.92 0.12 135) */
+  --fg: oklch(0.92 0.12 135);
+  /* rule: a single amber accent: oklch(0.82 0.15 75) */
+  --amber: oklch(0.82 0.15 75);
+  /* rule: One hairline rule colour: oklch(0.3 0.04 150) */
+  --rule: oklch(0.3 0.04 150);
+  /* rule: dim text colour from palette */
+  --dim: oklch(0.55 0.05 150);
+}
+
+/* rule: Everything in monospace. */
+* {
+  box-sizing: border-box;
+  /* rule: Rectangles only, no radii */
+  border-radius: 0 !important;
+  /* rule: No shadows */
+  box-shadow: none !important;
+  /* rule: No gradients */
+  background-image: none !important;
+  /* rule: No entrance animation */
+  animation: none !important;
+}
+
+body {
+  /* rule: Dark green-black background */
+  background-color: var(--bg);
+  /* rule: Muted green foreground */
+  color: var(--fg);
+  /* rule: Everything in monospace. Font families from spec. */
+  font-family: 'Berkeley Mono', 'IBM Plex Mono', 'JetBrains Mono', ui-monospace, monospace;
+  /* rule: Weights: 400, 700. */
+  font-weight: 400;
+  /* rule: Line-height body: 1.55 */
+  line-height: 1.55;
+  /* rule: Tracking body: 0 */
+  letter-spacing: 0;
+  /* rule: Everything aligns to an 80 character grid. */
+  max-width: 80ch;
+  /* rule: Space scale: 0, 4, 8, 12, 16, 24, 32, 48, 64 */
+  margin: 0 auto;
+  padding: 32px 16px;
+}
+
+h1, h2 {
+  /* rule: Weights: 400, 700. */
+  font-weight: 700;
+}
+
+h1 {
+  /* rule: Line-height display: 1.1 */
+  line-height: 1.1;
+  /* rule: Space scale */
+  margin-bottom: 32px;
+}
+
+h2 {
+  /* rule: Line-height h2: 1.25 */
+  line-height: 1.25;
+  /* rule: Space scale */
+  margin-top: 48px;
+  margin-bottom: 16px;
+  /* rule: Rectangles only. One hairline rule colour. */
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 8px;
+}
+
+p {
+  /* rule: Space scale */
+  margin-bottom: 16px;
+}
+
+/* rule: Underlined links with an offset, no colour change. */
+a {
+  /* rule: Underlined links */
+  text-decoration: underline;
+  /* rule: offset 4px */
+  text-underline-offset: 4px;
+  /* rule: no colour change */
+  color: inherit;
+}
+
+ul {
+  /* rule: No emoji bullets */
+  list-style-type: none;
+  /* rule: Space scale */
+  padding: 0;
+  margin: 0 0 24px 0;
+}
+
+li {
+  /* rule: Space scale */
+  margin-bottom: 8px;
+}
+
+li::before {
+  /* rule: strictly post-digital, technical voice */
+  content: "- ";
+  color: var(--dim);
+}
+
+.ascii {
+  /* rule: a single amber accent */
+  color: var(--amber);
+  /* rule: Include one ASCII diagram rendered as text */
+  white-space: pre;
+  /* rule: Space scale */
+  margin: 32px 0;
+  /* rule: Everything in monospace */
+  font-family: inherit;
+}
+
+pre {
+  /* rule: Rectangles only */
+  border: 1px solid var(--rule);
+  /* rule: Space scale */
+  padding: 16px;
+  margin: 32px 0;
+  /* rule: terminal-aesthetic code block */
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+code {
+  /* rule: Everything in monospace */
+  font-family: inherit;
+}
+
+.cta-container {
+  /* rule: Space scale */
+  margin-top: 48px;
+}
+
+.cta-link {
+  /* rule: uppercase tracking 0.04em */
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+footer {
+  /* rule: Space scale */
+  margin-top: 64px;
+  /* rule: One hairline rule colour */
+  border-top: 1px solid var(--rule);
+  padding-top: 16px;
+  color: var(--dim);
+}
+</style>
+</head>
+<body>
+
+<!-- rule: at least one element aligned to the char grid (e.g. 80ch max-width) -->
+<header>
+  <!-- rule: voice: technical, lowercase by default, terse -->
+  <h1>ahd. (artificial human design)</h1>
+</header>
+
+<main>
+  <!-- rule: One screen of reading. -->
+  <p>artificial human design takes the slop thesis seriously and does something about it. a rigid framework for working designers, senior engineers, and founders who do not need another lecture on generative sameness.</p>
+  
+  <p>we provide a rules-based engine for design that refuses to hallucinate corporate memphis or iridescent blobs. the aesthetic is strictly post-digital.</p>
+
+  <!-- rule: Include one ASCII diagram rendered as text. -->
+  <!-- rule: at least one intentional imperfection (missing pipe char on right side) -->
+  <div class="ascii" aria-hidden="true">
++---------------------------------------------------+
+| ahd compiler pipeline                             |
+|                                                  
+| [brief] -> [linter] -> [eval harness] -> [out]    |
++---------------------------------------------------+
+  </div>
+
+  <!-- rule: The command ... rendered in a monospace code block with the language tag `bash`. -->
+  <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+
+  <!-- rule: A clearly separated manifest section titled 'What ships' -->
+  <section>
+    <h2>What ships</h2>
+    <!-- rule: enumerates specific items -->
+    <ul>
+      <li>brief compiler</li>
+      <li>28-rule linter</li>
+      <li>eval harness</li>
+      <li>vision-critic scaffold</li>
+      <li>MCP server</li>
+      <li>editor plugins</li>
+      <li>eight tokens</li>
+    </ul>
+  </section>
+
+  <!-- rule: A clearly separated manifest section titled 'What is gated' -->
+  <section>
+    <h2>What is gated</h2>
+    <!-- rule: enumerates specific items -->
+    <ul>
+      <li>live frontier-model calls (needs API keys)</li>
+      <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+      <li>standalone npm packages for the editor plugins</li>
+      <li>additional tokens</li>
+    </ul>
+  </section>
+
+  <!-- rule: A link to github labelled as the read-the-code CTA. -->
+  <div class="cta-container">
+    <!-- rule: Underlined links with an offset, no colour change. -->
+    <a href="https://github.com/ahd-project/ahd" class="cta-link">read the code</a>
+  </div>
+</main>
+
+<!-- rule: A footer that names the licence explicitly... -->
+<footer>
+  <p>licence: FSL-1.1-Apache-2.0 for code, CC-BY-4.0 for tokens and artwork.</p>
+</footer>
+
+</body>
+</html>

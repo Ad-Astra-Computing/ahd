@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8 <!-- rule: character encoding -->">
+  <,eta name="viewport" content_datetime="width=device-width<!-- rule: responsive))>, initial-scale= -*-
+  <title>Artificial Human Design</title>
+  <?"
+
+
+
+<style>
+  /* Global Styles */
+  :root {
+    --font-family: Neue Haas )
+
+
+
+
+
+
+
+  <link rel=" ‘stylesheet” href=“styles.css” ”> 
+</head>
+",_body">
+  <!-- Hero Section -->
+vey  <section class="hero">
+  <h (class=" (title" >Artificial ‘Human Design’</h1> 
+  < p >A framework for designers, engineers, and founders who want to ‘take AI-generated design seriously.</p>
+European  <pre><code class="bash">$ ahd eval":[-live sw":[-editorial! --brief brief Ogre /landing.yml --models <_specs> --n 10</code></pre>
+  <!-- rule: terminal-aesthetic code block -->
+<p><a href="https:// github.com/Artificial-Human-De’tign" class="read-the-code”>Read the code</a></p> <!-- rule: ***!
+  </section>
+!-manifest Section -->
+ [<sectionocommerce class="manifest　ﾊ">
+    <hﾆﾆclass="subtitle">What ships</h!>
+    <ByteArray>
+      <,li>Brief compiler/li>
+      <!–-rule: brief compiler –->
+      <li>28-rule linter/li>
+      <!–-rule:  28-rule ,linterrule: –->
+!      <li!>Eval harness/lidao>
+     {\li>Vision-cIPHER Scaffold/li>
+ EXEMPLARY      <li弋MCP server.:.:.:.::</li>
+|(
+      <:.:.:.:.:li>EditorRECT plugins</li>
+      <li-､_tokens>Eight tokens</li>
+    </ul>
+    <h2-class="subtitle!">What! is gated</h2>
+    <ul!>
+      <!–-!rule: live frontier-model! calls –->
+!      <!li>!Live!! frontier-model! calls (!needs API keys)</li>
+!      <!–-!rule: live vision critique! –->
+!      <!li>!Live! vision! critique! (needs multimodal! key +! screenshot!! pipeline)</!li>
+!      <!!–!!rule:! standalone npm! packages!! for! editor! plugins! –->
+!      <!li>!St!andalone!! npm!! packages! for! editor plugins</li>
+ #+#      <!–!
+      <li>Additional tokens透</li>
+!    </ul'´
+ ! </section>
+  <!-- Footer Sectionillisecond –->
+  <":[-footer class="footer.$$">
+    Ogre FSL-､:1.":[-Apache-2":[-0 for code CC-BY Resize-4.OutputStream for tokens and-context artwork</p>
+ ":[-/footer>
+</body>
+</ benchmark html>

@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ahd — artificial human design</title>
+<!-- rule: single-monospace pairing, Berkeley Mono with mono fallbacks -->
+<style>
+  /* rule: oklch palette, dark green-black bg, muted green fg, amber accent */
+  :root{
+    --bg: oklch(0.14 0.02 150);
+    --fg: oklch(0.92 0.12 135);
+    --dim: oklch(0.55 0.05 150);
+    --rule: oklch(0.30 0.04 150);
+    --amber: oklch(0.82 0.15 75);
+    --ch: 1ch;
+  }
+  /* rule: no entrance animations, no shadows, no radii, no gradients */
+  *{box-sizing:border-box;margin:0;padding:0;border-radius:0;box-shadow:none;background-image:none;}
+  html,body{background:var(--bg);color:var(--fg);}
+  body{
+    /* rule: monospace body, single family */
+    font-family: "Berkeley Mono","IBM Plex Mono","JetBrains Mono",ui-monospace,monospace;
+    font-size:15px; /* rule: scale base 15 */
+    line-height:1.55; /* rule: body line-height */
+    font-weight:400;
+    padding:24px 16px 16px;
+  }
+  /* rule: char-grid alignment, 80ch max width */
+  .page{max-width:80ch;margin:0 auto;}
+  /* rule: hairline rule, single colour, weight 1 solid */
+  .rule{border:0;border-top:1px solid var(--rule);margin:24px 0;}
+  header,section,footer{padding:0;}
+  /* rule: allcaps tracking 0.04em */
+  .caps{text-transform:uppercase;letter-spacing:0.04em;}
+  .dim{color:var(--dim);}
+  .amber{color:var(--amber);}
+  h1{
+    font-size:18px;font-weight:700;line-height:1.1; /* rule: display line-height */
+    letter-spacing:0;
+  }
+  h2{
+    font-size:15px;font-weight:700;line-height:1.25; /* rule: h2 line-height */
+    text-transform:uppercase;letter-spacing:0.04em;
+    margin-bottom:8px;
+  }
+  p{max-width:72ch;} /* rule: measure 72ch */
+  /* rule: link underline-offset 4px, no colour change */
+  a{color:inherit;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px;}
+  a:hover{text-decoration-thickness:1px;}
+  /* rule: rectangles only, hairline border */
+  .box{border:1px solid var(--rule);padding:12px;}
+  pre,code{font-family:inherit;font-size:15px;}
+  pre.code{
+    border:1px solid var(--rule);
+    padding:12px;
+    overflow-x:auto;
+    white-space:pre;
+  }
+  pre.code .lang{color:var(--dim);}
+  pre.code .prompt{color:var(--amber);}
+  /* rule: ascii diagram preserved as text */
+  pre.ascii{white-space:pre;color:var(--fg);line-height:1.2;overflow-x:auto;}
+  /* rule: caret blink permitted */
+  .caret{display:inline-block;width:1ch;background:var(--amber);color:var(--bg);animation:blink 1s steps(1) infinite;}
+  @keyframes blink{50%{opacity:0;}}
+  ul.manifest{list-style:none;}
+  ul.manifest li{padding:2px 0;}
+  ul.manifest li::before{content:"[ ] ";color:var(--dim);} /* rule: no emoji bullets, ascii markers */
+  ul.manifest.ships li::before{content:"[x] ";color:var(--amber);}
+  ul.manifest.gated li::before{content:"[ ] ";color:var(--dim);}
+  /* rule: two-column manifest aligned to char grid, not three equal cards */
+  .cols{display:grid;grid-template-columns: 1fr 1fr;gap:24px;}
+  @media (max-width:680px){ .cols{grid-template-columns:1fr;} }
+  .meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;color:var(--dim);}
+  /* rule: intentional imperfection — a single off-grid character marker */
+  .quirk{color:var(--amber);}
+  /* rule: footer is not a 4-column product/company/resources/legal layout */
+  footer{color:var(--dim);}
+  footer a{color:var(--fg);}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- rule: header is a status line, not a centred hero stack with pill + two CTAs -->
+  <header class="meta caps">
+    <span>ahd / artificial human design</span>
+    <span class="dim">v0.1.0 &nbsp; 2026-04-24 &nbsp; <span class="amber">●</span> online</span>
+  </header>
+
+  <hr class="rule">
+
+  <!-- rule: terse, lowercase voice; no slop-thesis lecture -->
+  <section>
+    <h1>a framework for designing with models that do not, on their own, design.</h1>
+    <p style="margin-top:12px;" class="dim">
+      you have already seen the sites. centred hero, pill badge, two ctas, three
+      equal cards, purple-to-blue gradient, lucide icon in a tile. the problem is
+      not that the model is stupid. the problem is that nobody handed it a brief,
+      a token, a linter, or a critic. ahd is that handoff, written down.
+    </p>
+  </section>
+
+  <hr class="rule">
+
+  <!-- rule: ascii diagram required, rendered as text -->
+  <section>
+    <h2>pipeline</h2>
+<pre class="ascii" aria-label="ahd pipeline diagram">
+   brief.yml         token.json        rules/*.ts
+       |                 |                  |
+       v                 v                  v
+   +---------+      +---------+      +-----------+
+   | compile | ---> |  emit   | ---> |   lint    |
+   +---------+      +---------+      +-----------+
+                                            |
+                          +-----------------+-----------------+
+                          v                                   v
+                    +-----------+                       +-----------+
+                    |  models   |  --- artifacts --->   |  critic   |
+                    +-----------+                       +-----------+
+                                                              |
+                                                              v
+                                                        score / diff
+</pre>
+  </section>
+
+  <hr class="rule">
+
+  <!-- rule: required terminal one-liner with bash language tag -->
+  <section>
+    <h2>run the eval</h2>
+    <p class="dim" style="margin-bottom:8px;">
+      ten generations, one brief, n models. artifacts written to <code>./out</code>.
+    </p>
+<pre class="code" data-lang="bash" aria-label="bash command"><span class="lang">$ # bash</span>
+<span class="prompt">$</span> ahd eval-live swiss-editorial \
+    --brief briefs/landing.yml \
+    --models &lt;specs&gt; \
+    --n 10<span class="caret">&nbsp;</span></pre>
+  </section>
+
+  <hr class="rule">
+
+  <!-- rule: two manifest sections, clearly separated, not three equal cards -->
+  <section class="cols">
+    <div>
+      <h2>what ships <span class="dim">— today, in the repo</span></h2>
+      <ul class="manifest ships">
+        <li>brief compiler <span class="dim">— yml &rarr; ir</span></li>
+        <li>28-rule linter <span class="dim">— ast over ir + html</span></li>
+        <li>eval harness <span class="dim">— n-of-m, deterministic seed</span></li>
+        <li>vision-critic scaffold <span class="dim">— interface + stubs</span></li>
+        <li>mcp server <span class="dim">— stdio, local-first</span></li>
+        <li>editor plugins <span class="dim">— vscode, zed, neovim</span></li>
+        <li>eight tokens <span class="dim">— including post-digital-green</span></li>
+      </ul>
+    </div>
+    <div>
+      <h2>what is gated <span class="dim">— needs external keys</span></h2>
+      <ul class="manifest gated">
+        <li>live frontier-model calls <span class="dim">— needs api keys</span></li>
+        <li>live vision critique <span class="dim">— multimodal key + screenshot pipeline</span></li>
+        <li>standalone npm packages <span class="dim">— for the editor plugins</span></li>
+        <li>additional tokens <span class="dim">— roadmap, not in 0.1.0</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- rule: read-the-code CTA, plain underlined link, no button chrome -->
+  <section>
+    <h2>read the code</h2>
+    <p>
+      the repo is the documentation. start at <code>/packages/compile</code> and
+      <code>/rules</code>. mirror on forgejo for those who prefer it.
+    </p>
+    <p style="margin-top:8px;">
+      <span class="quirk">&rarr;</span>
+      <a href="https://github.com/ahd/ahd">github.com/ahd/ahd</a>
+      &nbsp;<span class="dim">/</span>&nbsp;
+      <a href="https://code.ahd.dev/ahd/ahd">code.ahd.dev/ahd/ahd</a>
+      <span class="dim"> (forgejo mirror)</span>
+    </p>
+  </section>
+
+  <hr class="rule">
+
+  <!-- rule: footer is a single line, not 4-column legal/product/etc -->
+  <footer>
+    <div class="meta">
+      <span>
+        code: <a href="https://fsl.software/FSL-1.1-Apache-2.0.template.md">FSL-1.1-Apache-2.0</a>
+        &nbsp;·&nbsp;
+        tokens &amp; artwork: <a href="https://creativecommons.org/licenses/by/4.0/">CC-BY-4.0</a>
+      </span>
+      <span class="caps">eof</span>
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Artificial Human Design</title>
+<style>
+/* rule: colour palette */
+:root{
+  --ink: oklch(0.18 0 0);
+  --paper: oklch(0.98 0.005 95);
+  --spot: oklch(0.58 0.22 27);
+  --rule: oklch(0.18 0 0);
+  --margin-min:32px;
+  --gutter:24px;
+  --baseline:8px;
+  --space-0:0;
+  --space-1:4px;
+  --space-2:8px;
+  --space-3:12px;
+  --space-4:16px;
+  --space-5:24px;
+  --space-6:32px;
+  --space-7:48px;
+  --space-8:64px;
+  --space-9:96px;
+  --space-10:160px;
+}
+
+/* rule: typographic base */
+body{
+  margin:0;
+  font-family:"Neue Haas Grotesk Text",Helvetica,Arial,sans-serif;/* rule: typeface */
+  font-size:17px;/* rule: body size */
+  line-height:1.5;/* rule: body line-height */
+  color:var(--ink);
+  background:var(--paper);
+  max-width:62ch;/* rule: measure */
+  margin-left:auto;
+  margin-right:auto;
+  padding:var(--space-5) var(--margin-min);
+}
+
+/* rule: grid system */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(12,1fr);
+  gap:var(--gutter);
+}
+
+/* rule: display heading */
+.display{
+  font-family:"Neue Haas Grotesk Display",Helvetica,Arial,sans-serif;
+  font-size:128px;/* >=120px */
+  line-height:1.05;
+  letter-spacing:-0.02em;/* rule: tracking */
+  margin:0;
+  color:var(--ink);
+}
+
+/* rule: bleed element */
+.bleed{
+  position:relative;
+  left:-var(--gutter);
+  width:calc(100% + var(--gutter)*2);
+  height:var(--space-2);
+  background:var(--ink);
+}
+
+/* rule: code block */
+code{
+  font-family:monospace;
+  background:var(--paper);
+  padding:var(--space-2);
+  display:block;
+  border:1px solid var(--rule);
+  overflow-x:auto;
+}
+
+/* rule: spot usage exactly once */
+.spot-pill{
+  display:inline-block;
+  padding:var(--space-1) var(--space-3);
+  background:var(--spot);
+  color:#fff;
+  border-radius:999px;/* allowed for status pill */
+  font-size:0.6em;
+  vertical-align:middle;
+}
+
+/* rule: footer */
+footer{
+  margin-top:var(--space-9);
+  font-size:0.9em;
+  border-top:1px solid var(--rule);
+  padding-top:var(--space-4);
+}
+</style>
+</head>
+<body>
+  <div class="grid">
+    <!-- rule: anchored single-word display -->
+    <h1 class="display" style="grid-column: span 8;">AHD<span class="spot-pill">beta</span></h1> <!-- spot used exactly once -->
+    <p style="grid-column: span 8;">A framework that treats design as code. No fluff. No empty promises.</p>
+    <a href="https://github.com/ahd/ahd" style="grid-column: span 8; margin-top:var(--space-5); text-decoration:none; color:var(--spot);" class="read-the-code">read the code</a> <!-- rule: CTA -->
+    <!-- rule: bleed element -->
+    <div class="bleed" style="grid-column: 1 / -1; margin-top:var(--space-5);"></div>
+    <section style="grid-column: span 8; margin-top:var(--space-7);">
+      <h2 style="font-weight:700;">What ships</h2>
+      <ul style="list-style:none; padding-left:0;">
+        <li>brief compiler</li>
+        <li>28‑rule linter</li>
+        <li>eval harness</li>
+        <li>vision‑critic scaffold</li>
+        <li>MCP server</li>
+        <li>editor plugins</li>
+        <li>eight tokens</li>
+      </ul>
+    </section>
+    <section style="grid-column: span 8; margin-top:var(--space-7);">
+      <h2 style="font-weight:700;">What is gated</h2>
+      <ul style="list-style:none; padding-left:0;">
+        <li>live frontier‑model calls (needs API keys)</li>
+        <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+        <li>standalone npm packages for the editor plugins</li>
+        <li>additional tokens</li>
+      </ul>
+    </section>
+    <section style="grid-column: span 8; margin-top:var(--space-7);">
+      <h2 style="font-weight:700;">Run an evaluation</h2>
+      <code class="bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code> <!-- rule: code block -->
+    </section>
+  </div>
+  <footer>
+    Code licence: FSL‑1.1‑Apache‑2.0. Tokens &amp; artwork licence: CC‑BY‑4.0.
+  </footer>
+</body>
+</html>

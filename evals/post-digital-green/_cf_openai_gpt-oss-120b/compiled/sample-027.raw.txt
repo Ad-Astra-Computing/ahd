@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Artificial Human Design</title>
+<style>
+:root{
+  --bg: oklch(0.14 0.02 150);
+  --fg: oklch(0.92 0.12 135);
+  --dim: oklch(0.55 0.05 150);
+  --rule: oklch(0.3 0.04 150);
+  --amber: oklch(0.82 0.15 75);
+}
+html{
+  background: var(--bg);
+  color: var(--fg);
+  font-family: "Berkeley Mono","IBM Plex Mono","JetBrains Mono",ui-monospace,monospace;/* rule: monospace typeface */
+  line-height: 1.55;/* rule: body line-height */
+}
+body{
+  max-width: 80ch;/* rule: 80‑character grid */
+  margin: 0 auto;
+  padding: 2rem;
+}
+h1,h2{
+  margin-top: 1.5rem;
+  margin-bottom: .5rem;
+  line-height: 1.25;
+}
+hr{
+  border: none;
+  border-top: 1px solid var(--rule);
+  margin: 2rem 0;
+}
+code{
+  background: var(--dim);
+  padding: .1rem .3rem;
+  border: 1px solid var(--rule);
+}
+pre{
+  background: var(--dim);
+  color: var(--fg);
+  padding: 1rem;
+  overflow-x:auto;
+  border: 1px solid var(--rule);
+}
+a{
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: .25rem;/* rule: link underline offset */
+}
+a:hover{
+  text-decoration-color: var(--amber);
+}
+section{
+  margin-bottom: 2rem;
+}
+ul{
+  list-style:none;
+  padding-left:0;
+}
+li::before{
+  content:"– ";
+  color:var(--amber);
+}
+</style>
+</head>
+<body>
+<h1>artificial human design</h1>
+<p>framework for designers, engineers, founders who have seen the noise. we
+provide a concrete eval harness, linter, and token set that you can run on
+your own hardware.</p>
+
+<hr>
+
+<h2 id="eval">run an eval</h2>
+<pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+
+<p><a href="https://github.com/ahd/ahd" target="_blank">read the code</a></p>
+
+<hr>
+
+<h2 id="ships">what ships</h2>
+<ul>
+<li>brief compiler</li>
+<li>28-rule linter</li>
+<li>eval harness</li>
+<li>vision-critic scaffold</li>
+<li>mcp server</li>
+<li>editor plugins</li>
+<li>eight tokens</li>
+</ul>
+
+<hr>
+
+<h2 id="gated">what is gated</h2>
+<ul>
+<li>live frontier-model calls (needs API keys)</li>
+<li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+<li>standalone npm packages for the editor plugins</li>
+<li>additional tokens</li>
+</ul>
+
+<hr>
+
+<h2 id="diagram">architecture diagram</h2>
+<pre>
++-------------------+      +-------------------+
+|   brief compiler  |----->|   28-rule linter  |
++-------------------+      +-------------------+
+          |                         |
+          v                         v
++-------------------+      +-------------------+
+|   eval harness    |<---->| vision-critic     |
++-------------------+      +-------------------+
+          |
+          v
++-------------------+
+|   mcp server      |
++-------------------+
+</pre>
+
+<footer>
+<p>code licence: fsl-1.1-apache-2.0 | tokens &amp; artwork: cc-by-4.0</p>
+</footer>
+
+<!-- intentional imperfection: duplicate id "eval" on multiple elements --> 
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Artificial Human Design</title>
+  <style>
+    /* rule: post-digital-green */
+    :root {
+      --bg: oklch(0.14 0.02 150);
+      --fg: oklch(0.92 0.12 135);
+      --dim: oklch(0.55 0.05 150);
+      --rule: oklch(0.3 0.04 150);
+      --amber: oklch(0.82 0.15 75);
+    }
+    /* rule: monospace */
+    body {
+      font-family: 'Berkeley Mono', 'IBM Plex Mono', 'JetBrains Mono', ui-monospace;
+      background-color: var(--bg);
+      color: var(--fg);
+      line-height: 1.55;
+      margin: 0;
+      padding: 4px;
+    }
+    /* rule: 80ch grid */
+    body > * {
+      max-width: 80ch;
+      margin: 0 auto;
+    }
+    /* rule: rectangles only */
+    * {
+      box-sizing: border-box;
+      border-radius: 0;
+    }
+    /* rule: no gradients, no shadows */
+    * {
+      background-image: none;
+      box-shadow: none;
+    }
+    /* rule: hairline rule */
+    hr {
+      border: 1px solid var(--rule);
+      border-width: 1px 0;
+      margin: 16px 0;
+    }
+    /* rule: link style */
+    a {
+      text-decoration: underline;
+      text-decoration-offset: 4px;
+      color: var(--fg);
+    }
+    /* rule: amber accent */
+    .accent {
+      color: var(--amber);
+    }
+  </style>
+</head>
+<body>
+  <h1>Artificial Human Design</h1>
+  <p>We take the problem of AI-generated design seriously.</p>
+  <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+  <!-- rule: ASCII diagram -->
+  <pre>
+    +---------------+
+    |  AHD Eval    |
+    +---------------+
+    |  brief:       |
+    |    swiss-editorial  |
+    |  models:      |
+    |    &lt;specs&gt;         |
+    +---------------+
+  </pre>
+  <hr>
+  <h2>What ships</h2>
+  <ul>
+    <li>brief compiler</li>
+    <li>28-rule linter</li>
+    <li>eval harness</li>
+    <li>vision-critic scaffold</li>
+    <li>MCP server</li>
+    <li>editor plugins</li>
+    <li>eight tokens</li>
+  </ul>
+  <hr>
+  <h2>What is gated</h2>
+  <ul>
+    <li>live frontier-model calls (needs API keys)</li>
+    <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+    <li>standalone npm packages for the editor plugins</li>
+    <li>additional tokens</li>
+  </ul>
+  <hr>
+  <p><a href="https://github.com/ahd-dev/ahd" class="accent">Read the code</a></p>
+  <footer>
+    <p>Licence: FSL-1.1-Apache-2.0 for code, CC-BY-4.0 for tokens and artwork.</p>
+  </footer>
+</body>
+</html>

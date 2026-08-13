@@ -1,0 +1,275 @@
+```html
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Artificial Human Design</title>
+<style>
+/* rule: type-display-tracking */
+@font-face{font-family:'Neue Haas Grotesk Display';src:local('Helvetica Now Display'),local('Inter Tight');font-weight:300 900}
+@font-face{font-family:'Neue Haas Grotesk Text';src:local('Helvetica Now Text'),local('Inter');font-weight:300 900}
+
+/* rule: colour-palette-ink-paper-spot */
+:root{
+  --ink: oklch(0.18 0 0);
+  --paper: oklch(0.98 0.005 95);
+  --spot: oklch(0.58 0.22 27);
+  --rule: oklch(0.18 0 0);
+  --muted: oklch(0.55 0 0);
+}
+
+/* rule: grid-12-col-24px-gutter */
+/* rule: base-17px-body */
+/* rule: line-height-body-1.5 */
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+html{
+  font-size:17px;
+  font-family:'Neue Haas Grotesk Text','Helvetica Now Text',Inter,Helvetica,Arial,sans-serif;
+  line-height:1.5;
+  color:var(--ink);
+  background:var(--paper);
+}
+
+/* rule: asymmetric-left-aligned */
+/* rule: margin-preferred-calc */
+body{
+  padding:0 calc(100vw / 24);
+  max-width:1440px;
+  margin:0 auto;
+}
+
+/* rule: display-type-96-160px */
+/* rule: tracking-display-minus-0.02em */
+/* rule: line-height-display-1.05 */
+.display{
+  font-family:'Neue Haas Grotesk Display','Helvetica Now Display','Inter Tight',Helvetica,Arial,sans-serif;
+  font-weight:700;
+  letter-spacing:-0.02em;
+  line-height:1.05;
+  text-wrap:balance;
+}
+
+/* rule: one-word-display-120px */
+.massive{
+  font-size:clamp(96px,12vw,160px);
+  font-weight:900;
+  letter-spacing:-0.02em;
+  line-height:1.05;
+}
+
+/* rule: measure-62ch */
+.measure{
+  max-width:62ch;
+}
+
+/* rule: baseline-8px */
+/* rule: rhythm-160-between-sections */
+section{
+  margin-bottom:160px;
+}
+
+/* rule: structural-motion-only */
+a{
+  color:var(--ink);
+  text-decoration:none;
+  border-bottom:1px solid var(--rule);
+}
+a:hover{
+  border-bottom-width:2px;
+}
+
+/* rule: sharp-by-default */
+/* rule: pills-999-status-only */
+.status-pill{
+  display:inline-block;
+  padding:2px 10px;
+  border:1px solid var(--rule);
+  border-radius:999px;
+  font-size:0.764rem;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  font-weight:400;
+}
+
+/* rule: one-element-bleeds */
+.bleed-right{
+  margin-right:calc(-100vw / 24);
+  padding-right:calc(100vw / 24);
+}
+
+/* Terminal/Code: structural depth via rule, space, colour—no glass, no glow */
+/* rule: no-shadows-depth-via-rule */
+pre{
+  background:var(--ink);
+  color:var(--paper);
+  padding:24px 32px;
+  overflow-x:auto;
+  font-family:'SF Mono',Monaco,'Cascadia Code','Roboto Mono',monospace;
+  font-size:0.823rem;
+  line-height:1.6;
+  border:1px solid var(--rule);
+}
+
+pre code{
+  font-family:inherit;
+}
+
+/* rule: spot-used-exactly-once */
+.spot-only{
+  color:var(--spot);
+}
+
+/* Lists: no emoji bullets */
+ul.plain{
+  list-style:none;
+}
+ul.plain li{
+  position:relative;
+  padding-left:20px;
+}
+ul.plain li::before{
+  content:"—";
+  position:absolute;
+  left:0;
+  color:var(--muted);
+}
+
+/* rule: no-canonical-4-column-footer */
+footer{
+  display:flex;
+  flex-wrap:wrap;
+  gap:48px;
+  padding:48px 0 96px;
+  border-top:1px solid var(--rule);
+}
+
+footer > div{
+  flex:1 1 240px;
+}
+
+footer .primary{
+  flex:2 1 360px;
+}
+
+h2{
+  font-family:'Neue Haas Grotesk Display','Helvetica Now Display','Inter Tight',Helvetica,Arial,sans-serif;
+  font-size:2.369rem;
+  font-weight:700;
+  letter-spacing:-0.02em;
+  line-height:1.2;
+  margin-bottom:24px;
+}
+
+h3{
+  font-family:'Neue Haas Grotesk Text','Helvetica Now Text',Inter,Helvetica,Arial,sans-serif;
+  font-size:1rem;
+  font-weight:700;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  margin-bottom:16px;
+}
+
+p,ul{
+  margin-bottom:16px;
+}
+
+.muted{
+  color:var(--muted);
+}
+
+/* rule: no-rounded-2xl */
+/* rule: sharp-corners */
+.nowrap{
+  white-space:nowrap;
+}
+
+/* Intentional imperfection: slight baseline misalignment on hero subhead */
+.imperfect{
+  transform:translateY(1px);
+}
+</style>
+</head>
+<body>
+
+<!-- rule: asymmetric-left-aligned -->
+<!-- rule: no-centred-hero -->
+<header style="padding:64px 0 32px;">
+  <div style="margin-bottom:16px;">
+    <span class="status-pill">framework</span>
+  </div>
+  <!-- rule: one-word-display-120px -->
+  <h1 class="massive display" style="margin-bottom:32px;">AHD</h1>
+  <p class="measure imperfect" style="font-size:1.333rem; line-height:1.3; max-width:52ch;">
+    Artificial Human Design. A system for running design against constraints instead of vibes.
+  </p>
+</header>
+
+<!-- rule: one-element-bleeds-past-grid -->
+<section class="bleed-right">
+  <p class="measure" style="margin-bottom:32px; color:var(--muted);">
+    Run the eval. Compare outputs against the same brief.
+  </p>
+  <!-- rule: bash-code-block-required -->
+  <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+</section>
+
+<section>
+  <!-- rule: separated-manifest-what-ships -->
+  <h2>What ships</h2>
+  <ul class="plain">
+    <li>Brief compiler</li>
+    <li>28-rule linter</li>
+    <li>Eval harness</li>
+    <li>Vision-critic scaffold</li>
+    <li>MCP server</li>
+    <li>Editor plugins</li>
+    <li>Eight tokens</li>
+  </ul>
+</section>
+
+<section>
+  <!-- rule: separated-manifest-what-is-gated -->
+  <h2>What is gated</h2>
+  <ul class="plain">
+    <li>Live frontier-model calls (needs API keys)</li>
+    <li>Live vision critique (needs multimodal key + screenshot pipeline)</li>
+    <li>Standalone npm packages for the editor plugins</li>
+    <li>Additional tokens</li>
+  </ul>
+</section>
+
+<section>
+  <p class="measure">
+    <!-- rule: read-the-code-cta-link -->
+    <!-- rule: spot-used-exactly-once -->
+    <a href="https://github.com/ahrftime/ahd"><span class="spot-only">Read the code</span> &rarr;</a>
+  </p>
+</section>
+
+<!-- rule: no-canonical-4-column-footer -->
+<!-- rule: licence-footer-required -->
+<footer>
+  <div class="primary">
+    <h3>Artificial Human Design</h3>
+    <p class="muted">
+      A framework for reproducible design evaluation.
+    </p>
+  </div>
+  <div>
+    <h3>Licence</h3>
+    <p class="muted">
+      Code: <span class="nowrap">FSL-1.1-Apache-2.0</span><br>
+      Tokens and artwork: CC-BY-4.0
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>
+```

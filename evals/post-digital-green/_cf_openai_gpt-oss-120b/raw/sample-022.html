@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Artificial Human Design (AHD)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body{font-family:system-ui, sans-serif; margin:0; line-height:1.6; color:#222; background:#fafafa;}
+header{padding:2rem 1rem; max-width:800px; margin:auto;}
+h1{font-size:2.2rem; margin:0 0 .5rem;}
+p{margin:0 0 1rem;}
+a.cta{display:inline-block; padding:.5rem 1rem; background:#0066cc; color:#fff; text-decoration:none; border-radius:4px; font-weight:600;}
+section{padding:2rem 1rem; max-width:800px; margin:auto; border-top:1px solid #e0e0e0;}
+h2{font-size:1.6rem; margin-bottom:.5rem;}
+ul{list-style:disc inside; margin:0; padding-left:1rem;}
+code{background:#f0f0f0; padding:.2rem .4rem; border-radius:3px;}
+pre{background:#1e1e1e; color:#d4d4d4; padding:1rem; overflow:auto; border-radius:4px; font-family:monospace; font-size:.95rem;}
+footer{background:#eaeaea; padding:1rem; text-align:center; font-size:.9rem; margin-top:2rem;}
+</style>
+</head>
+<body>
+<header>
+<h1>Artificial Human Design (AHD)</h1>
+<p>A concise framework for evaluating AI‑generated design outputs without the hype.</p>
+<a href="https://github.com/your-org/ahd" class="cta">Read the code</a>
+</header>
+
+<section>
+<h2>Run an evaluation</h2>
+<pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+<p>This command launches the live evaluation harness against the specified model specifications.</p>
+</section>
+
+<section>
+<h2>What ships</h2>
+<ul>
+<li>Brief compiler</li>
+<li>28‑rule linter</li>
+<li>Eval harness</li>
+<li>Vision‑critic scaffold</li>
+<li>MCP server</li>
+<li>Editor plugins</li>
+<li>Eight tokens</li>
+</ul>
+</section>
+
+<section>
+<h2>What is gated</h2>
+<ul>
+<li>Live frontier‑model calls (requires API keys)</li>
+<li>Live vision critique (requires multimodal key + screenshot pipeline)</li>
+<li>Standalone npm packages for the editor plugins</li>
+<li>Additional tokens</li>
+</ul>
+</section>
+
+<footer>
+<p>Code licensed under <code>FSL-1.1-Apache-2.0</code>. Tokens and artwork licensed under <code>CC-BY-4.0</code>.</p>
+</footer>
+</body>
+</html>

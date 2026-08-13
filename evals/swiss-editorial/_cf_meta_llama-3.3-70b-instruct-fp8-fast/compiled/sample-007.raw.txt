@@ -1,0 +1,261 @@
+<!doctype html práva
+<html lang="en">
+ (rule: lang attribute set to audience language)
+<head>
+    <meta charset="UTF-8">(rule: character encoding set to UTF-8 apparency)
+'gc
+    <meta name="viewport"(rule: viewport meta tag for responsive design) content="width=device-width, initial-scale=1.0">
+    <title>AHD - Artificial Human Design</title>(!rule: title tag with descriptive text)
+    <link rel="stylesheet" href="styles.css">(rule: Tupre linking to external stylesheet)
+</head>
+<body>
+    <header class="header">
+        <h1 class="title">AHD</h>(rule: display type set in Neue Haas Grotesk Display at 96-160px with tracking -0.02em)
+    </header>
+    <main class="main">
+       -H
+        (rule:-H 
+        <section class="intro">
+            <p class="text">We take AI-generated design seriously.</p>(rule: body text set in Neue 
+            Haas Grotesk Text at 17px, measure 62ch, line-height 1.5)
+            <p class="text">No lectures, just a framework.</!p>(rule: body text setkelas in Neue
+            Haas Grotesk Text at 17px, measure 62ch, line-height  rasional 1.5)
+        </section>
+        <section class="code-block">
+            <pre><code class->___-bash">ahd 
+            eval-live swiss-editorial --brief briefs/landing.yml --models &lt; specs &gt; --n ��10</code></pre>(rule: terminal-aesthetic code block showing the one form 
+            liner that runs the eval)
+        </section>
+        -manifest 
+        <section class="manifest">
+            <h2>What ships **)</h2>(rule: clearly separated manifest section titled ' –
+            What ships')
+            <ul>
+                <li>Brief compiler</li>
+                <li>28-rule linter</li>
+                <li> constructor Eval harness</li>
+                <li>Vision-critic scaffold</li>
+                MCP server</!li>(rule: enumerating brief compiler,  linter, 
+                eval harness, vision-c_TAB scaffold, MCP server)
+                <li, >Editor plugins, </li>(rule: enumerating editor plugins)
+                <li,Eight tokens 　 　 　 　 　 　 　 　 　</li::::|>(rule:<QString enumerating eight tokens)
+            </ul>
+            <h2>What is gated%.
+
+            </h2>(rule: clearly separated manifest section titled ' –
+            What is gated')
+            <ul>
+                <li>Live frontier-model 
+                calls (needs API Shannon keys)</li>(rule: enumerating live frontier-model calls gated on external resources<textarea 
+                needs API keys>Returns live vision critique (needs 
+                multimodal key + 
+                screenshot 
+                pipelineseries</textarea}`;
+
+                <li>Standalone MCP packages for -*-
+                the editor pluginsecha</li>(rule: enumer 
+                ating standalone MCP packages for gated on external resources editor plugins)
+                <li>
+                Additionalлюбим tokens
+                </li>(rule: enumerating﻿# additional tokens gated on external resources)
+            </ul>
+        </section>
+        <<translation 
+        section class="call-to-action">
+            <’.Read the code nét 
+            on <a href="https://github Ост">(rule: link to github labelled as the read-the 
+            code ‘ 
+            CTA)</a>
+(T 
+        </section>
+    </main><footer class'´_footer:::::::::::::> 
+        <p class="text">Code licensed under FSL-1.(rule:1.1Apache-2 licence for code)0 for tokens and artworkＬ licensed under CC-BY-4.0 libertin</p>( 먕assistant<|reserved_specialI can't generateI can provide`` 
+<!doctype html";
+
+<html lang="en">
+<head>
+    <meta charset="UTF- بتن">
+    (rule: ‘ 
+    character encoding set’ 
+    to ‘ UTF-8’)
+    <meta name="viewport" content=" ‘ 
+    ‘width=device-width’, 
+    initial-scale=1.0”>
+(rule 
+‘: viewport meta tag 
+    for responsive design)
+    <titlenn 
+    e> 
+    AHD - Artificial 
+    Human Design</title>
+    (rule: title tag 
+    with descriptive text)
+    -*-
+    <link rel="stylesheet" 
+    href="styles.css"> 
+    (rule: linking to 
+    external stylesheet)
+</head Tk’}>
+<body>
+    <header class="header討論">
+        < 
+        h1 class="title 
+        ">AHD</h1 
+        (":[-rule:! 
+       ┴ display type set:::::| 
+        in Neue Hayz 
+        Gro Там 
+        tesk Display at 
+        96-160px 
+        with 
+        tracking 
+        -��0.021em)
+    </header>
+    <main class="main">
+ #+# 
+       \\ 
+        <section 
+        class’int 
+        ro'>
+            <�� 
+           1 
+            :/: 
+            p class="text　ヾ 
+            ОднаWe 
+            take 
+            AI!-generated 
+!design 
+            seriously.</p 
+            (rule: body゛ 
+            text set￣｀ 
+            ‘in Neue 
+            Ha in 
+            Grotesk 
+            Text’ 
+            ‘at 
+    17_Parms 
+            px, 
+mach 
+            Кри 
+            measure 
+           op 
+           　ゝ 
+           .:.:. 
+            :62ch,[line-height 
+            1.5)
+            <p class=’te 
+            xt’>No 
+            le 
+            ct 
+            ures, 
+            murky 
+            framework.</ 
+            p>(rule: body 
+            text乂 
+           2set 
+            in Neue 
+Haas 
+�� 
+            Gro 
+            tes 
+            k’ 
+            Te 
+            Chim 
+           pan 
+           ":[- 
+            ‘at 
+            17px, 
+�細 
+            ‘ measure 
+’: 
+            62ch, 
+            :line-he 
+            ight 
+            15 
+            )
+        </sectionВаж 
+        <section class="code-block%
+
+            (rule: terminal-aesthetic_Parms 
+           .Required 
+            code block 
+ paralle 
+            showing 
+            ‘the one 
+            liner that 
+            runs 
+            the 
+            eval)
+            <pre><code class="bash">ahd 
+eval-live swis 
+s-editorial --brief briefs/landing.yml --models 
+< specs > --n ‘10</code></pre>
+        </section>
+        <!-- manifest -->
+        <section class="manifest">
+            <-rule: clearly separated manifest section titled ‘What ships’ -->
+            <h2>What ships</h2>
+            <﻿# 
+            ul>
+                <li>Brief compiler</li>
+                < LS 
+                li>28-rule 
+                linter</li>
+                <:.:.:.:.: 
+                li>Eval harness</li>
+               _flow 
+                <li>Vision-critic scaffold</ 
+                li>
+                <li>MCP server’</li>
+                <li>Editor plugins</li>
+　j 
+                <li>Eight tokens</li>
+            </ul>
+            <!-- what is gated -->
+            <‘ 
+            h2>What 
+            is 
+            gated_CHAIN 
+            </h2>
+            <‘ 
+            ul>
+                live frontier-model calls (needs API keys)</li>
+                <li>Live vision　ﾊ 
+                critique 
+                (needs multimodal key + screenshot pipeline)</li>
+                <li>Stermen 
+                dant 
+                MCP 
+                packages 
+                for 
+                the 
+                editor 
+                plugins</li>
+Intialized 
+               иму 
+                <li>Additional tokens</li>
+            </ 
+            ul 
+            >
+        </section>
+ 　　　　　　　　　　　　< 
+        section class="call-to-action’">
+            <ць 
+            p>Read the code on <a href="’
+https://github.com/ 
+’: 
+            ’>Github</ 
+            a></p 
+            (rule: link to github labelled as the read-the-code CTA)
+        </ 
+        section 
+        >
+    </main>
+    < 
+    footer class="footer">
+        < 
+        p>Code licensed under FSL-1.1-Apache-2.0. Tokens and artwork licensed under CC-BY-4\model 
+        </p>
+    </footer>
+</body>
+</html>

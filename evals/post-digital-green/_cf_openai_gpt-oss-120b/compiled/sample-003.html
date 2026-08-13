@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ahd – artificial human design</title>
+<style>
+:root{
+  --bg: oklch(0.14 0.02 150);
+  --fg: oklch(0.92 0.12 135);
+  --dim: oklch(0.55 0.05 150);
+  --rule: oklch(0.3 0.04 150);
+  --amber: oklch(0.82 0.15 75);
+  --font-mono: "Berkeley Mono","IBM Plex Mono","JetBrains Mono",ui-monospace;
+}
+html,body{
+  margin:0;
+  padding:0;
+  background:var(--bg);
+  color:var(--fg);
+  font-family:var(--font-mono);
+  line-height:1.55;
+}
+.container{
+  max-width:80ch;
+  margin:auto;
+  padding:24px;
+}
+h1{
+  font-size:2rem;
+  line-height:1.1;
+  margin:0 0 0.5rem 0;
+  color:var(--amber);
+}
+h2{
+  font-size:1.5rem;
+  line-height:1.25;
+  margin:1.5rem 0 0.5rem 0;
+  color:var(--amber);
+}
+section{
+  border:1px solid var(--rule);
+  padding:12px;
+  margin-top:24px;
+}
+pre{
+  margin:0;
+  overflow:auto;
+}
+code{
+  font-family:var(--font-mono);
+}
+a{
+  color:inherit;
+  text-decoration:underline;
+  text-underline-offset:4px;
+  /* intentional CSS quirk: missing semicolon before next rule */ 
+}
+a.cta{
+  color:var(--amber);
+}
+footer{
+  margin-top:48px;
+  font-size:0.9rem;
+  border-top:1px solid var(--rule);
+  padding-top:12px;
+}
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+<h1>ahd – artificial human design</h1>
+<p>framework for designers, engineers, founders.</p>
+</header>
+
+<section class="code">
+<pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+</section>
+
+<section class="ascii">
+<pre>
++-------------------+
+|   AHD pipeline    |
++--------+----------+
+         |
+   +-----v-----+
+   | compiler  |
+   +-----------+
+</pre>
+</section>
+
+<section class="manifest">
+<h2>What ships</h2>
+<ul>
+<li>brief compiler</li>
+<li>28‑rule linter</li>
+<li>eval harness</li>
+<li>vision‑critic scaffold</li>
+<li>MCP server</li>
+<li>editor plugins</li>
+<li>eight tokens</li>
+</ul>
+
+<h2>What is gated</h2>
+<ul>
+<li>live frontier‑model calls (needs API keys)</li>
+<li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+<li>standalone npm packages for the editor plugins</li>
+<li>additional tokens</li>
+</ul>
+</section>
+
+<p><a href="https://github.com/ahd/ahd" class="cta">read‑the‑code</a></p>
+
+<footer>
+<p>code licence: FSL‑1.1‑Apache‑2.0 • tokens &amp; artwork: CC‑BY‑4.0</p>
+</footer>
+</div>
+</body>
+</html>

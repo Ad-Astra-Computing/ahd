@@ -2,7 +2,12 @@ node_modules
 dist
 out
 result
-/evals/
+# Keep the sample corpora behind published reports. /evals/ itself must
+# not be ignored or git never descends to see the negations. The other
+# runs stay out: they embed absolute paths from the machine that ran them.
+/evals/*
+!/evals/post-digital-green/
+!/evals/swiss-editorial/
 /critiques/
 docs/critique-artifacts/
 .DS_Store
@@ -12,3 +17,9 @@ docs/critique-artifacts/
 !.env.example
 coverage
 *.tgz
+
+# vision-critic / mobile-audit review artifacts
+critique-url.json
+critique-url.png
+audit-mobile.json
+audit-mobile.png

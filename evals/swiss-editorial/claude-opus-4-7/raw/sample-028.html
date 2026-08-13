@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AHD — Artificial Human Design</title>
+<style>
+  :root{
+    --ink:#111;
+    --paper:#f5f3ee;
+    --rule:#111;
+    --muted:#5a564e;
+    --term-bg:#0e0e0c;
+    --term-ink:#e8e4d8;
+    --term-dim:#8a8576;
+    --term-accent:#d8c36b;
+    --flag:#8a2a2a;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Iowan Old Style","Charter","Georgia",serif;
+    font-size:17px;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:840px;margin:0 auto;padding:40px 28px 80px}
+  .top{
+    display:flex;justify-content:space-between;align-items:baseline;
+    border-bottom:1px solid var(--rule);
+    padding-bottom:14px;
+    font-family:"IBM Plex Mono","SF Mono",ui-monospace,monospace;
+    font-size:12px;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+  }
+  .top .id{font-weight:600}
+  .top .meta{color:var(--muted)}
+  h1{
+    font-size:44px;
+    line-height:1.05;
+    letter-spacing:-.01em;
+    margin:36px 0 10px;
+    font-weight:600;
+  }
+  h1 .sub{
+    display:block;
+    font-family:"IBM Plex Mono",ui-monospace,monospace;
+    font-size:12px;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin-bottom:14px;
+    font-weight:500;
+  }
+  .lede{
+    font-size:19px;
+    max-width:62ch;
+    margin:0 0 8px;
+  }
+  .lede em{font-style:italic}
+  .thesis{
+    max-width:62ch;
+    color:#1a1a1a;
+    margin:14px 0 28px;
+  }
+  .rule{border:0;border-top:1px solid var(--rule);margin:36px 0}
+  .rule.thin{border-top:1px solid #bcb7a8}
+
+  /* terminal */
+  .term{
+    background:var(--term-bg);
+    color:var(--term-ink);
+    font-family:"IBM Plex Mono","SF Mono",ui-monospace,monospace;
+    font-size:13px;
+    line-height:1.55;
+    border:1px solid #000;
+    border-radius:2px;
+    overflow:hidden;
+    margin:18px 0 8px;
+  }
+  .term-head{
+    display:flex;justify-content:space-between;
+    padding:8px 12px;
+    border-bottom:1px solid #2a2a26;
+    color:var(--term-dim);
+    font-size:11px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+  }
+  .term-body{padding:14px 14px 16px;overflow-x:auto}
+  .term-body pre{margin:0;white-space:pre}
+  .prompt{color:var(--term-dim)}
+  .cmd{color:var(--term-ink)}
+  .flag{color:var(--term-accent)}
+  .arg{color:#9ec9a2}
+  .comment{color:var(--term-dim);font-style:italic}
+  .caption{
+    font-family:"IBM Plex Mono",ui-monospace,monospace;
+    font-size:12px;
+    color:var(--muted);
+    margin:0 0 24px;
+  }
+
+  /* manifest */
+  .manifest{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:0;
+    border-top:1px solid var(--rule);
+    border-bottom:1px solid var(--rule);
+  }
+  @media(min-width:720px){
+    .manifest{grid-template-columns:1fr 1fr}
+    .ships{border-right:1px solid var(--rule)}
+  }
+  .col{padding:22px 24px 26px}
+  .col h2{
+    font-family:"IBM Plex Mono",ui-monospace,monospace;
+    font-size:12px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    margin:0 0 14px;
+    font-weight:600;
+  }
+  .col h2 .tag{
+    display:inline-block;
+    margin-left:8px;
+    padding:1px 6px;
+    border:1px solid currentColor;
+    font-size:10px;
+    vertical-align:2px;
+  }
+  .gated h2 .tag{color:var(--flag)}
+  .col ol{
+    list-style:none;
+    counter-reset:m;
+    padding:0;margin:0;
+  }
+  .col li{
+    counter-increment:m;
+    display:grid;
+    grid-template-columns:28px 1fr;
+    padding:8px 0;
+    border-top:1px dashed #bcb7a8;
+    font-size:15px;
+  }
+  .col li:first-child{border-top:0}
+  .col li::before{
+    content:counter(m,decimal-leading-zero);
+    font-family:"IBM Plex Mono",ui-monospace,monospace;
+    font-size:11px;
+    color:var(--muted);
+    padding-top:3px;
+  }
+  .col li .note{
+    display:block;
+    font-size:12.5px;
+    color:var(--muted);
+    margin-top:2px;
+  }
+
+  /* CTA */
+  .cta{
+    display:flex;flex-wrap:wrap;gap:14px 22px;
+    align-items:baseline;
+    margin:30px 0 0;
+    font-family:"IBM Plex Mono",ui-monospace,monospace;
+    font-size:13px;
+  }
+  .cta a{
+    color:var(--ink);
+    text-decoration:none;
+    border-bottom:1px solid var(--ink);
+    padding-bottom:1px;
+  }
+  .cta a:hover{background:var(--ink);color:var(--paper)}
+  .cta .arrow{display:inline-block;transform:translateY(-1px);margin-left:4px}
+  .cta .aside{color:var(--muted);border:0}
+
+  /* footer */
+  footer{
+    margin-top:60px;
+    border-top:1px solid var(--rule);
+    padding-top:18px;
+    font-family:"IBM Plex Mono",ui-monospace,monospace;
+    font-size:11.5px;
+    color:var(--muted);
+    letter-spacing:.04em;
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px 18px;
+    justify-content:space-between;
+  }
+  footer b{color:var(--ink);font-weight:600}
+  ::selection{background:#111;color:var(--paper)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="top">
+    <span class="id">AHD — Artificial Human Design</span>
+    <span class="meta">v0.3 · 2026-04-22 · single page</span>
+  </div>
+
+  <h1>
+    <span class="sub">A framework, not a lecture</span>
+    A working definition of slop, and a harness that measures it.
+  </h1>
+
+  <p class="lede">
+    You have already seen the page. Centred hero, two pill CTAs, a gradient on the word
+    <em>AI</em>, three equal cards, a Trusted-by strip with logos nobody asked to licence.
+    You know what it looks like. You are probably tired of arguing about it.
+  </p>
+  <p class="thesis">
+    AHD treats design as a compiled artefact from a written brief, graded by a linter you
+    can read, judged by an eval you can rerun on your laptop. The command below produces a
+    ten-variant Swiss-editorial battery against the same brief that generated this page.
+    It is the only demo on the site because it is the only one that matters.
+  </p>
+
+  <div class="term" role="region" aria-label="terminal example">
+    <div class="term-head">
+      <span>bash · zsh — ahd</span>
+      <span>~/ahd</span>
+    </div>
+    <div class="term-body">
+<pre><span class="comment"># run the live eval against ten model configurations</span>
+<span class="prompt">$</span> <span class="cmd">ahd eval-live swiss-editorial</span> <span class="flag">--brief</span> <span class="arg">briefs/landing.yml</span> <span class="flag">--models</span> <span class="arg">&lt;specs&gt;</span> <span class="flag">--n</span> <span class="arg">10</span>
+<span class="comment"># → 10 candidates · 28 lint rules · vision critique (if key present) · scored HTML</span></pre>
+    </div>
+  </div>
+  <p class="caption">Reproducible from a clean clone. No telemetry. No hosted inference.</p>
+
+  <hr class="rule">
+
+  <section class="manifest" aria-label="manifest">
+    <div class="col ships">
+      <h2>What ships <span class="tag">today</span></h2>
+      <ol>
+        <li><div><b>Brief compiler</b><span class="note">YAML → typed intermediate representation; deterministic.</span></div></li>
+        <li><div><b>28-rule linter</b><span class="note">Structural, typographic, and rhythm checks. Readable source.</span></div></li>
+        <li><div><b>Eval harness</b><span class="note">Scores N candidates per brief; reproducible seeds; JSON out.</span></div></li>
+        <li><div><b>Vision-critic scaffold</b><span class="note">Rendering pipeline, prompt templates, graders. Bring your own model.</span></div></li>
+        <li><div><b>MCP server</b><span class="note">Exposes compiler, linter, and eval to any compatible client.</span></div></li>
+        <li><div><b>Editor plugins</b><span class="note">VS Code and Zed. In-repo sources; install from source.</span></div></li>
+        <li><div><b>Eight tokens</b><span class="note">The canonical set used by this page. Swiss-editorial family.</span></div></li>
+      </ol>
+    </div>
+
+    <div class="col gated">
+      <h2>What is gated <span class="tag">external</span></h2>
+      <ol>
+        <li><div><b>Live frontier-model calls</b><span class="note">Requires your own API keys. No keys are bundled or proxied.</span></div></li>
+        <li><div><b>Live vision critique</b><span class="note">Needs a multimodal key and the screenshot pipeline configured.</span></div></li>
+        <li><div><b>Standalone npm packages for the editor plugins</b><span class="note">Pending registry publication; install from source works today.</span></div></li>
+        <li><div><b>Additional tokens</b><span class="note">Beyond the eight shipped; grotesque, slab, and display families planned.</span></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <div class="cta">
+    <a href="https://github.com/ahd/ahd">Read the code on GitHub <span class="arrow">→</span></a>
+    <a href="https://codeberg.org/ahd/ahd">Forgejo mirror <span class="arrow">→</span></a>
+    <span class="aside">git clone, run the one-liner above, read the lint output.</span>
+  </div>
+
+  <footer>
+    <span>© 2026 AHD project contributors</span>
+    <span><b>Licence:</b> FSL-1.1-Apache-2.0 for code · CC-BY-4.0 for tokens and artwork</span>
+  </footer>
+
+</div>
+</body>
+</html>

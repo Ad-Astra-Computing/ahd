@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AHD — Artificial Human Design</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=Inter+Tight:wght@300;400;700;900&display=swap" rel="stylesheet">
+  <style>
+    /* rule: single-family-two-optical-sizes — Inter Tight for display, Inter for text */
+    :root {
+      --ink: #1a1714;
+      --paper: #faf8f5;
+      --spot: #c41e3a;
+      --rule: #1a1714;
+      --muted: #737373;
+      
+      --font-display: "Inter Tight", "Helvetica Now Display", "Inter", system-ui, sans-serif;
+      --font-text: "Inter", "Helvetica Now Text", system-ui, sans-serif;
+      
+      --track-display: -0.02em;
+      --track-body: 0;
+      --track-allcaps: 0.08em;
+      
+      --lh-display: 1.05;
+      --lh-h2: 1.2;
+      --lh-body: 1.5;
+      
+      --base: 17px;
+      --ratio: 1.333;
+      
+      --space-0: 0;
+      --space-1: 4px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 24px;
+      --space-6: 32px;
+      --space-7: 48px;
+      --space-8: 64px;
+      --space-9: 96px;
+      --space-10: 160px;
+      
+      --gutter: 24px;
+      --baseline: 8px;
+    }
+
+    /* rule: ink on paper palette, warm off-white */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* rule: structural motion only, no entrance animations */
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+
+    html {
+      font-size: var(--base);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* rule: swiss-12 grid with 24px gutters, 8px baseline */
+    body {
+      font-family: var(--font-text);
+      font-size: var(--base);
+      line-height: var(--lh-body);
+      color: var(--ink);
+      background: var(--paper);
+      padding: var(--space-6) calc(100vw / 24);
+    }
+
+    /* rule: asymmetric left-aligned composition, no centred hero */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: var(--gutter);
+      max-width: 1440px;
+      margin: 0;
+    }
+
+    /* rule: one intentional element bleeds past grid — .bleed class */
+    .bleed {
+      margin-left: calc(-100vw / 24);
+      margin-right: calc(-100vw / 24);
+      padding-left: calc(100vw / 24);
+      padding-right: calc(100vw / 24);
+    }
+
+    /* rule: display type at 96-160px with tracking -0.02em */
+    .mega {
+      font-family: var(--font-display);
+      font-size: clamp(96px, 12vw, 160px);
+      line-height: var(--lh-display);
+      letter-spacing: var(--track-display);
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    /* rule: h2 line-height 1.2 */
+    h2 {
+      font-family: var(--font-display);
+      font-size: calc(var(--base) * var(--ratio) * var(--ratio) * var(--ratio));
+      line-height: var(--lh-h2);
+      letter-spacing: var(--track-display);
+      font-weight: 700;
+      margin-bottom: var(--space-5);
+    }
+
+    /* rule: body at 17px, measure 62ch, line-height 1.5 */
+    p, li {
+      font-family: var(--font-text);
+      font-size: var(--base);
+      line-height: var(--lh-body);
+      max-width: 62ch;
+      margin-bottom: var(--space-5);
+    }
+
+    /* rule: spot colour used exactly once — on .spot */
+    .spot {
+      color: var(--spot);
+    }
+
+    /* rule: sharp corners by default, no shadows */
+    a {
+      color: var(--ink);
+      text-decoration: none;
+      border-bottom: 1px solid var(--rule);
+      padding-bottom: 1px;
+    }
+
+    a:hover {
+      border-bottom-width: 2px;
+    }
+
+    /* rule: terminal-aesthetic code block, language bash */
+    pre {
+      font-family: ui-monospace, "SF Mono", Monaco, Inconsolata, monospace;
+      font-size: 14px;
+      line-height: 1.6;
+      background: var(--ink);
+      color: var(--paper);
+      padding: var(--space-5) var(--space-6);
+      margin: var(--space-5) 0;
+      overflow-x: auto;
+    }
+
+    code {
+      font-family: inherit;
+    }
+
+    /* rule: no rounded-2xl, sharp edges */
+    /* rule: structural motion only */
+    @keyframes cursor {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    .cursor {
+      animation: cursor 1s step-end infinite;
+    }
+
+    /* rule: sections separated by dramatic jump of 160px */
+    section {
+      margin-bottom: var(--space-10);
+    }
+
+    /* rule: manifest sections clearly separated */
+    .manifest {
+      border-top: 1px solid var(--rule);
+      padding-top: var(--space-6);
+    }
+
+    .manifest ol {
+      list-style: decimal;
+      padding-left: var(--space-6);
+    }
+
+    .manifest li {
+      margin-bottom: var(--space-2);
+      max-width: 62ch;
+    }
+
+    /* rule: footer with explicit licence naming */
+    footer {
+      border-top: 1px solid var(--rule);
+      padding-top: var(--space-6);
+      margin-top: var(--space-10);
+    }
+
+    footer p {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: var(--space-2);
+    }
+
+    /* rule: no canonical 4-column footer */
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: var(--gutter);
+    }
+
+    .footer-col {
+      grid-column: span 6;
+    }
+
+    /* rule: status pills with 999 radius allowed */
+    .status {
+      display: inline-block;
+      padding: var(--space-1) var(--space-3);
+      border: 1px solid var(--rule);
+      border-radius: 999px;
+      font-size: 12px;
+      letter-spacing: var(--track-allcaps);
+      text-transform: uppercase;
+      font-weight: 400;
+    }
+
+    /* rule: columns placement */
+    .col-1-7 {
+      grid-column: 1 / 8;
+    }
+
+    .col-2-8 {
+      grid-column: 2 / 9;
+    }
+
+    .col-1-6 {
+      grid-column: 1 / 7;
+    }
+
+    .col-7-12 {
+      grid-column: 7 / 13;
+    }
+
+    @media (max-width: 800px) {
+      .col-1-7, .col-2-8, .col-1-6, .col-7-12 {
+        grid-column: 1 / -1;
+      }
+      
+      body {
+        padding: var(--space-5) var(--space-5);
+      }
+      
+      .mega {
+        font-size: clamp(48px, 15vw, 96px);
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- rule: one section anchored by single word at display >= 120px -->
+  <section>
+    <div class="grid">
+      <div class="col-1-7">
+        <h1 class="mega">AHD</h1>
+        <p>Artificial Human Design. A framework for running design evaluations against real constraints. Not a generator. A validator.</p>
+        <p>Designers and engineers use it to prove a layout meets intent before shipping. It compiles briefs into testable rules, runs models against them, and returns scored results.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="grid">
+      <div class="col-2-8">
+        <h2>Run the eval</h2>
+        <p>A single command compiles the brief, loads models, and scores outputs.</p>
+        <!-- rule: terminal-aesthetic code block, language bash -->
+        <pre><code><span class="spot">ahd</span> eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10<span class="cursor">_</span></code></pre>
+        <p><a href="https://github.com/artificial-human-design/ahd">Read the code</a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- rule: dramatically separated manifest sections, no feature cards -->
+  <section class="manifest">
+    <div class="grid">
+      <div class="col-1-6">
+        <h2>What ships</h2>
+        <ol>
+          <li>Brief compiler</li>
+          <li>28-rule linter</li>
+          <li>Eval harness</li>
+          <li>Vision-critic scaffold</li>
+          <li>MCP server</li>
+          <li>Editor plugins</li>
+          <li>Eight tokens</li>
+        </ol>
+      </div>
+      <div class="col-7-12">
+        <h2>What is gated</h2>
+        <ol>
+          <li>Live frontier-model calls (needs API keys)</li>
+          <li>Live vision critique (needs multimodal key + screenshot pipeline)</li>
+          <li>Standalone npm packages for the editor plugins</li>
+          <li>Additional tokens</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- rule: bleed element past grid -->
+  <section class="bleed" style="background: var(--ink); color: var(--paper); padding-top: var(--space-8); padding-bottom: var(--space-8);">
+    <div class="grid">
+      <div class="col-2-8">
+        <p style="color: var(--paper); max-width: 62ch;">The framework assumes you already have opinions about quality. It does not generate those opinions for you. It tests whether a given output matches constraints you defined.</p>
+        <p style="color: var(--muted); max-width: 62ch;">If you are looking for a tool that produces infinite layouts from a prompt, this is not it.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- rule: footer with explicit licence, no 4-column layout -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-col">
+        <p>Code: FSL-1.1-Apache-2.0</p>
+        <p>Tokens and artwork: CC-BY-4.0</p>
+      </div>
+      <div class="footer-col">
+        <p style="text-align: right;"><span class="status">Beta</span></p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

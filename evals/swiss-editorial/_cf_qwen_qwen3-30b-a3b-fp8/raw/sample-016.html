@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>AHD - Artificial Human Design</title>
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            background: #000;
+            color: #0f0;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.5;
+        }
+        pre {
+            background: #000;
+            padding: 1em;
+            border: 1px solid #0f0;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+        code.language-bash {
+            color: #0f0;
+        }
+        section {
+            margin-top: 40px;
+        }
+        h2 {
+            color: #0f0;
+            border-bottom: 1px solid #0f0;
+            padding-bottom: 5px;
+        }
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        li {
+            margin: 5px 0;
+        }
+        a {
+            color: #0f0;
+            text-decoration: underline;
+        }
+        footer {
+            margin-top: 60px;
+            color: #888;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+    <p><a href="https://github.com/ahd/ahd" target="_blank">Read the code</a></p>
+    <section>
+        <h2>What ships</h2>
+        <ul>
+            <li>brief compiler</li>
+            <li>28-rule linter</li>
+            <li>eval harness</li>
+            <li>vision-critic scaffold</li>
+            <li>MCP server</li>
+            <li>editor plugins</li>
+            <li>eight tokens</li>
+        </ul>
+    </section>
+    <section>
+        <h2>What is gated</h2>
+        <ul>
+            <li>live frontier-model calls (needs API keys)</li>
+            <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+            <li>standalone npm packages for the editor plugins</li>
+            <li>additional tokens</li>
+        </ul>
+    </section>
+    <footer>
+        <p>Licence: FSL-1.1-Apache-2.0 for code, CC-BY-4.0 for tokens and artwork.</p>
+    </footer>
+</body>
+</html>

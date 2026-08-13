@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+<!-- rule: Return a single, self-contained, valid HTML5 document. -->
+<head>
+<meta charset="utf-8">
+<!-- rule: Design post-digital. Everything in monospace. -->
+<title>ahd - artificial human design</title>
+<style>
+/* rule: Every design decision in your output must cite the brief rule it follows, as an inline comment */
+:root {
+  /* rule: Dark green-black background */
+  --bg: oklch(0.14 0.02 150);
+  /* rule: muted green foreground */
+  --fg: oklch(0.92 0.12 135);
+  /* rule: a single amber accent */
+  --amber: oklch(0.82 0.15 75);
+  /* rule: One hairline rule colour */
+  --rule: oklch(0.3 0.04 150);
+  --dim: oklch(0.55 0.05 150);
+
+  /* rule: scale base 15, ratio 1.2 */
+  --text-base: 15px;
+  --text-h2: 18px;
+  --text-h1: 25.9px;
+
+  /* rule: line-height body 1.55, h2 1.25, display 1.1 */
+  --lh-body: 1.55;
+  --lh-h2: 1.25;
+  --lh-display: 1.1;
+
+  /* rule: space scale [0, 4, 8, 12, 16, 24, 32, 48, 64] */
+  --space-0: 0;
+  --space-8: 8px;
+  --space-16: 16px;
+  --space-24: 24px;
+  --space-32: 32px;
+}
+
+body {
+  /* rule: Dark green-black background, muted green foreground */
+  background-color: var(--bg);
+  color: var(--fg);
+  /* rule: Everything in monospace. Berkeley Mono with fallbacks. */
+  font-family: 'Berkeley Mono', 'IBM Plex Mono', 'JetBrains Mono', ui-monospace, monospace;
+  font-size: var(--text-base);
+  line-height: var(--lh-body);
+  /* rule: No gradients */
+  background-image: none;
+  margin: var(--space-0);
+  padding: var(--space-32);
+  /* rule: lowercase by default */
+  text-transform: lowercase;
+  /* rule: tracking body 0 */
+  letter-spacing: 0;
+}
+
+* {
+  /* rule: No shadows */
+  box-shadow: none !important;
+  /* rule: no entrance animation */
+  animation: none !important;
+  /* rule: no radii */
+  border-radius: 0 !important;
+  /* rule: box-sizing for grid enforcement */
+  box-sizing: border-box;
+}
+
+.grid-container {
+  /* rule: Everything aligns to an 80 character grid */
+  max-width: 80ch;
+  margin: var(--space-0) auto;
+  /* rule: Rectangles only */
+  display: flex;
+  flex-direction: column;
+}
+
+.rectangle-box {
+  /* rule: Rectangles only. One hairline rule colour. */
+  border: 1px solid var(--rule);
+  padding: var(--space-24);
+  margin-bottom: var(--space-16);
+  /* rule: No gradients, no glassmorphism */
+  background-color: transparent;
+}
+
+h1 {
+  font-size: var(--text-h1);
+  line-height: var(--lh-display);
+  margin: var(--space-0) var(--space-0) var(--space-16) var(--space-0);
+  color: var(--amber); /* rule: a single amber accent */
+  font-weight: 700;
+}
+
+h2 {
+  font-size: var(--text-h2);
+  line-height: var(--lh-h2);
+  margin: var(--space-0) var(--space-0) var(--space-16) var(--space-0);
+  font-weight: 700;
+  border-bottom: 1px solid var(--rule); /* rule: One hairline rule colour */
+  padding-bottom: var(--space-8);
+}
+
+p {
+  margin: var(--space-0) var(--space-0) var(--space-16) var(--space-0);
+  /* rule: terse voice */
+}
+
+a {
+  /* rule: Underlined links with an offset, no colour change */
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+a:hover {
+  /* rule: no colour change */
+  color: inherit;
+}
+
+pre {
+  margin: var(--space-0);
+  padding: var(--space-16);
+  border: 1px solid var(--rule); /* rule: Rectangles only. */
+  overflow-x: auto;
+  /* rule: Terminal-aesthetic code block */
+  background-color: color-mix(in oklch, var(--bg) 95%, black);
+}
+
+code {
+  font-family: inherit;
+}
+
+ul {
+  list-style-type: none; /* rule: No emoji bullets */
+  padding-left: var(--space-0);
+  margin: var(--space-0);
+}
+
+li {
+  padding-left: var(--space-24);
+  position: relative;
+  margin-bottom: var(--space-8);
+}
+
+li::before {
+  content: ">";
+  position: absolute;
+  left: var(--space-0);
+  color: var(--dim); /* rule: muted green foreground / dim */
+}
+
+.manifest-split {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-16);
+  /* rule: no three equal feature cards, here we have exactly 2 sections */
+}
+
+.manifest-split > div {
+  flex: 1;
+  min-width: 30ch;
+}
+
+.quirk-box {
+  /* quirk: intentional imperfection - an overlapping boundary causing a 1px vertical misalignment */
+  margin-top: -1px;
+}
+
+.site-footer {
+  margin-top: var(--space-32);
+  padding-top: var(--space-16);
+  border-top: 1px solid var(--rule); /* rule: Rectangles only */
+  color: var(--dim);
+}
+
+</style>
+</head>
+<body>
+
+<main class="grid-container">
+  <!-- rule: One screen of reading. -->
+  <header class="rectangle-box">
+    <!-- rule: technical, lowercase by default -->
+    <h1>artificial human design (ahd)</h1>
+    <!-- rule: terse copy. they do not need to be sold on the slop thesis; they need to be shown that AHD takes it seriously -->
+    <p>you already know the problem: the web is drowning in generated slop. iridescent blobs and glassmorphism. ahd enforces strict design constraints before the model ever touches the dom.</p>
+    <!-- rule: A link to github labelled as the read-the-code CTA -->
+    <p><a href="https://github.com/ahd-project/ahd">> read the code on github</a></p>
+  </header>
+
+  <!-- rule: Include one ASCII diagram. -->
+  <div class="rectangle-box">
+<pre>
+[ brief.yml ]
+      |
+      v
++-------------+      +-------------+
+|  compiler   | ---> | eval harness|
++-------------+      +-------------+
+      |                    ^
+      v                    |
+[ dom output ] ----( linter rules )
+</pre>
+  </div>
+
+  <!-- rule: A terminal-aesthetic code block showing the one-liner that runs the eval. -->
+  <div class="rectangle-box">
+    <p>run the evaluation:</p>
+    <!-- rule: monospace code block with the language tag `bash` -->
+    <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+  </div>
+
+  <div class="manifest-split">
+    <!-- rule: A clearly separated manifest section titled 'What ships' -->
+    <div class="rectangle-box">
+      <h2>what ships</h2>
+      <ul>
+        <!-- rule: enumerates specific shipped components -->
+        <li>brief compiler</li>
+        <li>28-rule linter</li>
+        <li>eval harness</li>
+        <li>vision-critic scaffold</li>
+        <li>mcp server</li>
+        <li>editor plugins</li>
+        <li>eight tokens</li>
+      </ul>
+    </div>
+    
+    <!-- rule: A clearly separated manifest section titled 'What is gated' -->
+    <!-- quirk: intentional misalignment of 1px via CSS margin-top: -1px -->
+    <div class="rectangle-box quirk-box">
+      <h2>what is gated</h2>
+      <ul>
+        <!-- rule: enumerates specific gated components -->
+        <li>live frontier-model calls (needs api keys)</li>
+        <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+        <li>standalone npm packages for the editor plugins</li>
+        <li>additional tokens</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- rule: A footer that names the licence explicitly -->
+  <!-- rule: no canonical 4-column Product / Company / Resources / Legal footer -->
+  <footer class="site-footer">
+    <p>licence: fsl-1.1-apache-2.0 for code, cc-by-4.0 for tokens and artwork.</p>
+  </footer>
+</main>
+
+</body>
+</html>

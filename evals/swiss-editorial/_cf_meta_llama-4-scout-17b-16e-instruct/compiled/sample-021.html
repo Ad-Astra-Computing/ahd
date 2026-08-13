@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Artificial Human Design</title>
+  <style>
+    /* rule: Swiss / International Typographic Style */
+    :root {
+      --font-display: 'Neue Haas Grotesk Display', 'Helvetica Now Display', 'Inter Tight';
+      --font-text: 'Neue Haas Grotesk Text', 'Helvetica Now Text', 'Inter';
+      --color-ink: oklch(0.18 0 0);
+      --color-paper: oklch(0.98 0.005 95);
+      --color-spot: oklch(0.58 0.22 27);
+      --color-rule: oklch(0.18 0 0);
+      --color-muted: oklch(0.55 0 0);
+    }
+    body {
+      /* rule: 12-column grid with 24px gutters and 8px baseline */
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      grid-gap: 24px;
+      font-family: var(--font-text);
+      font-size: 17px;
+      line-height: 1.5;
+      color: var(--color-ink);
+      background-color: var(--color-paper);
+      margin: 32px auto;
+      max-width: 1200px;
+      padding: 24px;
+      /* rule: asymmetric left-aligned composition */
+      justify-items: start;
+    }
+    .hero {
+      /* rule: no centred hero */
+      grid-column: 1 / -1;
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+    }
+    .hero h1 {
+      /* rule: display type in Neue Haas Grotesk Display at 96–160px with tracking -0.02em */
+      font-family: var(--font-display);
+      font-size: 120px;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+    .code-block {
+      /* rule: terminal-aesthetic code block */
+      background-color: var(--color-muted);
+      padding: 16px;
+      border-radius: 2px;
+      font-family: monospace;
+      font-size: 14px;
+      line-height: 1.5;
+      grid-column: 1 / -1;
+    }
+    .manifest {
+      /* rule: clearly separated manifest sections */
+      margin-top: 64px;
+    }
+    .manifest h2 {
+      /* rule: section headings */
+      font-family: var(--font-display);
+      font-size: 24px;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+    .manifest ul {
+      /* rule: no emoji bullets */
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .manifest li {
+      /* rule: no emoji bullets */
+      margin-bottom: 8px;
+    }
+    .footer {
+      /* rule: no canonical 4-column footer */
+      grid-column: 1 / -1;
+      margin-top: 64px;
+      padding: 16px;
+      border-top: 1px solid var(--color-rule);
+    }
+    .bleed {
+      /* rule: at least one element bleeds past the grid */
+      grid-column: 1 / -1;
+      margin-left: -24px;
+      margin-right: -24px;
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+  </style>
+</head>
+<body>
+  <div class="hero">
+    <h1>Artificial Human Design</h1>
+    <p>We take the problem of AI-generated design seriously.</p>
+  </div>
+  <div class="code-block">
+    <!-- rule: The command `ahd eval-live swiss-editorial --brief briefs/landing.yml --models <specs> --n 10` rendered in a monospace code block with the language tag `bash` -->
+    <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+  </div>
+  <div class="manifest">
+    <h2>What ships</h2>
+    <ul>
+      <!-- rule: enumerates: brief compiler, 28-rule linter, eval harness, vision-critic scaffold, MCP server, editor plugins, eight tokens -->
+      <li>Brief compiler</li>
+      <li>28-rule linter</li>
+      <li>Eval harness</li>
+      <li>Vision-critic scaffold</li>
+      <li>MCP server</li>
+      <li>Editor plugins</li>
+      <li>Eight tokens</li>
+    </ul>
+  </div>
+  <div class="manifest">
+    <h2>What is gated</h2>
+    <ul>
+      <!-- rule: enumerates: live frontier-model calls (needs API keys), live vision critique (needs multimodal key + screenshot pipeline), standalone npm packages for the editor plugins, additional tokens -->
+      <li>Live frontier-model calls (needs API keys)</li>
+      <li>Live vision critique (needs multimodal key + screenshot pipeline)</li>
+      <li>Standalone npm packages for the editor plugins</li>
+      <li>Additional tokens</li>
+    </ul>
+  </div>
+  <div class="bleed">
+    <a href="https://github.com/ahd" target="_blank" rel="noopener noreferrer"><!-- rule: A link to github (or the forgejo mirror) labelled as the read-the-code CTA --><span>Read the code on GitHub</span></a>
+  </div>
+  <div class="footer">
+    <!-- rule: A footer that names the licence explicitly: FSL-1.1-Apache-2.0 for code, CC-BY-4.0 for tokens and artwork -->
+    <p>Licence: FSL-1.1-Apache-2.0 for code, CC-BY-4.0 for tokens and artwork.</p>
+  </div>
+</body>
+</html>

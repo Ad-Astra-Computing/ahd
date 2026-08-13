@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AHD - Artificial Human Design</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #151513;
+      --muted: #5d5b55;
+      --paper: #f4f1e8;
+      --panel: #fffaf0;
+      --line: #c9c1b0;
+      --line-strong: #8d8371;
+      --accent: #b6422c;
+      --accent-dark: #74291e;
+      --code-bg: #171815;
+      --code-fg: #e9e0c8;
+      --code-muted: #938b77;
+      --green: #85a35a;
+      --amber: #c99239;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      --sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --serif: Georgia, "Times New Roman", serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--sans);
+      line-height: 1.45;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        linear-gradient(90deg, rgba(21, 21, 19, 0.035) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(21, 21, 19, 0.03) 1px, transparent 1px),
+        var(--paper);
+      background-size: 44px 44px;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .page {
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 22px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .brand {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .mark {
+      font-family: var(--mono);
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0;
+      padding: 4px 7px;
+      border: 1px solid var(--ink);
+      background: var(--ink);
+      color: var(--paper);
+    }
+
+    .brand span:last-child {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .read-code {
+      font-family: var(--mono);
+      font-size: 13px;
+      text-decoration: none;
+      border-bottom: 1px solid currentColor;
+      color: var(--accent-dark);
+    }
+
+    main {
+      padding: 56px 0 34px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(360px, 0.92fr);
+      gap: 48px;
+      align-items: start;
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 780px;
+      font-family: var(--serif);
+      font-size: clamp(48px, 7.2vw, 92px);
+      line-height: 0.9;
+      font-weight: 500;
+      letter-spacing: 0;
+    }
+
+    .dek {
+      margin: 26px 0 0;
+      max-width: 660px;
+      font-size: clamp(18px, 2vw, 23px);
+      line-height: 1.35;
+      color: #302f2b;
+    }
+
+    .position {
+      margin: 28px 0 0;
+      max-width: 640px;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .terminal {
+      border: 1px solid #2c2e28;
+      background: var(--code-bg);
+      color: var(--code-fg);
+      box-shadow: 10px 10px 0 rgba(21, 21, 19, 0.12);
+    }
+
+    .terminal-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 10px 12px;
+      border-bottom: 1px solid #34362f;
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--code-muted);
+    }
+
+    .lights {
+      display: flex;
+      gap: 6px;
+    }
+
+    .lights span {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--line-strong);
+    }
+
+    .lights span:nth-child(1) {
+      background: var(--accent);
+    }
+
+    .lights span:nth-child(2) {
+      background: var(--amber);
+    }
+
+    .lights span:nth-child(3) {
+      background: var(--green);
+    }
+
+    pre {
+      margin: 0;
+      padding: 22px;
+      overflow-x: auto;
+      white-space: pre;
+    }
+
+    code {
+      font-family: var(--mono);
+      font-size: 14px;
+    }
+
+    .prompt {
+      color: var(--green);
+    }
+
+    .note {
+      border-top: 1px solid #34362f;
+      padding: 13px 22px 16px;
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--code-muted);
+    }
+
+    .manifest {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 1px;
+      margin-top: 52px;
+      border: 1px solid var(--line-strong);
+      background: var(--line-strong);
+    }
+
+    .section {
+      background: var(--panel);
+      padding: 26px;
+    }
+
+    .section h2 {
+      margin: 0 0 18px;
+      font-family: var(--mono);
+      font-size: 15px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .manifest-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 10px;
+    }
+
+    .manifest-list li {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 14px;
+      align-items: baseline;
+      padding-top: 10px;
+      border-top: 1px solid var(--line);
+      font-size: 15px;
+    }
+
+    .idx {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--accent-dark);
+    }
+
+    .gated .idx {
+      color: #6f5a22;
+    }
+
+    footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 22px 0 30px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 12px;
+    }
+
+    @media (max-width: 880px) {
+      .page {
+        width: min(100% - 28px, 680px);
+      }
+
+      header,
+      footer {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      main {
+        padding-top: 36px;
+      }
+
+      .hero {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+
+      .manifest {
+        grid-template-columns: 1fr;
+      }
+
+      .manifest-list li {
+        grid-template-columns: 54px 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .brand {
+        flex-direction: column;
+        gap: 7px;
+      }
+
+      .section {
+        padding: 22px 18px;
+      }
+
+      pre {
+        padding: 18px;
+      }
+
+      code {
+        font-size: 13px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <a class="brand" href="#" aria-label="AHD home">
+        <span class="mark">AHD</span>
+        <span>Artificial Human Design</span>
+      </a>
+      <a class="read-code" href="https://github.com/ahd-labs/ahd">read the code</a>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="hero-title">
+        <div>
+          <h1 id="hero-title">A stricter frame for generated interfaces.</h1>
+          <p class="dek">
+            AHD treats generated design as something to evaluate, lint, and argue with.
+            It gives teams a shared brief format, rule set, harness, and critic scaffold
+            for catching the familiar failures before they become the product surface.
+          </p>
+          <p class="position">
+            Built for designers, engineers, and founders who already know the pattern:
+            polished at first glance, vague under inspection, and expensive to correct
+            once nobody can name what went wrong.
+          </p>
+        </div>
+
+        <aside class="terminal" aria-label="Run the eval">
+          <div class="terminal-bar">
+            <div class="lights" aria-hidden="true">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <span>eval/live</span>
+          </div>
+          <pre><code class="language-bash"><span class="prompt">$</span> ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+          <div class="note">brief -> candidates -> lint -> critic -> report</div>
+        </aside>
+      </section>
+
+      <section class="manifest" aria-label="Project manifest">
+        <div class="section">
+          <h2>What ships</h2>
+          <ul class="manifest-list">
+            <li><span class="idx">01</span><span>brief compiler</span></li>
+            <li><span class="idx">02</span><span>28-rule linter</span></li>
+            <li><span class="idx">03</span><span>eval harness</span></li>
+            <li><span class="idx">04</span><span>vision-critic scaffold</span></li>
+            <li><span class="idx">05</span><span>MCP server</span></li>
+            <li><span class="idx">06</span><span>editor plugins</span></li>
+            <li><span class="idx">07</span><span>eight tokens</span></li>
+          </ul>
+        </div>
+
+        <div class="section gated">
+          <h2>What is gated</h2>
+          <ul class="manifest-list">
+            <li><span class="idx">01</span><span>live frontier-model calls (needs API keys)</span></li>
+            <li><span class="idx">02</span><span>live vision critique (needs multimodal key + screenshot pipeline)</span></li>
+            <li><span class="idx">03</span><span>standalone npm packages for the editor plugins</span></li>
+            <li><span class="idx">04</span><span>additional tokens</span></li>
+          </ul>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <span>Code licence: FSL-1.1-Apache-2.0</span>
+      <span>Tokens and artwork licence: CC-BY-4.0</span>
+    </footer>
+  </div>
+</body>
+</html>

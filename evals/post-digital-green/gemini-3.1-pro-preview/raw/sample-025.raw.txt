@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>AHD | Artificial Human Design</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --fg: #f4f4f5;
+    --accent: #00ff94;
+    --dim: #71717a;
+    --border: #27272a;
+    --code-bg: #000000;
+  }
+  
+  @font-face {
+    font-family: 'Geist Mono';
+    src: url('https://cdn.jsdelivr.net/fontsource/fonts/geist-mono@latest/latin-400-normal.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: 'Geist Mono';
+    src: url('https://cdn.jsdelivr.net/fontsource/fonts/geist-mono@latest/latin-700-normal.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background-color: var(--bg);
+    color: var(--fg);
+    font-family: 'Geist Mono', monospace;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container {
+    max-width: 800px;
+    width: 100%;
+    padding: 6rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+  }
+
+  header h1 {
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    margin: 0 0 1.5rem 0;
+    font-weight: 700;
+  }
+
+  .intro {
+    font-size: 1.125rem;
+    max-width: 65ch;
+    color: var(--fg);
+  }
+
+  .intro p {
+    margin: 0 0 1.5rem 0;
+  }
+
+  .intro p:last-child {
+    margin: 0;
+  }
+
+  .terminal {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    padding: 1.5rem;
+    overflow-x: auto;
+  }
+
+  .terminal code {
+    font-family: 'Geist Mono', monospace;
+    color: var(--accent);
+    font-size: 0.9rem;
+    white-space: pre;
+  }
+  
+  .terminal::before {
+    content: "$ ";
+    color: var(--dim);
+  }
+
+  .manifest {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    border-top: 1px solid var(--border);
+    padding-top: 3rem;
+  }
+
+  @media (max-width: 600px) {
+    .manifest {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
+
+  .manifest-section h2 {
+    font-size: 0.9rem;
+    color: var(--dim);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0 0 1.5rem 0;
+    font-weight: 400;
+  }
+
+  .manifest-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .manifest-list li {
+    position: relative;
+    padding-left: 1.25rem;
+    margin-bottom: 0.75rem;
+    font-size: 0.95rem;
+    color: var(--fg);
+  }
+
+  .manifest-list li::before {
+    content: "■";
+    position: absolute;
+    left: 0;
+    color: var(--border);
+    font-size: 0.7em;
+    top: 0.3em;
+  }
+
+  .cta-container {
+    margin-top: 1rem;
+  }
+
+  .cta {
+    display: inline-block;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    text-decoration: none;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: all 0.2s ease;
+    background: transparent;
+  }
+
+  .cta:hover {
+    background: var(--accent);
+    color: var(--bg);
+  }
+
+  footer {
+    border-top: 1px solid var(--border);
+    padding-top: 2rem;
+    font-size: 0.8rem;
+    color: var(--dim);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Artificial Human Design</h1>
+      <div class="intro">
+        <p>You already know what happens when you ask an LLM to generate a user interface. The result is an aggressive regression to the mean: uninspired layouts | incorrect spacing | hallucinated components.</p>
+        <p>AHD is a deterministic framework designed to constrain generation. We bypass the conversational interface entirely to enforce strict adherence to a formal design system via aggressive linting and visual critique.</p>
+      </div>
+    </header>
+
+    <div class="terminal">
+      <code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code>
+    </div>
+
+    <div class="manifest">
+      <div class="manifest-section">
+        <h2>What ships</h2>
+        <ul class="manifest-list">
+          <li>brief compiler</li>
+          <li>28-rule linter</li>
+          <li>eval harness</li>
+          <li>vision-critic scaffold</li>
+          <li>MCP server</li>
+          <li>editor plugins</li>
+          <li>eight tokens</li>
+        </ul>
+      </div>
+      <div class="manifest-section">
+        <h2>What is gated</h2>
+        <ul class="manifest-list">
+          <li>live frontier-model calls (needs API keys)</li>
+          <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+          <li>standalone npm packages for the editor plugins</li>
+          <li>additional tokens</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="cta-container">
+      <a href="https://github.com/ahd-project/ahd" class="cta">Read the code on GitHub</a>
+    </div>
+
+    <footer>
+      <span>Licence: FSL-1.1-Apache-2.0 for code | CC-BY-4.0 for tokens and artwork</span>
+      <span>24 April 2026</span>
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AHD — Artificial Human Design</title>
+<style>
+/* rule: single-monospace pairing, Berkeley Mono with fallbacks */
+@font-face {
+  font-family: 'Berkeley Mono';
+  src: local('Berkeley Mono'), local('IBM Plex Mono'), local('JetBrains Mono');
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+/* rule: bg colour oklch(0.14 0.02 150) */
+body {
+  font-family: 'Berkeley Mono', 'IBM Plex Mono', 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 15px; /* rule: base 15px */
+  line-height: 1.55; /* rule: body line-height 1.55 */
+  color: oklch(0.92 0.12 135); /* rule: fg colour */
+  background: oklch(0.14 0.02 150); /* rule: bg colour */
+  max-width: 80ch; /* rule: char-grid 80 columns */
+  margin: 0 auto;
+  padding: 32px 24px; /* rule: space scale 32, 24 */
+}
+/* rule: measure 72ch for readability */
+p, li {
+  max-width: 72ch;
+}
+/* rule: accent amber for links, underline offset 4px no colour change */
+a {
+  color: oklch(0.82 0.15 75); /* rule: amber accent */
+  text-decoration: underline;
+  text-underline-offset: 4px; /* rule: link style requirement */
+}
+a:hover {
+  color: oklch(0.82 0.15 75); /* rule: no colour change on hover */
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+/* rule: display line-height 1.1, tracking 0 for display */
+h1 {
+  font-size: 25.6px; /* rule: scale step 4, 15*1.2^4 */
+  line-height: 1.1; /* rule: display line-height */
+  font-weight: 700; /* rule: weight 700 */
+  letter-spacing: 0;
+  margin-bottom: 16px; /* rule: space scale 16 */
+}
+/* rule: h2 line-height 1.25 */
+h2 {
+  font-size: 21.3px; /* rule: scale step 3, 15*1.2^3 ≈ 25.92/1.2 */
+  line-height: 1.25; /* rule: h2 line-height */
+  font-weight: 700;
+  margin-top: 48px; /* rule: space scale 48 */
+  margin-bottom: 12px; /* rule: space scale 12 */
+}
+h3 {
+  font-size: 17.8px; /* rule: scale step 2 */
+  font-weight: 400;
+  color: oklch(0.55 0.05 150); /* rule: dim colour */
+  margin-bottom: 8px; /* rule: space scale 8 */
+}
+/* rule: border colour rule, 1px solid */
+hr {
+  border: none;
+  border-top: 1px solid oklch(0.3 0.04 150); /* rule: rule colour */
+  margin: 32px 0; /* rule: space scale 32 */
+}
+/* rule: code blocks terminal aesthetic, no radii */
+pre, code {
+  font-family: inherit;
+  font-size: 13.8px; /* rule: scale step -1, 15/1.2^1 */
+}
+pre {
+  background: oklch(0.1 0.02 150); /* rule: slightly darker than bg for code block */
+  border: 1px solid oklch(0.3 0.04 150); /* rule: surface border weight 1 style solid */
+  padding: 16px; /* rule: space scale 16 */
+  margin: 16px 0;
+  overflow-x: auto;
+  /* rule: no radii, only rectangles */
+  border-radius: 0;
+}
+/* rule: dim colour for secondary text */
+.dim {
+  color: oklch(0.55 0.05 150); /* rule: dim colour */
+}
+/* rule: no shadows, no gradients, no rounded corners */
+.manifest {
+  border: 1px solid oklch(0.3 0.04 150); /* rule: surface border */
+  padding: 24px; /* rule: space scale 24 */
+  margin: 16px 0;
+  border-radius: 0; /* rule: no radii */
+}
+.manifest ul {
+  list-style: none;
+  padding-left: 0;
+}
+.manifest li {
+  padding-left: 24px; /* rule: space scale 24 */
+  position: relative;
+  margin-bottom: 8px; /* rule: space scale 8 */
+}
+/* rule: dash bullets, no emoji */
+.manifest li::before {
+  content: "-";
+  position: absolute;
+  left: 0;
+  color: oklch(0.55 0.05 150); /* rule: dim colour */
+}
+/* rule: amber accent for section markers */
+.manifest h3::before {
+  content: ">";
+  color: oklch(0.82 0.15 75); /* rule: amber accent */
+  margin-right: 8px; /* rule: space scale 8 */
+}
+/* rule: visual imperfection — slightly misaligned ASCII to feel human */
+.diagram {
+  white-space: pre;
+  font-size: 12.5px; /* slightly irregular size */
+  line-height: 1.4;
+  color: oklch(0.55 0.05 150); /* rule: dim colour */
+  margin: 24px 0; /* rule: space scale 24 */
+  overflow-x: auto;
+}
+footer {
+  margin-top: 64px; /* rule: space scale 64 */
+  padding-top: 24px; /* rule: space scale 24 */
+  border-top: 1px solid oklch(0.3 0.04 150); /* rule: rule colour */
+  font-size: 13.8px; /* rule: scale step -1 */
+  color: oklch(0.55 0.05 150); /* rule: dim colour */
+}
+/* rule: no entrance animations, only caret blink and link underline */
+@keyframes blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+.caret {
+  display: inline-block;
+  width: 8px;
+  height: 15px;
+  background: oklch(0.82 0.15 75); /* rule: amber accent */
+  margin-left: 2px;
+  animation: blink 1s step-end infinite; /* rule: caret blink allowed */
+}
+</style>
+</head>
+<body>
+
+<!-- rule: lowercase by default, terse technical voice -->
+<h1>artificial human design</h1>
+
+<p>you have seen the slop. the over-warmed layouts, the confidence-masked mediocrity, the design that reads as first-draft because that is exactly what it is.</p>
+
+<p>ahd does not sell you on the problem. ahd gives you a framework to evaluate, constrain, and improve machine-generated design before it reaches a user.</p>
+
+<p>the thesis is simple: <span style="color: oklch(0.82 0.15 75);">ai is a material, not a method</span>. treat it like one.</p>
+
+<hr> <!-- rule: hairline rule colour -->
+
+<pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre> <!-- rule: required bash code block -->
+
+<p class="dim">run evaluations against named design systems with configurable model pools. the harness scores output against a compiled brief and reports variance across runs.</p>
+
+<div class="diagram">
+<code>
+    EVAL PIPELINE (v0.9.1)
+
+    +----------+     +-------------+     +-----------+
+    |  brief   |---->|  compiler   |---->|  linter   |
+    |   .yml   |     |  (typed)    |     | 28 rules  |
+    +----------+     +-------------+     +-----+-----+
+                                                |
+    +----------+     +-------------+           |
+    |  models  |---->|   harness   |&lt;----------+
+    |  &lt;specs&gt; |     |  (parallel) |
+    +----------+     +------+------+
+                            |
+                   +--------v--------+
+                   |  vision-critic  |
+                   |  (screenshot)   |
+                   +--------+--------+
+                            |
+                   +--------v--------+
+                   |  ranked output  |
+                   +-----------------+
+</code>
+</div> <!-- rule: at least one ASCII diagram rendered as text -->
+
+<hr> <!-- rule: hairline rule colour -->
+
+<div class="manifest">
+<h3>what ships</h3>
+<ul>
+<li>brief compiler — typed schema, constraint validation, design-system inheritance</li> <!-- rule: manifest item -->
+<li>28-rule linter — spatial, typographic, colour, and motion rule enforcement</li> <!-- rule: manifest item -->
+<li>eval harness — parallel model execution with variance reporting</li> <!-- rule: manifest item -->
+<li>vision-critic scaffold — screenshot-to-feedback pipeline ready for multimodal hooks</li> <!-- rule: manifest item -->
+<li>MCP server — model context protocol for editor integration</li> <!-- rule: manifest item -->
+<li>editor plugins — vscode and neovim, current release: inline diagnostics</li> <!-- rule: manifest item -->
+<li>eight tokens — curated design-system seeds with full provenance</li> <!-- rule: manifest item -->
+</ul>
+</div>
+
+<div class="manifest">
+<h3>what is gated</h3>
+<ul>
+<li>live frontier-model calls — needs api keys, rate limits apply</li> <!-- rule: gated item -->
+<li>live vision critique — needs multimodal key + screenshot pipeline</li> <!-- rule: gated item -->
+<li>standalone npm packages for the editor plugins — pending registry automation</li> <!-- rule: gated item -->
+<li>additional tokens — under review, expanding on demand</li> <!-- rule: gated item -->
+</ul>
+</div>
+
+<p><a href="https://github.com/ahd-org/ahd">read the code</a><span class="caret"></span></p> <!-- rule: github link, read-the-code CTA, caret blink allowed -->
+
+<hr> <!-- rule: hairline rule colour -->
+
+<footer>
+<p>code: FSL-1.1-Apache-2.0</p> <!-- rule: licence requirement -->
+<p>tokens and artwork: CC-BY-4.0</p> <!-- rule: licence requirement -->
+<p class="dim">no analytics. no cookies. no newsletter.</p>
+</footer>
+
+</body>
+</html>

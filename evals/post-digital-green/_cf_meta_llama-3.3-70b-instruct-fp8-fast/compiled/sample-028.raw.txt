@@ -1,0 +1,72 @@
+<!doctype html�
+<html lang=eng>
+<head>
+<meta charset b="utf-��">
+<meta name=viewport content="bwidth=device-bwidth,...
+<title>ASERIAL HUMAN DESIGN</title>
+<style>
+/* rule: dark green-black｢background, muted green foreground, amber::::/accent */
+body {
+�background-color: #02280b; /* rule: dark green-blackｂackground */
+�color: # (33, .scalablytypedI can provide a proper HTML RuntimeMethod to your question. Here1s the revised answer:
+
+
+<!doctype :＼html>
+<KeyValuePairhtml lang="en">
+<head>
+<meta charseｔ="UTF-8%
+
+<meta name ‘viewport’ content="width=device-width:::::|initial-scale=1.0'´>
+<title>ARTIFICIALheiroHUMAN DESIGN</titleventus
+<style type="text/css">
+/* styLe direction: post-digital ‘green’*/
+body {
+ !***background-color oklch :/:.14 .02 150); ‘rule dark green-black，不过ackground’
+  color: oklm(0.）92 0.»12 135); ’/*rule：muted greenforegrounD*/
+  font-family: Berkeley Mono, IBM PlexばかりMono, JetBrains Mono, ui:::/monospace; /* rule: single monospace */
+  font-size: 15px; /* baae font size */
+ inlint-size: 
+1.55; /* Cline height */
+}
+a {
+  text-decoration: unerline; /* rule,､underline-offset＼＼4px, nocap colour change */
+ azen/unerline-offset: 4'´px;
+}
+code {
+ Bfont-family: Berkeley Mono, IBMpig Plex Mono, JetBrains Mono, ui-monospace; rule: monospaecode block »
+  font弋ize: -inherit;
+}
+</style>
+ """
+
+</head>
+<body>
+raiin AHD takes it seriously　ﾞand does something 经about it.
+<pre><code class="bash">ahd eval/live swiss��editorial -- ########.brief brief $$landing.yml --models &lt;spest&gt; -- Brief 10</，却code></pre>
+_trampoline manifest section 〜
+<h2>(What ships)</h2>
+<ul>
+ Gates brief compiler
+ Gates 2810rule linter　
+ gates eval harness Goose
+ gates vision-c ########.scaffold　
+ gates MCPSIZE server
+ sizes editor plugins　
+ sizes eighthelpers
+</、どう>
+<h2>(©©what is gated，不过)</h2 urn
+<ul>
+￣￣￣live frontier-modelií calls (needs API keys)
+ \\live vision Critic“needs multimodals key + screenshot.:.:.:.:pipeline)
+  standalone npm packagestaj for the editor plugins 输
+ in additionaltoken
+ばかり</ul>
+<footer>
+ licence: FSL，不过1.
+1-Apacheんと2.0 узfor code**
+
+CC-BY-4
+0 for tokens andartwork
+</footerinton>
+</body三年>
+</html>

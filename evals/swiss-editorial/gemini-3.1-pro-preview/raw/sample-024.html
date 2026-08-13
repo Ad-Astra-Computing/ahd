@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Artificial Human Design (AHD)</title>
+<style>
+  :root {
+    --bg: #f4f4f2;
+    --fg: #111111;
+    --muted: #555555;
+    --border: #cccccc;
+    --mono: "JetBrains Mono", "Geist Mono", "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  
+  * {
+    box-sizing: border-box;
+  }
+  
+  body {
+    background-color: var(--bg);
+    color: var(--fg);
+    font-family: var(--sans);
+    line-height: 1.6;
+    margin: 0;
+    padding: 4rem 2rem;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .container {
+    width: 100%;
+    max-width: 800px;
+  }
+  
+  h1 {
+    font-size: 1.75rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin: 0 0 1.5rem 0;
+  }
+  
+  .lead {
+    font-size: 1.125rem;
+    max-width: 65ch;
+    margin: 0 0 2.5rem 0;
+    color: var(--fg);
+  }
+  
+  pre {
+    background-color: #0a0a0a;
+    color: #e5e5e5;
+    padding: 1.25rem 1.5rem;
+    margin: 0 0 4rem 0;
+    font-family: var(--mono);
+    font-size: 0.875rem;
+    overflow-x: auto;
+    border-radius: 2px;
+  }
+  
+  code {
+    font-family: inherit;
+  }
+  
+  .manifest-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin: 0 0 4rem 0;
+    border-top: 2px solid var(--fg);
+    padding-top: 2.5rem;
+  }
+  
+  h2 {
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0 0 1.5rem 0;
+  }
+  
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  li {
+    margin: 0 0 0.875rem 0;
+    padding-left: 1.25rem;
+    position: relative;
+    color: var(--fg);
+    font-size: 0.9375rem;
+  }
+  
+  li::before {
+    content: "—";
+    position: absolute;
+    left: 0;
+    color: var(--muted);
+  }
+  
+  .item-detail {
+    display: block;
+    color: var(--muted);
+    font-size: 0.8125rem;
+    margin-top: 0.125rem;
+  }
+  
+  footer {
+    border-top: 1px solid var(--border);
+    padding-top: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 0.875rem;
+    color: var(--muted);
+  }
+  
+  a {
+    color: var(--fg);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+    font-weight: 500;
+  }
+  
+  a:hover {
+    color: #000;
+    background-color: rgba(0,0,0,0.05);
+  }
+  
+  @media (max-width: 640px) {
+    .manifest-grid {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+    footer {
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Artificial Human Design</h1>
+  </header>
+  
+  <p class="lead">
+    Generated interfaces have settled into a predictable local maximum. If you are tired of identical layouts, generic aesthetics, and the systemic lack of architectural rigour in automated production, AHD provides a structural alternative. This is an evaluation framework designed to encode strict stylistic intent, enforce typographic discipline, and aggressively assert control over generated surfaces.
+  </p>
+
+  <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+
+  <div class="manifest-grid">
+    <section>
+      <h2>What ships</h2>
+      <ul>
+        <li>Brief compiler</li>
+        <li>28-rule linter</li>
+        <li>Eval harness</li>
+        <li>Vision-critic scaffold</li>
+        <li>MCP server</li>
+        <li>Editor plugins</li>
+        <li>Eight tokens</li>
+      </ul>
+    </section>
+    
+    <section>
+      <h2>What is gated</h2>
+      <ul>
+        <li>Live frontier-model calls <span class="item-detail">(needs API keys)</span></li>
+        <li>Live vision critique <span class="item-detail">(needs multimodal key + screenshot pipeline)</span></li>
+        <li>Standalone npm packages for the editor plugins</li>
+        <li>Additional tokens</li>
+      </ul>
+    </section>
+  </div>
+
+  <footer>
+    <div class="legal">
+      Licence: FSL-1.1-Apache-2.0 for code, CC-BY-4.0 for tokens and artwork.
+    </div>
+    <div class="cta">
+      <a href="https://github.com/artificial-human-design/ahd">Read the code on GitHub</a>
+    </div>
+  </footer>
+</div>
+</body>
+</html>

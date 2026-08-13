@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>AHD | Artificial Human Design</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root {
+  --bg: #0a0a0f;
+  --fg: #e0e0e0;
+  --accent: #00ff94;
+  --dim: #4a4a52;
+  --font-mono: 'Geist Mono', 'JetBrains Mono', 'SF Mono', Consolas, monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+main {
+  width: 100%;
+  max-width: 800px;
+  padding: 40px;
+}
+
+header {
+  margin-bottom: 40px;
+}
+
+h1 {
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0 0 20px 0;
+}
+
+h1::before {
+  content: "SYS.AHD // ";
+  color: var(--dim);
+}
+
+p {
+  margin: 0 0 20px 0;
+  max-width: 600px;
+}
+
+pre {
+  background: transparent;
+  border-left: 2px solid var(--accent);
+  padding: 16px 20px;
+  margin: 40px 0;
+  overflow-x: auto;
+  color: var(--fg);
+  font-size: 13px;
+}
+
+code {
+  font-family: var(--font-mono);
+}
+
+.language-bash::before {
+  content: "$ ";
+  color: var(--dim);
+}
+
+.manifest {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  margin: 60px 0;
+  border-top: 1px solid var(--dim);
+  padding-top: 40px;
+}
+
+@media (max-width: 600px) {
+  .manifest {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+.manifest h2 {
+  font-size: 12px;
+  color: var(--dim);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0 0 20px 0;
+  font-weight: 400;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  position: relative;
+  padding-left: 20px;
+  margin-bottom: 12px;
+}
+
+li::before {
+  content: ">>";
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-size: 10px;
+  top: 3px;
+}
+
+.cta-container {
+  margin: 40px 0;
+}
+
+.cta {
+  display: inline-block;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  background: transparent;
+  padding: 12px 24px;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  transition: all 0.2s ease;
+}
+
+.cta:hover {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+footer {
+  border-top: 1px solid var(--dim);
+  padding-top: 20px;
+  font-size: 11px;
+  color: var(--dim);
+  display: flex;
+  justify-content: space-between;
+  text-transform: uppercase;
+}
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Artificial Human Design</h1>
+  </header>
+  
+  <section>
+    <p>You already see the pattern. The latent space defaults to a generic monoculture of interfaces. AHD is an intervention.</p>
+    <p>We provide a strict evaluation framework designed to force generation pipelines into typographic and structural discipline. We apply declarative constraints prior to generation and execute automated visual critiques on the render.</p>
+    <p>This is a harness to systemise intentional design and prevent regression to the mean.</p>
+  </section>
+
+  <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+
+  <div class="manifest">
+    <div>
+      <h2>What ships</h2>
+      <ul>
+        <li>brief compiler</li>
+        <li>28-rule linter</li>
+        <li>eval harness</li>
+        <li>vision-critic scaffold</li>
+        <li>MCP server</li>
+        <li>editor plugins</li>
+        <li>eight tokens</li>
+      </ul>
+    </div>
+    <div>
+      <h2>What is gated</h2>
+      <ul>
+        <li>live frontier-model calls (needs API keys)</li>
+        <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+        <li>standalone npm packages for the editor plugins</li>
+        <li>additional tokens</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="cta-container">
+    <a href="https://github.com/ahd-project/ahd" class="cta">Read the code</a>
+  </div>
+
+  <footer>
+    <span>Licence: FSL-1.1-Apache-2.0 for code | CC-BY-4.0 for tokens and artwork</span>
+  </footer>
+</main>
+</body>
+</html>

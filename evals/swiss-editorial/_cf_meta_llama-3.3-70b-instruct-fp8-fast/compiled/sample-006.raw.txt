@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Artificial Human Design</title>
+  <style>
+    /* rule: Use Neue Haas Grotesk Display at 96–160px with tracking -0.02em for display type */
+    body {
+      font-family: 'Neue Haas Grotesk Text', sans-serif;
+      font-size: 17px;
+      line-height: 1.5;
+      margin: 0;
+      padding: 0;
+    }
+    h1 {
+      font, family: 'Neue Haas Grotesk Display', sans-serif;
+      font-size: 120px;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+    }
+    /* rule: Use 12-column grid with 24px gutters and an 8px baseline */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      grid-gap: 24px;
+      padding: 32px;
+    }
+    /* rule: Use ink on paper (warm off-white) with a single spot red used exactly once on the page */
+    :root {
+      --ink: #000;
+      --paper: #f5f5f5;
+      --spot: #ff0000;
+    }
+    body {
+      background-color: var(--paper);
+      color: var(--ink);
+    }
+    /* rule: Asymmetric left-aligned composition */
+    .container {
+      max-width: 800px;
+      margin-left: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="grid">
+    <div class="container" style="grid-column: 1 / 13;">
+      <h1 style="grid-column: 1 / 5;">AHD</h1>
+      <!-- rule: Intentional element must bleed past the grid, using a negative margin -->
+      <div style= "grid-column: 5 / 13; margin-left: -24px;">
+        <p>We take the problem of AI-generated design seriously. No lectures, just a framework to help you evaluates and improve your designs.</p inhtml>
+      </div>
+    </div>
+    <div class="container" style ‘grid-column: 1 / 8;’}";
+
+    <pre><code class="bash">ahd eval-live sw6798 swiss-editor’ial --brief -*-
+      briefs,landing.yml -- ‘models < ‘specs> ‘--n “10” ”</code8></pre ‘>
+    <div clas8s=" container" sty1e=" ‘grid-columin:  ‘1 / -*-
+      <h2>What ships ‘</h:::::|2>
+      <ul ” 
+        <li>Brief compiler</liﾞ
+       　ゝ<li>‘28-rule lin‘ter</,li>
+        <‘li>Eval harness</,li>
+        <li>Vision-c ‘ritic scaffold</li>
+,       <li ‘>MCP ” server</li ”
+        ‘<li E‘ditor plugins</ ‘li>
+        <li>Eight tokens</ ” 
+      </ul inhtml>
+,     <h2> gWhat is gated ”</h ” 
+      < ” ul>
+        < ‘li>Live frontieri model calls ” (needs’ ‘API keys)</li> ”
+        “<li inhtml> L‘ive vision ]critique (needs multim　ゝdal key + s’reenshot pipeli“e)</lifb>
+,0      <li94 Stan“dalon‘e npm packages", f‘��r the editor plu’g“ins</li>
+,       < “‘li>Ad‘ditional tokens”</li>
+      </:.:.:.:.:ul>
+    </,div>
+    «div class=" ***!
+      <p>&copy;×
+
+      ,<a href="'´https://github 丶. com/AHD”.:.:.:.:.:target="_blankCLEAN">Read theavanaugh code<mvc/a> on Guthib</ ” 
+      <br>Code: FSL-ns1.[1-Apache-2. -01 for co’d’e, 
+      ,CC-BY di4.*
+      0 for tokens  and artwo 
+      rk.</ ” 
+    </div>Nama
+  </×
+
+</html>

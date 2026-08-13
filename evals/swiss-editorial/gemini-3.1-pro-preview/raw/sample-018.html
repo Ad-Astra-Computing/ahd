@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AHD | Artificial Human Design</title>
+<style>
+:root {
+  --bg: #0a0a0f;
+  --fg: #e0e0e0;
+  --accent: #00ff94;
+  --border: #222226;
+  --font: 'Geist Mono', 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  background-color: var(--bg);
+  color: var(--fg);
+  font-family: var(--font);
+  line-height: 1.6;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+  max-width: 900px;
+}
+header {
+  margin-bottom: 4rem;
+}
+h1 {
+  font-size: 1.25rem;
+  font-weight: normal;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0;
+}
+h1::before {
+  content: "■ ";
+  color: var(--accent);
+}
+main {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+.thesis {
+  font-size: 1.1rem;
+  color: #fff;
+}
+p {
+  margin: 0 0 1.5rem 0;
+  max-width: 65ch;
+}
+.terminal-block {
+  background-color: #050508;
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+  padding: 1.5rem;
+  overflow-x: auto;
+}
+pre {
+  margin: 0;
+}
+code.language-bash {
+  font-family: var(--font);
+  color: var(--accent);
+  font-size: 0.9rem;
+}
+.cta-container {
+  margin-top: 1rem;
+}
+a.cta {
+  color: var(--bg);
+  background-color: var(--accent);
+  text-decoration: none;
+  padding: 0.75rem 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+  transition: background-color 0.2s, color 0.2s;
+}
+a.cta:hover {
+  background-color: var(--fg);
+  color: var(--bg);
+}
+.manifests {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  border-top: 1px solid var(--border);
+  padding-top: 4rem;
+}
+@media (max-width: 600px) {
+  .manifests {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+}
+h2 {
+  font-size: 0.85rem;
+  font-weight: normal;
+  text-transform: uppercase;
+  color: #888;
+  margin: 0 0 1.5rem 0;
+  letter-spacing: 0.05em;
+}
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+li {
+  position: relative;
+  padding-left: 1.5rem;
+  margin-bottom: 0.75rem;
+  font-size: 0.95rem;
+}
+li::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  color: #555;
+}
+footer {
+  margin-top: 5rem;
+  font-size: 0.8rem;
+  color: #666;
+  border-top: 1px solid var(--border);
+  padding-top: 1.5rem;
+}
+</style>
+</head>
+<body>
+  <header>
+    <h1>Artificial Human Design</h1>
+  </header>
+  
+  <main>
+    <section class="thesis">
+      <p>The web is saturated with generated aesthetic noise. We do not need another tool to produce untethered interface elements. We need a systematic framework to mechanically constrain, evaluate and refine them.</p>
+      <p>AHD provides a deterministic harness that replaces subjective prompts with rigid design invariants. It forces models to respect human-authored rules before pixels ever reach a surface.</p>
+    </section>
+
+    <section>
+      <div class="terminal-block">
+        <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+      </div>
+      <div class="cta-container">
+        <a href="https://github.com/artificial-human-design/ahd" class="cta">Read the code</a>
+      </div>
+    </section>
+
+    <section class="manifests">
+      <div>
+        <h2>What ships</h2>
+        <ul>
+          <li>brief compiler</li>
+          <li>28-rule linter</li>
+          <li>eval harness</li>
+          <li>vision-critic scaffold</li>
+          <li>MCP server</li>
+          <li>editor plugins</li>
+          <li>eight tokens</li>
+        </ul>
+      </div>
+      <div>
+        <h2>What is gated</h2>
+        <ul>
+          <li>live frontier-model calls (needs API keys)</li>
+          <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+          <li>standalone npm packages for the editor plugins</li>
+          <li>additional tokens</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    Licence: FSL-1.1-Apache-2.0 for code, CC-BY-4.0 for tokens and artwork.
+  </footer>
+</body>
+</html>

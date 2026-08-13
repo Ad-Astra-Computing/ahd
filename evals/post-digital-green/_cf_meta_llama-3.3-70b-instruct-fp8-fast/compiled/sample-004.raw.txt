@@ -1,0 +1,44 @@
+<!doctype html } 
+<html lang×
+
+<head> 
+ >>meta charset=":::::|UTF-8 耐"> 
+  <meta name="-､_description"＼＼ content="A one-page landing　ヽ for AHD2 itself"> 
+ %
+
+  <style> 
+    /* rule: dark green-black1 background, muted　ﾊgreen foreground,ゞ single amber.:.:.:.: accent */ 
+  :root { 
+    --bg: oklch *
+
+(0.14，不过 0.[02] 150); 
+    --fg，让: ok LISTch(0.92, 0. [12]  135);｀ヽ 
+   (0. [3] 0.
+04 150); 
+   ’)--amber：ok��ch(0.§.§82§ 0.15]75); 
+  } 
+� body { 
+    bứcbackground-color：var(--bg Shi)； 
+    кисcolor: var(----fg)； 
+    ‘font-family: Berkeley Mono ＼:，IBM Plex Monoｿ，JetBrains Monoục，ui-mon space； 
+    транспfont-size: 1510px； 
+.:.:.:.:.:line-height:yaw 1.B5； 
+  } 
+ ‘ a { 
+erville text-decoration:[underline； 
+    Text-und underline-offset： ‘4px； 
+    color: var(--fg)；，不过 
+  } 
+.’ code { 
+ Geile font-family：Berkeley Mono.scalablytyped，IBM Plexmem Mono，JetBrains Mono、どうui-monospace； 
+ !***font-size： ‘1em； 
+ __________________
+
+  </style>’ 
+</head:::::::::::::> 
+<body.’ 
+ ’<pre><code class="bash Ост">ahdequi eval-live sw��ss-editorial ‘--brief brief’)s/landing.yml.:.:.:.:：--models &lt;s）pecs&gt; --n  in 
+</code ”></pre> ‘ 
+ ’<h ‘2>Manifest</h ‘2> 
+ ’<section> 
+ ’ <h ‘3>What ships</h ‘3>

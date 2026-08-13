@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>artificial human design</title>
+<style>
+:root{
+  --bg:#0a0c0a;/* rule: background colour from palette bg */
+  --fg:#c0d0c0;/* rule: foreground colour from palette fg */
+  --dim:#7a8a7a;/* rule: dim colour from palette dim */
+  --rule:#5a5c5a;/* rule: hairline rule colour from palette rule */
+  --accent:#ffb84d;/* rule: amber accent from palette amber */
+  --space-0:0px;
+  --space-1:4px;
+  --space-2:8px;
+  --space-3:12px;
+  --space-4:16px;
+  --space-5:24px;
+  --space-6:32px;
+}
+html{font-size:15px;line-height:1.55;background:var(--bg);color:var(--fg);font-family:"Berkeley Mono","IBM Plex Mono","JetBrains Mono",ui-monospace;overflow-x:hidden;}
+body{margin:0;padding:var(--space-4);}
+.wrapper{max-width:80ch;margin:auto;}
+h1{font-size:1.8rem;line-height:1.1;margin:0 0 var(--space-3) 0;letter-spacing:0;}
+p{margin:0 0 var(--space-4) 0;}
+a{color:inherit;text-decoration:underline;text-underline-offset:4px;/* rule: link style underline offset */} 
+section{border-top:1px solid var(--rule);padding-top:var(--space-4);margin-top:var(--space-5);}
+pre{background:var(--dim);padding:var(--space-2);overflow:auto;}
+code{font-family:inherit;color:var(--accent);}/* rule: amber accent for code */
+ul{margin:0;padding-left:var(--space-4);}
+li{margin-bottom:var(--space-1);}
+footer{border-top:1px solid var(--rule);padding-top:var(--space-4);margin-top:var(--space-5);font-size:0.9rem;color:var(--dim);}
+</style>
+</head>
+<body>
+<div class="wrapper">
+<h1>artificial human design</h1>
+<p>framework for evaluating AI‑generated layouts without the hype. run a single eval, get deterministic feedback.</p>
+
+<pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre><!-- rule: command block with language tag bash -->
+
+<p><a href="https://github.com/ahd/ahd" class="cta">read the code</a></p>
+
+<pre>
++-------------------+   +-------------------+
+|  brief compiler   |→→|  28‑rule linter   |
++-------------------+   +-------------------+
+          |                     |
+          v                     v
++-------------------+   +-------------------+
+|   eval harness    |→→| vision‑critic     |
++-------------------+   +-------------------+
+          |                     |
+          v                     v
++-------------------+   +-------------------+
+|   MCP server      |→→| editor plugins    |
++-------------------+   +-------------------+
+</pre><!-- rule: required ASCII diagram -->
+
+<section>
+<h2>what ships</h2>
+<ul>
+<li>brief compiler</li>
+<li>28‑rule linter</li>
+<li>eval harness</li>
+<li>vision‑critic scaffold</li>
+<li>MCP server</li>
+<li>editor plugins</li>
+<li>eight tokens</li>
+</ul>
+</section>
+
+<section>
+<h2>what is gated</h2>
+<ul>
+<li>live frontier‑model calls (needs API keys)</li>
+<li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+<li>standalone npm packages for the editor plugins</li>
+<li>additional tokens</li>
+</ul>
+</section>
+
+<footer>
+code licence: FSL-1.1‑Apache-2.0 • tokens &amp; artwork: CC‑BY‑4.0
+</footer>
+</div>
+</body>
+</html>

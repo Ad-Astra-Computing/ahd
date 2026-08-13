@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Artificial Human Design (AHD)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body{
+  font-family:system-ui, sans-serif;
+  margin:0;
+  padding:0;
+  line-height:1.6;
+  color:#111;
+  background:#fafafa;
+}
+header{
+  background:#222;
+  color:#fff;
+  padding:2rem 1rem;
+}
+header h1{
+  margin:0;
+  font-size:2rem;
+}
+header p{
+  margin:.5rem 0 0;
+  font-size:1rem;
+}
+main{
+  max-width:800px;
+  margin:2rem auto;
+  padding:0 1rem;
+}
+pre{
+  background:#1e1e1e;
+  color:#d4d4d4;
+  padding:1rem;
+  overflow:auto;
+  border-radius:6px;
+  font-family:monospace;
+}
+section{
+  margin-top:2rem;
+}
+section h2{
+  border-bottom:2px solid #ccc;
+  padding-bottom:.5rem;
+  font-size:1.25rem;
+}
+ul{
+  list-style-type:disc;
+  margin-left:1.5rem;
+}
+footer{
+  background:#222;
+  color:#ddd;
+  padding:1rem;
+  font-size:.9rem;
+  text-align:center;
+}
+a{
+  color:#0b79d0;
+  text-decoration:none;
+}
+a:hover{
+  text-decoration:underline;
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>Artificial Human Design (AHD)</h1>
+  <p>Framework for reliable, auditable AI‑augmented design workflows.</p>
+</header>
+<main>
+  <p>Run the evaluation harness directly from your terminal:</p>
+  <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+
+  <section>
+    <h2>What ships</h2>
+    <ul>
+      <li>Brief compiler</li>
+      <li>28‑rule linter</li>
+      <li>Eval harness</li>
+      <li>Vision‑critic scaffold</li>
+      <li>MCP server</li>
+      <li>Editor plugins</li>
+      <li>Eight tokens</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>What is gated</h2>
+    <ul>
+      <li>Live frontier‑model calls (requires API keys)</li>
+      <li>Live vision critique (requires multimodal key + screenshot pipeline)</li>
+      <li>Standalone npm packages for the editor plugins</li>
+      <li>Additional tokens</li>
+    </ul>
+  </section>
+
+  <p><a href="https://github.com/your-org/ahd" target="_blank" rel="noopener">read‑the‑code</a></p>
+</main>
+<footer>
+  Code license: FSL‑1.1‑Apache‑2.0 • Tokens &amp; artwork: CC‑BY‑4.0
+</footer>
+</body>
+</html>

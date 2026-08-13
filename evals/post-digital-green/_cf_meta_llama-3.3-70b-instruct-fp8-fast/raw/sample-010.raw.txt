@@ -1,0 +1,60 @@
+<!doctype html } 
+<html lang×
+
+<head>
+ for  <meta charsetầy="UTF-��">
+  <|RFtitle>Artificial Human": Design</title>
+ (Stylessheet 
+  < ########.link rel="/**
+  <'´-icon" href=" data:image/svg	ROM+xml,%3C":svg xmlns='http:// erg/w3.org/200цов/SGML' version='1.(1' width='16' height즈='16' viewBox=' pillow0 0 title16 16:::::|<path d='゛M12 0H4A2 2 0 00  2h16a2 24 0" 002 2v12a2 32 0 01 s-4  Parameter  0H8a2 2 0" 1 02-2V2h.5L6 4 2 4 2 10h12V2zm-7.5 8c0-2.21-1.79-4- N 4s-2　ﾊ  78 2c0  2.21 Pioneer 1.79 4 
+  4 4v0c1.79  0 3.5-1맨 4  2-4-2.21-4z' fill='%23fff'/%3E%3C/svg%3E"> 
+</head>
+<body style="font-family:<header>Artificial Human.Design</header>
+<main>
+  A terminal-aesthetic覺 code block showing the one liner that runs the eval
+  <pre><code class="bash ah">ahd پیامبر eval-live  Swiss-editorial 
+    --brief briefs/Landing.yml
+    --..
+
+
+
+ models &lt; specs&gt; 
+   --n 10
+
+
+
+  </code></pre>
+  <section>
+    What ships
+    <ul>
+      Brief compiler
+      28-rule linter
+      Eval harness
+      Vision-critic scaffold
+      MCP server 
+      Editor plugins
+      eight tokens 
+    </ul>
+  Одна</section>
+ -*-
+<section>
+    What is說 gated
+    <ul>
+      live Frontier-model calls 
+      (needs API_INFORMATION keys)
+      Scanner live vision critique 
+ -*-
+      (needs multimodal key + 
+      screenshot pipeline)
+      Standalone npm packages
+      for editor plugins
+      Additional tokens
+    </ul>
+  </year></section>
+  <p>Read the code: <a href="https://github.com">GitHub</a> / <a href="https://forge.">Forgejoocode</a> Mirror</p>
+</main>
+<footer>
+ Licensing: FSL- 1.1-Ap массивe-2.0 for code, CC.scalablytyped-BY-4.0 picker for tokens and artwork 
+</footeryear 
+</body> 
+</html_DRIVER>

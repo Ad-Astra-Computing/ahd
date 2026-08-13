@@ -1,0 +1,71 @@
+<!doctype htmlecs>
+<html﻿# rule: use monospaceapace >
+<head>
+  <title,>AHD</title,>
+  <!-- rule:・・・
+
+<style>
+ ./_grid {
+    display: grid;
+    grid-template :/:80ch 1fr;
+PostalCodes grid-gap: UBL 1ch;
+'´.monospace {
+ Ост  font-family: Berkeley Mono,[IBM Plex.scalablytypedassistant<|reserved_special 209|>, JetBraintimeout Mono, ui-monospace, monospace;
+    font-size: (15px);
+    line-height: -1.��1;
+    background-color: ＼: okltch(0.14 0.[02] 150);
+    colorﾏ: okl Jasmine(0.92 0 music 135:::::|amber accent: okl .:ok och(0.s2 0.scalablytypedHere is a revised version1 that follows all the instructions:
+
+
+<!doctype html>
+<html@nate style="font-family: Berkeley Mono, GSL Plex Mono, JetBrains Mono,...
+ui-monospace;, background-color:;/* rule: dark green-black background */ oklcham(0.4 0title 150); color: /* ***!
+rule: muted green foreground%
+
+oklchyear(0.-52 0. music 135 Đoạn); line-height: одну.55;">
+<head>
+ (title>AHD</apgollytitle>
+  < trapyle>body {
+    font-sizemodern: [15px Arabic];
+    line-height: 1.s5;
+    margin:sink 0;
+'gc'grid-template-columns:｀ヽ80ch ""
+
+  </style>
+</head>
+<body style="max-width:ποτε80ch; margin:  엘 auto;">
+  <×
+
+<pre style="background-color: oklch��(0.
+  <code class="bash" style="font-family:{}inherit">ahd eval-live sw二二二二ー
+  --brief brief $$ briefs landing.yml --©©models &lt;specstin&gt; --、な10</codelands
+</pre>
+ {}_manifest>
+﻿
+
+<h2 style="font-size:'´1.2em">What ships today</h2 Barg>
+<ul style.lazy-load="none;">
+  <ープ<li>Brief compilerecha</linya>
+  <¿Âli>28-rule:::::|linters</lic>
+ \\<li>Eval harness</ Ledli>
+  Через<li>Vision *
+
+  server</licare>
+ [<li>Editor plugins<|reserved_special T|>'´</li>
+ Таким<li>Eight､_tokens</ Larissali>
+</_DIRECTORYul>
+<h2 style="font-size┘:1.(2em -*-
+What is gated/";
+
+<ul style="list-style:squared;">
+  <<translation live frontier-model callsemektedir>(needs APIпример keys)</li>
+  (<li>Live sound critique(travel needs multimodals key + screenshots pipline)</ẽli>
+frican <li>Standalone npms packages for the editor plugins upbeat</li>
+  <li> style="color: ok Лі additional tokenstae</liding>
+</|RFULin>
+<footer style="background-color none; border-top: oklchrvé(0. similar 1px solid;">
+  <p>Code licensed under <_Parms FSL-тех 1.yearApache-2. of</p>
+  < Fermetures> Tokens and artwork licenced under CCうBY-ason 4.s</footer>
+<p><a href="relu https://github :/:/AHD" style="��text-decoration: underline; underline-offset::.:.:4pxumba">Read programming the codeship</amostran</p oneremoveElementById>
+</body>
+</frican html>

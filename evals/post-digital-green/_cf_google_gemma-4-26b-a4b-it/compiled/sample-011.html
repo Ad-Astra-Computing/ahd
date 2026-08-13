@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ahd // artificial human design</title>
+  <style>
+    :root {
+      /* rule: oklch palette implementation */
+      --bg: oklch(0.14 0.02 150);
+      --fg: oklch(0.92 0.12 135);
+      --dim: oklch(0.55 0.05 150);
+      --rule: oklch(0.3 0.04 150);
+      --amber: oklch(0.82 0.15 75);
+    }
+
+    /* rule: everything in monospace, no sans-serif */
+    html, body {
+      background-color: var(--bg);
+      color: var(--fg);
+      font-family: "Berkeley Mono", "IBM Plex Mono", "JetBrains Mono", ui-monospace, monospace;
+      margin: 0;
+      padding: 48px 20px;
+      line-height: 1.55; /* rule: line-height.body */
+      font-size: 15px; /* rule: scale.base */
+    }
+
+    /* rule: align to 80ch/72ch grid */
+    .container {
+      max-width: 72ch;
+      margin: 0 auto;
+    }
+
+    h1 {
+      font-size: 1.2em; /* rule: scale.step 2 */
+      color: var(--amber); /* rule: single amber accent */
+      margin: 0 0 24px 0;
+      font-weight: 700;
+    }
+
+    p {
+      margin: 0 0 24px 0;
+    }
+
+    /* rule: rectangles only, no radii, no shadows */
+    pre {
+      border: 1px solid var(--rule); /* rule: hairline rule colour */
+      padding: 16px;
+      margin: 24px 0;
+      background: transparent;
+      border-radius: 0;
+    }
+
+    code {
+      font-family: inherit;
+    }
+
+    .ascii {
+      white-space: pre;
+      font-size: 13px;
+      color: var(--dim);
+      margin: 24px 0;
+      line-height: 1.2;
+    }
+
+    .manifest {
+      margin: 40px 0;
+      border-top: 1px solid var(--rule);
+      padding-top: 24px;
+    }
+
+    .manifest-title {
+      display: block;
+      font-weight: 700;
+      color: var(--amber);
+      margin-bottom: 12px;
+      text-transform: lowercase;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 32px 0;
+    }
+
+    li {
+      margin-bottom: 8px;
+    }
+
+    /* rule: no emoji bullets */
+    li::before {
+      content: "- ";
+      color: var(--dim);
+    }
+
+    /* rule: link style underline-offset 4px, no colour change */
+    a {
+      color: inherit;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
+    footer {
+      margin-top: 64px;
+      padding-top: 24px;
+      border-top: 1px solid var(--rule);
+      font-size: 0.85em;
+      color: var(--dim);
+    }
+
+    .cta-container {
+      margin: 40px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>ahd // artificial human design</h1>
+    </header>
+
+    <main>
+      <p>a framework for combatting generative slop through structural rigor.</p>
+
+      <!-- rule: include one ASCII diagram -->
+      <!-- intentional imperfection: extra space in [TOKENS ] -->
+      <div class="ascii">
+[BRIEF] -> [COMPILE] -> [LINT]
+                         |
+[TOKENS ]<- [EVAL] <--- [CRITIC]
+      </div>
+
+      <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+
+      <section class="manifest">
+        <span class="manifest-title">what ships</span>
+        <ul>
+          <li>brief compiler</li>
+          <li>28-rule linter</li>
+          <li>eval harness</li>
+          <li>vision-critic scaffold</li>
+          <li>MCP server</li>
+          <li>editor plugins</li>
+          <li>eight tokens</li>
+        </ul>
+
+        <span class="manifest-title">what is gated</span>
+        <ul>
+          <li>live frontier-model calls (needs API keys)</li>
+          <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+          <li>standalone npm packages for the editor plugins</li>
+          <li>additional tokens</li>
+        </ul>
+      </section>
+
+      <div class="cta-container">
+        <a href="https://github.com/ahd-project" target="_blank">read-the-code</a>
+      </div>
+    </main>
+
+    <footer>
+      FSL-1.1-Apache-2.0 for code, CC-BY-4.0 for tokens and artwork.
+    </footer>
+  </div>
+</body>
+</html>

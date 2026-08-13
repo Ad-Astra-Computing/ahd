@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Artificial Human Design</title>
+  <style>
+    /* rule: Swiss / International Typographic Style */
+    :root {
+      --font-family: 'Neue Haas Grotesk Text', 'Helvetica Now Text', 'Inter';
+      --font-family-display: 'Neue Haas Grotesk Display', 'Helvetica Now Display', 'Inter Tight';
+      --font-size: 17px;
+      --line-height: 1.5;
+      --color-ink: oklch(0.18 0 0);
+      --color-paper: oklch(0.98 0.005 95);
+      --color-spot: oklch(0.58 0.22 27);
+      --grid-columns: 12;
+      --grid-gutter: 24px;
+      --grid-baseline: 8px;
+    }
+    body {
+      /* rule: ink on paper */
+      background-color: var(--color-paper);
+      color: var(--color-ink);
+      font-family: var(--font-family);
+      font-size: var(--font-size);
+      line-height: var(--line-height);
+      margin: 0;
+      padding: 0;
+    }
+    .grid {
+      /* rule: 12-column grid */
+      display: grid;
+      grid-template-columns: repeat(var(--grid-columns), 1fr);
+      grid-gap: var(--grid-gutter);
+    }
+    .bleed {
+      /* rule: one element bleeds past the grid */
+      grid-column: 1 / -1;
+    }
+    .code-block {
+      /* rule: terminal-aesthetic code block */
+      font-family: monospace;
+      background-color: var(--color-ink);
+      color: var(--color-paper);
+      padding: 16px;
+      border-radius: 2px;
+    }
+    .manifest {
+      /* rule: clearly separated manifest sections */
+      margin-top: 160px;
+    }
+    .manifest h2 {
+      /* rule: display type */
+      font-family: var(--font-family-display);
+      font-size: 96px;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+    }
+    .footer {
+      /* rule: licence explicit */
+      margin-top: 160px;
+      font-size: 14px;
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Neue+Haas+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="grid">
+    <h1 class="bleed" style="grid-column: 1 / -1; font-size: 160px; line-height: 1.05; letter-spacing: -0.02em; /* rule: display type */">Artificial Human Design</h1>
+    <p style="grid-column: 1 / 7; /* rule: asymmetric left-aligned composition */">We take the problem of AI-generated design seriously.</p>
+    <div style="grid-column: 7 / -1; /* rule: asymmetric left-aligned composition */">
+      <pre class="code-block">
+        <code>
+          ahd eval-live swiss-editorial --brief briefs/landing.yml --models <specs> --n 10
+        </code>
+      </pre>
+    </div>
+    <div class="manifest" style="grid-column: 1 / -1;">
+      <h2>What ships</h2>
+      <ul>
+        <li>brief compiler</li>
+        <li>28-rule linter</li>
+        <li>eval harness</li>
+        <li>vision-critic scaffold</li>
+        <li>MCP server</li>
+        <li>editor plugins</li>
+        <li>eight tokens</li>
+      </ul>
+      <h2>What is gated</h2>
+      <ul>
+        <li>live frontier-model calls (needs API keys)</li>
+        <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+        <li>standalone npm packages for the editor plugins</li>
+        <li>additional tokens</li>
+      </ul>
+    </div>
+    <div class="footer" style="grid-column: 1 / -1;">
+      <p>Licence: FSL-1.1-Apache-2.0 for code, CC-BY-4.0 for tokens and artwork.</p>
+      <p><a href="https://github.com/ahd" target="_blank" rel="noopener">Read the code on GitHub</a></p>
+    </div>
+  </div>
+</body>
+</html>

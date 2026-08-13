@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AHD</title>
+<style>
+/* rule: Design in the Swiss / International Typographic Style */
+/* rule: Palette is ink on paper (warm off-white) with a single spot red */
+:root {
+  --ink: oklch(0.18 0 0); /* rule: foreground is ink */
+  --paper: oklch(0.98 0.005 95); /* rule: background is paper */
+  --spot: oklch(0.58 0.22 27); /* rule: single spot red used exactly once */
+  --rule: oklch(0.18 0 0); /* rule: border is rule */
+  --muted: oklch(0.55 0 0);
+
+  /* rule: Set display type in Neue Haas Grotesk Display */
+  --font-display: "Neue Haas Grotesk Display", "Helvetica Now Display", "Inter Tight", sans-serif;
+  /* rule: Body in Neue Haas Grotesk Text */
+  --font-text: "Neue Haas Grotesk Text", "Helvetica Now Text", "Inter", sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+
+  --baseline: 8px; /* rule: 8px baseline */
+  --gutter: 24px; /* rule: 24px gutters */
+  --margin: max(32px, calc(100vw / 24));
+}
+
+body {
+  background-color: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-text);
+  font-size: 17px; /* rule: Body at 17px */
+  line-height: 1.5; /* rule: line-height 1.5 */
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden; /* Prevent horizontal scroll from intentional bleed element */
+}
+
+/* rule: Work on a 12-column grid */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: var(--gutter);
+  padding-left: var(--margin);
+  padding-right: var(--margin);
+}
+
+/* rule: display >= 120px with -0.02em tracking */
+.display-huge {
+  font-family: var(--font-display);
+  font-size: clamp(120px, 12vw, 160px); /* rule: anchored word at display >= 120px */
+  font-weight: 700;
+  letter-spacing: -0.02em; /* rule: tracking -0.02em */
+  line-height: 1.05; /* rule: display line-height 1.05 */
+  margin: 0;
+}
+
+.display-large {
+  font-family: var(--font-display);
+  font-size: clamp(48px, 6vw, 96px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+/* rule: measure 62ch */
+.measure {
+  max-width: 62ch;
+}
+
+/* rule: rhythm-note - Require one dramatic jump per section (160 between sections) */
+.mt-8 { margin-top: 8px; }
+.mt-32 { margin-top: 32px; }
+.mt-48 { margin-top: 48px; }
+.mt-64 { margin-top: 64px; }
+.mt-160 { margin-top: 160px; }
+.mb-160 { margin-bottom: 160px; }
+
+/* rule: No shadows, depth via rule */
+/* rule: No rounded corners except small status pills */
+.border-top { border-top: 1px solid var(--rule); }
+.border-bottom { border-bottom: 1px solid var(--rule); }
+
+/* rule: small status pills allowed */
+.pill {
+  background-color: var(--spot); /* rule: spot color used EXACTLY once on the page */
+  color: var(--paper);
+  border-radius: 999px; /* rule: pills (999) allowed for status tags only */
+  padding: 4px 12px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em; /* rule: allcaps 0.08em */
+  font-weight: 700;
+  display: inline-block;
+  line-height: 1;
+}
+
+/* rule: terminal-aesthetic code block */
+.terminal {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  padding: 24px;
+  border: 1px solid var(--rule); /* rule: sharp by default */
+  background: var(--paper);
+  color: var(--ink);
+  overflow-x: auto;
+  white-space: pre;
+}
+
+/* Grid span utilities */
+.col-span-4 { grid-column: span 4; }
+.col-span-5 { grid-column: span 5; }
+.col-span-6 { grid-column: span 6; }
+.col-span-8 { grid-column: span 8; }
+.col-span-12 { grid-column: span 12; }
+.col-start-1 { grid-column-start: 1; }
+.col-start-7 { grid-column-start: 7; }
+.col-start-9 { grid-column-start: 9; }
+
+/* rule: no emoji bullets */
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+li {
+  border-bottom: 1px solid var(--rule);
+  padding: 12px 0;
+}
+li:last-child { border-bottom: none; }
+
+/* rule: No purple/blue gradients */
+a {
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--ink);
+}
+a:hover {
+  background-color: var(--ink);
+  color: var(--paper);
+}
+
+/* rule: One intentional element must bleed past the grid */
+.bleed-right {
+  width: 150vw;
+  height: 1px;
+  background-color: var(--rule);
+  margin-top: 160px; /* aligns with spacing rhythm */
+}
+
+.label {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink);
+}
+</style>
+</head>
+<body>
+
+  <!-- rule: Asymmetric left-aligned composition -->
+  <!-- rule: Do not centre the hero -->
+  <header class="grid mt-32">
+    <div class="col-span-4 col-start-1">
+      <span class="label">AHD</span>
+    </div>
+    <div class="col-span-4 col-start-9" style="text-align: right;">
+      <!-- rule: A link to github labelled as the read-the-code CTA -->
+      <a href="https://github.com/artificial-human-design/ahd">Read the code</a>
+    </div>
+  </header>
+
+  <main class="grid mt-160">
+    <div class="col-span-12 col-start-1">
+      <!-- rule: one section anchored by a single word at display >= 120px with -0.02em tracking -->
+      <h1 class="display-huge">RIGIDITY.</h1>
+    </div>
+    <div class="col-span-6 col-start-1 mt-48 measure">
+      <!-- rule: Voice: declarative, short sentences, no hedges, no Oxford commas -->
+      <!-- rule: Avoid banned phrases ('build the future', 'AI-native', 'ship faster', 'seamless') -->
+      <p>Design generated by machines is a problem. The current output lacks structure. The solution is not better prompts. The solution is rigid constraints.</p>
+      <p>AHD provides an explicit framework for automated design. It compiles briefs into strict rulesets. It enforces typography, grid and colour space. Slop is rejected. The output meets human standards.</p>
+    </div>
+    
+    <div class="col-span-8 col-start-1 mt-64">
+      <div class="label" style="margin-bottom: 12px; display: flex; align-items: center;">
+        Evaluate live
+        <!-- rule: spot red used exactly once on the page -->
+        <span class="pill" style="margin-left: 12px;">Active</span>
+      </div>
+      <!-- rule: The command rendered in a monospace code block with the language tag `bash` -->
+      <div class="terminal"><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></div>
+    </div>
+  </main>
+
+  <!-- rule: One intentional element must bleed past the grid -->
+  <div class="bleed-right"></div>
+
+  <!-- Manifest Section -->
+  <!-- rule: Asymmetric left-aligned composition -->
+  <section class="grid mt-160">
+    <div class="col-span-5 col-start-1">
+      <!-- rule: clearly separated manifest section titled 'What ships' -->
+      <h2 class="label border-bottom" style="padding-bottom: 12px; margin-bottom: 0;">What ships</h2>
+      <ul>
+        <li>brief compiler</li>
+        <li>28-rule linter</li>
+        <li>eval harness</li>
+        <li>vision-critic scaffold</li>
+        <li>MCP server</li>
+        <li>editor plugins</li>
+        <li>eight tokens</li>
+      </ul>
+    </div>
+
+    <div class="col-span-6 col-start-7">
+      <!-- rule: clearly separated manifest section titled 'What is gated' -->
+      <h2 class="label border-bottom" style="padding-bottom: 12px; margin-bottom: 0;">What is gated</h2>
+      <ul>
+        <li>live frontier-model calls (needs API keys)</li>
+        <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+        <li>standalone npm packages for the editor plugins</li>
+        <li>additional tokens</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- rule: No canonical 4-column footer -->
+  <footer class="grid mt-160 mb-160 border-top pt-32" style="padding-top: 32px;">
+    <div class="col-span-8 col-start-1 measure">
+      <span class="label">Licence</span>
+      <!-- rule: A footer that names the licence explicitly -->
+      <p class="mt-8">FSL-1.1-Apache-2.0 for code<br>CC-BY-4.0 for tokens and artwork</p>
+    </div>
+  </footer>
+
+</body>
+</html>

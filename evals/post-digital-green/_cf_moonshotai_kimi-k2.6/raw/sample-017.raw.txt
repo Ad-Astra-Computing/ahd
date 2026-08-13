@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AHD — Artificial Human Design</title>
+  <style>
+    :root {
+      --bg-primary: #0a0a0a;
+      --bg-secondary: #111111;
+      --bg-tertiary: #1a1a1a;
+      --fg-primary: #e8e6e3;
+      --fg-secondary: #a0a0a0;
+      --fg-tertiary: #696969;
+      --accent: #c4b896;
+      --accent-muted: #8b7d5e;
+      --border: #2a2a2a;
+      --code-string: #a8c496;
+      --code-keyword: #c4b896;
+      --code-flag: #6b8fc7;
+    }
+
+    @font-face {
+      font-family: 'Berkeley Mono';
+      src: local('Berkeley Mono'), local('SF Mono'), local('Menlo'), local('Consolas'), monospace;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: auto;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg-primary);
+      color: var(--fg-primary);
+      line-height: 1.65;
+      font-size: 15px;
+      text-rendering: optimizeLegibility;
+    }
+
+    /* --- Noise texture overlay --- */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 100;
+    }
+
+    /* --- Layout --- */
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    main {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* --- Header --- */
+    .site-header {
+      padding: 48px 0 60px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .identity {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .identity h1 {
+      font-family: 'Berkeley Mono', monospace;
+      font-size: 32px;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      color: var(--fg-primary);
+    }
+
+    .identity .tagline {
+      font-family: 'Berkeley Mono', monospace;
+      font-size: 12px;
+      color: var(--fg-tertiary);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .problem-statement {
+      font-size: 17px;
+      line-height: 1.75;
+      color: var(--fg-primary);
+      max-width: 640px;
+    }
+
+    .problem-statement p {
+      margin-bottom: 1em;
+    }
+
+    .problem-statement p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* --- Code section --- */
+    .eval-section {
+      padding: 40px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-label {
+      font-family: 'Berkeley Mono', monospace;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--fg-tertiary);
+      margin-bottom: 20px;
+    }
+
+    .code-block {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .code-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 16px;
+      background: var(--bg-tertiary);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .code-lang {
+      font-family: 'Berkeley Mono', monospace;
+      font-size: 11px;
+      color: var(--fg-tertiary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .code-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .code-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--fg-tertiary);
+      opacity: 0.3;
+    }
+
+    pre {
+      padding: 20px 24px;
+      overflow-x: auto;
+      font-family: 'Berkeley Mono', monospace;
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    code {
+      font-family: inherit;
+    }
+
+    .token-cmd { color: var(--fg-primary); }
+    .token-sub { color: var(--accent); }
+    .token-flag { color: var(--code-flag); }
+    .token-arg { color: var(--code-string); }
+    .token-comment { color: var(--fg-tertiary); }
+    .token-var { color: var(--fg-primary); opacity: 0.7; }
+
+    .code-caption {
+      margin-top: 16px;
+      font-family: 'Berkeley Mono', monospace;
+      font-size: 12px;
+      color: var(--fg-tertiary);
+      line-height: 1.6;
+    }
+
+    /* --- Manifest sections --- */
+    .manifest {
+      padding: 40px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .manifest-title {
+      font-family: 'Berkeley Mono', monospace;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--fg-primary);
+      margin-bottom: 20px;
+      letter-spacing: -0.01em;
+    }
+
+    .manifest-list {
+      list-style: none;
+      display: grid;
+      gap: 2px;
+    }
+
+    .manifest-list li {
+      padding: 10px 0;
+      border-bottom: 1px solid var(--bg-tertiary);
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+    }
+
+    .manifest-list li:last-child {
+      border-bottom: none;
+    }
+
+    .manifest-list .marker {
+      font-family: 'Berkeley Mono', monospace;
+      font-size: 11px;
+      color: var(--accent-muted);
+      min-width: 16px;
+      text-align: right;
+    }
+
+    .manifest-list.good .marker {
+      color: #7a9b6a;
+    }
+
+    .manifest-list.gated .marker {
+      color: #9b7a6a;
+    }
+
+    .manifest-list .item-name {
+      font-family: 'Berkeley Mono', monospace;
+      font-size: 13.5px;
+      color: var(--fg-primary);
+      min-width: 220px;
+    }
+
+    .manifest-list .item-desc {
+      font-size: 13.5px;
+      color: var(--fg-secondary);
+    }
+
+    .what-is-gated {
+      padding-top: 40px;
+      border-top: 1px solid var(--border);
+      margin-top: 40px;
+    }
+
+    .gated-note {
+      margin-top: 20px;
+      font-size: 13px;
+      color: var(--fg-tertiary);
+      line-height: 1.7;
+      max-width: 560px;
+    }
+
+    /* --- CTA --- */
+    .cta-section {
+      padding: 40px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .cta-row {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .cta-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 24px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--fg-primary);
+      font-family: 'Berkeley Mono', monospace;
+      font-size: 13px;
+      text-decoration: none;
+      transition: border-color 0.15s ease;
+    }
+
+    .cta-primary:hover {
+      border-color: var(--accent-muted);
+    }
+
+    .cta-primary svg {
+      width: 16px;
+      height: 16px;
+      stroke: var(--fg-tertiary);
+    }
+
+    .cta-secondary {
+      font-family: 'Berkeley Mono', monospace;
+      font-size: 12px;
+      color: var(--fg-tertiary);
+    }
+
+    .cta-secondary a {
+      color: var(--accent-muted);
+      text-decoration: none;
+    }
+
+    .cta-secondary a:hover {
+      text-decoration: underline;
+    }
+
+    /* --- Footer --- */
+    .site-footer {
+      padding: 40px 0 80px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+
+    .footer-block {
+      font-size: 12px;
+      line-height: 1.7;
+      color: var(--fg-tertiary);
+    }
+
+    .footer-block h4 {
+      font-family: 'Berkeley Mono', monospace;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--fg-secondary);
+      margin-bottom: 12px;
+      font-weight: 400;
+    }
+
+    .footer-block p {
+      margin-bottom: 0.4em;
+    }
+
+    .footer-block a {
+      color: var(--fg-secondary);
+      text-decoration: none;
+      border-bottom: 1px solid var(--bg-tertiary);
+    }
+
+    .footer-block a:hover {
+      color: var(--fg-primary);
+      border-bottom-color: var(--accent-muted);
+    }
+
+    .licence-tag {
+      display: inline-block;
+      font-family: 'Berkeley Mono', monospace;
+      font-size: 10px;
+      padding: 4px 10px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      margin-top: 12px;
+      color: var(--fg-secondary);
+    }
+
+    /* --- Scrollbar --- */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg-primary);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 4px;
+    }
+
+    /* --- Selection --- */
+    ::selection {
+      background: var(--accent-muted);
+      color: var(--bg-primary);
+    }
+
+    /* --- Responsive --- */
+    @media (max-width: 600px) {
+      .identity {
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .manifest-list li {
+        flex-direction: column;
+        gap: 4px;
+        padding: 16px 0;
+      }
+
+      .manifest-list .item-name {
+        min-width: auto;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .cta-row {
+        flex-direction: column;
+        align-items: stretch;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <main>
+      <!-- Header -->
+      <header class="site-header">
+        <div class="identity">
+          <h1>AHD</h1>
+          <span class="tagline">Artificial HumanDesign</span>
+        </div>
+        <div class="problem-statement">
+          <p>Every AI-adjacent tool promises to eliminate taste from the work. We take the opposite position: design evaluation is a teachable skill, and the cadence of doing it well can be compressed without losing rigor.</p>
+          <p>AHD is a toolkit for running structured evaluations of generative design output. It does not generate. It measures, compares, and documents what made it through the filter and what did not.</p>
+        </div>
+      </header>
+
+      <!-- Eval Command -->
+      <section class="eval-section">
+        <div class="section-label">Run an evaluation</div>
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">bash</span>
+            <div class="code-actions">
+              <span class="code-dot"></span>
+              <span class="code-dot"></span>
+              <span class="code-dot"></span>
+            </div>
+          </div>
+          <pre><code><span class="token-cmd">ahd</span> <span class="token-sub">eval-live</span> <span class="token-arg">swiss-editorial</span> <span class="token-flag">--brief</span> <span class="token-arg">briefs/landing.yml</span> <span class="token-flag">--models</span> <span class="token-var">&lt;specs&gt;</span> <span class="token-flag">--n</span> <span class="token-arg">10</span></code></pre>
+        </div>
+        <p class="code-caption">Runs 10 generations against the <code>swiss-editorial</code> token set, compiled from <code>briefs/landing.yml</code> with the model specs you provide.</p>
+      </section>
+
+      <!-- Manifest: What ships -->
+      <section class="manifest">
+        <h2 class="manifest-title">What ships</h2>
+        <ul class="manifest-list good">
+          <li>
+            <span class="marker">01</span>
+            <span class="item-name">Brief compiler</span>
+            <span class="item-desc">YAML schemas that resolve to model-agnostic prompts with type checking</span>
+          </li>
+          <li>
+            <span class="marker">02</span>
+            <span class="item-name">28-rule linter</span>
+            <span class="item-desc">Static analysis for common generative-design failure modes</span>
+          </li>
+          <li>
+            <span class="marker">03</span>
+            <span class="item-name">Eval harness</span>
+            <span class="item-desc">Headless browser capture, DOM extraction, perceptual diffing</span>
+          </li>
+          <li>
+            <span class="marker">04</span>
+            <span class="item-name">Vision-critic scaffold</span>
+            <span class="item-desc">Protocol for multimodal critique; implementation needs your keys</span>
+          </li>
+          <li>
+            <span class="marker">05</span>
+            <span class="item-name">MCP server</span>
+            <span class="item-desc">Model Context Protocol for editor integration</span>
+          </li>
+          <li>
+            <span class="marker">06</span>
+            <span class="item-name">Editor plugins</span>
+            <span class="item-desc">VS Code and Zed extensions; install from source today, packages pending</span>
+          </li>
+          <li>
+            <span class="marker">07</span>
+            <span class="item-name">Eight tokens</span>
+            <span class="item-desc">Curated design-language specimens with published provenance</span>
+          </li>
+        </ul>
+
+        <!-- What is gated -->
+        <div class="what-is-gated">
+          <h2 class="manifest-title">What is gated</h2>
+          <ul class="manifest-list gated">
+            <li>
+              <span class="marker">—</span>
+              <span class="item-name">Live frontier-model calls</span>
+              <span class="item-desc">Requires your own API keys; no proxy or bundled credits</span>
+            </li>
+            <li>
+              <span class="marker">—</span>
+              <span class="item-name">Live vision critique</span>
+              <span class="item-desc">Needs multimodal key + screenshot pipeline setup</span>
+            </li>
+            <li>
+              <span class="marker">—</span>
+              <span class="item-name">Standalone npm packages</span>
+              <span class="item-desc">Editor plugins; build from repo today, registry packages gated on CI</span>
+            </li>
+            <li>
+              <span class="marker">—</span>
+              <span class="item-name">Additional tokens</span>
+              <span class="item-desc">Beyond the initial eight; contribution cycle or external license</span>
+            </li>
+          </ul>
+          <p class="gated-note">Gated items are not "coming soon." They have working implementations in the repository that you can run today with your own infrastructure. The gate is resource or legal, not technical.</p>
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <section class="cta-section">
+        <div class="section-label">Source</div>
+        <div class="cta-row">
+          <a href="https://github.com/artificialhumandesign/ahd" class="cta-primary">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+            </svg>
+            Read the code
+          </a>
+          <span class="cta-secondary">Mirror: <a href="https://forgejo.org/">forgejo mirror</a> &middot; Issue tracker on GitHub</span>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="site-footer">
+        <div class="footer-grid">
+          <div class="footer-block">
+            <h4>Code licence</h4>
+            <p>All source code, build scripts, and tooling in this repository is licensed under the Functional Source Licence, version 1.1, with Apache 2.0 change licence.</p>
+            <span class="licence-tag">FSL-1.1-Apache-2.0</span>
+          </div>
+          <div class="footer-block">
+            <h4>Content licence</h4>
+            <p>Token definitions, design specimens, documentation, and published artwork are licensed under Creative Commons Attribution 4.0 International.</p>
+            <span class="licence-tag">CC-BY-4.0</span>
+          </div>
+        </div>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AHD</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Courier New', Courier, monospace;
+      background: #000;
+      color: #0f0;
+      line-height: 1.5;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+    pre {
+      background: #000;
+      border: 1px solid #0f0;
+      padding: 1rem;
+      overflow-x: auto;
+    }
+    code {
+      color: #0f0;
+    }
+    .cta {
+      display: inline-block;
+      margin: 1rem 0;
+      padding: 0.5rem 1rem;
+      background: #0f0;
+      color: #000;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .manifest {
+      margin-top: 2rem;
+    }
+    .manifest h2 {
+      border-bottom: 1px solid #0f0;
+      padding-bottom: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    .manifest ul {
+      padding-left: 1rem;
+    }
+    footer {
+      margin-top: 4rem;
+      font-size: 0.9rem;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+    <a href="https://github.com/ahd" class="cta">read-the-code</a>
+    <div class="manifest">
+      <h2>What ships</h2>
+      <ul>
+        <li>brief compiler</li>
+        <li>28-rule linter</li>
+        <li>eval harness</li>
+        <li>vision-critic scaffold</li>
+        <li>MCP server</li>
+        <li>editor plugins</li>
+        <li>eight tokens</li>
+      </ul>
+    </div>
+    <div class="manifest">
+      <h2>What is gated</h2>
+      <ul>
+        <li>live frontier-model calls (needs API keys)</li>
+        <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+        <li>standalone npm packages for the editor plugins</li>
+        <li>additional tokens</li>
+      </ul>
+    </div>
+    <footer>
+      Code: FSL-1.1-Apache-2.0 | Tokens and artwork: CC-BY-4.0
+    </footer>
+  </div>
+</body>
+</html>

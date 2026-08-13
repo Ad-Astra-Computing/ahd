@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AHD — Artificial Human Design</title>
+<style>
+  :root{
+    --ink:#111;
+    --paper:#f4f1ea;
+    --rule:#111;
+    --muted:#5a564e;
+    --term-bg:#0e0e0e;
+    --term-ink:#e6e6e6;
+    --term-dim:#8a8a8a;
+    --term-accent:#c9f26e;
+    --flag:#b8301c;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Times New Roman", "Times", Georgia, serif;
+    font-size:17px;
+    line-height:1.45;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{
+    max-width:860px;
+    margin:0 auto;
+    padding:40px 28px 60px;
+  }
+  header.masthead{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    border-bottom:2px solid var(--rule);
+    padding-bottom:10px;
+    margin-bottom:22px;
+    font-variant:small-caps;
+    letter-spacing:0.04em;
+  }
+  .masthead .mark{
+    font-family:"Helvetica Neue", Arial, sans-serif;
+    font-weight:800;
+    font-size:14px;
+    letter-spacing:0.18em;
+  }
+  .masthead .meta{
+    font-family:"Helvetica Neue", Arial, sans-serif;
+    font-size:11px;
+    color:var(--muted);
+    letter-spacing:0.1em;
+  }
+  h1{
+    font-family:"Times New Roman", Times, serif;
+    font-weight:700;
+    font-size:54px;
+    line-height:1.02;
+    letter-spacing:-0.01em;
+    margin:14px 0 12px;
+  }
+  h1 .amp{font-style:italic;font-weight:400;color:var(--muted)}
+  .deck{
+    font-size:19px;
+    line-height:1.5;
+    max-width:62ch;
+    margin:0 0 18px;
+  }
+  .deck em{font-style:italic}
+  .byline{
+    font-family:"Helvetica Neue", Arial, sans-serif;
+    font-size:11px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin-bottom:6px;
+  }
+  .rule{
+    border:0;
+    border-top:1px solid var(--rule);
+    margin:28px 0;
+  }
+  .rule.thick{border-top-width:2px}
+  section{margin:22px 0}
+  h2{
+    font-family:"Helvetica Neue", Arial, sans-serif;
+    font-weight:800;
+    font-size:12px;
+    letter-spacing:0.2em;
+    text-transform:uppercase;
+    margin:0 0 10px;
+    padding-bottom:6px;
+    border-bottom:1px solid var(--rule);
+  }
+  p{margin:0 0 12px;max-width:62ch}
+  /* Terminal block */
+  .terminal{
+    background:var(--term-bg);
+    color:var(--term-ink);
+    border:1px solid #000;
+    border-radius:2px;
+    font-family:"SFMono-Regular", ui-monospace, "Menlo", "Consolas", monospace;
+    font-size:13px;
+    line-height:1.55;
+    margin:14px 0 6px;
+    box-shadow:4px 4px 0 #111;
+  }
+  .terminal .bar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:#1a1a1a;
+    border-bottom:1px solid #000;
+    padding:6px 10px;
+    font-size:11px;
+    color:var(--term-dim);
+    letter-spacing:0.08em;
+  }
+  .terminal .bar .dots{display:flex;gap:6px}
+  .terminal .bar .dots i{
+    width:10px;height:10px;border-radius:50%;
+    background:#3a3a3a;display:block;
+  }
+  .terminal pre{
+    margin:0;
+    padding:14px 14px 16px;
+    white-space:pre-wrap;
+    word-break:break-word;
+  }
+  .terminal .prompt{color:var(--term-dim)}
+  .terminal .cmd{color:var(--term-ink)}
+  .terminal .flag{color:var(--term-accent)}
+  .terminal .arg{color:#f2c45a}
+  .terminal .lang{color:var(--term-dim);font-size:10.5px}
+  .caption{
+    font-size:13px;
+    color:var(--muted);
+    font-style:italic;
+    margin:4px 0 0;
+  }
+  /* Manifest */
+  .manifest{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:0;
+    border-top:2px solid var(--rule);
+    border-bottom:2px solid var(--rule);
+  }
+  .manifest .col{
+    padding:18px 20px;
+  }
+  .manifest .col + .col{
+    border-left:1px solid var(--rule);
+  }
+  .manifest h3{
+    font-family:"Helvetica Neue", Arial, sans-serif;
+    font-size:11px;
+    letter-spacing:0.2em;
+    text-transform:uppercase;
+    margin:0 0 14px;
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+  }
+  .manifest h3 .tag{
+    font-weight:400;
+    color:var(--muted);
+    font-size:10px;
+    letter-spacing:0.14em;
+  }
+  .manifest h3 .tag.now{color:#1f6b3a}
+  .manifest h3 .tag.later{color:var(--flag)}
+  .manifest ol{
+    list-style:none;
+    counter-reset:item;
+    padding:0;margin:0;
+  }
+  .manifest li{
+    counter-increment:item;
+    padding:8px 0;
+    border-top:1px dotted #999;
+    display:grid;
+    grid-template-columns:28px 1fr;
+    gap:8px;
+    font-size:15px;
+  }
+  .manifest li:first-child{border-top:0}
+  .manifest li::before{
+    content:counter(item, decimal-leading-zero);
+    font-family:"SFMono-Regular", ui-monospace, monospace;
+    font-size:11px;
+    color:var(--muted);
+    padding-top:3px;
+  }
+  .manifest li .name{font-weight:600}
+  .manifest li .note{
+    display:block;
+    font-size:13px;
+    color:var(--muted);
+    font-style:italic;
+  }
+  /* CTA */
+  .cta-row{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:baseline;
+    gap:14px 22px;
+    margin:18px 0 4px;
+  }
+  a.read-code{
+    font-family:"Helvetica Neue", Arial, sans-serif;
+    font-size:13px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--ink);
+    text-decoration:none;
+    border:1.5px solid var(--ink);
+    padding:10px 14px;
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    background:var(--paper);
+    box-shadow:3px 3px 0 var(--ink);
+  }
+  a.read-code:hover{background:#111;color:var(--paper)}
+  a.read-code .arrow{font-family:monospace}
+  .cta-note{
+    font-size:13px;
+    color:var(--muted);
+    font-style:italic;
+    max-width:38ch;
+  }
+  /* Thesis */
+  .thesis{
+    border-left:3px solid var(--ink);
+    padding:2px 0 2px 16px;
+    margin:12px 0 18px;
+    font-size:16.5px;
+  }
+  .thesis span.flag{
+    background:var(--flag);
+    color:var(--paper);
+    font-family:"Helvetica Neue", Arial, sans-serif;
+    font-size:10px;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    padding:2px 6px;
+    margin-right:6px;
+    vertical-align:2px;
+  }
+  /* Footer */
+  footer.license{
+    margin-top:40px;
+    border-top:2px solid var(--rule);
+    padding-top:14px;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:space-between;
+    gap:12px;
+    font-family:"Helvetica Neue", Arial, sans-serif;
+    font-size:11.5px;
+    letter-spacing:0.06em;
+    color:var(--muted);
+  }
+  footer.license strong{color:var(--ink);font-weight:700}
+  footer.license code{
+    font-family:"SFMono-Regular", ui-monospace, monospace;
+    font-size:11.5px;
+    background:#e8e3d6;
+    padding:1px 5px;
+    border:1px solid #cfc8b6;
+  }
+  @media (max-width:640px){
+    h1{font-size:38px}
+    .manifest{grid-template-columns:1fr}
+    .manifest .col + .col{border-left:0;border-top:1px solid var(--rule)}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="mark">AHD &middot; Artificial Human Design</div>
+    <div class="meta">Vol. 0 &middot; No. 1 &middot; 2026-04-24</div>
+  </header>
+
+  <div class="byline">A framework, not a lecture.</div>
+  <h1>The slop is not an aesthetic problem. <span class="amp">It is an evaluation problem.</span></h1>
+
+  <p class="deck">
+    You have spent the last month closing tabs full of rounded cards, lavender gradients, and a hero that says the same thing about itself in three different weights. You already know what is wrong. AHD is the attempt to write it down as code that a machine can fail against, not as a thread that humans can nod at.
+  </p>
+
+  <div class="thesis">
+    <span class="flag">Thesis</span>
+    If a generator cannot be graded on a concrete brief with a concrete rubric, it will regress to the mean of the training set. The mean is the slop. So: concrete brief, concrete rubric, concrete eval, run it live on ten seeds and look at the spread.
+  </div>
+
+  <hr class="rule">
+
+  <section>
+    <h2>Run the eval</h2>
+    <p>One editorial brief, Swiss rubric, ten seeds, whatever model specs you pass. The harness writes a judgement sheet and a diff against the linter. No dashboard, no sign-up.</p>
+
+    <div class="terminal" role="figure" aria-label="Terminal command">
+      <div class="bar">
+        <div class="dots"><i></i><i></i><i></i></div>
+        <div class="lang">bash &mdash; ahd@local</div>
+      </div>
+<pre><span class="prompt">$</span> <span class="cmd">ahd eval-live swiss-editorial</span> <span class="flag">--brief</span> <span class="arg">briefs/landing.yml</span> <span class="flag">--models</span> <span class="arg">&lt;specs&gt;</span> <span class="flag">--n</span> <span class="arg">10</span></pre>
+    </div>
+    <p class="caption">Replace <code>&lt;specs&gt;</code> with a comma-separated list, e.g. <code>claude-4,gpt-5,mistral-large</code>. Expect it to be unkind.</p>
+
+    <div class="cta-row">
+      <a class="read-code" href="https://github.com/ahd/ahd" rel="noopener">
+        <span class="arrow">&gt;_</span> Read the code on GitHub
+      </a>
+      <span class="cta-note">Forgejo mirror at <code>code.ahd.dev/ahd/ahd</code> if you have opinions about the first one.</span>
+    </div>
+  </section>
+
+  <hr class="rule thick">
+
+  <section>
+    <div class="manifest">
+
+      <div class="col" id="ships">
+        <h3><span>What ships</span><span class="tag now">today, in tree</span></h3>
+        <ol>
+          <li><span><span class="name">Brief compiler</span><span class="note">YAML &rarr; typed rubric + constraint set.</span></span></li>
+          <li><span><span class="name">28-rule linter</span><span class="note">Static rules for typographic, grid, and rhythm failures.</span></span></li>
+          <li><span><span class="name">Eval harness</span><span class="note">Seeded runs, per-rule scoring, diff reporter.</span></span></li>
+          <li><span><span class="name">Vision-critic scaffold</span><span class="note">Prompt templates, judgement schema, offline fixtures.</span></span></li>
+          <li><span><span class="name">MCP server</span><span class="note">Exposes brief, rubric, and linter to model clients.</span></span></li>
+          <li><span><span class="name">Editor plugins</span><span class="note">In-tree sources for VS Code and Zed.</span></span></li>
+          <li><span><span class="name">Eight tokens</span><span class="note">Swiss-editorial pack: type scale, grid, rhythm, ink.</span></span></li>
+        </ol>
+      </div>
+
+      <div class="col" id="gated">
+        <h3><span>What is gated</span><span class="tag later">needs external keys / work</span></h3>
+        <ol>
+          <li><span><span class="name">Live frontier-model calls</span><span class="note">Requires your own API keys; nothing is proxied.</span></span></li>
+          <li><span><span class="name">Live vision critique</span><span class="note">Needs a multimodal key and a screenshot pipeline (Playwright recipe included).</span></span></li>
+          <li><span><span class="name">Standalone npm packages for the editor plugins</span><span class="note">Sources ship; registry publishing is not wired up yet.</span></span></li>
+          <li><span><span class="name">Additional tokens</span><span class="note">Editorial-serif, grotesk-monolith, and print-first packs are drafted, not released.</span></span></li>
+        </ol>
+      </div>
+
+    </div>
+    <p class="caption" style="margin-top:10px">If a thing is not on the left column, assume it does not work yet. The repository will not pretend otherwise.</p>
+  </section>
+
+  <hr class="rule">
+
+  <section>
+    <h2>Why one page</h2>
+    <p>
+      Because the argument fits. A generator that cannot pass the linter on its own landing page is not going to pass it on yours. The code is short enough to read in an afternoon. The rubric is short enough to argue with. Do both.
+    </p>
+  </section>
+
+  <footer class="license">
+    <div>
+      <strong>Licence.</strong>
+      Code: <code>FSL-1.1-Apache-2.0</code>. Tokens &amp; artwork: <code>CC-BY-4.0</code>.
+    </div>
+    <div>
+      &copy; 2026 AHD &middot; <span>maintained in public</span>
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>

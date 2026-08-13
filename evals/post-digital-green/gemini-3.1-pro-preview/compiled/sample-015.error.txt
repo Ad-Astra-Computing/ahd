@@ -1,0 +1,4 @@
+Error: gemini CLI exited 1: AbortError: The user aborted a request.
+    at abort (/nix/store/n2hfkymcn4al6cqhz0da64v5k90ghavq-gemini-cli-0.38.2/share/gemini-cli/node_modules/node-fetch/lib/index.js:1458:16)
+    at AbortSignal.abortAndFinalize (/nix/store/n2hfkymcn4al6cqhz0da64v5k90ghavq-gemini-cli-0.38.2/share/gemini-cli/node_modules/node-fetch/lib/index.js:1473:4)
+    at [nodejs.internal.kHybridDispatch] (node:internal/even…

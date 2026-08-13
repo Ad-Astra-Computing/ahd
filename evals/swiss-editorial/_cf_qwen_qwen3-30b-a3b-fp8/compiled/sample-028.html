@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>AHD: Swiss Editorial</title>
+  <style>
+    :root {
+      --font-display: "Neue Haas Grotesk Display", "Helvetica Now Display", "Inter Tight";
+      --font-text: "Neue Haas Grotesk Text", "Helvetica Now Text", "Inter";
+      --ink: oklch(0.18 0 0);
+      --paper: oklch(0.98 0.005 95);
+      --spot: oklch(0.58 0.22 27);
+      --rule: oklch(0.18 0 0);
+      --baseline: 8px;
+      --gutter: 24px;
+      --margin: calc(100vw / 24);
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--font-text);
+      font-size: 17px;
+      line-height: 1.5;
+      color: var(--ink);
+      background: var(--paper);
+      max-width: 100vw;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: var(--gutter);
+      padding: 32px var(--margin);
+    }
+
+    pre {
+      font-family: monospace;
+      font-size: 16px;
+      background: var(--ink);
+      color: var(--paper);
+      padding: 16px;
+      margin: 0;
+      border: 1px solid var(--rule);
+      overflow-x: auto;
+    }
+
+    code {
+      font-family: monospace;
+      font-size: 16px;
+      color: var(--paper);
+    }
+
+    h1 {
+      grid-column: span 8;
+      font-family: var(--font-display);
+      font-size: 96px;
+      letter-spacing: -0.02em;
+      margin: 0;
+      color: var(--ink);
+    }
+
+    h2 {
+      font-size: 24px;
+      font-weight: 700;
+      margin: 48px 0 16px;
+      color: var(--ink);
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      margin: 8px 0;
+    }
+
+    .cta {
+      color: var(--spot);
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .footer {
+      margin-top: 160px;
+      font-size: 14px;
+      color: var(--ink);
+      border-top: 1px solid var(--rule);
+      padding-top: 32px;
+    }
+
+    /* rule: asymmetric left-aligned composition */
+    .grid {
+      grid-template-areas:
+        "hero hero hero hero hero hero hero hero hero hero hero hero"
+        "content content content content content content content content content content content content";
+    }
+
+    /* rule: one intentional element must bleed past the grid */
+    pre {
+      grid-column: span 12;
+      margin-left: -24px;
+      margin-right: -24px;
+    }
+
+    /* rule: spot colour used exactly once */
+    .cta {
+      color: var(--spot);
+    }
+  </style>
+</head>
+<body>
+  <div class="grid">
+    <h1>Swiss Editorial</h1>
+    <pre><code class="bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+    <section>
+      <h2>What ships</h2>
+      <ul>
+        <li>brief compiler</li>
+        <li>28-rule linter</li>
+        <li>eval harness</li>
+        <li>vision-critic scaffold</li>
+        <li>MCP server</li>
+        <li>editor plugins</li>
+        <li>eight tokens</li>
+      </ul>
+    </section>
+    <section>
+      <h2>What is gated</h2>
+      <ul>
+        <li>live frontier-model calls (needs API keys)</li>
+        <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+        <li>standalone npm packages for the editor plugins</li>
+        <li>additional tokens</li>
+      </ul>
+    </section>
+    <section>
+      <a href="https://github.com/ahd/swiss-editorial" class="cta">read-the-code</a>
+    </section>
+  </div>
+  <footer class="footer">
+    <p>Code: FSL-1.1-Apache-2.0 | Tokens and artwork: CC-BY-4.0</p>
+  </footer>
+</body>
+</html>

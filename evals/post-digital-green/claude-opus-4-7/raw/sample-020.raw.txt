@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AHD — Artificial Human Design</title>
+<style>
+  :root{
+    --bg:#f4f1ea;
+    --ink:#14140f;
+    --rule:#14140f;
+    --muted:#5a5850;
+    --paper:#ecead9;
+    --term-bg:#0e1012;
+    --term-ink:#e8e4d4;
+    --term-accent:#b9d48a;
+    --term-dim:#7a8073;
+    --flag:#a83232;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);}
+  body{
+    font-family: "Iowan Old Style","Charter","Georgia",serif;
+    font-size:17px;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{
+    max-width:880px;
+    margin:0 auto;
+    padding:36px 28px 80px;
+  }
+  header.top{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    border-bottom:1px solid var(--rule);
+    padding-bottom:10px;
+    margin-bottom:26px;
+    font-family:"JetBrains Mono","IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+    font-size:12.5px;
+    text-transform:uppercase;
+    letter-spacing:.08em;
+  }
+  header.top .mark b{font-weight:700;}
+  header.top .meta{color:var(--muted);}
+  header.top a{color:var(--ink); text-decoration:none; border-bottom:1px solid var(--ink);}
+  header.top a:hover{background:var(--ink); color:var(--bg);}
+
+  h1{
+    font-family:"Iowan Old Style","Charter","Georgia",serif;
+    font-weight:600;
+    font-size:44px;
+    line-height:1.02;
+    letter-spacing:-.01em;
+    margin:10px 0 14px;
+    max-width:18ch;
+  }
+  h1 em{font-style:italic; color:var(--muted); font-weight:400;}
+  .lede{
+    font-size:18.5px;
+    max-width:62ch;
+    margin:0 0 18px;
+  }
+  .lede + p{
+    max-width:62ch;
+    margin:0 0 22px;
+    color:var(--muted);
+  }
+
+  .section{
+    border-top:1px solid var(--rule);
+    padding-top:14px;
+    margin-top:36px;
+  }
+  .section h2{
+    font-family:"JetBrains Mono","IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+    font-size:12px;
+    font-weight:500;
+    text-transform:uppercase;
+    letter-spacing:.12em;
+    color:var(--muted);
+    margin:0 0 14px;
+  }
+  .section h2 .num{color:var(--ink); margin-right:10px;}
+
+  /* terminal */
+  .term{
+    background:var(--term-bg);
+    color:var(--term-ink);
+    border-radius:4px;
+    font-family:"JetBrains Mono","IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+    font-size:13px;
+    line-height:1.55;
+    overflow:hidden;
+    border:1px solid #000;
+  }
+  .term-bar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:8px 12px;
+    background:#1a1d20;
+    border-bottom:1px solid #000;
+    color:var(--term-dim);
+    font-size:11.5px;
+    letter-spacing:.04em;
+  }
+  .term-bar .lang{color:var(--term-accent);}
+  .term-body{
+    padding:16px 18px 18px;
+    overflow-x:auto;
+    white-space:pre;
+  }
+  .term-body .p{color:var(--term-dim);}
+  .term-body .cmd{color:var(--term-ink);}
+  .term-body .flag{color:var(--term-accent);}
+  .term-body .str{color:#e4c07a;}
+  .caption{
+    color:var(--muted);
+    font-size:14px;
+    margin-top:10px;
+    max-width:62ch;
+  }
+
+  /* manifest */
+  .manifest{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:0;
+  }
+  dl.list{
+    margin:0;
+    padding:0;
+    border-top:1px dashed #9a988b;
+  }
+  dl.list > div{
+    display:grid;
+    grid-template-columns: 52px 1fr;
+    gap:18px;
+    padding:10px 0;
+    border-bottom:1px dashed #9a988b;
+    align-items:baseline;
+  }
+  dl.list .k{
+    font-family:"JetBrains Mono","IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+    font-size:11.5px;
+    color:var(--muted);
+    letter-spacing:.08em;
+  }
+  dl.list .v{margin:0;}
+  dl.list .v b{font-weight:600;}
+  dl.list .v .note{color:var(--muted);}
+  .gated .tag{
+    display:inline-block;
+    font-family:"JetBrains Mono",monospace;
+    font-size:10.5px;
+    letter-spacing:.08em;
+    padding:1px 6px;
+    margin-left:8px;
+    border:1px solid var(--flag);
+    color:var(--flag);
+    text-transform:uppercase;
+    vertical-align:1px;
+  }
+
+  .two-up{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:40px;
+  }
+  @media (max-width:720px){
+    .two-up{grid-template-columns:1fr; gap:20px;}
+    h1{font-size:34px;}
+    .wrap{padding:24px 18px 60px;}
+  }
+
+  .thesis p{
+    max-width:62ch;
+    margin:0 0 12px;
+  }
+  .thesis p + p{color:var(--muted);}
+
+  .cta-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:14px 22px;
+    align-items:center;
+    font-family:"JetBrains Mono","IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+    font-size:13px;
+    margin-top:8px;
+  }
+  .cta-row a{
+    color:var(--ink);
+    text-decoration:none;
+    border-bottom:1px solid var(--ink);
+    padding-bottom:2px;
+  }
+  .cta-row a.primary{
+    background:var(--ink);
+    color:var(--bg);
+    padding:8px 14px;
+    border:1px solid var(--ink);
+  }
+  .cta-row a.primary:hover{background:transparent; color:var(--ink);}
+  .cta-row a:hover{background:var(--ink); color:var(--bg);}
+  .cta-row .sep{color:var(--muted);}
+
+  footer.foot{
+    border-top:1px solid var(--rule);
+    margin-top:56px;
+    padding-top:14px;
+    font-family:"JetBrains Mono","IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+    font-size:12px;
+    color:var(--muted);
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px 22px;
+    justify-content:space-between;
+  }
+  footer.foot b{color:var(--ink); font-weight:500;}
+  footer.foot .lic span{margin-right:14px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div class="mark"><b>AHD</b> — Artificial Human Design</div>
+    <div class="meta">v0.4 · 2026-04 · <a href="https://github.com/ahd/ahd">github/ahd</a></div>
+  </header>
+
+  <section class="hero">
+    <h1>A framework for design that survives <em>being generated.</em></h1>
+    <p class="lede">You have probably audited four AI-generated sites this month. You already know the pattern: the centred hero, the pill badge, the three equal cards, the purple gradient on the word <span style="font-style:italic">AI</span>. AHD is not an argument about taste. It is an eval harness and a compiler that makes the argument reproducible.</p>
+    <p>You write the brief, AHD lints it against 28 editorial rules, compiles it to eight tokens and a component contract, then runs <span style="font-family:monospace; font-size:15px;">n=10</span> generations across whatever frontier models you point it at. A vision critic reads the screenshots back. You look at the diff, not the marketing copy.</p>
+
+    <div class="cta-row" style="margin-top:18px;">
+      <a class="primary" href="https://github.com/ahd/ahd">Read the code →</a>
+      <span class="sep">or</span>
+      <a href="https://codeberg.org/ahd/ahd">forgejo mirror</a>
+      <span class="sep">·</span>
+      <a href="#run">jump to the one-liner</a>
+    </div>
+  </section>
+
+  <section class="section" id="run">
+    <h2><span class="num">01</span> Run the eval</h2>
+    <div class="term" aria-label="terminal">
+      <div class="term-bar">
+        <span>~/proj/landing — zsh</span>
+        <span class="lang">bash</span>
+      </div>
+      <div class="term-body"><span class="p">$</span> <span class="cmd">ahd eval-live swiss-editorial <span class="flag">--brief</span> <span class="str">briefs/landing.yml</span> <span class="flag">--models</span> <span class="str">&lt;specs&gt;</span> <span class="flag">--n</span> <span class="str">10</span></span></div>
+    </div>
+    <p class="caption">Resolves the brief, lints, compiles tokens, fans out <span style="font-family:monospace">n=10</span> generations per model, captures screenshots, and scores them against the vision critic. Exits non-zero if the median score drops below the floor in <span style="font-family:monospace">ahd.toml</span>.</p>
+  </section>
+
+  <section class="section">
+    <h2><span class="num">02</span> The thesis, briefly</h2>
+    <div class="thesis two-up">
+      <div>
+        <p>Slop is not a style problem. It is an <b>evaluation</b> problem. Models optimise for the reward you give them, and if the reward is "looks like a SaaS landing page," the output regresses to the mean of SaaS landing pages ever scraped.</p>
+      </div>
+      <div>
+        <p>AHD replaces that reward. The brief compiler produces a machine-checkable contract; the linter rejects the 28 most common regressions before a model ever sees the prompt; the vision critic grades the render, not the tokens in the response.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2><span class="num">03</span> What ships</h2>
+    <div class="manifest">
+      <dl class="list">
+        <div><dt class="k">A</dt><dd class="v"><b>Brief compiler.</b> <span class="note">YAML → typed contract, tokens, and component shape. Deterministic.</span></dd></div>
+        <div><dt class="k">B</dt><dd class="v"><b>28-rule linter.</b> <span class="note">Catches centred-hero-pill-two-CTAs, three-equal-cards, gradient-on-AI, shimmer, Memphis, iridescent blobs, and 22 more.</span></dd></div>
+        <div><dt class="k">C</dt><dd class="v"><b>Eval harness.</b> <span class="note">Fan-out, screenshot capture, scoring, regression report. Works against any model with a completions endpoint.</span></dd></div>
+        <div><dt class="k">D</dt><dd class="v"><b>Vision-critic scaffold.</b> <span class="note">Prompt templates, rubric, scorer, diff viewer. Ships without keys.</span></dd></div>
+        <div><dt class="k">E</dt><dd class="v"><b>MCP server.</b> <span class="note">Exposes the compiler and linter to any MCP-aware editor or agent.</span></dd></div>
+        <div><dt class="k">F</dt><dd class="v"><b>Editor plugins.</b> <span class="note">In-tree source for VS Code, Zed, Neovim. Run them from the monorepo today.</span></dd></div>
+        <div><dt class="k">G</dt><dd class="v"><b>Eight tokens.</b> <span class="note">Type pair, scale, measure, rule-weight, paper, ink, muted, flag. The working set for editorial layouts.</span></dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="section gated">
+    <h2><span class="num">04</span> What is gated</h2>
+    <div class="manifest">
+      <dl class="list">
+        <div><dt class="k">i</dt><dd class="v"><b>Live frontier-model calls.</b> <span class="tag">keys</span> <span class="note">The harness runs offline against fixtures out of the box. To hit real models you bring your own API keys.</span></dd></div>
+        <div><dt class="k">ii</dt><dd class="v"><b>Live vision critique.</b> <span class="tag">multimodal + pipeline</span> <span class="note">Needs a multimodal key and a working screenshot pipeline (headless Chromium, a device matrix, and storage).</span></dd></div>
+        <div><dt class="k">iii</dt><dd class="v"><b>Standalone npm packages for the editor plugins.</b> <span class="tag">registry</span> <span class="note">Sources are in-tree today; published packages arrive when the plugin API freezes.</span></dd></div>
+        <div><dt class="k">iv</dt><dd class="v"><b>Additional tokens.</b> <span class="tag">roadmap</span> <span class="note">Beyond the working eight: motion, density, and a dark-paper set. On the roadmap, not in <span style="font-family:monospace">main</span>.</span></dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2><span class="num">05</span> Read the code</h2>
+    <p style="max-width:62ch; margin:0 0 14px;">The repository is the documentation. Start with <span style="font-family:monospace">/briefs/landing.yml</span> — it is the brief that produced the page you are reading.</p>
+    <div class="cta-row">
+      <a class="primary" href="https://github.com/ahd/ahd">github.com/ahd/ahd</a>
+      <a href="https://codeberg.org/ahd/ahd">codeberg mirror (forgejo)</a>
+      <a href="https://github.com/ahd/ahd/blob/main/briefs/landing.yml">briefs/landing.yml</a>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <div><b>AHD</b> · Artificial Human Design · maintained in the open</div>
+    <div class="lic">
+      <span>Code: <b>FSL-1.1-Apache-2.0</b></span>
+      <span>Tokens &amp; artwork: <b>CC-BY-4.0</b></span>
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>

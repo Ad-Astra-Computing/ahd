@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>artificial human design</title>
+<style>
+/* rule: single-monospace */
+/* rule: post-digital-green palette */
+:root {
+  --bg: oklch(0.14 0.02 150); /* rule: palette.bg */
+  --fg: oklch(0.92 0.12 135); /* rule: palette.fg */
+  --dim: oklch(0.55 0.05 150); /* rule: palette.dim */
+  --rule: oklch(0.3 0.04 150); /* rule: palette.rule */
+  --amber: oklch(0.82 0.15 75); /* rule: palette.amber */
+}
+
+/* rule: technical, lowercase by default, terse */
+body {
+  font-family: 'Berkeley Mono', 'IBM Plex Mono', 'JetBrains Mono', ui-monospace, monospace; /* rule: font-family fallback */
+  background-color: var(--bg); /* rule: roles.background */
+  color: var(--fg); /* rule: roles.foreground */
+  font-size: 15px; /* rule: scale.base */
+  line-height: 1.55; /* rule: line-height.body */
+  margin: 0;
+  padding: 48px 24px; /* rule: space.scale */
+  display: flex;
+  justify-content: center;
+}
+
+main {
+  width: 100%;
+  max-width: 80ch; /* rule: at least one element aligned to the char grid */
+  /* rule: no radii; only rectangles */
+}
+
+h1, h2 {
+  font-weight: 400; /* rule: weights */
+  margin: 0 0 24px 0; /* rule: space.scale */
+}
+
+h1 {
+  line-height: 1.1; /* rule: line-height.display */
+  font-size: 1.2rem; /* rule: ratio step */
+  color: var(--amber); /* rule: single amber accent */
+}
+
+h2 {
+  line-height: 1.25; /* rule: line-height.h2 */
+  font-size: 1rem;
+  border-bottom: 1px solid var(--rule); /* rule: one hairline rule colour */
+  padding-bottom: 8px; /* rule: space.scale */
+  margin-top: 48px; /* rule: space.scale */
+  color: var(--fg);
+}
+
+p {
+  margin: 0 0 24px 0; /* rule: space.scale */
+}
+
+a {
+  color: inherit; /* rule: no colour change */
+  text-decoration: underline; /* rule: underlined links */
+  text-underline-offset: 4px; /* rule: offset */
+  /* rule: forbidden transition/animations except caret blink and link underline */
+}
+
+a:hover {
+  text-decoration-style: dashed;
+}
+
+code, pre {
+  font-family: inherit; /* rule: single-monospace */
+  font-size: 15px;
+}
+
+pre {
+  border: 1px solid var(--rule); /* rule: surface.border */
+  padding: 16px; /* rule: space.scale */
+  overflow-x: auto;
+  white-space: pre;
+  color: var(--dim);
+  margin: 0 0 24px 0; /* rule: space.scale */
+}
+
+ul {
+  list-style-type: square; /* rule: no emoji bullets */
+  padding-left: 24px;
+  margin: 0 0 24px 0;
+}
+
+li {
+  margin-bottom: 8px; /* rule: space.scale */
+}
+
+.ascii-diagram {
+  color: var(--dim); /* rule: palette.dim */
+  white-space: pre;
+  margin: 32px 0; /* rule: space.scale */
+  line-height: 1.2; /* rule: ASCII diagram rendered as text */
+  font-size: 0.9em;
+  overflow-x: auto;
+}
+
+.cta {
+  display: inline-block;
+  margin-top: 24px;
+}
+
+footer {
+  border-top: 1px solid var(--rule); /* rule: one hairline rule colour */
+  padding-top: 16px;
+  margin-top: 64px;
+  color: var(--dim);
+  font-size: 0.9em;
+  /* rule: no canonical 4-column footer */
+}
+</style>
+</head>
+<body>
+<main>
+  <!-- rule: technical, lowercase by default -->
+  <h1>artificial human design</h1>
+  
+  <p>generative web output defaults to slop. ahd is a determinism framework that forces language models to respect structural constraints. we evaluate against strict typographic grids and rigid colour spaces. we replace probabilistic vibes with a 28-rule linter.</p>
+
+  <!-- rule: at least one ASCII diagram rendered as text -->
+  <!-- rule: include at least one intentional imperfection (the unaligned pipeline arrow below) -->
+  <div class="ascii-diagram" aria-hidden="true">
++---------------+      +----------------+      +--------------+
+| brief compiler| ---> | vision critic  | ---> | eval harness |
++---------------+      +----------------+      +--------------+
+      ^                                              |
+      |                                              v
++---------------+                             +--------------+
+| editor plugin | <---------------------------| 28-rule lint |
++---------------+                             +--------------+
+  </div>
+
+  <h2>eval harness</h2>
+  <p>run the baseline suite to test model adherence against defined strictures.</p>
+  <!-- rule: command rendered in a monospace code block with language tag bash -->
+  <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+
+  <!-- rule: clearly separated manifest section titled 'What ships' -->
+  <h2>what ships</h2>
+  <ul>
+    <li>brief compiler</li>
+    <li>28-rule linter</li>
+    <li>eval harness</li>
+    <li>vision-critic scaffold</li>
+    <li>mcp server</li>
+    <li>editor plugins</li>
+    <li>eight tokens</li>
+  </ul>
+
+  <!-- rule: clearly separated manifest section titled 'What is gated' -->
+  <h2>what is gated</h2>
+  <ul>
+    <li>live frontier-model calls (needs api keys)</li>
+    <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+    <li>standalone npm packages for the editor plugins</li>
+    <li>additional tokens</li>
+  </ul>
+
+  <!-- rule: link to github labelled as the read-the-code CTA -->
+  <div class="cta">
+    <a href="https://github.com/ahd-project/ahd">read the code (github/forgejo mirror)</a>
+  </div>
+
+  <!-- rule: footer naming licences explicitly -->
+  <footer>
+    licence: fsl-1.1-apache-2.0 for code, cc-by-4.0 for tokens and artwork.
+</footer>
+</main>
+</body>
+</html>

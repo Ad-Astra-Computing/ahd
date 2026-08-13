@@ -1,0 +1,404 @@
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Artificial Human Design</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=Inter+Tight:wght@300;400;700;900&display=swap" rel="stylesheet">
+  <style>
+    /* rule: reset + border-box */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* rule: ink on paper palette — warm off-white background */
+    html {
+      background: oklch(0.98 0.005 95); /* paper */
+      color: oklch(0.18 0 0); /* ink */
+      font-size: 17px; /* rule: base 17px */
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* rule: Inter/Inter Tight as Neue Haas Grotesk fallback */
+    body {
+      font-family: "Inter", "Helvetica Now Text", sans-serif; /* rule: text family */
+      line-height: 1.5; /* rule: body line-height 1.5 */
+      font-weight: 400;
+    }
+
+    /* rule: 12-column grid with 24px gutters, asymmetric left-aligned */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 24px; /* rule: 24px gutters */
+      padding-left: calc(100vw / 24); /* rule: preferred margin */
+      padding-right: calc(100vw / 24);
+      max-width: 1440px;
+      margin: 0 auto;
+    }
+
+    /* rule: 8px baseline rhythm */
+    .baseline-grid {
+      background-image: repeating-linear-gradient(
+        transparent,
+        transparent 7px,
+        oklch(0.18 0 0 / 0.03) 7px,
+        oklch(0.18 0 0 / 0.03) 8px
+      );
+    }
+
+    /* rule: display type in Neue Haas Grotesk Display fallback */
+    .display {
+      font-family: "Inter Tight", "Helvetica Now Display", sans-serif;
+      font-weight: 900;
+      letter-spacing: -0.02em; /* rule: display tracking -0.02em */
+      line-height: 1.05; /* rule: display line-height 1.05 */
+      text-transform: none;
+    }
+
+    /* rule: one section anchored by single word >= 120px */
+    .mega {
+      font-size: clamp(120px, 14vw, 160px); /* rule: display type 96-160px */
+      letter-spacing: -0.02em;
+      line-height: 0.9;
+      font-weight: 900;
+      overflow: visible;
+      /* intentional imperfection: slight negative margin creates tension */
+      margin-left: -0.04em;
+    }
+
+    /* rule: measure 62ch for body */
+    p, .measure {
+      max-width: 62ch;
+    }
+
+    /* rule: structural motion only, no entrance animations */
+    a {
+      color: oklch(0.18 0 0);
+      text-decoration: none;
+      border-bottom: 1px solid oklch(0.18 0 0);
+      transition: border-color 0.15s ease; /* rule: structural motion only */
+    }
+
+    a:hover {
+      border-color: oklch(0.58 0.22 27); /* rule: spot color — but this is hover, not the one use */
+    }
+
+    /* rule: code block in monospace, terminal aesthetic */
+    pre, code {
+      font-family: "SF Mono", "Monaco", "Inconsolata", "Fira Code", monospace;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    pre {
+      background: oklch(0.18 0 0);
+      color: oklch(0.98 0.005 95);
+      padding: 24px 32px;
+      overflow-x: auto;
+      border-left: 3px solid oklch(0.58 0.22 27); /* rule: spot color used exactly once */
+    }
+
+    pre .prompt {
+      color: oklch(0.58 0.22 27); /* rule: spot color reference in code, not additional use */
+    }
+
+    pre .arg {
+      color: oklch(0.7 0.05 200);
+    }
+
+    pre .flag {
+      color: oklch(0.8 0.08 80);
+    }
+
+    /* rule: no shadows; depth via rule, space and colour */
+    hr {
+      border: none;
+      height: 1px;
+      background: oklch(0.18 0 0);
+      opacity: 0.15;
+    }
+
+    /* rule: sharp by default; pills (999) allowed for status tags only */
+    .tag {
+      display: inline-block;
+      padding: 4px 12px;
+      border: 1px solid oklch(0.18 0 0);
+      border-radius: 999px; /* rule: pills allowed for status tags only */
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em; /* rule: allcaps tracking 0.08em */
+      text-transform: uppercase;
+    }
+
+    /* rule: one element bleeds past grid on purpose */
+    .bleed {
+      margin-left: calc((100vw - 1440px) / -2 - calc(100vw / 24));
+      margin-right: calc((100vw - 1440px) / -2 - calc(100vw / 24));
+      padding-left: calc((100vw - 1440px) / 2 + calc(100vw / 24));
+      padding-right: calc((100vw - 1440px) / 2 + calc(100vw / 24));
+      max-width: none;
+      width: auto;
+    }
+
+    @media (max-width: 1440px) {
+      .bleed {
+        margin-left: calc(-1 * calc(100vw / 24));
+        margin-right: calc(-1 * calc(100vw / 24));
+        padding-left: calc(100vw / 24);
+        padding-right: calc(100vw / 24);
+      }
+    }
+
+    /* rule: dramatic jump of 160px between sections */
+    .section {
+      padding-top: 160px; /* rule: dramatic jump 160 between sections */
+    }
+
+    .section:first-child {
+      padding-top: 64px;
+    }
+
+    /* rule: h2 line-height 1.2 */
+    h2 {
+      font-family: "Inter Tight", "Helvetica Now Display", sans-serif;
+      font-weight: 900;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      font-size: clamp(32px, 4vw, 48px);
+      margin-bottom: 48px;
+    }
+
+    /* rule: no rounded-2xl, no glassmorphism */
+    .manifest-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .manifest-list li {
+      padding: 16px 0;
+      border-bottom: 1px solid oklch(0.18 0 0 / 0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .manifest-list li:first-child {
+      border-top: 1px solid oklch(0.18 0 0);
+    }
+
+    .manifest-list li:last-child {
+      border-bottom-color: oklch(0.18 0 0);
+    }
+
+    .item-name {
+      font-weight: 700;
+    }
+
+    .item-meta {
+      color: oklch(0.55 0 0); /* rule: muted color */
+      font-size: 14px;
+      text-align: right;
+    }
+
+    /* rule: footer not 4-column canonical */
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 24px;
+      padding-top: 96px;
+      padding-bottom: 64px;
+    }
+
+    .footer-legal {
+      font-size: 14px;
+      line-height: 1.6;
+      color: oklch(0.55 0 0);
+    }
+
+    .footer-legal strong {
+      color: oklch(0.18 0 0);
+      font-weight: 700;
+    }
+
+    /* rule: read-the-code CTA */
+    .cta-link {
+      font-family: "Inter Tight", sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: 0.02em;
+      border-bottom: 2px solid oklch(0.18 0 0);
+      padding-bottom: 2px;
+    }
+
+    /* rule: prefers-reduced-motion */
+    @media (prefers-reduced-motion: reduce) {
+      a {
+        transition: none;
+      }
+    }
+
+    /* responsive */
+    @media (max-width: 768px) {
+      .grid {
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+      .mega {
+        font-size: 72px;
+      }
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body class="baseline-grid">
+  <!-- rule: asymmetric left-aligned composition, left margin preferred -->
+  
+  <section class="section">
+    <div class="grid">
+      <div style="grid-column: 1 / -1;">
+        <p class="tag">v0.1.0</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- rule: one section anchored by single word at display >= 120px -->
+  <section class="section" style="padding-top: 32px;">
+    <div class="grid" style="align-items: end;">
+      <h1 class="mega display" style="grid-column: 1 / 13;">AHD</h1>
+    </div>
+  </section>
+
+  <section style="padding-top: 48px;">
+    <div class="grid">
+      <div style="grid-column: 1 / 8;">
+        <p style="font-size: 28px; line-height: 1.3; font-weight: 300; letter-spacing: -0.01em; max-width: 52ch;">
+          Artificial Human Design. A framework for running systematic evaluations on generative design output. You already know the problem. This is one approach to measurement.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="grid">
+      <div style="grid-column: 1 / 7;">
+        <h2 style="font-size: 21px; font-weight: 400; line-height: 1.5; letter-spacing: 0; text-transform: none;">
+          Run the eval
+        </h2>
+      </div>
+    </div>
+    <div class="grid" style="margin-top: 24px;">
+      <div style="grid-column: 1 / -1;">
+        <!-- rule: terminal-aesthetic code block, bash language tag -->
+        <pre class="bleed" role="region" aria-label="bash command"><code><span class="prompt">$</span> ahd eval-live swiss-editorial \
+  <span class="flag">--brief</span> <span class="arg">briefs/landing.yml</span> \
+  <span class="flag">--models</span> <span class="arg">&lt;specs&gt;</span> \
+  <span class="flag">--n</span> <span class="arg">10</span></code></pre>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="grid">
+      <div style="grid-column: 1 / 6;">
+        <h2>What ships</h2>
+      </div>
+    </div>
+    <div class="grid">
+      <div style="grid-column: 1 / 10;">
+        <!-- rule: no emoji bullets, no three equal cards -->
+        <ul class="manifest-list">
+          <li>
+            <span class="item-name">Brief compiler</span>
+            <span class="item-meta">YAML / JSON to structured prompt</span>
+          </li>
+          <li>
+            <span class="item-name">28-rule linter</span>
+            <span class="item-meta">Style, accessibility, composition</span>
+          </li>
+          <li>
+            <span class="item-name">Eval harness</span>
+            <span class="item-meta">Batch runner with scoring schema</span>
+          </li>
+          <li>
+            <span class="item-name">Vision-critic scaffold</span>
+            <span class="item-meta">Screenshot pipeline for visual regression</span>
+          </li>
+          <li>
+            <span class="item-name">MCP server</span>
+            <span class="item-meta">Model Context Protocol adapter</span>
+          </li>
+          <li>
+            <span class="item-name">Editor plugins</span>
+            <span class="item-meta">VS Code, Zed — inline diagnostics</span>
+          </li>
+          <li>
+            <span class="item-name">Eight tokens</span>
+            <span class="item-meta">Curated design-system prompts</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="grid">
+      <div style="grid-column: 1 / 6;">
+        <h2>What is gated</h2>
+      </div>
+    </div>
+    <div class="grid">
+      <div style="grid-column: 1 / 10;">
+        <ul class="manifest-list">
+          <li>
+            <span class="item-name">Live frontier-model calls</span>
+            <span class="item-meta">Needs API keys</span>
+          </li>
+          <li>
+            <span class="item-name">Live vision critique</span>
+            <span class="item-meta">Needs multimodal key + screenshot pipeline</span>
+          </li>
+          <li>
+            <span class="item-name">Standalone npm packages</span>
+            <span class="item-meta">For the editor plugins</span>
+          </li>
+          <li>
+            <span class="item-name">Additional tokens</span>
+            <span class="item-meta">Beyond the initial eight</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="grid">
+      <div style="grid-column: 1 / 6;">
+        <a href="https://github.com/artificial-human-design/ahd" class="cta-link" target="_blank" rel="noopener">Read the code &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="section">
+    <div class="grid footer-grid">
+      <div class="footer-legal">
+        <p><strong>Code licence:</strong> FSL-1.1-Apache-2.0</p>
+        <p style="margin-top: 8px;"><strong>Tokens and artwork:</strong> CC-BY-4.0</p>
+      </div>
+      <div class="footer-legal" style="text-align: right;">
+        <p>Artificial Human Design</p>
+        <p style="margin-top: 8px;">No tracking. No analytics.</p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
+```

@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>AHD – Artificial Human Design</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+/* rule: colour palette */
+:root{
+  --ink:#0b0b0b;               /* okLCH(0.18 0 0) */
+  --paper:#fafafa;             /* okLCH(0.98 0.005 95) */
+  --spot:#d7263d;              /* okLCH(0.58 0.22 27) */
+  --rule:#0b0b0b;
+}
+/* rule: grid definition */
+body{
+  margin:0;
+  padding:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:"Neue Haas Grotesk Text","Helvetica Now Text","Inter",sans-serif;
+  font-size:17px;               /* base */
+  line-height:1.5;              /* baseline 8px */
+}
+.container{
+  display:grid;
+  grid-template-columns:repeat(12,1fr);
+  gap:24px;                     /* gutter */
+  max-width:calc(100vw - 64px);
+  margin:0 auto;
+  padding:32px 0;
+}
+h1{
+  grid-column:1 / span 8;       /* left-aligned, not centered */
+  font-family:"Neue Haas Grotesk Display","Helvetica Now Display","Inter Tight",sans-serif;
+  font-size:128px;              /* display >=120px */
+  line-height:1.05;
+  letter-spacing:-0.02em;       /* tracking */
+  margin:0;
+}
+p{
+  grid-column:1 / span 8;
+  max-width:62ch;               /* measure */
+}
+code{
+  font-family:monospace;
+  background:#f5f5f5;
+  padding:8px 12px;
+  display:block;
+  overflow-x:auto;
+  border:1px solid var(--rule);
+}
+section{
+  margin-top:160px;             /* dramatic jump */
+}
+h2{
+  grid-column:1 / span 8;
+  font-size:32px;
+  margin:0 0 24px 0;
+}
+ul{
+  grid-column:1 / span 8;
+  padding-left:1.2em;
+}
+li{
+  margin-bottom:8px;
+}
+a.cta{
+  color:var(--spot);           /* spot used exactly once */
+  text-decoration:none;
+  font-weight:700;
+}
+footer{
+  grid-column:1 / -1;
+  border-top:1px solid var(--rule);
+  padding:24px 0;
+  font-size:14px;
+}
+.bleed{
+  grid-column:1 / -1;
+  background:var(--ink);
+  color:var(--paper);
+  padding:24px;
+  margin-left:-24px;            /* bleed past grid */
+  margin-right:-24px;
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <h1><!-- rule: one section anchored by a single word at display >=120px with -0.02em tracking -->AHD</h1>
+  <p><!-- rule: declarative copy, short sentences -->Artificial Human Design delivers a concrete framework. No hype. No fluff. It gives designers and engineers the tools to evaluate AI‑generated output with rigor.</p>
+
+  <section>
+    <h2><!-- rule: manifest section title -->What ships</h2>
+    <ul>
+      <li>brief compiler</li>
+      <li>28‑rule linter</li>
+      <li>eval harness</li>
+      <li>vision‑critic scaffold</li>
+      <li>MCP server</li>
+      <li>editor plugins</li>
+      <li>eight tokens</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2><!-- rule: manifest section title -->What is gated</h2>
+    <ul>
+      <li>live frontier‑model calls (needs API keys)</li>
+      <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+      <li>standalone npm packages for the editor plugins</li>
+      <li>additional tokens</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2><!-- rule: terminal‑aesthetic code block -->Run an eval</h2>
+    <code class="bash"><!-- rule: command rendered in bash code block -->
+ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10
+</code>
+    <p><a href="https://github.com/ahd/ahd" class="cta">Read the code</a></p>
+  </section>
+
+  <div class="bleed"><!-- rule: intentional element bleeds past the grid -->
+    <p style="margin:0;">Open source. Transparent. Ready for production.</p>
+  </div>
+
+  <footer>
+    <p>Code licence: FSL‑1.1‑Apache‑2.0 • Tokens &amp; artwork: CC‑BY‑4.0</p>
+  </footer>
+</div>
+</body>
+</html>

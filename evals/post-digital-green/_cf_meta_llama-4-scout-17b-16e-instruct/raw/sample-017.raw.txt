@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artificial Human Design</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .code-block {
+            background-color: #f5f5f5;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: monospace;
+        }
+        .manifest-section {
+            margin-top: 40px;
+        }
+        .manifest-section h2 {
+            margin-top: 0;
+        }
+        .manifest-section ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .manifest-section li {
+            margin-bottom: 10px;
+        }
+        footer {
+            margin-top: 40px;
+            padding: 10px;
+            background-color: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Artificial Human Design</h1>
+        <p>We take the problem of AI-generated design seriously.</p>
+        <div class="code-block">
+            <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+        </div>
+        <p><a href="https://github.com/ArtificialHumanDesign/ahd">Read the code on GitHub</a></p>
+        <div class="manifest-section">
+            <h2>What ships</h2>
+            <ul>
+                <li>Brief compiler</li>
+                <li>28-rule linter</li>
+                <li>Eval harness</li>
+                <li>Vision-critic scaffold</li>
+                <li>MCP server</li>
+                <li>Editor plugins</li>
+                <li>Eight tokens</li>
+            </ul>
+        </div>
+        <div class="manifest-section">
+            <h2>What is gated</h2>
+            <ul>
+                <li>Live frontier-model calls (needs API keys)</li>
+                <li>Live vision critique (needs multimodal key + screenshot pipeline)</li>
+                <li>Standalone npm packages for the editor plugins</li>
+                <li>Additional tokens</li>
+            </ul>
+        </div>
+    </div>
+    <footer>
+        <p>Licence: <a href="https://opensource.org/licenses/FSL-1.1-Apache-2.0">FSL-1.1-Apache-2.0</a> for code, <a href="https://creativecommons.org/licenses/by/4.0/">CC-BY-4.0</a> for tokens and artwork.</p>
+    </footer>
+</body>
+</html>

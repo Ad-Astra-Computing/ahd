@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ahd — artificial human design</title>
+<!-- rule: single-monospace pairing, Berkeley Mono with mono fallbacks -->
+<style>
+  /* rule: oklch palette, dark green-black bg, muted green fg, amber accent */
+  :root{
+    --bg: oklch(0.14 0.02 150);
+    --fg: oklch(0.92 0.12 135);
+    --dim: oklch(0.55 0.05 150);
+    --rule: oklch(0.30 0.04 150);
+    --amber: oklch(0.82 0.15 75);
+    --ch: 1ch;
+  }
+  /* rule: no entrance animation, no shadow, no radius */
+  *{box-sizing:border-box;margin:0;padding:0;border-radius:0;box-shadow:none;}
+  html,body{background:var(--bg);color:var(--fg);}
+  body{
+    /* rule: monospace body, no sans-serif */
+    font-family: "Berkeley Mono","IBM Plex Mono","JetBrains Mono",ui-monospace,monospace;
+    font-size:15px;            /* rule: type scale base 15 */
+    line-height:1.55;          /* rule: body line-height 1.55 */
+    font-weight:400;
+    padding:24px 16px 16px;    /* rule: space scale tokens */
+  }
+  /* rule: 80ch char-grid; one element pinned to grid */
+  .grid{max-width:80ch;margin:0 auto;}
+  /* rule: hairline rule, single colour, rectangles only */
+  hr{border:0;border-top:1px solid var(--rule);margin:16px 0;}
+  /* rule: link underline-offset 4px, no colour change */
+  a{color:inherit;text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:1px;}
+  a:hover{text-decoration-thickness:1px;color:var(--amber);} /* rule: amber is the single accent */
+  /* rule: tracking allcaps 0.04em */
+  .caps{text-transform:uppercase;letter-spacing:0.04em;color:var(--dim);}
+  .amber{color:var(--amber);}
+  .dim{color:var(--dim);}
+  h1{font-size:18px;font-weight:700;line-height:1.1;}  /* rule: display 1.1 */
+  h2{font-size:15px;font-weight:700;line-height:1.25;letter-spacing:0.04em;text-transform:uppercase;} /* rule: h2 1.25 */
+  p{max-width:72ch;}            /* rule: measure 72ch */
+  ul{list-style:none;}
+  li{padding-left:2ch;text-indent:-2ch;}
+  li::before{content:"-- ";color:var(--dim);} /* rule: no emoji bullets */
+  /* rule: rectangles only, single hairline rule colour */
+  .box{border:1px solid var(--rule);padding:12px 16px;}
+  pre,code,kbd{font-family:inherit;}
+  pre.bash{
+    border:1px solid var(--rule);
+    padding:12px 16px;
+    overflow-x:auto;
+    background:transparent;
+  }
+  pre.bash::before{
+    content:"bash  $";   /* rule: language tag bash */
+    display:block;
+    color:var(--dim);
+    margin-bottom:4px;
+  }
+  pre.bash code .amber{color:var(--amber);}
+  /* rule: caret blink is the only motion permitted besides link underline */
+  .caret{display:inline-block;width:1ch;background:var(--amber);color:var(--bg);animation:blink 1.06s steps(2,end) infinite;}
+  @keyframes blink{50%{background:transparent;}}
+  /* rule: header ascii is monospace pre, preserves char grid */
+  pre.ascii{white-space:pre;line-height:1.1;color:var(--fg);}
+  .row{display:flex;gap:24px;flex-wrap:wrap;}
+  .col{flex:1 1 32ch;min-width:32ch;}
+  /* rule: footer is not the canonical 4-col Product/Company/Resources/Legal */
+  footer{margin-top:24px;border-top:1px solid var(--rule);padding-top:12px;color:var(--dim);}
+  /* rule: focus visible, no colour-only signalling */
+  :focus-visible{outline:1px solid var(--amber);outline-offset:2px;}
+  /* intentional imperfection: a single off-grid character in the masthead rule */
+  .ragged::after{content:" ░";color:var(--dim);}
+</style>
+</head>
+<body>
+<main class="grid"><!-- rule: 80ch char-grid alignment -->
+
+  <!-- rule: not a centred hero stack; left-aligned masthead -->
+  <header>
+    <div class="caps">ahd / artificial human design &nbsp;&middot;&nbsp; v0.1.0 &nbsp;&middot;&nbsp; 2026-04-24</div>
+    <hr>
+    <h1>a framework for designers who already know what slop looks like.<span class="caret">&nbsp;</span></h1>
+  </header>
+
+  <section style="margin-top:16px;">
+    <!-- rule: terse, lowercase, technical voice -->
+    <p>
+      ahd is a brief compiler, a linter, and an eval harness. you write a brief
+      in yaml. ahd compiles it into a token spec plus a forbidden list. a model
+      generates html. the linter and a vision critic score the output against
+      the spec. nothing here is a lecture about taste; it is a feedback loop.
+    </p>
+  </section>
+
+  <!-- rule: at least one ASCII diagram rendered as text -->
+  <section style="margin-top:16px;" aria-label="pipeline diagram">
+    <div class="caps">pipeline</div>
+    <pre class="ascii box" aria-hidden="true">
+   brief.yml ──▶ [ compile ] ──▶ spec.json ──▶ [ model ] ──▶ page.html
+                     │                                          │
+                     ▼                                          ▼
+                [ 28-rule linter ] ◀──── render ────▶ [ vision-critic ]
+                     │                                          │
+                     └────────────▶ score ◀─────────────────────┘
+    </pre>
+  </section>
+
+  <!-- rule: terminal-aesthetic one-liner code block, language tag bash -->
+  <section style="margin-top:16px;">
+    <div class="caps">run the eval</div>
+    <pre class="bash" aria-label="eval command"><code>ahd <span class="amber">eval-live</span> swiss-editorial \
+  --brief briefs/landing.yml \
+  --models &lt;specs&gt; \
+  --n 10</code></pre>
+    <p class="dim" style="margin-top:8px;">
+      ten generations per model, scored deterministically by the linter and
+      qualitatively by the critic. results land in <code>./runs/</code> as
+      flat html plus a single <code>index.json</code>.
+    </p>
+  </section>
+
+  <!-- rule: clearly separated manifest sections; not three equal cards -->
+  <section style="margin-top:24px;">
+    <div class="row">
+      <div class="col box">
+        <h2>what ships</h2>
+        <hr>
+        <ul>
+          <li>brief compiler &nbsp;<span class="dim">// yaml &rarr; spec.json</span></li>
+          <li>28-rule linter &nbsp;<span class="dim">// deterministic, offline</span></li>
+          <li>eval harness &nbsp;<span class="dim">// runs n generations, scores them</span></li>
+          <li>vision-critic scaffold &nbsp;<span class="dim">// prompts + rubric, no key bundled</span></li>
+          <li>mcp server &nbsp;<span class="dim">// expose ahd to a model client</span></li>
+          <li>editor plugins &nbsp;<span class="dim">// vscode + zed, in-tree</span></li>
+          <li>eight tokens &nbsp;<span class="dim">// post-digital-green is one of them</span></li>
+        </ul>
+      </div>
+      <div class="col box">
+        <h2>what is gated</h2>
+        <hr>
+        <ul>
+          <li>live frontier-model calls &nbsp;<span class="dim">// needs api keys</span></li>
+          <li>live vision critique &nbsp;<span class="dim">// needs multimodal key + screenshot pipeline</span></li>
+          <li>standalone npm packages &nbsp;<span class="dim">// for the editor plugins</span></li>
+          <li>additional tokens &nbsp;<span class="dim">// beyond the initial eight</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section style="margin-top:24px;" class="box">
+    <div class="caps">read the code</div>
+    <p style="margin-top:8px;">
+      <!-- rule: required github / forgejo CTA, underline only -->
+      <a href="https://github.com/ahd/ahd">github.com/ahd/ahd</a>
+      &nbsp;&middot;&nbsp;
+      <a href="https://code.ahd.computer/ahd/ahd">forgejo mirror</a>
+      &nbsp;&middot;&nbsp;
+      <a href="https://github.com/ahd/ahd/blob/main/briefs/landing.yml">briefs/landing.yml</a>
+    </p>
+    <p class="dim" style="margin-top:8px;">
+      the page you are reading was generated by the command above and then
+      hand-edited at three lines. the diff is in the repo.
+    </p>
+  </section>
+
+  <!-- rule: footer is licence-first, not the 4-col canonical layout -->
+  <footer>
+    <div class="ragged">
+      <span class="caps">licence</span> &nbsp;
+      code: <span class="amber">FSL-1.1-Apache-2.0</span> &nbsp;&middot;&nbsp;
+      tokens + artwork: <span class="amber">CC-BY-4.0</span>
+    </div>
+    <div style="margin-top:4px;">
+      <span class="caps">contact</span> &nbsp;
+      <a href="mailto:hello@ahd.computer">hello@ahd.computer</a>
+      &nbsp;&middot;&nbsp;
+      <a href="/colophon">colophon</a>
+    </div>
+    <div style="margin-top:4px;">no cookies. no analytics. no newsletter.</div>
+  </footer>
+
+</main>
+</body>
+</html>

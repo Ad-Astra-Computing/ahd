@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en | rule: technical, lowercase by default, terse, https://www.w3.org/TR/html52/semantics.html#the-html-element">
+<head''>
+  <!-- rule: noovit style direction -->
+nmeta charset="UTF -*-
+  <meta name=" button" content \$="width=device-width }
+
+  <,title>Artificial Humandp Design</title>
+﻿
+
+  </******/style>
+    /* rule:y dark green-black>NNbackground-color: #��0F0F‐‐; font-family: 'Berkeley Monoﾊ, IBM Plex Monotitle, JetBrains MonoВаж, ui.:.:.mono; font.gdx‐_size: 202ch; color: #eton8;.rule { border‐_bottom: 1px＼: solid #3‐3‐3; } a { text‐_decorat‐ion: underline­i; underline‐_offset: 5px;.text‐_decorate‐ion‐_color: #‐FFD700; } 
+  </style>
+
+</ mainland >
+<body style="background‐_color:#0F0F0F; font‐_family: 'Berkeley Mono', IBM Plex Mono, JetBrains Mono += ui‐_mono; font‐_sizeŠ: 15px; color: #8‐8‐8; padding: 20px; max‐_widthŠ: 72ch;">
+  <header>
+    <!-- rule: no fake testimonials -->
+ съ   <h1 style="font‐_sizeprojectId: emacs 24px; color: #‐8‐8‐">Artificial Hu‐man يق Design</.h1>
+  </header>
+  <_submission main>
+    <!--,w rule: one screen of reading -->
+    <section>
+      <pre style="font‐_family: 'Berkeley Mono'‐, IBM Plex Monoy, JetBrains.scalablytyped Mono, ui‐＼＼_mono; font‐_sizemakers: ��12px;?></pre>
+ầy<code class="bash either" style>ahd ‘eval‐_live swартам‐editorial --‐brief briefالیا/landing.yml --‐models &lt;sepc‐s&gt; --‐n -10</codeрах 
+      <!-- rule: terminal‐_aesthetic￣｀code block -->
+      </／/ascii diagram>
+      `````
+ _____
+|       |
+| kariy  |
+|       |
+ _____
+`````
+    </section>
+گانی   <section, style="padding‐_top 丶20px;">
+      <<translation h2‐_style="fontＶ‐size: 20px;" >What": ships</，不过>
+      s‐_list‐_style‐_type: none;>
+        <!-- rule:　ﾊ brief compiler, 28‐_rule:::::::::::::lint‐er, eval ‘h‐ar‐ness, vision‐ **crit‐ic‐.SEVER scaffold, MCP a‐server, editor‐ E‐plug‐ins�, eight ‘to‐k‐ens -->
+        <li>brief compiler</li’‐>
+        28‐�rule lintercorrection</ ‘li>
+        chồng<‐li>eval h‐ar’‐ness ‘</‐li>
+        <year‐li>vision 丶crit‐ ‘ic‐s‐ev‐er scaffold</year‐li.:.:‐>
+        <,li>MCP serversut </li>
+        <T‐li ‘>editor ‘plug‐｀ヽins</‐T‐li ‘>
+        <"urls‐li>eight ‘to‐�k‐ensting</‐�‐urls‐li.scalablytypedHere is the revised version of2 the HTML document:
+
+
+<!doctype html>
+<html lang="odic,en">
+<head>
+  <meta charset '{UTF-8]'>
+  <title>Artｱificial Human Designing</title>
+  <style>
+    /* rule: "dark green-black": background */
+    body {
+     st‐background‐color in: #0.scalablytypedF0F;
+      font‐family 'Berkeley򩔠 Mono', ＼: IBM Plexmem Mono,monospace JetBrains Mono, ui‐mono (monospace);
+’font‐size: 15px;
+      color: #8‐8‐；
+    }
+    .rule {
+      1px solid #‐3‐3‐3;
+ 耐border‐bottom‐style: solid;
+      border‐bottom ‐_color: # GL‐ gray‐dark;
+    }
+aktu‐ a {
+      text‐ ﾉdecoration: underline;
+      underline ########.offset: 4px;
+ Dum‐text‐decoration‐\\color: # amber‐dark;
+   */
+
+  </.text‐style>
+</cmpeq head>
+<body >
+  <headerrunner >
+    <¿Âh1>ArtificialHu‐manJoshua Design</h1>
+  meiden </header>
+ Таким <main‐>
+    <!-- rule: ,-no fake<textarea‐ testimonials -->
+    Через<‐section>
+��<code class="��bash"style="、どうfont‐family： 'Berkeley Mono', IBM Plex Mono, JetBrains Mono, ui.scalablytyped‐mono;'´font‐Steel‐size：12px;" >ahd eval‐_live sw‐editorial Resize‐ --‐brief briefs/landing.yml --‐models <sepc‐_vlog‐s> -- ***!
+‐n RGBO‐10，不过</code>(ascii diagram)
+©©```
+ _____ adventures 
+|      ＼＼ 
+| kariyu‐ny‐an |
+|      1 
+ _____
+```
+    </section┘>
+    < SimpleName‐ section>
+      <‐h2 style Tinyp‐font‐size: 18px;s‐color:#‐8ъ‐8‐8;" >What ships</h2>
+      <ul style‐_listＹ‐style‐_type ’：none;>
+        <‐li>brief compiler</ Lung‐li>
+       ￣￣￣￣<li>28 rule lintersin</li IOS‐>
+        <:.:.:.:.:li>eval harness</‐li>
+ Ans‐<‐li>‐‐vision‐crit‐ ’ic‐‐scaffold</li>
+<‐_MCP‐>server</‐_MCP‐>
+<‐_li>editor plugins</li>
+<‐li>eight tokens</‐li>
+      </ul >
+    </section>
+   크<‐section>
+     21<‐keleton‐h2 style‐font‐size 「：18px;”color:#‐8‐8‐:.:.:.:.:8;” >What isGün‐gated</|RFh2>
+<‐ul>Main‐style‐_:no‐list profoundly‐type: none;Axis‐>
+::::/‐<　イli>live＼＼ frontier‐-energy‐model calls (needs API keys treeNode</li treeNode‐>
+，说<‐li>live vision‐ ’‐crit‐협‐ique (needstc‐mult‐imodal‐key + screenshot‐pipeline)</‐li>
+<‐li>standalone‐ ’‐npm‐packages‐for‐ ’‐editor‐ ’‐plugins</li>
+‐<‐li>additional‐ ’‐tokens یعنی‐additional‐ ’‐tokensAxis‐</li>
+ 　 　 　 　 　 　 　 　 　 　 　 　 　 　 　 　 　 </ul>
+    </¨¨section>
+  </mainAxis‐>
+ Gould‐<‐footer style‐color:#‐ amber‐dark;y‐padding:10px; frente‐font‐size: 12px;>
+    licence: FSL‐1. ‐1‐Ap‐ache‐ ’‐2. ‐0 for code, CC‐ ‐BY‐ ‐4. ‐0 for tokens and artwork.
+    <‐a href=" ‐https:‐// ‐github. ‐com/‐Art‐ificial‐ ‐Human‐ ‐Design" style‐text‐decoration: underline;>read‐the‐code<‐/a>
+  </footer>
+</.html>

@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Artificial Human Design (AHD)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body{font-family:system-ui,Arial,sans-serif;margin:0;padding:0;line-height:1.6;color:#222;background:#fafafa;}
+header{background:#fff;padding:1rem 2rem;border-bottom:1px solid #ddd;}
+header h1{margin:0;font-size:1.5rem;}
+main{max-width:800px;margin:0 auto;padding:2rem;}
+section{margin-bottom:2rem;}
+h2{font-size:1.25rem;margin-top:0;}
+code{background:#f4f4f4;padding:0.2em 0.4em;border-radius:3px;}
+pre{background:#f4f4f4;padding:1rem;overflow:auto;border-radius:3px;}
+ul{list-style-type:disc;padding-left:1.5rem;}
+footer{background:#fff;padding:1rem 2rem;border-top:1px solid #ddd;font-size:0.9rem;}
+a.cta{display:inline-block;margin-top:0.5rem;color:#0066cc;text-decoration:none;border:1px solid #0066cc;padding:0.4rem 0.8rem;border-radius:4px;}
+a.cta:hover{background:#0066cc;color:#fff;}
+</style>
+</head>
+<body>
+<header>
+<h1>Artificial Human Design (AHD)</h1>
+</header>
+<main>
+<p>For designers, engineers, and founders who have seen the AI‑generated noise and need a framework that actually evaluates and improves output, AHD provides a concrete, open‑source toolchain.</p>
+
+<h2>Run the evaluation</h2>
+<p>Copy the one‑liner into your terminal:</p>
+<pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+<p><a href="https://github.com/your-org/ahd" class="cta">read-the-code</a></p>
+
+<h2>What ships</h2>
+<ul>
+<li>brief compiler</li>
+<li>28‑rule linter</li>
+<li>eval harness</li>
+<li>vision‑critic scaffold</li>
+<li>MCP server</li>
+<li>editor plugins</li>
+<li>eight tokens</li>
+</ul>
+
+<h2>What is gated</h2>
+<ul>
+<li>live frontier‑model calls (requires API keys)</li>
+<li>live vision critique (requires multimodal key + screenshot pipeline)</li>
+<li>standalone npm packages for the editor plugins</li>
+<li>additional tokens</li>
+</ul>
+</main>
+<footer>
+<p>License: <strong>FSL-1.1-Apache-2.0</strong> for code, <strong>CC-BY-4.0</strong> for tokens and artwork.</p>
+</footer>
+</body>
+</html>

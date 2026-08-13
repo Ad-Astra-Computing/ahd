@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>artificial human design</title>
+  <!-- rule: return a single, self-contained, valid HTML5 document -->
+  <style>
+    /* rule: design post-digital; everything in monospace */
+    :root {
+      /* rule: dark green-black background, muted green foreground, a single amber accent */
+      --bg: oklch(0.14 0.02 150);
+      --fg: oklch(0.92 0.12 135);
+      --dim: oklch(0.55 0.05 150);
+      --rule: oklch(0.3 0.04 150);
+      --accent: oklch(0.82 0.15 75);
+      --max: 80ch;
+    }
+
+    /* rule: no shadows, no gradients, no radii, no entrance animation */
+    * {
+      box-sizing: border-box;
+      font-family: "Berkeley Mono", "IBM Plex Mono", "JetBrains Mono", ui-monospace, monospace;
+      border-radius: 0;
+      box-shadow: none;
+      animation: none;
+    }
+
+    /* rule: muted green foreground on dark green-black background */
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      background: var(--bg);
+      color: var(--fg);
+    }
+
+    /* rule: everything aligns to an 80 character grid */
+    body {
+      padding: 16px;
+      font-size: 15px;
+      line-height: 1.55;
+      letter-spacing: 0;
+    }
+
+    /* rule: one hairline rule colour; rectangles only */
+    .page {
+      max-width: var(--max);
+      margin: 0 auto;
+      border: 1px solid var(--rule);
+      padding: 16px;
+    }
+
+    /* rule: terse, technical, lowercase by default */
+    h1, h2, p, li, a, code, pre, small {
+      margin: 0;
+      text-transform: lowercase;
+    }
+
+    /* rule: single-monospace scale; no centred hero stack */
+    h1 {
+      font-size: 2.0736rem;
+      line-height: 1.1;
+      font-weight: 700;
+    }
+
+    /* rule: clearly separated manifest sections */
+    h2 {
+      font-size: 1rem;
+      line-height: 1.25;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    /* rule: underlined links with an offset, no colour change */
+    a,
+    a:visited,
+    a:hover,
+    a:active {
+      color: inherit;
+      text-decoration-line: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 4px;
+    }
+
+    /* rule: one hairline rule colour */
+    .rule {
+      height: 1px;
+      background: var(--rule);
+      margin: 12px 0;
+    }
+
+    /* rule: rectangles only; terminal-aesthetic code block */
+    pre {
+      margin: 0;
+      padding: 12px;
+      border: 1px solid var(--rule);
+      overflow-x: auto;
+      color: var(--accent);
+      background: transparent;
+    }
+
+    /* rule: one screen of reading; compact layout */
+    .stack > * + * {
+      margin-top: 12px;
+    }
+
+    /* rule: no three equal feature cards */
+    .split {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(22ch, 0.9fr);
+      gap: 16px;
+      align-items: start;
+    }
+
+    /* rule: ensure the page loads properly on both desktop and mobile */
+    @media (max-width: 820px) {
+      .split {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* rule: manifest lists are explicit and separated */
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    li + li {
+      margin-top: 4px;
+    }
+
+    /* rule: a single amber accent */
+    .accent {
+      color: var(--accent);
+    }
+
+    /* rule: dim support text uses muted green */
+    .dim {
+      color: var(--dim);
+    }
+
+    /* rule: at least one element aligned to the char grid (80ch max-width) */
+    .grid-note {
+      max-width: 80ch;
+    }
+
+    /* rule: include one intentional imperfection */
+    .quirk {
+      letter-spacing: 0.01em;
+    }
+  </style>
+</head>
+<body>
+  <main class="page stack">
+    <!-- rule: audience already suspects the problem; show framework rather than lecture -->
+    <header class="split">
+      <section class="stack">
+        <p class="dim">artificial human design / ahd</p>
+        <h1>the work is not to make ai output prettier. the work is to make it answerable.</h1>
+        <p>
+          ahd turns taste into a compiled brief, a rule set, and an eval loop you can
+          inspect. it is for teams who are tired of watching generic systems average
+          away intent.
+        </p>
+        <p class="grid-note quirk">
+          this is not a manifesto about slop. it is a working surface for catching it,
+          naming it, and refusing it before it reaches prodction.
+        </p>
+      </section>
+
+      <aside class="stack">
+        <!-- rule: at least one ASCII diagram rendered as text -->
+        <pre aria-label="ascii diagram"><code>brief.yml
+   |
+   v
+[compiler] -> [28 rules] -> [eval harness]
+                              |
+                              v
+                      [vision critic?]</code></pre>
+        <p>
+          <a href="https://github.com/" target="_blank" rel="noreferrer">read the code</a>
+        </p>
+      </aside>
+    </header>
+
+    <div class="rule" aria-hidden="true"></div>
+
+    <section class="stack">
+      <!-- rule: terminal-aesthetic code block showing the one-liner that runs the eval -->
+      <p class="dim">run the live check when you want to see whether a brief survives contact with a model.</p>
+      <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+    </section>
+
+    <div class="rule" aria-hidden="true"></div>
+
+    <section class="split">
+      <!-- rule: a clearly separated manifest section titled 'What ships' -->
+      <section class="stack">
+        <h2>what ships</h2>
+        <ul>
+          <li>brief compiler</li>
+          <li>28-rule linter</li>
+          <li>eval harness</li>
+          <li>vision-critic scaffold</li>
+          <li>mcp server</li>
+          <li>editor plugins</li>
+          <li>eight tokens</li>
+        </ul>
+      </section>
+
+      <!-- rule: a clearly separated manifest section titled 'What is gated' -->
+      <section class="stack">
+        <h2>what is gated</h2>
+        <ul>
+          <li>live frontier-model calls <span class="dim">(needs api keys)</span></li>
+          <li>live vision critique <span class="dim">(needs multimodal key + screenshot pipeline)</span></li>
+          <li>standalone npm packages for the editor plugins</li>
+          <li>additional tokens</li>
+        </ul>
+      </section>
+    </section>
+
+    <div class="rule" aria-hidden="true"></div>
+
+    <footer class="split">
+      <!-- rule: footer names the licence explicitly -->
+      <p class="dim">
+        code licence: fsl-1.1-apache-2.0<br />
+        tokens and artwork: cc-by-4.0
+      </p>
+      <p>
+        one page. hard edges. visible rules. external dependencies called out before
+        they become excuses.
+      </p>
+    </footer>
+  </main>
+</body>
+</html>

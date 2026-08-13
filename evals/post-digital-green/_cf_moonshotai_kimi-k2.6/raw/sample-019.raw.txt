@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AHD — Artificial Human Design</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #0a0a0a;
+            --bg-raised: #141414;
+            --bg-code: #0d1117;
+            --text: #c9d1d9;
+            --text-dim: #6e7681;
+            --text-bright: #f0f6fc;
+            --border: #21262d;
+            --border-bright: #30363d;
+            --accent: #58a6ff;
+            --accent-dim: #1f6feb;
+            --accent-warn: #d29922;
+            --error: #f85149;
+            --ok: #3fb950;
+        }
+
+        @font-face {
+            font-family: 'mono';
+            src: local('SF Mono'), local('Menlo'), local('Monaco'), local('Courier New'), monospace;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            font-size: 15px;
+        }
+
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        header {
+            padding: 48px 0 32px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .mark {
+            font-family: 'mono', monospace;
+            font-size: 13px;
+            color: var(--text-dim);
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            font-size: 32px;
+            font-weight: 600;
+            color: var(--text-bright);
+            margin-top: 12px;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+
+        .lead {
+            margin-top: 20px;
+            font-size: 17px;
+            line-height: 1.7;
+            color: var(--text);
+            max-width: 640px;
+        }
+
+        .lead strong {
+            color: var(--text-bright);
+            font-weight: 500;
+        }
+
+        section {
+            padding: 40px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        h2 {
+            font-size: 13px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-dim);
+            margin-bottom: 20px;
+        }
+
+        .code-block {
+            background: var(--bg-code);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            overflow: hidden;
+            margin: 24px 0;
+        }
+
+        .code-header {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 16px;
+            background: rgba(255,255,255,0.03);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--text-dim);
+            opacity: 0.5;
+        }
+
+        .dot:first-child { background: #ff5f56; opacity: 1; }
+        .dot:nth-child(2) { background: #ffbd2e; opacity: 1; }
+        .dot:nth-child(3) { background: #27c93f; opacity: 1; }
+
+        .lang-tag {
+            margin-left: auto;
+            font-family: 'mono', monospace;
+            font-size: 11px;
+            color: var(--text-dim);
+            text-transform: uppercase;
+        }
+
+        pre {
+            padding: 16px 20px;
+            overflow-x: auto;
+            font-family: 'mono', monospace;
+            font-size: 13px;
+            line-height: 1.7;
+            color: var(--text);
+        }
+
+        .prompt { color: var(--ok); }
+        .cmd { color: var(--text-bright); }
+        .flag { color: var(--accent); }
+        .arg { color: var(--accent-warn); }
+
+        .manifest {
+            margin-top: 8px;
+        }
+
+        .manifest h3 {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-bright);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .ships .status-dot { background: var(--ok); }
+        .gated .status-dot { background: var(--accent-warn); }
+
+        .manifest-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .manifest-list li {
+            padding: 10px 0;
+            padding-left: 18px;
+            position: relative;
+            border-bottom: 1px solid var(--border);
+            font-size: 14px;
+            color: var(--text);
+        }
+
+        .manifest-list li:last-child {
+            border-bottom: none;
+        }
+
+        .manifest-list li::before {
+            content: "—";
+            position: absolute;
+            left: 0;
+            color: var(--text-dim);
+        }
+
+        .label {
+            display: inline-block;
+            font-family: 'mono', monospace;
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 4px;
+            background: var(--bg-raised);
+            color: var(--text-dim);
+            margin-left: 8px;
+            vertical-align: 1px;
+        }
+
+        .section-gap {
+            margin-top: 48px;
+        }
+
+        .cta-row {
+            margin-top: 32px;
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: background 0.15s;
+        }
+
+        .btn-primary {
+            background: var(--accent-dim);
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent);
+        }
+
+        .btn-secondary {
+            background: var(--bg-raised);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--border);
+        }
+
+        .footnote {
+            margin-top: 24px;
+            font-size: 13px;
+            color: var(--text-dim);
+            line-height: 1.7;
+        }
+
+        footer {
+            padding: 40px 0 64px;
+        }
+
+        .license {
+            font-family: 'mono', monospace;
+            font-size: 12px;
+            color: var(--text-dim);
+            line-height: 1.8;
+        }
+
+        .license strong {
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 480px) {
+            h1 { font-size: 26px; }
+            pre { font-size: 12px; padding: 14px 16px; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="mark">Artificial Human Design</div>
+            <h1>A framework for evaluating design systems, not generating them</h1>
+            <p class="lead">
+                You have already seen what happens when layout, colour, and typography are
+                outsourced to pattern completion. <strong>AHD treats design quality as a
+                verifiable property</strong> — measured against explicit rules, comparable
+                across model outputs, and inspectable in code.
+            </p>
+            <p class="lead">
+                This is not a tool that writes CSS for you. It is a toolchain that lets you
+                state what good design means for your context, run models against that
+                definition, and choose whether the output meets your bar.
+            </p>
+        </div>
+    </header>
+
+    <section>
+        <div class="container">
+            <h2>The Eval Command</h2>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="lang-tag">bash</span>
+                </div>
+                <pre><span class="prompt">$</span> <span class="cmd">ahd</span> <span class="flag">eval-live</span> swiss-editorial <span class="flag">--brief</span> <span class="arg">briefs/landing.yml</span> <span class="flag">--models</span> &lt;specs&gt; <span class="flag">--n</span> <span class="arg">10</span></pre>
+            </div>
+            <p class="footnote">
+                Runs the live evaluation harness against a stored brief. Outputs scored
+                candidates with full traceability to the rules that fired. Vision critique
+                and frontier calls require keys; the scaffold and local linter run without
+                them.
+            </p>
+            <div class="cta-row">
+                <a href="https://github.com/artificialhumandesign/ahd" class="btn btn-primary">Read the code</a>
+                <a href="https://forgejo.ahd.dev/artificialhumandesign/ahd" class="btn btn-secondary">Forgejo mirror</a>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="manifest ships">
+                <h3><span class="status-dot"></span>What ships</h3>
+                <ul class="manifest-list">
+                    <li>Brief compiler <span class="label">.yml &rarr; internal IR</span></li>
+                    <li>28-rule linter <span class="label">zero-config, extensible</span></li>
+                    <li>Eval harness <span class="label">local-first, batch or live</span></li>
+                    <li>Vision-critic scaffold <span class="label">pluggable, mockable</span></li>
+                    <li>MCP server <span class="label">stdio &amp; SSE transports</span></li>
+                    <li>Editor plugins <span class="label">VS Code, Zed; vim pending</span></li>
+                    <li>Eight tokens <span class="label">baseline design vocabulary</span></li>
+                </ul>
+            </div>
+
+            <div class="manifest gated section-gap">
+                <h3><span class="status-dot"></span>What is gated</h3>
+                <ul class="manifest-list">
+                    <li>Live frontier-model calls <span class="label">needs API keys</span></li>
+                    <li>Live vision critique <span class="label">needs multimodal key + screenshot pipeline</span></li>
+                    <li>Standalone npm packages for editor plugins <span class="label">pending registry split</span></li>
+                    <li>Additional tokens <span class="label">curated, not auto-generated</span></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="license">
+                <strong>FSL-1.1-Apache-2.0</strong> for code<br>
+                <strong>CC-BY-4.0</strong> for tokens and artwork
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

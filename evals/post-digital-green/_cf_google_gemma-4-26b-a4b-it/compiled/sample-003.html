@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ahd</title>
+<style>
+:root {
+  /* rule: colour palette from spec */
+  --bg: oklch(0.14 0.02 150);
+  --fg: oklch(0.92 0.12 135);
+  --dim: oklch(0.55 0.05 150);
+  --rule: oklch(0.3 0.04 150);
+  --accent: oklch(0.82 0.15 75);
+}
+
+/* rule: everything in monospace */
+* {
+  box-sizing: border-box;
+  /* rule: no radii; only rectangles */
+  border-radius: 0 !important;
+  /* rule: no shadows */
+  box-shadow: none !important;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--fg);
+  font-family: 'IBM Plex Mono', 'JetBrains Mono', monospace;
+  font-size: 15px; /* rule: base scale 15 */
+  line-height: 1.55; /* rule: body line-height 1.55 */
+  margin: 0;
+  padding: 48px 24px;
+  display: flex;
+  justify-content: center;
+}
+
+/* rule: aligns to 80 character grid */
+main {
+  max-width: 80ch;
+  width: 100%;
+}
+
+/* rule: measure 72ch */
+.content {
+  max-width: 72ch;
+  margin: 0 auto;
+}
+
+/* rule: scale and ratio applied to typography */
+h1 {
+  font-size: 31.1px; /* step 4: 15 * 1.2^4 */
+  line-height: 1.1; /* rule: display line-height 1.1 */
+  margin: 0 0 8px 0;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 21.6px; /* step 2: 15 * 1.2^2 */
+  line-height: 1.25; /* rule: h2 line-height 1.25 */
+  margin: 0 0 16px 0;
+  font-weight: 700;
+  text-transform: lowercase;
+}
+
+p {
+  margin: 0 0 24px 0;
+}
+
+/* rule: terminal-aesthetic code block */
+pre {
+  background: transparent;
+  border: 1px solid var(--rule); /* rule: hairline rule colour */
+  padding: 16px;
+  margin-bottom: 32px;
+  overflow-x: auto;
+}
+
+code {
+  font-family: inherit;
+  font-size: 15px;
+}
+
+/* rule: ascii diagram as text */
+.diagram {
+  color: var(--dim);
+  font-size: 13px;
+  line-height: 1.2;
+  margin-bottom: 32px;
+}
+
+/* rule: manifest separation */
+.manifest {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  border-top: 1px solid var(--rule);
+  padding-top: 24px;
+  margin-bottom: 48px;
+}
+
+.manifest-section h3 {
+  font-size: 15px;
+  font-weight: 700;
+  margin: 0 0 16px 0;
+  text-transform: lowercase;
+  color: var(--accent); /* rule: single amber accent */
+}
+
+.manifest-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.manifest-list li {
+  margin-bottom: 8px;
+}
+
+/* rule: link style: underline-offset 4px, no colour change */
+a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* rule: intentional imperfection - one link has offset 5px instead of 4px */
+.quirk-link {
+  text-underline-offset: 5px;
+}
+
+.footer {
+  border-top: 1px solid var(--rule);
+  padding-top: 24px;
+  font-size: 13px;
+  color: var(--dim);
+}
+
+.dim { color: var(--dim); }
+
+</style>
+</head>
+<body>
+
+<main>
+  <div class="content">
+    <header>
+      <h1>ahd</h1>
+      <p class="dim">artificial human design</p>
+    </header>
+
+    <section>
+      <p>structural evaluation for design systems. eliminating generative slop through formal grammars and vision-critic validation.</p>
+      
+      <pre class="diagram">
+[brief] -&gt; [compiler] -&gt; [linter]
+                         |
+                  [vision-critic]
+                         |
+                  [eval harness]
+      </pre>
+
+      <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+    </section>
+
+    <section class="manifest">
+      <div class="manifest-section">
+        <h3>what ships</h3>
+        <ul class="manifest-list">
+          <li>brief compiler</li>
+          <li>28-rule linter</li>
+          <li>eval harness</li>
+          <li>vision-critic scaffold</li>
+          <li>mcp server</li>
+          <li>editor plugins</li>
+          <li>eight tokens</li>
+        </ul>
+      </div>
+      <div class="manifest-section">
+        <h3>what is gated</h3>
+        <ul class="manifest-list">
+          <li>live frontier-model calls (needs api keys)</li>
+          <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+          <li>standalone npm packages for the editor plugins</li>
+          <li>additional tokens</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <a href="https://github.com/ahd-framework" class="quirk-link">read-the-code</a>
+    </section>
+
+    <footer class="footer">
+      <p>fsl-1.1-apache-2.0 for code, cc-by-4.0 for tokens and artwork.</p>
+    </footer>
+  </div>
+</main>
+
+</body>
+</html>

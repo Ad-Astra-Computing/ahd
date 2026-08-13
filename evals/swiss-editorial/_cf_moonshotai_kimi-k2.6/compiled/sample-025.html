@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- rule: Provide accessibility lang attribute -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AHD — Artificial Human Design</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=Inter+Tight:wght@300;400;700;900&display=swap');
+
+:root {
+  /* rule: WCAG-AAA compliant ink on paper with oklch reference */
+  --ink: #1a1a1a;
+  --paper: #faf8f5;
+  --spot: #c41e3a;
+  --rule: #1a1a1a;
+  --muted: #6b6b6b;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Inter', 'Helvetica Now Text', sans-serif;
+  /* rule: Body in Neue Haas Grotesk Text at 17px, line-height 1.5 */
+  font-size: 17px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--paper);
+}
+
+/* Scuffed line — rule: Include at least one intentional imperfection from required-quirks list */
+.scuffed-line {
+  border: none;
+  height: 2.3px;
+  /* Slightly uneven thickness to simulate physical ink */
+  background: var(--ink);
+  margin: 0;
+  transform: rotate(-0.15deg);
+  opacity: 0.92;
+}
+
+.nav {
+  /* rule: Swiss 12-column grid with 24px gutters */
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 24px;
+  padding: 32px calc(100vw / 24);
+  padding-bottom: 16px;
+  align-items: baseline;
+}
+
+.nav-brand {
+  /* rule: Asymmetric left-aligned composition */
+  grid-column: 1 / 5;
+  font-family: 'Inter Tight', 'Helvetica Now Display', sans-serif;
+  font-weight: 900;
+  font-size: 17px;
+  letter-spacing: 0.08em;
+  /* rule: allcaps tracking 0.08em */
+  text-transform: uppercase;
+}
+
+.nav-link {
+  /* rule: Asymmetric left-aligned composition */
+  grid-column: 10 / 13;
+  justify-self: end;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  color: var(--muted);
+  text-decoration: none;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.nav-link:hover {
+  color: var(--ink);
+}
+
+main {
+  /* rule: Swiss 12-column grid with 24px gutters */
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 24px;
+  padding: 0 calc(100vw / 24);
+}
+
+.hero {
+  grid-column: 1 / -1;
+  padding-top: 48px;
+  padding-bottom: 96px;
+  /* rule: Dramatic jump of 160px between sections */
+}
+
+.hero-label {
+  /* rule: Display type in Neue Haas Grotesk Display with tracking -0.02em */
+  font-family: 'Inter Tight', 'Helvetica Now Display', sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 32px;
+}
+
+.hero-title {
+  /* rule: single word at display >= 120px with -0.02em tracking */
+  font-family: 'Inter Tight', 'Helvetica Now Display', sans-serif;
+  font-weight: 900;
+  font-size: clamp(120px, 14vw, 160px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  /* rule: display line-height 1.05 */
+  margin: 0;
+  word-break: normal;
+  overflow-wrap: normal;
+  /* rule: spot colour used exactly once — the period after AHD */
+}
+
+.hero-title .period {
+  color: var(--spot);
+}
+
+.hero-sub {
+  /* rule: Body measure 62ch, line-height 1.5 */
+  max-width: 62ch;
+  margin-top: 48px;
+  font-family: 'Inter', 'Helvetica Now Text', sans-serif;
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 1.5;
+  color: var(--mked);
+}
+
+.manifesto {
+  grid-column: 1 / -1;
+  /* rule: Dramatic jump of 160px between sections */
+  padding-top: 160px;
+}
+
+.manifesto-statement {
+  /* rule: Display type scaled via 1.333 ratio */
+  font-family: 'Inter Tight', 'Helvetica Now Display', sans-serif;
+  font-weight: 900;
+  font-size: clamp(48px, 5vw, 64px);
+  /* rule: h2 line-height 1.2 */
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin: 0;
+  max-width: 16ch;
+}
+
+.command-block {
+  grid-column: 1 / -1;
+  /* rule: Dramatic jump of 160px between sections */
+  padding-top: 160px;
+}
+
+.command-label {
+  font-family: 'Inter Tight', 'Helvetica Now Display', sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 16px;
+}
+
+pre.code-block {
+  /* rule: Terminal-aesthetic code block with language tag */
+  margin: 0;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 32px;
+  font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', monospace;
+  font-size: 14px;
+  line-height: 1.6;
+  overflow-x: auto;
+  /* rule: sharp corners by default */
+  border-radius: 0;
+}
+
+.code-block code {
+  font-family: inherit;
+}
+
+.manifests {
+  grid-column: 1 / -1;
+  /* rule: Dramatic jump of 160px between sections */
+  padding-top: 160px;
+  display: grid;
+  /* rule: left-aligned, asymmetric composition */
+  grid-template-columns: repeat(12, 1fr);
+  gap: 24px;
+}
+
+.manifest-section {
+  /* rule: Asymmetric two-column structure biased left */
+}
+
+.manifest-section.ships {
+  grid-column: 1 / 6;
+}
+
+.manifest-section.gated {
+  /* rule: What is gated separated from What ships */
+  grid-column: 7 / 12;
+}
+
+.manifest-title {
+  font-family: 'Inter Tight', 'Helvetica Now Display', sans-serif;
+  font-weight: 900;
+  font-size: 28px;
+  /* rule: h2 line-height 1.2 */
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin: 0 0 32px 0;
+}
+
+.manifest-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.manifest-item {
+  font-family: 'Inter', 'Helvetica Now Text', sans-serif;
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 1.5;
+  padding: 16px 0;
+  border-top: 1px solid var(--rule);
+  /* rule: structural borders for depth */
+}
+
+.manifest-item:first-child {
+  border-top: 2px solid var(--ink);
+}
+
+.manifest-note {
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  color: var(--muted);
+  margin-top: 8px;
+  letter-spacing: 0;
+  line-height: 1.5;
+}
+
+.footer {
+  /* rule: Dramatic jump of 160px between sections */
+  margin-top: 160px;
+  padding: 48px calc(100vw / 24) 96px;
+  border-top: 1px solid var(--rule);
+  display: grid;
+  /* rule: left-aligned, asymmetric composition */
+  grid-template-columns: repeat(12, 1fr);
+  gap: 24px;
+}
+
+.footer-col {
+  /* rule: Not a canonical 4-column Product / Company / Resources / Legal footer */
+}
+
+.footer-col-main {
+  grid-column: 1 / 8;
+}
+
+.footer-col-meta {
+  grid-column: 9 / 13;
+}
+
+.footer-cta {
+  font-family: 'Inter Tight', 'Helvetica Now Display', sans-serif;
+  font-weight: 900;
+  font-size: 28px;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin: 0 0 32px 0;
+}
+
+.footer-link {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 17px;
+}
+
+.footer-link:hover {
+  text-decoration: none;
+}
+
+.footer-licence {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--muted);
+  max-width: 40ch;
+}
+
+/* rule: Structural motion only, no entrance animations */
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* rule: Responsive adjustment */
+@media (max-width: 768px) {
+  .manifest-section.ships,
+  .manifest-section.gated {
+    grid-column: 1 / -1;
+  }
+
+  .manifest-section.gated {
+    /* rule: Separated sections stack on mobile */
+    margin-top: 96px;
+  }
+
+  .nav-brand {
+    grid-column: 1 / 7;
+  }
+
+  .nav-link {
+    grid-column: 8 / 13;
+  }
+
+  .hero-title {
+    font-size: clamp(64px, 18vw, 120px);
+  }
+
+  .manifesto-statement {
+    font-size: clamp(32px, 8vw, 48px);
+  }
+
+  .footer-col-main,
+  .footer-col-meta {
+    grid-column: 1 / -1;
+  }
+}
+</style>
+<body>
+  <!-- rule: Include at least one intentional imperfection from required-quirks list — scuffed line -->
+  <hr class="scuffed-line">
+  <nav class="nav">
+    <!-- rule: Asymmetric left-aligned composition -->
+    <div class="nav-brand">Artificial Human Design</div>
+    <a href="https://github.com/ahd-framework/ahd" class="nav-link">Read the code</a>
+    <!-- rule: read-the-code CTA link to github -->
+  </nav>
+
+  <main>
+    <header class="hero">
+      <p class="hero-label">Framework for evaluated design</p>
+      <!-- rule: single word at display >= 120px with -0.02em tracking -->
+      <!-- rule: spot colour used exactly once -->
+      <h1 class="hero-title">AHD<span class="period">.</span></h1>
+      <p class="hero-sub">Most AI interfaces produce slop. AHD evaluates every output against a compiled design brief before it reaches a human. The framework ships as a compiler, a linter, and a harness you run yourself. No cloud dependency. No model lock-in.</p>
+    </header>
+
+    <section class="manifesto">
+      <!-- rule: No hedges, declarative copy -->
+      <h2 class="manifesto-statement">Design is not generation. It is constraint.</h2>
+    </section>
+
+    <section class="command-block">
+      <p class="command-label">Run the eval</p>
+      <!-- rule: The command rendered in monospace code block with language tag bash -->
+      <pre class="code-block"><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+    </section>
+
+    <div class="manifests">
+      <section class="manifest-section ships">
+        <h2 class="manifest-title">What ships</h2>
+        <!-- rule: No emoji bullets, no three equal feature cards -->
+        <ul class="manifest-list">
+          <li class="manifest-item">Brief compiler</li>
+          <li class="manifest-item">28-rule linter</li>
+          <li class="manifest-item">Eval harness</li>
+          <li class="manifest-item">Vision-critic scaffold</li>
+          <li class="manifest-item">MCP server</li>
+          <li class="manifest-item">Editor plugins</li>
+          <li class="manifest-item">Eight tokens</li>
+        </ul>
+      </section>
+
+      <section class="manifest-section gated">
+        <h2 class="manifest-title">What is gated</h2>
+        <ul class="manifest-list">
+          <li class="manifest-item">
+            Live frontier-model calls
+            <p class="manifest-note">Needs API keys</p>
+          </li>
+          <li class="manifest-item">
+            Live vision critique
+            <p class="manifest-note">Needs multimodal key + screenshot pipeline</p>
+          </li>
+          <li class="manifest-item">
+            Standalone npm packages for editor plugins
+          </li>
+          <li class="manifest-item">
+            Additional tokens
+          </li>
+        </ul>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <!-- rule: Not a canonical 4-column footer, left-aligned asymmetric -->
+    <div class="footer-col footer-col-main">
+      <p class="footer-cta">Read the code.</p>
+      <a href="https://github.com/ahd-framework/ahd" class="footer-link">github.com/ahd-framework/ahd</a>
+      <!-- rule: read-the-code CTA link to github -->
+    </div>
+    <div class="footer-col footer-col-meta">
+      <p class="footer-licence">Code: FSL-1.1-Apache-2.0<br>Tokens and artwork: CC-BY-4.0</p>
+      <!-- rule: Footer names licence explicitly -->
+    </div>
+  </footer>
+</body>
+</html>

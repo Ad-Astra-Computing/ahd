@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AHD — Artificial Human Design</title>
+    <style>
+        /* rule: Palette defined via oklch as per spec */
+        :root {
+            --ink: oklch(0.18 0 0);
+            --paper: oklch(0.98 0.005 95);
+            --spot: oklch(0.58 0.22 27);
+            --rule: oklch(0.18 0 0);
+            --muted: oklch(0.55 0 0);
+            
+            /* rule: 8px baseline rhythm */
+            --space-unit: 8px;
+        }
+
+        /* rule: Swiss International Typographic Style - reset and typography */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            background-color: var(--paper);
+            color: var(--ink);
+            /* rule: Neue Haas Grotesk Text fallback to Inter */
+            font-family: "Neue Haas Grotesk Text", "Inter", sans-serif;
+            font-size: 17px;
+            line-height: 1.5;
+            /* rule: 8px baseline rhythm */
+            line-height: calc(17px * 1.5);
+        }
+
+        /* rule: 12-column grid with 24px gutters */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            column-gap: 24px;
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+
+        /* rule: Display typography - Neue Haas Grotesk Display fallback */
+        h1, .display {
+            font-family: "Neue Haas Grotesk Display", "Helvetica Now Display", "Inter Tight", sans-serif;
+            font-weight: 900;
+            text-transform: uppercase;
+            line-height: 1.05;
+            /* rule: tracking -0.02em for display */
+            letter-spacing: -0.02em;
+        }
+
+        h1 {
+            font-size: 140px; /* rule: display >= 120px */
+            grid-column: 1 / span 12;
+            margin-bottom: 64px;
+        }
+
+        /* rule: One intentional element must bleed past the grid */
+        .bleed-rule {
+            grid-column: 1 / span 12;
+            width: 150vw;
+            margin-left: -50px; /* forcing bleed to the right */
+            height: 1px;
+            background-color: var(--ink);
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* rule: Asymmetric left-aligned composition */
+        section {
+            padding-top: 96px;
+            padding-bottom: 96px;
+        }
+
+        /* rule: Terminal-aesthetic code block */
+        .terminal {
+            grid-column: 1 / span 8;
+            background-color: var(--ink);
+            color: var(--paper);
+            padding: 32px;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 96px;
+        }
+
+        .terminal code {
+            display: block;
+        }
+
+        /* rule: Manifest section titles */
+        .manifest-title {
+            font-family: "Neue Haas Grotesk Display", sans-serif;
+            font-weight: 700;
+            font-size: 24px;
+            margin-bottom: 32px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* rule: Spot colour used exactly once on the page */
+        .status-pill {
+            background-color: var(--spot);
+            color: var(--paper);
+            padding: 2px 8px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            border-radius: 999px; /* rule: pills allowed for status tags only */
+        }
+
+        .manifest-grid {
+            grid-column: 1 / span 12;
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 24px;
+        }
+
+        .manifest-column {
+            grid-column: span 6;
+        }
+
+        /* rule: No emoji bullets - using custom CSS bullets */
+        ul {
+            list-style: none;
+        }
+
+        ul li {
+            margin-bottom: 12px;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        ul li::before {
+            content: "—";
+            position: absolute;
+            left: 0;
+            color: var(--muted);
+        }
+
+        /* rule: CTA link */
+        .cta {
+            grid-column: 1 / span 4;
+            display: inline-block;
+            font-weight: 700;
+            text-decoration: none;
+            color: var(--ink);
+            border-bottom: 2px solid var(--ink);
+            margin-top: 48px;
+            padding-bottom: 4px;
+        }
+
+        .cta:hover {
+            background-color: var(--ink);
+            color: var(--paper);
+        }
+
+        /* rule: Footer - no canonical 4-column layout */
+        footer {
+            grid-column: 1 / span 12;
+            padding: 64px 0;
+            border-top: 1px solid var(--rule);
+            margin-top: 96px;
+            font-size: 14px;
+            color: var(--muted);
+        }
+
+        /* rule: Structural motion only; respects prefers-reduced-motion */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 1024px) {
+            h1 { font-size: 80px; }
+            .terminal, .manifest-column { grid-column: 1 / span 12; }
+            .manifest-grid { display: block; }
+            .manifest-column { margin-bottom: 64px; }
+        }
+    </style>
+</head>
+<body>
+
+    <main class="grid">
+        <!-- rule: One section anchored by a single word at display >= 120px -->
+        <h1>AHD</h1>
+
+        <!-- rule: Terminal-aesthetic code block -->
+        <div class="terminal">
+            <code><span style="color: var(--muted)">// run evaluation</span><br>
+            <span class="lang-tag" style="color: var(--spot)">bash</span><br>
+            ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code>
+        </div>
+
+        <!-- rule: One intentional element must bleed past the grid -->
+        <div class="bleed-rule"></div>
+
+        <section class="grid" style="padding-top: 0; padding-bottom: 0;">
+            <!-- rule: Manifest section 'What ships' -->
+            <div class="manifest-column">
+                <h2 class="manifest-title">
+                    What ships 
+                    <span class="status-pill">live</span>
+                </h2>
+                <ul>
+                    <li>brief compiler</li>
+                    <li>28-rule linter</li>
+                    <li>eval harness</li>
+                    <li>vision-critic scaffold</li>
+                    <li>MCP server</li>
+                    <li>editor plugins</li>
+                    <li>eight tokens</li>
+                </ul>
+            </div>
+
+            <!-- rule: Manifest section 'What is gated' -->
+            <div class="manifest-column">
+                <h2 class="manifest-title">What is gated</h2>
+                <ul>
+                    <li>live frontier-model calls (needs API keys)</li>
+                    <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+                    <li>standalone npm packages for the editor plugins</li>
+                    <li>additional tokens</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- rule: Link to github labelled as read-the-code CTA -->
+        <a href="https://github.com/ahd-framework" class="cta">read-the-code</a>
+
+        <!-- rule: Footer names the licence explicitly -->
+        <footer>
+            <div class="grid">
+                <div style="grid-column: 1 / span 12;">
+                    FSL-1.1-Apache-2.0 for code. CC-BY-4.0 for tokens and artwork.
+                </div>
+            </div>
+        </footer>
+    </main>
+
+</body>
+</html>

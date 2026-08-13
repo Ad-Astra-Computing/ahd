@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AHD: Artificial Human Design</title>
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --fg: #e0e0e0;
+    --accent: #00ff94;
+    --dim: #888888;
+    --mono: "Geist Mono", "JetBrains Mono", Consolas, monospace;
+    --sans: "Geist", "Inter", -apple-system, sans-serif;
+  }
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    background-color: var(--bg);
+    color: var(--fg);
+    font-family: var(--sans);
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+  }
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 8vh 2rem;
+  }
+  h1 {
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin: 0 0 2rem 0;
+    color: var(--accent);
+    font-family: var(--mono);
+    letter-spacing: -0.02em;
+  }
+  p {
+    margin: 0 0 1.5rem 0;
+    color: var(--fg);
+    font-size: 1.125rem;
+    max-width: 65ch;
+  }
+  pre.terminal {
+    background: #000;
+    border: 1px solid #1a1a24;
+    padding: 1.5rem;
+    border-radius: 2px;
+    font-family: var(--mono);
+    font-size: 0.875rem;
+    margin: 2.5rem 0;
+    overflow-x: auto;
+    color: var(--accent);
+  }
+  pre.terminal code {
+    font-family: inherit;
+  }
+  .manifest-container {
+    margin: 4rem 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+  }
+  @media (max-width: 600px) {
+    .manifest-container {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
+  .manifest h2 {
+    font-size: 0.875rem;
+    font-family: var(--mono);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--dim);
+    border-bottom: 1px solid #1a1a24;
+    padding-bottom: 0.75rem;
+    margin: 0 0 1.25rem 0;
+  }
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  li {
+    margin-bottom: 0.75rem;
+    padding-left: 1rem;
+    position: relative;
+    color: var(--fg);
+    font-size: 0.9375rem;
+  }
+  li::before {
+    content: "|";
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-family: var(--mono);
+    font-weight: bold;
+  }
+  a.cta {
+    display: inline-block;
+    color: var(--bg);
+    background-color: var(--accent);
+    padding: 0.75rem 1.5rem;
+    text-decoration: none;
+    font-weight: 500;
+    font-family: var(--mono);
+    font-size: 0.875rem;
+    border-radius: 2px;
+    transition: opacity 0.2s;
+  }
+  a.cta:hover {
+    opacity: 0.9;
+  }
+  footer {
+    margin-top: 6rem;
+    padding-top: 2rem;
+    border-top: 1px solid #1a1a24;
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--dim);
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <h1>AHD</h1>
+    <p>You have seen the synthetic output flooding the network. It lacks intent, constraint and taste. AHD does not attempt to lecture the industry on the mechanics of slop. It simply provides the primitives to prevent it.</p>
+    <p>Artificial Human Design is a framework for enforcing strict typographic and structural constraints on generative interfaces. It replaces speculative prompting with deterministic evaluation and programmatic linting. The focus is exclusively on the final render.</p>
+    
+    <pre class="terminal"><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+
+    <a href="https://github.com/ahd-project/ahd" class="cta">Read the code</a>
+
+    <div class="manifest-container">
+      <div class="manifest">
+        <h2>What ships</h2>
+        <ul>
+          <li>brief compiler</li>
+          <li>28-rule linter</li>
+          <li>eval harness</li>
+          <li>vision-critic scaffold</li>
+          <li>MCP server</li>
+          <li>editor plugins</li>
+          <li>eight tokens</li>
+        </ul>
+      </div>
+      <div class="manifest">
+        <h2>What is gated</h2>
+        <ul>
+          <li>live frontier-model calls (needs API keys)</li>
+          <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+          <li>standalone npm packages for the editor plugins</li>
+          <li>additional tokens</li>
+        </ul>
+      </div>
+    </div>
+
+    <footer>
+      Licence: FSL-1.1-Apache-2.0 for code | CC-BY-4.0 for tokens and artwork
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AHD — Artificial Human Design</title>
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --fg: #e5e5e5;
+            --dim: #737373;
+            --accent: #ffffff;
+            --code-bg: #141414;
+            --border: #262626;
+        }
+        * { box-sizing: border-box; }
+        body {
+            background-color: var(--bg);
+            color: var(--fg);
+            font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.5;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 640px;
+            width: 100%;
+            padding: 2rem;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 3rem;
+        }
+        .logo {
+            font-family: monospace;
+            font-weight: 700;
+            font-size: 1.1rem;
+            letter-spacing: -0.05em;
+        }
+        .cta-link {
+            color: var(--dim);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-family: monospace;
+        }
+        .cta-link:hover {
+            color: var(--accent);
+        }
+        h1 {
+            font-size: 1.75rem;
+            font-weight: 500;
+            margin: 0 0 0.75rem 0;
+            letter-spacing: -0.03em;
+        }
+        .subtext {
+            color: var(--dim);
+            margin-bottom: 2.5rem;
+            font-size: 1rem;
+        }
+        pre {
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            padding: 1.25rem;
+            border-radius: 4px;
+            overflow-x: auto;
+            margin-bottom: 3.5rem;
+        }
+        code {
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+            font-size: 0.875rem;
+            color: #d1d1d1;
+        }
+        .manifest-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2.5rem;
+            margin-bottom: 3.5rem;
+        }
+        h2 {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--dim);
+            margin-bottom: 1.25rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.5rem;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        li {
+            font-size: 0.875rem;
+            margin-bottom: 0.6rem;
+            color: var(--fg);
+        }
+        li::before {
+            content: "•";
+            color: var(--dim);
+            margin-right: 0.75rem;
+        }
+        footer {
+            border-top: 1px solid var(--border);
+            padding-top: 1.5rem;
+            font-size: 0.75rem;
+            color: var(--dim);
+            font-family: monospace;
+        }
+        .license-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+        @media (max-width: 600px) {
+            .manifest-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            header {
+                margin-bottom: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">AHD</div>
+            <a href="https://github.com" class="cta-link">read-the-code</a>
+        </header>
+
+        <main>
+            <h1>Architecture for the post-slop era.</h1>
+            <p class="subtext">A deterministic framework for design evaluation. Built for those who prioritize system integrity over generative drift.</p>
+
+            <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+
+            <div class="manifest-grid">
+                <section>
+                    <h2>What ships</h2>
+                    <ul>
+                        <li>brief compiler</li>
+                        <li>28-rule linter</li>
+                        <li>eval harness</li>
+                        <li>vision-critic scaffold</li>
+                        <li>MCP server</li>
+                        <li>editor plugins</li>
+                        <li>eight tokens</li>
+                    </ul>
+                </section>
+                <section>
+                    <h2>What is gated</h2>
+                    <ul>
+                        <li>live frontier-model calls (needs API keys)</li>
+                        <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+                        <li>standalone npm packages for the editor plugins</li>
+                        <li>additional tokens</li>
+                    </ul>
+                </section>
+            </div>
+        </main>
+
+        <footer>
+            <div class="license-row">
+                <span>Code: FSL-1.1-Apache-2.0</span>
+                <span>Tokens & Artwork: CC-BY-4.0</span>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

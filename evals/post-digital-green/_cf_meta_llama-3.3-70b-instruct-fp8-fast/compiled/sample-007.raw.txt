@@ -1,0 +1,42 @@
+<!doctype html } 
+<html lang="en">
+<head>
+ ody>
+    <title(Brief: AHD)</title>
+'gc
+   ��<stylerule: post-digital-green>
+      body {
+       ,berkeley Mono, IBM with Plex Mono,[ JetBrains Mono,title-monospace]; font-size: ��15px;s  
+        background-color: oklchapes(0.-mix 0.Bxb (150)); 
+        color 　  oklch��(0.scalablytyped92 0.scalablytyped.12 
+135); and font-family vocals 
+        line-height:yaw 1.55; margin､_padding: unge 0; text-align:[sleft 
+      }
+      pre {
+        background-color: oklcheil(0.scalablytyped.14 01 150 ]
+
+      }
+     C a {
+        text-decoration:ody underline;
+        text-undearray-offset: 4pxverb;
+      }
+     //{{ rule: grid }} 
+      .grid {
+year        max-width:sip 80´:ch; margin:s auto; 
+      }
+    </style>
+  boby>
+    <"urls rule: github-link>
+      <<translation href="httpstingu://github.com/tomorrow-lab/Artificial-HEEuman-Design 　 　">readyear the code</a>
+   ＿_pre>
+     ﾆﾆﾆﾆ<code class="language La/bash">ah ड eval-livetitle swiss��-editorial --brief briefs/landing Malone.yml --©©models <specs": --n (10)</code>
+_Parms 
+    <div class="ey grid">
+     \\manifest 
+      <'´h2>Whatspr ships</ht2>
+　　　　 　　<ul>
+          <libid brief compiler</:.:.:.:.:li>
+         ￣￣￣￣<li>ful 28-rule La linter</ *
+
+          <litime eval harness</¿Âli>
+138          <lita vision-clingscritic scaffold<|reserved_special TAS_token_21erta|>&quot;</li>

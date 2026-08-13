@@ -1,0 +1,416 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AHD — Artificial Human Design</title>
+<style>
+  /* rule: colour.palette in oklch, ink on paper */
+  :root{
+    --ink: oklch(0.18 0 0);
+    --paper: oklch(0.98 0.005 95);
+    --spot: oklch(0.58 0.22 27);
+    --muted: oklch(0.55 0 0);
+    --rule: oklch(0.18 0 0);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--paper);color:var(--ink)}
+  /* rule: type.families — Neue Haas Grotesk Text, 17px, lh 1.5 */
+  body{
+    font-family:"Neue Haas Grotesk Text","Helvetica Now Text","Inter",Helvetica,Arial,sans-serif;
+    font-size:17px;line-height:1.5;font-weight:400;
+    -webkit-font-smoothing:antialiased;
+    font-feature-settings:"ss01","kern";
+  }
+  /* rule: surface.shadow.policy — forbidden */
+  /* rule: surface.radius — sharp by default */
+
+  /* rule: grid.kind swiss-12, gutter 24 */
+  .wrap{
+    max-width:1440px;
+    margin:0 auto;
+    padding:0 max(32px, calc(100vw / 24));
+    display:grid;
+    grid-template-columns:repeat(12, 1fr);
+    column-gap:24px;
+  }
+
+  /* rule: surface.border 1px solid rule */
+  header.top{
+    border-bottom:1px solid var(--rule);
+    padding:16px 0;
+  }
+  header.top .wrap{align-items:baseline}
+  .brand{grid-column:1 / span 6;font-weight:700;letter-spacing:-0.02em}
+  .brand small{font-weight:400;color:var(--muted);margin-left:12px;text-transform:uppercase;letter-spacing:0.08em;font-size:12px}
+  nav.top-nav{grid-column:7 / span 6;display:flex;justify-content:flex-end;gap:32px;font-size:14px;text-transform:uppercase;letter-spacing:0.08em}
+  nav.top-nav a{color:var(--ink);text-decoration:none;border-bottom:1px solid transparent}
+  nav.top-nav a:hover{border-bottom-color:var(--ink)}
+
+  /* rule: required — asymmetric left-aligned composition; no centred hero */
+  section.hero{
+    padding:96px 0 160px; /* rule: space.rhythm — 160 between sections */
+    border-bottom:1px solid var(--rule);
+    position:relative;
+    overflow:hidden;
+  }
+  .eyebrow{
+    grid-column:1 / span 3;
+    font-size:12px;text-transform:uppercase;letter-spacing:0.08em;
+    color:var(--muted);
+  }
+  .eyebrow .dot{display:inline-block;width:8px;height:8px;background:var(--ink);margin-right:8px;vertical-align:2px}
+  .hero-index{grid-column:10 / span 3;text-align:right;font-size:12px;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted)}
+  /* rule: display type Neue Haas Grotesk Display 96–160, tracking -0.02em */
+  h1.display{
+    grid-column:1 / span 11;
+    margin-top:48px;
+    font-family:"Neue Haas Grotesk Display","Helvetica Now Display","Inter Tight",Helvetica,sans-serif;
+    font-weight:700;
+    font-size:clamp(72px, 11vw, 160px);
+    line-height:1.05;
+    letter-spacing:-0.02em;
+  }
+  /* rule: spot colour used exactly once */
+  h1.display em{font-style:normal;color:var(--spot)}
+  .lede{
+    grid-column:1 / span 6;
+    margin-top:48px;
+    max-width:62ch; /* rule: measure 62ch */
+    font-size:20px;line-height:1.5;
+  }
+  .hero-meta{
+    grid-column:8 / span 5;
+    margin-top:48px;
+    border-top:1px solid var(--rule);
+    padding-top:16px;
+    font-size:14px;
+  }
+  .hero-meta dl{display:grid;grid-template-columns:1fr 2fr;row-gap:8px;column-gap:24px}
+  .hero-meta dt{color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;font-size:12px}
+  .hero-meta dd{color:var(--ink)}
+
+  .cta-row{
+    grid-column:1 / span 12;
+    margin-top:64px;
+    display:flex;gap:24px;align-items:center;flex-wrap:wrap;
+    border-top:1px solid var(--rule);
+    padding-top:24px;
+  }
+  .cta{
+    display:inline-block;
+    border:1px solid var(--ink);
+    padding:12px 24px;
+    text-decoration:none;color:var(--ink);
+    font-size:14px;text-transform:uppercase;letter-spacing:0.08em;
+  }
+  .cta:hover{background:var(--ink);color:var(--paper)}
+  .cta-note{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em}
+
+  /* rule: required — one element bleeds past the 12-col grid */
+  .bleed-rule{
+    position:absolute;
+    left:-5vw;right:-5vw;
+    bottom:0;
+    height:1px;background:var(--ink);
+  }
+  .bleed-marker{
+    position:absolute;
+    right:-3vw;
+    top:32px;
+    font-family:"Neue Haas Grotesk Display",sans-serif;
+    font-weight:900;
+    font-size:clamp(96px,14vw,220px);
+    letter-spacing:-0.02em;
+    line-height:0.9;
+    color:var(--ink);
+    opacity:0.06;
+    pointer-events:none;
+  }
+
+  /* terminal block */
+  section.terminal{
+    padding:96px 0 160px;
+    border-bottom:1px solid var(--rule);
+  }
+  .terminal h2{
+    grid-column:1 / span 4;
+    font-family:"Neue Haas Grotesk Display",sans-serif;
+    font-weight:700;font-size:40px;line-height:1.2;letter-spacing:-0.02em;
+  }
+  .terminal .caption{
+    grid-column:6 / span 6;
+    max-width:62ch;
+    color:var(--ink);
+  }
+  .code{
+    grid-column:1 / span 12;
+    margin-top:48px;
+    border:1px solid var(--rule);
+    background:var(--paper);
+  }
+  .code header{
+    border-bottom:1px solid var(--rule);
+    display:flex;justify-content:space-between;align-items:center;
+    padding:8px 16px;
+    font-size:12px;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);
+  }
+  /* rule: surface.radius — pills 999 for status tags only */
+  .pill{
+    display:inline-block;border:1px solid var(--rule);border-radius:999px;
+    padding:2px 10px;font-size:11px;letter-spacing:0.08em;color:var(--ink);
+  }
+  pre.bash{
+    font-family:"JetBrains Mono","IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+    font-size:15px;line-height:1.5;
+    padding:24px;
+    overflow-x:auto;
+    color:var(--ink);
+    white-space:pre;
+  }
+  pre.bash .prompt{color:var(--muted);user-select:none}
+  pre.bash .cmd{color:var(--ink);font-weight:700}
+  pre.bash .flag{color:var(--muted)}
+
+  /* manifest */
+  section.manifest{
+    padding:96px 0 160px;
+    border-bottom:1px solid var(--rule);
+  }
+  .manifest-head{
+    grid-column:1 / span 12;
+    display:grid;grid-template-columns:repeat(12,1fr);column-gap:24px;
+    margin-bottom:64px;
+  }
+  .manifest-head h2{
+    grid-column:1 / span 8;
+    font-family:"Neue Haas Grotesk Display",sans-serif;
+    font-weight:700;font-size:64px;line-height:1.05;letter-spacing:-0.02em;
+  }
+  .manifest-head p{
+    grid-column:9 / span 4;
+    font-size:14px;color:var(--muted);
+  }
+
+  /* rule: forbidden — three equal feature cards; using two asymmetric columns instead */
+  .ships{grid-column:1 / span 7;border-top:1px solid var(--rule);padding-top:24px}
+  .gated{grid-column:9 / span 4;border-top:1px solid var(--rule);padding-top:24px}
+  .ships h3, .gated h3{
+    font-size:12px;text-transform:uppercase;letter-spacing:0.08em;
+    color:var(--muted);margin-bottom:32px;
+  }
+  .ships h3 span, .gated h3 span{color:var(--ink);margin-right:8px}
+  ol.list{list-style:none;counter-reset:item}
+  ol.list li{
+    counter-increment:item;
+    display:grid;grid-template-columns:48px 1fr auto;column-gap:16px;
+    padding:16px 0;border-bottom:1px solid var(--rule);
+    align-items:baseline;
+  }
+  ol.list li::before{
+    content:counter(item,decimal-leading-zero);
+    font-family:"JetBrains Mono",monospace;
+    font-size:13px;color:var(--muted);
+  }
+  .item-title{font-weight:700}
+  .item-meta{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em}
+  .item-desc{grid-column:2 / span 1;font-size:14px;color:var(--muted);margin-top:4px}
+
+  /* anchor word section — one section anchored by single word >=120px */
+  section.anchor{
+    padding:96px 0 160px;
+    border-bottom:1px solid var(--rule);
+  }
+  .anchor .word{
+    grid-column:1 / span 12;
+    font-family:"Neue Haas Grotesk Display",sans-serif;
+    font-weight:900;
+    font-size:clamp(120px, 18vw, 260px);
+    line-height:0.95;
+    letter-spacing:-0.02em;
+    margin-bottom:48px;
+  }
+  .anchor .gloss{
+    grid-column:1 / span 6;
+    max-width:62ch;font-size:17px;
+  }
+  .anchor .ref{
+    grid-column:8 / span 5;
+    font-size:13px;color:var(--muted);
+    border-left:1px solid var(--rule);padding-left:16px;
+  }
+
+  /* footer */
+  footer.foot{
+    padding:64px 0 48px;
+  }
+  .foot-grid{grid-column:1 / span 12;display:grid;grid-template-columns:repeat(12,1fr);column-gap:24px;row-gap:32px}
+  .licence{grid-column:1 / span 7;font-size:14px}
+  .licence strong{display:block;font-size:12px;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:8px}
+  .colophon{grid-column:9 / span 4;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em}
+  .foot-rule{grid-column:1 / span 12;border-top:1px solid var(--rule);padding-top:16px;display:flex;justify-content:space-between;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em}
+
+  @media (max-width: 800px){
+    .eyebrow, .hero-index, h1.display, .lede, .hero-meta, .cta-row,
+    .terminal h2, .terminal .caption, .code,
+    .manifest-head h2, .manifest-head p, .ships, .gated,
+    .anchor .word, .anchor .gloss, .anchor .ref,
+    .licence, .colophon, .foot-rule, .brand, nav.top-nav{
+      grid-column:1 / -1;
+    }
+    nav.top-nav{justify-content:flex-start;margin-top:8px;flex-wrap:wrap;gap:16px}
+  }
+
+  /* rule: motion structural only; respects prefers-reduced-motion */
+  @media (prefers-reduced-motion: reduce){ *{transition:none !important} }
+</style>
+</head>
+<body>
+
+<!-- rule: asymmetric top bar, 1px rule, no logo in gradient square -->
+<header class="top">
+  <div class="wrap">
+    <div class="brand">AHD <small>Artificial Human Design</small></div>
+    <nav class="top-nav">
+      <a href="#terminal">Eval</a>
+      <a href="#ships">Manifest</a>
+      <a href="#anchor">Thesis</a>
+      <a href="https://github.com/ahd/ahd">Code</a>
+    </nav>
+  </div>
+</header>
+
+<!-- rule: required — asymmetric left-aligned hero; no centred stack -->
+<section class="hero" id="hero">
+  <div class="wrap">
+    <div class="eyebrow"><span class="dot"></span>Release 0.1.0 — 2026.04</div>
+    <div class="hero-index">§01 / Thesis</div>
+
+    <!-- rule: display type at clamp up to 160px, tracking -0.02em -->
+    <!-- rule: spot colour used exactly once (on the full stop) -->
+    <h1 class="display">A design system<br>that treats models<br>as unreliable draftsmen<em>.</em></h1>
+
+    <p class="lede">
+      You have seen the output. Rounded cards in threes. Purple on blue. A pill badge above a centred headline. AHD is a brief compiler and an eval harness for teams who want a framework instead of another lecture about taste.
+    </p>
+
+    <aside class="hero-meta">
+      <dl>
+        <dt>Token</dt><dd>swiss-editorial · 0.1.0</dd>
+        <dt>Grid</dt><dd>12 col · 24 gutter · 8 baseline</dd>
+        <dt>Type</dt><dd>Neue Haas Grotesk · 17 / 62ch</dd>
+        <dt>Licence</dt><dd>FSL-1.1-Apache-2.0 / CC-BY-4.0</dd>
+      </dl>
+    </aside>
+
+    <div class="cta-row">
+      <!-- rule: required — read-the-code CTA to github/forgejo -->
+      <a class="cta" href="https://github.com/ahd/ahd">Read the code →</a>
+      <a class="cta" href="#terminal">Run the eval</a>
+      <span class="cta-note">Mirror: forgejo.ahd.systems/ahd</span>
+    </div>
+
+    <!-- rule: required — one intentional element bleeds past the grid -->
+    <div class="bleed-marker" aria-hidden="true">AHD</div>
+    <div class="bleed-rule" aria-hidden="true"></div>
+  </div>
+</section>
+
+<!-- terminal / eval section -->
+<section class="terminal" id="terminal">
+  <div class="wrap">
+    <h2>The one-liner<br>that runs it.</h2>
+    <p class="caption">
+      Compile a brief. Ask ten models for a site. Lint each against twenty-eight rules. Score layout against the token. Write the results to disk. No marketing copy in the terminal. No spinners shaped like brains.
+    </p>
+
+    <!-- rule: required — bash code block with the literal command -->
+    <figure class="code">
+      <header>
+        <span>briefs/landing.yml</span>
+        <span class="pill">bash</span>
+      </header>
+<pre class="bash"><span class="prompt">$ </span><span class="cmd">ahd eval-live swiss-editorial</span> <span class="flag">--brief</span> briefs/landing.yml <span class="flag">--models</span> &lt;specs&gt; <span class="flag">--n</span> 10
+<span class="prompt">›</span> compiling brief              ok  (42 rules, 8 tokens)
+<span class="prompt">›</span> dispatching to n=10 workers  ok
+<span class="prompt">›</span> linting output               28/28 rules evaluated
+<span class="prompt">›</span> vision-critic                scaffold only — see --gated
+<span class="prompt">›</span> wrote report                 .ahd/runs/2026-04-22T0931Z/</pre>
+    </figure>
+  </div>
+</section>
+
+<!-- manifest -->
+<section class="manifest" id="ships">
+  <div class="wrap">
+    <div class="manifest-head">
+      <h2>What ships.<br>What is gated.</h2>
+      <p>Two columns because there are two states. Ships means in the repository, tagged, running against CI today. Gated means waiting on an external resource — keys, pipelines, a registry account.</p>
+    </div>
+
+    <!-- What ships — 7 cols (asymmetric, not three equal cards) -->
+    <div class="ships">
+      <h3><span>§02.A</span>What ships — today, 2026.04.22</h3>
+      <ol class="list">
+        <li><span class="item-title">Brief compiler</span><span class="item-meta">core · rust</span><span class="item-desc">YAML → normalised spec, resolves token inheritance.</span></li>
+        <li><span class="item-title">28-rule linter</span><span class="item-meta">core · rust</span><span class="item-desc">Structural, typographic and colour rules. Exit codes per rule.</span></li>
+        <li><span class="item-title">Eval harness</span><span class="item-meta">core · python</span><span class="item-desc">Parallel dispatch, scoring, diff report, JSON + HTML output.</span></li>
+        <li><span class="item-title">Vision-critic scaffold</span><span class="item-meta">scaffold</span><span class="item-desc">Interfaces, fixtures and a mocked adjudicator. Keys not wired.</span></li>
+        <li><span class="item-title">MCP server</span><span class="item-meta">server · ts</span><span class="item-desc">Exposes briefs, tokens, linter, eval to any MCP client.</span></li>
+        <li><span class="item-title">Editor plugins</span><span class="item-meta">source-only</span><span class="item-desc">VS Code and Zed. Install from source; no registry yet.</span></li>
+        <li><span class="item-title">Eight tokens</span><span class="item-meta">tokens</span><span class="item-desc">swiss-editorial, brutal-grid, print-broadsheet, neo-terminal, colour-field, signal, quiet-luxury, archive.</span></li>
+      </ol>
+    </div>
+
+    <div class="gated">
+      <h3><span>§02.B</span>What is gated</h3>
+      <ol class="list">
+        <li><span class="item-title">Live frontier-model calls</span><span class="item-meta">needs api keys</span></li>
+        <li><span class="item-title">Live vision critique</span><span class="item-meta">multimodal + screenshot pipe</span></li>
+        <li><span class="item-title">Editor plugins on npm</span><span class="item-meta">registry account</span></li>
+        <li><span class="item-title">Additional tokens</span><span class="item-meta">commissioned · q3</span></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- rule: required — section anchored by a single word at display >=120px -->
+<section class="anchor" id="anchor">
+  <div class="wrap">
+    <div class="word">Slop.</div>
+    <p class="gloss">
+      The thesis is not that models cannot design. It is that without a brief, a token and an eval loop, they regress to the mean of their training data — and the mean is a purple gradient and a pill badge. AHD is the loop.
+    </p>
+    <aside class="ref">
+      <p>Further reading:</p>
+      <p>— Müller-Brockmann, Grid Systems, 1981.</p>
+      <p>— Ruder, Typographie, 1967.</p>
+      <p>— The last twelve months of your feed.</p>
+    </aside>
+  </div>
+</section>
+
+<!-- rule: forbidden — canonical 4-column footer; using 2 asymmetric blocks -->
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="licence">
+        <strong>Licence</strong>
+        Code is released under <b>FSL-1.1-Apache-2.0</b>. Tokens and artwork are released under <b>CC-BY-4.0</b>. Attribution to Artificial Human Design. Commercial use permitted subject to the functional-source clause; converts to Apache-2.0 after two years.
+      </div>
+      <div class="colophon">
+        Set in Neue Haas Grotesk<br>
+        Typeset 2026.04.22<br>
+        Hand-coded, reviewed, shipped
+      </div>
+      <div class="foot-rule">
+        <span>AHD / Artificial Human Design</span>
+        <span>github.com/ahd · forgejo.ahd.systems</span>
+        <span>§ end of document</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

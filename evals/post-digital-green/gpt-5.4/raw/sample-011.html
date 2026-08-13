@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AHD — Artificial Human Design</title>
+  <meta name="description" content="AHD is a design evaluation framework for people who are already tired of AI-generated sameness.">
+  <style>
+    :root {
+      --bg: #f4efe6;
+      --paper: #fbf8f2;
+      --ink: #181613;
+      --muted: #5f584d;
+      --line: #cfc4b3;
+      --accent: #9f2f1f;
+      --accent-2: #23433b;
+      --terminal: #121212;
+      --terminal-ink: #efe7d8;
+      --terminal-dim: #a89f92;
+      --max: 1180px;
+      --radius: 18px;
+      --shadow: 0 18px 60px rgba(24, 22, 19, 0.09);
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--bg);
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 15% 15%, rgba(159, 47, 31, 0.08), transparent 28%),
+        radial-gradient(circle at 85% 20%, rgba(35, 67, 59, 0.1), transparent 30%),
+        linear-gradient(180deg, #f7f1e8 0%, var(--bg) 55%, #efe8dc 100%);
+      font-family: Georgia, "Iowan Old Style", "Palatino Linotype", "Book Antiqua", serif;
+      line-height: 1.45;
+    }
+
+    a {
+      color: inherit;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 0.16em;
+    }
+
+    .page {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .frame {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(24, 22, 19, 0.14);
+      border-radius: 28px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.72), rgba(255,255,255,0.38)),
+        var(--paper);
+      box-shadow: var(--shadow);
+    }
+
+    .frame::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(24,22,19,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(24,22,19,0.03) 1px, transparent 1px);
+      background-size: 28px 28px;
+      mask-image: linear-gradient(180deg, rgba(0,0,0,0.55), transparent 78%);
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 18px 22px;
+      border-bottom: 1px solid rgba(24, 22, 19, 0.1);
+      font-family: "Courier New", Courier, monospace;
+      font-size: 0.92rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .brand {
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .brand strong {
+      font-weight: 700;
+    }
+
+    .navlink {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border: 1px solid rgba(24,22,19,0.16);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.55);
+      text-decoration: none;
+    }
+
+    .navlink:hover,
+    .navlink:focus-visible {
+      background: rgba(255,255,255,0.9);
+      outline: none;
+    }
+
+    main {
+      position: relative;
+      z-index: 1;
+      padding: 28px 22px 20px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(320px, 0.95fr);
+      gap: 26px;
+      min-height: calc(100vh - 180px);
+      align-items: start;
+    }
+
+    .hero {
+      padding: 10px 6px 10px 2px;
+    }
+
+    .eyebrow {
+      margin: 0 0 18px;
+      font-family: "Courier New", Courier, monospace;
+      font-size: 0.88rem;
+      color: var(--accent-2);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0 0 18px;
+      max-width: 11ch;
+      font-size: clamp(3rem, 7vw, 6.2rem);
+      line-height: 0.92;
+      font-weight: 600;
+      letter-spacing: -0.04em;
+    }
+
+    .lede {
+      margin: 0;
+      max-width: 34rem;
+      font-size: clamp(1.1rem, 1.55vw, 1.34rem);
+      color: var(--ink);
+    }
+
+    .lede strong {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .aside {
+      display: grid;
+      gap: 18px;
+      align-content: start;
+    }
+
+    .terminal,
+    .manifest,
+    .footerbox {
+      border: 1px solid rgba(24, 22, 19, 0.12);
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: rgba(255,255,255,0.6);
+    }
+
+    .terminal {
+      background: var(--terminal);
+      color: var(--terminal-ink);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
+    }
+
+    .windowbar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      font-family: "Courier New", Courier, monospace;
+      font-size: 0.82rem;
+      color: var(--terminal-dim);
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #6f675c;
+    }
+
+    .dot:nth-child(1) { background: #b86c57; }
+    .dot:nth-child(2) { background: #b49a5c; }
+    .dot:nth-child(3) { background: #5b8a70; }
+
+    pre {
+      margin: 0;
+      padding: 18px 16px 20px;
+      overflow-x: auto;
+      font-size: 0.97rem;
+      line-height: 1.55;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    }
+
+    .manifest {
+      padding: 16px 16px 12px;
+    }
+
+    .manifest h2 {
+      margin: 0 0 10px;
+      font-size: 1rem;
+      font-family: "Courier New", Courier, monospace;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    .manifest ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 9px;
+    }
+
+    .manifest li {
+      padding-top: 9px;
+      border-top: 1px solid rgba(24, 22, 19, 0.08);
+      color: var(--ink);
+    }
+
+    .manifest li:first-child {
+      border-top: 0;
+      padding-top: 0;
+    }
+
+    .footerbox {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 14px 16px;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    .footerbox strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .micro {
+      margin-top: 20px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(24, 22, 19, 0.1);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 18px;
+      font-family: "Courier New", Courier, monospace;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .micro span {
+      white-space: nowrap;
+    }
+
+    @media (max-width: 960px) {
+      main {
+        grid-template-columns: 1fr;
+        min-height: auto;
+      }
+
+      h1 {
+        max-width: 12ch;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .page {
+        padding: 14px;
+      }
+
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      main {
+        padding: 20px 16px 16px;
+      }
+
+      h1 {
+        font-size: clamp(2.5rem, 15vw, 4.2rem);
+      }
+
+      .footerbox {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="frame">
+      <header>
+        <div class="brand"><strong>AHD</strong> / Artificial Human Design</div>
+        <a class="navlink" href="https://github.com/" aria-label="Read the code on GitHub">Read the code</a>
+      </header>
+
+      <main>
+        <section class="hero" aria-labelledby="hero-title">
+          <p class="eyebrow">Framework over slogans</p>
+          <h1 id="hero-title">Design that survives contact with an eval.</h1>
+          <p class="lede">
+            AHD is for people who can already spot generated sameness on first scroll.
+            It treats that failure mode as a systems problem: compile the brief, lint the work,
+            run the batch, inspect the misses, and make the design answerable to something
+            stricter than taste alone. <strong>No lecture. No theater. A concrete loop.</strong>
+          </p>
+
+          <div class="micro" aria-label="Key points">
+            <span>briefs become testable inputs</span>
+            <span>style tokens stay inspectable</span>
+            <span>editor workflow stays close to the work</span>
+          </div>
+        </section>
+
+        <aside class="aside">
+          <section class="terminal" aria-labelledby="run-eval">
+            <div class="windowbar">
+              <span class="dot" aria-hidden="true"></span>
+              <span class="dot" aria-hidden="true"></span>
+              <span class="dot" aria-hidden="true"></span>
+              <span id="run-eval">eval-live</span>
+            </div>
+            <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+          </section>
+
+          <section class="manifest" aria-labelledby="what-ships">
+            <h2 id="what-ships">What ships</h2>
+            <ul>
+              <li>brief compiler</li>
+              <li>28-rule linter</li>
+              <li>eval harness</li>
+              <li>vision-critic scaffold</li>
+              <li>MCP server</li>
+              <li>editor plugins</li>
+              <li>eight tokens</li>
+            </ul>
+          </section>
+
+          <section class="manifest" aria-labelledby="what-is-gated">
+            <h2 id="what-is-gated">What is gated</h2>
+            <ul>
+              <li>live frontier-model calls (needs API keys)</li>
+              <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+              <li>standalone npm packages for the editor plugins</li>
+              <li>additional tokens</li>
+            </ul>
+          </section>
+
+          <footer class="footerbox">
+            <div><strong>Licence</strong></div>
+            <div>Code: FSL-1.1-Apache-2.0</div>
+            <div>Tokens and artwork: CC-BY-4.0</div>
+          </footer>
+        </aside>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

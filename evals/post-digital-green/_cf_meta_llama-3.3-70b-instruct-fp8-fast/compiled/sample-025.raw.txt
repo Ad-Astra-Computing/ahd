@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+ ,<!-- rule: dark green-black background -->
+  <style>
+    /* rule:,dark green-black,background */
+    body {
+()
+      background-color: #,021c14;, /* oklch(0.**,14,0.**02,150) */
+      font-family: Berkeley Mono, IBM Plex Mono**, JetBrains Mono**, ui-monospace;
+      font-size: 15px;
+      line-height: 1.55;
+      color: #,33cc33;, /*,oklch(0.**,92,0**,12,135) */
+    }
+   ’ve 
+    pre {
+      »background-color: »#021c14;
+      padding: »8px;
+      border,»1px »solid »#,0f390f; »/*,rule:,border,colour,»*/
+    }
+ addCriterion 
+    a {
+     ‐‐text-decoration»-»none;
+      border-bottom: »1px »solid »#,ff9900; addCriterion »/* »rule:,underline-offset,]4px, no,colour change,»*/
+    }
+    a:hover {
+     EMPLARYborder-bottom: »1px »solid »#,ff9900;
+    }
+] rule »no,radii »only »rect,angles », border »,weight »,1,»px »,solid »,border »,colour »,»rule »
+  </style>
+,<header>
+  <nav>
+   �<»a »href=»"https:»//github.com »/ahd,»github,»mirror"»>read »the »,code,»</»a»»
+,  </nav>
+rule » terminal »aesthetic »code »block »showing »the »one »liner »that »runs »,the »eval******
+</header>
+<pre><code class="bash">ahd eval-live swiss-editorial --brief briefs/landing --models,specs --n,10
+</code ‘></pre>
+ASCII »diagram »rendered��<»pre»>»»»»»»» ‘’’’’’’’’’’’’’’’’’’ ‘’’’’’’’’’’’’’’’’’’ascar
+»»»»rule »»manifest »section »»titled »’What »ships »»that »»enumerates:
+»»»brief »compiler »,28 »rule »linter »,eval »harness »,vision »critic---
+
+<»sectionOptionsResolver »».MixedReality »»-BEGIN
+»» ‘’’’’’What »shipsgnore
+»»»»brief%
+
+compiler
+»»»28-rule »lationer
+»» -*-
+  eval »harness
+  vision-critic »«scaffoldMCP » -*-
+  server
+  »editor »«plugins
+  eight »«tokens
+»»»</section>»
+»»»»»»»What »is »,gated»»»itetle
+» ***!
+  live frontier-model »,calls »(needs »,API »,keys)
+  live »,vision »,critique »(needs »,multimodal »,key Faster »,+ »,s地址creenshot »,pipeline)
+ \$ standalone »,npmpackages », -*-
+  for »,the »,editor »,«plugins
+  additional »«tokens
+ Moo »»</section devoops »»»»»»»»»footer »»»»»»»梗»<footer 
+»»»»»»	ROME »»»»code »,»FSL »»1.1 »,Apache »,2.'0 »»», »»tokens »,and »,artwork »,CC »,BY »,4D ».0 »» "»</footer 
+</html »»»»»>

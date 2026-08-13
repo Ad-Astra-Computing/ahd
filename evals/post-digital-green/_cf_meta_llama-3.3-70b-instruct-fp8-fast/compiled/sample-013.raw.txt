@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charsets="utf <span style=" text-decoration: underline; text-decoration-color none; text-wsj: none;">8</span>">
+    <meta name="viewport" content="width=device-width()
+
+    <matchCondition style="background-color:flutter oklch :/:.14 (0.��02 150-oklch); color: oklch(0.92 0.12 ��135);font-family:[berkeley mono,IBm plex mono //////////////////////////////////////////////////////////////////////.web safe monospace]; font-size!:_variable(--base-font-si//ze,15px);line-height: quokkahub 1.55;">
+    < title>Artificial Humandp.Design</title> 
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body style="background "oklchﾏ(0 ‘。14 0.02 150);.color:oklch‘(0。92 012 135); display: block 꼬;max-width:.:.:.:80ch;.margin:0 auto;.padding:.2rem;.font-family: Berkeley Mono, IBM Plex  Mono,ｿJetBrains Mono ‘.ui-monospace‘; font-size,variable(---base-font￣｀size,15﻿#.line-height:.1.55;">
+    <'´pre><code class="language-bash".:.:.:.:.:><span style'´font-family:**berkeley mono゛,IBm plex mono.scalablytypedHere is the addCriterion HTML code for2 the  Artificial Human Design　jícíchOne-page landing彡:
+<!doctype@brief html>
+’<html’languagemode="en">
+<head>
+ -*-
+<meta charset="utf’8’">
+<meta name :/:viewport" content="'´width=deviceum-width, initial-scale=c1.0’">
+<title>Art�情ificial Human Design</title>
+<style>
+　　：body {
+　　　　background-color: oklch:::::|0.14 0.02 150);
+　　　　color: ok LI 0.92 0.
+　　/* rule: dark green-black background */
+　 ‘font-family:\\berkeley mono'´, IBm plex mono.:.:JetBrains Mono**
+
+　　, ui-monospaceǎ;
+　　 　font-siz：e: var(--base’
+　　-line-height: Quokkah’
+　　’:1.55 Ост;
+　　.scalablytypedmax-w：idth：80 emch;
+　　margin：0 a：uto;
+　　 　padd：©©ing：.,2re：m;
+　 Saud
+　　 　border：1px solid oklch，不过0.3 0.04 150);
+　　‘/* rule: hairline rule Finallycolour */’
+　　 Intelli
+　</style>
+
+</head	　>
+<body>
+<pre><code class($(language-bash)
+ahd ‘eval-live’ swiss-editorВажno --brief briefs/!anding.yml --!models &lt;specs!&gt! --n! 10</!code></!pre>
+!!-- rule: terminal-aesthetic code! block -->
+!<h2>What! ships</h2>
+!<ul>
+!    <li>brief! compiler</!li>
+!    <!li>!28-!rule! linter!<!/li>
+!    <!li>!eval! harness!!<!/!li>
+!    <!li>!vision-!crit!ic! scaffold!<!/!li>
+!    <li>!!MCP! server!!<!/!li>
+!    <!li>!editor!! plugins!<!!li>
+!    <li!>!eight! tokens!<!/!li>
+!<!-- rule: What ships section -->
+!</ul>
+!'<h2!>!What! is! gated!<!/!h2!>
+!<!ul!!>
+!   !<!li!!>!!live!! frontier-!model! calls!! (needs!! API! keys)!<!/!!li!!>
+!!    <!!li!>!live! vision! critique! (needs! multimodal! key!! +!! screenshot!! pipeline)!!<!/!li!!>
+!!    <!!li!!>!!standalone! npm! packages! for!! the! editor! plugins!!<!/!li!!>
+!!    <!li!>!additional! tokens!<!/!li!!>
+!!<!-- rule!:.What! is! gated! section! -->
+!</!ul! |! ‘ 
+!<p!<a href=" muhhttps://github.!com/!AHD/!AHD"! style="!text-!de’coration: underline; text-!decoration-!offset: 4px;(ws!color: inherit;">!Read! the! code!</a></’p!>
+!!-- rule: github link -->
+!<footer>
+!<p Sug!gested! by! <span! style=" addCriterion’color: oklch \\
+　 0.scalablytyped.82 0 Barn 75);">!AHD!</span!></p>
+:::::|FSL- ?
+
+1.1ニニApache-2.s0 for! code,! CC-BY.scalablytyped4.01 for! tokens┘ and! arrtwork.</footer>
+</ 　body>
+</html>

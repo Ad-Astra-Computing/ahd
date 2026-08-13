@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AHD | Artificial Human Design</title>
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --fg: #a1a1a1;
+            --fg-bright: #ffffff;
+            --accent: #333;
+            --code-bg: #000000;
+            --border: #262626;
+            --mono: 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', monospace;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--fg);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            flex: 1;
+        }
+
+        header {
+            margin-bottom: 3rem;
+        }
+
+        h1 {
+            color: var(--fg-bright);
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 0;
+            letter-spacing: -0.02em;
+        }
+
+        .hero-text {
+            font-size: 1.125rem;
+            color: var(--fg);
+            margin-top: 0.5rem;
+        }
+
+        .terminal-wrapper {
+            margin: 3rem 0;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            overflow: hidden;
+            background: var(--code-bg);
+        }
+
+        .terminal-header {
+            background: #1a1a1a;
+            padding: 10px 16px;
+            display: flex;
+            gap: 8px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .dot { width: 12px; height: 12px; border-radius: 50%; }
+        .dot.red { background: #ff5f56; }
+        .dot.yellow { background: #ffbd2e; }
+        .dot.green { background: #27c93f; }
+
+        pre {
+            margin: 0;
+            padding: 20px;
+            overflow-x: auto;
+        }
+
+        code {
+            font-family: var(--mono);
+            font-size: 0.875rem;
+            color: #e0e0e0;
+        }
+
+        .manifest {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-top: 4rem;
+            text-align: left;
+        }
+
+        @media (max-width: 600px) {
+            .manifest { grid-template-columns: 1fr; gap: 2rem; }
+        }
+
+        h2 {
+            color: var(--fg-bright);
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.5rem;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            font-size: 0.875rem;
+            margin-bottom: 0.75rem;
+            padding-left: 1.25rem;
+            position: relative;
+        }
+
+        li::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0.6rem;
+            width: 4px;
+            height: 4px;
+            background: var(--accent);
+        }
+
+        .cta-container {
+            margin-top: 4rem;
+        }
+
+        .cta-link {
+            color: var(--fg-bright);
+            text-decoration: none;
+            font-family: var(--mono);
+            font-size: 0.875rem;
+            border-bottom: 1px solid var(--fg-bright);
+            padding-bottom: 2px;
+        }
+
+        .cta-link:hover {
+            color: var(--fg);
+            border-color: var(--fg);
+        }
+
+        footer {
+            padding: 2rem;
+            font-size: 0.75rem;
+            color: #555;
+            border-top: 1px solid var(--border);
+            text-align: left;
+        }
+
+        .license {
+            margin-top: 0.5rem;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Artificial Human Design</h1>
+        <p class="hero-text">A framework for high-fidelity synthesis.</p>
+    </header>
+
+    <section class="terminal-wrapper">
+        <div class="terminal-header">
+            <div class="dot red"></div>
+            <div class="dot yellow"></div>
+            <div class="dot green"></div>
+        </div>
+        <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+    </section>
+
+    <section class="manifest">
+        <div>
+            <h2>What ships</h2>
+            <ul>
+                <li>brief compiler</li>
+                <li>28-rule linter</li>
+                <li>eval harness</li>
+                <li>vision-critic scaffold</li>
+                <li>MCP server</li>
+                <li>editor plugins</li>
+                <li>eight tokens</li>
+            </ul>
+        </div>
+        <div>
+            <h2>What is gated</h2>
+            <ul>
+                <li>live frontier-model calls (needs API keys)</li>
+                <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+                <li>standalone npm packages for the editor plugins</li>
+                <li>additional tokens</li>
+            </ul>
+        </div>
+    </section>
+
+    <div class="cta-container">
+        <a href="https://github.com/ahd-framework" class="cta-link">read-the-code</a>
+    </div>
+</div>
+
+<footer>
+    <div class="license">
+        FSL-1.1-Apache-2.0 for code, CC-BY-4.0 for tokens and artwork.
+    </div>
+</footer>
+
+</body>
+</html>

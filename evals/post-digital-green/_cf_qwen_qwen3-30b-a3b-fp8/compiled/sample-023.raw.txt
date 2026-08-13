@@ -1,0 +1,91 @@
+
+
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>AHD</title>
+<style>
+:root {
+  --bg: oklch(0.14 0.02 150);
+  --fg: oklch(0.92 0.12 135);
+  --dim: oklch(0.55 0.05 150);
+  --rule: oklch(0.3 0.04 150);
+  --amber: oklch(0.82 0.15 75);
+}
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: "Berkeley Mono", "IBM Plex Mono", "JetBrains Mono", "ui-monospace", monospace;
+  line-height: 1.55;
+  max-width: 80ch;
+  margin: 0 auto;
+  padding: 2rem;
+}
+code {
+  background: var(--dim);
+  padding: 0.25rem 0.5rem;
+  border: 1px solid var(--rule);
+}
+hr {
+  border: 1px solid var(--rule);
+  margin: 2rem 0;
+}
+a {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  color: inherit;
+}
+h2 {
+  margin-top: 2rem;
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 0.25rem;
+}
+</style>
+</head>
+<body>
+<pre style="font-size: 0.875rem; white-space: pre-wrap; background: var(--dim); padding: 1rem; border: 1px solid var(--rule);">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</pre>
+
+<p>artificial human design</p>
+
+<hr>
+
+<h2>what ships</h2>
+<ul style="padding-left: 1.5rem;">
+<li>brief compiler</li>
+<li>28-rule linter</li>
+<li>eval harness</li>
+<li>vision-critic scaffold</li>
+<li>mcp server</li>
+<li>editor plugins</li>
+<li>eight tokens</li>
+</ul>
+
+<h2>what is gated</h2>
+<ul style="padding-left: 1.5rem;">
+<li>live frontier-model calls (needs api keys)</li>
+<li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+<li>standalone npm packages for the editor plugins</li>
+<li>additional tokens</li>
+</ul>
+
+<hr>
+
+<p><a href="https://github.com/ahd" target="_blank">read-the-code</a></p>
+
+<footer style="margin-top: 2rem; font-size: 0.875rem; color: var(--dim);">
+fsl-1.1-apache-2.0 for code, cc-by-4.0 for tokens and artwork
+</footer>
+
+<!-- rule: terminal-aesthetic code block -->
+<!-- rule: 80ch max-width -->
+<!-- rule: monospace fonts -->
+<!-- rule: amber accent in links -->
+<!-- rule: ascii diagram via pre + hr -->
+<!-- rule: no gradients shadows rounded-corners -->
+<!-- rule: required manifest sections -->
+<!-- rule: license footer -->
+</body>
+</html>

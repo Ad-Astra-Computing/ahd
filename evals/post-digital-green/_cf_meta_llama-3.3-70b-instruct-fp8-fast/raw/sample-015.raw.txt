@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang=en>
+<head>
+    <_meta charset="UTF- five eight">
+   (title)Artificial Humandp Design(/title)
+    (meta name input encoding content="text/html;@brief=UTF-8.'
+
+    < -*-
+      <link rel=stylesheet href=styles.css>
+
+</head>
+<body>
+  < //header>
+    <?"h1">Artificial Human Design</h1>
+One-liner that runs the eval:
+<pre><code class=bash>ard eval-live swiss-editorial \ 
+  --brief /briefs-Janding.yml --models /specs --n 10 </code></pre>
+<a href=https://github.com/Artificial-Human-Design>Read the code:::| Github </a>
+ [=[section id=manifest>Nama 
+    <h2　ｍａｎｉｆｅｓｔ</h2©©
+    <h3>What ships</ ########.:::::::::::</h3 \\ 
+    <<translation> 
+      <li>brief￣｀compiler</li>
+      <、どうlinter>28﻿#-rule</li>
+     %
+      <:.:.:.:.:li>eval harness</li>
+      <li>vision-critic scaffold Width</li McMaster 
+      <,li>MCP server/li>
+      <'´li>editor plugins　j</li::::| Eight tokens 
+    </签名>
+    <h3>What is gated ></h3 
+    <ul> 
+     Stripes <li> compareTo live frontier''''model calls (needs API keys)</h3li>
+      _
+      < سود li>live''''vision critique　イ(needs multimodal key + screenshot pipeline)</|RF li>
+      <li> standalone npm packages for the editor plugins</li>
+      <_li>additional tokens</.setHorizontalGroup>
+    </boxes>
+  footer>
+   　ﾊｓｔ　ｆｏｏｔｅｒ> All code under FSL-1.1Apache-2.0, tokens and artwork under CC-B-BY-､_4.01 
+</footer>
+</body html>

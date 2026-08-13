@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ahd — artificial human design</title>
+<!-- rule: single-monospace pairing; Berkeley Mono with IBM Plex Mono / JetBrains Mono fallback -->
+<style>
+  /* rule: oklch palette, dark green-black bg, muted green fg, amber accent */
+  :root{
+    --bg: oklch(0.14 0.02 150);
+    --fg: oklch(0.92 0.12 135);
+    --dim: oklch(0.55 0.05 150);
+    --rule: oklch(0.30 0.04 150);
+    --amber: oklch(0.82 0.15 75);
+    --ch: 0.62ch; /* rule: char-grid gutter basis */
+  }
+  /* rule: no entrance animation; no shadow; no radius; rectangles only */
+  *{box-sizing:border-box;margin:0;padding:0;border-radius:0;box-shadow:none;}
+  html,body{background:var(--bg);color:var(--fg);}
+  body{
+    /* rule: monospace body, no sans-serif */
+    font-family: "Berkeley Mono","IBM Plex Mono","JetBrains Mono",ui-monospace,monospace;
+    font-size:15px; /* rule: scale base 15 */
+    line-height:1.55; /* rule: body line-height */
+    font-weight:400;
+    -webkit-font-smoothing:antialiased;
+  }
+  /* rule: 80ch char-grid max width */
+  .grid80{
+    max-width:80ch;
+    margin:0 auto;
+    padding:24px 16px 32px;
+    border-left:1px solid var(--rule); /* rule: one hairline rule colour */
+    border-right:1px solid var(--rule);
+  }
+  /* rule: hairline rule, single colour */
+  hr{border:0;border-top:1px solid var(--rule);margin:24px 0;}
+  .row{display:flex;justify-content:space-between;align-items:baseline;gap:16px;}
+  .dim{color:var(--dim);}
+  .amber{color:var(--amber);} /* rule: single amber accent */
+  .caps{letter-spacing:0.04em;text-transform:uppercase;} /* rule: allcaps tracking 0.04em */
+  h1{
+    font-size:2.488em; /* rule: scale step 4, ratio 1.2 (approx) */
+    font-weight:700;
+    line-height:1.1; /* rule: display line-height */
+    letter-spacing:0;
+  }
+  h2{
+    font-size:1.2em; /* rule: scale step 1 */
+    font-weight:700;
+    line-height:1.25; /* rule: h2 line-height */
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+  }
+  p,li{max-width:72ch;} /* rule: measure 72ch */
+  /* rule: underlined links with offset; no colour change */
+  a{
+    color:inherit;
+    text-decoration:underline;
+    text-underline-offset:4px;
+    text-decoration-thickness:1px;
+  }
+  a:hover,a:focus{color:inherit;text-decoration:underline;text-underline-offset:4px;}
+  /* rule: terminal code block, rectangle, hairline border */
+  pre,code,kbd{font-family:inherit;}
+  pre.term{
+    border:1px solid var(--rule);
+    padding:12px 16px;
+    overflow-x:auto;
+    background:var(--bg);
+    margin:16px 0;
+  }
+  pre.term::before{
+    content:"[bash]";
+    display:block;
+    color:var(--dim);
+    font-size:0.833em; /* rule: scale step -1 */
+    margin-bottom:8px;
+    letter-spacing:0.04em;
+  }
+  .prompt{color:var(--dim);}
+  .caret{
+    display:inline-block;
+    width:0.6ch;
+    background:var(--amber);
+    color:transparent;
+    /* rule: motion policy allows caret blink */
+    animation: blink 1.05s steps(2,end) infinite;
+  }
+  @keyframes blink{50%{opacity:0}}
+  ul{list-style:none;}
+  ul.rows li{
+    display:grid;
+    grid-template-columns: 22ch 1fr 8ch;
+    gap:1ch;
+    padding:4px 0;
+    border-bottom:1px dotted var(--rule);
+    align-items:baseline;
+  }
+  ul.rows li:last-child{border-bottom:0;}
+  .tag{color:var(--dim);text-align:right;font-size:0.833em;letter-spacing:0.04em;}
+  .ships .tag{color:var(--amber);} /* rule: single amber accent reserved for shipping status */
+  /* rule: at least one ASCII diagram */
+  pre.ascii{
+    border:1px solid var(--rule);
+    padding:12px 16px;
+    color:var(--fg);
+    font-size:0.833em;
+    line-height:1.35;
+    margin:16px 0;
+    overflow-x:auto;
+  }
+  header.top{
+    display:flex;justify-content:space-between;align-items:baseline;
+    padding-bottom:12px;border-bottom:1px solid var(--rule);margin-bottom:24px;
+    font-size:0.833em;letter-spacing:0.04em;text-transform:uppercase;
+  }
+  footer.bot{
+    margin-top:32px;padding-top:16px;border-top:1px solid var(--rule);
+    font-size:0.833em;color:var(--dim);
+  }
+  /* rule: intentional imperfection — a single stray ASCII marker in the top rule */
+  .quirk{color:var(--dim);}
+  section{margin-top:24px;}
+  .lede{font-size:1.2em;line-height:1.35;margin-top:16px;}
+  .small{font-size:0.833em;}
+</style>
+</head>
+<body>
+<!-- rule: 80-char grid container, rectangles only -->
+<main class="grid80">
+
+  <!-- rule: no centred hero stack + pill badge + two CTAs; use left-aligned terse header -->
+  <header class="top">
+    <span>ahd // artificial human design</span>
+    <span class="quirk">v0.1.0 · 2026-04-24</span>
+  </header>
+
+  <!-- rule: terse, lowercase voice; no "build the future of", no "ship faster", no "AI-native" -->
+  <h1>design eval, not vibes.</h1>
+  <p class="lede dim">
+    a framework for catching ai-generated slop before it reaches a browser.
+    brief in, 80-char grid out, linter and vision-critic on the side.
+  </p>
+
+  <hr>
+
+  <!-- rule: one-liner in monospace code block, language tag bash -->
+  <p class="small caps dim">run the eval</p>
+  <pre class="term" aria-label="bash"><span class="prompt">$ </span>ahd eval-live swiss-editorial \
+    --brief briefs/landing.yml \
+    --models &lt;specs&gt; \
+    --n 10<span class="caret">_</span></pre>
+  <p class="small dim">
+    ten renders, one brief, n models. the linter and the vision-critic score
+    each output against the token before a human sees it.
+  </p>
+
+  <hr>
+
+  <!-- rule: ASCII diagram (required) -->
+  <p class="small caps dim">pipeline</p>
+<pre class="ascii" aria-hidden="false">
+  +-----------+    +-----------+    +-----------+    +-----------+
+  |  brief    | -> |  compile  | -> |  render   | -> |  critic   |
+  |  .yml     |    |  prompt   |    |  n x m    |    |  lint+vis |
+  +-----------+    +-----------+    +-----------+    +-----+-----+
+                                                           |
+                                                           v
+                                                    +-------------+
+                                                    |  verdict    |
+                                                    |  pass/fail  |
+                                                    +-------------+
+</pre>
+
+  <hr>
+
+  <!-- rule: manifest 'What ships' — brief compiler, 28-rule linter, eval harness,
+       vision-critic scaffold, MCP server, editor plugins, eight tokens -->
+  <section>
+    <div class="row">
+      <h2>what ships</h2>
+      <span class="small dim">today, in-repo</span>
+    </div>
+    <ul class="rows ships" role="list">
+      <li><span>brief compiler</span><span class="dim">yaml -> prompt + constraints</span><span class="tag">ships</span></li>
+      <li><span>28-rule linter</span><span class="dim">static checks on markup + css</span><span class="tag">ships</span></li>
+      <li><span>eval harness</span><span class="dim">batch, diff, score, archive</span><span class="tag">ships</span></li>
+      <li><span>vision-critic scaffold</span><span class="dim">interfaces, stub scorer, fixtures</span><span class="tag">ships</span></li>
+      <li><span>mcp server</span><span class="dim">exposes brief + tokens to agents</span><span class="tag">ships</span></li>
+      <li><span>editor plugins</span><span class="dim">vscode + zed, in-tree source</span><span class="tag">ships</span></li>
+      <li><span>eight tokens</span><span class="dim">post-digital-green + 7 siblings</span><span class="tag">ships</span></li>
+    </ul>
+  </section>
+
+  <!-- rule: manifest 'What is gated' — live frontier-model calls, live vision critique,
+       standalone npm packages, additional tokens -->
+  <section>
+    <div class="row">
+      <h2>what is gated</h2>
+      <span class="small dim">needs keys or hands</span>
+    </div>
+    <ul class="rows" role="list">
+      <li><span>live frontier-model calls</span><span class="dim">requires api keys you bring</span><span class="tag">gated</span></li>
+      <li><span>live vision critique</span><span class="dim">multimodal key + screenshot pipeline</span><span class="tag">gated</span></li>
+      <li><span>standalone npm packages</span><span class="dim">editor plugins not yet published</span><span class="tag">gated</span></li>
+      <li><span>additional tokens</span><span class="dim">beyond the first eight</span><span class="tag">gated</span></li>
+    </ul>
+  </section>
+
+  <hr>
+
+  <!-- rule: read-the-code CTA linking to github / forgejo mirror -->
+  <section>
+    <p class="small caps dim">read the code</p>
+    <p>
+      the repo is the documentation.
+      <a href="https://github.com/ahd-org/ahd">github.com/ahd-org/ahd</a>
+      &nbsp;·&nbsp;
+      <a href="https://code.ahd.dev/ahd/ahd">forgejo mirror</a>
+    </p>
+    <p class="small dim">
+      no waitlist, no demo call, no newsletter. clone, read, run the harness,
+      file an issue if a rule is wrong.
+    </p>
+  </section>
+
+  <!-- rule: not a 4-column Product/Company/Resources/Legal footer -->
+  <footer class="bot">
+    <div class="row">
+      <span>licence // FSL-1.1-Apache-2.0 for code · CC-BY-4.0 for tokens and artwork</span>
+      <span>ahd</span>
+    </div>
+    <p class="small" style="margin-top:8px;">
+      post-digital-green 0.1.0 · rendered on an 80-char grid · one amber, one rule.
+    </p>
+  </footer>
+
+</main>
+</body>
+</html>

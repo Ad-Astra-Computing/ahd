@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ahd // artificial human design</title>
+<style>
+/* rule: dark green-black background */
+:root {
+  --bg: oklch(0.14 0.02 150);
+  /* rule: muted green foreground */
+  --fg: oklch(0.92 0.12 135);
+  --dim: oklch(0.55 0.05 150);
+  /* rule: one hairline rule colour */
+  --rule: oklch(0.3 0.04 150);
+  /* rule: a single amber accent */
+  --accent: oklch(0.82 0.15 75);
+}
+
+/* rule: everything in monospace */
+* {
+  box-sizing: border-box;
+  border-radius: 0 !important; /* rule: no radii; only rectangles */
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--fg);
+  font-family: ui-monospace, 'IBM Plex Mono', 'JetBrains Mono', monospace;
+  font-size: 15px; /* rule: scale base 15 */
+  line-height: 1.55; /* rule: body line-height 1.55 */
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+}
+
+/* rule: everything aligns to an 80 character grid */
+main {
+  width: 100%;
+  max-width: 80ch;
+  padding: 48px 16px;
+}
+
+/* rule: no shadows, no gradients, no radii, no entrance animation */
+h1 {
+  font-size: 26px; /* rule: scale step 3 */
+  font-weight: 700;
+  margin-bottom: 16px;
+  text-transform: lowercase;
+}
+
+h2 {
+  font-size: 22px; /* rule: scale step 2 */
+  font-weight: 700;
+  margin-top: 48px;
+  margin-bottom: 16px;
+  text-transform: lowercase;
+}
+
+p {
+  margin-bottom: 24px;
+}
+
+/* rule: terminal-aesthetic code block */
+pre {
+  background: transparent;
+  border: 1px solid var(--rule); /* rule: hairline rule */
+  padding: 16px;
+  overflow-x: auto;
+  margin-bottom: 32px;
+}
+
+code {
+  font-family: inherit;
+  font-size: 14px;
+}
+
+/* rule: bash code block with amber accent */
+.cmd {
+  color: var(--accent);
+}
+
+/* rule: ASCII diagram */
+.ascii {
+  color: var(--dim);
+  line-height: 1.2;
+  margin-bottom: 32px;
+  white-space: pre;
+  font-size: 12px;
+}
+
+/* rule: clearly separated manifest sections */
+.manifest-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+  border-top: 1px solid var(--rule);
+  padding-top: 32px;
+}
+
+@media (min-width: 60ch) {
+  .manifest-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  margin-bottom: 8px;
+  color: var(--fg);
+}
+
+/* rule: underline with an offset, no colour change */
+a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+footer {
+  margin-top: 64px;
+  padding-top: 24px;
+  border-top: 1px solid var(--rule);
+  font-size: 12px;
+  color: var(--dim);
+}
+
+.cta-block {
+  margin: 48px 0;
+}
+
+.intentional-imperfection {
+  /* rule: include one intentional imperfection */
+  letter-spacing: -0.5px;
+}
+</style>
+</head>
+<body>
+
+<main>
+  <h1 class="intentional-imperfection">ahd</h1>
+  
+  <p>
+    most ai-generated design is noise. we are building the framework to extract signal. 
+    we don't lecture on the problem; we provide the primitives to solve it.
+  </p>
+
+  <!-- rule: ASCII diagram -->
+  <div class="ascii">
++-----------+       +-----------+       +-----------+
+|   brief   | ----> |   eval    | ----> |  result   |
++-----------+       +-----------+       +-----------+
+      ^                   |
+      |                   v
+      +-----------+ <-----+
+                | critic |
+                +--------+
+  </div>
+
+  <!-- rule: terminal-aesthetic code block -->
+  <pre><code><span class="cmd">$</span> ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+
+  <div class="manifest-grid">
+    <section>
+      <h2>what ships</h2>
+      <ul>
+        <li>brief compiler</li>
+        <li>28-rule linter</li>
+        <li>eval harness</li>
+        <li>vision-critic scaffold</li>
+        <li>mcp server</li>
+        <li>editor plugins</li>
+        <li>eight tokens</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>what is gated</h2>
+      <ul>
+        <li>live frontier-model calls (needs api keys)</li>
+        <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+        <li>standalone npm packages for the editor plugins</li>
+        <li>additional tokens</li>
+      </ul>
+    </section>
+  </div>
+
+  <div class="cta-block">
+    <a href="https://github.com/ahd-framework">read-the-code</a>
+  </div>
+
+  <footer>
+    code: fsl-1.1-apache-2.0<br>
+    tokens & artwork: cc-by-4.0
+  </footer>
+</main>
+
+</body>
+</html>

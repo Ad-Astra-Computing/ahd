@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+ and artwork.
+Must avoid:
+- anyVersions of 'build the future　ヽ was removed as per the instructions. Here is2 the revised﻿
+
+<html lang="en">
+<head>
+    <meta )
+
+
+
+
+
+
+
+    <meta charset="UTF Residents8">
+   };
+
+
+
+
+
+
+
+    < -*-
+      <head-
+      <metauyu charset="UTFăm né">
+      <meta name="vieport" content="widt=device-widt } initial-scale=1.0"> 
+      <title>Artificial／／／／／／／／Human Design</title> 
+     \Container
+      handset
+      < :::::::::::::::::::::.::::/styles:::::::::::::::::::::::.:::::::::::::::::::.:::::::::::::::::::::::::.:::::::::>
+      <style>
+       1 body {
+         ゞ font-family:″ Monospace;
+751        }
+        .
+        manifest {
+         ad
+          padding: (20px);
+丶        }
+        profoundly .code-block {
+jee
+          background-color: # immersion 222;
+         s
+         -energy 
+          padding:  cod 10px;
+         ©© border-radius:
+          5px;
+ gubern 
+          font-family: Monospace;
+        }
+      </style #[]>
+    </head Euros>
+    < BASIS 
+    <|RF body>
+      <section>
+        < terminal-aesthetic asıl code block >
+          <pre><code class="bash">$ ahd evallink-live swiss-Editorial＿＿＿＿ ───brief brief $$briefs/landing.yml -- ########.models <specs raging > --ncnt 10:\\</code></pre";
+
+      </section	
+      <sectionĩ class="manifest式">
+        <ưỡng h2>Whatsuites ships</h 〉_SELECTOR
+       \$brief compilerrak
+       .:.:.:.:.:28-rule lending linter
+title eval harnesstitle
+vision-critic scafolddata
+MCP serversWith
+editor and plugins
+eight tokesntypes
+      </sectionurm
+     arpa
+     
+      <©©section class="manifest;
+
+      <h2> presumption What is gated meilleures </h2	　
+      live frontier-modeleatures calls (needs API､_keys)
+     \\ live vision 丶critiquename (needs multimodal key + screenshots pipeline)
+     ﻿# standalone npm packages forearm editor plugins sound
+additional tokens
+asti
+     [<a href="-H https://github.co artificialhumandesign/AHD">��Read the code</

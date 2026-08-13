@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ahd // artificial human design</title>
+<style>
+/* rule: post-digital-green token */
+/* rule: everything in monospace */
+body {
+  background-color: oklch(0.14 0.02 150);
+  color: oklch(0.92 0.12 135);
+  font-family: 'IBM Plex Mono', 'JetBrains Mono', monospace;
+  line-height: 1.55; /* rule: body line-height 1.55 */
+  margin: 0;
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+  font-size: 15px;
+}
+
+/* rule: align to 80 character grid / 72ch measure */
+main {
+  max-width: 72ch;
+  width: 100%;
+}
+
+h1, h2 {
+  font-weight: 700;
+  margin-top: 0;
+  text-transform: lowercase;
+}
+
+/* rule: amber accent for h1 */
+h1 { 
+  font-size: 1.2rem; 
+  color: oklch(0.82 0.15 75); 
+  margin-bottom: 1rem;
+}
+
+/* rule: hairline rule color and rectangles only */
+h2 { 
+  font-size: 1rem; 
+  border-bottom: 1px solid oklch(0.3 0.04 150); 
+  padding-bottom: 4px; 
+  margin-top: 2.5rem;
+}
+
+/* rule: ascii diagram style */
+.ascii {
+  white-space: pre;
+  font-size: 12px;
+  color: oklch(0.55 0.05 150); /* rule: dim foreground */
+  margin: 2rem 0;
+  line-height: 1.2;
+}
+
+/* rule: terminal-aesthetic code block */
+pre {
+  background: oklch(0.18 0.02 150);
+  border: 1px solid oklch(0.3 0.04 150); /* rule: single hairline rule color */
+  padding: 1rem;
+  overflow-x: auto;
+  margin: 1.5rem 0;
+}
+
+code { 
+  font-family: monospace; 
+}
+
+/* rule: link style: underline-offset 4px, no colour change */
+a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0;
+}
+
+li {
+  margin-bottom: 4px;
+}
+
+/* rule: no emoji bullets */
+li::before {
+  content: "> ";
+  color: oklch(0.82 0.15 75); /* rule: amber accent */
+}
+
+/* rule: footer naming licence explicitly */
+footer {
+  margin-top: 4rem;
+  font-size: 12px;
+  color: oklch(0.55 0.05 150); /* rule: dim */
+  border-top: 1px solid oklch(0.3 0.04 150);
+  padding-top: 1rem;
+}
+
+/* rule: intentional imperfection (blinking caret) */
+.cursor {
+  animation: blink 1s step-end infinite;
+  color: oklch(0.82 0.15 75);
+}
+
+@keyframes blink {
+  from, to { opacity: 1; }
+  50% { opacity: 0; }
+}
+</style>
+</head>
+<body>
+<main>
+<h1>ahd // artificial human design</h1>
+
+<div class="ascii">
++---------+      +-----------+      +-----------+
+| brief   | ---> | compiler  | ---> | linter    |
++---------+      +-----------+      +-----------+
+     |                |                  |
+     v                v                  v
++---------+      +-----------+      +-----------+
+| mcp     | <--- | harness   | <--- | critic    |
++---------+      +-----------+      +-----------+
+</div>
+
+<p>ahd is an evaluation framework. we replace stochastic generation with verifiable constraint sets to eliminate design slop.</p>
+
+<pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10<span class="cursor">_</span></code></pre>
+
+<h2>what ships</h2>
+<ul>
+  <li>brief compiler</li>
+  <li>28-rule linter</li>
+  <li>eval harness</li>
+  <li>vision-critic scaffold</li>
+  <li>mcp server</li>
+  <li>editor plugins</li>
+  <li>eight tokens</li>
+</ul>
+
+<h2>what is gated</h2>
+<ul>
+  <li>live frontier-model calls (needs api keys)</li>
+  <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+  <li>standalone npm packages for the editor plugins</li>
+  <li>additional tokens</li>
+</ul>
+
+<p><a href="https://github.com/ahd-project">read-the-code</a></p>
+
+</main>
+<footer>
+fsl-1.1-apache-2.0 for code, cc-by-4.0 for tokens and artwork.
+</footer>
+</body>
+</html>

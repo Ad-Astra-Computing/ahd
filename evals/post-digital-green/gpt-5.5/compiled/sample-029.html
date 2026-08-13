@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <!-- rule: valid self-contained html5 document for web surface -->
+  <meta charset="utf-8">
+  <!-- rule: responsive web surface without alternate directions -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- rule: one-page landing for AHD itself -->
+  <title>AHD / Artificial Human Design</title>
+  <style>
+    /* rule: post-digital green token, dark green-black background */
+    :root {
+      --bg: oklch(0.14 0.02 150);
+      --fg: oklch(0.92 0.12 135);
+      --dim: oklch(0.55 0.05 150);
+      --rule: oklch(0.3 0.04 150);
+      --amber: oklch(0.82 0.15 75);
+      --measure: 80ch;
+    }
+
+    /* rule: rectangles only, no gradients, no shadows, no radii */
+    * {
+      box-sizing: border-box;
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    /* rule: everything in monospace, dark green-black background, muted green foreground */
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: "Berkeley Mono", "IBM Plex Mono", "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 15px;
+      line-height: 1.55;
+      letter-spacing: 0;
+    }
+
+    /* rule: one screen of reading, aligned to 80 character grid */
+    body {
+      display: block;
+      padding: 24px 16px;
+    }
+
+    /* rule: at least one element aligned to char grid, 80ch max-width */
+    main {
+      max-width: var(--measure);
+      margin: 0 auto;
+    }
+
+    /* rule: no centred hero stack; terse technical voice */
+    header {
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+      padding: 12px 0 16px;
+    }
+
+    /* rule: single monospace display family, no gradient text */
+    h1 {
+      margin: 0 0 8px;
+      color: var(--fg);
+      font-size: 2.074rem;
+      line-height: 1.1;
+      font-weight: 700;
+      letter-spacing: 0;
+    }
+
+    /* rule: clearly separated manifest sections */
+    section {
+      border-bottom: 1px solid var(--rule);
+      padding: 14px 0;
+    }
+
+    /* rule: compact headings inside tool surface */
+    h2 {
+      margin: 0 0 8px;
+      color: var(--amber);
+      font-size: 1rem;
+      line-height: 1.25;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: none;
+    }
+
+    /* rule: terse lowercase copy, 72ch measure within 80ch grid */
+    p {
+      max-width: 72ch;
+      margin: 0 0 10px;
+    }
+
+    /* rule: terminal-aesthetic code block, rectangles only, hairline rule colour */
+    pre {
+      margin: 10px 0 0;
+      padding: 12px;
+      overflow-x: auto;
+      color: var(--fg);
+      background: transparent;
+      border: 1px solid var(--rule);
+      font: inherit;
+      line-height: 1.55;
+    }
+
+    /* rule: command rendered in monospace code block */
+    code {
+      font: inherit;
+    }
+
+    /* rule: manifest enumerates items without emoji bullets */
+    ol,
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    /* rule: everything aligns to char grid using fixed character columns */
+    li {
+      display: grid;
+      grid-template-columns: 4ch 1fr;
+      gap: 1ch;
+      margin: 0;
+    }
+
+    /* rule: single amber accent */
+    li::before {
+      content: "->";
+      color: var(--amber);
+    }
+
+    /* rule: include one ASCII diagram rendered as text */
+    .diagram {
+      margin: 10px 0 0;
+      color: var(--dim);
+      white-space: pre;
+      overflow-x: auto;
+    }
+
+    /* rule: intentional imperfection from required quirks list */
+    .quirk {
+      padding-left: 1ch;
+    }
+
+    /* rule: underlined links with offset, no colour change */
+    a,
+    a:visited {
+      color: inherit;
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 4px;
+    }
+
+    /* rule: footer names licence explicitly, non-canonical footer */
+    footer {
+      padding: 12px 0 0;
+      color: var(--dim);
+      font-size: 0.833rem;
+      border-top: 1px solid var(--rule);
+    }
+
+    /* rule: one amber accent only, caret blink allowed */
+    .cursor {
+      color: var(--amber);
+      animation: blink 1s steps(1, end) infinite;
+    }
+
+    /* rule: motion forbidden except caret blink */
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+
+    /* rule: responsive constraints preserve 80ch grid on narrow screens */
+    @media (max-width: 720px) {
+      body {
+        padding: 16px 12px;
+      }
+
+      h1 {
+        font-size: 1.728rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- rule: one-page landing, no testimonial/pricing/trusted-by surfaces -->
+  <main>
+    <!-- rule: AHD is first-viewport signal, not a centred hero stack -->
+    <header>
+      <h1>AHD / Artificial Human Design<span class="cursor">_</span></h1>
+      <p>
+        a design evaluation framework for people who already know the problem:
+        generated interfaces are often plausible, polished, and wrong.
+      </p>
+      <p>
+        AHD turns taste into inspectable constraints: briefs, tokens, lint rules,
+        live evals, and critic scaffolds that make the output answer to a system.
+      </p>
+      <p>
+        <a href="https://github.com/ahd-design/ahd">read-the-code CTA</a>
+      </p>
+    </header>
+
+    <!-- rule: include at least one ASCII diagram rendered as text -->
+    <section aria-label="diagram">
+      <h2>loop</h2>
+      <pre class="diagram" aria-label="AHD evaluation loop">brief.yml  ->  compiler  ->  token/rules  ->  model output
+   ^                                                  |
+   |                                                  v
+report    <-  eval harness  <-  linter  <-  screenshot/critic</pre>
+    </section>
+
+    <!-- rule: terminal-aesthetic code block with exact eval command and bash language tag -->
+    <section>
+      <h2>eval one-liner</h2>
+      <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+    </section>
+
+    <!-- rule: clearly separated manifest section titled exactly What ships -->
+    <section>
+      <h2>What ships</h2>
+      <ul>
+        <li>brief compiler</li>
+        <li>28-rule linter</li>
+        <li>eval harness</li>
+        <li>vision-critic scaffold</li>
+        <li>MCP server</li>
+        <li>editor plugins</li>
+        <li>eight tokens</li>
+      </ul>
+    </section>
+
+    <!-- rule: clearly separated manifest section titled exactly What is gated -->
+    <section>
+      <h2>What is gated</h2>
+      <ul>
+        <li>live frontier-model calls (needs API keys)</li>
+        <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+        <li>standalone npm packages for the editor plugins</li>
+        <li class="quirk">additional tokens</li>
+      </ul>
+    </section>
+
+    <!-- rule: footer names licence explicitly; no canonical 4-column footer -->
+    <footer>
+      licence: FSL-1.1-Apache-2.0 for code; CC-BY-4.0 for tokens and artwork.
+    </footer>
+  </main>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+(bookmark: top)
+<head |
+
+<!-- rule: monospace, dark green, no shadows -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial scaleX=1 scaleX=1">
+<title>AHD</title>
+<style>
+/* rule: monospace, dark green, homage to terminal */
+body {
+  ‘font-family: Berkeley Mono;, IBM Plex Mono ‘, JetBrains Mono ‘, ui-monospace ‘;
+  background-color: oklch »(0.,14 .02 150‘);
+  color: ok YM .92 .12 135);
+  line-height: 1.55;
+  margin: 0;
+  padding: ›0›
+}
+code {
+  ‘font-family M: Berkeley Mono񥹜, IBM Plex, Mono,, JetBrains Mono,, ”ui-mon Gspace‘;
+ EMPLARYbackground-color:ok YM .95 .05,155‘;
+} 
+a {
+  text-decoration: ‘underline‘;
+  text-underline-offset:.4em’
+} 
+,footer {
+  ‘background-color‘: ok YM . t5 .0 150);
+  padding: . in;
+  border M: 1px ”solid‘ ok YM .3 .04›150);
+}
+</style>
+</head>
+<body>
+<main style="max Eidth:80ch;margin:0 auto;">
+  < ‘h1‘>AHD</h1>
+  <p>Artificial Human ‘Design</p›
+  («bookmark: eval)
+  <pre><code class="bash ‘">ahd ‘eval-live ‘swiss‘-editorial‘ --brief briefs/ ”landing.yml‘ ”--models < Mspecs> --n 10</code></pre>
+(bookmark:  manifest)
+  (section 
+    <h2 cWhat ships</ ‘h2>
+    <ul>
+      < 1i>brief compiler ‘</li>
+      1i>28-rule linter</li>
+,      <li>eval harness</li>
+      <›li> ”vision-crita“ scaffold</,li>
+      ‘<li>’MCP server</li>
+,      <li> ‘editor plugins</li>
+      < 1i c>eight tokens</ ‘li>
+ ‘   /‘ul>
+ .:.:.:.:section 
+    <h2yat is gated</ h2>
+ »   <ul＼＼
+ »     <li>live frontier-model callsニﾆ(needs API　ﾊkeys)</li:::| 
+,      <li ‘>live vision critique (needs multim,odal key + ”screenshot, pipeline)</li: 
+’    　ノli>standalone npm＼＼packages forTừ the editor.:.:.:.:plugins</｀ヽli>
+ unb      <li>additional tokens、そう</li>
+ »   /／ul>
+ーツ 
+  </main>
+ ‘<footer style=»padding:.4em»>
+ »  Licence: Fранз-1.1-Apache 丶2. for «code CC-BY。そして4.0 Mfor tokens andﾍartwork 至
+  <a href="https:// Однаgithub.com/AHD»>readころthe code</a Howell 
+ </footer>
+ 　 　 　 　 　 　 　 　 　 　 　 　 　┌────┐
+ 　 　 　 　 　 　 　 　 　 　 　 　 　 ========= 
+ 　 　 　 　 　 　 　 　 　 　 　 　 　｜　 　 ｜
+ 　 　 　 　 　 　 　 　1   ASCII       ｜　 　 ｜
+izza    　   diagram   　   └────┘
+</body>
+</　ﾊhtml>

@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ahd</title>
+<style>
+/* rule: single-monospace */
+@font-face {
+  font-family: 'Berkeley Mono';
+  src: local('Berkeley Mono'), local('IBM Plex Mono'), local('JetBrains Mono'), local('ui-monospace');
+}
+
+/* rule: bg oklch(0.14 0.02 150), fg oklch(0.92 0.12 135) */
+:root {
+  --bg: #0a110a;
+  --fg: #9ecc9e;
+  --dim: #5a7a5a;
+  --rule: #1a3a1a;
+  --amber: #d4a574;
+  --measure: 72ch;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: 'Berkeley Mono', 'IBM Plex Mono', 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 15px;
+  line-height: 1.55;
+  /* rule: baseline 8 */
+}
+
+body {
+  max-width: 80ch;
+  margin: 0 auto;
+  padding: 32px 16px 64px;
+  /* rule: char-grid 80 columns */
+}
+
+/* rule: accent amber for links, underline-offset 4px no colour change */
+a {
+  color: var(--amber);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  /* rule: link style underline-offset 4px */
+}
+a:hover {
+  color: var(--amber);
+  /* rule: no colour change on hover */
+}
+
+/* rule: rule colour oklch(0.3 0.04 150) */
+hr {
+  border: none;
+  height: 1px;
+  background: var(--rule);
+  margin: 24px 0;
+}
+
+h1 {
+  font-size: 1em;
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 8px;
+  color: var(--amber);
+}
+
+h2 {
+  font-size: 1em;
+  font-weight: 700;
+  line-height: 1.25;
+  margin-top: 32px;
+  margin-bottom: 12px;
+  color: var(--fg);
+}
+
+p {
+  margin-bottom: 12px;
+  max-width: var(--measure);
+}
+
+/* rule: terminal-aesthetic code block */
+pre {
+  background: #050a05;
+  border: 1px solid var(--rule);
+  padding: 16px;
+  margin: 16px 0;
+  overflow-x: auto;
+  /* rule: no radii; only rectangles */
+  border-radius: 0;
+}
+
+code {
+  font-family: inherit;
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--fg);
+}
+
+pre code {
+  display: block;
+}
+
+/* rule: dim colour for secondary text */
+.dim {
+  color: var(--dim);
+}
+
+/* rule: ASCII diagram alignment */
+.ascii {
+  color: var(--dim);
+  line-height: 1.2;
+  margin: 16px 0;
+  white-space: pre;
+  font-size: 13px;
+}
+
+ul {
+  list-style: none;
+  margin: 12px 0;
+  padding: 0;
+}
+
+ul li {
+  padding-left: 2ch;
+  position: relative;
+  margin-bottom: 4px;
+  max-width: var(--measure);
+}
+
+ul li::before {
+  content: '-';
+  position: absolute;
+  left: 0;
+  color: var(--dim);
+}
+
+/* rule: footer licence naming */
+footer {
+  margin-top: 48px;
+  padding-top: 24px;
+  border-top: 1px solid var(--rule);
+  font-size: 13px;
+  color: var(--dim);
+  line-height: 1.6;
+}
+
+/* rule: motion forbidden except caret blink and link underline */
+::selection {
+  background: var(--amber);
+  color: var(--bg);
+}
+
+/* intentional imperfection: slightly misaligned header */
+header {
+  margin-bottom: 32px;
+  position: relative;
+  left: -1px; /* rule: intentional imperfection from required-quirks */
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>ahd</h1>
+  <p class="dim">artificial human design — a framework for evaluating generated interfaces</p>
+</header>
+
+<hr>
+
+<p>you have seen the slop. flat gradients, corporate memphis, three identical cards with sparkle icons. ahd does not explain why this happens. ahd gives you tools to measure it, compare it, and stop it.</p>
+
+<p>the framework compiles a design brief into a structured eval, runs models against it, and scores the output against a rule set written by humans who have shipped real products.</p>
+
+<div class="ascii"><!-- rule: at least one ASCII diagram -->
++----------+     +--------------+     +----------------+
+|  brief   | --> |  28-rule     | --> |  vision-critic |
+|  .yml    |     |  linter      |     |  scaffold      |
++----------+     +--------------+     +----------------+
+       |                |                      |
+       v                v                      v
+  +---------+     +----------+          +-----------+
+  | tokens  |     |  score   |          |  screenshot|
+  |  (8)    |     |  0-100   |          |  pipeline  |
+  +---------+     +----------+          +-----------+
+</div>
+
+<p>run one eval:</p>
+
+<!-- rule: The command rendered in monospace code block with bash tag -->
+<pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+
+<p>this generates scored outputs, a rule-by-rule breakdown, and a trace you can inspect. the linter runs without api keys. the rest is gated behind what you already have.</p>
+
+<hr>
+
+<h2>what ships</h2>
+<ul>
+  <li>brief compiler — yaml to structured eval with token substitution</li>
+  <li>28-rule linter — static rules, no model calls, runs locally</li>
+  <li>eval harness — batch runner with variance analysis and trace logging</li>
+  <li>vision-critic scaffold — infrastructure for multimodal critique, ready to wire</li>
+  <li>mcp server — model context protocol server for editor integration</li>
+  <li>editor plugins — vscode and neovim configs, inline linting on generated code</li>
+  <li>eight tokens — curated design-language primitives, cc-by-4.0</li>
+</ul>
+
+<h2>what is gated</h2>
+<ul>
+  <li>live frontier-model calls — needs api keys (openai, anthropic, google, etc)</li>
+  <li>live vision critique — needs multimodal key + screenshot pipeline</li>
+  <li>standalone npm packages for the editor plugins — awaiting registry setup</li>
+  <li>additional tokens — community submissions under review</li>
+</ul>
+
+<p><a href="https://github.com/artificial-human-design/ahd">read the code</a> <!-- rule: A link to github labelled as read-the-code CTA --></p>
+
+<footer>
+  <p>code licence: fsl-1.1-apache-2.0<br>
+  tokens & artwork licence: cc-by-4.0</p>
+  <!-- rule: footer names licence explicitly -->
+</footer>
+
+</body>
+</html>

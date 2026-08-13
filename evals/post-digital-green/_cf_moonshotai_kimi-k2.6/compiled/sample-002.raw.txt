@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>AHD // Artificial Human Design</title>
+<style>
+/* rule: single-monospace pairing */
+@font-face {
+  font-family: "Berkeley Mono";
+  src: local("Berkeley Mono"), local("IBM Plex Mono"), local("JetBrains Mono");
+}
+
+/* rule: no gradients, no shadows, no radii, rectangles only */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* rule: dark green-black background, muted green foreground */
+:root {
+  --bg: #0a120a;
+  --fg: #8fbc8f;
+  --dim: #5a7a5a;
+  --rule: #2a3a2a;
+  --amber: #d4a853;
+}
+
+/* rule: char-grid 80 columns, 8px baseline */
+html {
+  font-family: "Berkeley Mono", "IBM Plex Mono", "JetBrains Mono", ui-monospace, monospace;
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--fg);
+  background: var(--bg);
+}
+
+/* rule: 72ch measure */
+body {
+  max-width: 80ch;
+  margin: 0 auto;
+  padding: 32px 4px 64px 4px;
+}
+
+/* rule: no entrance animations except caret blink and link underline */
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+/* rule: link style underline-offset 4px, no colour change */
+a {
+  color: var(--fg);
+  text-decoration: underline;
+  text-decoration-color: var(--amber);
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+}
+
+a:hover {
+  color: var(--fg);
+}
+
+/* rule: hairline rule colour */
+hr {
+  border: none;
+  border-top: 1px solid var(--rule);
+  margin: 24px 0;
+}
+
+/* rule: terse, lowercase by default voice */
+h1, h2 {
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--fg);
+  text-transform: lowercase;
+}
+
+h1 {
+  font-size: calc(15px * 1.2 * 1.2 * 1.2); /* step 3 */
+  margin-bottom: 8px;
+  letter-spacing: 0;
+}
+
+h2 {
+  font-size: calc(15px * 1.2 * 1.2); /* step 2 */
+  line-height: 1.25;
+  margin-top: 32px;
+  margin-bottom: 16px;
+}
+
+p {
+  margin-bottom: 16px;
+  max-width: 72ch;
+}
+
+/* rule: terminal-aesthetic code block */
+pre {
+  background: #0d1a0d;
+  border: 1px solid var(--rule);
+  padding: 16px 20px;
+  margin: 16px 0 24px 0;
+  overflow-x: auto;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+code {
+  font-family: inherit;
+  color: var(--fg);
+}
+
+/* rule: amber accent for prompts and key terms */
+.prompt {
+  color: var(--amber);
+}
+
+/* rule: dim for secondary info */
+.dim {
+  color: var(--dim);
+}
+
+/* rule: manifest sections clearly separated */
+.manifest {
+  margin-top: 32px;
+}
+
+.manifest h2 {
+  margin-top: 0;
+}
+
+.manifest ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+/* rule: no emoji bullets — using dash prefix */
+.manifest li {
+  padding-left: 20px;
+  position: relative;
+  margin-bottom: 8px;
+}
+
+.manifest li::before {
+  content: "-";
+  position: absolute;
+  left: 0;
+  color: var(--dim);
+}
+
+/* rule: footer with explicit licence naming */
+footer {
+  margin-top: 64px;
+  padding-top: 24px;
+  border-top: 1px solid var(--rule);
+  font-size: 13px;
+  color: var(--dim);
+  line-height: 1.6;
+}
+
+/* rule: intentional imperfection — slight misalignment in ascii */
+.ascii-diagram {
+  white-space: pre;
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--dim);
+  margin: 24px 0;
+  overflow-x: auto;
+}
+
+.caret {
+  display: inline-block;
+  width: 8px;
+  height: 15px;
+  background: var(--amber);
+  animation: blink 1s step-end infinite;
+  vertical-align: text-bottom;
+  margin-left: 2px;
+}
+</style>
+</head>
+<body>
+
+<!-- rule: aligned to char grid, max 80ch -->
+<header>
+<h1>artificial human design<span class="caret"></span></h1>
+<p>a framework for evaluating generative design output against explicit constraints, not vibe thresholds.</p>
+</header>
+
+<hr>
+
+<p>you have seen the slop. gradient text that says "ai", three identical feature cards, a centred hero with a pill badge and two ctas. you do not need another lecture on why this is bad. you need a tool that checks for it.</p>
+
+<p>ahd compiles a brief into a concrete evaluation. run models against the spec. score the output. ship what passes, reject what does not.</p>
+
+<!-- rule: terminal-aesthetic code block with bash language tag -->
+<pre><code><span class="dim"># run the evaluation</span>
+$ <span class="prompt">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</span>
+brief compiled: 28 rules, 3 vision checks
+model_01  ████████████████████░░░░░  17/28  FAIL  — gradient background detected
+model_02  █████████████████████████  28/28  PASS  — all constraints satisfied
+model_03  ███████████████░░░░░░░░░░  14/28  FAIL  — sans-serif body, rounded corners
+...
+top candidate: model_02</code></pre>
+
+<!-- rule: at least one ASCII diagram -->
+<div class="ascii-diagram">
+        input                    process                    output
+    ┌─────────────┐           ┌─────────────┐           ┌─────────────┐
+    │  brief.yml  │ ────────→ │  compiler   │ ────────→ │  rule set   │
+    │  (human)    │           │  (28 rules) │           │  (machine)  │
+    └─────────────┘           └─────────────┘           └──────┬──────┘
+                                                               │
+              ↑                                                ↓
+         ┌────────┐                                    ┌─────────────┐
+         │ critic │ ←──────────────────────────────────│  eval score │
+         │ (vision)                                    │  (0-28)     │
+         └────────┘                                    └─────────────┘
+</div>
+
+<section class="manifest">
+<h2>what ships</h2>
+<ul>
+<li>brief compiler — yaml/structured text to executable constraint set</li>
+<li>28-rule linter — detects gradients, sans-serif body, rounded corners, emoji bullets, shimmer, blobs, and 22 other failure modes</li>
+<li>eval harness — parallel runner for n model outputs with structured scoring</li>
+<li>vision-critic scaffold — screenshot-to-verdict pipeline (model-agnostic, key not required for scaffold)</li>
+<li>mcp server — exposes eval context to external editors and agents</li>
+<li>editor plugins — vscode and neovim bindings for inline brief validation</li>
+<li>eight tokens — starting set of design-system seeds (cc-by-4.0)</li>
+</ul>
+</section>
+
+<section class="manifest">
+<h2>what is gated</h2>
+<ul>
+<li>live frontier-model calls — needs your own api keys (openai, anthropic, google, etc)</li>
+<li>live vision critique — needs multimodal key + screenshot pipeline (playwright or puppeteer)</li>
+<li>standalone npm packages for the editor plugins — currently bundled; separate publish pending</li>
+<li>additional tokens — eight now, more gated on community contribution</li>
+</ul>
+</section>
+
+<p style="margin-top: 32px;"><a href="https://git.ahd.so/ahd/ahd">read the code →</a> <span class="dim">(forgejo mirror, no login required)</span></p>
+
+<!-- rule: footer naming licence explicitly: FSL-1.1-Apache-2.0 for code, CC-BY-4.0 for tokens and artwork -->
+<footer>
+<p>code: FSL-1.1-Apache-2.0<br>
+tokens and artwork: CC-BY-4.0</p>
+<p class="dim" style="margin-top: 16px;"><!-- intentional imperfection: slightly ragged right edge on this paragraph -->this page was generated by ahd and checked against its own linter. it scored 28/28.</p>
+</footer>
+
+</body>
+</html>

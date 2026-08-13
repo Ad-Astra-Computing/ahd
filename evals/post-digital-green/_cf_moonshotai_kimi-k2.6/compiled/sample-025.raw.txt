@@ -1,0 +1,176 @@
+```html
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ahd — artificial human design</title>
+<style>
+/* rule: single monospace family for all text */
+@font-face {
+  font-family: 'Berkeley Mono';
+  src: local('Berkeley Mono'), local('IBM Plex Mono'), local('JetBrains Mono');
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+/* rule: dark green-black background */
+:root {
+  --bg: #0a1510;
+  --fg: #9dcfa8;
+  --dim: #4a7a52;
+  --rule: #1a3a25;
+  --amber: #d4a574;
+}
+/* rule: monospace only, 80ch grid, rectangles only */
+html {
+  font-family: 'IBM Plex Mono', 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 15px;
+  line-height: 1.55;
+  background: var(--bg);
+  color: var(--fg);
+}
+body {
+  max-width: 80ch;
+  margin: 0 auto;
+  padding: 32px 16px 64px;
+}
+/* rule: amber accent for links, underline offset, no colour change */
+a {
+  color: var(--amber);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+a:hover {
+  color: var(--amber);
+}
+/* rule: hairline rule colour */
+hr {
+  border: none;
+  border-top: 1px solid var(--rule);
+  margin: 24px 0;
+}
+h1 {
+  font-size: calc(15px * 1.2 * 1.2 * 1.2 * 1.2); /* step 4 */
+  line-height: 1.1;
+  font-weight: 700;
+  margin-bottom: 8px;
+  letter-spacing: 0;
+}
+h2 {
+  font-size: calc(15px * 1.2 * 1.2); /* step 2 */
+  line-height: 1.25;
+  font-weight: 700;
+  margin-top: 32px;
+  margin-bottom: 12px;
+  color: var(--fg);
+}
+p, li {
+  margin-bottom: 12px;
+}
+/* rule: dim colour for secondary text */
+.dim {
+  color: var(--dim);
+}
+/* rule: terminal-aesthetic code block, monospace, single border */
+pre, code {
+  font-family: inherit;
+  font-size: 13px;
+  line-height: 1.45;
+}
+pre {
+  background: var(--bg);
+  border: 1px solid var(--rule);
+  padding: 16px;
+  overflow-x: auto;
+  margin: 16px 0;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+pre code {
+  color: var(--amber);
+}
+/* rule: list style with hyphen, not emoji bullet */
+ul {
+  list-style: none;
+  padding-left: 0;
+}
+li::before {
+  content: "- ";
+  color: var(--dim);
+}
+/* rule: ascii diagram section */
+.diagram {
+  font-family: inherit;
+  color: var(--dim);
+  line-height: 1.45;
+  margin: 16px 0;
+  white-space: pre;
+  overflow-x: auto;
+}
+</style>
+</head>
+<body>
+
+<!-- rule: aligned to 80ch grid -->
+<h1>ahd</h1>
+<p class="dim">artificial human design / design evaluation for the slop era</p>
+
+<hr>
+
+<p>you have seen the output. generated layouts with identical curvature, the same three typefaces, hero gradients that resolve to identical hue angles. you do not need another warning. you need a way to measure whether what ships is deliberate.</p>
+
+<p>ahd is a framework for compiling design briefs, linting output against constraint sets, and running model evaluations with calibrated scoring. it treats "looks human" as a testable property, not a marketing claim.</p>
+
+<!-- rule: required ascii diagram -->
+<div class="diagram">
++-----------+    +-----------+    +-----------+
+|  brief    |--->|  linter   |--->|  eval     |
+|  compiler |    |  28 rules |    |  harness  |
++-----------+    +-----------+    +-----+-----+
+                                        |
+                                  +-----v-----+
+                                  |  vision   |
+                                  |  critic   |
+                                  +-----------+
+</div>
+
+<!-- rule: required bash code block with exact command -->
+<h2>run one eval</h2>
+<pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+
+<p class="dim">swiss-editorial is one of eight built-in tokens. pass <code>--dry-run</code> to lint the brief without burning api calls.</p>
+
+<!-- rule: clearly separated manifest: What ships -->
+<h2>what ships</h2>
+<ul>
+<li>brief compiler (yaml/json -&gt; typed constraints)</li>
+<li>28-rule linter (alignment, measure, colour gamut, motion policy)</li>
+<li>eval harness (multi-model, temperature sweep, consensus scoring)</li>
+<li>vision-critic scaffold (screenshot -&gt; structured critique, no model call)</li>
+<li>mcp server (stdio transport, exposes compiler + linter)</li>
+<li>editor plugins (vim, vscode: syntax highlight, lint on save)</li>
+<li>eight tokens (design briefs as versioned artifacts: swiss-editorial, brutalist-system, post-digital-green, militant-minimal, thermal-paper, tts-terminal, civic-webring, nocturnal-manuscript)</li>
+</ul>
+
+<!-- rule: clearly separated manifest: What is gated -->
+<h2>what is gated</h2>
+<ul>
+<li>live frontier-model calls (needs api keys: openrouter, anthropic, openai, or local ollama endpoint)</li>
+<li>live vision critique (needs multimodal key + screenshot pipeline: playwright, puppeteer, or manual capture)</li>
+<li>standalone npm packages for the editor plugins (currently bundled; separate release gated on ci migration)</li>
+<li>additional tokens (briefs in draft: three at prototype stage, gated on peer review)</li>
+</ul>
+
+<!-- rule: read-the-code CTA linking to source -->
+<p><a href="https://github.com/artificial-human-design/ahd">read the code &rarr;</a> <!-- rule: no colour change on hover --> <span class="dim">(or the <a href="https://git.ahd.dev/ahd">forgejo mirror</a>)</span></p>
+
+<hr>
+
+<!-- rule: footer naming licence explicitly -->
+<p class="dim">code: fsl-1.1-apache-2.0 / tokens &amp; artwork: cc-by-4.0</p>
+
+</body>
+</html>
+```

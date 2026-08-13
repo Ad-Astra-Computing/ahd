@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ahd</title>
+<style>
+:root{
+  --bg: oklch(0.14 0.02 150);               /* rule: background colour */
+  --fg: oklch(0.92 0.12 135);               /* rule: foreground colour */
+  --dim: oklch(0.55 0.05 150);              /* rule: dim colour for code */
+  --rule: oklch(0.3 0.04 150);              /* rule: border / rule colour */
+  --accent: oklch(0.82 0.15 75);            /* rule: amber accent */
+  --space-0:0;
+  --space-1:4px;
+  --space-2:8px;
+  --space-3:12px;
+  --space-4:16px;
+  --space-5:24px;
+  --space-6:32px;
+  --space-7:48px;
+  --space-8:64px;
+}
+html{
+  background:var(--bg);
+  color:var(--fg);
+  font-family:"Berkeley Mono",monospace;   /* rule: single-monospace */
+  line-height:1.55;                        /* rule: body line-height */
+  margin:0;
+  padding:0;
+}
+body{
+  max-width:80ch;                          /* rule: 80‑character grid */
+  margin:0 auto;
+  padding:var(--space-4);
+}
+h1{
+  font-size:1.8rem;
+  line-height:1.1;                         /* rule: display line-height */
+  margin-top:0;
+}
+h2{
+  font-size:1.4rem;
+  line-height:1.25;                        /* rule: h2 line-height */
+  margin-top:var(--space-5);
+}
+p,li{
+  margin:var(--space-2) 0;
+}
+a{
+  color:inherit;
+  text-decoration:underline;
+  text-underline-offset:4px;               /* rule: link underline offset */
+}
+pre{
+  background:var(--dim);
+  padding:var(--space-4);
+  border:1px solid var(--rule);
+  overflow:auto;
+}
+code{
+  font-family:"Berkeley Mono",monospace;
+}
+section{
+  margin-top:var(--space-5);
+  border-top:1px solid var(--rule);
+  padding-top:var(--space-4);
+}
+ul{
+  list-style:none;
+  padding-left:0;
+}
+li::before{
+  content:"- ";
+  color:var(--accent);
+  margin-right:4px;
+}
+footer{
+  font-size:0.85rem;
+  margin-top:var(--space-7);
+  border-top:1px solid var(--rule);
+  padding-top:var(--space-4);
+}
+</style>
+</head>
+<body>
+<h1>artificial human design</h1>
+<p>framework for designers, engineers, founders who have seen the noise. we
+provide a compiled, auditable pipeline that runs on your own hardware.</p>
+
+<pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre> <!-- rule: terminal‑style code block -->
+
+<p><a href="https://github.com/ahd/ahd" target="_blank">read the code</a></p> <!-- rule: read‑the‑code CTA -->
+
+<pre>
++-------------------+   +-------------------+   +-------------------+
+| brief compiler    | → | 28‑rule linter    | → | eval harness      |
++-------------------+   +-------------------+   +-------------------+
+</pre> <!-- rule: ascii diagram -->
+
+<section>
+<h2>what ships</h2>
+<ul>
+<li>brief compiler</li>
+<li>28‑rule linter</li>
+<li>eval harness</li>
+<li>vision‑critic scaffold</li>
+<li>mcp server</li>
+<li>editor plugins</li>
+<li>eight tokens</li>
+</ul>
+</section>
+
+<section>
+<h2>what is gated</h2>
+<ul>
+<li>live frontier‑model calls (needs api keys)</li>
+<li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+<li>standalone npm packages for the editor plugins</li>
+<li>additional tokens</li>
+</ul>
+</section>
+
+<footer>
+code licence: fsl-1.1-apache-2.0 • tokens &amp; artwork: cc-by-4.0
+</footer>
+</body>
+</html>

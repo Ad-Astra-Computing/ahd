@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AHD – Artificial Human Design</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: system-ui, sans-serif;
+      line-height: 1.6;
+      color: #111;
+      background: #f9f9f9;
+    }
+    header {
+      padding: 2rem 1rem;
+      background: #fff;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 1rem;
+    }
+    h1 {
+      margin: 0;
+      font-size: 2rem;
+    }
+    h2 {
+      margin-top: 2rem;
+      font-size: 1.5rem;
+      border-bottom: 2px solid #e0e0e0;
+      padding-bottom: .3rem;
+    }
+    .code-block {
+      background: #1e1e1e;
+      color: #d4d4d4;
+      padding: 1rem;
+      border-radius: 4px;
+      overflow-x: auto;
+      font-family: "Courier New", monospace;
+      margin: 1.5rem 0;
+    }
+    .code-block::before {
+      content: "$ ";
+      color: #6a9955;
+    }
+    a.cta {
+      display: inline-block;
+      margin-top: .5rem;
+      padding: .6rem 1.2rem;
+      background: #0070f3;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 4px;
+    }
+    ul {
+      list-style: disc inside;
+      margin: .5rem 0 1.5rem 0;
+    }
+    footer {
+      margin-top: 3rem;
+      padding: 1rem;
+      background: #fff;
+      border-top: 1px solid #e0e0e0;
+      font-size: .9rem;
+      text-align: center;
+    }
+    footer a {
+      color: inherit;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <header class="container">
+    <h1>AHD – Artificial Human Design</h1>
+    <p>Real tooling for designers, engineers, and founders who demand rigor.</p>
+  </header>
+
+  <main class="container">
+    <section>
+      <h2>Run the evaluation</h2>
+      <div class="code-block"><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></div>
+      <a href="https://github.com/ahd/ahd" class="cta" target="_blank" rel="noopener">read-the-code</a>
+    </section>
+
+    <section>
+      <h2>What ships</h2>
+      <ul>
+        <li>Brief compiler</li>
+        <li>28‑rule linter</li>
+        <li>Eval harness</li>
+        <li>Vision‑critic scaffold</li>
+        <li>MCP server</li>
+        <li>Editor plugins</li>
+        <li>Eight tokens</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>What is gated</h2>
+      <ul>
+        <li>Live frontier‑model calls (requires API keys)</li>
+        <li>Live vision critique (requires multimodal key + screenshot pipeline)</li>
+        <li>Standalone npm packages for the editor plugins</li>
+        <li>Additional tokens</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    License: Code – <a href="https://spdx.org/licenses/FSL-1.1-Apache-2.0.html" target="_blank" rel="noopener">FSL-1.1-Apache-2.0</a> | Tokens &amp; Artwork – <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC-BY-4.0</a>
+  </footer>
+</body>
+</html>

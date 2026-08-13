@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ahd</title>
+  <style>
+    /* rule: design post-digital; everything in monospace; dark green-black background, muted green foreground, single amber accent */
+    :root {
+      --bg: oklch(0.14 0.02 150);
+      --fg: oklch(0.92 0.12 135);
+      --dim: oklch(0.55 0.05 150);
+      --rule: oklch(0.3 0.04 150);
+      --amber: oklch(0.82 0.15 75);
+      --max: 80ch;
+    }
+
+    /* rule: no gradients, no shadows, no radii, no entrance animation */
+    * {
+      box-sizing: border-box;
+      border-radius: 0;
+      box-shadow: none;
+      animation: none;
+    }
+
+    /* rule: single-monospace pairing; 80 character grid; terse lowercase voice */
+    html {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: "Berkeley Mono", "IBM Plex Mono", "JetBrains Mono", ui-monospace, monospace;
+      font-size: 15px;
+      line-height: 1.55;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--fg);
+    }
+
+    /* rule: rectangles only; one hairline rule colour; align to 80ch */
+    .page {
+      width: min(calc(100vw - 32px), var(--max));
+      margin: 0 auto;
+      padding: 24px 0 32px;
+    }
+
+    .rule {
+      border-top: 1px solid var(--rule);
+      height: 0;
+      margin: 16px 0;
+    }
+
+    header,
+    section,
+    footer {
+      border: 1px solid var(--rule);
+      padding: 12px;
+      margin: 0 0 16px;
+    }
+
+    /* rule: avoid centred hero stack; keep layout asymmetrical but grid-bound */
+    .hero {
+      display: grid;
+      grid-template-columns: 3fr 2fr;
+      gap: 12px;
+      align-items: start;
+    }
+
+    @media (max-width: 760px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    h1,
+    h2,
+    p,
+    pre,
+    ul {
+      margin: 0;
+    }
+
+    h1,
+    h2 {
+      font-size: 1rem;
+      font-weight: 700;
+      text-transform: lowercase;
+      letter-spacing: 0.04em;
+    }
+
+    p + p,
+    ul,
+    pre,
+    .stack > * + * {
+      margin-top: 12px;
+    }
+
+    .dim {
+      color: var(--dim);
+    }
+
+    .accent {
+      color: var(--amber);
+    }
+
+    /* rule: link style underline-offset 4px, no colour change */
+    a,
+    a:visited,
+    a:hover,
+    a:active {
+      color: inherit;
+      text-decoration-line: underline;
+      text-decoration-color: currentColor;
+      text-underline-offset: 4px;
+      text-decoration-thickness: 1px;
+    }
+
+    /* rule: terminal-aesthetic code block; rectangles only */
+    pre {
+      overflow-x: auto;
+      border: 1px solid var(--rule);
+      padding: 12px;
+      white-space: pre;
+      background: transparent;
+    }
+
+    code {
+      font: inherit;
+    }
+
+    /* rule: no feature cards; use manifest lists instead */
+    ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    li::before {
+      content: "[ ] ";
+      color: var(--amber);
+    }
+
+    .meta {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    @media (max-width: 760px) {
+      .meta {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .small {
+      font-size: 0.833rem;
+    }
+
+    .ascii {
+      color: var(--dim);
+      border: 1px solid var(--rule);
+      padding: 12px;
+      white-space: pre;
+      overflow-x: auto;
+    }
+
+    /* rule: intentional imperfection; include one visible seam rather than polishing it away */
+    .seam {
+      border-right: 0;
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <!-- rule: one-page landing; one screen of reading; audience already knows the problem -->
+    <header class="hero">
+      <div class="stack seam">
+        <p class="small dim"><!-- rule: technical, lowercase by default, terse -->artificial human design / ahd</p>
+        <div class="rule" aria-hidden="true"></div>
+        <h1><!-- rule: avoid salesy lecture; show a framework -->a design system for catching slop before it hardens into product.</h1>
+        <p><!-- rule: brief intent; visitor needs to be shown seriousness, not sold the thesis -->
+          ahd turns taste into constraints you can run: compiled briefs, a linter
+          with 28 rules, an eval harness, and the scaffolding around live visual
+          critique. the point is not more output. the point is refusing the easy
+          defaults that make everything look machine-averaged.
+        </p>
+        <p>
+          <a href="https://github.com/" target="_blank" rel="noreferrer">read the code</a>
+          <!-- rule: required read-the-code CTA linking to github or forgejo -->
+        </p>
+      </div>
+
+      <div class="stack">
+        <div class="ascii" aria-label="ascii diagram">
+<!-- rule: include one ASCII diagram rendered as text -->
++------------------------------+
+| brief.yml                    |
++--------------+---------------+
+               |
+               v
++--------------+---------------+
+| compiler -> linter -> eval   |
++--------------+---------------+
+               |
+               v
++--------------+---------------+
+| pass / fail / diffs to read  |
++------------------------------+
+        </div>
+        <p class="small dim"><!-- rule: intentional imperfection retained as part of post-digital surface -->one seam left visible on purpose.</p>
+      </div>
+    </header>
+
+    <!-- rule: must include the exact one-liner in a monospace code block with bash language tag -->
+    <section class="stack">
+      <h2>run the eval</h2>
+      <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+      <p class="dim small">
+        live runs stay honest about what is local, what is deterministic, and what
+        still depends on external model access.
+      </p>
+    </section>
+
+    <!-- rule: clearly separated manifest section titled 'What ships' -->
+    <section class="meta">
+      <div class="stack">
+        <h2>what ships</h2>
+        <ul>
+          <li>brief compiler</li>
+          <li>28-rule linter</li>
+          <li>eval harness</li>
+          <li>vision-critic scaffold</li>
+          <li>mcp server</li>
+          <li>editor plugins</li>
+          <li>eight tokens</li>
+        </ul>
+      </div>
+
+      <!-- rule: clearly separated manifest section titled 'What is gated' -->
+      <div class="stack">
+        <h2>what is gated</h2>
+        <ul>
+          <li>live frontier-model calls <span class="dim">(needs api keys)</span></li>
+          <li>live vision critique <span class="dim">(needs multimodal key + screenshot pipeline)</span></li>
+          <li>standalone npm packages for the editor plugins</li>
+          <li>additional tokens</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- rule: footer must name the licence explicitly; avoid canonical 4-column footer -->
+    <footer class="stack small">
+      <div class="rule" aria-hidden="true"></div>
+      <p>
+        ahd is for designers, engineers, and founders who want a repeatable way to
+        reject obvious model habits without pretending taste can be outsourced.
+      </p>
+      <p>
+        licence: <span class="accent">fsl-1.1-apache-2.0</span> for code,
+        <span class="accent">cc-by-4.0</span> for tokens and artwork.
+      </p>
+    </footer>
+  </main>
+</body>
+</html>

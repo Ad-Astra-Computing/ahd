@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Artificial Human Design</title>
+  <style>
+    /* rule: base typography */
+    html {font-size: 17px; line-height: 1.5; font-family: "Neue Haas Grotesk Text", Helvetica, Arial, sans-serif; color: oklch(0.18 0 0); background: oklch(0.98 0.005 95);}
+    body {margin: 0; padding: 0;}
+    /* rule: 12‑column Swiss grid */
+    .grid {display: grid; grid-template-columns: repeat(12, 1fr); gap: 24px; max-width: calc(100vw - 64px); margin: 0 auto; padding: 0 32px;}
+    /* rule: baseline rhythm */
+    .section {margin-top: 160px; /* one dramatic jump */}
+    h1, h2, h3 {margin: 0; font-weight: 900; line-height: 1.05; letter-spacing: -0.02em; color: inherit;}
+    h1 {font-family: "Neue Haas Grotesk Display", Helvetica, Arial, sans-serif; font-size: 144px; /* rule: anchored word display >=120px */}
+    h2 {font-size: 32px; margin-bottom: 12px;}
+    ul {margin: 0; padding-left: 1.5ch;}
+    li {margin-bottom: 8px;}
+    a {color: inherit; text-decoration: underline;}
+    /* rule: code block styling */
+    pre {background: oklch(0.98 0.005 95); border: 1px solid oklch(0.18 0 0); padding: 12px; overflow-x: auto;}
+    code {font-family: "Courier New", monospace; font-size: 0.95em;}
+    /* rule: CTA button */
+    .cta {display: inline-block; padding: 8px 16px; border: 1px solid oklch(0.18 0 0); text-decoration: none; font-weight: 700; margin-top: 24px;}
+    /* rule: spot colour used exactly once */
+    .spot-line {background: oklch(0.58 0.22 27); height: 4px; margin: 24px 0; grid-column: 1 / -1; position: relative; left: -24px; width: calc(100% + 48px);}
+    /* rule: no rounded corners except pills (none used) */
+    * {border-radius: 0;}
+    footer {font-size: 0.85em; margin-top: 160px; padding: 24px 0; border-top: 1px solid oklch(0.18 0 0);}
+  </style>
+</head>
+<body>
+  <div class="grid">
+    <!-- rule: left‑aligned hero word -->
+    <h1 class="section" style="grid-column: 1 / span 8;">AHD</h1>
+    <!-- rule: spot colour used exactly once as a bleed line -->
+    <div class="spot-line"></div>
+
+    <!-- rule: terminal‑style code block -->
+    <section class="section" style="grid-column: 1 / span 9;">
+      <pre><code class="bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+      <a href="https://github.com/ahd/ahd" class="cta">read the code</a>
+    </section>
+
+    <!-- rule: manifest – what ships -->
+    <section class="section" style="grid-column: 1 / span 6;">
+      <h2>What ships</h2>
+      <ul>
+        <li>brief compiler</li>
+        <li>28‑rule linter</li>
+        <li>eval harness</li>
+        <li>vision‑critic scaffold</li>
+        <li>MCP server</li>
+        <li>editor plugins</li>
+        <li>eight tokens</li>
+      </ul>
+    </section>
+
+    <!-- rule: manifest – what is gated -->
+    <section class="section" style="grid-column: 7 / span 6;">
+      <h2>What is gated</h2>
+      <ul>
+        <li>live frontier‑model calls (needs API keys)</li>
+        <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+        <li>standalone npm packages for the editor plugins</li>
+        <li>additional tokens</li>
+      </ul>
+    </section>
+
+    <!-- rule: footer with explicit licences -->
+    <footer class="section" style="grid-column: 1 / -1;">
+      Code licence: FSL‑1.1‑Apache‑2.0 • Tokens &amp; artwork licence: CC‑BY‑4.0
+    </footer>
+  </div>
+</body>
+</html>

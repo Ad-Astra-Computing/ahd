@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AHD — Artificial Human Design</title>
+<style>
+  :root {
+    --bg: #0c0c0c;
+    --fg: #c1c1c1;
+    --fg-dim: #6b6b6b;
+    --accent: #e8e4dc;
+    --accent-2: #8b8680;
+    --border: #1e1e1e;
+    --code-bg: #111111;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.6;
+    font-size: 15px;
+  }
+
+  main {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 5rem 1.5rem 3rem;
+  }
+
+  h1 {
+    font-size: 1.25rem;
+    font-weight: 400;
+    color: var(--accent);
+    letter-spacing: -0.01em;
+    margin-bottom: 1.5rem;
+  }
+
+  h1 span {
+    color: var(--fg-dim);
+  }
+
+  .lede {
+    font-size: 1.125rem;
+    line-height: 1.55;
+    color: var(--fg);
+    margin-bottom: 2.5rem;
+    max-width: 600px;
+  }
+
+  .lede strong {
+    color: var(--accent);
+    font-weight: 400;
+  }
+
+  .code-block {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 0.75rem;
+    overflow-x: auto;
+  }
+
+  .code-block pre {
+    margin: 0;
+    font-family: "SF Mono", Monaco, Inconsolata, "Fira Code", monospace;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    color: var(--accent);
+  }
+
+  .code-meta {
+    font-size: 0.75rem;
+    color: var(--fg-dim);
+    margin-bottom: 3rem;
+    padding-left: 0.25rem;
+  }
+
+  .manifest {
+    margin-bottom: 2.5rem;
+  }
+
+  .manifest h2 {
+    font-size: 0.875rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--accent-2);
+    margin-bottom: 0.875rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .manifest ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .manifest li {
+    padding: 0.35rem 0;
+    color: var(--fg);
+    font-size: 0.9375rem;
+  }
+
+  .manifest li::before {
+    content: "—";
+    color: var(--fg-dim);
+    margin-right: 0.75rem;
+  }
+
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 2.5rem 0;
+  }
+
+  .cta {
+    margin: 2.5rem 0;
+  }
+
+  .cta a {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid var(--accent-2);
+    padding-bottom: 0.1em;
+    font-size: 0.9375rem;
+  }
+
+  .cta a:hover {
+    border-bottom-color: var(--accent);
+  }
+
+  footer {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+
+  footer p {
+    font-size: 0.8125rem;
+    color: var(--fg-dim);
+    line-height: 1.6;
+  }
+
+  footer a {
+    color: var(--fg-dim);
+    text-decoration: none;
+    border-bottom: 1px solid var(--border);
+  }
+
+  footer a:hover {
+    color: var(--fg);
+    border-bottom-color: var(--accent-2);
+  }
+
+  @media (max-width: 480px) {
+    main {
+      padding: 3rem 1rem 2rem;
+    }
+    .lede {
+      font-size: 1rem;
+    }
+  }
+</style>
+</head>
+<body>
+<main>
+
+<h1>AHD <span>/ Artificial Human Design</span></h1>
+
+<p class="lede">
+A framework for evaluating generative design systems against intentional constraints, not statistical likelihood. <strong>You write the brief; the system tests whether the output respects it.</strong> No scoring model trained on Dribbble. No "vibe check." Rules you can inspect, modify, and version.
+</p>
+
+<div class="code-block">
+<pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+</div>
+<p class="code-meta">Run against live models or cached traces. Output: per-sample pass/fail with rule attribution.</p>
+
+<section class="manifest">
+<h2>What ships</h2>
+<ul>
+<li>Brief compiler (YAML/JSON to internal constraint graph)</li>
+<li>28-rule linter (typography, layout, color, motion, a11y)</li>
+<li>Eval harness (parallel execution, result aggregation, diff reporting)</li>
+<li>Vision-critic scaffold (open slot for Multimodal-as-judge)</li>
+<li>MCP server (Model Context Protocol for IDE integration)</li>
+<li>Editor plugins (VS Code, Zed, Neovim—workspace-local)</li>
+<li>Eight tokens (curated, versioned, replaceable)</li>
+</ul>
+</section>
+
+<section class="manifest">
+<h2>What is gated</h2>
+<ul>
+<li>Live frontier-model calls (needs API keys: OpenAI, Anthropic, Google, etc.)</li>
+<li>Live vision critique (needs multimodal key + screenshot pipeline)</li>
+<li>Standalone npm packages for the editor plugins (publish pending)</li>
+<li>Additional tokens (expansion set, external review in progress)</li>
+</ul>
+</section>
+
+<div class="cta">
+<a href="https://git.ahd.dev/ahd/core">Read the code →</a>
+</div>
+
+<hr class="divider">
+
+<footer>
+<p>
+Code licensed under <a href="https://fsl.software/">FSL-1.1-Apache-2.0</a>. Tokens and artwork licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC-BY-4.0</a>. No copyright assignment required for contributions.
+</p>
+</footer>
+
+</main>
+</body>
+</html>

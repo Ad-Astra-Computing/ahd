@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AHD — Artificial Human Design</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;450;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0d1117;
+            --bg-secondary: #161b22;
+            --fg-primary: #e6edf3;
+            --fg-muted: #8b949e;
+            --fg-dim: #484f58;
+            --accent: #50fa7b;
+            --accent-dim: #2ea043;
+            --accent-gated: #da3633;
+            --border-base: rgba(139, 148, 158, 0.12);
+            --border-active: rgba(80, 250, 123, 0.25);
+            --token-ok: #2ea043;
+            --token-warn: #d29922;
+            --token-error: #da3633;
+        }
+        
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: var(--bg-primary);
+            color: var(--fg-primary);
+            line-height: 1.65;
+            letter-spacing: -0.01em;
+            min-height: 100vh;
+        }
+        
+        ::selection {
+            background: rgba(80, 250, 123, 0.15);
+            color: inherit;
+        }
+        
+        /* Custom scrollbar — terminal feel */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--fg-dim);
+            border-radius: 0;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--fg-muted);
+        }
+        
+        /* Status line at top */
+        .status-line {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            line-height: 1;
+            color: var(--fg-dim);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+        
+        .status-indicator {
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            background: var(--token-ok);
+            animation: status-breath 3s ease-in-out infinite;
+        }
+        
+        @keyframes status-breath {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 1; }
+        }
+        
+        /* Section markers like in editors */
+        .section-marker {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: var(--fg-dim);
+            user-select: none;
+        }
+        
+        /* Terminal block */
+        .term-container {
+            background: #0a0c10;
+            border: 1px solid var(--border-base);
+            position: relative;
+        }
+        
+        .term-header {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--border-base);
+        }
+        
+        .term-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 0;
+            display: block;
+        }
+        
+        .term-dot.red { background: #ff5555; }
+        .term-dot.yellow { background: #f1fa8c; }
+        .term-dot.green { background: var(--accent); }
+        
+        .term-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--fg-muted);
+            margin-left: 8px;
+            letter-spacing: 0.02em;
+        }
+        
+        .term-body {
+            padding: 18px 20px;
+            overflow-x: auto;
+        }
+        
+        .term-body pre {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13.5px;
+            line-height: 1.6;
+            color: var(--fg-primary);
+            white-space: pre;
+        }
+        
+        .term-prompt {
+            color: var(--accent);
+        }
+        
+        .term-cursor {
+            display: inline-block;
+            width: 8px;
+            height: 16px;
+            background: var(--fg-primary);
+            animation: cursor-blink 1s step-end infinite;
+            vertical-align: -2px;
+            margin-left: -4px;
+        }
+        
+        @keyframes cursor-blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        
+        .lang-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            color: var(--fg-dim);
+            text-transform: lowercase;
+            letter-spacing: 0.05em;
+            border: 1px solid var(--border-base);
+            padding: 2px 8px;
+            position: absolute;
+            top: 10px;
+            right: 14px;
+        }
+        
+        /* Manifest items */
+        .manifest-section {
+            border-left: 2px solid var(--border-base);
+            padding-left: 24px;
+            position: relative;
+        }
+        
+        .manifest-section::before {
+            content: '';
+            position: absolute;
+            left: -2px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: transparent;
+            transition: background 0.15s ease;
+        }
+        
+        .manifest-section.ships::before {
+            background: var(--accent-dim);
+        }
+        
+        .manifest-section.gated::before {
+            background: var(--token-error);
+        }
+        
+        .manifest-item {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+            padding: 6px 0;
+            font-size: 15px;
+        }
+        
+        .item-status {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            font-weight: 600;
+            flex-shrink: 0;
+            min-width: 36px;
+        }
+        
+        .item-status.ok {
+            color: var(--token-ok);
+        }
+        
+        .item-status.gated {
+            color: var(--token-error);
+        }
+        
+        .item-note {
+            color: var(--fg-muted);
+            font-size: 13px;
+        }
+        
+        /* Links */
+        .link-code {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--fg-primary);
+            text-decoration: none;
+            border-bottom: 1px solid var(--fg-dim);
+            padding-bottom: 1px;
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+        
+        .link-code:hover {
+            color: var(--accent);
+            border-color: var(--accent);
+        }
+        
+        .link-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: var(--fg-primary);
+            text-decoration: none;
+            border: 1px solid var(--border-base);
+            padding: 12px 20px;
+            transition: border-color 0.15s ease, background 0.15s ease;
+        }
+        
+        .link-cta:hover {
+            border-color: var(--accent);
+            background: rgba(80, 250, 123, 0.04);
+        }
+        
+        .link-cta .arrow {
+            transition: transform 0.15s ease;
+        }
+        
+        .link-cta:hover .arrow {
+            transform: translate(3px, -3px);
+        }
+        
+        /* Link decorations in text */
+        .text-link {
+            color: var(--fg-primary);
+            text-decoration: underline;
+            text-decoration-color: var(--fg-dim);
+            text-underline-offset: 3px;
+            transition: text-decoration-color 0.15s ease;
+        }
+        
+        .text-link:hover {
+            text-decoration-color: var(--accent);
+        }
+        
+        /* Footnote style */
+        .license-block {
+            font-size: 13px;
+            color: var(--fg-dim);
+            line-height: 1.7;
+        }
+        
+        .license-name {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: var(--fg-muted);
+        }
+        
+        /* Rule counter decoration */
+        .rule-num {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: var(--fg-dim);
+            min-width: 24px;
+            text-align: right;
+        }
+        
+        /* Minimal decorative: file path breadcrumb */
+        .breadcrumb {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--fg-dim);
+            letter-spacing: 0.02em;
+        }
+        
+        .breadcrumb-sep {
+            color: var(--fg-dim);
+            opacity: 0.5;
+            margin: 0 6px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Top status bar -->
+    <div class="border-b" style="border-color: var(--border-base);">
+        <div class="max-w-3xl mx-auto px-6 py-2 flex items-center justify-between">
+            <div class="status-line">
+                <span class="status-indicator inline-block mr-2"></span>
+                ahd — v0.4.2 — main
+            </div>
+            <nav class="flex items-center gap-6">
+                <a href="https://git.ahd.so/forgejo/ahd" class="link-code text-xs">forgejo</a>
+                <a href="https://github.com/artificial-human-design/ahd" class="link-code text-xs">github</a>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Main content: single reading screen -->
+    <main class="max-w-3xl mx-auto px-6 pt-16 pb-24">
+        
+        <!-- Header -->
+        <header class="mb-16">
+            <div class="breadcrumb mb-6">
+                <span>~</span>
+                <span class="breadcrumb-sep">/</span>
+                <span>ahd</span>
+                <span class="breadcrumb-sep">/</span>
+                <span style="color: var(--fg-muted);">README</span>
+            </div>
+            <h1 style="font-size: 32px; font-weight: 600; letter-spacing: -0.03em; line-height: 1.2; margin-bottom: 20px;">
+                Artificial Human Design
+            </h1>
+            <p style="font-size: 17px; color: var(--fg-muted); max-width: 600px; line-height: 1.65;">
+                A framework for evaluating web design with explicit rules, not model optimism. You write a brief in YAML, AHD compiles it, runs a 28-rule linter, and scores candidates against a vision-critic scaffold. No rankings without reasoning.
+            </p>
+        </header>
+
+        <!-- The Command -->
+        <section class="mb-16">
+            <div class="flex items-center gap-3 mb-4">
+                <span class="section-marker">01</span>
+                <h2 class="text-sm font-medium" style="color: var(--fg-muted); letter-spacing: 0.02em;">ONE LINER</h2>
+            </div>
+            
+            <div class="term-container">
+                <div class="lang-tag">bash</div>
+                <div class="term-header">
+                    <span class="term-dot red"></span>
+                    <span class="term-dot yellow"></span>
+                    <span class="term-dot green"></span>
+                    <span class="term-title">ahd — eval-live</span>
+                </div>
+                <div class="term-body">
+                    <pre><span class="term-prompt">$</span> ahd eval-live swiss-editorial \
+    --brief briefs/landing.yml \
+    --models claude-sonnet-4,gpt-4o,gemini-2.5-pro \
+    --n 10<span class="term-cursor"></span></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Manifest: What ships -->
+        <section class="mb-14">
+            <div class="flex items-center gap-3 mb-6">
+                <span class="section-marker">02</span>
+                <h2 class="text-sm font-medium" style="color: var(--fg-dim); letter-spacing: 0.02em; text-transform: uppercase;">What ships</h2>
+            </div>
+            
+            <div class="manifest-section ships">
+                <ul style="list-style: none;">
+                    <li class="manifest-item">
+                        <span class="item-status ok">OK</span>
+                        <span>Brief compiler</span>
+                    </li>
+                    <li class="manifest-item">
+                        <span class="item-status ok">OK</span>
+                        <span>28-rule linter <span class="item-note">—<span style="margin-left: 4px;">typography, color contrast, motion, reflow, focus, alt text</span></span></span>
+                    </li>
+                    <li class="manifest-item">
+                        <span class="item-status ok">OK</span>
+                        <span>Eval harness <span class="item-note">—<span style="margin-left: 4px;">parallel generation, rule enforcement, score aggregation</span></span></span>
+                    </li>
+                    <li class="manifest-item">
+                        <span class="item-status ok">OK</span>
+                        <span>Vision-critic scaffold <span class="item-note">—<span style="margin-left: 4px;">prompt templates, structured output schema, no live calls</span></span></span>
+                    </li>
+                    <li class="manifest-item">
+                        <span class="item-status ok">OK</span>
+                        <span>MCP server <span class="item-note">—<span style="margin-left: 4px;">stdio transport, tool definitions for brief inspection</span></span></span>
+                    </li>
+                    <li class="manifest-item">
+                        <span class="item-status ok">OK</span>
+                        <span>Editor plugins <span class="item-note">—<span style="margin-left: 4px;">VS Code, Zed; .wasm for nvim in progress</span></span></span>
+                    </li>
+                    <li class="manifest-item">
+                        <span class="item-status ok">OK</span>
+                        <span>Eight tokens <span class="item-note">—<span style="margin-left: 4px;">curated design vocabulary, versioned in git</span></span></span>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Manifest: What is gated -->
+        <section class="mb-16">
+            <div class="flex items-center gap-3 mb-6">
+                <span class="section-marker">03</span>
+                <h2 class="text-sm font-medium" style="color: var(--fg-dim); letter-spacing: 0.02em; text-transform: uppercase;">What is gated</h2>
+            </div>
+            
+            <div class="manifest-section gated">
+                <ul style="list-style: none;">
+                    <li class="manifest-item">
+                        <span class="item-status gated">KEY</span>
+                        <span>Live frontier-model calls <span class="item-note">—<span style="margin-left: 4px;">requires your own API keys</span></span></span>
+                    </li>
+                    <li class="manifest-item">
+                        <span class="item-status gated">KEY</span>
+                        <span>Live vision critique <span class="item-note">—<span style="margin-left: 4px;">requires multimodal key + screenshot pipeline</span></span></span>
+                    </li>
+                    <li class="manifest-item">
+                        <span class="item-status gated">WIP</span>
+                        <span>Standalone npm packages for editor plugins</li>
+                    <li class="manifest-item">
+                        <span class="item-status gated">WIP</span>
+                        <span>Additional tokens</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="mb-20">
+            <a href="https://github.com/artificial-human-design/ahd" class="link-cta">
+                <span>Read the code</span>
+                <svg class="arrow" width="12" height="12" viewBox="0 0 12 12" fill="none" style="color: var(--accent);">
+                    <path d="M1 11L11 1M11 1H3M11 1V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/>
+                </svg>
+            </a>
+            <span class="ml-4" style="font-size: 12px; color: var(--fg-dim); font-family: 'JetBrains Mono', monospace;">forgejo mirror also available</span>
+        </section>
+
+    </main>
+
+    <!-- Footer: non-standard layout -->
+    <footer style="border-top: 1px solid var(--border-base);">
+        <div class="max-w-3xl mx-auto px-6 py-10">
+            <div class="license-block">
+                <p style="margin-bottom: 12px;">
+                    <strong style="color: var(--fg-muted); font-weight: 500;">License</strong>
+                </p>
+                <p style="margin-bottom: 16px;">
+                    Code: <span class="license-name">FSL-1.1-Apache-2.0</span>
+                    <span style="color: var(--fg-dim); margin: 0 8px;">—</span>
+                    converts to Apache-2.0 after two years
+                </p>
+                <p>
+                    Tokens and artwork: <span class="license-name">CC-BY-4.0</span>
+                </p>
+            </div>
+            <div class="mt-10 pt-6" style="border-top: 1px solid var(--border-base); display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+                <span style="font-size: 12px; color: var(--fg-dim);">© 2025 AHD contributors</span>
+                <span style="font-size: 12px; color: var(--fg-dim); font-family: 'JetBrains Mono', monospace;">commit 4f2a9c1</span>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

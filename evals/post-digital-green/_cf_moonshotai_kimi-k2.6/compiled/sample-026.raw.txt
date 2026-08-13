@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AHD — artificial human design</title>
+<style>
+/* rule: forbidden - gradients, shadows, rounded corners */
+/* rule: single monospace stack per type.pairing-rule */
+/* rule: 80ch char-grid per grid.columns */
+/* rule: oklch palette per colour.space */
+/* rule: no radii per surface.radius.rule */
+/* rule: forbidden shadows per surface.shadow.policy */
+/* rule: forbidden motion per surface.motion.policy except caret/link */
+@font-face {
+  font-family: 'Berkeley Mono';
+  src: local('Berkeley Mono'), local('IBM Plex Mono'), local('JetBrains Mono');
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  background: oklch(0.14 0.02 150); /* rule: colour.roles.background */
+  color: oklch(0.92 0.12 135); /* rule: colour.roles.foreground */
+  font-family: 'Berkeley Mono', 'IBM Plex Mono', 'JetBrains Mono', ui-monospace, monospace; /* rule: type.families.text */
+  font-size: 15px; /* rule: type.scale.base */
+  line-height: 1.55; /* rule: type.line-height.body */
+}
+
+body {
+  max-width: 80ch; /* rule: grid.columns char-grid alignment */
+  margin: 0 auto;
+  padding: 48px 24px 64px; /* rule: space.scale */
+}
+
+/* rule: link underline offset per required */
+a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: oklch(0.82 0.15 75); /* rule: colour.roles.accent */
+  text-underline-offset: 4px;
+}
+
+a:hover {
+  /* rule: no colour change per required */
+}
+
+/* rule: hairline rule colour per brief */
+hr {
+  border: none;
+  height: 1px;
+  background: oklch(0.3 0.04 150); /* rule: colour.roles.border */
+  margin: 32px 0; /* rule: space.scale */
+}
+
+h1, h2, h3 {
+  font-weight: 700; /* rule: type.weights */
+  line-height: 1.1; /* rule: type.line-height.display */
+  text-transform: lowercase; /* rule: copy.voice lowercase by default */
+}
+
+h1 {
+  font-size: calc(15px * 1.2 * 1.2 * 1.2 * 1.2); /* rule: type.scale ratio^4 */
+  line-height: 1.1;
+  margin-bottom: 8px; /* rule: space.scale */
+}
+
+h2 {
+  font-size: calc(15px * 1.2 * 1.2); /* rule: type.scale ratio^2 */
+  line-height: 1.25; /* rule: type.line-height.h2 */
+  margin-top: 32px; /* rule: space.scale */
+  margin-bottom: 16px; /* rule: space.scale */
+}
+
+h3 {
+  font-size: calc(15px * 1.2); /* rule: type.scale ratio^1 */
+  margin-top: 24px; /* rule: space.scale */
+  margin-bottom: 12px; /* rule: space.scale */
+}
+
+p {
+  margin-bottom: 16px; /* rule: space.scale */
+  max-width: 72ch; /* rule: type.measure */
+}
+
+/* rule: amber accent per colour.roles.accent */
+.amber {
+  color: oklch(0.82 0.15 75);
+}
+
+/* rule: dim per colour.palette.dim */
+.dim {
+  color: oklch(0.55 0.05 150);
+}
+
+/* rule: terminal-aesthetic code block per brief */
+pre {
+  background: oklch(0.1 0.02 150);
+  border: 1px solid oklch(0.3 0.04 150); /* rule: surface.border */
+  padding: 16px 20px; /* rule: space.scale */
+  margin: 16px 0 24px; /* rule: space.scale */
+  overflow-x: auto;
+  font-family: inherit;
+  font-size: 13px; /* rule: type.scale.base -1 step approx */
+  line-height: 1.55;
+}
+
+code {
+  font-family: inherit;
+}
+
+/* rule: ASCII diagram as text per required */
+.ascii-diagram {
+  font-family: inherit;
+  font-size: 13px;
+  line-height: 1.4;
+  margin: 24px 0; /* rule: space.scale */
+  overflow-x: auto;
+}
+
+/* rule: manifest section separation per brief */
+.manifest {
+  margin-top: 32px; /* rule: space.scale */
+}
+
+.manifest h2 {
+  margin-top: 0;
+}
+
+.manifest ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.manifest li {
+  padding-left: 24px; /* rule: space.scale */
+  position: relative;
+  margin-bottom: 8px; /* rule: space.scale */
+}
+
+.manifest li::before {
+  content: "-"; /* rule: no emoji bullets - forbidden */
+  position: absolute;
+  left: 0;
+  color: oklch(0.55 0.05 150); /* rule: colour.palette.dim */
+}
+
+/* rule: footer licence explicit per required */
+footer {
+  margin-top: 64px; /* rule: space.scale */
+  padding-top: 32px; /* rule: space.scale */
+  border-top: 1px solid oklch(0.3 0.04 150); /* rule: surface.border */
+  font-size: 13px; /* rule: type.scale -1 step */
+  color: oklch(0.55 0.05 150); /* rule: colour.palette.dim */
+}
+
+/* rule: intentional imperfection - slight misalignment in header */
+.imperfection {
+  margin-left: -2px; /* rule: required-quirks */
+}
+
+/* rule: caret blink allowed per surface.motion.policy exception */
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+.caret {
+  display: inline-block;
+  width: 8px;
+  height: 15px;
+  background: oklch(0.82 0.15 75); /* rule: colour.roles.accent */
+  animation: blink 1s step-end infinite; /* rule: caret blink exception */
+  vertical-align: text-bottom;
+  margin-left: 2px;
+}
+</style>
+</head>
+<body>
+
+<!-- rule: char-grid - 80ch max width -->
+
+<header class="imperfection">
+<h1>ahd<span class="amber">.</span></h1>
+<p class="dim">artificial human design — a framework for evaluating generative interfaces</p>
+</header>
+
+<hr>
+
+<p>you have seen the slop. thin praise, overconfident spacing, the uncanny sheen of prompts iterated to death. ahd does not sell you on the problem. it gives you the rigour to measure it.</p>
+
+<p>the framework compiles briefs into structured evals, runs models against pinned rule-sets, and scores outputs on design intent rather than polish. a vision-critic scaffold compares renders to spec. an MCP server surfaces results in your editor. everything is versioned, inspectable, and deliberately constrained.</p>
+
+<!-- rule: ASCII diagram rendered as text per required -->
+<div class="ascii-diagram">
+<pre>
+brief.yml ──┬──> compiler ──> linter ──┬──> eval harness ──> report
+            │     (28 rules)           │
+            │                          └──> vision-critic ──> diff
+            │
+            └──> tokens ──> prompt scaffold ──> model call
+</pre>
+</div>
+
+<!-- rule: terminal-aesthetic code block per brief -->
+<!-- rule: bash language tag per required -->
+<pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+
+<p>the harness runs ten generations against the same brief, checks each against the compiled rule-set, and emits a json trace you can diff, replay, or version.</p>
+
+<!-- rule: clearly separated manifest section 'What ships' per required -->
+<section class="manifest">
+<h2>what ships</h2>
+<ul>
+<li>brief compiler — yaml to structured eval plan</li>
+<li>28-rule linter — spacing, hierarchy, type scale, colour contrast, motion policy</li>
+<li>eval harness — parallel generation, result capture, trace export</li>
+<li>vision-critic scaffold — screenshot pipeline, perceptual diff, rule overlay</li>
+<li>MCP server — model context protocol for editor integration</li>
+<li>editor plugins — vscode and neovim bindings (source-distributed, not yet packaged)</li>
+<li>eight tokens — curated design-system seeds with full provenance</li>
+</ul>
+</section>
+
+<!-- rule: clearly separated manifest section 'What is gated' per required -->
+<section class="manifest">
+<h2>what is gated</h2>
+<ul>
+<li>live frontier-model calls — needs API keys, not bundled</li>
+<li>live vision critique — needs multimodal key + screenshot pipeline setup</li>
+<li>standalone npm packages for the editor plugins — pending registry and CI</li>
+<li>additional tokens — gated on curation and legal review</li>
+</ul>
+</section>
+
+<hr>
+
+<p><a href="https://github.com/artificial-human-design/ahd">read the code</a> — forgejo mirror available on request.</p>
+
+<!-- rule: licence footer per required -->
+<footer>
+<p>code: FSL-1.1-Apache-2.0</p>
+<p>tokens and artwork: CC-BY-4.0</p>
+<p class="dim">no cookies. no analytics. no newsletter.</p>
+</footer>
+
+</body>
+</html>

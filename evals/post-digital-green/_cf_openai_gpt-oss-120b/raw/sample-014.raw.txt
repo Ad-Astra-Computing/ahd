@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Artificial Human Design (AHD)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      line-height: 1.6;
+      background: #fafafa;
+      color: #222;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+    }
+    h1 {
+      font-size: 2.2rem;
+      margin-bottom: 0.5rem;
+    }
+    h2 {
+      font-size: 1.6rem;
+      margin-top: 2rem;
+      margin-bottom: 0.5rem;
+    }
+    p {
+      margin: 0.8rem 0;
+    }
+    .code-block {
+      background: #111;
+      color: #0f0;
+      padding: 1rem;
+      border-radius: 4px;
+      overflow-x: auto;
+      font-family: Menlo, Monaco, "Courier New", monospace;
+      margin: 1.5rem 0;
+    }
+    .code-block code {
+      display: block;
+      white-space: pre;
+    }
+    a.cta {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.6rem 1.2rem;
+      background: #222;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 3px;
+      font-weight: 500;
+    }
+    ul {
+      padding-left: 1.5rem;
+    }
+    footer {
+      background: #eaeaea;
+      padding: 1rem;
+      font-size: 0.9rem;
+      text-align: center;
+      margin-top: 3rem;
+    }
+    footer a {
+      color: inherit;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Artificial Human Design (AHD)</h1>
+      <p>For designers, engineers, and founders who need a real framework against generic AI‑generated sites.</p>
+    </header>
+
+    <section>
+      <h2>Run the evaluation</h2>
+      <div class="code-block">
+        <code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code>
+      </div>
+      <a href="https://github.com/your-org/ahd" class="cta" target="_blank" rel="noopener">read-the-code</a>
+    </section>
+
+    <section>
+      <h2>What ships</h2>
+      <ul>
+        <li>Brief compiler</li>
+        <li>28‑rule linter</li>
+        <li>Eval harness</li>
+        <li>Vision‑critic scaffold</li>
+        <li>MCP server</li>
+        <li>Editor plugins</li>
+        <li>Eight tokens</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>What is gated</h2>
+      <ul>
+        <li>Live frontier‑model calls (requires API keys)</li>
+        <li>Live vision critique (requires multimodal key + screenshot pipeline)</li>
+        <li>Standalone npm packages for the editor plugins</li>
+        <li>Additional tokens</li>
+      </ul>
+    </section>
+  </div>
+
+  <footer>
+    Code licensed under <a href="https://spdx.org/licenses/FSL-1.1-Apache-2.0.html" target="_blank" rel="noopener">FSL‑1.1‑Apache‑2.0</a>. Tokens and artwork licensed under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC‑BY‑4.0</a>.
+  </footer>
+</body>
+</html>

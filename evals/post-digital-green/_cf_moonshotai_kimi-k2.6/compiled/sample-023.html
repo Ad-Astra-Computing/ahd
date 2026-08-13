@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AHD — Artificial Human Design</title>
+<style>
+/* rule: single-monospace */
+@font-face {
+  font-family: 'Berkeley Mono';
+  src: local('Berkeley Mono'), local('IBM Plex Mono'), local('JetBrains Mono');
+}
+/* rule: single-monospace fallback */
+:root {
+  --font-mono: 'Berkeley Mono', 'IBM Plex Mono', 'JetBrains Mono', ui-monospace, monospace;
+  /* rule: bg oklch(0.14 0.02 150) */
+  --bg: #0a0f0a;
+  /* rule: fg oklch(0.92 0.12 135) */
+  --fg: #c4d4b4;
+  /* rule: dim oklch(0.55 0.05 150) */
+  --dim: #6b7a6b;
+  /* rule: rule oklch(0.3 0.04 150) */
+  --rule: #2a3a2a;
+  /* rule: amber oklch(0.82 0.15 75) */
+  --amber: #d4a574;
+}
+/* rule: no radii; only rectangles */
+/* rule: no shadows */
+/* rule: no gradients */
+/* rule: forbidden except caret blink and link underline */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-mono);
+  /* rule: base 15px */
+  font-size: 15px;
+  /* rule: body line-height 1.55 */
+  line-height: 1.55;
+}
+/* rule: char-grid 80 columns */
+body {
+  max-width: 80ch;
+  margin: 0 auto;
+  padding: 32px 16px;
+  /* rule: measure 72ch for reading */
+}
+/* rule: link underline-offset 4px, no colour change */
+a {
+  color: var(--fg);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+}
+a:hover {
+  color: var(--fg);
+  text-decoration-color: var(--amber);
+}
+/* rule: display line-height 1.1 */
+h1 {
+  font-size: calc(15px * 1.2 * 1.2 * 1.2 * 1.2);
+  line-height: 1.1;
+  font-weight: 700;
+  margin-bottom: 24px;
+  /* rule: tracking display 0 */
+  letter-spacing: 0;
+}
+/* rule: h2 line-height 1.25 */
+h2 {
+  font-size: calc(15px * 1.2 * 1.2);
+  line-height: 1.25;
+  font-weight: 700;
+  margin-top: 48px;
+  margin-bottom: 16px;
+  color: var(--amber);
+  /* rule: allcaps 0.04em */
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+/* rule: baseline 8 */
+p, ul, pre {
+  margin-bottom: 16px;
+}
+/* rule: border weight 1px solid rule */
+pre {
+  background: transparent;
+  border: 1px solid var(--rule);
+  padding: 16px;
+  overflow-x: auto;
+  /* rule: no radii */
+  border-radius: 0;
+}
+code {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.4;
+}
+pre code {
+  color: var(--fg);
+}
+/* rule: dim for secondary text */
+.dim {
+  color: var(--dim);
+}
+/* rule: amber accent */
+.accent {
+  color: var(--amber);
+}
+/* rule: char-grid alignment */
+hr {
+  border: none;
+  border-top: 1px solid var(--rule);
+  margin: 32px 0;
+}
+/* rule: no emoji bullets */
+ul {
+  list-style: none;
+  padding-left: 0;
+}
+li {
+  padding-left: 16px;
+  position: relative;
+}
+li::before {
+  content: '-';
+  position: absolute;
+  left: 0;
+  color: var(--dim);
+}
+/* rule: no canonical 4-column footer */
+footer {
+  margin-top: 64px;
+  padding-top: 32px;
+  border-top: 1px solid var(--rule);
+  color: var(--dim);
+  font-size: 13px;
+  line-height: 1.6;
+}
+/* intentional imperfection: slightly too-tight section spacing on mobile */
+@media (max-width: 600px) {
+  h2 {
+    margin-top: 32px;
+  }
+}
+/* rule: caret blink allowed */
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+.caret::after {
+  content: '_';
+  color: var(--amber);
+  animation: blink 1s step-end infinite;
+}
+</style>
+</head>
+<body>
+
+<!-- rule: one screen of reading, terse technical voice -->
+<h1>AHD <span class="dim">//</span> <span class="accent">Artificial Human Design</span><span class="caret"></span></h1>
+
+<p class="dim">framework for evaluating generative design systems against human criteria</p>
+
+<!-- rule: at least one ASCII diagram rendered as text -->
+<pre style="border: none; padding-left: 0; padding-right: 0;"><!-- rule: no radii --><code>    INPUT               PROCESS              OUTPUT
+   brief.yml  --------&gt;  compiler   --------&gt;  structured spec
+      |                    |                      |
+      v                    v                      v
+   models.spec  ------&gt;  linter    --------&gt;  rule violations
+      |                    |                      |
+      v                    v                      v
+   eval-live  --------&gt;  harness   --------&gt;  scored candidates
+      |                    |                      |
+      v                    v                      v
+   screenshots  ------&gt;  vision-critic  ----&gt;  ranked results</code></pre>
+
+<p>The loop is closed by human judgment, not replaced by it. AHD does not generate layouts. It compiles briefs, enforces constraints, runs comparative evaluation, and surfaces the gap between what was requested and what was produced.</p>
+
+<!-- rule: terminal-aesthetic code block with bash language tag -->
+<pre><code class="language-bash">$ ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+
+<p>Runs the full pipeline: compile, lint, generate, score, rank. Replace <code>&lt;specs&gt;</code> with provider/model pairs. Output is JSONL to stdout or structured directory tree with <code>--out</code>.</p>
+
+<hr>
+
+<!-- rule: clearly separated manifest section 'What ships' -->
+<h2>What ships</h2>
+<ul>
+<li>brief compiler (yaml to structured design spec)</li>
+<li>28-rule linter (typography, spacing, color, motion, accessibility)</li>
+<li>eval harness (parallel generation + scoring against brief)</li>
+<li>vision-critic scaffold (screenshot ingestion pipeline, local scoring model)</li>
+<li>MCP server (model context protocol for editor integration)</li>
+<li>editor plugins (vscode + neovim, inline diagnostics via LSP)</li>
+<li>eight tokens (curated design-system seeds with explicit lineage)</li>
+</ul>
+
+<!-- rule: clearly separated manifest section 'What is gated' -->
+<h2>What is gated</h2>
+<ul>
+<li>live frontier-model calls (needs API keys: openrouter, anthropic, or openai)</li>
+<li>live vision critique (needs multimodal key + screenshot pipeline: playwright or puppeteer)</li>
+<li>standalone npm packages for the editor plugins (requires registry publishing)</li>
+<li>additional tokens (contribution-reviewed, not auto-generated)</li>
+</ul>
+
+<hr>
+
+<p><!-- rule: read-the-code CTA --><a href="https://github.com/artificial-human-design/ahd">read the code &rarr;</a> <span class="dim">(github mirror: forgejo instance available on request)</span></p>
+
+<!-- rule: footer naming licence explicitly -->
+<footer>
+<p>code: <span class="accent">FSL-1.1-Apache-2.0</span> (functional source license, changes Apache 2.0 after two years)</p>
+<p>tokens and artwork: <span class="accent">CC-BY-4.0</span></p>
+<p class="dim">no cookies. no analytics. no newsletter.</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AHD // artificial human design</title>
+    <style>
+        /* rule: post-digital-green palette */
+        :root {
+            --bg: oklch(0.14 0.02 150);
+            --fg: oklch(0.92 0.12 135);
+            --dim: oklch(0.55 0.05 150);
+            --rule: oklch(0.3 0.04 150);
+            --accent: oklch(0.82 0.15 75);
+        }
+
+        /* rule: single-monospace pairing */
+        /* rule: everything in monospace */
+        * {
+            box-sizing: border-box;
+            font-family: "IBM Plex Mono", "JetBrains Mono", ui-monospace, monospace;
+            font-size: 15px; /* rule: base 15 */
+        }
+
+        /* rule: dark green-black background */
+        body {
+            background-color: var(--bg);
+            color: var(--fg);
+            margin: 0;
+            padding: 40px 20px;
+            line-height: 1.55; /* rule: body line-height 1.55 */
+            display: flex;
+            justify-content: center;
+        }
+
+        /* rule: aligns to an 80 character grid */
+        .grid {
+            width: 80ch;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* rule: measure 72ch */
+        .content {
+            max-width: 72ch;
+        }
+
+        header {
+            margin-bottom: 48px;
+        }
+
+        h1 {
+            font-size: 24px; /* rule: base 15 * 1.2 * 1.2 */
+            font-weight: 700;
+            margin: 0;
+            text-transform: lowercase;
+        }
+
+        .ascii {
+            color: var(--dim);
+            white-space: pre;
+            line-height: 1.2;
+            margin-bottom: 48px;
+            /* rule: intentional imperfection - slightly off-grid ascii */
+            padding-left: 2px; 
+        }
+
+        .hero {
+            margin-bottom: 48px;
+        }
+
+        .hero p {
+            margin: 0;
+            font-size: 18px;
+        }
+
+        /* rule: terminal-aesthetic code block */
+        .terminal {
+            background: var(--bg);
+            border: 1px solid var(--rule); /* rule: rectangles only, no radii */
+            padding: 24px;
+            margin-bottom: 48px;
+            position: relative;
+        }
+
+        code {
+            display: block;
+            color: var(--accent); /* rule: single amber accent */
+        }
+
+        .manifest {
+            margin-bottom: 48px;
+            border-top: 1px solid var(--rule); /* rule: one hairline rule colour */
+            padding-top: 24px;
+        }
+
+        h2 {
+            font-size: 18px;
+            font-weight: 700;
+            text-transform: lowercase;
+            margin: 0 0 24px 0;
+        }
+
+        .manifest-group {
+            margin-bottom: 32px;
+        }
+
+        .manifest-group ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* rule: no emoji bullets */
+        .manifest-group li {
+            margin-bottom: 8px;
+            display: flex;
+        }
+
+        .manifest-group li::before {
+            content: "-";
+            margin-right: 12px;
+            color: var(--dim);
+        }
+
+        /* rule: underline-offset 4px, no colour change */
+        a {
+            color: inherit;
+            text-decoration: underline;
+            text-underline-offset: 4px;
+        }
+
+        a:hover {
+            color: var(--accent);
+        }
+
+        footer {
+            margin-top: 64px;
+            padding-top: 24px;
+            border-top: 1px solid var(--rule);
+            color: var(--dim);
+            font-size: 13px;
+        }
+
+        .cta-area {
+            margin: 48px 0;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="grid">
+    <header>
+        <h1>ahd // artificial human design</h1>
+    </header>
+
+    <div class="content">
+        <!-- rule: at least one ASCII diagram -->
+        <div class="ascii">
+[brief] ----> [linter] ----> [eval]
+                 ^              |
+                 |              v
+              [rules] <---- [critic]
+        </div>
+
+        <div class="hero">
+            <p>a framework for designers and engineers who refuse to ship generative slop. we evaluate visual intent through rigorous, rule-based constraints rather than probabilistic guesswork.</p>
+        </div>
+
+        <!-- rule: terminal-aesthetic code block with bash tag -->
+        <div class="terminal">
+            <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+        </div>
+
+        <div class="manifest">
+            <div class="manifest-group">
+                <h2>what ships</h2>
+                <ul>
+                    <li>brief compiler</li>
+                    <li>28-rule linter</li>
+                    <li>eval harness</li>
+                    <li>vision-critic scaffold</li>
+                    <li>mcp server</li>
+                    <li>editor plugins</li>
+                    <li>eight tokens</li>
+                </ul>
+            </div>
+
+            <div class="manifest-group">
+                <h2>what is gated</h2>
+                <ul>
+                    <li>live frontier-model calls (needs api keys)</li>
+                    <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+                    <li>standalone npm packages for the editor plugins</li>
+                    <li>additional tokens</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="cta-area">
+            <!-- rule: link to github labelled as read-the-code -->
+            <a href="https://github.com/ahd-project">read-the-code</a>
+        </div>
+
+        <!-- rule: footer with explicit licence -->
+        <footer>
+            fsl-1.1-apache-2.0 for code, cc-by-4.0 for tokens and artwork.
+        </footer>
+    </div>
+</div>
+
+</body>
+</html>

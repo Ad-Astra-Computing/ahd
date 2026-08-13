@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>AHD — Artificial Human Design</title>
+  <meta name="description" content="AHD is a framework for evaluating and constraining AI-generated design output with briefs, rules, and visible manifests.">
+  <style>
+    :root{
+      --bg:#f4f1e8;
+      --paper:#fbf8f1;
+      --ink:#171614;
+      --muted:#5d584f;
+      --line:#c9c1b3;
+      --accent:#b24c2f;
+      --accent-2:#1f4d45;
+      --panel:#eee8dc;
+      --terminal:#111111;
+      --terminal-line:#242424;
+      --terminal-text:#e9e3d6;
+      --terminal-prompt:#8ac6a2;
+      --shadow:0 10px 40px rgba(23,22,20,.08);
+      --radius:18px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      --serif: Iowan Old Style, Palatino Linotype, Book Antiqua, Georgia, serif;
+      --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:var(--sans);
+      color:var(--ink);
+      background:
+        radial-gradient(circle at 15% 10%, rgba(178,76,47,.08), transparent 28%),
+        radial-gradient(circle at 85% 20%, rgba(31,77,69,.08), transparent 30%),
+        linear-gradient(180deg, #f7f3eb 0%, var(--bg) 100%);
+      line-height:1.45;
+    }
+
+    a{color:inherit}
+    .page{
+      max-width:1200px;
+      margin:0 auto;
+      padding:28px 20px 24px;
+    }
+
+    .frame{
+      border:1px solid var(--line);
+      background:rgba(251,248,241,.82);
+      backdrop-filter: blur(8px);
+      box-shadow:var(--shadow);
+      border-radius:24px;
+      overflow:hidden;
+    }
+
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:14px 18px;
+      border-bottom:1px solid var(--line);
+      background:rgba(255,255,255,.35);
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:0;
+    }
+
+    .mark{
+      width:36px;
+      height:36px;
+      display:grid;
+      place-items:center;
+      border:1px solid var(--ink);
+      border-radius:10px;
+      font:700 14px/1 var(--mono);
+      letter-spacing:.08em;
+      background:var(--paper);
+    }
+
+    .brand-copy{
+      min-width:0;
+    }
+
+    .brand-copy strong{
+      display:block;
+      font-size:13px;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+    }
+
+    .brand-copy span{
+      display:block;
+      font-size:12px;
+      color:var(--muted);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .nav-link{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      text-decoration:none;
+      border:1px solid var(--ink);
+      padding:10px 14px;
+      border-radius:999px;
+      background:var(--paper);
+      font-size:13px;
+      font-weight:600;
+      transition:transform .18s ease, background .18s ease;
+    }
+
+    .nav-link:hover,
+    .nav-link:focus-visible{
+      transform:translateY(-1px);
+      background:#fff;
+      outline:none;
+    }
+
+    main{
+      padding:26px;
+      display:grid;
+      grid-template-columns:1.15fr .85fr;
+      gap:22px;
+    }
+
+    .hero{
+      display:grid;
+      gap:18px;
+      align-content:start;
+    }
+
+    .eyebrow{
+      font:600 12px/1 var(--mono);
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color:var(--accent-2);
+    }
+
+    h1{
+      margin:0;
+      font-family:var(--serif);
+      font-weight:700;
+      font-size:clamp(2.5rem, 5.2vw, 5.1rem);
+      line-height:.95;
+      letter-spacing:-.04em;
+      max-width:11ch;
+    }
+
+    .lede{
+      margin:0;
+      max-width:58ch;
+      color:var(--muted);
+      font-size:clamp(1rem, 1.4vw, 1.08rem);
+    }
+
+    .split-note{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+    }
+
+    .note{
+      border-top:1px solid var(--ink);
+      padding-top:10px;
+      font-size:14px;
+      color:var(--muted);
+    }
+
+    .note strong{
+      display:block;
+      color:var(--ink);
+      margin-bottom:4px;
+      font-size:12px;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+    }
+
+    .terminal{
+      background:var(--terminal);
+      color:var(--terminal-text);
+      border-radius:20px;
+      overflow:hidden;
+      border:1px solid #000;
+      box-shadow:0 14px 38px rgba(0,0,0,.16);
+      min-width:0;
+    }
+
+    .terminal-bar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:10px 14px;
+      background:var(--terminal-line);
+      border-bottom:1px solid rgba(255,255,255,.08);
+      font:500 12px/1 var(--mono);
+      color:#b8b0a0;
+    }
+
+    .dots{
+      display:flex;
+      gap:7px;
+    }
+
+    .dots span{
+      width:10px;
+      height:10px;
+      border-radius:50%;
+      background:#5e5a53;
+    }
+
+    .terminal-body{
+      padding:18px;
+    }
+
+    pre{
+      margin:0;
+      overflow:auto;
+      font:500 14px/1.6 var(--mono);
+      white-space:pre-wrap;
+      word-break:break-word;
+    }
+
+    .prompt{color:var(--terminal-prompt)}
+
+    .manifest-wrap{
+      grid-column:1 / -1;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:22px;
+      margin-top:2px;
+    }
+
+    .manifest{
+      background:var(--panel);
+      border:1px solid var(--line);
+      border-radius:20px;
+      padding:18px 18px 16px;
+      position:relative;
+    }
+
+    .manifest h2{
+      margin:0 0 12px;
+      font-size:1rem;
+      letter-spacing:.02em;
+    }
+
+    .manifest p{
+      margin:0 0 14px;
+      font-size:14px;
+      color:var(--muted);
+      max-width:44ch;
+    }
+
+    .manifest ul{
+      list-style:none;
+      padding:0;
+      margin:0;
+      display:grid;
+      gap:9px;
+    }
+
+    .manifest li{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:14px;
+      padding-top:9px;
+      border-top:1px solid rgba(23,22,20,.12);
+      font-size:15px;
+    }
+
+    .manifest li:first-child{border-top:0;padding-top:0}
+
+    .state{
+      flex:none;
+      font:600 11px/1 var(--mono);
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      padding:5px 7px;
+      border-radius:999px;
+      border:1px solid currentColor;
+    }
+
+    .state.ship{color:var(--accent-2)}
+    .state.gated{color:var(--accent)}
+
+    footer{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:18px;
+      padding:16px 26px 22px;
+      border-top:1px solid var(--line);
+      color:var(--muted);
+      font-size:13px;
+      background:rgba(255,255,255,.28);
+    }
+
+    .footer-note{
+      max-width:70ch;
+    }
+
+    .footer-note strong{
+      color:var(--ink);
+      font-weight:600;
+    }
+
+    .footer-links{
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+
+    .footer-links a{
+      text-decoration:none;
+      border-bottom:1px solid currentColor;
+    }
+
+    @media (max-width: 920px){
+      main{
+        grid-template-columns:1fr;
+      }
+      .manifest-wrap{
+        grid-template-columns:1fr;
+      }
+      h1{max-width:none}
+    }
+
+    @media (max-width: 640px){
+      .page{padding:12px}
+      .topbar,
+      main,
+      footer{padding-left:16px;padding-right:16px}
+      .topbar{
+        align-items:flex-start;
+        flex-direction:column;
+      }
+      .split-note{
+        grid-template-columns:1fr;
+      }
+      .nav-link{
+        width:100%;
+        justify-content:center;
+      }
+      footer{
+        flex-direction:column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="frame">
+      <header class="topbar">
+        <div class="brand">
+          <div class="mark" aria-hidden="true">AHD</div>
+          <div class="brand-copy">
+            <strong>Artificial Human Design</strong>
+            <span>Frameworks for evaluating generated design against an actual brief</span>
+          </div>
+        </div>
+        <a class="nav-link" href="https://github.com/" target="_blank" rel="noreferrer">Read the code</a>
+      </header>
+
+      <main>
+        <section class="hero" aria-labelledby="hero-title">
+          <div class="eyebrow">One brief. Ten runs. Visible criteria.</div>
+          <h1 id="hero-title">Less style theater. More design pressure.</h1>
+          <p class="lede">
+            AHD treats generated design as something to inspect, constrain, and compare, not something to romanticize. If you already know the problem, this is the practical layer: compile the brief, lint the output, run the eval, inspect what passed, and keep the parts that survive contact with taste and implementation reality.
+          </p>
+          <div class="split-note">
+            <div class="note">
+              <strong>For designers</strong>
+              Bring the brief back to the front of the process instead of reverse-engineering intent from polished noise.
+            </div>
+            <div class="note">
+              <strong>For engineers and founders</strong>
+              See what is executable today, what still depends on outside infrastructure, and where the system fails in plain view.
+            </div>
+          </div>
+        </section>
+
+        <aside class="terminal" aria-label="Eval command">
+          <div class="terminal-bar">
+            <div class="dots" aria-hidden="true">
+              <span></span><span></span><span></span>
+            </div>
+            <div>eval-live.sh</div>
+          </div>
+          <div class="terminal-body">
+            <pre><code class="language-bash"><span class="prompt">$</span> ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+          </div>
+        </aside>
+
+        <section class="manifest-wrap" aria-label="Manifest">
+          <section class="manifest" aria-labelledby="ships-title">
+            <h2 id="ships-title">What ships</h2>
+            <p>The current repo contains the core machinery required to define a brief, enforce rules, run evaluations, and wire AHD into working tools.</p>
+            <ul>
+              <li><span>brief compiler</span><span class="state ship">ships</span></li>
+              <li><span>28-rule linter</span><span class="state ship">ships</span></li>
+              <li><span>eval harness</span><span class="state ship">ships</span></li>
+              <li><span>vision-critic scaffold</span><span class="state ship">ships</span></li>
+              <li><span>MCP server</span><span class="state ship">ships</span></li>
+              <li><span>editor plugins</span><span class="state ship">ships</span></li>
+              <li><span>eight tokens</span><span class="state ship">ships</span></li>
+            </ul>
+          </section>
+
+          <section class="manifest" aria-labelledby="gated-title">
+            <h2 id="gated-title">What is gated</h2>
+            <p>These pieces are intentionally separated because they depend on external services, packaging work, or infrastructure not bundled inside the base system.</p>
+            <ul>
+              <li><span>live frontier-model calls (needs API keys)</span><span class="state gated">gated</span></li>
+              <li><span>live vision critique (needs multimodal key + screenshot pipeline)</span><span class="state gated">gated</span></li>
+              <li><span>standalone npm packages for the editor plugins</span><span class="state gated">gated</span></li>
+              <li><span>additional tokens</span><span class="state gated">gated</span></li>
+            </ul>
+          </section>
+        </section>
+      </main>
+
+      <footer>
+        <div class="footer-note">
+          <strong>Licence:</strong> FSL-1.1-Apache-2.0 for code, CC-BY-4.0 for tokens and artwork.
+        </div>
+        <div class="footer-links">
+          <a href="https://github.com/" target="_blank" rel="noreferrer">GitHub</a>
+          <a href="https://forgejo.org/" target="_blank" rel="noreferrer">Forgejo mirror</a>
+        </div>
+      </footer>
+    </div>
+  </div>
+</body>
+</html>

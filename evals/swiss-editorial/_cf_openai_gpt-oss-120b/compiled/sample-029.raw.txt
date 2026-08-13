@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Artificial Human Design</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+/* rule: colour palette */
+:root{
+  --ink:#111111; /* ink */
+  --paper:#fafafa; /* paper */
+  --spot:#d72631; /* spot red, used once */
+  --gutter:24px;
+  --baseline:8px;
+  --margin-min:32px;
+  --margin-pref:calc(100vw/24);
+  --font-display:"Neue Haas Grotesk Display",Helvetica,Arial,sans-serif;
+  --font-text:"Neue Haas Grotesk Text",Helvetica,Arial,sans-serif;
+}
+/* rule: global layout */
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--font-text);
+  font-size:17px;
+  line-height:1.5;
+  max-width:62ch; /* rule: measure */
+  margin-left:auto;
+  margin-right:auto;
+  padding:var(--baseline) var(--margin-min);
+}
+@media (min-width:600px){
+  body{padding-left:var(--margin-pref);padding-right:var(--margin-pref);}
+}
+/* rule: 12‑column grid */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(12,1fr);
+  column-gap:var(--gutter);
+}
+@media (max-width:800px){
+  .grid{grid-template-columns:repeat(6,1fr);}
+}
+/* rule: display heading */
+h1{
+  font-family:var(--font-display);
+  font-size:128px; /* within 96–160px */
+  line-height:1.05;
+  letter-spacing:-0.02em; /* tracking */
+  margin:0;
+  grid-column:span 6;
+}
+h2{
+  font-family:var(--font-display);
+  font-size:48px;
+  line-height:1.2;
+  margin-top:calc(var(--baseline)*20);
+  margin-bottom:calc(var(--baseline)*4);
+}
+pre{
+  background:#f0f0f0;
+  padding:calc(var(--baseline)*2);
+  overflow:auto;
+  font-family:monospace;
+  font-size:15px;
+}
+code{
+  display:block;
+}
+/* rule: CTA button */
+.cta{
+  display:inline-block;
+  padding:calc(var(--baseline)*2) calc(var(--baseline)*4);
+  border:1px solid var(--ink);
+  text-decoration:none;
+  color:var(--ink);
+  font-weight:700;
+  margin-top:calc(var(--baseline)*4);
+}
+.cta:hover{background:#eaeaea;}
+/* rule: spot accent used once */
+.accent{
+  height:4px;
+  background:var(--spot);
+  grid-column:1/-1;
+  margin-top:calc(var(--baseline)*2);
+}
+.bleed{
+  background:#e0e0e0;
+  margin-left:-12px; /* bleed past grid */
+  margin-right:-12px;
+  padding:calc(var(--baseline)*4) 0;
+  grid-column:1/-1;
+}
+.pill{
+  display:inline-block;
+  padding:2px 8px;
+  border:1px solid var(--ink);
+  border-radius:999px; /* rule: pill allowed */
+  font-size:14px;
+  line-height:1;
+}
+</style>
+</head>
+<body>
+<div class="grid">
+  <!-- rule: required single word large heading -->
+  <h1>AHD</h1>
+  <div class="pill">beta</div>
+  <p style="grid-column:span 6;margin-top:calc(var(--baseline)*4);">
+    A framework that treats AI‑generated design as a problem, not a gimmick.
+    No fluff. No promises. Just tools you can run now.
+  </p>
+  <!-- rule: spot colour used exactly once -->
+  <div class="accent"></div>
+  <!-- rule: code block with bash command -->
+  <pre class="grid" style="grid-column:span 12;"><code class="bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+  <!-- rule: read‑the‑code CTA -->
+  <a href="https://github.com/ahd/ahd" class="cta" style="grid-column:span 12;">read the code</a>
+  <!-- rule: bleed element -->
+  <div class="bleed"> </div>
+  <!-- rule: manifest sections -->
+  <section style="grid-column:span 12;">
+    <h2>What ships</h2>
+    <ul>
+      <li>brief compiler</li>
+      <li>28‑rule linter</li>
+      <li>eval harness</li>
+      <li>vision‑critic scaffold</li>
+      <li>MCP server</li>
+      <li>editor plugins</li>
+      <li>eight tokens</li>
+    </ul>
+  </section>
+  <section style="grid-column:span 12;">
+    <h2>What is gated</h2>
+    <ul>
+      <li>live frontier‑model calls (needs API keys)</li>
+      <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+      <li>standalone npm packages for the editor plugins</li>
+      <li>additional tokens</li>
+    </ul>
+  </section>
+  <!-- rule: footer with licences -->
+  <footer style="grid-column:span 12;margin-top:calc(var(--baseline)*8);font-size:14px;">
+    Code licence: FSL‑1.1‑Apache‑2.0 • Tokens &amp; artwork licence: CC‑BY‑4.0
+  </footer>
+</div>
+</body>
+</html>

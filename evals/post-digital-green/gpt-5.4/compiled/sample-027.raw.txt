@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AHD / Artificial Human Design</title>
+  <style>
+    /* rule: design post-digital; everything in monospace; no gradients, shadows, rounded corners */
+    :root {
+      --bg: oklch(0.14 0.02 150);
+      --fg: oklch(0.92 0.12 135);
+      --dim: oklch(0.55 0.05 150);
+      --rule: oklch(0.30 0.04 150);
+      --amber: oklch(0.82 0.15 75);
+      --cols: 80ch;
+    }
+
+    /* rule: dark green-black background; muted green foreground; one amber accent */
+    * { box-sizing: border-box; }
+
+    /* rule: single-monospace; one screen of reading; char-grid width */
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: "Berkeley Mono", "IBM Plex Mono", "JetBrains Mono", ui-monospace, monospace;
+      font-size: 15px;
+      line-height: 1.55;
+      letter-spacing: 0;
+    }
+
+    /* rule: 80 character grid; rectangles only; one hairline rule colour */
+    body {
+      display: grid;
+      place-items: start center;
+      padding: 16px;
+    }
+
+    /* rule: element aligned to the char grid; no radii; no shadows */
+    .frame {
+      width: min(100%, var(--cols));
+      border: 1px solid var(--rule);
+      padding: 16px;
+      background: transparent;
+    }
+
+    /* rule: technical, lowercase by default, terse */
+    h1, h2, p, li, a, code, pre, footer {
+      margin: 0;
+      font-weight: 400;
+      text-transform: lowercase;
+    }
+
+    /* rule: single amber accent; no centered hero stack */
+    h1 {
+      color: var(--amber);
+      font-size: 2.074rem;
+      line-height: 1.1;
+    }
+
+    /* rule: separated manifest sections; terse headings */
+    h2 {
+      font-size: 1rem;
+      color: var(--amber);
+      padding-bottom: 4px;
+      border-bottom: 1px solid var(--rule);
+      margin-bottom: 8px;
+    }
+
+    /* rule: one hairline rule colour */
+    .rule {
+      height: 1px;
+      background: var(--rule);
+      margin: 16px 0;
+    }
+
+    /* rule: underline links with offset, no colour change */
+    a,
+    a:visited,
+    a:hover,
+    a:active {
+      color: inherit;
+      text-decoration-line: underline;
+      text-decoration-color: currentColor;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 4px;
+    }
+
+    /* rule: terminal-aesthetic code block; rectangles only */
+    pre {
+      overflow-x: auto;
+      white-space: pre;
+      border: 1px solid var(--rule);
+      padding: 12px;
+      color: var(--fg);
+      background: transparent;
+    }
+
+    /* rule: one amber accent */
+    code .prompt {
+      color: var(--amber);
+    }
+
+    /* rule: no three equal feature cards; manifest is list-based instead */
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    /* rule: technical terse manifest; rectangles only */
+    li {
+      display: grid;
+      grid-template-columns: 17ch 1fr;
+      gap: 8px;
+      padding: 4px 0;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    /* rule: muted green foreground for secondary text */
+    .k {
+      color: var(--dim);
+    }
+
+    /* rule: one screen of reading */
+    .stack > * + * {
+      margin-top: 16px;
+    }
+
+    /* rule: at least one ASCII diagram rendered as text */
+    .ascii {
+      color: var(--dim);
+      white-space: pre;
+      overflow-x: auto;
+      border-left: 1px solid var(--rule);
+      padding-left: 12px;
+    }
+
+    /* rule: footer names licence explicitly; avoid canonical 4-column footer */
+    footer {
+      color: var(--dim);
+      font-size: 0.833rem;
+    }
+
+    /* rule: forbidden entrance animations; only caret blink allowed */
+    .caret::after {
+      content: "_";
+      color: var(--amber);
+      animation: blink 1.1s steps(1) infinite;
+    }
+
+    /* rule: motion forbidden except caret blink and link underline */
+    @keyframes blink {
+      0%, 49% { opacity: 1; }
+      50%, 100% { opacity: 0; }
+    }
+
+    /* rule: mobile and desktop support while preserving 80ch max width */
+    @media (max-width: 720px) {
+      body { padding: 8px; }
+      .frame { padding: 12px; }
+      li { grid-template-columns: 1fr; gap: 0; }
+      h1 { font-size: 1.728rem; }
+    }
+  </style>
+</head>
+<body>
+  <!-- rule: one-page landing; one screen of reading; avoid centred hero stack with pill badge + two CTAs -->
+  <main class="frame stack">
+    <!-- rule: terse technical voice; audience already understands the problem -->
+    <header class="stack">
+      <p class="k">artificial human design / ahd <span class="caret" aria-hidden="true"></span></p>
+      <h1>design that can survive contact with a linter.</h1>
+      <p>
+        ahd treats generated interface work as something to inspect, constrain,
+        and fail on purpose. the point is not more output. the point is a
+        framework that can tell you when the output is weak.
+      </p>
+      <p>
+        briefs compile. rules lint. evals compare. critics annotate. what is
+        local runs locally. what depends on frontier systems stays named as a
+        dependency instead of pretending to be product.
+      </p>
+      <p>
+        <a href="https://github.com/" aria-label="read the code">read-the-code</a>
+      </p>
+    </header>
+
+    <div class="rule" aria-hidden="true"></div>
+
+    <!-- rule: include one ASCII diagram rendered as text -->
+    <section class="stack" aria-labelledby="diagram">
+      <h2 id="diagram">inspection path</h2>
+      <pre class="ascii" aria-label="ASCII diagram">brief.yml
+   |
+   v
+compiler ----> 28-rule linter ----> eval harness ----> critic notes
+   |                                            |
+   +--------------------> tokens ---------------+---> human decision</pre>
+    </section>
+
+    <!-- rule: command rendered in a monospace code block with language tag bash -->
+    <section class="stack" aria-labelledby="eval">
+      <h2 id="eval">run the eval</h2>
+      <pre><code class="language-bash"><span class="prompt">$</span> ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+    </section>
+
+    <div class="rule" aria-hidden="true"></div>
+
+    <!-- rule: clearly separated manifest section titled 'What ships' -->
+    <section class="stack" aria-labelledby="ships">
+      <h2 id="ships">what ships</h2>
+      <ul>
+        <li><span>brief compiler</span><span class="k">turns intent, constraints, and token rules into an executable brief.</span></li>
+        <li><span>28-rule linter</span><span class="k">checks the work against formal design and copy constraints.</span></li>
+        <li><span>eval harness</span><span class="k">runs batches, compares outputs, and makes failure legible.</span></li>
+        <li><span>vision-critic scaffold</span><span class="k">structured critic interface ready for image-aware review.</span></li>
+        <li><span>mcp server</span><span class="k">tool surface for editors, agents, and local automation.</span></li>
+        <li><span>editor plugins</span><span class="k">in-editor access to briefs, rules, and evaluation flows.</span></li>
+        <li><span>eight tokens</span><span class="k">eight design systems with explicit constraints, not style soup.</span></li>
+      </ul>
+    </section>
+
+    <!-- rule: clearly separated manifest section titled 'What is gated' -->
+    <section class="stack" aria-labelledby="gated">
+      <h2 id="gated">what is gated</h2>
+      <ul>
+        <li><span>live frontier-model calls</span><span class="k">needs api keys.</span></li>
+        <li><span>live vision critique</span><span class="k">needs multimodal key + screenshot pipeline.</span></li>
+        <li><span>standalone npm packages for the editor plugins</span><span class="k">current plugin path is present; package publishing is external.</span></li>
+        <li><span>additional tokens</span><span class="k">more systems are possible, but not claimed as shipped.</span></li>
+      </ul>
+    </section>
+
+    <div class="rule" aria-hidden="true"></div>
+
+    <!-- rule: footer names licence explicitly; intentional imperfection is the slightly uneven last line break -->
+    <footer>
+      code licence: fsl-1.1-apache-2.0. tokens and artwork: cc-by-4.0.
+    </footer>
+  </main>
+</body>
+</html>

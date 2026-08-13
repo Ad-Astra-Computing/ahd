@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>AHD | Artificial Human Design</title>
+  <style>
+    :root {
+      --bg-main: #050505;
+      --bg-sidebar: #0a0a0f;
+      --fg-primary: #ededed;
+      --fg-secondary: #888888;
+      --accent: #00ff94;
+      --border: #1a1a24;
+      --font-mono: 'JetBrains Mono', 'Geist Mono', SFMono-Regular, Consolas, monospace;
+    }
+    
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-main);
+      color: var(--fg-primary);
+      font-family: var(--font-mono);
+      font-size: 14px;
+      line-height: 1.6;
+      display: flex;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    aside {
+      width: 240px;
+      background-color: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      padding: 2rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+
+    .brand {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+      margin-bottom: 2rem;
+    }
+
+    .sidebar-meta {
+      color: var(--fg-secondary);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .sidebar-meta div {
+      margin-bottom: 0.5rem;
+    }
+
+    main {
+      flex-grow: 1;
+      padding: 4rem;
+      max-width: 1000px;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      font-weight: 400;
+      margin: 0 0 1.5rem 0;
+      color: var(--fg-primary);
+    }
+
+    p {
+      color: var(--fg-secondary);
+      max-width: 640px;
+      margin: 0 0 2rem 0;
+      font-size: 0.95rem;
+    }
+
+    a.cta-button {
+      display: inline-flex;
+      align-items: center;
+      background: transparent;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    a.cta-button:hover {
+      background: var(--accent);
+      color: var(--bg-main);
+    }
+
+    .terminal-block {
+      background-color: #000;
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+      margin: 3rem 0;
+      position: relative;
+    }
+
+    .terminal-block::before {
+      content: "stdout";
+      position: absolute;
+      top: -10px;
+      left: 1rem;
+      background: var(--bg-main);
+      padding: 0 0.5rem;
+      font-size: 0.7rem;
+      color: var(--fg-secondary);
+      text-transform: uppercase;
+    }
+
+    pre {
+      margin: 0;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+
+    code.language-bash {
+      color: var(--accent);
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+    }
+
+    .manifest-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 3rem;
+      margin-top: 4rem;
+      border-top: 1px solid var(--border);
+      padding-top: 3rem;
+    }
+
+    h2 {
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--fg-primary);
+      margin: 0 0 1.5rem 0;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    li {
+      position: relative;
+      padding-left: 1rem;
+      margin-bottom: 0.75rem;
+      color: var(--fg-secondary);
+      font-size: 0.9rem;
+    }
+
+    li::before {
+      content: ">";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+    }
+
+    footer {
+      margin-top: 6rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      color: var(--fg-secondary);
+      font-size: 0.75rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        flex-direction: column;
+      }
+      aside {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        flex-direction: row;
+        align-items: center;
+        padding: 1rem 1.5rem;
+      }
+      .brand {
+        margin-bottom: 0;
+      }
+      .sidebar-meta {
+        display: none;
+      }
+      main {
+        padding: 2rem 1.5rem;
+      }
+      .manifest-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <aside>
+    <div class="brand">AHD_SYS</div>
+    <div class="sidebar-meta">
+      <div>STATUS: ONLINE</div>
+      <div>DATE: 22 April 2026</div>
+      <div>ENV: PRODUCTION</div>
+    </div>
+  </aside>
+  <main>
+    <header>
+      <h1>Artificial Human Design</h1>
+      <p>Machine generation naturally outputs a statistical average: a regression to the mean of popular aesthetics lacking structural intent. You already recognise the degradation of web surfaces. AHD approaches this as an engineering problem. We replace the standard prompt cycle with a deterministic pipeline of compilers, linters and evaluators to enforce strict formal criteria before runtime.</p>
+      <a href="https://github.com/ahd-sys/ahd" class="cta-button">Read the code</a>
+    </header>
+
+    <section class="terminal-block">
+      <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+    </section>
+
+    <section class="manifest-grid">
+      <div class="manifest-section">
+        <h2>What ships</h2>
+        <ul>
+          <li>brief compiler</li>
+          <li>28-rule linter</li>
+          <li>eval harness</li>
+          <li>vision-critic scaffold</li>
+          <li>MCP server</li>
+          <li>editor plugins</li>
+          <li>eight tokens</li>
+        </ul>
+      </div>
+
+      <div class="manifest-section">
+        <h2>What is gated</h2>
+        <ul>
+          <li>live frontier-model calls (needs API keys)</li>
+          <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+          <li>standalone npm packages for the editor plugins</li>
+          <li>additional tokens</li>
+        </ul>
+      </div>
+    </section>
+
+    <footer>
+      <div>Licence: FSL-1.1-Apache-2.0 for code | CC-BY-4.0 for tokens and artwork</div>
+      <div>AHD v1.0.0</div>
+    </footer>
+  </main>
+</body>
+</html>

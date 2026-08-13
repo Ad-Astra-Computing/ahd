@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ahd | artificial human design</title>
+  <style>
+    /* rule: single-monospace pairing */
+    /* rule: dark green-black background */
+    :root {
+      --bg: oklch(0.14 0.02 150);
+      --fg: oklch(0.92 0.12 135);
+      --dim: oklch(0.55 0.05 150);
+      --rule: oklch(0.3 0.04 150);
+      --amber: oklch(0.82 0.15 75);
+    }
+
+    * {
+      box-sizing: border-box;
+      /* rule: rectangles only; no radii */
+      border-radius: 0 !important;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--fg);
+      font-family: 'IBM Plex Mono', 'JetBrains Mono', ui-monospace, monospace;
+      font-size: 15px;
+      line-height: 1.55;
+      margin: 0;
+      padding: 48px 16px;
+      display: flex;
+      justify-content: center;
+    }
+
+    /* rule: aligns to 80 character grid / 72ch measure */
+    main {
+      max-width: 72ch;
+      width: 100%;
+    }
+
+    h1 {
+      font-size: 2.4em;
+      font-weight: 700;
+      margin: 0 0 8px 0;
+      line-height: 1.1;
+      /* rule: lowercase by default */
+      text-transform: lowercase;
+    }
+
+    p {
+      margin: 0 0 32px 0;
+      color: var(--dim);
+    }
+
+    h2 {
+      font-size: 1.2em;
+      margin: 48px 0 16px 0;
+      text-transform: lowercase;
+      border-bottom: 1px solid var(--rule); /* rule: one hairline rule colour */
+      padding-bottom: 4px;
+      display: inline-block;
+    }
+
+    /* rule: terminal-aesthetic code block */
+    pre {
+      background: oklch(0.18 0.02 150);
+      padding: 16px;
+      margin: 24px 0;
+      border: 1px solid var(--rule);
+      overflow-x: auto;
+    }
+
+    code {
+      font-family: inherit;
+      font-size: 14px;
+    }
+
+    .bash-cmd {
+      color: var(--fg);
+    }
+
+    /* rule: ASCII diagram rendered as text */
+    .ascii {
+      color: var(--dim);
+      font-size: 13px;
+      line-height: 1.2;
+      margin: 32px 0;
+      white-space: pre;
+    }
+
+    /* rule: intentional imperfection (amber underscore) */
+    .glitch {
+      color: var(--amber);
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    li {
+      margin: 8px 0;
+      display: flex;
+    }
+
+    li::before {
+      content: ">";
+      margin-right: 12px;
+      color: var(--dim);
+    }
+
+    /* rule: underline-offset 4px, no colour change */
+    a {
+      color: inherit;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
+    footer {
+      margin-top: 64px;
+      padding-top: 32px;
+      border-top: 1px solid var(--rule);
+      font-size: 12px;
+      color: var(--dim);
+    }
+
+    .license {
+      display: block;
+      margin-top: 8px;
+    }
+
+    .cta-wrap {
+      margin: 48px 0;
+    }
+
+  </style>
+</head>
+<body>
+
+<main>
+  <header>
+    <h1>artificial human design</h1>
+    <p>a framework for fighting generative slop.</p>
+  </header>
+
+  <section class="ascii">
++---------------------------------------+
+| [brief] -> [compiler] -> [linter]     |
+|               |           |           |
+|           [eval] <--- [critic]        |
++---------------------------------------+<span class="glitch">_</span>
+  </section>
+
+  <section>
+    <pre><code><span class="bash-cmd">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</span></code></pre>
+  </section>
+
+  <section>
+    <h2>what ships</h2>
+    <ul>
+      <li>brief compiler</li>
+      <li>28-rule linter</li>
+      <li>eval harness</li>
+      <li>vision-critic scaffold</li>
+      <li>mcp server</li>
+      <li>editor plugins</li>
+      <li>eight tokens</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>what is gated</h2>
+    <ul>
+      <li>live frontier-model calls (needs api keys)</li>
+      <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+      <li>standalone npm packages for the editor plugins</li>
+      <li>additional tokens</li>
+    </ul>
+  </section>
+
+  <div class="cta-wrap">
+    <a href="https://github.com/ahd-project">read-the-code</a>
+  </div>
+
+  <footer>
+    <p>artificial human design / technical manifest / v0.1.0</p>
+    <span class="license">fsl-1.1-apache-2.0 for code, cc-by-4.0 for tokens and artwork.</span>
+  </footer>
+</main>
+
+</body>
+</html>

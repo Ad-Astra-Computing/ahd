@@ -1,0 +1,363 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AHD — Artificial Human Design</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;700;900&family=Inter:wght@300;400;700;900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        /* rule: colors */
+        :root {
+            --ink: #1a1a1a;
+            --paper: #faf8f5;
+            --spot: #c41e3a;
+            --muted: #6b6b6b;
+            --rule: #1a1a1a;
+            --rule-light: #d4d0c8;
+        }
+
+        /* rule: reset, base 17px, line-height 1.5 */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 17px;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            font-family: "Inter", "Helvetica Now Text", sans-serif;
+            background: var(--paper);
+            color: var(--ink);
+            /* rule: asymmetric left-aligned composition */
+            text-align: left;
+        }
+
+        /* rule: display font Neue Haas Grotesk Display */
+        .display {
+            font-family: "Inter Tight", "Helvetica Now Display", sans-serif;
+            font-weight: 900;
+            letter-spacing: -0.02em;
+            line-height: 1.05;
+        }
+
+        /* rule: sharp corners, pills only for status tags */
+        .pill {
+            border-radius: 999px;
+            display: inline-block;
+            padding: 4px 12px;
+            font-size: 0.7059rem;
+            font-weight: 400;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            border: 1px solid var(--rule);
+        }
+
+        /* rule: structural motion only */
+        a {
+            color: var(--ink);
+            text-decoration: none;
+            border-bottom: 1px solid var(--rule);
+            transition: border-color 0.15s, color 0.15s;
+        }
+
+        a:hover {
+            border-bottom-color: var(--spot);
+            color: var(--spot);
+        }
+
+        /* rule: swiss-12 grid with 24px gutter, 8px baseline */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 24px;
+            padding: 0 calc(100vw / 24);
+            max-width: 1440px;
+            margin: 0 auto;
+        }
+
+        /* rule: 8px baseline alignment */
+        .baseline {
+            display: block;
+            height: 1px;
+            background: var(--rule-light);
+            margin: 0;
+        }
+
+        /* Typography scale: base 17px, ratio 1.333 */
+        .t-1 { font-size: 0.7059rem; }   /* ~12px */
+        .t0 { font-size: 1rem; }          /* 17px */
+        .t1 { font-size: 1.333rem; }      /* ~22.7px */
+        .t2 { font-size: 1.777rem; }      /* ~30.2px */
+        .t3 { font-size: 2.369rem; }      /* ~40.3px, line-height 1.2 */
+        .t4 { font-size: 3.157rem; }      /* ~53.7px */
+        .t5 { font-size: 4.209rem; }      /* ~71.6px */
+        .t6 { font-size: 5.611rem; }      /* ~95.4px */
+        .t7 { font-size: 7.479rem; }      /* ~127.1px */
+        .t8 { font-size: 9.969rem; }      /* ~169.5px, display >= 120px with -0.02em tracking */
+
+        /* rule: line-height specifications */
+        .lh-display { line-height: 1.05; }
+        .lh-h2 { line-height: 1.2; }
+        .lh-body { line-height: 1.5; }
+
+        /* rule: measure 62ch */
+        .measure { max-width: 62ch; }
+
+        /* rule: spot color used exactly once */
+        .spot {
+            color: var(--spot);
+        }
+
+        /* rule: depth via rule, space and colour, no shadows */
+        .rule-top {
+            border-top: 1px solid var(--rule);
+        }
+
+        .rule-bottom {
+            border-bottom: 1px solid var(--rule);
+        }
+
+        .rule-left {
+            border-left: 1px solid var(--rule);
+            padding-left: 24px;
+        }
+
+        /* rule: terminal-aesthetic code block */
+        pre {
+            font-family: "IBM Plex Mono", monospace;
+            font-size: 0.8235rem;
+            line-height: 1.4;
+            background: var(--ink);
+            color: #e8e6e3;
+            padding: 24px;
+            overflow-x: auto;
+            /* rule: sharp corners */
+            border-radius: 0;
+        }
+
+        code {
+            font-family: "IBM Plex Mono", monospace;
+        }
+
+        /* rule: one intentional element bleeds past grid — the hero number */
+        .bleed-left {
+            margin-left: calc(-100vw / 24);
+            padding-left: calc(100vw / 24);
+        }
+
+        /* Layout */
+        header {
+            padding: 32px 0;
+        }
+
+        main {
+            padding-bottom: 160px; /* rule: dramatic jump 160 between sections */
+        }
+
+        section {
+            margin-top: 160px; /* rule: dramatic jump 160 between sections */
+        }
+
+        /* rule: status pill */
+        .status-pill {
+            font-family: "Inter Tight", sans-serif;
+            font-weight: 400;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            font-size: 0.7059rem;
+            border: 1px solid var(--rule);
+            border-radius: 999px;
+            padding: 4px 12px;
+            display: inline-block;
+        }
+
+        /* Lists */
+        ul.plain {
+            list-style: none;
+        }
+
+        ul.plain li {
+            position: relative;
+            padding-left: 0;
+            margin-bottom: 8px;
+        }
+
+        /* rule: no emoji bullets, structural indicators only */
+        ul.plain li::before {
+            content: "—";
+            position: absolute;
+            left: -24px;
+            color: var(--muted);
+        }
+
+        /* Footer: not canonical 4-column */
+        .footer-rule {
+            border-top: 2px solid var(--ink);
+            padding-top: 24px;
+        }
+
+        /* Anchored single word at display >= 120px */
+        .anchored-word {
+            font-family: "Inter Tight", sans-serif;
+            font-weight: 900;
+            font-size: 7.479rem; /* ~127px, > 120px */
+            letter-spacing: -0.02em;
+            line-height: 1.05;
+            /* rule: intentional imperfection — slightly negative margin creates tension */
+            margin-left: -4px;
+        }
+
+        /* rule: structural motion: links respond, no entrance animations */
+        @media (prefers-reduced-motion: reduce) {
+            a {
+                transition: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="grid">
+        <div style="grid-column: 1 / 5;">
+            <span class="display" style="font-size: 1rem; font-weight: 700; letter-spacing: 0;">AHD</span>
+        </div>
+        <div style="grid-column: 5 / 13; display: flex; justify-content: flex-end; align-items: baseline;">
+            <span class="status-pill">v0.1.0</span>
+        </div>
+    </header>
+
+    <!-- Hero: not centered -->
+    <main>
+        <!-- rule: one element bleeds past grid -->
+        <div class="grid" style="margin-top: 96px;">
+            <div style="grid-column: 1 / 13;" class="bleed-left">
+                <p class="t-1" style="color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 24px;">
+                    Artificial Human Design
+                </p>
+                <h1 class="display anchored-word">
+                    Discipline<br>not slop
+                </h1>
+            </div>
+        </div>
+
+        <!-- rule: measure 62ch, asymmetric left-aligned -->
+        <div class="grid" style="margin-top: 48px;">
+            <div style="grid-column: 1 / 8;" class="measure">
+                <p class="t0 lh-body">
+                    Most AI-generated sites look the same because the process tolerates default choices. AHD is a framework for systematic evaluation. It compiles briefs, lints output against explicit rules, and scores results with vision models. The goal is not more output. It is better decisions.
+                </p>
+            </div>
+        </div>
+
+        <!-- rule: terminal-aesthetic code block with language tag bash -->
+        <div class="grid" style="margin-top: 64px;">
+            <div style="grid-column: 2 / 12;">
+                <div style="border: 1px solid var(--rule);">
+                    <div style="padding: 8px 24px; border-bottom: 1px solid var(--rule); background: var(--paper);">
+                        <span class="t-1" style="color: var(--muted);">bash</span>
+                    </div>
+                    <pre><code>ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="grid" style="margin-top: 32px;">
+            <div style="grid-column: 2 / 12;">
+                <a href="https://github.com/artificial-human-design/ahd" style="font-family: 'Inter Tight', sans-serif; font-weight: 700; font-size: 1rem; border-bottom: 2px solid var(--ink);">
+                    Read the code →
+                </a>
+            </div>
+        </div>
+
+        <!-- Manifest: What ships -->
+        <section class="grid" style="margin-top: 160px;">
+            <div style="grid-column: 1 / 13;" class="rule-top" style="padding-top: 24px;">
+                <h2 class="display t3 lh-h2" style="margin-top: 24px;">What ships</h2>
+            </div>
+        </section>
+        
+        <div class="grid" style="margin-top: 48px;">
+            <div style="grid-column: 1 / 6;">
+                <ul class="plain">
+                    <li>Brief compiler</li>
+                    <li>28-rule linter</li>
+                    <li>Eval harness</li>
+                    <li>Vision-critic scaffold</li>
+                </ul>
+            </div>
+            <div style="grid-column: 7 / 12;">
+                <ul class="plain">
+                    <li>MCP server</li>
+                    <li>Editor plugins</li>
+                    <li>Eight tokens</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Manifest: What is gated -->
+        <section class="grid" style="margin-top: 160px;">
+            <div style="grid-column: 1 / 13;" class="rule-top" style="padding-top: 24px;">
+                <h2 class="display t3 lh-h2" style="margin-top: 24px;">What is gated</h2>
+            </div>
+        </section>
+        
+        <div class="grid" style="margin-top: 48px;">
+            <div style="grid-column: 1 / 6;">
+                <ul class="plain">
+                    <li>Live frontier-model calls (needs API keys)</li>
+                    <li>Live vision critique (needs multimodal key + screenshot pipeline)</li>
+                </ul>
+            </div>
+            <div style="grid-column: 7 / 12;">
+                <ul class="plain">
+                    <li>Standalone npm packages for the editor plugins</li>
+                    <li>Additional tokens</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- rule: spot color used exactly once — the period after "calibrated" -->
+        <div class="grid" style="margin-top: 160px;">
+            <div style="grid-column: 1 / 8;" class="measure">
+                <p class="t1 lh-h2" style="font-family: 'Inter Tight', sans-serif; font-weight: 300;">
+                    The framework is opinionated. The rules are explicit. The scoring is calibrated<span class="spot">.</span>
+                </p>
+            </div>
+        </div>
+
+        <!-- Footer: explicit licence, not canonical 4-column -->
+        <footer class="grid" style="margin-top: 160px; padding-bottom: 64px;">
+            <div style="grid-column: 1 / 13;" class="footer-rule">
+                <div style="display: grid; grid-template-columns: repeat(12, 1fr); gap: 24px; margin-top: 24px;">
+                    <div style="grid-column: 1 / 7;">
+                        <p class="t-1" style="color: var(--muted);">
+                            Code: FSL-1.1-Apache-2.0
+                        </p>
+                    </div>
+                    <div style="grid-column: 7 / 13;">
+                        <p class="t-1" style="color: var(--muted);">
+                            Tokens & artwork: CC-BY-4.0
+                        </p>
+                    </div>
+                </div>
+                <div style="margin-top: 48px;">
+                    <p class="t-1" style="color: var(--muted);">
+                        AHD / Artificial Human Design
+                    </p>
+                </div>
+            </div>
+        </footer>
+    </main>
+</body>
+</html>
+```

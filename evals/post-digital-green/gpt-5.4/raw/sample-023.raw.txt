@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AHD — Artificial Human Design</title>
+  <meta name="description" content="AHD is a framework for evaluating and constraining generative web design against explicit standards.">
+  <style>
+    :root {
+      --bg: #f3efe7;
+      --paper: #fbf8f1;
+      --ink: #121212;
+      --muted: #5b574f;
+      --line: #cfc6b7;
+      --accent: #a33a22;
+      --terminal: #111111;
+      --terminal-ink: #e8e1d3;
+      --terminal-dim: #9f9788;
+      --shadow: 0 18px 48px rgba(18, 18, 18, 0.08);
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--bg);
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.38), rgba(255,255,255,0) 28%),
+        repeating-linear-gradient(
+          90deg,
+          rgba(18,18,18,0.02) 0,
+          rgba(18,18,18,0.02) 1px,
+          transparent 1px,
+          transparent 24px
+        ),
+        var(--bg);
+      font-family: Georgia, "Times New Roman", serif;
+      line-height: 1.45;
+    }
+
+    a {
+      color: inherit;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 0.16em;
+    }
+
+    a:hover { color: var(--accent); }
+
+    .page {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 28px 22px 22px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 28px;
+    }
+
+    .wordmark {
+      display: flex;
+      gap: 14px;
+      align-items: baseline;
+      flex-wrap: wrap;
+    }
+
+    .wordmark strong {
+      font-size: 0.95rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-family: "Courier New", Courier, monospace;
+    }
+
+    .wordmark span {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .read-code {
+      font-family: "Courier New", Courier, monospace;
+      font-size: 0.9rem;
+      white-space: nowrap;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.45fr) minmax(320px, 0.95fr);
+      gap: 28px;
+      align-items: start;
+      min-height: calc(100vh - 180px);
+    }
+
+    .hero-copy {
+      padding-top: 6px;
+    }
+
+    h1 {
+      margin: 0 0 18px;
+      font-size: clamp(2.7rem, 7vw, 5.8rem);
+      line-height: 0.94;
+      letter-spacing: -0.045em;
+      font-weight: 700;
+      max-width: 11ch;
+    }
+
+    .lede {
+      margin: 0 0 18px;
+      max-width: 58ch;
+      font-size: clamp(1.05rem, 1.6vw, 1.24rem);
+      color: var(--ink);
+    }
+
+    .subcopy {
+      margin: 0;
+      max-width: 60ch;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    .rail {
+      display: grid;
+      gap: 18px;
+    }
+
+    .terminal,
+    .manifest {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    .terminal {
+      overflow: hidden;
+    }
+
+    .terminal-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 14px;
+      border-bottom: 1px solid #2e2e2e;
+      background: #1b1b1b;
+      color: var(--terminal-dim);
+      font-family: "Courier New", Courier, monospace;
+      font-size: 0.78rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .lights {
+      display: inline-flex;
+      gap: 7px;
+    }
+
+    .lights i {
+      width: 9px;
+      height: 9px;
+      display: block;
+      border-radius: 50%;
+      background: #615c54;
+    }
+
+    pre {
+      margin: 0;
+      padding: 18px 16px 20px;
+      overflow-x: auto;
+      background: var(--terminal);
+      color: var(--terminal-ink);
+      font: 0.95rem/1.55 "Courier New", Courier, monospace;
+    }
+
+    code { font-family: "Courier New", Courier, monospace; }
+
+    .manifest {
+      padding: 18px 16px 16px;
+    }
+
+    .manifest h2 {
+      margin: 0 0 12px;
+      font-size: 1rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-family: "Courier New", Courier, monospace;
+    }
+
+    .manifest ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .manifest li {
+      margin: 0 0 9px;
+      color: var(--ink);
+    }
+
+    .manifest li::marker {
+      color: var(--accent);
+    }
+
+    footer {
+      margin-top: 28px;
+      padding-top: 16px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+      font-size: 0.95rem;
+    }
+
+    .footer-note {
+      max-width: 70ch;
+    }
+
+    @media (max-width: 920px) {
+      .hero {
+        grid-template-columns: 1fr;
+        min-height: auto;
+      }
+
+      h1 {
+        max-width: 12ch;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .page {
+        padding: 18px 14px 18px;
+      }
+
+      .topbar {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      h1 {
+        font-size: clamp(2.3rem, 12vw, 4rem);
+      }
+
+      .lede {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="topbar">
+      <div class="wordmark">
+        <strong>AHD</strong>
+        <span>Artificial Human Design</span>
+      </div>
+      <a class="read-code" href="https://github.com/" target="_blank" rel="noreferrer">Read the code</a>
+    </header>
+
+    <main class="hero">
+      <section class="hero-copy" aria-labelledby="title">
+        <h1 id="title">A framework for catching design slop before it ships.</h1>
+        <p class="lede">
+          AHD turns taste into constraints you can inspect: compile the brief, lint the output, run the eval, and see what holds up when generated work is forced through a standard instead of a vibe.
+        </p>
+        <p class="subcopy">
+          This is not a lecture about what is wrong with autogenerated design. It is a working system for people who already know the failure modes and want a repeatable way to name them, test them, and reject them.
+        </p>
+      </section>
+
+      <aside class="rail">
+        <section class="terminal" aria-labelledby="eval-command">
+          <div class="terminal-head">
+            <span class="lights" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span id="eval-command">eval-live</span>
+          </div>
+          <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+        </section>
+
+        <section class="manifest" aria-labelledby="ships">
+          <h2 id="ships">What ships</h2>
+          <ul>
+            <li>brief compiler</li>
+            <li>28-rule linter</li>
+            <li>eval harness</li>
+            <li>vision-critic scaffold</li>
+            <li>MCP server</li>
+            <li>editor plugins</li>
+            <li>eight tokens</li>
+          </ul>
+        </section>
+
+        <section class="manifest" aria-labelledby="gated">
+          <h2 id="gated">What is gated</h2>
+          <ul>
+            <li>live frontier-model calls (needs API keys)</li>
+            <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+            <li>standalone npm packages for the editor plugins</li>
+            <li>additional tokens</li>
+          </ul>
+        </section>
+      </aside>
+    </main>
+
+    <footer>
+      <div class="footer-note">
+        AHD is for teams that want an explicit design standard, a visible evaluator, and a boundary between what is operational now and what still depends on outside infrastructure.
+      </div>
+      <div>Licence: FSL-1.1-Apache-2.0 for code, CC-BY-4.0 for tokens and artwork.</div>
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ahd — artificial human design</title>
+    <style>
+        /* rule: single-monospace */
+        :root {
+            --bg: oklch(0.14 0.02 150); /* rule: bg */
+            --fg: oklch(0.92 0.12 135); /* rule: fg */
+            --dim: oklch(0.55 0.05 150); /* rule: dim */
+            --rule: oklch(0.3 0.04 150); /* rule: hairline rule colour */
+            --accent: oklch(0.82 0.15 75); /* rule: amber accent */
+        }
+
+        * {
+            box-sizing: border-box;
+            /* rule: no radii; only rectangles */
+            border-radius: 0 !important;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--fg);
+            font-family: 'IBM Plex Mono', 'JetBrains Mono', monospace;
+            line-height: 1.55; /* rule: body line-height 1.55 */
+            margin: 0;
+            padding: 48px 24px;
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        /* rule: align to 80 character grid */
+        .container {
+            width: 100%;
+            max-width: 80ch;
+        }
+
+        /* rule: display line-height 1.1 */
+        h1 {
+            font-size: 2.5rem;
+            line-height: 1.1;
+            margin: 0 0 8px 0;
+            font-weight: 700;
+            text-transform: lowercase;
+        }
+
+        h2 {
+            font-size: 1.2rem;
+            line-height: 1.25; /* rule: h2 line-height 1.25 */
+            margin: 0 0 16px 0;
+            text-transform: lowercase;
+        }
+
+        p {
+            margin: 0 0 24px 0;
+        }
+
+        .dim {
+            color: var(--dim);
+        }
+
+        .accent {
+            color: var(--accent);
+        }
+
+        /* rule: hairline rule colour */
+        .rule-border {
+            border: 1px solid var(--rule);
+        }
+
+        /* rule: terminal-aesthetic code block */
+        pre {
+            margin: 32px 0;
+            padding: 16px;
+            background-color: rgba(0,0,0,0.2);
+            overflow-x: auto;
+        }
+
+        code {
+            font-family: 'IBM Plex Mono', monospace;
+        }
+
+        /* rule: manifest section separation */
+        .manifest {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin: 48px 0;
+        }
+
+        @media (max-width: 600px) {
+            .manifest {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .manifest-item {
+            padding: 16px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        /* rule: no emoji bullets */
+        .bullet {
+            margin-right: 8px;
+        }
+
+        /* rule: underline-offset 4px, no colour change */
+        a {
+            text-decoration: underline;
+            text-underline-offset: 4px;
+            color: inherit;
+        }
+
+        .ascii {
+            white-space: pre;
+            font-size: 0.85rem;
+            line-height: 1.2;
+            margin: 32px 0;
+            color: var(--dim);
+        }
+
+        /* intentional imperfection: slight offset in diagram spacing */
+        .imperfection {
+            padding-left: 2px;
+        }
+
+        footer {
+            margin-top: 80px;
+            padding-top: 24px;
+            border-top: 1px solid var(--rule);
+            font-size: 0.8rem;
+            color: var(--dim);
+        }
+
+        .cta-link {
+            display: inline-block;
+            margin-top: 24px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>artificial human design</h1>
+            <p class="dim">a framework for design evaluation, not generation.</p>
+        </header>
+
+        <div class="ascii">
+[input] -> [compiler] -> [eval-harness]
+              |               |
+         [linter] <span class="imperfection">[vision-critic]</span>
+        </div>
+
+        <pre class="rule-border"><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+
+        <section class="manifest">
+            <div class="manifest-item rule-border">
+                <h2>what ships</h2>
+                <ul>
+                    <li><span class="bullet">+</span> brief compiler</li>
+                    <li><span class="bullet">+</span> 28-rule linter</li>
+                    <li><span class="bullet">+</span> eval harness</li>
+                    <li><span class="bullet">+</span> vision-critic scaffold</li>
+                    <li><span class="bullet">+</span> MCP server</li>
+                    <li><span class="bullet">+</span> editor plugins</li>
+                    <li><span class="bullet">+</span> eight tokens</li>
+                </ul>
+            </div>
+
+            <div class="manifest-item rule-border">
+                <h2>what is gated</h2>
+                <ul>
+                    <li><span class="bullet">+</span> live frontier-model calls (needs API keys)</li>
+                    <li><span class="bullet">+</span> live vision critique (needs multimodal key + screenshot pipeline)</li>
+                    <li><span class="bullet">+</span> standalone npm packages for the editor plugins</li>
+                    <li><span class="bullet">+</span> additional tokens</li>
+                </ul>
+            </div>
+        </section>
+
+        <a href="https://github.com/ahd" class="cta-link accent">read-the-code</a>
+
+        <footer>
+            licence: fsl-1.1-apache-2.0 for code, cc-by-4.0 for tokens and artwork.
+        </footer>
+    </div>
+
+</body>
+</html>

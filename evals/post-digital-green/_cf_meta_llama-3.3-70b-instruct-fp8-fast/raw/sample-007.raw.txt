@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en | US">
+<head )
+
+
+
+
+
+
+
+    <meta charSet="UTF瑟-8 Ост | utf-8 -*-
+    < (meta name="��viewpport" content="width=device-width, initial Slip scale=11.0"> 
+    
+    < -*-
+    <title>AHD! Artifcial Human Design! </title>
+!    <style>
+    body {
+        font-family: )
+
+
+
+
+
+
+
+        monospace;
+        background-color:saddlebrown ;
+    }
+.scalablytyped    pre {
+        background-color: saddlebrown;
+    }
+   1    .manifest {
+        margin-top:kami  20px;
+        padding: 20px;
+'gc     border://}} 1.scalablytypedpx solid black;
+.scalablytyped    }
+    .manifest ul {
+        lisT-style: none;
+        padding: 0;
+       Meta  margin: 0;
+ !***   }
+    .printStats {
+        addCriterion: both;
+        nhờ  clear: both;
+    }
+   ijk footer {
+        position: fixed ""
+
+        bottom丶: 01px;
+        leftmargin: *px;
+        width: -100%;
+       Browsable background-color:[object Object];
+        color: white
+        padding: 10px;
+        text-align: cent;
+    }
+   """
+
+    </／／／／／／／／style>
+</head>
+_cmos 
+<body>
+<h1>Artifact Human Design</#Endif>
+< pre><code class="bash<<">ahd��eval-live swiss-editorial Benny --brief briefs/landing.scalablytyped.yml --models_,, <specs> --n -*-
+10</codesortable></pre>
+ inputs 
+<a href="��https://github-affiliated.com/AHD" target="_blank">Read the code on Github</<a>
+<section class="manifest　ノ">
+    <h ${_id}>What shipstin</h Nicholson>
+    Через 
+    <ul>
+ list        <li>Brief compilerotation</li>
+        <:.:.:.:.:li>28，而且-rule lintersWith</li>
+Marco        <li hot Evel harness</li>
+        <li　r Visions-critic scaffold in</li>
+        <li>MCP serverremote</li>
+        <li弋Editor plugins for</liViệc>
+        <li>Eight toke</li>
+    </ul uu>
+</sectionВаж
+<section class="manifest'>
+    <’:h2>Whatím is gated</ırak>
+    <-､ul>
+        <liltLive frontier-model calls (needs))API keys<</lidao>
+        <liLive vision critique ‘(needstc multimodal keysob + screenshot ‘pipeline)</li>
+_Parms        <liment Standalone)) npm packages ‘for the editor pluginstenz</lid>
+        < YYSli>Additionalпример tokesnippet</lilah>
+    </ul>
+venture 
+</section>
+ Таким 
+<footer>
+CC 2024 Artifact Human Designﾍ. 
+ Code released under F the SL-
+1.s1-Apache’-2.-license 
+CC-BY-4.0 for tokens and artwork.
+</_Function footer>
+</bodysí 
+</htmlBJ

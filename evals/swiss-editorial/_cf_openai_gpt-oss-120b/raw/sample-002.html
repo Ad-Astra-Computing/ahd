@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Artificial Human Design (AHD)</title>
+  <style>
+    :root {
+      --bg: #fafafa;
+      --text: #111;
+      --accent: #0066cc;
+      --code-bg: #1e1e1e;
+      --code-text: #e5e5e5;
+    }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    header, footer {
+      padding: 1rem 2rem;
+      background: #fff;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    nav a {
+      margin-left: 1rem;
+      text-decoration: none;
+      color: var(--accent);
+      font-weight: 500;
+    }
+    main {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+    h1 {
+      font-size: 2.2rem;
+      margin-bottom: .5rem;
+    }
+    h2 {
+      font-size: 1.6rem;
+      margin-top: 2rem;
+      margin-bottom: .5rem;
+      border-bottom: 2px solid #e0e0e0;
+      padding-bottom: .3rem;
+    }
+    pre {
+      background: var(--code-bg);
+      color: var(--code-text);
+      padding: 1rem;
+      overflow-x: auto;
+      border-radius: 4px;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    }
+    code {
+      font-family: inherit;
+    }
+    ul {
+      padding-left: 1.2rem;
+    }
+    li {
+      margin-bottom: .4rem;
+    }
+    .cta {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: .6rem 1.2rem;
+      background: var(--accent);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 4px;
+    }
+    footer {
+      font-size: .9rem;
+      text-align: center;
+      border-top: 1px solid #e0e0e0;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div><strong>AHD</strong> – Artificial Human Design</div>
+    <nav>
+      <a href="https://github.com/yourorg/ahd" target="_blank" rel="noopener">Read the Code</a>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Design that actually respects the craft</h1>
+    <p>
+      AHD is a framework that lets you evaluate AI‑generated designs with the rigor
+      you expect from a senior engineer or a seasoned designer. No fluff, just
+      concrete tools you can run today.
+    </p>
+
+    <h2>Run an evaluation</h2>
+    <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+
+    <h2>What ships</h2>
+    <ul>
+      <li>Brief compiler</li>
+      <li>28‑rule linter</li>
+      <li>Eval harness</li>
+      <li>Vision‑critic scaffold</li>
+      <li>MCP server</li>
+      <li>Editor plugins</li>
+      <li>Eight tokens</li>
+    </ul>
+
+    <h2>What is gated</h2>
+    <ul>
+      <li>Live frontier‑model calls (requires API keys)</li>
+      <li>Live vision critique (requires multimodal key + screenshot pipeline)</li>
+      <li>Standalone npm packages for the editor plugins</li>
+      <li>Additional tokens</li>
+    </ul>
+
+    <a href="https://github.com/yourorg/ahd" class="cta">Read the Code</a>
+  </main>
+
+  <footer>
+    Code licensed under <strong>FSL-1.1‑Apache-2.0</strong> • Tokens &amp; artwork licensed under <strong>CC‑BY‑4.0</strong>
+  </footer>
+</body>
+</html>

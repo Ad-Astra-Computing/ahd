@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AHD | Artificial Human Design</title>
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --fg: #e0e0e0;
+    --accent: #00ff94;
+    --mono: 'Geist Mono', 'JetBrains Mono', 'Courier New', monospace;
+    --sans: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  }
+  
+  * { 
+    box-sizing: border-box; 
+  }
+  
+  body {
+    background-color: var(--bg);
+    color: var(--fg);
+    font-family: var(--sans);
+    line-height: 1.6;
+    margin: 0;
+    padding: 3rem 2rem;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .container {
+    max-width: 800px;
+    width: 100%;
+  }
+  
+  header {
+    margin-bottom: 3rem;
+  }
+  
+  h1 {
+    font-family: var(--mono);
+    color: var(--accent);
+    font-size: 2rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0 0 0.5rem 0;
+  }
+  
+  .subtitle {
+    font-family: var(--mono);
+    color: #888;
+    margin: 0;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  
+  .prose {
+    font-size: 1.125rem;
+    color: #ccc;
+    max-width: 65ch;
+    margin-bottom: 3rem;
+  }
+  
+  .prose p {
+    margin: 0 0 1.5rem 0;
+  }
+  
+  .code-block {
+    background: #000;
+    border: 1px solid #333;
+    padding: 1.5rem;
+    margin: 3rem 0;
+    overflow-x: auto;
+  }
+  
+  .code-block code {
+    font-family: var(--mono);
+    color: var(--accent);
+    font-size: 0.95rem;
+    white-space: pre;
+  }
+  
+  .actions {
+    margin-bottom: 5rem;
+  }
+  
+  a.cta {
+    display: inline-block;
+    font-family: var(--mono);
+    background-color: var(--accent);
+    color: var(--bg);
+    padding: 0.75rem 1.5rem;
+    text-decoration: none;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+    transition: background-color 0.2s, color 0.2s;
+  }
+  
+  a.cta:hover {
+    background-color: var(--fg);
+    color: var(--bg);
+  }
+  
+  .manifest-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    margin: 4rem 0;
+    border-top: 1px solid #333;
+    padding-top: 3rem;
+  }
+  
+  @media (min-width: 600px) {
+    .manifest-container {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  
+  h2 {
+    font-family: var(--mono);
+    font-size: 1rem;
+    color: var(--fg);
+    text-transform: uppercase;
+    font-weight: 400;
+    margin: 0 0 1.5rem 0;
+    letter-spacing: 0.05em;
+  }
+  
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  li {
+    font-family: var(--mono);
+    font-size: 0.9rem;
+    color: #aaa;
+    margin-bottom: 0.75rem;
+    padding-left: 1.25rem;
+    position: relative;
+  }
+  
+  li::before {
+    content: ">";
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+  }
+  
+  footer {
+    border-top: 1px solid #333;
+    padding-top: 2rem;
+    margin-top: 4rem;
+  }
+  
+  footer p {
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    color: #666;
+    margin: 0;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>AHD</h1>
+    <p class="subtitle">Artificial Human Design</p>
+  </header>
+  
+  <main>
+    <div class="prose">
+      <p>The web is drowning in generated output. You already know the exact patterns: the identical layouts, the predictable phrasing, the fundamental lack of structural rigour. If you suspect generation models have compromised design standards, you are correct.</p>
+      <p>AHD is a framework built to enforce strict, deterministic design systems against non-deterministic outputs. It evaluates, lints and compiles design intent before any pixels render. This is not a lecture on aesthetics. This is the mechanism to enforce them.</p>
+    </div>
+
+    <div class="code-block">
+      <code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code>
+    </div>
+
+    <div class="actions">
+      <a href="https://github.com/ahd-framework/ahd" class="cta">Read the code</a>
+    </div>
+
+    <div class="manifest-container">
+      <section>
+        <h2>What ships</h2>
+        <ul>
+          <li>brief compiler</li>
+          <li>28-rule linter</li>
+          <li>eval harness</li>
+          <li>vision-critic scaffold</li>
+          <li>MCP server</li>
+          <li>editor plugins</li>
+          <li>eight tokens</li>
+        </ul>
+      </section>
+      
+      <section>
+        <h2>What is gated</h2>
+        <ul>
+          <li>live frontier-model calls (needs API keys)</li>
+          <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+          <li>standalone npm packages for the editor plugins</li>
+          <li>additional tokens</li>
+        </ul>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <p>Licence: FSL-1.1-Apache-2.0 for code | CC-BY-4.0 for tokens and artwork</p>
+  </footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,319 @@
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AHD — Artificial Human Design</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=Inter+Tight:wght@300;400;700;900&display=swap" rel="stylesheet">
+  <style>
+    /* rule: single-family-two-optical-sizes — Inter Tight for display, Inter for text */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      /* rule: colour.space oklch, palette ink/paper/spot */
+      --ink: oklch(0.18 0 0);
+      --paper: oklch(0.98 0.005 95);
+      --spot: oklch(0.58 0.22 27);
+      --rule: oklch(0.18 0 0);
+      --muted: oklch(0.55 0 0);
+      /* rule: type.base 17px, ratio 1.333 */
+      --base: 17px;
+      --ratio: 1.333;
+      --step-2: calc(var(--base) / var(--ratio) / var(--ratio));
+      --step-1: calc(var(--base) / var(--ratio));
+      --step-0: var(--base);
+      --step-1-up: calc(var(--base) * var(--ratio));
+      --step-2-up: calc(var(--base) * var(--ratio) * var(--ratio));
+      --step-3-up: calc(var(--base) * var(--ratio) * var(--ratio) * var(--ratio));
+      --step-4-up: calc(var(--base) * var(--ratio) * var(--ratio) * var(--ratio) * var(--ratio));
+      --step-5-up: calc(var(--base) * var(--ratio) * var(--ratio) * var(--ratio) * var(--ratio) * var(--ratio));
+      /* rule: grid.baseline 8px */
+      --bl: 8px;
+      /* rule: grid.gutter 24px */
+      --gutter: 24px;
+    }
+
+    html {
+      scroll-behavior: auto;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      /* rule: background paper, foreground ink */
+      background: var(--paper);
+      color: var(--ink);
+      /* rule: type.text Inter 17px, line-height 1.5 */
+      font-family: "Inter", "Helvetica Now Text", Helvetica, Arial, sans-serif;
+      font-size: var(--base);
+      line-height: 1.5;
+      /* rule: grid.margin preferred calc(100vw / 24), min 32px */
+      padding-left: max(32px, calc(100vw / 24));
+      padding-right: max(32px, calc(100vw / 24));
+    }
+
+    /* rule: swiss-12 grid with 24px gutters */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: var(--gutter);
+      max-width: 1440px;
+      margin: 0 auto;
+    }
+
+    /* rule: asymmetric left-aligned composition, no centred hero */
+    .grid > * {
+      grid-column: 1 / -1;
+    }
+
+    /* rule: dramatic jump 160px between sections */
+    section {
+      padding-top: 160px;
+    }
+
+    section:first-child {
+      padding-top: 96px;
+    }
+
+    /* rule: display type Neue Haas Grotesk Display, tracking -0.02em */
+    .display {
+      font-family: "Inter Tight", "Helvetica Now Display", "Inter", Helvetica, Arial, sans-serif;
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+      text-transform: uppercase;
+    }
+
+    /* rule: one section anchored by single word at display >= 120px with -0.02em tracking */
+    .mega {
+      /* rule: type.scale step 5 approx 160px, clamped for viewport */
+      font-size: clamp(96px, 12vw, 160px);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      font-weight: 400;
+      /* rule: at least one intentional imperfection — slight optical overshoot */
+      margin-left: -0.03em;
+    }
+
+    h2 {
+      font-family: "Inter Tight", "Helvetica Now Display", "Inter", Helvetica, Arial, sans-serif;
+      font-size: var(--step-4-up);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: calc(var(--bl) * 4);
+    }
+
+    h3 {
+      font-family: "Inter Tight", "Helvetica Now Display", "Inter", Helvetica, Arial, sans-serif;
+      font-size: var(--step-2-up);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: calc(var(--bl) * 3);
+    }
+
+    p, li {
+      /* rule: measure 62ch */
+      max-width: 62ch;
+      margin-bottom: calc(var(--bl) * 2);
+    }
+
+    /* rule: no Oxford commas, declarative voice reflected in tight list punctuation */
+    ul {
+      list-style: none;
+      margin-bottom: calc(var(--bl) * 4);
+    }
+
+    /* rule: no emoji bullets, use structural rule markers */
+    li::before {
+      content: "—";
+      display: inline-block;
+      width: 2ch;
+      margin-left: -2ch;
+    }
+
+    li {
+      padding-left: 2ch;
+      margin-bottom: calc(var(--bl) * 1.5);
+      color: var(--muted);
+    }
+
+    /* rule: at least one element bleeds past the 12-col grid on purpose */
+    .bleed {
+      grid-column: 1 / 14;
+      margin-left: calc(-1 * max(32px, calc(100vw / 24)) - var(--gutter));
+      margin-right: calc(-1 * max(32px, calc(100vw / 24)) - var(--gutter));
+      padding-left: max(32px, calc(100vw / 24));
+      padding-right: max(32px, calc(100vw / 24));
+    }
+
+    /* rule: terminal-aesthetic code block, structural only no animations */
+    pre {
+      /* rule: border weight 1, style solid, colour rule */
+      border: 1px solid var(--rule);
+      padding: calc(var(--bl) * 4);
+      margin-top: calc(var(--bl) * 3);
+      margin-bottom: calc(var(--bl) * 3);
+      overflow-x: auto;
+      /* rule: sharp corners, no rounded-2xl */
+      border-radius: 0;
+      background: transparent;
+    }
+
+    code {
+      font-family: "SF Mono", "SFMono-Regular", "Menlo", "Monaco", "Consolas", monospace;
+      font-size: var(--step-0);
+      line-height: 1.6;
+      color: var(--ink);
+    }
+
+    .language-bash {
+      color: var(--ink);
+    }
+
+    /* rule: spot colour used exactly once — the anchor word "slop" */
+    .spot {
+      color: var(--spot);
+    }
+
+    /* rule: no shadows, depth via rule, space and colour */
+    a {
+      color: var(--ink);
+      text-decoration: none;
+      border-bottom: 1px solid var(--rule);
+      padding-bottom: 2px;
+    }
+
+    a:hover {
+      border-bottom-color: var(--spot);
+    }
+
+    /* rule: structural motion only, respects prefers-reduced-motion */
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+
+    /* rule: sharp by default, pills (999) allowed for status tags only */
+    .status {
+      display: inline-block;
+      border: 1px solid var(--rule);
+      padding: calc(var(--bl) * 0.5) calc(var(--bl) * 1.5);
+      border-radius: 999px;
+      font-size: var(--step-2);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: calc(var(--bl) * 4);
+    }
+
+    /* rule: line-height.display 1.05 for display, body 1.5 */
+    .lead {
+      font-size: var(--step-2-up);
+      line-height: 1.4;
+      max-width: 52ch;
+      margin-bottom: calc(var(--bl) * 6);
+    }
+
+    /* rule: not a canonical 4-column footer — single line licence statement */
+    footer {
+      padding-top: 160px;
+      padding-bottom: calc(var(--bl) * 6);
+      border-top: 1px solid var(--rule);
+      margin-top: 160px;
+    }
+
+    footer p {
+      font-size: var(--step-2);
+      color: var(--muted);
+      max-width: none;
+      margin-bottom: 0;
+    }
+
+    /* rule: manifest sections clearly separated with rule lines */
+    .manifest {
+      border-top: 1px solid var(--rule);
+      padding-top: calc(var(--bl) * 6);
+    }
+
+    .manifest + .manifest {
+      margin-top: calc(var(--bl) * 8);
+    }
+
+    /* rule: no rounded-2xl on everything — sharp corners */
+    * {
+      border-radius: 0;
+    }
+
+    /* rule: grid.rhythm-note dramatic jump 160 between sections maintained */
+  </style>
+</head>
+<body>
+  <!-- rule: asymmetric left-aligned composition — content sits left, never centred -->
+  <div class="grid">
+    
+    <!-- rule: no centred hero, no pill badge + two CTAs -->
+    <section>
+      <span class="status">artificial human design</span>
+      <!-- rule: one section anchored by single word at display >= 120px with -0.02em tracking -->
+      <h1 class="display mega">No more <span class="spot">slop</span></h1>
+      <p class="lead">AHD is a framework for evaluating design output from frontier models. It compiles briefs into structured specifications, lints against explicit rules, and scores results with repeatable rigour.</p>
+    </section>
+
+    <!-- rule: terminal-aesthetic code block with language tag bash -->
+    <section>
+      <h2 class="display">Run the eval</h2>
+      <p>One command. Ten variations. One brief.</p>
+      <!-- rule: bleed past the 12-col grid on purpose -->
+      <div class="bleed">
+        <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+      </div>
+      <!-- rule: link to github labelled as read-the-code CTA -->
+      <p><a href="https://github.com/ahd-org/ahd">Read the code</a></p>
+    </section>
+
+    <!-- rule: clearly separated manifest section titled 'What ships' -->
+    <section class="manifest">
+      <h2 class="display">What ships</h2>
+      <ul>
+        <!-- rule: enumerates brief compiler, 28-rule linter, eval harness, vision-critic scaffold, MCP server, editor plugins, eight tokens -->
+        <li>Brief compiler</li>
+        <li>28-rule linter</li>
+        <li>Eval harness</li>
+        <li>Vision-critic scaffold</li>
+        <li>MCP server</li>
+        <li>Editor plugins</li>
+        <li>Eight tokens</li>
+      </ul>
+    </section>
+
+    <!-- rule: clearly separated manifest section titled 'What is gated' -->
+    <section class="manifest">
+      <h2 class="display">What is gated</h2>
+      <ul>
+        <!-- rule: enumerates live frontier-model calls, live vision critique, standalone npm packages, additional tokens -->
+        <li>Live frontier-model calls (needs API keys)</li>
+        <li>Live vision critique (needs multimodal key + screenshot pipeline)</li>
+        <li>Standalone npm packages for the editor plugins</li>
+        <li>Additional tokens</li>
+      </ul>
+    </section>
+
+    <!-- rule: no canonical 4-column footer — explicit licence naming only -->
+    <footer>
+      <!-- rule: footer names licence explicitly: FSL-1.1-Apache-2.0 for code, CC-BY-4.0 for tokens and artwork -->
+      <p>Code under FSL-1.1-Apache-2.0. Tokens and artwork under CC-BY-4.0.</p>
+    </footer>
+
+  </div>
+</body>
+</html>
+```

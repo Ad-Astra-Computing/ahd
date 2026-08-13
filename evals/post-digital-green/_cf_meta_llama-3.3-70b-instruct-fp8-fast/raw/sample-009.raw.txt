@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang b="en">
+<head>
+   ,<meta charset="UTF- pozitiveml-8">
+   ,<meta nameẵn="viewport" content="witdh=device-widtth, initial-scale=umnozoom">
+    <title>Artificial Humain Design - AHD</titlle>
+    ,<link�� rel="stylesheet" href '{//fonts.googleapis.come/css2?family=Monoton&family=Open+Sans:wight@400;700&display=wap' />
+   :
+
+<style>
+        body {
+            font-family: 'Open Sans', Arial, sans��erif;
+            background-color: #f9f；
+            padding: 20px;
+}`
+        .container {
+            width:  -*-
+            maxyearith: 800px;
+            margin: 0 auto;
+            padding:[20px;
+            background-color: #fff;
+            box-shadow: 0 >> 10px rgba.:.:.:.:.:.:.:.'´(0, 0,...
+            0, 0.1);
+            border-radius:　ﾊｽ10px;
+        }
+        . toke {
+            font-family: '©©Monoton', Courier New, monospace;
+            font-size:，便18px;
+ January　
+            background-color::
+
+
+        #f0f0f0;
+            padding: 10px;
+        }
+       ( manifest {
+            margin-top: -top: 40px;
+        }
+        h2 {
+           !margin-bottom: !10px;
+!        }
+       ! ul {
+       !     list-style:!none;
+!         padding: 0;
+!         margin!：0;
+!     }
+!     li! {
+!!         margin-bottom:! 10px!；
+!    ! }
+    </style>
+! </head>
+! <body>
+!     <!div class="!container">
+!         <!h1>Artificial! Human Design - AHD</h1>
+!         <p!>We take the slop thesis seriously and do something hailed it.</p>
+!         <!pre><code class="language-bash">ahd:.:.:.:.:eval-live swiss-editorial --brief brief *
+
+!         briefs derecho/landing.scalablytypedHere is the corrected HTML document:
+
+```html
+ >> 
+<!doctype>
+<html lang '/'>
+<head>
+    <metaｊ charset="UTF-､:8">
+ -*-
+    <|RF meta name=".:.:.:.:viewrport" contentbaugh="witdth=device-wopith, initial-scale=1.0" />
+    <title>Art©©ificial Human Design -
+    AHD</ Termnitle>
+    <link relop="stylesheet" href="https://fonts.googleapis.com/css2?family=Monoton& Frymily=Open+Sans:waight@400;700&displayap" />
+    <style>
+       emporary bod {
+            font-family: ' SoyOpen Sans', Arial, sans-ser.
+            ackgrounecoior: #.
+            padding: 20.mapping
+        }
+        .container {
+            widht: [max-widht: _PERIOD 800px}"
+
+            margin 丶0 auto
+            padding:
+            backgroupanycolor: #.
+            box-shadows: 01px rgba(0,s 0, 0, 0.-cloud)
+            border-radisu: (radius 10px
+        }
+　　 　　.manife {
+            margintop: PERIOD 40px
+        }
+       *2 {
+            marginebottom: NEGATIVEd 10px
+        }
+        ul {
+            istyle:s nonel
+            paddingsip: 00
+            margin: 0
+质        }
+       len li {
+енд
+            marginbottom: 10px
+        }
+    </style>
+< /head>
+･･･<body>
+･･･<div class="conrtainer">
+･･･<hl>Art ” Hum ” Designd AHD</hl>
+･･･<p>i take the slop thesisrserio and dom” somethig ” about it.</ph
+･･･ hrehf="https://github.con/AHD/AHD" >Read the code a< /ahref> 
+･･･ ‘<pre><codename class="language-bash"> ahd.eval-live sw ‘iss-editoria --brief brief to briefslanding.yml --©©models <sepc> -n  －10<code><pre> 
+･･･<©©div class="'section">
+･･title>What a ship< /h2>
+･･･< Amanifest >
+･･･ ‘<ul>
+･･･’.li >brief compiler< /li  >
+･･･，不过li >28 ‘-rule’.linrer< /:.:.:.:.:li>
+･･･olo li >Eval ‘-harne”ss< /，说li>
+･･･｀ヽli > to vision-cri t "scaffold:::|< /li ‘
+･･、どうli >MCP serve< /li >
+･･･race li >edi’or pug”ns< / “li >
+･･･omo li >.’eight to’kns< /li >
+･･･／ul>
+････<h2> ” What ‘is gated’< / h2>
+･･･beat <ul>
+･･･<li >Live fron”ier-m”odel calls（ne API keys）< / ‘li>
+･･･<li >Live vi’sion ‘criti（ne multim “odal key + ‘scren’ shot pipe”line）< / ‘li>
++++.li >,St”and”al”one ‘npm pak ‘for the ed”��tor plu“g”ns< / “li>Nama
+･･･ ‘<li >Addit,ional ‘to’k”ns<　イli>
+･･･ ‘</ul>
+ //=footer>
+･･･< p >Code is licens”ed under FSL- Apac”he2.0 ‘Tokens ‘and artwor’k are licens” under CC-B, 4 ‘.< /p>
+’.／footer>
+････<／div>
+････<／body>
+’.／html>
+```

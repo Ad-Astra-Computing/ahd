@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ahd / artificial human design</title>
+  <style>
+    /* rule: single-monospace, dark green-black background, muted green foreground, single amber accent */
+    :root {
+      --bg: oklch(0.14 0.02 150);
+      --fg: oklch(0.92 0.12 135);
+      --dim: oklch(0.55 0.05 150);
+      --rule: oklch(0.3 0.04 150);
+      --amber: oklch(0.82 0.15 75);
+      --page: 80ch;
+      --space-1: 4px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 24px;
+      --space-6: 32px;
+    }
+
+    /* rule: no gradients, no shadows, no radii, no entrance animation */
+    * {
+      box-sizing: border-box;
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    /* rule: everything in monospace, lowercase by default, 80 character grid */
+    html {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: "Berkeley Mono", "IBM Plex Mono", "JetBrains Mono", ui-monospace, monospace;
+      font-size: 15px;
+      line-height: 1.55;
+      text-transform: lowercase;
+    }
+
+    /* rule: one screen of reading, web surface, rectangles only */
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+    }
+
+    /* rule: at least one element aligned to the char grid (80ch max-width) */
+    .page {
+      width: min(calc(100vw - 32px), var(--page));
+      margin: 0 auto;
+      padding: 16px 0 24px;
+    }
+
+    /* rule: one hairline rule colour */
+    .rule,
+    .panel,
+    pre,
+    footer {
+      border: 1px solid var(--rule);
+    }
+
+    /* rule: technical, terse voice; no centered hero stack */
+    header,
+    section,
+    footer {
+      margin-bottom: var(--space-5);
+    }
+
+    /* rule: rectangles only, muted palette */
+    .panel {
+      padding: var(--space-4);
+      background: transparent;
+    }
+
+    /* rule: display and text use same monospace family */
+    h1,
+    h2,
+    p,
+    ul,
+    pre,
+    a,
+    small {
+      margin: 0;
+      font: inherit;
+      letter-spacing: 0;
+    }
+
+    /* rule: terse, technical hierarchy without sans-serif or decorative styling */
+    h1 {
+      color: var(--fg);
+      line-height: 1.1;
+    }
+
+    /* rule: clear separation for manifest sections */
+    h2 {
+      margin-bottom: var(--space-3);
+      color: var(--amber);
+    }
+
+    /* rule: muted secondary text */
+    .dim,
+    small,
+    .meta {
+      color: var(--dim);
+    }
+
+    /* rule: underline links with an offset, no colour change */
+    a,
+    a:visited,
+    a:hover,
+    a:active {
+      color: inherit;
+      text-decoration-line: underline;
+      text-decoration-color: currentColor;
+      text-underline-offset: 4px;
+    }
+
+    /* rule: single amber accent */
+    .accent {
+      color: var(--amber);
+    }
+
+    /* rule: one screen of reading; compressed spacing */
+    .stack > * + * {
+      margin-top: var(--space-3);
+    }
+
+    /* rule: terminal-aesthetic code block */
+    pre {
+      overflow-x: auto;
+      padding: var(--space-4);
+      background: transparent;
+      color: var(--fg);
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    /* rule: no emoji bullets, no feature cards */
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    /* rule: terse manifest enumeration */
+    li + li {
+      margin-top: var(--space-2);
+    }
+
+    /* rule: rectangles only, hairline separators */
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-4);
+    }
+
+    @media (min-width: 860px) {
+      /* rule: desktop and mobile support without changing the 80ch reading width */
+      .grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    /* rule: ASCII diagram rendered as text */
+    .ascii {
+      white-space: pre;
+      color: var(--dim);
+      overflow-x: auto;
+    }
+
+    /* rule: intentional imperfection; keep one small asymmetry instead of polishing it away */
+    .quirk {
+      padding-right: 15px;
+    }
+
+    /* rule: footer names licence explicitly; avoid canonical 4-column footer */
+    footer {
+      padding: var(--space-4);
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <!-- rule: no pill badge, no centered hero stack, one screen of reading -->
+    <header class="panel stack quirk">
+      <div class="meta">artificial human design / ahd</div>
+      <h1>design systems for rejecting slop before it reaches production.</h1>
+      <p>
+        ahd turns taste into something a team can inspect: compiled briefs, a fixed
+        rule set, repeatable evals, and a place to wire vision critique without
+        pretending the hard parts are solved.
+      </p>
+      <p>
+        this is for people who already know the problem. the point is not a lecture.
+        the point is a framework with edges, failure modes, and a command you can run.
+      </p>
+      <p>
+        <a href="https://github.com/" target="_blank" rel="noreferrer">read the code</a>
+        <span class="dim"> / source first, claims second</span>
+      </p>
+    </header>
+
+    <!-- rule: at least one ASCII diagram rendered as text -->
+    <section class="panel stack">
+      <div class="ascii" aria-label="ascii pipeline diagram">
+brief --> compiler --> linter(28) --> eval harness --> critic scaffold
+   \                                                   /
+    \---------------------- outputs ------------------/
+                     [html][css][scores][notes]
+      </div>
+      <p class="dim">
+        one brief in. multiple candidates out. rules stay visible. failures stay legible.
+      </p>
+    </section>
+
+    <!-- rule: terminal-aesthetic code block showing the one-liner that runs the eval -->
+    <section class="panel stack">
+      <h2>run it</h2>
+      <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+      <p class="dim">
+        live eval is where rhetoric stops. if a token or prompt collapses into defaults,
+        the harness should make that obvious.
+      </p>
+    </section>
+
+    <!-- rule: clearly separated manifest sections titled exactly as requested -->
+    <section class="grid">
+      <section class="panel stack">
+        <h2>what ships</h2>
+        <ul>
+          <li>brief compiler</li>
+          <li>28-rule linter</li>
+          <li>eval harness</li>
+          <li>vision-critic scaffold</li>
+          <li>mcp server</li>
+          <li>editor plugins</li>
+          <li>eight tokens</li>
+        </ul>
+      </section>
+
+      <section class="panel stack">
+        <h2>what is gated</h2>
+        <ul>
+          <li>live frontier-model calls <span class="dim">(needs api keys)</span></li>
+          <li>live vision critique <span class="dim">(needs multimodal key + screenshot pipeline)</span></li>
+          <li>standalone npm packages for the editor plugins</li>
+          <li>additional tokens</li>
+        </ul>
+      </section>
+    </section>
+
+    <!-- rule: terse, technical close; no testimonials, no pricing, no trusted-by strip -->
+    <section class="panel stack">
+      <p>
+        ahd is opinionated on purpose. the artefacts should be inspectable, the rules
+        should be enumerable, and the generated result should be harder to confuse with
+        generic model output.
+      </p>
+      <p>
+        <span class="accent">if the system cannot say what it is checking, it is not evaluating design.</span>
+      </p>
+    </section>
+
+    <!-- rule: footer names licence explicitly; no canonical 4-column footer -->
+    <footer class="stack">
+      <small>
+        licence: fsl-1.1-apache-2.0 for code, cc-by-4.0 for tokens and artwork.
+      </small>
+    </footer>
+  </main>
+</body>
+</html>

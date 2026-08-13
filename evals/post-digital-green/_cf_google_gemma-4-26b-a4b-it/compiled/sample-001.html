@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ahd — artificial human design</title>
+<style>
+/* rule: post-digital-green token application */
+:root {
+  --bg: oklch(0.14 0.02 150);
+  --fg: oklch(0.92 0.12 135);
+  --dim: oklch(0.55 0.05 150);
+  --rule: oklch(0.3 0.04 150);
+  --accent: oklch(0.82 0.15 75);
+}
+
+/* rule: everything in monospace */
+* {
+  box-sizing: border-box;
+  font-family: 'IBM Plex Mono', 'JetBrains Mono', ui-monospace, monospace;
+}
+
+/* rule: dark green-black background, muted green foreground */
+body {
+  background-color: var(--bg);
+  color: var(--fg);
+  margin: 0;
+  padding: 48px 16px;
+  line-height: 1.55; /* rule: line-height body 1.55 */
+  display: flex;
+  justify-content: center;
+}
+
+/* rule: 80 character grid / measure 72ch */
+main {
+  max-width: 72ch;
+  width: 100%;
+}
+
+/* rule: technical, lowercase voice */
+h1, h2, h3, p, li, code, pre {
+  text-transform: lowercase;
+}
+
+h1 {
+  font-size: 2.4rem;
+  line-height: 1.1; /* rule: line-height display 1.1 */
+  margin: 0 0 24px 0;
+}
+
+h2 {
+  font-size: 1.5rem;
+  line-height: 1.25; /* rule: line-height h2 1.25 */
+  margin: 48px 0 16px 0;
+  border-bottom: 1px solid var(--rule); /* rule: one hairline rule colour */
+  padding-bottom: 8px;
+}
+
+h3 {
+  font-size: 1.1rem;
+  margin: 24px 0 8px 0;
+  color: var(--dim);
+}
+
+p {
+  margin: 0 0 24px 0;
+}
+
+/* rule: rectangles only, no radii, no shadows, no gradients */
+pre {
+  background: oklch(0.18 0.02 150);
+  border: 1px solid var(--rule);
+  padding: 16px;
+  margin: 24px 0;
+  overflow-x: auto;
+}
+
+code {
+  font-size: 0.9rem;
+}
+
+/* rule: link style - underline-offset 4px, no colour change */
+a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* rule: single amber accent */
+.accent {
+  color: var(--accent);
+}
+
+/* rule: ascii diagram style */
+.ascii {
+  font-family: monospace;
+  white-space: pre;
+  color: var(--dim);
+  line-height: 1.2;
+  margin: 32px 0;
+}
+
+/* rule: no emoji bullets */
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  margin-bottom: 4px;
+}
+
+li::before {
+  content: "[ ] ";
+  color: var(--dim);
+}
+
+li.shipped::before {
+  content: "[x] ";
+  color: var(--accent);
+}
+
+/* rule: footer requirements */
+footer {
+  margin-top: 64px;
+  padding-top: 32px;
+  border-top: 1px solid var(--rule);
+  font-size: 0.8rem;
+  color: var(--dim);
+}
+
+.cta-container {
+  margin-top: 48px;
+}
+
+</style>
+</head>
+<body>
+
+<main>
+  <header>
+    <h1>artificial human design</h1>
+    <p>
+      the current generative landscape is saturated with aesthetic slop. 
+      ahd provides the framework to audit, critique, and enforce human-grade 
+      intentionality in automated workflows.
+    </p>
+  </header>
+
+  <div class="ascii">
++-----------+       +-----------+       +-----------+
+|   brief   | ----> |  compiler | ----> |   linter  |
++-----------+       +-----------+       +-----------+
+    |                   |                   |
+    +-------------------+-------------------+---> [ eval ]
+  </div>
+
+  <section>
+    <h2>evaluation</h2>
+    <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+  </section>
+
+  <section>
+    <h2>manifest</h2>
+    
+    <h3>what ships</h3>
+    <ul>
+      <li class="shipped">brief compiler</li>
+      <li class="shipped">28-rule linter</li>
+      <li class="shipped">eval harness</li>
+      <li class="shipped">vision-critic scaffold</li>
+      <li class="shipped">mcp server</li>
+      <li class="shipped">editor plugins</li>
+      <li class="shipped">eight tokens</li>
+    </ul>
+
+    <h3>what is gated</h3>
+    <ul>
+      <li>live frontier-model calls (needs api keys)</li>
+      <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+      <li>standalone npm packages for the editor plugins</li>
+      <li>additional tokens</li>
+    </ul>
+  </section>
+
+  <div class="cta-container">
+    <a href="https://github.com/ahd-project" class="accent">read-the-code</a>
+  </div>
+
+  <footer>
+    licence: fsl-1.1-apache-2.0 for code, cc-by-4.0 for tokens and artwork.
+  </footer>
+</main>
+
+</body>
+</html>

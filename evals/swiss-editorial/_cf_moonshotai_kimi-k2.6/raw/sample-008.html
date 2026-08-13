@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AHD — Artificial Human Design</title>
+  <style>
+    :root {
+      --bg: #0c0c0c;
+      --fg: #c5c5c5;
+      --dim: #6b6b6b;
+      --accent: #b8bb26;
+      --accent-dim: #7a7d1a;
+      --border: #2a2a2a;
+      --code-bg: #141414;
+      --warning: #fe8019;
+      --pink: #d3869b;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.6;
+      font-size: 15px;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    header {
+      padding: 64px 0 48px;
+    }
+
+    .lede {
+      color: var(--dim);
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-size: 28px;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      color: #e8e8e8;
+      line-height: 1.3;
+    }
+
+    .thesis {
+      margin-top: 20px;
+      font-size: 16px;
+      line-height: 1.7;
+      max-width: 640px;
+    }
+
+    .thesis em {
+      color: #e8e8e8;
+      font-style: normal;
+      font-weight: 400;
+    }
+
+    .code-block {
+      margin: 40px 0;
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .code-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      background: #1a1a1a;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--dim);
+    }
+
+    .dot:first-child { background: #cc241d; }
+    .dot:nth-child(2) { background: #d79921; }
+    .dot:nth-child(3) { background: var(--accent); }
+
+    .lang-tag {
+      margin-left: auto;
+      font-size: 11px;
+      color: var(--dim);
+      text-transform: uppercase;
+    }
+
+    pre {
+      padding: 20px 24px;
+      overflow-x: auto;
+      font-family: "SF Mono", Monaco, Inconsolata, "Fira Code", monospace;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    code {
+      color: var(--fg);
+    }
+
+    .cmd-name { color: var(--accent); }
+    .cmd-flag { color: var(--pink); }
+    .cmd-arg { color: #83a598; }
+
+    .manifest {
+      margin: 48px 0;
+    }
+
+    .manifest-section {
+      margin-bottom: 40px;
+    }
+
+    .manifest-section h2 {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--dim);
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .manifest-section h2 span {
+      color: var(--warning);
+    }
+
+    .manifest-section ul {
+      list-style: none;
+    }
+
+    .manifest-section li {
+      padding: 8px 0;
+      padding-left: 20px;
+      position: relative;
+      font-size: 14px;
+    }
+
+    .manifest-section li::before {
+      content: "-";
+      position: absolute;
+      left: 0;
+      color: var(--dim);
+    }
+
+    .ships li::before {
+      color: var(--accent);
+    }
+
+    .manifest-section li code {
+      background: var(--code-bg);
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-size: 12px;
+      color: #e8e8e8;
+    }
+
+    .note {
+      margin-top: 16px;
+      padding: 14px 18px;
+      background: var(--code-bg);
+      border-left: 3px solid var(--warning);
+      font-size: 13px;
+      color: var(--dim);
+      line-height: 1.6;
+    }
+
+    .cta {
+      margin: 48px 0 64px;
+    }
+
+    .cta a {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--bg);
+      background: var(--accent);
+      text-decoration: none;
+      padding: 12px 24px;
+      border-radius: 4px;
+      font-size: 14px;
+      font-weight: 500;
+      transition: background 0.15s;
+    }
+
+    .cta a:hover {
+      background: var(--accent-dim);
+    }
+
+    .cta a::after {
+      content: "->";
+      font-family: monospace;
+      font-size: 13px;
+    }
+
+    .cta .sub {
+      display: block;
+      margin-top: 12px;
+      font-size: 12px;
+      color: var(--dim);
+    }
+
+    footer {
+      padding: 40px 0 64px;
+      border-top: 1px solid var(--border);
+    }
+
+    footer p {
+      font-size: 12px;
+      color: var(--dim);
+      line-height: 1.8;
+      margin-bottom: 8px;
+    }
+
+    footer a {
+      color: var(--dim);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    footer a:hover {
+      color: var(--fg);
+    }
+
+    @media (max-width: 600px) {
+      header {
+        padding: 40px 0 32px;
+      }
+
+      h1 {
+        font-size: 22px;
+      }
+
+      .thesis {
+        font-size: 15px;
+      }
+
+      pre {
+        padding: 16px;
+        font-size: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <p class="lede">Artificial Human Design</p>
+      <h1>A framework for evaluating design quality without outsourcing judgment to models that cannot see.</h1>
+      <p class="thesis">
+        You have already seen the slop. You do not need another essay on why it is bad. 
+        <em>AHD is a toolchain for designers and engineers who want structured critique, 
+        reproducible evaluation, and a way to keep humans in the loop without pretending 
+        the loop does not exist.</em> It is not a generator. It is a mirror.
+      </p>
+    </header>
+
+    <div class="code-block">
+      <div class="code-header">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="lang-tag">bash</span>
+      </div>
+      <pre><code><span class="cmd-name">ahd</span> <span class="cmd-flag">eval-live</span> swiss-editorial <span class="cmd-flag">--brief</span> <span class="cmd-arg">briefs/landing.yml</span> <span class="cmd-flag">--models</span> <span class="cmd-arg">&lt;specs&gt;</span> <span class="cmd-flag">--n</span> <span class="cmd-arg">10</span></code></pre>
+    </div>
+
+    <div class="manifest">
+      <div class="manifest-section ships">
+        <h2>What ships</h2>
+        <ul>
+          <li>Brief compiler — transforms YAML briefs into structured evaluation contexts</li>
+          <li>28-rule linter — design heuristics derived from actual human critique practice</li>
+          <li>Eval harness — batch runner with deterministic seeding and result aggregation</li>
+          <li>Vision-critic scaffold — plumbing for multimodal critique, runs locally with your own keys</li>
+          <li>MCP server — Model Context Protocol server for integration with compatible editors</li>
+          <li>Editor plugins — VS Code and Neovim extensions (source in-repo, build from source today)</li>
+          <li>Eight tokens — curated design tokens with human-written rationale per value</li>
+        </ul>
+      </div>
+
+      <div class="manifest-section">
+        <h2>What is <span>gated</span></h2>
+        <ul>
+          <li>Live frontier-model calls — needs your own API keys (OpenAI, Anthropic, or compatible)</li>
+          <li>Live vision critique — needs multimodal key + working screenshot pipeline (Playwright, Puppeteer, or manual)</li>
+          <li>Standalone npm packages for the editor plugins — publish pipeline blocked on registry access</li>
+          <li>Additional tokens — blocked on community submission + curation cycle</li>
+        </ul>
+        <div class="note">
+          Nothing here requires a subscription to AHD. The gated items need 
+          your own infrastructure or patience. The framework itself is 
+          designed to degrade gracefully: run the linter offline, run the 
+          harness with local models, skip vision critique entirely.
+        </div>
+      </div>
+    </div>
+
+    <div class="cta">
+      <a href="https://github.com/artificial-human-design/ahd">Read the code on GitHub</a>
+      <span class="sub">Mirror available on <a href="https://git.ahd.dev/ahd">Forgejo</a> if preferred.</span>
+    </div>
+
+    <footer>
+      <p>
+        Code licensed under <a href="https://fsl.software/">FSL-1.1-Apache-2.0</a>.
+        Tokens and artwork licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC-BY-4.0</a>.
+      </p>
+      <p>
+        AHD does not use tracking cookies. No testimonials were harmed or fabricated in the making of this page.
+      </p>
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AHD — Artificial Human Design</title>
+    <style>
+        /* rule: Swiss / International Typographic Style */
+        /* rule: palette is ink on paper (warm off-white) */
+        :root {
+            --paper: oklch(0.98 0.005 95);
+            --ink: oklch(0.18 0 0);
+            --spot: oklch(0.58 0.22 27);
+            --muted: oklch(0.55 0 0);
+            --gutter: 24px;
+            --baseline: 8px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--paper);
+            color: var(--ink);
+            /* rule: Neue Haas Grotesk Text at 17px, line-height 1.5 */
+            font-family: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 17px;
+            line-height: 1.5;
+            /* rule: 8px baseline rhythm */
+            line-height: calc(1.5 * 17px);
+            overflow-x: hidden;
+        }
+
+        /* rule: 12-column grid with 24px gutters */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            column-gap: var(--gutter);
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        .container {
+            padding: 0 calc(100vw / 24);
+        }
+
+        /* rule: asymmetric left-aligned composition */
+        .left-align {
+            grid-column: 1 / span 12;
+            text-align: left;
+        }
+
+        /* rule: one section anchored by a single word at display >= 120px */
+        .hero-section {
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        h1 {
+            /* rule: Neue Haas Grotesk Display at 140px with tracking -0.02em */
+            font-size: 140px;
+            font-weight: 900;
+            line-height: 1.05;
+            letter-spacing: -0.02em;
+            margin: 0;
+            /* rule: one intentional element must bleed past the grid */
+            /* the 'D' will bleed off the right edge */
+            display: block;
+        }
+
+        /* rule: small status pills allowed for status tags only. used spot red exactly once */
+        .status-pill {
+            display: inline-block;
+            background-color: var(--spot);
+            color: var(--paper);
+            font-size: 12px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 999px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        /* rule: terminal-aesthetic code block */
+        .terminal-block {
+            grid-column: 1 / span 10;
+            background-color: var(--ink);
+            color: var(--paper);
+            padding: 32px;
+            margin-bottom: 160px; /* rule: dramatic jump per section */
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            font-size: 15px;
+            overflow-x: auto;
+        }
+
+        .terminal-block code {
+            display: block;
+        }
+
+        /* rule: manifest sections */
+        .manifest-section {
+            margin-bottom: 160px;
+        }
+
+        h2 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 32px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .manifest-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: var(--gutter);
+        }
+
+        .manifest-col {
+            grid-column: span 6;
+        }
+
+        /* rule: avoid three equal feature cards (using 2 columns) */
+        ul {
+            list-style: none;
+            /* rule: do not use emoji bullets */
+        }
+
+        ul li {
+            margin-bottom: 12px;
+            padding-left: 16px;
+            position: relative;
+        }
+
+        ul li::before {
+            content: "-";
+            position: absolute;
+            left: 0;
+        }
+
+        /* rule: CTA - read-the-code */
+        .cta-section {
+            margin-bottom: 160px;
+        }
+
+        .cta-link {
+            color: var(--ink);
+            font-weight: 700;
+            text-decoration: none;
+            border-bottom: 2px solid var(--ink);
+            padding-bottom: 4px;
+        }
+
+        .cta-link:hover {
+            background-color: var(--ink);
+            color: var(--paper);
+        }
+
+        /* rule: footer */
+        footer {
+            padding-top: 64px;
+            padding-bottom: 64px;
+            border-top: 1px solid var(--ink);
+            font-size: 14px;
+            color: var(--muted);
+        }
+
+        /* rule: intentional bleed element (the vertical line) */
+        .bleed-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 1px;
+            height: 100%;
+            background-color: var(--ink);
+            z-index: -1;
+        }
+
+        /* rule: bleed text in background */
+        .bg-text {
+            position: absolute;
+            font-size: 40vw;
+            font-weight: 900;
+            top: 10%;
+            left: -5vw;
+            z-index: -1;
+            color: var(--ink);
+            opacity: 0.03;
+            pointer-events: none;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 80px; }
+            .manifest-col { grid-column: span 12; }
+            .terminal-block { grid-column: span 12; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-text">AHD</div>
+
+    <main class="container">
+        <div class="grid">
+            
+            <!-- rule: one section anchored by a single word -->
+            <section class="hero-section left-align">
+                <div class="bleed-line"></div>
+                <div style="grid-column: 1 / span 12;">
+                    <span class="status-pill">v0.1.0</span> <!-- rule: spot red used exactly once -->
+                    <h1>AHD</h1>
+                </div>
+            </section>
+
+            <!-- rule: terminal-aesthetic code block -->
+            <section class="terminal-block">
+                <code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code>
+            </section>
+
+            <!-- rule: manifest section -->
+            <section class="manifest-section left-align">
+                <div class="manifest-grid">
+                    <div class="manifest-col">
+                        <h2>What ships</h2>
+                        <ul>
+                            <li>brief compiler</li>
+                            <li>28-rule linter</li>
+                            <li>eval harness</li>
+                            <li>vision-critic scaffold</li>
+                            <li>MCP server</li>
+                            <li>editor plugins</li>
+                            <li>eight tokens</li>
+                        </ul>
+                    </div>
+                    <div class="manifest-col">
+                        <h2>What is gated</h2>
+                        <ul>
+                            <li>live frontier-model calls (needs API keys)</li>
+                            <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+                            <li>standalone npm packages for the editor plugins</li>
+                            <li>additional tokens</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- rule: GitHub CTA -->
+            <section class="cta-section left-align">
+                <a href="https://github.com/ahd" class="cta-link">read-the-code</a>
+            </section>
+
+            <!-- rule: footer naming licenses explicitly -->
+            <footer class="left-align">
+                <p>FSL-1.1-Apache-2.0 for code, CC-BY-4.0 for tokens and artwork.</p>
+            </footer>
+
+        </div>
+    </main>
+
+</body>
+</html>

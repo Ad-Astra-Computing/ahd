@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AHD — Artificial Human Design</title>
+<style>
+:root {
+  --bg: #0a0a0a;
+  --bg-2: #111111;
+  --fg: #c4c4c4;
+  --fg-dim: #666666;
+  --fg-bright: #e8e8e8;
+  --accent: #d4a574;
+  --accent-2: #8fb573;
+  --border: #222222;
+  --code-bg: #0d1117;
+  --danger: #c47a7a;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  line-height: 1.6;
+}
+
+.mono {
+  font-family: "SF Mono", SFMono-Regular, ui-monospace, "Cascadia Mono", "Segoe UI Mono", "Liberation Mono", Menlo, Monaco, Consolas, monospace;
+}
+
+.wrap {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+header {
+  padding: 64px 0 48px;
+  border-bottom: 1px solid var(--border);
+}
+
+.brand {
+  font-size: 0.875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+  margin-bottom: 32px;
+}
+
+h1 {
+  font-size: 1.75rem;
+  font-weight: 500;
+  color: var(--fg-bright);
+  line-height: 1.3;
+  margin-bottom: 20px;
+}
+
+.lede {
+  font-size: 1.0625rem;
+  color: var(--fg);
+  max-width: 560px;
+}
+
+.problem {
+  margin: 48px 0;
+  padding: 24px;
+  background: var(--bg-2);
+  border-left: 2px solid var(--accent);
+}
+
+.problem p {
+  font-size: 0.9375rem;
+  color: var(--fg-dim);
+}
+
+.problem p + p {
+  margin-top: 12px;
+}
+
+.command-block {
+  margin: 48px 0;
+}
+
+.command-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--border);
+}
+
+.dot:first-child { background: #5a5a5a; }
+.dot:nth-child(2) { background: var(--fg-dim); }
+.dot:nth-child(3) { background: var(--border); }
+
+.command-label {
+  font-size: 0.75rem;
+  color: var(--fg-dim);
+  margin-left: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+pre {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 20px 24px;
+  overflow-x: auto;
+}
+
+code {
+  font-family: "SF Mono", SFMono-Regular, ui-monospace, "Cascadia Mono", "Segoe UI Mono", "Liberation Mono", Menlo, Monaco, Consolas, monospace;
+  font-size: 0.8125rem;
+  line-height: 1.7;
+  color: var(--fg-bright);
+}
+
+.keyword { color: #7ee787; }
+.string { color: #a5d6ff; }
+.flag { color: #d4a574; }
+.number { color: #79c0ff; }
+
+.manifest {
+  margin: 48px 0;
+}
+
+.manifest h2 {
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--fg-dim);
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.manifest-items {
+  list-style: none;
+}
+
+.manifest-items li {
+  padding: 10px 0;
+  font-size: 0.9375rem;
+  color: var(--fg);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.manifest-items li::before {
+  content: "—";
+  color: var(--fg-dim);
+  font-size: 0.75rem;
+}
+
+.gated .manifest-items li::before {
+  content: "⊘";
+  color: var(--danger);
+}
+
+.token-count {
+  color: var(--accent-2);
+  font-size: 0.8125rem;
+}
+
+.status-note {
+  font-size: 0.8125rem;
+  color: var(--fg-dim);
+  margin-top: 16px;
+  padding: 12px 16px;
+  background: var(--bg-2);
+  border-radius: 4px;
+}
+
+.gated .status-note {
+  border-left: 2px solid var(--danger);
+}
+
+.ships {
+  margin-bottom: 40px;
+}
+
+.read-code {
+  margin: 48px 0;
+  padding: 24px;
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+
+.read-code p {
+  font-size: 0.9375rem;
+  color: var(--fg-dim);
+  margin-bottom: 16px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--fg-bright);
+  font-size: 0.875rem;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: border-color 0.15s;
+}
+
+.btn:hover {
+  border-color: var(--fg-dim);
+}
+
+.btn svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
+
+footer {
+  margin-top: 64px;
+  padding: 32px 0 64px;
+  border-top: 1px solid var(--border);
+}
+
+.licence {
+  font-size: 0.8125rem;
+  color: var(--fg-dim);
+  line-height: 1.8;
+}
+
+.licence strong {
+  color: var(--fg);
+  font-weight: 500;
+}
+
+.forge {
+  margin-top: 20px;
+  font-size: 0.8125rem;
+}
+
+.forge a {
+  color: var(--fg-dim);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--border);
+}
+
+.forge a:hover {
+  color: var(--fg-bright);
+}
+
+@media (max-width: 480px) {
+  .wrap {
+    padding: 0 16px;
+  }
+
+  header {
+    padding: 40px 0 32px;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  pre {
+    padding: 16px;
+    font-size: 0.75rem;
+  }
+
+  code {
+    font-size: 0.75rem;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<header>
+  <div class="brand">Artificial Human Design</div>
+  <h1>A framework for evaluating design with humans in the loop.</h1>
+  <p class="lede">You have already seen the slop. You do not need another essay about it. AHD is a toolchain that encodes design intent, runs structured evals against it, and keeps a human as the final gate.</p>
+</header>
+
+<section class="problem">
+  <p>The problem is not that models generate layouts. The problem is that no one checks whether the layout matches the brief, whether the hierarchy survives translation, whether the tokens hold up across breakpoints.</p>
+  <p>AHD is the check. It is not a generator. It is a compiler, a linter, and a harness for running design evals at the speed you already work.</p>
+</section>
+
+<section class="command-block">
+  <div class="command-header">
+    <span class="dot"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
+    <span class="command-label">bash</span>
+  </div>
+  <pre><code><span class="keyword">ahd</span> <span class="flag">eval-live</span> <span class="string">swiss-editorial</span> <span class="flag">--brief</span> <span class="string">briefs/landing.yml</span> <span class="flag">--models</span> &lt;specs&gt; <span class="flag">--n</span> <span class="number">10</span></code></pre>
+</section>
+
+<section class="manifest ships">
+  <h2>What ships</h2>
+  <ul class="manifest-items">
+    <li>Brief compiler <span class="token-count">(YAML → typed design spec)</span></li>
+    <li>28-rule linter <span class="token-count">(typography, spacing, hierarchy, motion)</span></li>
+    <li>Eval harness <span class="token-count">(batch runner with deterministic seeding)</span></li>
+    <li>Vision-critic scaffold <span class="token-count">(screenshot → structured critique pipeline)</span></li>
+    <li>MCP server <span class="token-count">(Model Context Protocol for IDE integration)</span></li>
+    <li>Editor plugins <span class="token-count">(VS Code, Zed; vim in review)</span></li>
+    <li>Eight tokens <span class="token-count">(curated semantic design primitives)</span></li>
+  </ul>
+  <p class="status-note">Everything above runs locally. No API keys required for core evals.</p>
+</section>
+
+<section class="manifest gated">
+  <h2>What is gated</h2>
+  <ul class="manifest-items">
+    <li>Live frontier-model calls <span class="token-count">(needs API keys: OpenAI, Anthropic, Google, or local equivalent)</span></li>
+    <li>Live vision critique <span class="token-count">(needs multimodal key + screenshot pipeline)</span></li>
+    <li>Standalone npm packages for the editor plugins <span class="token-count">(currently bundled; extracted on request)</span></li>
+    <li>Additional tokens <span class="token-count">(eight more in review; gated on community validation)</span></li>
+  </ul>
+  <p class="status-note">Gated features are documented and stubbed. You can see exactly where they plug in.</p>
+</section>
+
+<div class="read-code">
+  <p>The implementation is open. Read the eval harness, the rule definitions, and the token schema before you adopt.</p>
+  <a href="https://github.com/artificialhumandesign/ahd" class="btn">
+    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"/></svg>
+    github.com/artificialhumandesign/ahd
+  </a>
+</div>
+
+<footer>
+  <div class="licence">
+    <strong>Licence</strong><br>
+    Code: FSL-1.1-Apache-2.0<br>
+    Tokens &amp; artwork: CC-BY-4.0
+  </div>
+  <div class="forge">
+    <a href="https://forgejo.internal/ahd">Forgejo mirror</a> available for source-available review.
+  </div>
+</footer>
+
+</div>
+
+</body>
+</html>

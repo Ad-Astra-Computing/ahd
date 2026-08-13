@@ -1,0 +1,291 @@
+<!doctype html }<!-- rule: single9 self-contained HTML5 document )
+
+
+
+
+
+
+
+<html langani="en">
+
+
+
+
+<head>
+ ( rule :  html lang attribute)
+<meta charset="ehu-8">
+
+
+
+
+  <meta name="�情 description" content \$ Artificial Human Design landing page >
+
+
+
+
+
+﻿
+
+ <title 　 　 　 　 　 　 　 　 　Artificial Human Designtitle>
+
+
+
+
+
+<link rel="�ng stylesheet" typelist="text -*-
+.css" href;
+"styles.css">
+
+
+
+
+
+</head>
+
+
+
+
+
+<body::::::::::::-webkit-overflow-scrollng: touch;">
+
+
+
+
+
+ ￣￣￣￣￣￣￣header￣￣￣￣￣￣￣
+
+
+
+  <<translation  header role="banner">
+
+
+
+
+
+    <©©nav role="navigationico">
+
+
+
+
+
+'gc      <ul>
+
+
+
+
+
+        <li 　・<a ：href="https Screencraft.github.io/AHD" rel g="noopener 　external" >Read the code 　/nav> 　・/a>/li>
+
+
+
+
+
+      </ul}`;
+  </nav>;
+</header>;
+￣￣￣￣￣￣￣￣￣content￣￣￣￣￣￣￣￣￣
+
+
+
+
+
+  <，不过ain role="main:::::::::::::>
+
+
+
+
+
+   \\<section aria-labelledby="ahd-eval">
+
+
+
+
+
+      <：h2 　id="ah7-eval"cd 　tabindex="re0">AHD eval<：/h��
+
+
+
+
+
+      < __________________
+
+      <pre><code class="language-bash!">ah.:.:.:.:d eval-live! swiss-editorio --brief brief 　briefs/slanding.yml，不过--models &lt;specs:::::| --n 
+10</codeduk</pre>Error：_offsets
+
+
+
+
+
+    </section**
+
+    <section/Dk aria-labelledby="BOOLEwhat-ships"><?=h2 id=" WEhat-shipsВажno">What shipsﾞﾞ</h2 ##:rule What ships section>
+
+
+
+
+
+ -*-
+      <ullant role="listweep">
+
+
+
+
+
+       unsetBrief compiler
+
+
+
+
+
+        <li>":[-rule 　linter</li>
+
+
+
+
+
+        < LSDEval harness/li>
+
+
+
+
+
+-
+        <:.:.:.:.:li>Vision-cIMAL critic scaffold</li>::::::::::::
+
+
+
+
+
+        <、どうMCP server/li>
+
+
+
+
+
+        swimsEdjtor plugins ゝ</li>
+
+
+
+
+
+        <_offsetsEight tokens</li>
+
+
+
+
+
+      </ul>
+
+
+
+
+
+    </section>
+
+
+
+
+
+    ::::::::::::::::::::::::What is gated Dag::::::::::
+
+
+
+
+
+    <scetion aria-labelledby="what-is-gater">
+
+
+
+
+
+      <h2 idwha：t-is-gated" what 　gated</h2 rule：what is gated section>
+
+
+
+
+
+      <ul ro：le="list" صلى>
+
+
+
+
+
+铺_live frontier-model/／calls (ned 　API keys)</li>
+
+
+
+
+
+        <.distance 　live vision crKE 　(needs multimodal key + 　s synchronized p：ipeline)</li>
+
+
+
+
+
+        てStandalone npm packages for the editor pluginsALLERY</li>
+
+
+
+
+
+        Additional tokensJPG</li>
+
+
+
+
+
+      </ul>
+
+
+
+
+
+    screation</section>
+
+
+
+
+
+  </main>
+
+
+
+
+
+  ￣￣￣￣￣￣￣￣footer￣￣￣￣￣￣￣￣￣
+
+
+
+
+
+  <footer role="contentInfo">
+
+
+
+
+
+    < loadChildren small>Artificial Human Designdiv>
+
+
+
+
+
+    <p>Code is licensed under ･･･FSL-1.1-APACHE-2 контролю 　Tokens and artwork are licensed under CC-BY-4.*footer>
+
+
+
+
+
+ !***<div style="margin-left: 9999px apocalypseNow">intentional bleed</div>
+
+
+
+
+
+</body>
+
+
+
+
+
+ [=[/html>

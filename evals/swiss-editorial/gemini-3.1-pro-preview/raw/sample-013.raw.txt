@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AHD | Artificial Human Design</title>
+<style>
+  :root {
+    --bg: #09090b;
+    --fg: #f4f4f5;
+    --dim: #a1a1aa;
+    --border: #27272a;
+    --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, "JetBrains Mono", "Geist Mono", Menlo, Monaco, Consolas, monospace;
+  }
+  
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 6rem 2rem;
+  }
+
+  header {
+    margin-bottom: 4rem;
+  }
+
+  h1 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0 0 0.5rem 0;
+    letter-spacing: -0.01em;
+  }
+
+  p.subtitle {
+    color: var(--dim);
+    margin: 0;
+    font-size: 1rem;
+  }
+
+  main {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+  }
+
+  .intro {
+    max-width: 65ch;
+  }
+
+  .intro p {
+    font-size: 1.125rem;
+    margin: 0 0 1.5rem 0;
+    color: var(--fg);
+  }
+
+  .intro p:last-of-type {
+    margin-bottom: 2.5rem;
+  }
+
+  a.cta {
+    display: inline-block;
+    color: var(--bg);
+    background-color: var(--fg);
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: opacity 0.2s ease;
+  }
+
+  a.cta:hover {
+    opacity: 0.8;
+  }
+
+  .code-block pre {
+    background-color: #000000;
+    border: 1px solid var(--border);
+    padding: 1.5rem;
+    margin: 0;
+    overflow-x: auto;
+  }
+
+  .code-block code {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    color: #e4e4e7;
+  }
+
+  .manifest-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  @media (min-width: 600px) {
+    .manifest-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+    }
+  }
+
+  .manifest-section h2 {
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--dim);
+    margin: 0 0 1.5rem 0;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0.5rem;
+  }
+
+  .manifest-section ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .manifest-section li {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #18181b;
+    font-size: 0.9375rem;
+  }
+
+  .manifest-section li:last-child {
+    border-bottom: none;
+  }
+
+  footer {
+    margin-top: 6rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--dim);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Artificial Human Design (AHD)</h1>
+      <p class="subtitle">Structural design evaluation framework.</p>
+    </header>
+
+    <main>
+      <section class="intro">
+        <p>The web has been saturated with generated interfaces that lack intent, coherence, and taste. AHD assumes you already recognise the degradation of structural design quality. It provides a programmatic framework to measure, critique, and correct output, enforcing rigorous constraints over default aesthetic compromises.</p>
+        <p>This is a practical toolset for evaluating models against deterministic rules and specific design briefs, isolating true capability from probabilistic styling.</p>
+        <a href="https://github.com/example/ahd" class="cta">Read the code on GitHub</a>
+      </section>
+
+      <section class="code-block">
+        <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+      </section>
+
+      <div class="manifest-grid">
+        <section class="manifest-section">
+          <h2>What ships</h2>
+          <ul>
+            <li>Brief compiler</li>
+            <li>28-rule linter</li>
+            <li>Eval harness</li>
+            <li>Vision-critic scaffold</li>
+            <li>MCP server</li>
+            <li>Editor plugins</li>
+            <li>Eight tokens</li>
+          </ul>
+        </section>
+
+        <section class="manifest-section">
+          <h2>What is gated</h2>
+          <ul>
+            <li>Live frontier-model calls (needs API keys)</li>
+            <li>Live vision critique (needs multimodal key + screenshot pipeline)</li>
+            <li>Standalone npm packages for the editor plugins</li>
+            <li>Additional tokens</li>
+          </ul>
+        </section>
+      </div>
+    </main>
+
+    <footer>
+      <span>Code: FSL-1.1-Apache-2.0</span>
+      <span>Tokens &amp; Artwork: CC-BY-4.0</span>
+    </footer>
+  </div>
+</body>
+</html>

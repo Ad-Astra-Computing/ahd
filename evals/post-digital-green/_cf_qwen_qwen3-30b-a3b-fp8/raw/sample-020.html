@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AHD</title>
+  <style>
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background: #000;
+      color: #0f0;
+      margin: 0;
+      padding: 0;
+    }
+    pre {
+      background: #000;
+      padding: 1rem;
+      border: 1px solid #0f0;
+      overflow-x: auto;
+    }
+    code {
+      color: #0f0;
+    }
+    .manifest {
+      padding: 2rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .manifest h2 {
+      color: #0f0;
+      border-bottom: 1px solid #0f0;
+      padding-bottom: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    .manifest ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    .manifest li {
+      margin: 0.5rem 0;
+    }
+    footer {
+      background: #000;
+      color: #0f0;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+    }
+    a {
+      color: #0f0;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="manifest">
+    <pre><code class="bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+    <h2>What ships</h2>
+    <ul>
+      <li>brief compiler</li>
+      <li>28-rule linter</li>
+      <li>eval harness</li>
+      <li>vision-critic scaffold</li>
+      <li>MCP server</li>
+      <li>editor plugins</li>
+      <li>eight tokens</li>
+    </ul>
+    <h2>What is gated</h2>
+    <ul>
+      <li>live frontier-model calls (needs API keys)</li>
+      <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+      <li>standalone npm packages for the editor plugins</li>
+      <li>additional tokens</li>
+    </ul>
+  </div>
+  <footer>
+    <p><a href="https://github.com/ahd" target="_blank" rel="noopener noreferrer">read-the-code</a> | FSL-1.1-Apache-2.0 for code, CC-BY-4.0 for tokens and artwork</p>
+  </footer>
+</body>
+</html>

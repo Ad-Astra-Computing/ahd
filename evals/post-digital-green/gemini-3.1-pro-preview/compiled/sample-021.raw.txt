@@ -1,0 +1,212 @@
+```html
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"><!-- rule: standard meta tag -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"><!-- rule: standard meta tag -->
+    <title>AHD // Artificial Human Design</title><!-- rule: concise title -->
+    <style>
+        /* rule: post-digital style, monospace for everything */
+        /* rule: dark green-black background, muted green foreground, single amber accent, hairline rule colour */
+        :root {
+            --bg: oklch(0.14 0.02 150); /* rule: background color from palette */
+            --fg: oklch(0.92 0.12 135); /* rule: foreground color from palette */
+            --dim: oklch(0.55 0.05 150); /* rule: dim color from palette */
+            --rule: oklch(0.3 0.04 150); /* rule: rule color from palette */
+            --amber: oklch(0.82 0.15 75); /* rule: accent color from palette */
+
+            /* rule: single-monospace pairing rule with fallbacks */
+            --font-display: "Berkeley Mono", "IBM Plex Mono", "JetBrains Mono", ui-monospace, monospace;
+            --font-text: "Berkeley Mono", "IBM Plex Mono", "JetBrains Mono", ui-monospace, monospace;
+
+            /* rule: font scale and line height */
+            --font-size-base: 15px; /* rule: base font size from spec */
+            --line-height-body: 1.55; /* rule: body line-height from spec */
+            --line-height-h2: 1.25; /* rule: h2 line-height from spec */
+            --line-height-display: 1.1; /* rule: display line-height from spec */
+        }
+
+        body {
+            /* rule: dark green-black background, muted green foreground */
+            background-color: var(--bg);
+            color: var(--fg);
+            /* rule: monospace font for everything */
+            font-family: var(--font-text);
+            font-weight: 400; /* rule: weight from spec */
+            font-size: var(--font-size-base); /* rule: base font size */
+            line-height: var(--line-height-body); /* rule: body line height */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center; /* rule: center content for 80ch grid */
+            min-height: 100vh; /* rule: ensure at least one screen of reading */
+            box-sizing: border-box; /* rule: include padding in element's total width and height */
+        }
+
+        .container {
+            /* rule: 80 character grid alignment */
+            max-width: 80ch; /* rule: content should align to 80 character grid */
+            padding: 16px; /* rule: spacing from spec (16 = 4*4) */
+            box-sizing: border-box;
+            width: 100%;
+        }
+
+        h1 {
+            /* rule: monospace font, line-height from spec */
+            font-family: var(--font-display);
+            font-size: calc(var(--font-size-base) * 1.2 * 1.2 * 1.2 * 1.2); /* rule: scale step 4 */
+            line-height: var(--line-height-display);
+            margin-top: 0;
+            margin-bottom: 24px; /* rule: spacing from spec (24 = 3*8) */
+        }
+
+        h2 {
+            /* rule: monospace font, line-height from spec */
+            font-family: var(--font-display);
+            font-size: calc(var(--font-size-base) * 1.2 * 1.2 * 1.2); /* rule: scale step 3 */
+            line-height: var(--line-height-h2);
+            margin-top: 32px; /* rule: spacing from spec (32 = 4*8) */
+            margin-bottom: 16px; /* rule: spacing from spec (16 = 2*8) */
+            border-top: 1px solid var(--rule); /* rule: hairline rule colour */
+            padding-top: 16px; /* rule: spacing from spec (16 = 2*8) */
+        }
+
+        p {
+            margin-bottom: 16px; /* rule: spacing from spec (16 = 2*8) */
+            max-width: 72ch; /* rule: body measure from spec */
+        }
+
+        a {
+            /* rule: underlined links with an offset, no colour change */
+            color: var(--fg);
+            text-decoration: underline;
+            text-underline-offset: 4px; /* rule: offset from spec */
+            /* rule: no colour change on hover/active */
+            transition: none; /* rule: no entrance animation/motion */
+        }
+
+        a:hover, a:focus, a:active {
+            color: var(--fg); /* rule: no colour change */
+        }
+
+        pre {
+            /* rule: terminal-aesthetic code block */
+            /* rule: amber accent for code block text, hairline rule for background */
+            background-color: var(--rule);
+            color: var(--amber);
+            padding: 16px; /* rule: spacing from spec (16 = 2*8) */
+            margin: 24px 0; /* rule: spacing from spec (24 = 3*8) */
+            overflow-x: auto; /* rule: handle long lines in code block */
+            max-width: 76ch; /* rule: 80ch container - 2*2ch padding from pre (16px/font-size-base) */
+            box-sizing: border-box;
+            border: 1px solid var(--rule); /* rule: rectangles only, hairline rule colour */
+        }
+
+        ul {
+            list-style: none; /* rule: no emoji bullets */
+            padding-left: 1ch; /* rule: small indent for list items */
+            margin-bottom: 24px; /* rule: spacing from spec (24 = 3*8) */
+            max-width: 72ch; /* rule: body measure from spec */
+        }
+
+        ul li::before {
+            content: "> "; /* rule: simple text bullet, no emoji */
+            color: var(--amber); /* rule: amber accent for bullet */
+        }
+
+        footer {
+            border-top: 1px solid var(--rule); /* rule: hairline rule colour */
+            padding-top: 16px; /* rule: spacing from spec (16 = 2*8) */
+            margin-top: 48px; /* rule: spacing from spec (48 = 6*8) */
+            font-size: calc(var(--font-size-base) * 1.2 * 1.2 * 1.2 * 1.2 / 1.2 / 1.2); /* rule: scale step -1 for smaller footer text */
+            color: var(--dim); /* rule: dim color for footer text */
+            max-width: 72ch; /* rule: body measure from spec */
+        }
+
+        /* rule: no shadows, no gradients, no radii, no entrance animation */
+        /* All these are explicitly avoided or set to none */
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>ARTIFICIAL HUMAN DESIGN</h1><!-- rule: monospace, display font, terse -->
+
+        <p>
+            the internet, today, is awash in slop. you know it. we know it. 
+            artificial human design (ahd) is a framework to produce exceptional, 
+            brief-driven user interfaces. it formalizes the ephemeral into hard rules, 
+            generating creative variations while ensuring adherence to specific design 
+            tokens and constraints.
+        </p>
+
+        <!-- rule: at least one ASCII diagram rendered as text -->
+        <pre><code>
++------------------------------------------------------------------------+
+| BRIEF &lt;- INPUT                                                         |
+|  [design intent, audience, surfaces]                                   |
+|  [style direction, forbidden list, must-haves]                         |
+|                                                                        |
+|       +------------------------------------------------------+         |
+|       |                                                      |         |
+|       | AHD (ARTIFICIAL HUMAN DESIGN)                        |         |
+|       |                                                      |         |
+|       |  BRIEF COMPILER                                      |         |
+|       |  28-RULE LINTER                                      |         |
+|       |  EVAL HARNESS                                        |         |
+|       |  VISION-CRITIC SCAFFOLD                              |         |
+|       |  MCP SERVER                                          |         |
+|       |  EDITOR PLUGINS                                      |         |
+|       |  EIGHT TOKENS                                        |         |
+|       |                                                      |         |
+|       +------------------------------------------------------+         |
+|                                                                        |
+| DESIGN OUTPUT -> HTML, CSS, ASSETS                                     |
+|  [valid, compliant, unique, on-brief]                                  |
++------------------------------------------------------------------------+
+        </code></pre>
+
+        <p>
+            ahd orchestrates models, tools, and human expertise to solve for the 
+            specific rather than the generic. we provide the framework for design 
+            automation that respects craft.
+        </p>
+
+        <!-- rule: terminal-aesthetic code block showing the one-liner that runs the eval -->
+        <h2>EVALUATE CANDIDATE DESIGNS</h2>
+        <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &#x3C;specs> --n 10</code></pre>
+
+        <!-- rule: clearly separated manifest section titled 'What ships' -->
+        <h2>WHAT SHIPS TODAY</h2>
+        <ul>
+            <li>brief compiler</li>
+            <li>28-rule linter</li>
+            <li>eval harness</li>
+            <li>vision-critic scaffold</li>
+            <li>mcp server</li>
+            <li>editor plugins</li>
+            <li>eight tokens</li>
+        </ul>
+
+        <!-- rule: clearly separated manifest section titled 'What is gated' -->
+        <h2>WHAT IS GATED</h2>
+        <ul>
+            <li>live frontier-model calls (needs API keys)</li>
+            <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+            <li>standalone npm packages for the editor plugins</li>
+            <li>additional tokens</li>
+        </ul>
+
+        <p>
+            ahd is open source. contributions and investigations are welcome.
+            <a href="https://github.com/your-ahd-repo" target="_blank" rel="noopener noreferrer">read the code</a><!-- rule: link to github, labelled as read-the-code CTA -->
+        </p>
+
+        <footer>
+            <p>
+                licence: FSL-1.1-Apache-2.0 for code, CC-BY-4.0 for tokens and artwork.
+            </p>
+        </footer>
+    </div>
+</body>
+</html>
+```

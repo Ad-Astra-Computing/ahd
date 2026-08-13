@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AHD — Artificial Human Design</title>
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --bg-raised: #141414;
+            --fg: #c4c4c4;
+            --fg-bright: #e8e8e8;
+            --fg-dim: #6e6e6e;
+            --accent: #d4a574;
+            --accent-dim: #8b6914;
+            --border: #222;
+            --code-bg: #0d1117;
+            --success: #5a7a5a;
+            --pending: #7a6a5a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--fg);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-size: 15px;
+            line-height: 1.65;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Selection */
+        ::selection {
+            background: var(--accent-dim);
+            color: var(--fg-bright);
+        }
+
+        /* Layout */
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header */
+        header {
+            padding: 48px 0 16px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .mark {
+            font-family: "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", monospace;
+            font-size: 13px;
+            color: var(--accent);
+            letter-spacing: 0.02em;
+        }
+
+        .mark a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .mark a:hover {
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
+        /* Hero */
+        .hero {
+            padding: 64px 0 48px;
+        }
+
+        h1 {
+            font-size: 28px;
+            font-weight: 500;
+            color: var(--fg-bright);
+            line-height: 1.3;
+            margin-bottom: 20px;
+        }
+
+        .lead {
+            font-size: 16px;
+            color: var(--fg);
+            max-width: 560px;
+        }
+
+        .lead p + p {
+            margin-top: 16px;
+        }
+
+        /* Terminal */
+        .terminal {
+            margin: 48px 0;
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .terminal-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 16px;
+            background: #161b22;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--fg-dim);
+        }
+
+        .dot:first-child { background: #7a5a5a; }
+        .dot:nth-child(2) { background: #7a6a5a; }
+        .dot:nth-child(3) { background: #5a7a5a; }
+
+        .lang-tag {
+            margin-left: auto;
+            font-family: "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", monospace;
+            font-size: 11px;
+            color: var(--fg-dim);
+            text-transform: uppercase;
+        }
+
+        .terminal-body {
+            padding: 20px 24px;
+            overflow-x: auto;
+        }
+
+        pre {
+            font-family: "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", monospace;
+            font-size: 13.5px;
+            line-height: 1.6;
+            color: #e6edf3;
+        }
+
+        .prompt {
+            color: var(--accent);
+        }
+
+        .param {
+            color: #7dd3fc;
+        }
+
+        .arg {
+            color: #a5d6ff;
+        }
+
+        .flag {
+            color: #d2a8ff;
+        }
+
+        .comment {
+            color: var(--fg-dim);
+        }
+
+        /* Sections */
+        section {
+            padding: 32px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        h2 {
+            font-size: 13px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--fg-dim);
+            margin-bottom: 20px;
+        }
+
+        /* Manifest lists */
+        .manifest {
+            list-style: none;
+        }
+
+        .manifest li {
+            position: relative;
+            padding-left: 16px;
+            margin-bottom: 10px;
+            color: var(--fg);
+        }
+
+        .manifest li::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 10px;
+            width: 5px;
+            height: 5px;
+            border-radius: 1px;
+        }
+
+        .ships li::before {
+            background: var(--success);
+        }
+
+        .gated li::before {
+            background: var(--pending);
+        }
+
+        .manifest .note {
+            color: var(--fg-dim);
+            font-size: 13px;
+        }
+
+        /* CTA */
+        .cta {
+            margin: 48px 0 32px;
+        }
+
+        .cta a {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--fg-bright);
+            text-decoration: none;
+            font-size: 14px;
+            padding: 12px 20px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            background: var(--bg-raised);
+            transition: border-color 0.15s;
+        }
+
+        .cta a:hover {
+            border-color: var(--accent-dim);
+        }
+
+        .cta svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+
+        /* Footer */
+        footer {
+            padding: 32px 0 64px;
+            border-top: 1px solid var(--border);
+        }
+
+        .license {
+            font-size: 13px;
+            color: var(--fg-dim);
+            line-height: 1.7;
+        }
+
+        .license strong {
+            color: var(--fg);
+            font-weight: 500;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .hero {
+                padding: 40px 0 32px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+            
+            pre {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="mark">
+                <a href="https://forgejo.ahd.dev/ahd/core">forgejo.ahd.dev/ahd/core</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="hero">
+                <h1>Artificial Human Design</h1>
+                <div class="lead">
+                    <p>AHD is a framework for evaluating design systems with rules, not taste. You write a brief. The compiler expands it into evaluable criteria. Models generate candidates. A linter and vision critic score against the brief. You get a ranked set with traceable scores, not a vibe check.</p>
+                    <p>Built for teams who have already seen what un-evaluated generation produces and want to close the loop.</p>
+                </div>
+            </div>
+
+            <div class="terminal">
+                <div class="terminal-header">
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="lang-tag">bash</span>
+                </div>
+                <div class="terminal-body">
+<pre><span class="prompt">$</span> ahd eval-live swiss-editorial \
+    <span class="flag">--brief</span> <span class="arg">briefs/landing.yml</span> \
+    <span class="flag">--models</span> <span class="param">&lt;specs&gt;</span> \
+    <span class="flag">--n</span> <span class="arg">10</span></pre>
+                </div>
+            </div>
+
+            <section>
+                <h2>What ships</h2>
+                <ul class="manifest ships">
+                    <li>Brief compiler <span class="note">— YAML to structured eval criteria</span></li>
+                    <li>28-rule linter <span class="note">— typographic, spatial, and interaction rules</span></li>
+                    <li>Eval harness <span class="note">— batch runner with deterministic seeding</span></li>
+                    <li>Vision-critic scaffold <span class="note">— multimodal scoring pipeline, ready for your keys</span></li>
+                    <li>MCP server <span class="note">— Model Context Protocol for IDE integration</span></li>
+                    <li>Editor plugins <span class="note">— VS Code and Zed, source-installable today</span></li>
+                    <li>Eight tokens <span class="note">— curated aesthetic priors, CC-BY-4.0</span></li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>What is gated</h2>
+                <ul class="manifest gated">
+                    <li>Live frontier-model calls <span class="note">— requires your own API keys</span></li>
+                    <li>Live vision critique <span class="note">— requires multimodal key + screenshot pipeline</span></li>
+                    <li>Standalone npm packages for editor plugins <span class="note">— registry publish pending</span></li>
+                    <li>Additional tokens <span class="note">— community contributions in review</span></li>
+                </ul>
+            </section>
+
+            <div class="cta">
+                <a href="https://forgejo.ahd.dev/ahd/core">
+                    <svg viewBox="0 0 16 16" aria-hidden="true">
+                        <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+                    </svg>
+                    Read the code
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="license">
+                <strong>FSL-1.1-Apache-2.0</strong> for code<br>
+                <strong>CC-BY-4.0</strong> for tokens and artwork
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

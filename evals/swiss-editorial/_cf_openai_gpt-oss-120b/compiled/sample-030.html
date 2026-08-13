@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Artificial Human Design</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root{
+  --ink: oklch(0.18 0 0);
+  --paper: oklch(0.98 0.005 95);
+  --spot: oklch(0.58 0.22 27);
+  --rule: oklch(0.18 0 0);
+}
+html{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:"Neue Haas Grotesk Text","Helvetica Now Text","Inter",sans-serif;
+  line-height:1.5;
+  font-size:17px;
+}
+body{
+  margin:0;
+  padding:0;
+  display:grid;
+  grid-template-columns:repeat(12,1fr);
+  gap:24px;/* rule: grid */
+}
+.container{
+  grid-column:2 / span 10;/* rule: margin */
+  padding-top:160px;/* rule: rhythm-note */
+  padding-bottom:160px;/* rule: rhythm-note */
+}
+h1{
+  font-family:"Neue Haas Grotesk Display","Helvetica Now Display","Inter Tight",sans-serif;
+  font-size:140px;/* rule: display type */
+  line-height:1.05;
+  letter-spacing:-0.02em;/* rule: tracking */
+  grid-column:2 / span 6;
+  margin:0;
+}
+p{
+  grid-column:2 / span 6;
+  max-width:62ch;
+}
+a.cta{
+  grid-column:2 / span 6;
+  display:inline-block;
+  margin-top:24px;
+  color:var(--ink);
+  text-decoration:none;
+  border-bottom:2px solid var(--spot);/* rule: spot colour used exactly once */
+}
+pre{
+  background:#f5f5f5;
+  color:#111;
+  padding:1rem;
+  overflow:auto;
+  font-family:monospace;
+  grid-column:2 / span 8;/* rule: code block */
+}
+code{
+  font-family:monospace;
+}
+h2{
+  grid-column:2 / span 6;
+  margin-top:48px;
+}
+ul{
+  list-style:none;
+  padding:0;
+  margin:0;
+  grid-column:2 / span 6;
+}
+li{
+  margin-bottom:8px;
+}
+li::before{
+  content:"• ";
+  margin-right:0.5em;
+}
+footer{
+  grid-column:1 / -1;
+  background:var(--paper);
+  color:var(--ink);
+  font-size:0.9rem;
+  padding:2rem 0;
+  border-top:1px solid var(--rule);
+  text-align:left;
+}
+.bleed{
+  width:100vw;
+  height:4px;
+  background:var(--ink);
+  margin-top:2rem;
+  margin-left:-calc(100vw - 100%);/* rule: bleed past grid */
+}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>Artificial Human Design</h1><!-- rule: anchored single word display >=120px -->
+<p>A framework for designers, engineers, and founders who demand rigor over hype. No fluff. No promises. Just tools that work.</p>
+<a href="https://github.com/ahd/ahd" class="cta">Read the code</a><!-- rule: read-the-code CTA -->
+<pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre><!-- rule: command block -->
+<h2>What ships</h2><!-- rule: manifest title -->
+<ul>
+<li>Brief compiler</li>
+<li>28‑rule linter</li>
+<li>Eval harness</li>
+<li>Vision‑critic scaffold</li>
+<li>MCP server</li>
+<li>Editor plugins</li>
+<li>Eight tokens</li>
+</ul>
+<h2>What is gated</h2><!-- rule: manifest title -->
+<ul>
+<li>Live frontier‑model calls (needs API keys)</li>
+<li>Live vision critique (needs multimodal key + screenshot pipeline)</li>
+<li>Standalone npm packages for the editor plugins</li>
+<li>Additional tokens</li>
+</ul>
+</div>
+<div class="bleed"></div><!-- rule: intentional bleed -->
+<footer>
+<p>Code licence: FSL‑1.1‑Apache‑2.0. Tokens &amp; artwork licence: CC‑BY‑4.0.</p>
+</footer>
+</body>
+</html>

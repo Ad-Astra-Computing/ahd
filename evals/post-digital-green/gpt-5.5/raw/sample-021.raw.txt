@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AHD — Artificial Human Design</title>
+  <style>
+    :root {
+      --ink: #151515;
+      --muted: #5b5f62;
+      --paper: #f7f4ec;
+      --panel: #ffffff;
+      --rule: #242424;
+      --soft-rule: #d8d1c3;
+      --accent: #b8422e;
+      --accent-2: #1f6b5f;
+      --terminal: #101312;
+      --terminal-text: #dbe7df;
+      --terminal-dim: #89a39a;
+      --max: 1120px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.45;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        linear-gradient(90deg, rgba(21,21,21,.035) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(21,21,21,.025) 1px, transparent 1px),
+        var(--paper);
+      background-size: 32px 32px;
+    }
+
+    a {
+      color: inherit;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 4px;
+    }
+
+    .page {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    header {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 24px;
+      padding: 28px 0;
+      border-bottom: 2px solid var(--rule);
+    }
+
+    .brand {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+    }
+
+    .mark {
+      font-family: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: .04em;
+    }
+
+    .name {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .code-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 40px;
+      padding: 8px 14px;
+      border: 2px solid var(--rule);
+      background: var(--panel);
+      font-family: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+      box-shadow: 4px 4px 0 var(--rule);
+    }
+
+    main {
+      padding: 54px 0 28px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(320px, .95fr);
+      gap: 48px;
+      align-items: start;
+      margin-bottom: 64px;
+    }
+
+    h1 {
+      max-width: 820px;
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(46px, 8vw, 92px);
+      line-height: .9;
+      font-weight: 500;
+      letter-spacing: 0;
+    }
+
+    .intro {
+      max-width: 680px;
+      margin: 28px 0 0;
+      font-size: clamp(18px, 2vw, 23px);
+      line-height: 1.35;
+      color: #242424;
+    }
+
+    .aside {
+      border-left: 2px solid var(--rule);
+      padding-left: 24px;
+    }
+
+    .aside p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .aside strong {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--ink);
+      font-family: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+
+    .terminal {
+      margin-top: 28px;
+      overflow: hidden;
+      border: 2px solid var(--rule);
+      background: var(--terminal);
+      box-shadow: 8px 8px 0 var(--rule);
+    }
+
+    .terminal-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 10px 14px;
+      border-bottom: 1px solid rgba(219, 231, 223, .18);
+      color: var(--terminal-dim);
+      font-family: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+      font-size: 12px;
+    }
+
+    pre {
+      margin: 0;
+      padding: 22px;
+      overflow-x: auto;
+      color: var(--terminal-text);
+      font-family: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+      font-size: clamp(13px, 1.8vw, 16px);
+      line-height: 1.55;
+      white-space: pre;
+    }
+
+    .prompt {
+      color: #95c8b7;
+    }
+
+    .manifest {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border-top: 2px solid var(--rule);
+      border-bottom: 2px solid var(--rule);
+      background: rgba(255,255,255,.35);
+    }
+
+    .manifest section {
+      padding: 28px;
+    }
+
+    .manifest section + section {
+      border-left: 2px solid var(--rule);
+    }
+
+    h2 {
+      margin: 0 0 20px;
+      font-family: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+      font-size: 15px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+
+    ol {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      counter-reset: item;
+    }
+
+    li {
+      position: relative;
+      min-height: 28px;
+      padding-left: 42px;
+      font-size: 17px;
+    }
+
+    li::before {
+      counter-increment: item;
+      content: counter(item, decimal-leading-zero);
+      position: absolute;
+      left: 0;
+      top: 1px;
+      color: var(--accent);
+      font-family: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .gated li::before {
+      color: var(--accent-2);
+    }
+
+    footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 24px 0 32px;
+      color: var(--muted);
+      font-size: 14px;
+      border-bottom: 2px solid var(--rule);
+    }
+
+    footer strong {
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    @media (max-width: 820px) {
+      header,
+      .hero,
+      .manifest,
+      footer {
+        grid-template-columns: 1fr;
+      }
+
+      header {
+        align-items: start;
+      }
+
+      .code-link {
+        width: max-content;
+      }
+
+      .hero {
+        gap: 32px;
+      }
+
+      .aside {
+        border-left: 0;
+        border-top: 2px solid var(--rule);
+        padding: 22px 0 0;
+      }
+
+      .manifest section + section {
+        border-left: 0;
+        border-top: 2px solid var(--rule);
+      }
+
+      .manifest section {
+        padding: 24px 0;
+      }
+
+      footer {
+        display: grid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="brand">
+        <div class="mark">AHD</div>
+        <div class="name">Artificial Human Design</div>
+      </div>
+      <a class="code-link" href="https://github.com/" aria-label="Read the AHD source code on GitHub">read-the-code</a>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="title">
+        <div>
+          <h1 id="title">Design evals for people who can see the problem.</h1>
+          <p class="intro">
+            AHD is a working framework for testing AI-generated interfaces against human design judgment: briefs, rules, harnesses, tokens, and critique scaffolds that make taste inspectable instead of implied.
+          </p>
+        </div>
+
+        <aside class="aside" aria-label="Run the eval">
+          <strong>Run the live eval</strong>
+          <p>
+            Start with a known brief, a named design grammar, explicit model specs, and ten attempts. Then inspect what failed, why it failed, and whether the failure was aesthetic, structural, or operational.
+          </p>
+
+          <div class="terminal">
+            <div class="terminal-bar">
+              <span>terminal</span>
+              <span>ahd eval-live</span>
+            </div>
+            <pre><code class="language-bash"><span class="prompt">$</span> ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+          </div>
+        </aside>
+      </section>
+
+      <div class="manifest" aria-label="Manifest">
+        <section aria-labelledby="ships-title">
+          <h2 id="ships-title">What ships</h2>
+          <ol>
+            <li>brief compiler</li>
+            <li>28-rule linter</li>
+            <li>eval harness</li>
+            <li>vision-critic scaffold</li>
+            <li>MCP server</li>
+            <li>editor plugins</li>
+            <li>eight tokens</li>
+          </ol>
+        </section>
+
+        <section class="gated" aria-labelledby="gated-title">
+          <h2 id="gated-title">What is gated</h2>
+          <ol>
+            <li>live frontier-model calls, needs API keys</li>
+            <li>live vision critique, needs multimodal key + screenshot pipeline</li>
+            <li>standalone npm packages for the editor plugins</li>
+            <li>additional tokens</li>
+          </ol>
+        </section>
+      </div>
+    </main>
+
+    <footer>
+      <div><strong>Licence:</strong> FSL-1.1-Apache-2.0 for code.</div>
+      <div><strong>Tokens and artwork:</strong> CC-BY-4.0.</div>
+    </footer>
+  </div>
+</body>
+</html>

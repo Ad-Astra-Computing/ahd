@@ -1,0 +1,296 @@
+<!doctype html>
+<!-- rule: Return a single, self-contained, valid HTML5 document -->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AHD</title>
+  <style>
+    /* rule: Palette is ink on paper (warm off-white) */
+    :root {
+      /* rule: palette is ink oklch(0.18 0 0) */
+      --ink: oklch(0.18 0 0);
+      /* rule: paper oklch(0.98 0.005 95) */
+      --paper: oklch(0.98 0.005 95);
+      /* rule: single spot red oklch(0.58 0.22 27) */
+      --spot: oklch(0.58 0.22 27);
+      /* rule: border colour is rule oklch(0.18 0 0) */
+      --rule: oklch(0.18 0 0);
+      /* rule: muted oklch(0.55 0 0) */
+      --muted: oklch(0.55 0 0);
+      
+      /* rule: Work on a 12-column grid */
+      --grid-columns: 12;
+      /* rule: 24px gutters */
+      --grid-gutter: 24px;
+      /* rule: grid margin preferred calc(100vw / 24) */
+      --grid-margin: calc(100vw / 24);
+      /* rule: 8px baseline */
+      --baseline: 8px;
+    }
+
+    /* rule: No shadows. No rounded corners except small status pills. */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    body {
+      /* rule: Palette is ink on paper */
+      background-color: var(--paper);
+      color: var(--ink);
+      /* rule: Body in Neue Haas Grotesk Text at 17px */
+      font-family: 'Neue Haas Grotesk Text', 'Helvetica Now Text', 'Inter', sans-serif;
+      font-size: 17px;
+      /* rule: line-height 1.5 */
+      line-height: 1.5;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* rule: Set display type in Neue Haas Grotesk Display */
+    h1, h2, h3 {
+      font-family: 'Neue Haas Grotesk Display', 'Helvetica Now Display', 'Inter Tight', sans-serif;
+      /* rule: tracking -0.02em */
+      letter-spacing: -0.02em;
+      margin: 0;
+      /* rule: weight 400 from scale */
+      font-weight: 400;
+    }
+
+    h1 {
+      /* rule: one section anchored by a single word at display >= 120px */
+      /* rule: Set display type in Neue Haas Grotesk Display at 96-160px */
+      font-size: clamp(120px, 12vw, 160px);
+      /* rule: line-height display 1.05 */
+      line-height: 1.05;
+      margin-bottom: calc(var(--baseline) * 4);
+    }
+
+    h2 {
+      /* rule: typography ratio 1.333, scale steps approx 40px */
+      font-size: 40px; 
+      /* rule: line-height h2 1.2 */
+      line-height: 1.2;
+      margin-bottom: calc(var(--baseline) * 3);
+    }
+
+    p {
+      /* rule: measure 62ch */
+      max-width: 62ch;
+      margin-top: 0;
+      margin-bottom: calc(var(--baseline) * 3);
+    }
+
+    /* rule: Work on a 12-column grid with 24px gutters */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(var(--grid-columns), 1fr);
+      column-gap: var(--grid-gutter);
+      padding-left: var(--grid-margin);
+      padding-right: var(--grid-margin);
+    }
+
+    /* rule: Require one dramatic jump per section (160 between sections) */
+    .section {
+      margin-top: 160px;
+      margin-bottom: 160px;
+    }
+
+    /* rule: Asymmetric left-aligned composition */
+    .col-span-12 { grid-column: 1 / -1; }
+    .col-span-8 { grid-column: 1 / 9; }
+    .col-span-4-left { grid-column: 1 / 5; }
+    .col-span-4-right { grid-column: 7 / 11; }
+
+    @media (max-width: 768px) {
+      .col-span-8, .col-span-4-left, .col-span-4-right {
+        grid-column: 1 / -1;
+      }
+    }
+
+    /* rule: No rounded corners except small status pills */
+    .status-pill {
+      border-radius: 999px;
+      border: 1px solid var(--rule);
+      padding: 4px 12px;
+      /* rule: ratio 1.333 scaling down */
+      font-size: 13px;
+      display: inline-block;
+      margin-bottom: calc(var(--baseline) * 3);
+    }
+
+    /* rule: terminal-aesthetic code block */
+    pre {
+      /* rule: Palette is ink on paper, inverted for terminal */
+      background-color: var(--ink);
+      color: var(--paper);
+      font-family: 'JetBrains Mono', 'Geist Mono', monospace;
+      padding: 24px;
+      overflow-x: auto;
+      font-size: 13px;
+      margin: 0 0 calc(var(--baseline) * 4) 0;
+    }
+
+    code {
+      font-family: inherit;
+    }
+
+    /* rule: A link to github labelled as the read-the-code CTA */
+    a.cta {
+      display: inline-flex;
+      align-items: center;
+      padding: 12px 24px;
+      /* rule: border weight 1 */
+      border: 1px solid var(--rule);
+      color: var(--ink);
+      text-decoration: none;
+      /* rule: weight 700 from scale */
+      font-weight: 700;
+      /* rule: Structural motion only; respects prefers-reduced-motion */
+      transition: background-color 0.1s linear, color 0.1s linear;
+      cursor: pointer;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      /* rule: Structural motion only; respects prefers-reduced-motion */
+      a.cta {
+        transition: none;
+      }
+    }
+
+    a.cta:hover {
+      background-color: var(--ink);
+      color: var(--paper);
+    }
+
+    ul.manifest-list {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+      /* rule: border weight 1 */
+      border-top: 1px solid var(--rule);
+    }
+
+    ul.manifest-list li {
+      /* rule: border weight 1 */
+      border-bottom: 1px solid var(--rule);
+      padding: 12px 0;
+    }
+
+    /* rule: One intentional element must bleed past the grid */
+    .bleed-wrapper {
+      position: relative;
+    }
+    .bleed-content {
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+      padding: 24px 0;
+      /* rule: One intentional element must bleed past the grid (right side bleed) */
+      margin-right: calc(var(--grid-margin) * -1);
+    }
+
+    .spot-color {
+      /* rule: a single spot red used exactly once on the page */
+      color: var(--spot);
+    }
+
+    footer {
+      /* rule: border weight 1 */
+      border-top: 1px solid var(--rule);
+      padding-top: 24px;
+      padding-bottom: 64px;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- rule: Asymmetric left-aligned composition -->
+  <!-- rule: Do not centre the hero -->
+  <header class="grid section" style="margin-top: 96px; margin-bottom: 160px;">
+    <div class="col-span-12">
+      <!-- rule: small status pills -->
+      <span class="status-pill">System Status: Active</span>
+    </div>
+    <div class="col-span-12">
+      <!-- rule: one section anchored by a single word at display >= 120px with -0.02em tracking -->
+      <!-- rule: spot colour used exactly once -->
+      <h1>Artificial<span class="spot-color">.</span></h1>
+    </div>
+    
+    <div class="col-span-8">
+      <!-- rule: declarative, short sentences, no hedges, no Oxford commas -->
+      <p>The industry is flooded with generated interfaces. You recognize the patterns immediately. We provide a framework to address this. AHD treats typography and structural design as code. We run strict evaluations. We enforce rigid rules.</p>
+      
+      <!-- rule: A link to github labelled as the read-the-code CTA -->
+      <a href="https://github.com" class="cta">Read the code</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- rule: Require one dramatic jump per section (160 between sections) -->
+    <section class="grid section">
+      <div class="col-span-12 bleed-wrapper">
+        <div class="bleed-content">
+          <!-- rule: One intentional element must bleed past the grid -->
+          <h2 style="margin: 0;">Evaluation Execution</h2>
+        </div>
+      </div>
+    </section>
+
+    <!-- rule: One screen of reading -->
+    <section class="grid section">
+      <div class="col-span-8">
+        <!-- rule: declarative, short sentences -->
+        <p>Run the validation suite to inspect output against our defined ruleset.</p>
+        <!-- rule: A terminal-aesthetic code block showing the one-liner that runs the eval rendered in a monospace code block with the language tag bash -->
+        <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+      </div>
+    </section>
+
+    <section class="grid section">
+      <!-- rule: A clearly separated manifest section titled 'What ships' -->
+      <!-- rule: Asymmetric left-aligned composition -->
+      <div class="col-span-4-left">
+        <h2>What ships</h2>
+        <!-- rule: No emoji bullets (using standard borders instead) -->
+        <ul class="manifest-list">
+          <li>brief compiler</li>
+          <li>28-rule linter</li>
+          <li>eval harness</li>
+          <li>vision-critic scaffold</li>
+          <li>MCP server</li>
+          <li>editor plugins</li>
+          <li>eight tokens</li>
+        </ul>
+      </div>
+
+      <!-- rule: A clearly separated manifest section titled 'What is gated' -->
+      <div class="col-span-4-right">
+        <h2>What is gated</h2>
+        <ul class="manifest-list">
+          <li>live frontier-model calls (needs API keys)</li>
+          <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+          <li>standalone npm packages for the editor plugins</li>
+          <li>additional tokens</li>
+        </ul>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- rule: A footer that names the licence explicitly: FSL-1.1-Apache-2.0 for code, CC-BY-4.0 for tokens and artwork. -->
+  <!-- rule: No canonical 4-column Product / Company / Resources / Legal footer -->
+  <footer class="grid">
+    <div class="col-span-8">
+      <!-- rule: declarative, short sentences -->
+      <p style="margin-bottom: 0;">Code licensed under FSL-1.1-Apache-2.0. Tokens and artwork licensed under CC-BY-4.0.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

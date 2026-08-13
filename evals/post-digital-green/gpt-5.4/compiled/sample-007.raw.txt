@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AHD / Artificial Human Design</title>
+  <style>
+    :root {
+      --bg: oklch(0.14 0.02 150); /* rule: dark green-black background */
+      --fg: oklch(0.92 0.12 135); /* rule: muted green foreground */
+      --dim: oklch(0.55 0.05 150); /* rule: muted green foreground */
+      --rule: oklch(0.3 0.04 150); /* rule: one hairline rule colour */
+      --amber: oklch(0.82 0.15 75); /* rule: a single amber accent */
+      --font: "Berkeley Mono", "IBM Plex Mono", "JetBrains Mono", ui-monospace, monospace; /* rule: everything in monospace; single-monospace */
+      --pad: 16px; /* rule: rectangles only; restrained spacing on one screen */
+      --w: 80ch; /* rule: everything aligns to an 80 character grid */
+    }
+
+    * {
+      box-sizing: border-box; /* rule: rectangles only */
+    }
+
+    html {
+      background: var(--bg); /* rule: dark green-black background */
+      color: var(--fg); /* rule: muted green foreground */
+      font-family: var(--font); /* rule: everything in monospace */
+      font-size: 15px; /* rule: base 15 from type scale */
+      line-height: 1.55; /* rule: body line-height 1.55 */
+      text-rendering: optimizeLegibility; /* rule: technical, readable, terse */
+    }
+
+    body {
+      margin: 0; /* rule: spare layout; remove ornamental framing */
+      min-height: 100vh; /* rule: one-page landing for web */
+      background: var(--bg); /* rule: dark green-black background */
+      color: var(--fg); /* rule: muted green foreground */
+    }
+
+    a {
+      color: inherit; /* rule: underlined links with no colour change */
+      text-decoration-line: underline; /* rule: underlined links */
+      text-decoration-color: currentColor; /* rule: no colour change */
+      text-underline-offset: 4px; /* rule: underline offset 4px */
+    }
+
+    main {
+      width: min(calc(100vw - 24px), var(--w)); /* rule: 80ch max-width; char-grid alignment */
+      margin: 0 auto; /* rule: web surface centered within 80ch column, not a centered hero stack */
+      padding: 16px 0 24px; /* rule: one screen of reading */
+    }
+
+    .rule {
+      border-top: 1px solid var(--rule); /* rule: one hairline rule colour */
+      height: 0; /* rule: rectangles only */
+      margin: 0 0 16px; /* rule: clear separation without cards */
+    }
+
+    .frame {
+      border: 1px solid var(--rule); /* rule: rectangles only; hairline border */
+      padding: var(--pad); /* rule: restrained terminal-aesthetic blocks */
+      margin-bottom: 12px; /* rule: one screen of reading */
+      background: transparent; /* rule: no gradients, no glassmorphism */
+    }
+
+    .hero {
+      display: grid; /* rule: web surface; structured, not feature cards */
+      grid-template-columns: 1.35fr 0.95fr; /* rule: avoid centered hero stack; asymmetric layout */
+      gap: 12px; /* rule: one screen of reading */
+      align-items: start; /* rule: technical, editorial presentation */
+    }
+
+    h1, h2, p, pre, ul {
+      margin: 0; /* rule: terse copy; controlled rhythm */
+    }
+
+    h1 {
+      font-size: 2.0736rem; /* rule: type scale step 4 */
+      line-height: 1.1; /* rule: display line-height 1.1 */
+      font-weight: 700; /* rule: weights 400 and 700 only */
+      text-transform: lowercase; /* rule: copy voice lowercase by default */
+      letter-spacing: 0; /* rule: tracking display 0 */
+      margin-bottom: 12px; /* rule: one screen of reading */
+    }
+
+    h2 {
+      font-size: 1rem; /* rule: terse manifest headings */
+      line-height: 1.25; /* rule: h2 line-height 1.25 */
+      font-weight: 700; /* rule: weights 400 and 700 only */
+      text-transform: lowercase; /* rule: copy voice lowercase by default */
+      margin-bottom: 8px; /* rule: one screen of reading */
+    }
+
+    p,
+    li {
+      max-width: 72ch; /* rule: measure 72ch */
+    }
+
+    .lede {
+      color: var(--fg); /* rule: muted green foreground */
+      margin-bottom: 12px; /* rule: one screen of reading */
+    }
+
+    .meta,
+    .quiet,
+    .manifest li span {
+      color: var(--dim); /* rule: muted green secondary text */
+    }
+
+    .accent {
+      color: var(--amber); /* rule: single amber accent */
+    }
+
+    .ascii {
+      white-space: pre; /* rule: include one ASCII diagram rendered as text */
+      color: var(--dim); /* rule: subdued technical diagram */
+      overflow-x: auto; /* rule: web surface practicality */
+      margin-top: 8px; /* rule: compact stack */
+    }
+
+    pre {
+      overflow-x: auto; /* rule: terminal-aesthetic code block on web */
+      padding: 12px; /* rule: rectangles only */
+      border: 1px solid var(--rule); /* rule: one hairline rule colour */
+      background: rgba(0, 0, 0, 0); /* rule: no gradients, no shadows */
+      margin-top: 12px; /* rule: one screen of reading */
+    }
+
+    code {
+      font-family: var(--font); /* rule: everything in monospace */
+      font-size: 0.93rem; /* rule: terminal-aesthetic code block */
+    }
+
+    .manifests {
+      display: grid; /* rule: clearly separated manifest sections */
+      grid-template-columns: 1fr 1fr; /* rule: concise one-screen comparison */
+      gap: 12px; /* rule: restrained spacing */
+      margin-top: 12px; /* rule: clear section break */
+    }
+
+    .manifest ul {
+      list-style: none; /* rule: no emoji bullets; plain terminal list */
+      padding: 0; /* rule: terse technical layout */
+      margin: 0; /* rule: terse technical layout */
+    }
+
+    .manifest li {
+      padding: 3px 0; /* rule: compact one-screen reading */
+      border-bottom: 1px solid var(--rule); /* rule: one hairline rule colour */
+    }
+
+    .manifest li:last-child {
+      border-bottom: 0; /* rule: restrained terminal finish */
+    }
+
+    .manifest .tag {
+      color: var(--amber); /* rule: single amber accent */
+      padding-right: 1ch; /* rule: char-grid cadence */
+    }
+
+    footer {
+      border-top: 1px solid var(--rule); /* rule: separated footer, not canonical 4-column footer */
+      padding-top: 12px; /* rule: clear separation */
+      color: var(--dim); /* rule: muted green secondary text */
+    }
+
+    @media (max-width: 820px) {
+      .hero,
+      .manifests {
+        grid-template-columns: 1fr; /* rule: ensure page loads properly on mobile */
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="rule" aria-hidden="true"></div><!-- rule: one hairline rule colour -->
+
+    <section class="hero frame"><!-- rule: one-page landing; avoid centred hero stack with pill badge + two CTAs -->
+      <div>
+        <p class="meta">artificial human design / v0.1</p><!-- rule: technical, terse, lowercase -->
+        <h1>ai output is easy to spot. so is design that bothered to test itself.</h1><!-- rule: audience already suspects the problem; show framework rather than lecture -->
+        <p class="lede">
+          ahd is a brief compiler, linter, and evaluation loop for teams that are
+          tired of generated pages that all look generated. it turns taste into a
+          spec, runs the work against it, and leaves an audit trail instead of a vibe.
+        </p><!-- rule: working designers, senior engineers, founders; terse; one screen of reading -->
+        <p>
+          the point is not novelty. the point is constraint, traceability, and a
+          way to say <span class="accent">why</span> one output survives and nine do not.
+          <a href="https://github.com/artificial-human-design/ahd">read the code</a>.
+        </p><!-- rule: include read-the-code CTA; single amber accent; underlined links -->
+        <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre><!-- rule: render required command in a monospace code block with language tag bash -->
+      </div>
+
+      <div>
+        <h2>loop sketch</h2><!-- rule: include at least one ASCII diagram rendered as text -->
+        <div class="ascii" role="img" aria-label="ascii diagram of the ahd evaluation flow">[brief.yml]---&gt;[compiler]---&gt;[linter:28]---&gt;[eval harness]
+     |                                            |
+     +------------------&gt;[tokens]-----------------+
+                                                  |
+                                             [critic?]
+                                                  |
+                                              [report.txt]</div><!-- rule: ASCII diagram; intentional imperfection: critic branch sits one column off -->
+        <p class="quiet" style="margin-top:8px;">
+          one deliberate flaw remains in the diagram alignment. the system should
+          show its hand.
+        </p><!-- rule: include at least one intentional imperfection; technical, self-aware, terse -->
+      </div>
+    </section>
+
+    <section class="manifests"><!-- rule: clearly separated manifest sections -->
+      <section class="manifest frame">
+        <h2>what ships</h2><!-- rule: manifest section titled exactly 'What ships' -->
+        <ul>
+          <li><span class="tag">01</span>brief compiler</li><!-- rule: enumerate exact shipped items -->
+          <li><span class="tag">02</span>28-rule linter</li><!-- rule: enumerate exact shipped items -->
+          <li><span class="tag">03</span>eval harness</li><!-- rule: enumerate exact shipped items -->
+          <li><span class="tag">04</span>vision-critic scaffold</li><!-- rule: enumerate exact shipped items -->
+          <li><span class="tag">05</span>MCP server</li><!-- rule: enumerate exact shipped items -->
+          <li><span class="tag">06</span>editor plugins</li><!-- rule: enumerate exact shipped items -->
+          <li><span class="tag">07</span>eight tokens</li><!-- rule: enumerate exact shipped items -->
+        </ul>
+      </section>
+
+      <section class="manifest frame">
+        <h2>what is gated</h2><!-- rule: manifest section titled exactly 'What is gated' -->
+        <ul>
+          <li><span class="tag">01</span>live frontier-model calls <span>(needs API keys)</span></li><!-- rule: enumerate exact gated items -->
+          <li><span class="tag">02</span>live vision critique <span>(needs multimodal key + screenshot pipeline)</span></li><!-- rule: enumerate exact gated items -->
+          <li><span class="tag">03</span>standalone npm packages for the editor plugins</li><!-- rule: enumerate exact gated items -->
+          <li><span class="tag">04</span>additional tokens</li><!-- rule: enumerate exact gated items -->
+        </ul>
+      </section>
+    </section>
+
+    <footer>
+      <p>
+        code licence: FSL-1.1-Apache-2.0. tokens and artwork: CC-BY-4.0.
+      </p><!-- rule: footer names licence explicitly -->
+    </footer>
+  </main>
+</body>
+</html>

@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Artificial Human Design</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
+
+    :root {
+      --bg-sidebar: #0a0a0f;
+      --bg-main: #050508;
+      --text-main: #d4d4d8;
+      --text-muted: #a1a1aa;
+      --accent: #00ff94;
+      --border: #27272a;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      line-height: 1.6;
+      display: flex;
+      min-height: 100vh;
+    }
+
+    aside {
+      width: 240px;
+      background-color: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      padding: 32px 24px;
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      height: 100vh;
+    }
+
+    aside h1 {
+      color: var(--accent);
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      margin-bottom: 48px;
+    }
+
+    aside nav {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    aside a {
+      color: var(--accent);
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+
+    aside a:hover {
+      opacity: 0.8;
+    }
+
+    main {
+      margin-left: 240px;
+      flex: 1;
+      padding: 64px 48px;
+      max-width: 900px;
+    }
+
+    section {
+      margin-bottom: 64px;
+    }
+
+    h2 {
+      font-size: 24px;
+      color: #ffffff;
+      margin-bottom: 24px;
+      font-weight: 400;
+    }
+
+    p {
+      margin-bottom: 24px;
+      font-size: 16px;
+      color: var(--text-muted);
+      max-width: 640px;
+    }
+
+    .terminal {
+      background-color: var(--bg-sidebar);
+      border: 1px solid var(--border);
+      padding: 24px;
+      border-radius: 4px;
+      margin-bottom: 64px;
+      overflow-x: auto;
+    }
+
+    .terminal code {
+      color: var(--accent);
+      font-size: 14px;
+      white-space: pre;
+    }
+
+    .terminal-header {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .terminal-header span {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: var(--border);
+    }
+
+    .manifest {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 64px;
+    }
+
+    .manifest-column h3 {
+      font-size: 14px;
+      color: #ffffff;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+    }
+
+    .manifest-list {
+      list-style: none;
+    }
+
+    .manifest-list li {
+      position: relative;
+      padding-left: 20px;
+      margin-bottom: 12px;
+      color: var(--text-muted);
+    }
+
+    .manifest-list li::before {
+      content: '>';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding-top: 24px;
+      color: var(--text-muted);
+      font-size: 12px;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        flex-direction: column;
+      }
+      aside {
+        width: 100%;
+        height: auto;
+        position: relative;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+      }
+      main {
+        margin-left: 0;
+        padding: 32px 24px;
+      }
+      .manifest {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <aside>
+    <h1>AHD_SYS</h1>
+    <nav>
+      <a href="https://github.com/artificial-human-design/ahd">Read the code</a>
+    </nav>
+  </aside>
+  
+  <main>
+    <section>
+      <h2>Artificial Human Design</h2>
+      <p>You have seen the generated slop. Structural homogeny, thoughtless component placement and a complete absence of design intent.</p>
+      <p>AHD treats this as an engineering failure. It replaces manual pixel-pushing with deterministic evaluation routines. Provide a brief, define your model specifications and run the harness to enforce strict layout principles over raw output.</p>
+    </section>
+
+    <div class="terminal">
+      <div class="terminal-header">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+    </div>
+
+    <section class="manifest">
+      <div class="manifest-column">
+        <h3>What ships</h3>
+        <ul class="manifest-list">
+          <li>brief compiler</li>
+          <li>28-rule linter</li>
+          <li>eval harness</li>
+          <li>vision-critic scaffold</li>
+          <li>MCP server</li>
+          <li>editor plugins</li>
+          <li>eight tokens</li>
+        </ul>
+      </div>
+      <div class="manifest-column">
+        <h3>What is gated</h3>
+        <ul class="manifest-list">
+          <li>live frontier-model calls (needs API keys)</li>
+          <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+          <li>standalone npm packages for the editor plugins</li>
+          <li>additional tokens</li>
+        </ul>
+      </div>
+    </section>
+
+    <footer>
+      <p>License | FSL-1.1-Apache-2.0 for code | CC-BY-4.0 for tokens and artwork.</p>
+    </footer>
+  </main>
+</body>
+</html>

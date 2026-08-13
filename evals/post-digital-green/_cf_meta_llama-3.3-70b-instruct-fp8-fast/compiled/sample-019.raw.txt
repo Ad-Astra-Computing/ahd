@@ -1,0 +1,76 @@
+<!doctype html } 
+<html lang="en2">
+<head／/ 
+  <couz charset="UTF -*-
+  <líb title="Artificial Humandp Design"[AHD 
+  <style
+   -
+    /* rule: dark green-black｢ background, muted ########.green foreground, amberap accent */
+    body {
+     ( background-color:**okltch(��.14 
+      foreground: oklchyear(0.scalablytyped92 010 135 }
+
+    /* rule: monoospace font */
+   view font-family: 'Ber�ng Mono',×
+
+    /*﻿# rule: amber accent */
+.scalablytyped    a {
+     [underline-offset: 
+      colori: oklch(0.-inset 
+      text-decoration:[underline 
+      text-decoration-color,､ oklch´:0.82 0.dateTime 75awah)
+    }
+
+    /* __________________
+
+rule: manifest sections */
+    .manifest {
+ \$      background-colorTừ: oklch(s0.3 0.04 15 
+      padding: 1em
+      border: 1 POP solid oklch(0.لق3 0 narrator 150)
+ приблиз 
+    }
+  </style
+</head 
+<body 
+  <h1Artificial HumanВаж Design</haan
+ ( <!-- rule: terminal-aesthetic code block -->
+ Ост
+ -<pre<code class="bash	">ahdTransformation eval-live swiss:no --brief briefゞ/landing.yml -- ########.models <specssat --ns 10</ion 
+  </co 
+  </pr 
+  <!-- rule:×
+
+  manifest section -->
+  <<translation class="manifest">
+    ОднаWhat ships
+    <ul
+      <li>Brief compiler/li
+     .:.:.:.:<li28-rule linter</li
+174      <li>Eval harness</li
+      نام <li>Vision-critt scaffolddb</li
+      <li>MSID server</li>
+      .:.<li>nsEditor plugins</l
+      :.:.:<li> tokens</li Pars
+   045</ul
+    <h2WhatIEWS gated</h2ома
+   
+    <©©ul
+      Через<li>Live frontier-model calls (needs APIпример keys)</li>
+      <li>_Lean Live vision critique二二二二 (needs multimodaledge 
+      <lЎ_standalone npmpy packages for the editor pluginshrd</li 
+      <li>
+      Additional tokens</Важ li
+   [</ul
+ इसस
+  <!-- rule:odic footer -->
+  <footer 
+    &copy;2023 
+    <.a href="httpsture://github.com	/AHD" 
+      >Read the code</a
+    >
+    .Licence: FSLンテ-1.*Apache-2.scalablytyped.0 for code,...
+    CC-BВаж-4.0 for tokens 💡 and artwork
+  </footer Costs
+</bodyĐây 
+</html matte

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AHD — Artificial Human Design</title>
+    <style>
+        /* rule: palette is ink on paper (warm off-white) */
+        :root {
+            --color-ink: oklch(0.18 0 0);
+            --color-paper: oklch(0.98 0.005 95);
+            --color-spot: oklch(0.58 0.22 27); /* rule: single spot red used exactly once */
+            --color-rule: oklch(0.18 0 0);
+            --color-muted: oklch(0.55 0 0);
+            
+            --font-display: 'Neue Haas Grotesk Display', 'Helvetica Now Display', 'Inter Tight', sans-serif;
+            --font-text: 'Neue Haas Grotesk Text', 'Helvetica Now Text', 'Inter', sans-serif;
+        }
+
+        /* rule: 12-column grid with 24px gutters and 8px baseline */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--color-paper);
+            color: var(--color-ink);
+            font-family: var(--font-text);
+            font-size: 17px; /* rule: Body in Neue Haas Grotesk Text at 17px */
+            line-height: 1.5; /* rule: line-height 1.5 */
+            -webkit-font-smoothing: antialiased;
+            padding: 0;
+        }
+
+        /* rule: Asymmetric left-aligned composition */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(12, minmax(0, 1fr));
+            column-gap: 24px; /* rule: 24px gutters */
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 32px; /* rule: margin preferred */
+        }
+
+        /* rule: One intentional element must bleed past the grid */
+        .bleed-element {
+            grid-column: 8 / span 12;
+            text-align: right;
+        }
+
+        /* rule: Section anchored by a single word at display >= 120px with -0.02em tracking */
+        .hero-word {
+            font-family: var(--font-display);
+            font-size: 160px; /* rule: 96–160px */
+            font-weight: 900;
+            line-height: 1.05; /* rule: display line-height 1.05 */
+            letter-spacing: -0.02em; /* rule: tracking -0.02em */
+            margin-top: 160px; /* rule: dramatic jump per section */
+            margin-bottom: 96px;
+        }
+
+        h1, h2 {
+            font-family: var(--font-display);
+            font-weight: 700;
+            line-height: 1.2; /* rule: h2 line-height 1.2 */
+        }
+
+        .hero-text {
+            grid-column: 1 / span 6;
+            margin-top: -120px; /* intentional asymmetry */
+        }
+
+        .intro-para {
+            grid-column: 1 / span 8;
+            max-width: 62ch; /* rule: measure 62ch */
+            margin-bottom: 160px;
+        }
+
+        /* rule: terminal-aesthetic code block */
+        .code-section {
+            grid-column: 1 / span 12;
+            margin-bottom: 160px;
+        }
+
+        pre {
+            background: transparent;
+            border: 1px solid var(--color-rule); /* rule: depth via rule, no shadows */
+            padding: 32px;
+            overflow-x: auto;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            font-size: 15px;
+        }
+
+        code {
+            color: var(--color-ink);
+        }
+
+        /* rule: manifest section */
+        .manifest-section {
+            grid-column: 1 / span 12;
+            margin-bottom: 160px;
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 24px;
+        }
+
+        .manifest-col {
+            grid-column: span 6; /* rule: Do not place three equal feature cards; using two columns */
+        }
+
+        .manifest-title {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em; /* rule: allcaps tracking 0.08em */
+            margin-bottom: 32px;
+            color: var(--color-muted);
+        }
+
+        .manifest-list {
+            list-style: none;
+        }
+
+        .manifest-list li {
+            margin-bottom: 12px;
+            padding-left: 0;
+        }
+
+        /* rule: No emoji bullets */
+        .manifest-list li::before {
+            content: "— ";
+            color: var(--color-muted);
+        }
+
+        /* rule: single spot red used exactly once (on the CTA) */
+        .cta-container {
+            grid-column: 1 / span 12;
+            margin-bottom: 160px;
+        }
+
+        .cta-link {
+            display: inline-block;
+            text-decoration: none;
+            color: var(--color-spot); /* rule: spot color used exactly once */
+            font-weight: 700;
+            border-bottom: 1px solid var(--color-spot);
+            padding-bottom: 2px;
+        }
+
+        /* rule: footer names licence explicitly */
+        footer {
+            grid-column: 1 / span 12;
+            border-top: 1px solid var(--color-rule);
+            padding-top: 32px;
+            padding-bottom: 64px;
+            font-size: 14px;
+            color: var(--color-muted);
+        }
+
+        /* rule: small status pills allowed for status tags only */
+        .status-pill {
+            display: inline-block;
+            padding: 2px 8px;
+            border: 1px solid var(--color-rule);
+            border-radius: 999px;
+            font-size: 12px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        @media (max-width: 768px) {
+            .hero-word { font-size: 80px; }
+            .hero-text { grid-column: 1 / span 12; margin-top: 0; }
+            .intro-para { grid-column: 1 / span 12; }
+            .manifest-col { grid-column: 1 / span 12; }
+            .bleed-element { grid-column: 1 / span 12; text-align: left; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="grid">
+        <!-- rule: One section anchored by a single word at display >= 120px -->
+        <div class="bleed-element">
+            <h1 class="hero-word">AHD</h1>
+        </div>
+
+        <div class="hero-text">
+            <div class="status-pill">v0.1.0</div> <!-- rule: pills allowed for status tags only -->
+            <p>Artificial Human Design</p>
+        </div>
+
+        <div class="intro-para">
+            <p>The framework for high-fidelity design evaluation. AHD provides a structured method to move beyond the generative slop. It treats design as a verifiable set of rules and constraints rather than a single prompt-to-image probability.</p>
+        </div>
+
+        <!-- rule: terminal-aesthetic code block -->
+        <div class="code-section">
+            <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+        </div>
+
+        <!-- rule: manifest section -->
+        <div class="manifest-section">
+            <div class="manifest-col">
+                <h2 class="manifest-title">What ships</h2>
+                <ul class="manifest-list">
+                    <li>brief compiler</li>
+                    <li>28-rule linter</li>
+                    <li>eval harness</li>
+                    <li>vision-critic scaffold</li>
+                    <li>MCP server</li>
+                    <li>editor plugins</li>
+                    <li>eight tokens</li>
+                </ul>
+            </div>
+            <div class="manifest-col">
+                <h2 class="manifest-title">What is gated</h2>
+                <ul class="manifest-list">
+                    <li>live frontier-model calls (needs API keys)</li>
+                    <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+                    <li>standalone npm packages for the editor plugins</li>
+                    <li>additional tokens</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- rule: link to github labelled as read-the-code CTA -->
+        <!-- rule: spot color used exactly once here -->
+        <div class="cta-container">
+            <a href="https://github.com/ahd-project" class="cta-link">read-the-code</a>
+        </div>
+
+        <!-- rule: footer that names the licence explicitly -->
+        <footer>
+            <p>Code: FSL-1.1-Apache-2.0 | Tokens and Artwork: CC-BY-4.0</p>
+        </footer>
+    </div>
+
+</body>
+</html>

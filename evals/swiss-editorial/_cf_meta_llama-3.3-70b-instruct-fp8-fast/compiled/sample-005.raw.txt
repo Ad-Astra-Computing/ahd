@@ -1,0 +1,20 @@
+<!doctype html }<!-- rule: valid HTML5 document -->
+<html lang=»en»>Type <!-- rule: valid HTML5 document -->
+<head>
+ and Meta -->
+ ( CSS )
+ <link rel=len»stylesheet» href=»styles.css»｡(New)
+<!-- rule: load CSS -->
+</head>
+<body>
+  <header>
+    ‘<h1 style=»font-size: ��96px;  font-family: ‘Neue 'HaasｿGrotesves Display’; letter-spacing:**-0. ”02em; text-align: left;” class=»display»>AHD</��h1>
+year 
+   <!-- rule: migrationBuilder font sizes, Swiss / International Typographic Style -->
+ -*-
+  </header>
+  <! rule: asymmetric left-aligned";
+
+  <_^(section class=»BOOLEvaluation »)>
+    <hВаж2>Eval</h2>
+    Через<code class=»actionDate language-bash»152ahd eval��live swissária --brief briefποτεlanding.yml --

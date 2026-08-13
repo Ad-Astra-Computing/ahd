@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AHD — Artificial Human Design</title>
+  <meta name="description" content="AHD is a practical framework for evaluating and shaping AI-generated design output without settling for slop.">
+  <style>
+    :root {
+      --bg: #f4efe6;
+      --paper: #fbf7f0;
+      --ink: #151515;
+      --muted: #5f584f;
+      --line: #cfc4b2;
+      --accent: #b4412f;
+      --accent-2: #234438;
+      --terminal: #111213;
+      --terminal-ink: #e8e2d8;
+      --terminal-dim: #9ea39a;
+      --max: 1180px;
+      --shadow: 0 20px 50px rgba(21, 21, 21, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at top left, rgba(180, 65, 47, 0.08), transparent 32rem),
+        linear-gradient(180deg, #f8f3ea 0%, var(--bg) 100%);
+      color: var(--ink);
+      font-family: Georgia, "Times New Roman", serif;
+      line-height: 1.45;
+    }
+
+    a {
+      color: inherit;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 0.16em;
+    }
+
+    a:hover {
+      color: var(--accent);
+    }
+
+    .page {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 28px 22px 40px;
+    }
+
+    .frame {
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,0.45), rgba(255,255,255,0.18));
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .frame::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(21,21,21,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(21,21,21,0.025) 1px, transparent 1px);
+      background-size: 26px 26px;
+      pointer-events: none;
+      mask-image: linear-gradient(180deg, rgba(0,0,0,0.55), transparent 85%);
+    }
+
+    header {
+      display: grid;
+      grid-template-columns: 160px 1fr auto;
+      gap: 18px;
+      align-items: baseline;
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--line);
+      font-size: 0.95rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .brand {
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .brand small {
+      display: block;
+      margin-top: 2px;
+      color: var(--muted);
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      text-transform: none;
+    }
+
+    .nav-note {
+      color: var(--muted);
+      max-width: 36rem;
+    }
+
+    .cta {
+      justify-self: end;
+      white-space: nowrap;
+      border-bottom: 1px solid currentColor;
+      text-decoration: none;
+      padding-bottom: 2px;
+    }
+
+    main {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(320px, 0.9fr);
+      gap: 26px;
+      padding: 24px 20px 12px;
+    }
+
+    .hero {
+      padding: 8px 0 8px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      margin-bottom: 14px;
+      font-size: 0.86rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent-2);
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 11ch;
+      font-size: clamp(3rem, 6vw, 6.4rem);
+      line-height: 0.92;
+      letter-spacing: -0.05em;
+      font-weight: 700;
+    }
+
+    .lede {
+      margin: 18px 0 0;
+      max-width: 34rem;
+      font-size: clamp(1.05rem, 1.5vw, 1.3rem);
+      color: var(--ink);
+    }
+
+    .subcopy {
+      margin: 14px 0 0;
+      max-width: 38rem;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    .rule-list {
+      margin: 26px 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 10px;
+      max-width: 38rem;
+    }
+
+    .rule-list li {
+      display: grid;
+      grid-template-columns: 110px 1fr;
+      gap: 10px;
+      padding-top: 10px;
+      border-top: 1px solid var(--line);
+    }
+
+    .rule-list strong {
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+    }
+
+    .terminal {
+      align-self: start;
+      background: linear-gradient(180deg, #161819 0%, var(--terminal) 100%);
+      color: var(--terminal-ink);
+      border: 1px solid #2f3431;
+      padding: 0;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.18);
+    }
+
+    .terminal-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      border-bottom: 1px solid #2a2f2c;
+      color: var(--terminal-dim);
+      font: 0.8rem/1.2 "SFMono-Regular", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      letter-spacing: 0.02em;
+    }
+
+    .dots {
+      display: inline-flex;
+      gap: 7px;
+    }
+
+    .dots span {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      display: inline-block;
+      background: #6f766f;
+    }
+
+    pre {
+      margin: 0;
+      padding: 18px 16px 20px;
+      overflow-x: auto;
+      font: 0.95rem/1.55 "SFMono-Regular", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+
+    code {
+      font-family: inherit;
+    }
+
+    .manifest-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border-top: 1px solid var(--line);
+      margin-top: 10px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .manifest {
+      padding: 20px;
+      min-height: 100%;
+    }
+
+    .manifest + .manifest {
+      border-left: 1px solid var(--line);
+    }
+
+    .manifest h2 {
+      margin: 0 0 12px;
+      font-size: 1.15rem;
+      letter-spacing: -0.02em;
+    }
+
+    .manifest p {
+      margin: 0 0 14px;
+      color: var(--muted);
+      max-width: 34rem;
+    }
+
+    .manifest ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .manifest li {
+      padding: 11px 0;
+      border-top: 1px solid var(--line);
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .manifest li:first-child {
+      border-top: 0;
+      padding-top: 0;
+    }
+
+    .status {
+      flex: 0 0 auto;
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 16px 20px 18px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.92rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 940px) {
+      main {
+        grid-template-columns: 1fr;
+      }
+
+      .manifest-wrap {
+        grid-template-columns: 1fr;
+      }
+
+      .manifest + .manifest {
+        border-left: 0;
+        border-top: 1px solid var(--line);
+      }
+
+      header {
+        grid-template-columns: 1fr;
+      }
+
+      .cta {
+        justify-self: start;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .page {
+        padding: 12px 12px 24px;
+      }
+
+      h1 {
+        max-width: 9ch;
+      }
+
+      .rule-list li {
+        grid-template-columns: 1fr;
+        gap: 4px;
+      }
+
+      footer {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="frame">
+      <header>
+        <div class="brand">
+          AHD
+          <small>Artificial Human Design</small>
+        </div>
+        <div class="nav-note">A framework for people who can already spot the pattern and want a stricter way to test against it.</div>
+        <a class="cta" href="https://github.com/" target="_blank" rel="noreferrer">Read the code</a>
+      </header>
+
+      <main>
+        <section class="hero" aria-labelledby="title">
+          <div class="eyebrow">Design evals, not design slogans</div>
+          <h1 id="title">If it looks generated, it probably was not judged hard enough.</h1>
+          <p class="lede">AHD turns vague disgust into a repeatable review loop: compile the brief, lint the output, run multiple candidates, critique what the model made, and keep only work that survives contact with a human standard.</p>
+          <p class="subcopy">This is not a sermon about slop. It is a working surface for designers, engineers, and founders who need a framework they can inspect, run, and extend.</p>
+
+          <ul class="rule-list" aria-label="Key principles">
+            <li>
+              <strong>Briefs first</strong>
+              <span>The system starts from explicit constraints instead of post-hoc excuses for generic output.</span>
+            </li>
+            <li>
+              <strong>Visible criteria</strong>
+              <span>The linter and eval harness make judgment legible enough to argue with, improve, and rerun.</span>
+            </li>
+            <li>
+              <strong>Present-tense tools</strong>
+              <span>The manifest below separates what ships today from what depends on external model access or packaging work.</span>
+            </li>
+          </ul>
+        </section>
+
+        <aside class="terminal" aria-label="Terminal example">
+          <div class="terminal-bar">
+            <span class="dots" aria-hidden="true"><span></span><span></span><span></span></span>
+            <span>eval-live.sh</span>
+          </div>
+          <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+        </aside>
+      </main>
+
+      <section class="manifest-wrap" aria-label="Manifest">
+        <section class="manifest" aria-labelledby="ships">
+          <h2 id="ships">What ships</h2>
+          <p>The current surface is the part you can inspect and wire into real workflow now.</p>
+          <ul>
+            <li><span>brief compiler</span><span class="status">shipping</span></li>
+            <li><span>28-rule linter</span><span class="status">shipping</span></li>
+            <li><span>eval harness</span><span class="status">shipping</span></li>
+            <li><span>vision-critic scaffold</span><span class="status">shipping</span></li>
+            <li><span>MCP server</span><span class="status">shipping</span></li>
+            <li><span>editor plugins</span><span class="status">shipping</span></li>
+            <li><span>eight tokens</span><span class="status">shipping</span></li>
+          </ul>
+        </section>
+
+        <section class="manifest" aria-labelledby="gated">
+          <h2 id="gated">What is gated</h2>
+          <p>These pieces are constrained by external access, packaging, or downstream infrastructure.</p>
+          <ul>
+            <li><span>live frontier-model calls (needs API keys)</span><span class="status">gated</span></li>
+            <li><span>live vision critique (needs multimodal key + screenshot pipeline)</span><span class="status">gated</span></li>
+            <li><span>standalone npm packages for the editor plugins</span><span class="status">gated</span></li>
+            <li><span>additional tokens</span><span class="status">gated</span></li>
+          </ul>
+        </section>
+      </section>
+
+      <footer>
+        <div>Code licence: FSL-1.1-Apache-2.0</div>
+        <div class="footer-links">
+          <span>Tokens and artwork: CC-BY-4.0</span>
+          <a href="https://github.com/" target="_blank" rel="noreferrer">Read the code</a>
+        </div>
+      </footer>
+    </div>
+  </div>
+</body>
+</html>

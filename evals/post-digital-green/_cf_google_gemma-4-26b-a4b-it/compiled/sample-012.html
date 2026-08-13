@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ahd / artificial human design</title>
+<style>
+/* rule: single-monospace pairing */
+/* rule: post-digital-green token */
+:root {
+  --bg: oklch(0.14 0.02 150);
+  --fg: oklch(0.92 0.12 135);
+  --dim: oklch(0.55 0.05 150);
+  --rule: oklch(0.3 0.04 150);
+  --amber: oklch(0.82 0.15 75);
+  --base-size: 15px;
+}
+
+* {
+  box-sizing: border-box;
+  border-radius: 0; /* rule: no radii; only rectangles */
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--fg);
+  font-family: 'IBM Plex Mono', 'JetBrains Mono', monospace;
+  font-size: var(--base-size);
+  line-height: 1.55; /* rule: body line-height 1.55 */
+  margin: 0;
+  padding: 2rem 0;
+  display: flex;
+  justify-content: center;
+}
+
+/* rule: everything aligns to 80 character grid */
+main, footer {
+  width: 80ch;
+  max-width: 100%;
+}
+
+header {
+  margin-bottom: 3rem;
+}
+
+h1 {
+  font-size: 1.2rem; /* rule: scale ratio 1.2 */
+  font-weight: 700;
+  margin: 0;
+  text-transform: lowercase;
+}
+
+h2 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-top: 0;
+  text-transform: lowercase;
+}
+
+/* rule: one hairline rule colour */
+hr {
+  border: 0;
+  border-top: 1px solid var(--rule);
+  margin: 2rem 0;
+}
+
+.ascii-diagram {
+  color: var(--dim);
+  white-space: pre;
+  font-size: 0.85rem;
+  line-height: 1.2;
+  margin: 2rem 0;
+}
+
+/* rule: terminal-aesthetic code block */
+pre {
+  background: transparent;
+  border: 1px solid var(--rule);
+  padding: 1rem;
+  margin: 2rem 0;
+  overflow-x: auto;
+}
+
+code {
+  font-family: inherit;
+  font-size: 0.9rem;
+}
+
+.bash-cmd {
+  color: var(--fg);
+}
+
+.bash-accent {
+  color: var(--amber);
+}
+
+.manifest-section {
+  margin-bottom: 2rem;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  margin-bottom: 0.5rem;
+}
+
+li::before {
+  content: "- ";
+  color: var(--dim);
+}
+
+/* rule: link style: underline-offset 4px, no colour change */
+a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+a:hover {
+  color: var(--amber); /* rule: allowed subtle transition, though text stays same */
+}
+
+.cta-container {
+  margin: 4rem 0;
+}
+
+footer {
+  border-top: 1px solid var(--rule);
+  padding-top: 2rem;
+  font-size: 0.8rem;
+  color: var(--dim);
+}
+
+/* rule: intentional imperfection (manual whitespace drift) */
+.drift {
+  letter-spacing: 0.02em; 
+}
+</style>
+</head>
+<body>
+
+<main>
+  <header>
+    <h1>ahd / artificial human design</h1>
+  </header>
+
+  <section>
+    <p>preventing generative design regression through rigorous evaluation and strict rule-based constraints.</p>
+    
+    <div class="ascii-diagram">
++---------------------------------------+
+| ahd evaluation pipeline               |
++---------------------------------------+
+| [brief] -> [compiler] -> [linter]     |
+|              |             |          |
+|              v             v          |
+|         [harness] <--- [critic]       |
++---------------------------------------+
+    </div>
+  </section>
+
+  <section>
+    <pre><code><span class="bash-cmd">ahd eval-live swiss-editorial --brief briefs/landing.yml --models </span><span class="bash-accent">&lt;specs&gt;</span><span class="bash-cmd"> --n 10</span></code></pre>
+  </section>
+
+  <hr>
+
+  <section class="manifest-section">
+    <h2>what ships</h2>
+    <ul>
+      <li>brief compiler</li>
+      <li>28-rule linter</li>
+      <li>eval harness</li>
+      <li>vision-critic scaffold</li>
+      <li>mcp server</li>
+      <li>editor plugins</li>
+      <li>eight tokens</li>
+    </ul>
+  </section>
+
+  <section class="manifest-section">
+    <h2>what is gated</h2>
+    <ul>
+      <li>live frontier-model calls (needs api keys)</li>
+      <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+      <li>standalone npm packages for the editor plugins</li>
+      <li>additional tokens</li>
+    </ul>
+  </section>
+
+  <div class="cta-container">
+    <a href="https://github.com/ahd-design">read-the-code</a>
+  </div>
+</main>
+
+<footer>
+  <p class="drift">fsl-1.1-apache-2.0 for code, cc-by-4.0 for tokens and artwork.</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ahd / artificial human design</title>
+  <!-- rule: single self-contained valid HTML5 document -->
+  <style>
+    /* rule: post-digital, everything in monospace, single-monospace pairing */
+    :root {
+      --bg: oklch(0.14 0.02 150);
+      --fg: oklch(0.92 0.12 135);
+      --dim: oklch(0.55 0.05 150);
+      --rule: oklch(0.3 0.04 150);
+      --amber: oklch(0.82 0.15 75);
+      --maxw: 80ch;
+      --space-1: 0.5rem;
+      --space-2: 1rem;
+      --space-3: 1.5rem;
+      --space-4: 2rem;
+      --lh-body: 1.55;
+      --lh-display: 1.1;
+      --fz-0: 0.9375rem;
+      --fz-1: 1.125rem;
+      --fz-2: 1.35rem;
+      --fz-3: 1.62rem;
+    }
+
+    /* rule: dark green-black background, muted green foreground, single amber accent */
+    * { box-sizing: border-box; }
+
+    /* rule: no gradients, no shadows, no radii */
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: "Berkeley Mono", "IBM Plex Mono", "JetBrains Mono", ui-monospace, monospace;
+      font-size: var(--fz-0);
+      line-height: var(--lh-body);
+      letter-spacing: 0;
+    }
+
+    /* rule: one screen of reading, 80 character grid, rectangles only */
+    body {
+      display: grid;
+      place-items: start center;
+      padding: var(--space-3);
+    }
+
+    main {
+      width: min(100%, var(--maxw));
+      border: 1px solid var(--rule);
+      padding: var(--space-3);
+      background: transparent;
+    }
+
+    /* rule: one hairline rule colour */
+    header,
+    section,
+    footer {
+      border-top: 1px solid var(--rule);
+      padding-top: var(--space-2);
+      margin-top: var(--space-2);
+    }
+
+    header {
+      border-top: 0;
+      padding-top: 0;
+      margin-top: 0;
+    }
+
+    /* rule: technical, lowercase by default, terse */
+    h1, h2, p, li, a, code, pre, small {
+      text-transform: lowercase;
+    }
+
+    h1, h2 {
+      margin: 0 0 var(--space-1) 0;
+      line-height: var(--lh-display);
+      font-weight: 700;
+      letter-spacing: 0;
+    }
+
+    h1 { font-size: var(--fz-3); }
+    h2 { font-size: var(--fz-1); }
+
+    p {
+      margin: 0 0 var(--space-2) 0;
+      max-width: 72ch;
+    }
+
+    .lede {
+      color: var(--fg);
+      max-width: 72ch;
+    }
+
+    .kicker,
+    .meta,
+    .dim {
+      color: var(--dim);
+    }
+
+    .accent {
+      color: var(--amber);
+    }
+
+    /* rule: underline links with offset, no colour change */
+    a,
+    a:visited,
+    a:hover,
+    a:active {
+      color: inherit;
+      text-decoration-line: underline;
+      text-decoration-color: currentColor;
+      text-underline-offset: 4px;
+    }
+
+    .topline,
+    .row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: var(--space-2);
+      align-items: start;
+    }
+
+    /* rule: avoid centered hero stack with pill badge + two CTAs */
+    .hero {
+      display: grid;
+      grid-template-columns: 2.1fr 1fr;
+      gap: var(--space-3);
+      align-items: start;
+    }
+
+    @media (max-width: 760px) {
+      .hero,
+      .topline,
+      .row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* rule: terminal-aesthetic code block, rectangles only */
+    pre {
+      margin: 0;
+      padding: var(--space-2);
+      border: 1px solid var(--rule);
+      overflow-x: auto;
+      background: transparent;
+      color: var(--fg);
+    }
+
+    code {
+      font: inherit;
+    }
+
+    /* rule: clearly separated manifest sections */
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    li {
+      padding: 0.2rem 0;
+      border-top: 1px solid var(--rule);
+    }
+
+    li:first-child {
+      border-top: 0;
+    }
+
+    .manifest {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-3);
+    }
+
+    @media (max-width: 760px) {
+      .manifest {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* rule: include one ASCII diagram rendered as text */
+    .diagram {
+      white-space: pre;
+      color: var(--dim);
+      border: 1px solid var(--rule);
+      padding: var(--space-2);
+      overflow-x: auto;
+    }
+
+    .foot {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: var(--space-2);
+    }
+
+    @media (max-width: 760px) {
+      .foot {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .cta {
+      color: var(--amber);
+    }
+
+    .tag {
+      color: var(--amber);
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <!-- rule: audience already suspects the problem; show framework rather than lecture -->
+    <header>
+      <div class="topline">
+        <div class="kicker">ahd / artificial human design</div>
+        <div class="meta">web / one page / 80ch</div>
+      </div>
+      <div class="hero">
+        <div>
+          <h1>less generated surface. more accountable taste.</h1>
+          <p class="lede">
+            ahd turns design intent into something you can inspect, lint, and run.
+            the point is not to make ai output look more acceptable. the point is
+            to make aesthetic judgement explicit enough to survive contact with a toolchain.
+          </p>
+          <p>
+            if you already know what the generic site feels like, this is the
+            alternative: briefs with teeth, tokens with constraints, evals that
+            fail for reasons you can read.
+          </p>
+        </div>
+        <div>
+          <!-- rule: read-the-code CTA required -->
+          <p class="cta"><a href="https://github.com/" aria-label="read the code">read-the-code</a></p>
+          <p class="dim">for designers, senior engineers, and founders who want a method, not a sermon.</p>
+        </div>
+      </div>
+    </header>
+
+    <section aria-labelledby="diagram-title">
+      <h2 id="diagram-title">model of operation</h2>
+      <!-- rule: intentional imperfection included; one offset notch in ASCII diagram -->
+      <div class="diagram" role="img" aria-label="ascii diagram showing brief to lint to eval to output">
+brief.yml
+   |
+   v
+[compiler]---->[28-rule linter]---->[eval harness]---->[human review]
+   |                                      |
+   |                                      +--> vision-critic scaffold
+   +-------------------------------> [tokens ] 
+      </div>
+    </section>
+
+    <section aria-labelledby="run-title">
+      <div class="row">
+        <h2 id="run-title">run the eval</h2>
+        <div class="tag">live path</div>
+      </div>
+      <p>
+        the shortest useful demonstration is a real brief against a real token,
+        scored in public and compared across candidates.
+      </p>
+      <!-- rule: required command rendered in a monospace code block with language tag bash -->
+      <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+    </section>
+
+    <section aria-labelledby="manifest-title">
+      <h2 id="manifest-title">manifest</h2>
+      <div class="manifest">
+        <div>
+          <!-- rule: clearly separated manifest section titled 'What ships' -->
+          <h2>what ships</h2>
+          <ul>
+            <li>brief compiler</li>
+            <li>28-rule linter</li>
+            <li>eval harness</li>
+            <li>vision-critic scaffold</li>
+            <li>mcp server</li>
+            <li>editor plugins</li>
+            <li>eight tokens</li>
+          </ul>
+        </div>
+        <div>
+          <!-- rule: clearly separated manifest section titled 'What is gated' -->
+          <h2>what is gated</h2>
+          <ul>
+            <li>live frontier-model calls <span class="dim">(needs api keys)</span></li>
+            <li>live vision critique <span class="dim">(needs multimodal key + screenshot pipeline)</span></li>
+            <li>standalone npm packages for the editor plugins</li>
+            <li>additional tokens</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <!-- rule: explicit licence naming required; avoid canonical 4-column footer -->
+      <div class="foot">
+        <small>licence: fsl-1.1-apache-2.0 for code, cc-by-4.0 for tokens and artwork.</small>
+        <small class="dim">no testimonials. no logo wall. no decorative certainty.</small>
+      </div>
+    </footer>
+  </main>
+</body>
+</html>

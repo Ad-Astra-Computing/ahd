@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Artificial Human Design</title>
+<style>
+:root {
+  --bg: #000000;
+  --fg: #e0e0e0;
+  --muted: #888888;
+  --border: #333333;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  background-color: var(--bg);
+  color: var(--fg);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+  margin: 0;
+  padding: 4rem 2rem;
+  max-width: 900px;
+}
+header {
+  margin-bottom: 3rem;
+}
+h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0 0 1.5rem 0;
+  letter-spacing: -0.02em;
+}
+p {
+  font-size: 1.125rem;
+  max-width: 65ch;
+  margin: 0 0 1.5rem 0;
+  color: #cccccc;
+}
+a {
+  color: #ffffff;
+  text-decoration: none;
+  border-bottom: 1px solid var(--muted);
+  transition: border-color 0.2s;
+}
+a:hover {
+  border-bottom-color: #ffffff;
+}
+.cta-block {
+  margin-top: 2rem;
+}
+pre {
+  background-color: #111111;
+  border: 1px solid var(--border);
+  padding: 1.5rem;
+  overflow-x: auto;
+  margin: 3rem 0;
+  border-radius: 2px;
+}
+code {
+  font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 0.875rem;
+}
+code.language-bash {
+  color: #e0e0e0;
+}
+.manifest {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  margin-bottom: 4rem;
+}
+@media (max-width: 600px) {
+  .manifest {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+h2 {
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  margin: 0 0 1rem 0;
+  font-weight: 600;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.5rem;
+}
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+li {
+  padding: 0.5rem 0;
+  font-size: 0.95rem;
+  border-bottom: 1px solid #1a1a1a;
+}
+li:last-child {
+  border-bottom: none;
+}
+footer {
+  border-top: 1px solid var(--border);
+  padding-top: 1.5rem;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Artificial Human Design</h1>
+</header>
+
+<main>
+  <p>The standard output of generative models is regression to the mean. Without strict constraints, they produce the same layouts, the same predictable colour ramps and the same synthetic aesthetic. The web is filling with identical artefacts devoid of intent.</p>
+  
+  <p>Artificial Human Design (AHD) is an evaluation framework that enforces mechanical constraints on generation. It applies rigorous rulesets, runs linters over output and scores designs against human-authored tokens. It is not an agent. It is a defence mechanism.</p>
+  
+  <div class="cta-block">
+    <a href="https://github.com/artificial-human-design/ahd">Read the code on GitHub</a>
+  </div>
+
+  <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+
+  <div class="manifest">
+    <div>
+      <h2>What ships</h2>
+      <ul>
+        <li>Brief compiler</li>
+        <li>28-rule linter</li>
+        <li>Eval harness</li>
+        <li>Vision-critic scaffold</li>
+        <li>MCP server</li>
+        <li>Editor plugins</li>
+        <li>Eight tokens</li>
+      </ul>
+    </div>
+    <div>
+      <h2>What is gated</h2>
+      <ul>
+        <li>Live frontier-model calls (needs API keys)</li>
+        <li>Live vision critique (needs multimodal key + screenshot pipeline)</li>
+        <li>Standalone npm packages for the editor plugins</li>
+        <li>Additional tokens</li>
+      </ul>
+    </div>
+  </div>
+</main>
+
+<footer>
+  Licence: FSL-1.1-Apache-2.0 for code, CC-BY-4.0 for tokens and artwork.
+</footer>
+
+</body>
+</html>

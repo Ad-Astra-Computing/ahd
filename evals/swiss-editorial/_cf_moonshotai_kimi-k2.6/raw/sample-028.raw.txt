@@ -1,0 +1,480 @@
+```html
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AHD — Artificial Human Design</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --bg-raised: #111111;
+            --bg-code: #0d0d0d;
+            --border: #222222;
+            --border-dim: #1a1a1a;
+            --fg: #e8e6e3;
+            --fg-dim: #8a8580;
+            --fg-faint: #4a4744;
+            --accent: #c4a574;
+            --accent-dim: #8a7a5a;
+            --error: #c97b63;
+            --ok: #7a9a7a;
+            --warn: #b8a060;
+            --type: #9ab8c8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            font-family: 'IBM Plex Sans', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--fg);
+            line-height: 1.65;
+            min-height: 100vh;
+        }
+
+        /* Layout */
+        .page {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header */
+        .site-head {
+            padding: 48px 0 32px;
+            border-bottom: 1px solid var(--border-dim);
+        }
+
+        .logo {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--fg);
+        }
+
+        .logo span {
+            color: var(--fg-faint);
+        }
+
+        .tagline {
+            margin-top: 8px;
+            font-size: 14px;
+            color: var(--fg-dim);
+        }
+
+        /* Hero */
+        .hero {
+            padding: 48px 0 40px;
+        }
+
+        .hero h1 {
+            font-size: 28px;
+            font-weight: 500;
+            line-height: 1.3;
+            color: var(--fg);
+        }
+
+        .hero p {
+            margin-top: 20px;
+            font-size: 16px;
+            color: var(--fg-dim);
+            max-width: 600px;
+        }
+
+        .hero p strong {
+            color: var(--fg);
+            font-weight: 500;
+        }
+
+        /* Terminal */
+        .terminal {
+            margin: 8px 0 48px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            overflow: hidden;
+            background: var(--bg-code);
+        }
+
+        .terminal-bar {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 14px;
+            background: var(--bg-raised);
+            border-bottom: 1px solid var(--border-dim);
+        }
+
+        .terminal-bar::before {
+            content: '';
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--fg-faint);
+            opacity: 0.5;
+        }
+
+        .terminal-bar::after {
+            content: 'bash';
+            margin-left: auto;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 11px;
+            color: var(--fg-faint);
+            text-transform: lowercase;
+        }
+
+        .terminal-body {
+            padding: 16px 18px;
+            overflow-x: auto;
+        }
+
+        .terminal-body code {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 13px;
+            line-height: 1.7;
+            color: var(--fg);
+            white-space: pre;
+            display: block;
+        }
+
+        .term-prompt {
+            color: var(--accent);
+        }
+
+        .term-flag {
+            color: var(--type);
+        }
+
+        .term-arg {
+            color: var(--fg-dim);
+        }
+
+        .term-comment {
+            color: var(--fg-faint);
+        }
+
+        /* Action bar under terminal */
+        .action-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+            margin: -32px 0 48px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 13px;
+            font-weight: 500;
+            text-decoration: none;
+            border-radius: 3px;
+            transition: all 0.15s ease;
+            cursor: pointer;
+            border: 1px solid transparent;
+        }
+
+        .btn-primary {
+            background: var(--fg);
+            color: var(--bg);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--fg-dim);
+            border-color: var(--border);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--fg-faint);
+            color: var(--fg);
+        }
+
+        .btn svg {
+            width: 14px;
+            height: 14px;
+            fill: currentColor;
+            flex-shrink: 0;
+        }
+
+        /* Manifest */
+        .manifest {
+            border-top: 1px solid var(--border-dim);
+            padding: 40px 0;
+        }
+
+        .manifest-title {
+            font-size: 12px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--fg);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .manifest-title::before {
+            content: '';
+            display: block;
+            width: 8px;
+            height: 8px;
+            border-radius: 2px;
+        }
+
+        .manifest-ships .manifest-title::before {
+            background: var(--ok);
+        }
+
+        .manifest-gated .manifest-title::before {
+            background: var(--warn);
+        }
+
+        .manifest-list {
+            list-style: none;
+            display: grid;
+            gap: 2px;
+        }
+
+        .manifest-list li {
+            padding: 10px 14px;
+            font-size: 14px;
+            color: var(--fg-dim);
+            background: var(--bg-raised);
+            border-left: 2px solid transparent;
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+        }
+
+        .manifest-ships .manifest-list li {
+            border-left-color: var(--ok);
+        }
+
+        .manifest-gated .manifest-list li {
+            border-left-color: var(--warn);
+        }
+
+        .manifest-list .item-name {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--fg);
+            min-width: 200px;
+        }
+
+        .manifest-list .item-note {
+            color: var(--fg-faint);
+            font-size: 13px;
+        }
+
+        .manifest-gated {
+            margin-top: 40px;
+        }
+
+        .gate-reason {
+            margin-top: 16px;
+            padding: 14px 16px;
+            background: var(--bg-raised);
+            border: 1px solid var(--border);
+            border-radius: 3px;
+        }
+
+        .gate-reason p {
+            font-size: 13px;
+            color: var(--fg-faint);
+            line-height: 1.6;
+        }
+
+        .gate-reason strong {
+            color: var(--fg-dim);
+            font-weight: 500;
+        }
+
+        /* Footer */
+        .site-foot {
+            margin-top: 24px;
+            padding: 32px 0 48px;
+            border-top: 1px solid var(--border-dim);
+        }
+
+        .licence-block {
+            font-size: 13px;
+            color: var(--fg-faint);
+            line-height: 1.7;
+        }
+
+        .licence-block p + p {
+            margin-top: 8px;
+        }
+
+        .licence-name {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 12px;
+            color: var(--fg-dim);
+        }
+
+        /* Utilities */
+        .delim {
+            margin: 0 4px;
+            color: var(--fg-faint);
+        }
+
+        @media (max-width: 600px) {
+            .hero h1 {
+                font-size: 22px;
+            }
+
+            .terminal-body code {
+                font-size: 12px;
+            }
+
+            .manifest-list li {
+                flex-direction: column;
+                gap: 4px;
+            }
+
+            .manifest-list .item-name {
+                min-width: auto;
+            }
+
+            .action-bar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .btn {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="site-head page">
+        <div class="logo">AHD <span>— Artificial Human Design</span></div>
+        <p class="tagline">A framework for evaluating design systems, not generating them.</p>
+    </header>
+
+    <main>
+        <section class="hero page">
+            <h1>Most AI design output is slop. Evaluation is the bottleneck, not generation.</h1>
+            <p>AHD is a <strong>rule-based evaluation framework</strong> for design systems and interface tokens. It compiles briefs, lints output against 28 structural rules, runs multi-model eval harnesses, and surfaces vision-critique scaffolds when you have the keys. Nothing ships to npm that we wouldn't run on our own production tokens.</p>
+        </section>
+
+        <div class="page">
+            <div class="terminal">
+                <div class="terminal-bar"></div>
+                <div class="terminal-body">
+<code><span class="term-prompt">$</span> ahd eval-live swiss-editorial \
+    <span class="term-flag">--brief</span> <span class="term-arg">briefs/landing.yml</span> \
+    <span class="term-flag">--models</span> <span class="term-arg">claude-sonnet-4,gpt-4.1,gemini-2.5-pro</span> \
+    <span class="term-flag">--n</span> <span class="term-arg">10</span>
+
+<span class="term-comment"># Compiles brief → runs linter → parallel model eval → vision critique → ranked output</span></code>
+                </div>
+            </div>
+
+            <div class="action-bar">
+                <a class="btn btn-primary" href="https://github.com/artificialhuman/design">
+                    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+                    Read the code
+                </a>
+                <a class="btn btn-secondary" href="https://codeberg.org/ahd/design">
+                    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0a8 8 0 00-8 8 8 8 0 005.47 7.59c.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8a8 8 0 00-8-8z"/></svg>
+                    Mirror on Forgejo
+                </a>
+            </div>
+        </div>
+
+        <div class="manifest page manifest-ships">
+            <h2 class="manifest-title">What ships</h2>
+            <ul class="manifest-list">
+                <li>
+                    <span class="item-name">Brief compiler</span>
+                    <span class="item-note">YAML/JSON schema to typed design constraints</span>
+                </li>
+                <li>
+                    <span class="item-name">28-rule linter</span>
+                    <span class="item-note">Spacing, type scale, contrast, nesting depth, token reference integrity</span>
+                </li>
+                <li>
+                    <span class="item-name">Eval harness</span>
+                    <span class="item-note">Parallel model runners with variance detection and consensus scoring</span>
+                </li>
+                <li>
+                    <span class="item-name">Vision-critic scaffold</span>
+                    <span class="item-note">Static prompt templates and response parsers; live execution gated on keys</span>
+                </li>
+                <li>
+                    <span class="item-name">MCP server</span>
+                    <span class="item-note">Model Context Protocol adapter for IDE integration</span>
+                </li>
+                <li>
+                    <span class="item-name">Editor plugins</span>
+                    <span class="item-note">VS Code and Vim extensions; npm packaging gated (see below)</span>
+                </li>
+                <li>
+                    <span class="item-name">Eight tokens</span>
+                    <span class="item-note">Seed token sets for testing: swiss-editorial, brutalist-web, museum-print, civic-forms, terminal-app, reader-digital, poster-loud, notebook-quiet</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="manifest page manifest-gated">
+            <h2 class="manifest-title">What is gated</h2>
+            <ul class="manifest-list">
+                <li>
+                    <span class="item-name">Live frontier-model calls</span>
+                    <span class="item-note">Requires your own API keys; no proxy or bundled credits</span>
+                </li>
+                <li>
+                    <span class="item-name">Live vision critique</span>
+                    <span class="item-note">Requires multimodal key + screenshot pipeline setup</span>
+                </li>
+                <li>
+                    <span class="item-name">Standalone npm packages</span>
+                    <span class="item-note">Editor plugins installable from registry; source builds from repo today</span>
+                </li>
+                <li>
+                    <span class="item-name">Additional tokens</span>
+                    <span class="item-note">Beyond the eight seed sets; community contributions pending review</span>
+                </li>
+            </ul>
+            <div class="gate-reason">
+                <p>We do not resell model access or wrap providers in our own API. Bring your own keys, run local where possible, fall back to the linter and harness for offline evaluation. The scaffold is useful without the live calls; the live calls are useful without lock-in.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-foot page">
+        <div class="licence-block">
+            <p>Code licensed under <span class="licence-name">FSL-1.1-Apache-2.0</span></p>
+            <p>Tokens, artwork, and documentation licensed under <span class="licence-name">CC-BY-4.0</span></p>
+        </div>
+    </footer>
+</body>
+</html>
+```

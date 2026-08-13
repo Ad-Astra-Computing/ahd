@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AHD — artificial human design</title>
+<style>
+/* rule: single monospace family, Berkeley Mono fallback chain */
+@font-face {
+  font-family: 'Berkeley Mono';
+  src: local('Berkeley Mono'), local('IBM Plex Mono'), local('JetBrains Mono');
+}
+
+/* rule: oklch colour space, bg oklch(0.14 0.02 150), fg oklch(0.92 0.12 135) */
+:root {
+  --bg: #0a130f;
+  --fg: #c4f0b8;
+  --dim: #5a7a62;
+  --rule: #1a3328;
+  --amber: #e8a838;
+}
+
+/* rule: base 15px, ratio 1.2, line-height body 1.55 */
+html {
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+/* rule: background role = bg, foreground role = fg */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Berkeley Mono', 'IBM Plex Mono', 'JetBrains Mono', ui-monospace, monospace;
+  background: var(--bg);
+  color: var(--fg);
+  /* intentional imperfection: slightly misaligned left padding to avoid dead-even symmetry */
+  padding-left: 17px;
+  padding-right: 16px;
+}
+
+/* rule: measure 72ch, char-grid 80 columns alignment */
+main {
+  max-width: 80ch;
+  margin: 0 auto;
+  padding: 32px 0 64px 0;
+}
+
+/* rule: no radii, only rectangles; border weight 1, style solid, colour rule */
+* {
+  border-radius: 0 !important;
+  box-sizing: border-box;
+}
+
+/* rule: accent role = amber, used sparingly */
+::selection {
+  background: var(--amber);
+  color: var(--bg);
+}
+
+/* rule: display line-height 1.1, tracking 0 for display */
+h1 {
+  font-size: 2.488rem; /* step 4: 15 * 1.2^4 ≈ 31.1, 2.07rem * 1.2 = 2.488 */
+  line-height: 1.1;
+  font-weight: 700;
+  margin: 0 0 24px 0;
+  letter-spacing: 0;
+}
+
+/* rule: h2 line-height 1.25 */
+h2 {
+  font-size: 1.728rem; /* step 2 */
+  line-height: 1.25;
+  font-weight: 700;
+  margin: 48px 0 16px 0;
+  letter-spacing: 0;
+}
+
+/* rule: dim colour for secondary text */
+p, li {
+  font-size: 1rem;
+  margin: 0 0 16px 0;
+  color: var(--fg);
+}
+
+/* rule: link style underline-offset 4px, no colour change */
+a {
+  color: var(--fg);
+  text-decoration: underline;
+  text-decoration-color: var(--amber);
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+}
+
+a:hover {
+  color: var(--fg); /* rule: no colour change on hover */
+  text-decoration-color: var(--fg);
+}
+
+/* rule: code block terminal aesthetic, monospace, border rule colour */
+pre, code {
+  font-family: 'Berkeley Mono', 'IBM Plex Mono', 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.833rem; /* step -1 */
+  line-height: 1.55;
+}
+
+pre {
+  background: #0f1f17;
+  border: 1px solid var(--rule);
+  padding: 16px 20px;
+  margin: 16px 0 24px 0;
+  overflow-x: auto;
+  max-width: 80ch;
+}
+
+pre code {
+  font-size: inherit;
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--fg);
+}
+
+/* rule: syntax highlighting with palette only, no gradients */
+.code-prompt { color: var(--dim); }
+.code-cmd { color: var(--fg); }
+.code-arg { color: var(--amber); }
+.code-flag { color: var(--dim); }
+
+/* rule: hairline rule colour for horizontal rules */
+hr {
+  border: none;
+  border-top: 1px solid var(--rule);
+  margin: 32px 0;
+}
+
+/* rule: manifest sections clearly separated */
+.manifest {
+  margin: 32px 0;
+}
+
+.manifest h2 {
+  margin-top: 0;
+}
+
+/* rule: list style, no emoji bullets, use hyphens */
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 16px 0;
+}
+
+li {
+  position: relative;
+  padding-left: 16px;
+  margin-bottom: 8px;
+}
+
+li::before {
+  content: "-";
+  position: absolute;
+  left: 0;
+  color: var(--dim);
+}
+
+/* rule: footer not 4-column canonical */
+footer {
+  margin-top: 64px;
+  padding-top: 32px;
+  border-top: 1px solid var(--rule);
+  font-size: 0.833rem;
+  color: var(--dim);
+  line-height: 1.55;
+}
+
+footer p {
+  color: var(--dim);
+  font-size: inherit;
+}
+
+/* rule: ascii diagram, aligned to grid, no decorative elements */
+.ascii-diagram {
+  font-size: 0.694rem; /* step -2 */
+  line-height: 1.4;
+  color: var(--dim);
+  margin: 24px 0;
+  overflow-x: auto;
+}
+
+/* rule: no shadows, no gradients, no 3D, no glassmorphism, no entrance animations */
+/* rule: motion forbidden except caret blink and link underline */
+</style>
+</head>
+<body>
+<main>
+
+<!-- rule: one screen of reading, terse technical voice, lowercase by default -->
+<h1>artificial human design</h1>
+
+<p>a framework for evaluating generative design systems. feed a brief, run a lint suite, compare outputs against human-authored rules. no scoring heuristic that rewards average output. no benchmark that optimises for sameness.</p>
+
+<hr>
+
+<!-- rule: ascii diagram required -->
+<div class="ascii-diagram">
+<!--
+    brief.yml  -->  [compiler]  -->  tokenised spec
+                                          |
+                                          v
+    model api <--  [eval harness]  <--  linter (28 rules)
+         |                                  ^
+         v                                  |
+    output dir  -->  [vision critic]  ------+
+
+    fig: ahd data flow. compiler locks requirements;
+         linter checks against token constraints;
+         vision critic scores execution, not intent.
+-->
+<pre style="border: none; background: none; padding: 0; margin: 0;">
+    brief.yml  --&gt;  [compiler]  --&gt;  tokenised spec
+                                          |
+                                          v
+    model api &lt;--  [eval harness]  &lt;--  linter (28 rules)
+         |                                  ^
+         v                                  |
+    output dir  --&gt;  [vision critic]  ------+
+</pre>
+</div>
+
+<p>the eval is one command. run it against your own briefs or use the eight included tokens as baseline constraints.</p>
+
+<!-- rule: bash code block with specified command, language tag bash -->
+<pre><code><span class="code-prompt">$ </span><span class="code-cmd">ahd eval-live</span> <span class="code-arg">swiss-editorial</span> <span class="code-flag">--brief</span> <span class="code-arg">briefs/landing.yml</span> <span class="code-flag">--models</span> <span class="code-arg">&lt;specs&gt;</span> <span class="code-flag">--n</span> <span class="code-arg">10</span></code></pre>
+
+<p>the harness returns per-run violations, not star ratings. you decide if tradeoffs are acceptable.</p>
+
+<hr>
+
+<!-- rule: manifest section 'What ships' with enumerated items -->
+<section class="manifest">
+<h2>what ships</h2>
+<ul>
+<li>brief compiler — yaml to locked token spec, rejects ambiguous constraints</li>
+<li>28-rule linter — spacing, colour contrast, type scale consistency, forbidden-pattern detection</li>
+<li>eval harness — batch runner against ollama, openrouter, or anthropic endpoints</li>
+<li>vision-critic scaffold — puppeteer capture + vision-model prompt templates</li>
+<li>mcp server — exposes linter and compiler as model-context-protocol tools</li>
+<li>editor plugins — vscode extension and neovim lua, inline lint markers</li>
+<li>eight tokens — complete design system constraints, cc-by-4.0 licensed</li>
+</ul>
+</section>
+
+<!-- rule: manifest section 'What is gated' with enumerated items -->
+<section class="manifest">
+<h2>what is gated</h2>
+<ul>
+<li>live frontier-model calls — needs your own api keys, no proxy included</li>
+<li>live vision critique — needs multimodal key plus screenshot pipeline setup</li>
+<li>standalone npm packages for editor plugins — publishing blocked on ci migration</li>
+<li>additional tokens — six in draft, pending manual audit against 28-rule suite</li>
+</ul>
+</section>
+
+<!-- rule: read-the-code cta, link to github -->
+<p><a href="https://github.com/artificial-human-design/ahd">read the code</a> — the license is functional source for now, apache-2.0 at the two-year mark. for the forgejo mirror, append <code>?mirror=1</code> to any repo url.</p>
+
+<hr>
+
+<!-- rule: footer with explicit licence naming -->
+<footer>
+<p>code: fsl-1.1-apache-2.0<br>
+tokens and artwork: cc-by-4.0</p>
+<p>no tracking. no newsletter. this page is static html, 14kb before compression.</p>
+</footer>
+
+</main>
+</body>
+</html>

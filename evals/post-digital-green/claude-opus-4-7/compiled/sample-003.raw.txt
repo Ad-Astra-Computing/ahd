@@ -1,0 +1,241 @@
+<!doctype html>
+<!-- rule: single self-contained html5 document -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ahd — artificial human design</title>
+<style>
+  /* rule: colour palette in oklch, dark green-black bg, muted green fg, amber accent */
+  :root{
+    --bg: oklch(0.14 0.02 150);
+    --fg: oklch(0.92 0.12 135);
+    --dim: oklch(0.55 0.05 150);
+    --rule: oklch(0.30 0.04 150);
+    --amber: oklch(0.82 0.15 75);
+    --ch: 9.2px; /* rule: char-grid approximation */
+  }
+  /* rule: monospace everywhere, no sans-serif body */
+  html,body{background:var(--bg);color:var(--fg);}
+  body{
+    font-family: "Berkeley Mono","IBM Plex Mono","JetBrains Mono",ui-monospace,monospace;
+    font-size:15px; /* rule: scale base 15 */
+    line-height:1.55; /* rule: body line-height */
+    margin:0;
+    padding:24px 16px 48px;
+    font-weight:400;
+  }
+  /* rule: 80-char grid max width */
+  .wrap{max-width:80ch;margin:0 auto;}
+  /* rule: hairline rule colour, rectangles only */
+  hr{border:0;border-top:1px solid var(--rule);margin:24px 0;}
+  /* rule: no radii, no shadows, rectangles only */
+  *{border-radius:0 !important;box-shadow:none !important;}
+  /* rule: underlined links with offset, no colour change */
+  a{color:inherit;text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:1px;}
+  a:hover{text-decoration-thickness:1px;}
+  /* rule: amber is the single accent */
+  .amber{color:var(--amber);}
+  .dim{color:var(--dim);}
+  /* rule: no entrance animation; caret blink is permitted */
+  .caret{display:inline-block;width:0.6ch;background:var(--amber);color:var(--bg);animation:blink 1s steps(1) infinite;}
+  @keyframes blink{50%{background:transparent;}}
+  /* rule: h-scale derived from ratio 1.2 */
+  h1{font-size:21.6px;font-weight:700;line-height:1.1;margin:0 0 8px;letter-spacing:0;}
+  h2{font-size:18px;font-weight:700;line-height:1.25;margin:0 0 8px;}
+  h3{font-size:15px;font-weight:700;margin:0 0 4px;}
+  /* rule: terminal code block, hairline border, no radii */
+  pre.code{
+    border:1px solid var(--rule);
+    padding:12px 16px;
+    overflow-x:auto;
+    margin:12px 0 0;
+    background:transparent;
+    white-space:pre;
+    font-size:13.5px;
+  }
+  pre.code .tag{color:var(--dim);}
+  pre.code .flag{color:var(--amber);}
+  /* rule: ascii diagram preserved verbatim */
+  pre.ascii{
+    white-space:pre;
+    margin:12px 0;
+    font-size:13.5px;
+    color:var(--dim);
+    border:1px solid var(--rule);
+    padding:12px 16px;
+    overflow-x:auto;
+  }
+  /* rule: header as a rule separator, not a pill badge */
+  header{
+    display:flex;justify-content:space-between;align-items:baseline;
+    border-bottom:1px solid var(--rule);
+    padding-bottom:8px;margin-bottom:16px;
+  }
+  header .slug{letter-spacing:0.04em;text-transform:uppercase;font-size:12.5px;color:var(--dim);}
+  /* rule: manifest list, no emoji bullets, just rectangular markers */
+  ul.manifest{list-style:none;padding:0;margin:8px 0 0;}
+  ul.manifest li{
+    padding:4px 0 4px 14px;position:relative;
+  }
+  ul.manifest li::before{
+    content:"";position:absolute;left:0;top:12px;
+    width:6px;height:1px;background:var(--fg);
+  }
+  ul.gated li::before{background:var(--amber);}
+  /* rule: two-column manifest on wider screens, still rectangular */
+  .manifests{display:grid;grid-template-columns:1fr;gap:24px;margin-top:16px;}
+  @media (min-width:720px){
+    .manifests{grid-template-columns:1fr 1fr;gap:0;}
+    .manifests > section:first-child{border-right:1px solid var(--rule);padding-right:16px;}
+    .manifests > section:last-child{padding-left:16px;}
+  }
+  /* rule: footer is not a 4-column Product/Company/Resources/Legal strip */
+  footer{
+    border-top:1px solid var(--rule);
+    padding-top:12px;margin-top:32px;
+    font-size:12.5px;color:var(--dim);
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;
+  }
+  /* rule: section labels as allcaps with tracking */
+  .label{
+    text-transform:uppercase;letter-spacing:0.04em;font-size:12.5px;
+    color:var(--dim);margin-bottom:6px;
+  }
+  p{margin:0 0 8px;max-width:72ch;} /* rule: measure 72ch */
+  .lede{color:var(--fg);}
+  .meta{font-size:12.5px;color:var(--dim);}
+  /* rule: one intentional imperfection — a single slightly off-grid rule */
+  .quirk{margin-left:-1px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- rule: no centred hero stack with pill badge + two CTAs -->
+  <header>
+    <div>
+      <span class="slug">ahd</span>
+      <span class="dim">&nbsp;/&nbsp;artificial human design</span>
+    </div>
+    <div class="meta">v0.1.0 &middot; 2026-04-24</div>
+  </header>
+
+  <!-- rule: terse lede, no slop-thesis sermon -->
+  <section>
+    <h1>a design framework for models that have already seen too much figma.<span class="caret">&nbsp;</span></h1>
+    <p class="lede">
+      ahd is a small toolchain that treats design as a compilable brief,
+      a linter, and an eval. it does not write taglines for you. it refuses
+      to generate the <span class="amber">purple-to-blue hero</span> for the
+      fourteenth time this week.
+    </p>
+    <p class="meta">
+      read the code &rarr;
+      <a href="https://github.com/ahd/ahd">github.com/ahd/ahd</a>
+      &nbsp;|&nbsp;
+      <a href="https://forgejo.ahd.dev/ahd/ahd">forgejo mirror</a>
+    </p>
+  </section>
+
+  <hr>
+
+  <!-- rule: terminal-aesthetic code block, language tag bash -->
+  <section>
+    <div class="label">one-liner &middot; eval harness</div>
+    <div class="meta">
+      compiles the brief, runs n generations against the listed specs,
+      lints each against the 28 rules, screenshots, and scores.
+    </div>
+<pre class="code" aria-label="bash"><span class="tag">$</span> <span class="flag">ahd</span> eval-live swiss-editorial \
+    --brief briefs/landing.yml \
+    --models &lt;specs&gt; \
+    --n 10</pre>
+    <div class="meta" style="margin-top:8px;">tag: <code>bash</code></div>
+  </section>
+
+  <hr>
+
+  <!-- rule: at least one ASCII diagram -->
+  <section>
+    <div class="label">pipeline</div>
+<pre class="ascii" aria-label="ascii pipeline diagram">
+ brief.yml ──▶ [compiler] ──▶ prompt+token+rules
+                   │
+                   ▼
+              [n generations] ──▶ [28-rule linter] ──▶ pass/fail
+                   │                      │
+                   ▼                      ▼
+            [screenshotter] ──▶ [vision-critic] ──▶ score
+                                       │
+                                       ▼
+                                    verdict
+</pre>
+  </section>
+
+  <hr>
+
+  <!-- rule: clearly separated manifest sections, no three equal feature cards -->
+  <div class="manifests">
+    <section>
+      <h2>what ships</h2>
+      <div class="meta">in the repo, today, offline.</div>
+      <ul class="manifest ships">
+        <li>brief compiler</li>
+        <li>28-rule linter</li>
+        <li>eval harness</li>
+        <li>vision-critic scaffold</li>
+        <li>mcp server</li>
+        <li>editor plugins</li>
+        <li>eight tokens</li>
+      </ul>
+    </section>
+
+    <section class="quirk">
+      <h2>what is gated</h2>
+      <div class="meta">needs something we cannot ship for you.</div>
+      <ul class="manifest gated">
+        <li>live frontier-model calls &mdash; needs api keys</li>
+        <li>live vision critique &mdash; needs multimodal key + screenshot pipeline</li>
+        <li>standalone npm packages for the editor plugins</li>
+        <li>additional tokens</li>
+      </ul>
+    </section>
+  </div>
+
+  <hr>
+
+  <!-- rule: no testimonials, no pricing, no Trusted-by strip -->
+  <section>
+    <div class="label">notes</div>
+    <p>
+      the eight tokens are opinions, not themes. swiss-editorial is one of
+      them. post-digital-green is the one rendering this page. tokens carry
+      their own forbidden lists; the linter enforces them.
+    </p>
+    <p>
+      if the output looks like every other landing page shipped in q1 2026,
+      the linter should have caught it. if it did not, file an issue with
+      the screenshot and the brief.
+    </p>
+  </section>
+
+  <!-- rule: footer names licence explicitly; not a 4-column canonical strip -->
+  <footer>
+    <div>
+      code: <span class="amber">FSL-1.1-Apache-2.0</span>
+      &nbsp;&middot;&nbsp;
+      tokens &amp; artwork: <span class="amber">CC-BY-4.0</span>
+    </div>
+    <div>
+      <a href="https://github.com/ahd/ahd">src</a>
+      &nbsp;&middot;&nbsp;
+      <a href="https://forgejo.ahd.dev/ahd/ahd">mirror</a>
+      &nbsp;&middot;&nbsp;
+      <a href="mailto:ahd@ahd.dev">ahd@ahd.dev</a>
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>

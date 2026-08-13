@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AHD // Artificial Human Design</title>
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --fg: #a1a1aa;
+            --hl: #ffffff;
+            --code-bg: #141414;
+            --border: #27272a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--fg);
+            font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            display: flex;
+            justify-content: center;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 720px;
+            width: 100%;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 4rem;
+        }
+
+        h1 {
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: var(--hl);
+            letter-spacing: -0.02em;
+        }
+
+        a {
+            color: var(--fg);
+            text-decoration: none;
+            font-family: ui-monospace, monospace;
+            font-size: 0.875rem;
+            border-bottom: 1px solid var(--border);
+            transition: color 0.2s ease;
+        }
+
+        a:hover {
+            color: var(--hl);
+            border-bottom-color: var(--hl);
+        }
+
+        .terminal-block {
+            background-color: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 1.5rem;
+            margin-bottom: 4rem;
+            overflow-x: auto;
+        }
+
+        code {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            font-size: 0.9rem;
+            color: #d1d5db;
+        }
+
+        .manifest-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 4rem;
+        }
+
+        @media (max-width: 600px) {
+            .manifest-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+
+        h2 {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--hl);
+            margin-bottom: 1.5rem;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        li {
+            font-size: 0.875rem;
+            margin-bottom: 0.75rem;
+            position: relative;
+            padding-left: 1rem;
+        }
+
+        li::before {
+            content: "-";
+            position: absolute;
+            left: 0;
+            color: var(--border);
+        }
+
+        footer {
+            border-top: 1px solid var(--border);
+            padding-top: 2rem;
+            font-size: 0.75rem;
+            color: #52525b;
+            font-family: ui-monospace, monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>AHD</h1>
+            <a href="https://github.com/ahd-design" target="_blank">read-the-code</a>
+        </header>
+
+        <main>
+            <div class="terminal-block">
+                <pre><code><span style="color: #6b7280;">$</span> ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+            </div>
+
+            <div class="manifest-grid">
+                <section>
+                    <h2>What ships</h2>
+                    <ul>
+                        <li>brief compiler</li>
+                        <li>28-rule linter</li>
+                        <li>eval harness</li>
+                        <li>vision-critic scaffold</li>
+                        <li>MCP server</li>
+                        <li>editor plugins</li>
+                        <li>eight tokens</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>What is gated</h2>
+                    <ul>
+                        <li>live frontier-model calls (needs API keys)</li>
+                        <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+                        <li>standalone npm packages for the editor plugins</li>
+                        <li>additional tokens</li>
+                    </ul>
+                </section>
+            </div>
+        </main>
+
+        <footer>
+            FSL-1.1-Apache-2.0 for code, CC-BY-4.0 for tokens and artwork.
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AHD — Artificial Human Design</title>
+  <style>
+    :root {
+      --ink: #161616;
+      --muted: #5c5c5c;
+      --line: #d9d3c7;
+      --paper: #f7f3ea;
+      --panel: #fffaf0;
+      --terminal: #101312;
+      --terminal-text: #d7e3d6;
+      --accent: #9b3d22;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: var(--paper);
+      line-height: 1.45;
+    }
+
+    main {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
+      gap: 48px;
+      padding: 56px clamp(24px, 5vw, 80px) 32px;
+      max-width: 1440px;
+      margin: 0 auto;
+    }
+
+    .intro {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: calc(100vh - 88px);
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 18px;
+      margin-bottom: 56px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .mark {
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: 0;
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 760px;
+      font-size: clamp(48px, 8vw, 112px);
+      line-height: 0.92;
+      letter-spacing: 0;
+      font-weight: 760;
+    }
+
+    .copy {
+      max-width: 680px;
+      margin-top: 32px;
+      font-size: clamp(18px, 2vw, 24px);
+      color: #2b2b2b;
+    }
+
+    .cta {
+      display: inline-flex;
+      width: fit-content;
+      margin-top: 36px;
+      color: var(--ink);
+      text-decoration: none;
+      font-weight: 700;
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: 4px;
+    }
+
+    .cta:hover {
+      color: var(--accent);
+    }
+
+    .run {
+      align-self: end;
+      width: 100%;
+    }
+
+    .terminal-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+
+    pre {
+      margin: 0;
+      background: var(--terminal);
+      color: var(--terminal-text);
+      border: 1px solid #252b29;
+      border-radius: 8px;
+      padding: 22px;
+      overflow-x: auto;
+      box-shadow: 0 20px 60px rgba(20, 18, 14, 0.18);
+    }
+
+    code {
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .manifest {
+      display: grid;
+      align-content: center;
+      gap: 18px;
+      min-height: calc(100vh - 88px);
+    }
+
+    section {
+      border-top: 1px solid var(--line);
+      padding-top: 22px;
+    }
+
+    h2 {
+      margin: 0 0 18px;
+      font-size: 22px;
+      letter-spacing: 0;
+    }
+
+    ol {
+      margin: 0;
+      padding-left: 22px;
+      color: #242424;
+    }
+
+    li {
+      padding: 6px 0;
+    }
+
+    footer {
+      grid-column: 1 / -1;
+      border-top: 1px solid var(--line);
+      padding-top: 20px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    @media (max-width: 900px) {
+      main {
+        display: block;
+        padding: 32px 20px 24px;
+      }
+
+      .intro,
+      .manifest {
+        min-height: auto;
+      }
+
+      header {
+        margin-bottom: 42px;
+      }
+
+      .run {
+        margin: 42px 0;
+      }
+
+      section + section {
+        margin-top: 30px;
+      }
+
+      footer {
+        margin-top: 34px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="intro">
+      <div>
+        <header>
+          <div class="mark">AHD</div>
+          <div>Artificial Human Design</div>
+        </header>
+
+        <h1>Design critique that can be run, argued with, and improved.</h1>
+
+        <p class="copy">
+          AHD turns taste into inspectable checks: briefs, lint rules, eval runs, and critic scaffolds for teams that already know the problem is not more generated output. It is knowing which output deserves to survive.
+        </p>
+
+        <a class="cta" href="https://github.com/ahd-toolkit/ahd">read the code</a>
+      </div>
+
+      <div class="run">
+        <div class="terminal-label">
+          <span>eval command</span>
+          <span>bash</span>
+        </div>
+        <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+      </div>
+    </div>
+
+    <div class="manifest">
+      <section aria-labelledby="ships-title">
+        <h2 id="ships-title">What ships</h2>
+        <ol>
+          <li>brief compiler</li>
+          <li>28-rule linter</li>
+          <li>eval harness</li>
+          <li>vision-critic scaffold</li>
+          <li>MCP server</li>
+          <li>editor plugins</li>
+          <li>eight tokens</li>
+        </ol>
+      </section>
+
+      <section aria-labelledby="gated-title">
+        <h2 id="gated-title">What is gated</h2>
+        <ol>
+          <li>live frontier-model calls (needs API keys)</li>
+          <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+          <li>standalone npm packages for the editor plugins</li>
+          <li>additional tokens</li>
+        </ol>
+      </section>
+    </div>
+
+    <footer>
+      Licence: FSL-1.1-Apache-2.0 for code, CC-BY-4.0 for tokens and artwork.
+    </footer>
+  </main>
+</body>
+</html>

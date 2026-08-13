@@ -1,0 +1,94 @@
+```html
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AHD - Artificial Human Design</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1e1e1e;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .code-block {
+            background-color: #2e2e2e;
+            padding: 20px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        .manifest {
+            margin-top: 40px;
+        }
+        .manifest h2 {
+            margin-bottom: 10px;
+        }
+        .manifest ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .manifest li {
+            margin-bottom: 10px;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #1a1a1a;
+            margin-top: 40px;
+        }
+        .cta {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #333333;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>AHD - Artificial Human Design</h1>
+        <p>AHD takes the problem of AI-generated design seriously. We provide a framework for designers, engineers, and founders who seek a solution beyond the noise.</p>
+        <div class="code-block">
+            <pre><code class="bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+        </div>
+        <div class="manifest">
+            <h2>What ships</h2>
+            <ul>
+                <li>Brief compiler</li>
+                <li>28-rule linter</li>
+                <li>Eval harness</li>
+                <li>Vision-critic scaffold</li>
+                <li>MCP server</li>
+                <li>Editor plugins</li>
+                <li>Eight tokens</li>
+            </ul>
+            <h2>What is gated</h2>
+            <ul>
+                <li>Live frontier-model calls (needs API keys)</li>
+                <li>Live vision critique (needs multimodal key + screenshot pipeline)</li>
+                <li>Standalone npm packages for the editor plugins</li>
+                <li>Additional tokens</li>
+            </ul>
+        </div>
+        <a href="https://github.com/ahd" class="cta">Read the code</a>
+    </div>
+    <footer>
+        Licensed under FSL-1.1-Apache-2.0 for code, CC-BY-4.0 for tokens and artwork.
+    </footer>
+</body>
+</html>
+```

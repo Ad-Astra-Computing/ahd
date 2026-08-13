@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AHD — Artificial Human Design</title>
+<style>
+:root {
+  --bg: #0c0c0c;
+  --surface: #141414;
+  --border: #262626;
+  --text: #a3a3a3;
+  --text-bright: #e5e5e5;
+  --muted: #525252;
+  --accent: #b8a27a;
+  --code: #d4c5a9;
+  --error: #c97b63;
+  --ok: #7a9b76;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+::selection {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+html { scroll-behavior: auto; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.65;
+  font-size: 15px;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--text-bright);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--muted);
+}
+
+a:hover {
+  color: var(--accent);
+  text-decoration-color: var(--accent);
+}
+
+code, pre, .mono {
+  font-family: "SF Mono", Monaco, "Cascadia Mono", "Roboto Mono", monospace;
+  font-size: 13px;
+}
+
+/* Layout */
+
+main {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+header {
+  border-bottom: 1px solid var(--border);
+  padding: 32px 0 16px;
+  margin-bottom: 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.logo {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-bright);
+  letter-spacing: -0.3px;
+}
+
+.logo span {
+  color: var(--muted);
+  font-weight: 400;
+}
+
+nav {
+  font-size: 13px;
+}
+
+nav a {
+  color: var(--muted);
+  text-decoration: none;
+  margin-left: 20px;
+}
+
+nav a:hover {
+  color: var(--accent);
+}
+
+/* Sections */
+
+section {
+  margin-bottom: 56px;
+}
+
+h2 {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  margin-bottom: 16px;
+}
+
+/* Hero */
+
+.hero {
+  margin-bottom: 64px;
+}
+
+.hero h1 {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--text-bright);
+  line-height: 1.4;
+  letter-spacing: -0.2px;
+  margin-bottom: 20px;
+  max-width: 560px;
+}
+
+.hero p {
+  max-width: 540px;
+  margin-bottom: 12px;
+}
+
+/* Code block */
+
+.code-block {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  margin: 28px 0 20px;
+  overflow: hidden;
+}
+
+.code-header {
+  background: rgba(255,255,255,0.02);
+  border-bottom: 1px solid var(--border);
+  padding: 8px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.lang-tag {
+  font-size: 11px;
+  color: var(--muted);
+  font-family: var(--mono);
+  text-transform: lowercase;
+}
+
+.copy-btn {
+  font-size: 11px;
+  color: var(--muted);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.copy-btn:hover {
+  color: var(--accent);
+}
+
+pre {
+  padding: 20px 16px;
+  overflow-x: auto;
+  color: var(--code);
+  line-height: 1.6;
+}
+
+pre .comment { color: var(--muted); }
+pre .flag { color: var(--error); }
+pre .arg { color: var(--ok); }
+pre .value { color: #9a8b7a; }
+
+/* Manifests */
+
+.manifest h2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.status-dot.ships { background: var(--ok); }
+.status-dot.gated { background: var(--error); }
+
+.manifest ul {
+  list-style: none;
+  padding: 0;
+}
+
+.manifest li {
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(38,38,38,0.5);
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.manifest li:last-child {
+  border-bottom: none;
+}
+
+.item-name {
+  color: var(--text-bright);
+  font-size: 14px;
+}
+
+.item-meta {
+  color: var(--muted);
+  font-size: 12px;
+  font-family: var(--mono);
+}
+
+.note {
+  margin-top: 16px;
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* Links */
+
+.cta-block {
+  margin: 32px 0 48px;
+}
+
+.cta-block a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-bright);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  padding: 10px 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+}
+
+.cta-block a:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.cta-block a::before {
+  content: "→";
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 12px;
+}
+
+.cta-block a:hover::before {
+  color: var(--accent);
+}
+
+/* Footer */
+
+footer {
+  border-top: 1px solid var(--border);
+  padding: 32px 0 48px;
+  margin-top: 64px;
+}
+
+.licence {
+  display: flex;
+  gap: 32px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.licence-block {
+  flex: 1;
+  min-width: 260px;
+}
+
+.licence-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+
+.licence-code {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--text-bright);
+}
+
+.colophon {
+  font-size: 12px;
+  color: var(--muted);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.colophon a {
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.colophon a:hover {
+  color: var(--accent);
+}
+</style>
+</head>
+<body>
+
+<main>
+
+<header>
+  <div class="logo">AHD <span>Artificial Human Design</span></div>
+  <nav>
+    <a href="https://github.com/artificial-human-design/ahd">GitHub</a>
+    <a href="https://forgejo.ahd.dev/ahd">Forgejo</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <h1>A framework for evaluating design systems against human criteria, not engagement metrics.</h1>
+  <p>Most AI-generated interfaces fail the same way: they look finished but behave like prototypes. Layouts collapse under real content. Color relationships don't survive accessibility filters. Interaction states are omitted because the model wasn't asked.</p>
+  <p>AHD treats these as measurable failures. It provides a structured brief compiler, a 28-rule linter with visual semantics, and an evaluation harness that scores output against the constraints you actually defined—not the ones the model inferred.</p>
+  <p>The system is self-contained for audit and reproducibility. Nothing phones home. Frontier model calls and screenshot vision critique are gated behind your own keys, which means you control the cost surface and the data surface.</p>
+</section>
+
+<div class="cta-block">
+  <a href="https://github.com/artificial-human-design/ahd">Read the code</a>
+</div>
+
+<section>
+  <h2>Run an evaluation</h2>
+  <p>Evaluations are terminal-first. The harness reads your brief, compiles constraints, runs the candidate through the linter, and produces scored output with traceable rule violations.</p>
+  
+  <div class="code-block">
+    <div class="code-header">
+      <span class="lang-tag">bash</span>
+      <button class="copy-btn" onclick="navigator.clipboard.writeText(this.closest('.code-block').querySelector('pre').innerText)">Copy</button>
+    </div>
+    <pre>ahd eval-live swiss-editorial <span class="flag">\</span>
+  <span class="flag">--brief</span> <span class="arg">briefs/landing.yml</span> <span class="flag">\</span>
+  <span class="flag">--models</span> <span class="value">&lt;specs&gt;</span> <span class="flag">\</span>
+  <span class="flag">--n</span> <span class="value">10</span></pre>
+  </div>
+  
+  <p class="note">Replace <code>&lt;specs&gt;</code> with provider model identifiers (e.g. <code>anthropic/claude-opus-4</code>, <code>openai/gpt-4o</code>). The harness dispatches to your configured endpoints. No proxy, no quota pool.</p>
+</section>
+
+<section class="manifest">
+  <h2><span class="status-dot ships"></span> What ships</h2>
+  <ul>
+    <li>
+      <span class="item-name">Brief compiler</span>
+      <span class="item-meta">YAML → validated constraint graph</span>
+    </li>
+    <li>
+      <span class="item-name">28-rule linter</span>
+      <span class="item-meta">spatial, typographic, color, motion</span>
+    </li>
+    <li>
+      <span class="item-name">Eval harness</span>
+      <span class="item-meta">parallel runner with determinism seed</span>
+    </li>
+    <li>
+      <span class="item-name">Vision-critic scaffold</span>
+      <span class="item-meta">screenshot → structured critique pipeline</span>
+    </li>
+    <li>
+      <span class="item-name">MCP server</span>
+      <span class="item-meta">Model Context Protocol adapter</span>
+    </li>
+    <li>
+      <span class="item-name">Editor plugins</span>
+      <span class="item-meta">VS Code, Neovim, Zed</span>
+    </li>
+    <li>
+      <span class="item-name">Eight tokens</span>
+      <span class="item-meta">curated design-system primitives</span>
+    </li>
+  </ul>
+</section>
+
+<section class="manifest">
+  <h2><span class="status-dot gated"></span> What is gated</h2>
+  <ul>
+    <li>
+      <span class="item-name">Live frontier-model calls</span>
+      <span class="item-meta">needs API keys</span>
+    </li>
+    <li>
+      <span class="item-name">Live vision critique</span>
+      <span class="item-meta">needs multimodal key + screenshot pipeline</span>
+    </li>
+    <li>
+      <span class="item-name">Standalone npm packages</span>
+      <span class="item-meta">for editor plugins</span>
+    </li>
+    <li>
+      <span class="item-name">Additional tokens</span>
+      <span class="item-meta">beyond shipped eight</span>
+    </li>
+  </ul>
+  <p class="note">Gated features fail open: the harness skips them with a warning rather than blocking evaluation. You can run a complete local eval against the compiler and linter with no external credentials.</p>
+</section>
+
+<footer>
+  <div class="licence">
+    <div class="licence-block">
+      <div class="licence-label">Code</div>
+      <div class="licence-code">FSL-1.1-Apache-2.0</div>
+    </div>
+    <div class="licence-block">
+      <div class="licence-label">Tokens and artwork</div>
+      <div class="licence-code">CC-BY-4.0</div>
+    </div>
+  </div>
+  <div class="colophon">
+    <span>Built for inspection, not persuasion.</span>
+    <a href="https://github.com/artificial-human-design/ahd">github.com/artificial-human-design/ahd</a>
+  </div>
+</footer>
+
+</main>
+
+</body>
+</html>

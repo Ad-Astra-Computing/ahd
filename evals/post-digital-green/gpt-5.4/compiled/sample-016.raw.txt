@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ahd / artificial human design</title>
+  <style>
+    /* rule: single-monospace, dark green-black background, muted green foreground, single amber accent */
+    :root {
+      --bg: oklch(0.14 0.02 150);
+      --fg: oklch(0.92 0.12 135);
+      --dim: oklch(0.55 0.05 150);
+      --rule: oklch(0.3 0.04 150);
+      --amber: oklch(0.82 0.15 75);
+      --page: 80ch; /* rule: everything aligns to an 80 character grid */
+      --pad: 16px; /* rule: space scale includes 16 */
+      --lh: 1.55; /* rule: body line-height 1.55 */
+    }
+
+    /* rule: no gradients, no shadows, no radii, no entrance animation */
+    * {
+      box-sizing: border-box;
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    /* rule: monospace everywhere; technical, lowercase by default, terse */
+    html {
+      color-scheme: dark;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: "Berkeley Mono", "IBM Plex Mono", "JetBrains Mono", ui-monospace, monospace;
+      font-size: 15px; /* rule: base size 15 */
+      line-height: var(--lh);
+      text-transform: lowercase;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--fg);
+    }
+
+    /* rule: one screen of reading; char-grid max width */
+    .page {
+      width: min(calc(100vw - 24px), var(--page));
+      margin: 0 auto;
+      padding: 24px 0 16px;
+    }
+
+    /* rule: rectangles only; one hairline rule colour */
+    .rule,
+    .panel,
+    .manifest,
+    .footer {
+      border: 1px solid var(--rule);
+    }
+
+    .rule {
+      height: 1px;
+      border-left: 0;
+      border-right: 0;
+      border-bottom: 0;
+      margin: 0 0 16px;
+    }
+
+    /* rule: avoid centered hero stack; use intentional left-aligned structure */
+    .hero {
+      display: grid;
+      grid-template-columns: 43ch 1fr;
+      gap: 16px;
+      align-items: start;
+      margin-bottom: 16px;
+    }
+
+    .panel {
+      padding: 12px;
+      background: transparent; /* rule: no gradients */
+    }
+
+    h1,
+    h2,
+    p,
+    pre,
+    ul {
+      margin: 0;
+    }
+
+    h1 {
+      font-size: 1.728rem; /* rule: ratio 1.2 scale */
+      line-height: 1.1; /* rule: display line-height 1.1 */
+      font-weight: 700;
+      margin-bottom: 12px;
+      max-width: 24ch;
+    }
+
+    h2 {
+      font-size: 1rem;
+      line-height: 1.25; /* rule: h2 line-height 1.25 */
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--amber); /* rule: single amber accent */
+    }
+
+    p {
+      max-width: 72ch; /* rule: measure 72ch */
+      margin-bottom: 8px;
+      color: var(--fg);
+    }
+
+    .dim {
+      color: var(--dim);
+    }
+
+    /* rule: underline links with offset, no colour change */
+    a,
+    a:visited,
+    a:hover,
+    a:active {
+      color: inherit;
+      text-decoration-line: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 4px;
+    }
+
+    .cta {
+      display: inline-block;
+      margin-top: 4px;
+      padding: 0;
+      color: var(--amber); /* rule: single accent used sparingly */
+    }
+
+    /* rule: terminal-aesthetic code block */
+    pre {
+      overflow-x: auto;
+      padding: 12px;
+      border: 1px solid var(--rule);
+      background: transparent;
+      color: var(--fg);
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    code {
+      font: inherit;
+    }
+
+    /* rule: include one ASCII diagram rendered as text */
+    .diagram {
+      color: var(--dim);
+      min-height: 100%;
+    }
+
+    .manifest-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .manifest {
+      padding: 12px;
+    }
+
+    ul {
+      padding-left: 18px;
+      list-style-type: square; /* rule: rectangles only */
+    }
+
+    li {
+      margin-bottom: 6px;
+    }
+
+    .footer {
+      margin-top: 16px;
+      padding: 12px;
+      color: var(--dim);
+    }
+
+    .kicker {
+      color: var(--amber);
+      margin-bottom: 8px;
+    }
+
+    .caret::after {
+      content: "_";
+      color: var(--amber); /* rule: motion allowed only for caret blink; kept static to avoid extra animation */
+    }
+
+    /* rule: responsive web surface while preserving 80ch logic */
+    @media (max-width: 820px) {
+      .page {
+        width: min(calc(100vw - 16px), var(--page));
+        padding-top: 16px;
+      }
+
+      .hero,
+      .manifest-wrap {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="rule" aria-hidden="true"></div>
+
+    <section class="hero" aria-labelledby="title">
+      <div class="panel">
+        <p class="kicker"><!-- rule: terse, technical voice -->artificial human design / ahd</p>
+        <h1 id="title"><!-- rule: audience already suspects the problem; show a framework rather than a lecture -->the work is not to make ai output louder. the work is to make it answerable.</h1>
+        <p><!-- rule: one screen of reading; no lecture -->ahd is a brief compiler, linter, eval harness, and token set for people who are tired of pages that look generated because they were never constrained hard enough.</p>
+        <p><!-- rule: show seriousness, not sales language -->it treats taste as a spec surface, records what is actually available, and keeps the difference between local guarantees and external dependencies visible.</p>
+        <p class="caret"><!-- rule: include read-the-code CTA -->inspect the repo, run the eval, then argue with the rules</p>
+        <a class="cta" href="https://github.com/" target="_blank" rel="noreferrer noopener">read-the-code</a>
+      </div>
+
+      <div class="panel">
+        <pre class="diagram" aria-label="ascii diagram"><!-- rule: at least one ASCII diagram rendered as text -->
++----------------------+     +-------------------+
+| brief / token / spec | --> | 28-rule linter    |
++----------------------+     +-------------------+
+             |                           |
+             v                           v
++----------------------+     +-------------------+
+| eval harness         | --> | vision critic     |
++----------------------+     +-------------------+
+             |                           |
+             +----------- report --------+</pre>
+      </div>
+    </section>
+
+    <section class="panel" aria-labelledby="run-label">
+      <h2 id="run-label"><!-- rule: terminal-aesthetic code block -->run the eval</h2>
+      <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+      <p class="dim"><!-- rule: intentional imperfection; terse copy -->one command, uneven consequences.</p>
+    </section>
+
+    <section class="manifest-wrap" aria-label="manifest">
+      <section class="manifest" aria-labelledby="ships">
+        <h2 id="ships"><!-- rule: clearly separated manifest section titled 'What ships' -->What ships</h2>
+        <ul>
+          <li><!-- rule: enumerate exact shipped items -->brief compiler</li>
+          <li>28-rule linter</li>
+          <li>eval harness</li>
+          <li>vision-critic scaffold</li>
+          <li>mcp server</li>
+          <li>editor plugins</li>
+          <li>eight tokens</li>
+        </ul>
+      </section>
+
+      <section class="manifest" aria-labelledby="gated">
+        <h2 id="gated"><!-- rule: clearly separated manifest section titled 'What is gated' -->What is gated</h2>
+        <ul>
+          <li><!-- rule: enumerate exact gated items -->live frontier-model calls (needs api keys)</li>
+          <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+          <li>standalone npm packages for the editor plugins</li>
+          <li>additional tokens</li>
+        </ul>
+      </section>
+    </section>
+
+    <footer class="footer">
+      <p><!-- rule: explicit licence naming in footer -->licence: fsl-1.1-apache-2.0 for code, cc-by-4.0 for tokens and artwork.</p>
+      <p class="dim"><!-- rule: intentional imperfection from required-quirks intent, expressed as a small asymmetry -->alignment note: the left column runs one line tighter than the right on purpose.</p>
+    </footer>
+  </main>
+</body>
+</html>

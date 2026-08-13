@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ahd // artificial human design</title>
+<style>
+/* rule: post-digital design, everything in monospace */
+:root {
+  --bg: oklch(0.14 0.02 150);
+  --fg: oklch(0.92 0.12 135);
+  --dim: oklch(0.55 0.05 150);
+  --rule: oklch(0.3 0.04 150); /* rule: one hairline rule colour */
+  --accent: oklch(0.82 0.15 75);
+}
+
+* {
+  box-sizing: border-box;
+  border-radius: 0; /* rule: no radii; only rectangles */
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--fg);
+  font-family: 'Berkeley Mono', 'IBM Plex Mono', 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 15px; /* rule: scale base 15 */
+  line-height: 1.55; /* rule: body line-height 1.55 */
+  margin: 0;
+  padding: 48px 16px; /* rule: space scale */
+  display: flex;
+  justify-content: flex-start;
+}
+
+main {
+  max-width: 72ch; /* rule: measure 72ch */
+  width: 100%;
+}
+
+header {
+  margin-bottom: 64px;
+  color: var(--dim);
+}
+
+h1 {
+  font-size: 36px; /* rule: scale 1.2 ratio applied */
+  line-height: 1.1; /* rule: display line-height 1.1 */
+  margin: 0;
+  font-weight: 700;
+  text-transform: lowercase;
+}
+
+.ascii-diagram {
+  color: var(--dim);
+  font-size: 13px;
+  line-height: 1.2;
+  margin-bottom: 48px;
+  white-space: pre;
+}
+
+.intro {
+  margin-bottom: 48px;
+  max-width: 60ch;
+}
+
+.intro p {
+  margin: 0;
+}
+
+.code-block {
+  border: 1px solid var(--rule); /* rule: hairline rule */
+  padding: 24px;
+  margin-bottom: 48px;
+  background: transparent;
+}
+
+code {
+  display: block;
+  color: var(--fg);
+  font-family: monospace;
+}
+
+.manifest {
+  margin-bottom: 64px;
+}
+
+.manifest-section {
+  margin-bottom: 32px;
+}
+
+.manifest-title {
+  color: var(--accent); /* rule: single amber accent */
+  font-weight: 700;
+  margin-bottom: 16px;
+  text-transform: lowercase;
+}
+
+.manifest-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.manifest-list li {
+  margin-bottom: 8px;
+  color: var(--fg);
+}
+
+.manifest-list li::before {
+  content: "- ";
+  color: var(--dim);
+}
+
+footer {
+  margin-top: 64px;
+  padding-top: 32px;
+  border-top: 1px solid var(--rule);
+}
+
+a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 4px; /* rule: underline-offset 4px, no colour change */
+}
+
+.cta {
+  display: inline-block;
+  margin-bottom: 32px;
+  font-weight: 700;
+}
+
+.licence {
+  color: var(--dim);
+  font-size: 13px;
+  text-transform: lowercase;
+}
+
+/* rule: no animations, no shadows, no gradients, no rounded corners */
+</style>
+</head>
+<body>
+
+<main>
+  <header>
+    <h1>ahd // artificial human design</h1>
+  </header>
+
+  <section class="ascii-diagram">
+.----------------------------------------------------------------------.
+| ahd execution flow                                                   |
+|                                                                      |
+| [ brief ] -> [ compiler ] -> [ linter ] -> [ eval ] -> [ critic ]   |
+|                                                                      |
+'----------------------------------------------------------------------'
+<!-- rule: intentional imperfection (the leading dot instead of a dash) -->
+  </section>
+
+  <section class="intro">
+    <p>
+      a framework for evaluating and enforcing design intent in automated 
+      workflows. moving beyond the probabilistic sludge.
+    </p>
+  </section>
+
+  <section class="code-block">
+    <code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code>
+  </section>
+
+  <section class="manifest">
+    <div class="manifest-section">
+      <div class="manifest-title">what ships</div>
+      <ul class="manifest-list">
+        <li>brief compiler</li>
+        <li>28-rule linter</li>
+        <li>eval harness</li>
+        <li>vision-critic scaffold</li>
+        <li>mcp server</li>
+        <li>editor plugins</li>
+        <li>eight tokens</li>
+      </ul>
+    </div>
+
+    <div class="manifest-section">
+      <div class="manifest-title">what is gated</div>
+      <ul class="manifest-list">
+        <li>live frontier-model calls (needs api keys)</li>
+        <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+        <li>standalone npm packages for the editor plugins</li>
+        <li>additional tokens</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    <div class="cta">
+      <a href="https://github.com/ahd-design/core">read-the-code</a>
+    </div>
+    <div class="licence">
+      fsl-1.1-apache-2.0 for code, cc-by-4.0 for tokens and artwork.
+    </div>
+  </footer>
+</main>
+
+</body>
+</html>

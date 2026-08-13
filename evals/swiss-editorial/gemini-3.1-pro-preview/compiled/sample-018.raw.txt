@@ -1,0 +1,353 @@
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AHD | Artificial Human Design</title>
+  
+  <!-- rule: pairing-rule: single-family-two-optical-sizes -->
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;700&family=Inter:wght@400;700&display=swap');
+
+    /* rule: type.families.display and text */
+    @font-face {
+      font-family: 'Neue Haas Grotesk Display';
+      src: local('NeueHaasGroteskDisp Pro'), local('Helvetica Now Display');
+    }
+    @font-face {
+      font-family: 'Neue Haas Grotesk Text';
+      src: local('NeueHaasGroteskText Pro'), local('Helvetica Now Text');
+    }
+
+    :root {
+      /* rule: space.scale */
+      --s-0: 0px;
+      --s-4: 4px;
+      --s-8: 8px;
+      --s-12: 12px;
+      --s-16: 16px;
+      --s-24: 24px;
+      --s-32: 32px;
+      --s-48: 48px;
+      --s-64: 64px;
+      --s-96: 96px;
+      --s-160: 160px;
+
+      /* rule: colour.space: oklch */
+      /* rule: colour.palette */
+      --c-ink: oklch(0.18 0 0);
+      --c-paper: oklch(0.98 0.005 95);
+      --c-spot: oklch(0.58 0.22 27);
+      --c-rule: oklch(0.18 0 0);
+      --c-muted: oklch(0.55 0 0);
+    }
+
+    body {
+      /* rule: colour.roles.background */
+      background-color: var(--c-paper);
+      /* rule: colour.roles.foreground */
+      color: var(--c-ink);
+      /* rule: type.families.text */
+      font-family: 'Neue Haas Grotesk Text', 'Helvetica Now Text', 'Inter', sans-serif;
+      /* rule: type.scale.base */
+      font-size: 17px;
+      /* rule: type.line-height.body */
+      line-height: 1.5;
+      /* rule: type.tracking.body */
+      letter-spacing: 0;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      text-align: left;
+    }
+
+    /* rule: grid.kind: swiss-12 */
+    .grid {
+      display: grid;
+      /* rule: grid.columns */
+      grid-template-columns: repeat(12, 1fr);
+      /* rule: grid.gutter */
+      gap: var(--s-24);
+      /* rule: grid.margin.preferred */
+      padding: var(--s-32) calc(100vw / 24);
+      max-width: 100vw;
+      box-sizing: border-box;
+    }
+
+    /* rule: Style direction: Set display type in Neue Haas Grotesk Display at 96–160px */
+    .display-large {
+      font-family: 'Neue Haas Grotesk Display', 'Helvetica Now Display', 'Inter Tight', sans-serif;
+      /* rule: type.scale (step 7) */
+      font-size: 127px;
+      /* rule: type.line-height.display */
+      line-height: 1.05;
+      /* rule: type.tracking.display */
+      letter-spacing: -0.02em;
+      font-weight: 400;
+      margin: 0 0 var(--s-48) 0;
+    }
+
+    .display-medium {
+      font-family: 'Neue Haas Grotesk Display', 'Helvetica Now Display', 'Inter Tight', sans-serif;
+      /* rule: type.scale (step 6) */
+      font-size: 96px;
+      /* rule: type.line-height.h2 */
+      line-height: 1.2;
+      /* rule: type.tracking.display */
+      letter-spacing: -0.02em;
+      font-weight: 400;
+      margin: 0 0 var(--s-48) 0;
+      word-wrap: break-word;
+    }
+
+    .text-block {
+      /* rule: type.measure */
+      max-width: 62ch;
+      margin: 0 0 var(--s-24) 0;
+    }
+
+    /* rule: Asymmetric left-aligned composition */
+    .hero {
+      grid-column: 1 / 10;
+      /* rule: space.rhythm-note: Require one dramatic jump per section */
+      margin-top: var(--s-160);
+      margin-bottom: var(--s-160);
+    }
+
+    .terminal-section {
+      grid-column: 2 / 12;
+      margin-bottom: var(--s-160);
+    }
+
+    pre {
+      background-color: var(--c-ink);
+      color: var(--c-paper);
+      padding: var(--s-24);
+      margin: 0;
+      /* rule: Brief: terminal-aesthetic code block */
+      font-family: monospace;
+      font-size: 17px;
+      line-height: 1.5;
+      overflow-x: auto;
+      /* rule: surface.radius.rule: sharp by default */
+      border-radius: 0;
+    }
+
+    code {
+      font-family: monospace;
+    }
+
+    .manifest {
+      grid-column: 1 / 13;
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: var(--s-24);
+      margin-bottom: var(--s-64);
+    }
+
+    .manifest-ships {
+      grid-column: 1 / 6;
+      /* rule: surface.border */
+      border-top: 1px solid var(--c-rule);
+      padding-top: var(--s-16);
+    }
+
+    .manifest-gated {
+      /* rule: asymmetric placement, skips column 6 */
+      grid-column: 7 / 13;
+      border-top: 1px solid var(--c-rule);
+      padding-top: var(--s-16);
+    }
+
+    ul.manifest-list {
+      /* rule: forbidden: emoji bullets */
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    ul.manifest-list li {
+      padding: var(--s-16) 0;
+      border-bottom: 1px solid var(--c-rule);
+    }
+
+    ul.manifest-list li:last-child {
+      border-bottom: none;
+    }
+
+    .cta {
+      display: inline-block;
+      color: var(--c-ink);
+      text-decoration: none;
+      border-bottom: 1px solid var(--c-rule);
+      padding-bottom: var(--s-4);
+      margin-top: var(--s-24);
+      font-weight: 700;
+    }
+
+    /* rule: surface.motion.policy: structural only */
+    .cta-arrow {
+      display: inline-block;
+      transition: transform 0.2s steps(4, end);
+    }
+
+    .cta:hover .cta-arrow {
+      transform: translateX(var(--s-8));
+    }
+
+    .cta:hover {
+      color: var(--c-muted);
+      border-color: var(--c-muted);
+    }
+
+    /* rule: surface.radius.rule: pills (999) allowed for status tags only */
+    .pill {
+      border-radius: 999px;
+      padding: var(--s-4) var(--s-12);
+      font-size: 13px;
+      /* rule: type.tracking.allcaps */
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 700;
+      display: inline-block;
+      margin-left: var(--s-12);
+      vertical-align: middle;
+      margin-top: var(--s-4);
+      margin-bottom: var(--s-4);
+    }
+
+    .pill-spot {
+      /* rule: required: spot colour used exactly once */
+      background-color: var(--c-spot);
+      color: var(--c-paper);
+    }
+
+    .pill-outline {
+      border: 1px solid var(--c-rule);
+      color: var(--c-rule);
+    }
+
+    .bleed-rule {
+      /* rule: required: at least one element bleeds past the 12-col grid on purpose */
+      /* rule: intentional imperfection (quirk): strictly breaking grid mathematics visually */
+      grid-column: 1 / 13;
+      height: 1px;
+      background-color: var(--c-rule);
+      margin-left: calc(-100vw / 24);
+      margin-right: calc(-100vw / 24);
+      margin-top: var(--s-96);
+      margin-bottom: var(--s-32);
+    }
+
+    .footer {
+      /* rule: asymmetric layout, avoiding canonical 4-column */
+      grid-column: 1 / 8;
+      padding-bottom: var(--s-64);
+    }
+
+    .footer p {
+      margin: 0 0 var(--s-8) 0;
+      color: var(--c-muted);
+    }
+
+    /* Responsive scaling to respect typography rules on smaller viewports */
+    @media (max-width: 1024px) {
+      .display-large { font-size: 96px; }
+      .display-medium { font-size: 71px; }
+      
+      .manifest-ships, .manifest-gated {
+        grid-column: 1 / 13;
+        margin-bottom: var(--s-48);
+      }
+      .manifest-gated {
+        margin-bottom: 0;
+      }
+      
+      .terminal-section {
+        grid-column: 1 / 13;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .display-large { font-size: 71px; }
+      .display-medium { font-size: 53px; }
+      
+      .hero {
+        grid-column: 1 / 13;
+      }
+    }
+    
+    /* rule: surface.motion.policy: respects prefers-reduced-motion */
+    @media (prefers-reduced-motion: reduce) {
+      .cta-arrow {
+        transition: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="grid">
+    
+    <!-- rule: copy.voice: declarative, short sentences, no hedges, no Oxford commas -->
+    <div class="hero">
+      <!-- rule: required: one section anchored by a single word at display >= 120px -->
+      <h1 class="display-large">Control.</h1>
+      
+      <p class="text-block">
+        Artificial Human Design is a framework for deterministic visual output. You define the brief. We enforce the constraints. Generative models are evaluated against strict structural and typographic rules. It limits aesthetic decay. No empty prose. No false depth.
+      </p>
+      
+      <!-- rule: required: A link to github labelled as the read-the-code CTA -->
+      <a href="https://github.com/ahd-project/ahd" class="cta">Read the code <span class="cta-arrow">→</span></a>
+    </div>
+
+    <div class="terminal-section">
+      <!-- rule: required: The command rendered in a monospace code block with language tag bash -->
+      <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+    </div>
+
+    <div class="manifest">
+      <!-- rule: required: clearly separated manifest section titled 'What ships' -->
+      <div class="manifest-ships">
+        <h2 class="display-medium">What ships</h2>
+        <ul class="manifest-list">
+          <li>Brief compiler</li>
+          <li>28-rule linter</li>
+          <li>Eval harness</li>
+          <li>Vision-critic scaffold</li>
+          <li>MCP server</li>
+          <li>Editor plugins</li>
+          <li>Eight tokens</li>
+        </ul>
+      </div>
+
+      <!-- rule: required: clearly separated manifest section titled 'What is gated' -->
+      <div class="manifest-gated">
+        <h2 class="display-medium">What is gated</h2>
+        <ul class="manifest-list">
+          <!-- rule: spot colour used exactly once on the page via .pill-spot -->
+          <li>Live frontier-model calls <span class="pill pill-spot">Needs API keys</span></li>
+          <li>Live vision critique <span class="pill pill-outline">Needs multimodal key + screenshot pipeline</span></li>
+          <li>Standalone npm packages for the editor plugins</li>
+          <li>Additional tokens</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- rule: required: intentional bleed past the grid -->
+    <div class="bleed-rule"></div>
+
+    <!-- rule: required: footer that names licence explicitly -->
+    <footer class="footer">
+      <p>Code: FSL-1.1-Apache-2.0</p>
+      <p>Tokens and artwork: CC-BY-4.0</p>
+    </footer>
+    
+  </div>
+
+</body>
+</html>
+```

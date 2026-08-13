@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AHD - Artificial Human Design</title>
+  <style>
+    /* rule: Swiss / International Typographic Style */
+    body {
+      font-family: 'Neue Haas Grotesk Text', Helvetica Now Text, Inter, sans-serif;
+      color: oklch(0.18 0 0); /* ink */
+      background-color: oklch(0.98 0.005 95); /* paper */
+      line-height: 1.5;
+      margin: 0;
+      padding: 0;
+      font-size: 17px;
+      max-width: 62ch;
+      margin: 0 auto;
+      padding: 32px;
+    }
+    h1, h2 {
+      font-family: 'Neue Haas Grotesk Display', Helvetica Now Display, Inter Tight, sans-serif;
+      letter-spacing: -0.02em;
+    }
+    h1 {
+      font-size: 160px;
+      line-height: 1.05;
+    }
+    h2 {
+      font-size: 96px;
+      line-height: 1.2;
+    }
+    p {
+      margin-bottom: 24px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 24px;
+    }
+    .grid > * {
+      grid-column: span 12;
+    }
+    .code-block {
+      background-color: oklch(0.18 0 0);
+      color: oklch(0.98 0.005 95);
+      padding: 16px;
+      border-radius: 0;
+      font-family: monospace;
+      overflow-x: auto;
+    }
+    .spot {
+      color: oklch(0.58 0.22 27); /* spot */
+    }
+    .manifest {
+      margin-top: 64px;
+    }
+    .manifest h2 {
+      margin-bottom: 16px;
+    }
+    .manifest ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    .manifest li {
+      margin-bottom: 8px;
+    }
+    .footer {
+      margin-top: 160px;
+      padding-top: 32px;
+      border-top: 1px solid oklch(0.18 0 0); /* rule */
+      text-align: left;
+    }
+    .footer p {
+      margin: 0;
+    }
+    .bleed {
+      position: relative;
+      left: -32px;
+    }
+    /* rule: No shadows, no rounded corners except small status pills */
+    .status-pill {
+      background-color: oklch(0.55 0 0); /* muted */
+      color: oklch(0.18 0 0); /* ink */
+      padding: 4px 8px;
+      border-radius: 999px;
+      font-size: 12px;
+      display: inline-block;
+    }
+    /* rule: Asymmetric left-aligned composition */
+    .asymmetric {
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+  <div class="grid">
+    <div class="asymmetric">
+      <h1>AHD</h1>
+      <p>Artificial Human Design</p>
+      <p>We take the problem of AI-generated design seriously. AHD provides a framework to evaluate and improve design quality.</p>
+      <div class="code-block">
+        <code class="language-bash">
+          ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10
+        </code>
+      </div>
+      <p><a href="https://github.com/ahd-framework/ahd" class="spot">Read the code</a></p>
+    </div>
+    <div class="manifest">
+      <h2>What ships</h2>
+      <ul>
+        <li>Brief compiler</li>
+        <li>28-rule linter</li>
+        <li>Eval harness</li>
+        <li>Vision-critic scaffold</li>
+        <li>MCP server</li>
+        <li>Editor plugins</li>
+        <li>Eight tokens</li>
+      </ul>
+      <h2>What is gated</h2>
+      <ul>
+        <li>Live frontier-model calls (needs API keys)</li>
+        <li>Live vision critique (needs multimodal key + screenshot pipeline)</li>
+        <li>Standalone npm packages for the editor plugins</li>
+        <li>Additional tokens</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer">
+    <p>Licence: FSL-1.1-Apache-2.0 for code, CC-BY-4.0 for tokens and artwork.</p>
+    <p class="bleed">AHD — Artificial Human Design</p>
+  </div>
+</body>
+</html>

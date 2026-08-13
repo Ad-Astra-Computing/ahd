@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <!-- rule: Return a single, self-contained, valid HTML5 document. -->
+  <meta charset="utf-8">
+  <!-- rule: Surfaces: web. -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- rule: Brief: A one-page landing for AHD itself. -->
+  <title>AHD — Artificial Human Design</title>
+  <style>
+    /* rule: Design post-digital. Everything in monospace. */
+    :root {
+      /* rule: colour.palette.bg oklch(0.14 0.02 150). */
+      --bg: oklch(0.14 0.02 150);
+      /* rule: colour.palette.fg oklch(0.92 0.12 135). */
+      --fg: oklch(0.92 0.12 135);
+      /* rule: colour.palette.dim oklch(0.55 0.05 150). */
+      --dim: oklch(0.55 0.05 150);
+      /* rule: colour.palette.rule oklch(0.3 0.04 150). */
+      --rule: oklch(0.3 0.04 150);
+      /* rule: colour.palette.amber oklch(0.82 0.15 75). */
+      --amber: oklch(0.82 0.15 75);
+      /* rule: grid.columns 80. */
+      --measure: 80ch;
+      /* rule: space.scale uses 8px baseline values. */
+      --baseline: 8px;
+    }
+
+    /* rule: No shadows, no gradients, no radii, no entrance animation. */
+    * {
+      box-sizing: border-box;
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    /* rule: type.pairing-rule single-monospace; forbidden: Do not use sans-serif body text. */
+    html {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: "Berkeley Mono", "IBM Plex Mono", "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 15px;
+      line-height: 1.55;
+      letter-spacing: 0;
+    }
+
+    /* rule: Dark green-black background, muted green foreground. */
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--fg);
+    }
+
+    /* rule: Everything aligns to an 80 character grid. */
+    main {
+      width: min(var(--measure), calc(100vw - 32px));
+      margin: 0 auto;
+      padding: 32px 0 24px;
+    }
+
+    /* rule: One hairline rule colour. */
+    header,
+    section,
+    footer {
+      border-top: 1px solid var(--rule);
+    }
+
+    /* rule: Rectangles only. */
+    header {
+      padding: 16px 0 24px;
+    }
+
+    /* rule: copy.voice technical, lowercase by default, terse. */
+    .kicker {
+      margin: 0 0 8px;
+      color: var(--amber);
+      font-weight: 700;
+      text-transform: lowercase;
+    }
+
+    /* rule: type.line-height.display 1.1; tracking.display 0. */
+    h1 {
+      margin: 0 0 16px;
+      max-width: 18ch;
+      font-size: clamp(2rem, 8vw, 3.6rem);
+      line-height: 1.1;
+      letter-spacing: 0;
+      font-weight: 700;
+    }
+
+    /* rule: type.measure 72ch. */
+    .lede {
+      max-width: 72ch;
+      margin: 0;
+      color: var(--fg);
+    }
+
+    /* rule: A link to github labelled as the read-the-code CTA. */
+    .cta {
+      display: inline-block;
+      margin-top: 16px;
+      color: inherit;
+      text-decoration-line: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 4px;
+    }
+
+    /* rule: link style: underline-offset 4px, no colour change. */
+    a {
+      color: inherit;
+      text-decoration-line: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 4px;
+    }
+
+    /* rule: Manifest sections clearly separated. */
+    section {
+      padding: 16px 0;
+    }
+
+    /* rule: type.line-height.h2 1.25. */
+    h2 {
+      margin: 0 0 8px;
+      font-size: 1.2rem;
+      line-height: 1.25;
+      color: var(--amber);
+      font-weight: 700;
+    }
+
+    /* rule: terminal-aesthetic code block. */
+    pre {
+      margin: 12px 0 0;
+      padding: 12px;
+      overflow-x: auto;
+      border: 1px solid var(--rule);
+      background: transparent;
+      color: var(--fg);
+      font: inherit;
+    }
+
+    /* rule: command rendered in a monospace code block with language tag bash. */
+    code {
+      font: inherit;
+    }
+
+    /* rule: No emoji bullets; rectangles/text only. */
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    /* rule: Everything aligns to an 80 character grid. */
+    li {
+      display: grid;
+      grid-template-columns: 3ch 1fr;
+      gap: 1ch;
+      margin: 0;
+    }
+
+    /* rule: single amber accent. */
+    li::before {
+      content: "[]";
+      color: var(--amber);
+    }
+
+    /* rule: at least one ASCII diagram rendered as text. */
+    .diagram {
+      margin: 0;
+      padding: 12px;
+      border: 1px solid var(--rule);
+      color: var(--dim);
+      overflow-x: auto;
+      line-height: 1.2;
+    }
+
+    /* rule: Include at least one intentional imperfection from required-quirks list. */
+    .quirk {
+      padding-left: 1ch;
+    }
+
+    /* rule: Footer that names the licence explicitly; no canonical 4-column footer. */
+    footer {
+      padding: 16px 0 0;
+      color: var(--dim);
+      font-size: 0.9rem;
+    }
+
+    /* rule: One screen of reading. */
+    .split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2ch;
+    }
+
+    /* rule: responsive constraints so text fits within parent UI element. */
+    @media (max-width: 760px) {
+      main {
+        width: min(72ch, calc(100vw - 24px));
+        padding-top: 24px;
+      }
+
+      .split {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        max-width: 12ch;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- rule: No centred hero stack with pill badge + two CTAs. -->
+  <main>
+    <!-- rule: The brand/product must be a first-viewport signal. -->
+    <header>
+      <!-- rule: copy.voice technical, lowercase by default, terse. -->
+      <p class="kicker">artificial human design / ahd</p>
+      <!-- rule: For landing-page heroes, make the H1 the brand/product/person name or literal offer/category. -->
+      <h1>AHD takes generated design seriously.</h1>
+      <!-- rule: Audience already suspects the problem; show framework rather than lecture. -->
+      <p class="lede">AHD compiles briefs, checks output against design rules, and runs repeatable evals so teams can argue from artifacts instead of taste. It is small, inspectable, and meant for working designers, senior engineers, and founders.</p>
+      <!-- rule: A link to github labelled as the read-the-code CTA. -->
+      <a class="cta" href="https://github.com/ahd-design/ahd">read-the-code CTA</a>
+    </header>
+
+    <!-- rule: terminal-aesthetic code block showing the one-liner that runs the eval. -->
+    <section aria-labelledby="run">
+      <h2 id="run">run the eval</h2>
+      <!-- rule: The command rendered in a monospace code block with the language tag bash. -->
+      <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+    </section>
+
+    <!-- rule: at least one ASCII diagram rendered as text. -->
+    <section aria-labelledby="shape">
+      <h2 id="shape">shape</h2>
+      <pre class="diagram" aria-label="AHD ASCII process diagram">+-------------+    +-------------+    +-------------+
+| brief.yml   | -&gt; | ahd compile | -&gt; | design eval |
++-------------+    +-------------+    +-------------+
+       |                  |                  |
+       +---- rules -------+---- tokens ------+
+            +-- critic scaffold --+   </pre>
+    </section>
+
+    <!-- rule: Manifest section clearly separated from other content. -->
+    <div class="split">
+      <!-- rule: A clearly separated manifest section titled 'What ships'. -->
+      <section aria-labelledby="ships">
+        <h2 id="ships">What ships</h2>
+        <ul>
+          <!-- rule: enumerate brief compiler. -->
+          <li>brief compiler</li>
+          <!-- rule: enumerate 28-rule linter. -->
+          <li>28-rule linter</li>
+          <!-- rule: enumerate eval harness. -->
+          <li>eval harness</li>
+          <!-- rule: enumerate vision-critic scaffold. -->
+          <li>vision-critic scaffold</li>
+          <!-- rule: enumerate MCP server. -->
+          <li>MCP server</li>
+          <!-- rule: enumerate editor plugins. -->
+          <li>editor plugins</li>
+          <!-- rule: enumerate eight tokens. -->
+          <li>eight tokens</li>
+        </ul>
+      </section>
+
+      <!-- rule: A clearly separated manifest section titled 'What is gated'. -->
+      <section aria-labelledby="gated" class="quirk">
+        <h2 id="gated">What is gated</h2>
+        <ul>
+          <!-- rule: enumerate live frontier-model calls needs API keys. -->
+          <li>live frontier-model calls (needs API keys)</li>
+          <!-- rule: enumerate live vision critique needs multimodal key + screenshot pipeline. -->
+          <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+          <!-- rule: enumerate standalone npm packages for the editor plugins. -->
+          <li>standalone npm packages for the editor plugins</li>
+          <!-- rule: enumerate additional tokens. -->
+          <li>additional tokens</li>
+        </ul>
+      </section>
+    </div>
+
+    <!-- rule: Footer names licence explicitly; no Product / Company / Resources / Legal footer. -->
+    <footer>
+      FSL-1.1-Apache-2.0 for code. CC-BY-4.0 for tokens and artwork.
+    </footer>
+  </main>
+</body>
+</html>

@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AHD | Artificial Human Design</title>
+  <style>
+    /* rule: Design in the Swiss / International Typographic Style */
+    :root {
+      /* rule: Palette is ink on paper */
+      --ink: oklch(0.18 0 0);
+      --paper: oklch(0.98 0.005 95);
+      --spot: oklch(0.58 0.22 27);
+      --rule: oklch(0.18 0 0);
+      --muted: oklch(0.55 0 0);
+
+      /* Typography */
+      --font-display: "Neue Haas Grotesk Display", "Helvetica Now Display", "Inter Tight", sans-serif;
+      --font-text: "Neue Haas Grotesk Text", "Helvetica Now Text", "Inter", sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      
+      /* Layout */
+      --baseline: 8px; /* rule: 8px baseline */
+      --gutter: 24px; /* rule: 24px gutters */
+      --margin: max(32px, calc(100vw / 24));
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--paper);
+      color: var(--ink);
+      font-family: var(--font-text);
+      font-size: 17px; /* rule: Body in Neue Haas Grotesk Text at 17px */
+      line-height: 1.5; /* rule: line-height 1.5 */
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* rule: Work on a 12-column grid */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      column-gap: var(--gutter);
+      padding-left: var(--margin);
+      padding-right: var(--margin);
+    }
+
+    /* rule: Asymmetric left-aligned composition */
+    .col-1-8 { grid-column: 1 / 9; }
+    .col-1-12 { grid-column: 1 / 13; }
+    .col-1-6 { grid-column: 1 / 7; }
+    .col-7-12 { grid-column: 7 / 13; }
+
+    /* rule: Require one dramatic jump per section (160 between sections) */
+    .section-jump { margin-top: 160px; }
+    .mb-160 { margin-bottom: 160px; }
+    .mb-64 { margin-bottom: 64px; }
+    .mb-48 { margin-bottom: 48px; }
+    .mb-32 { margin-bottom: 32px; }
+    .mb-24 { margin-bottom: 24px; }
+    .mt-48 { margin-top: 48px; }
+    .pt-24 { padding-top: 24px; }
+
+    /* Typography rules */
+    /* rule: Set display type in Neue Haas Grotesk Display at 96–160px with tracking -0.02em */
+    .display-title {
+      font-family: var(--font-display);
+      font-size: 160px;
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+      font-weight: 700;
+    }
+
+    /* rule: one section anchored by a single word at display >= 120px with -0.02em tracking */
+    .display-anchor {
+      font-family: var(--font-display);
+      font-size: 120px;
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+      font-weight: 700;
+    }
+
+    .manifest-title {
+      font-family: var(--font-display);
+      font-size: 23px;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .body-text {
+      max-width: 62ch; /* rule: measure 62ch */
+    }
+
+    /* rule: No shadows. No rounded corners except small status pills. */
+    .status-pill {
+      display: inline-block;
+      border: 1px solid var(--rule);
+      border-radius: 999px; /* rule: pills (999) allowed for status tags only */
+      padding: 4px 12px;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    /* rule: single spot red used exactly once on the page */
+    .cta-link {
+      display: inline-block;
+      color: var(--spot);
+      text-decoration: none;
+      font-weight: 700;
+      border-bottom: 1px solid var(--spot);
+      transition: opacity 0.2s; /* rule: Structural motion only */
+    }
+    .cta-link:hover {
+      opacity: 0.7;
+    }
+
+    /* rule: One intentional element must bleed past the grid. */
+    .bleed-line {
+      grid-column: 1 / -1;
+      width: calc(100% + var(--margin));
+      height: 1px;
+      background-color: var(--rule);
+    }
+
+    /* rule: terminal-aesthetic code block */
+    .terminal-block {
+      background-color: var(--ink);
+      color: var(--paper);
+      padding: 32px;
+      border-radius: 0; /* rule: sharp by default */
+      overflow-x: auto;
+    }
+    .terminal-block code {
+      font-family: var(--font-mono);
+      font-size: 17px;
+      white-space: pre;
+    }
+
+    .manifest-list {
+      list-style: none; /* rule: no emoji bullets */
+      padding: 0;
+    }
+    .manifest-list li {
+      position: relative;
+      padding-left: 24px;
+      margin-bottom: 8px;
+    }
+    .manifest-list li::before {
+      content: "—";
+      position: absolute;
+      left: 0;
+      color: var(--muted);
+    }
+
+    .footer-border {
+      border-top: 1px solid var(--rule);
+    }
+    .muted-text {
+      color: var(--muted);
+    }
+
+    @media (max-width: 768px) {
+      .col-1-8, .col-1-12, .col-1-6, .col-7-12 {
+        grid-column: 1 / 13;
+      }
+      .display-title { font-size: 96px; }
+    }
+
+    /* rule: respects prefers-reduced-motion */
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<main>
+  <!-- rule: Require one dramatic jump per section (160 between sections) -->
+  <section class="grid section-jump">
+    <!-- rule: Asymmetric left-aligned composition -->
+    <!-- rule: Do not centre the hero. -->
+    <div class="col-1-8">
+      <div class="mb-32">
+        <span class="status-pill">v0.1.0</span> <!-- rule: small status pills -->
+      </div>
+      <h1 class="display-title mb-48">AHD</h1>
+      <!-- rule: declarative, short sentences, no hedges, no Oxford commas -->
+      <p class="body-text mb-48">
+        You know the problem. The web is flooded with generic output. Artificial Human Design enforces strict aesthetic constraints over raw models. We provide a framework to establish design rules. It stops the drift toward defaults.
+      </p>
+      <!-- rule: A link to github labelled as the read-the-code CTA. -->
+      <!-- rule: spot colour used exactly once -->
+      <a href="https://github.com/ahd-project/ahd" class="cta-link">read-the-code</a>
+    </div>
+  </section>
+
+  <section class="grid section-jump">
+    <!-- rule: One intentional element must bleed past the grid. -->
+    <div class="bleed-line"></div>
+    <div class="col-1-12 mt-48">
+      <!-- rule: rendered in a monospace code block with the language tag bash -->
+      <pre class="terminal-block"><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+    </div>
+  </section>
+
+  <section class="grid section-jump">
+    <div class="col-1-12">
+      <!-- rule: one section anchored by a single word at display >= 120px with -0.02em tracking -->
+      <h2 class="display-anchor mb-64">Manifest</h2>
+    </div>
+    
+    <div class="col-1-6">
+      <!-- rule: A clearly separated manifest section titled 'What ships' -->
+      <h3 class="manifest-title mb-24">What ships</h3>
+      <ul class="manifest-list">
+        <li>brief compiler</li>
+        <li>28-rule linter</li>
+        <li>eval harness</li>
+        <li>vision-critic scaffold</li>
+        <li>MCP server</li>
+        <li>editor plugins</li>
+        <li>eight tokens</li>
+      </ul>
+    </div>
+    <div class="col-7-12">
+      <!-- rule: A clearly separated manifest section titled 'What is gated' -->
+      <h3 class="manifest-title mb-24">What is gated</h3>
+      <ul class="manifest-list">
+        <li>live frontier-model calls (needs API keys)</li>
+        <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+        <li>standalone npm packages for the editor plugins</li>
+        <li>additional tokens</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- rule: A footer that names the licence explicitly -->
+  <footer class="grid section-jump mb-160">
+    <div class="col-1-12 footer-border pt-24">
+      <!-- rule: explicit naming of FSL and CC licences without typical 4-column structure -->
+      <p class="muted-text">Licence: FSL-1.1-Apache-2.0 for code, CC-BY-4.0 for tokens and artwork.</p>
+    </div>
+  </footer>
+</main>
+
+</body>
+</html>

@@ -1,0 +1,106 @@
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AHD — Artificial Human Design</title>
+  <style>
+    body {
+      background-color: oklch(0.14 0.02 150); /* rule: dark green-black background */
+      color: oklch(0.92 0.12 135); /* rule: muted green foreground */
+      font-family: 'Berkeley Mono', 'IBM Plex Mono', 'JetBrains Mono', ui-monospace; /* rule: monospace */
+      line-height: 1.55; /* rule: line-height */
+      max-width: 80ch; /* rule: 80 character grid */
+      margin: 0 auto;
+      padding: 24px; /* rule: space scale */
+    }
+    h1, h2 {
+      color: oklch(0.82 0.15 75); /* rule: amber accent */
+    }
+    a {
+      text-decoration: underline;
+      text-underline-offset: 4px; /* rule: underline offset */
+    }
+    pre {
+      background-color: oklch(0.14 0.02 150); /* rule: dark green-black background */
+      color: oklch(0.92 0.12 135); /* rule: muted green foreground */
+      border: 1px solid oklch(0.3 0.04 150); /* rule: hairline rule colour */
+      padding: 8px; /* rule: space scale */
+      overflow-x: auto;
+    }
+    hr {
+      border: 0;
+      border-top: 1px solid oklch(0.3 0.04 150); /* rule: hairline rule colour */
+      margin: 24px 0; /* rule: space scale */
+    }
+    .manifest {
+      margin-top: 24px; /* rule: space scale */
+    }
+    .manifest h3 {
+      margin-bottom: 8px; /* rule: space scale */
+    }
+    .manifest ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    .manifest li {
+      margin-bottom: 4px; /* rule: space scale */
+    }
+    .footer {
+      margin-top: 48px; /* rule: space scale */
+      text-align: center;
+    }
+    .ascii-diagram {
+      font-size: 0.8em; /* rule: intentional imperfection */
+      margin-top: 24px; /* rule: space scale */
+    }
+  </style>
+</head>
+<body>
+  <h1>ahd</h1>
+  <p>Artificial Human Design is a framework for serious designers, engineers, and founders who want to take control of AI-generated design.</p>
+  <p>We provide a set of tools to evaluate, lint, and critique design briefs and outputs. Our goal is to create a sustainable and ethical approach to AI in design.</p>
+  <h2>Run the eval</h2>
+  <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+  <h2>What ships</h2>
+  <div class="manifest">
+    <h3>What ships</h3>
+    <ul>
+      <li>brief compiler</li>
+      <li>28-rule linter</li>
+      <li>eval harness</li>
+      <li>vision-critic scaffold</li>
+      <li>MCP server</li>
+      <li>editor plugins</li>
+      <li>eight tokens</li>
+    </ul>
+  </div>
+  <h2>What is gated</h2>
+  <div class="manifest">
+    <h3>What is gated</h3>
+    <ul>
+      <li>live frontier-model calls (needs API keys)</li>
+      <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+      <li>standalone npm packages for the editor plugins</li>
+      <li>additional tokens</li>
+    </ul>
+  </div>
+  <hr>
+  <div class="ascii-diagram">
+    +-------------------------------+
+    |        AHD Workflow           |
+    +-------------------------------+
+    | 1. Define brief               |
+    | 2. Run eval                   |
+    | 3. Lint output                |
+    | 4. Critique vision            |
+    +-------------------------------+
+  </div>
+  <p><a href="https://github.com/ahd-framework/ahd" target="_blank" rel="noopener noreferrer">read the code</a></p>
+  <div class="footer">
+    <p>Licensed under FSL-1.1-Apache-2.0 for code, CC-BY-4.0 for tokens and artwork.</p>
+  </div>
+</body>
+</html>
+```

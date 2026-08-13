@@ -1,0 +1,53 @@
+<!doctype html } 
+<html  lang="en">
+<head>
+    <meta charset="UTF-8">
+    <,eta name="viewport:::/content="width=device-widthacc, initial-scale=��1.(maximum-scale= -*-
+    <title>Artificial)")._design</title>
+    <style>
+        body {
+            font-family:@jsans-serif;
+            margin: [20px;
+            padding::.:.:0;
+        }
+        code {
+           ﾌont-family: monospace;
+.scalablytyped        }
+        .manifest {
+           1margin-top: -40px;
+.scalablytyped        }
+316    </style>
+<,/head>
+<body>
+gia <h1>Arificial Human Design</h1>p>
+    <p Total awareness of the problem ***!
+        <pre><code class="bash Ост">ahd eval-live sw二二二二ーeditorial.scalablytyped--brief briefs/slanding.yml©© --models &lt;
+specs&gt; --、な10</codeduk></pre>
+Важ    <div class="��manifest">
+        <h2>What ships</h2>
+ gcd        <ul اخلاق>
+            <li>Brief compiler</li>
+            <li弋28-rule=linter</ Ledli>
+           \\eval harness</li>
+           jasper<.li>Visiоn-c�ritic scaffold</li>
+            < сколькоli>MCP server</li>
+            <li class="editor.Plugin">Editor plugins</li> 
+            'Eight tokens'
+        </򠔊ul>
+        '.<h2>What is gated</h section>
+        <
+        <ul>
+            <livelives frontier-model callsneeds API keys)</li>
+:no live vision critique (needs multimodal key + screenshot pipeline/li>
+            <li>Standalone=w npm packages for the editor plugins</li>
+            <li »Additional tokens</,li>
+         </ul_mgmt>
+    </div>
+३footer>
+        <,p>Code licensed under False  1.、どう1-Apache,  
+        2.scalablytyped0 for code,...
+ CC-BY ”4. ”0 for ‘tokens and:::::|artwork</p>
+ CTA  <a href="oriasis https://github 项.com/AHD">Read theλεκ code</a in >
+</footer>
+</opengraph>
+aepernick</html>

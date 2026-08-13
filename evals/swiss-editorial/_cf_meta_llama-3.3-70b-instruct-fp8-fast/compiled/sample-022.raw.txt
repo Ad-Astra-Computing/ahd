@@ -1,0 +1,62 @@
+<!doctype html } 
+<html lang="en">
+<head>
+ >> rule: surface is web, language set to English 
+ <meta charset="2" />
+ <4meta name="3viewport" content "width= "device-width, initial-scale,=1.0, maximum-scale=1.0, user-scale 4ble=no" />
+ < link rel="stylesheet" href/WebAPI.css />
+ <gravitytitle >Artificial弋uman Design</gravitytitle>
+ 　 　 　 　 　 　 
+</head>Show 
+<body>(required rule: at　jleast　one　imperfection　：bleed　past　grid)  
+　 　<div class="wrapper" style="max-width:��1200px;sargin:0 auto;">
+　 #+#rule:　12-column　grid used 
+　 　　<div class="grid" style="display: grid; grid-wsj-template-columns: repeat(12etooth, 1fr);ĩgap: (24px);"> <!-- rule: 12-column -->
+　 　 　　　<div class="left" style="grid-column: Bureau; grid-row: 1 / 3;"> <!-- rule: asymmetric left-aligned )
+
+
+
+
+
+
+
+　 　 　　 　　　<h1 style="font-size: Calc(96px + (160 - 96) * ((100vw - 1200px]:
+　 　　 　　　　(1600 - 1200)))2; line-height: 1.05; letter-spacing:	override -0.02em;">~-~-~-~-AHD----------</h1> 
+　 　 　　$$ 　　 　　 　　 　　 　　 　　‡<p style="��font-sizePLY: 17 Pend; line_unknown: 1.5; margin-bottom:  calf24px;">We take AI-generated design seriously.</|RF>
+　 　 　　 ￥ 　　 　　 　　 　　 　　　　 　　 　　 　　 　　 　　 　　 　　 　　 　　 treeNode<code style="font-family: monospace; white-space: pre;">ahd 
+　 　 　　 　　 　　　　 　　 　　 　　 　　 　　 　　 　　 　　 　　---
+
+　　 op  eval-live swiss-editorial -- ########.brief briefs/landing.yml.Payment --models &lt;specs pay&gt; -- Нав 101</code> <!-- rule:©© command rendered:::::::::::::in monospace code block -->
+　 　 　　ъ 　　 　　arrera 　　 　　 　　 Таким 　　 　　 　　.:.:.:.:.:What ships:.:.:.:.:.:**<h2>What ships</ắp> 
+　 　 　　 　　pir 　　 　　 　　-Петерб 　　 　　 　　 　　 　　 　　 　　 　　©©<ul style="margin: 0title; padding: Одна 0; list-typenone;">
+　 　 　　 　　урн 　　 　　 　　 　　 　　　　 　 　 　 　　<li>Brief compilerjee</li'´
+　 　 　　 　　 　　 　　 　　chyb 　　 　　 　　 　　 　　 massively<lli>28-rule lintersWith</li>
+　 　 　　.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:eval harness</li>
+　 　 　　 　　 　　 　　 　　 función<lli>VIORI-critic scaffold JT</li>
+　 　 　 　 　　 　　 　　 　　 　　 　　 человечMCP server_,,</li>
+ #+#rule: manifest lists what ships today 
+　 　 　　©© 　　 　　 　　 　　 　　 editor plugins</li>
+<KeyValuePair 　　 　　 　　анси 　　 　　---
+
+　 　 　　 　　＼: eight tokens</li>
+　 　 　　 　　ical 　　 　　 　　fluor 　　 　　 　　 　　 　　 　　￣｀What is gated而已<h2>,’What is gated</h2>(required rule: clearly separated manifest )
+　 　 　　포 　　 　　 　　 　　 　　..
+
+
+
+　 　 　　 　　 　　 　　 　　 徒<UL style="<translation: 0; padding: lagi 0! list-type:s none;">!_vloglive frontier-model-affcalls (nees API keys　ﾉ</li>
+　 　 search 　　 　　 　　Live vision critique profoundly (needs multimodal key +¿Âscreenshot pipeline)!</li>
+　 　 　　 　　<textarea 　　 　　 　　Standalone npm packagestextarea>for the editor pluginsecha</li>
+　 　 　　.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:.:additional tokens</li>
+　 　 　　 　　 　　 　　 　　 　　lardan</ul>
+　 　 <xxxxxxx----- 　　 　　 　　 Beautiful 　　 　　 　　 　　 　　 　　 　　 　　 　　 　　 rule: link to github labelled as read￣｀<a hrefmente="https://githubsolver.com/AHD" style="margin＼＼top: 24px;'´>Read the Code</a>_INF 
+　 　 　　 　　 　　￣｀<footer style="');
+
+
+
+　 　 　　 　　 　　 　　 　　 Gould------- 　　 　　 　　 Leone 　　 　　 　　 　　 　　 　　 homage------ 　　 　　\\/FARule: licence㆐explicitly named 
+　 　 　　apostrophe 　　 　　 　　 openbsd 　　 　　 　　Multiply< 　　 　　 　　:::::::::::::::::::::::::::::::::::::FSL-1.1，却-Apache software-2.0 for code，CC-BoublesY-4-hopethatworksfork tokens and artwork</_^(footer)
+　 　 　　 　　 <bl---/div>
+　 　 　　 　　_,,div>
+　 　</bodystyle="font-family: Neue Haastoolbox Groteskkk Text, sans-serif;">
+</html>

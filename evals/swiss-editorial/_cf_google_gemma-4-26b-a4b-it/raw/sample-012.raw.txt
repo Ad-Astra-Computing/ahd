@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AHD | Artificial Human Design</title>
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --surface: #141414;
+            --border: #262626;
+            --text-main: #a0a0a0;
+            --text-bright: #ffffff;
+            --code-bg: #000000;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.5;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        main {
+            width: 100%;
+            max-width: 680px;
+            padding: 80px 24px;
+        }
+
+        h1 {
+            color: var(--text-bright);
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 0 0 1rem 0;
+            letter-spacing: -0.02em;
+        }
+
+        p.lead {
+            font-size: 1.1rem;
+            color: var(--text-main);
+            margin-bottom: 2.5rem;
+            max-width: 500px;
+        }
+
+        .code-container {
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 1.25rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        pre {
+            margin: 0;
+            overflow-x: auto;
+        }
+
+        code {
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+            font-size: 0.9rem;
+            color: #e0e0e0;
+        }
+
+        .cta-link {
+            display: inline-block;
+            color: var(--text-bright);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            border-bottom: 1px solid var(--text-bright);
+            padding-bottom: 1px;
+            margin-bottom: 4rem;
+        }
+
+        .cta-link:hover {
+            opacity: 0.7;
+        }
+
+        .manifest {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            border-top: 1px solid var(--border);
+            padding-top: 48px;
+        }
+
+        @media (max-width: 600px) {
+            .manifest {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+        }
+
+        h2 {
+            color: var(--text-bright);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin: 0 0 1.5rem 0;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            font-size: 0.9rem;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        li::before {
+            content: "-";
+            margin-right: 12px;
+            color: #444;
+        }
+
+        footer {
+            margin-top: 80px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+            font-size: 0.75rem;
+            color: #444;
+        }
+    </style>
+</head>
+<body>
+
+<main>
+    <header>
+        <h1>Artificial Human Design</h1>
+        <p class="lead">A framework for high-fidelity evaluation of generative design outputs against human-authored standards.</p>
+    </header>
+
+    <section>
+        <div class="code-container">
+<pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+        </div>
+        <a href="https://github.com/ahd-framework" class="cta-link">read-the-code</a>
+    </section>
+
+    <section class="manifest">
+        <div>
+            <h2>What ships</h2>
+            <ul>
+                <li>brief compiler</li>
+                <li>28-rule linter</li>
+                <li>eval harness</li>
+                <li>vision-critic scaffold</li>
+                <li>MCP server</li>
+                <li>editor plugins</li>
+                <li>eight tokens</li>
+            </ul>
+        </div>
+        <div>
+            <h2>What is gated</h2>
+            <ul>
+                <li>live frontier-model calls (needs API keys)</li>
+                <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+                <li>standalone npm packages for the editor plugins</li>
+                <li>additional tokens</li>
+            </ul>
+        </div>
+    </section>
+
+    <footer>
+        FSL-1.1-Apache-2.0 for code, CC-BY-4.0 for tokens and artwork.
+    </footer>
+</main>
+
+</body>
+</html>

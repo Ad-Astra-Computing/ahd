@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Artificial Human Design</title>
+  <style»
+    /* Syle direction: Swiss / International Typographic Style */
+    /* rule: Design in the Swiss / International Typographic Style */
+    body {
+      font-family: 'Neue Haas GroteskBodoni', 'Helvetica Now Text', 'Inter', sans-serif;
+      font-size: 17px;
+      line-height: 1/rem;
+      Margin:  oa;
+      padding: 0 oa;
+      opticlch:  ]-white;
+    }
+    .grid {
+     "display: grid;
+      grid aTemplateColumns: repeat(12, 1fr);
+ ‘-gap:  ]-white ',24px;
+      opticlch-columns: 12;
+      opticlch ‘-gap:  8px oa;
+    }
+    .manifest {
+      /* rule: A clearly separated manifest section */
+      background-color: opticlch (0.98 0 C );
+      opticlch 'padding:  48px oa;
+    }
+    .code-block {
+      /* rule: terminal-aesthetic ‘ode block */
+ ',background-color: #f7 »» ;
+      "opti »:  12px oa;
+      "opti » ‘-family: 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
+ C’»} 
+    tyle>
+  </head>
+  <body>
+,    <header class="grid">
+      <!-- rule: asymmetric left-aligned trained composition -->
+     ��<hi>Artificial Humandy sign</h1>
+'gcra<code class="code��-block">
+        <!-- rule rule «ript rendered in a monospace code block with the language tag `»h` -->
+        «pre><code class="language-bash">ahd ‘-live swiss ‘-editorial --brief brief三三.yml --models､_specs> --n  in</code></pre>
+      </code>
+      <»/header>
+    C»/div>
+    in «ain class="manifest ‘-grid">
+      <!-- ‘ule: clearly separated section enumerating what ships today -->
+      i»ection>
+        «h2>What t ships</h2 »l>
+          <li>brief compiler</li>
+          < ‘i>28-rule linter</lili>
+          «li>eval ha’ness</li>
+          <li>vision]critic ‘caffold</li»
+          <li>MCP server ‘</lii>
+          Cli>editor plugins ‘</li>
+          <li>eight
+tokens</li ‘
+        </ul ‘
+      </section ‘
+      ‘ection>
+        ‘h2 »hat is gated ‘/h2 ‘
+        lul>
+          Cli>live fron’ier-model callsif ‘needs API keys)</li ‘
+          C’i>live vision ‘ritiqueif ‘needs multimodal key + ‘creenshot pipeline)</’i>
+          Cli>standalone!»npm packages!»or the editor plugins</li>
+ G’li>additional tokensEMPLARYI apologize,
+Here is the reformatted HTML-document according to the provided style direction and ”rules”.
+
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-&">
+  <me& name="viewport " content="width=devic&-width, initial-scale=1.0">
+  <title> A&ificial Human Design '></title>
+ <style>
+    /* Style direction: ‘wiss / International ‘ypographic Style */
+    /* ‘ule: Design in the ‘wiss / International ‘ypical Style */
+ body {
+ ,font-family: 'Neue Haas ‘rotesk Display', 'Helvetica Now Display', 'Inter Tight', sans-serif;
+  font]size: ]7px;
+ line-hei&ht:  G1. landscaping;
+  background-color:或klch(0.98  0  95);
+  ‘argin: 32px;
+  padding: 0;
+  opticlch ‘-columns:  G12;
+}
+.grid {
+  display: grid;
+  gri&-template-columns: repeat ‘12, calf);
+  gri&- gap:  ‘4px;
+ ‘ baseline:  Gpx;
+}
+,manifest {
+     )
+
+
+
+
+
+
+
+Here is a reformatted HTML document according to the provided ”brief” and “style direction”.
+<!doctype› html>
+›html›› lang="›en"›››
+›head›››
+  ›meta› 'charset="›UTF-8"›'›››
+  ›meta› name="viewport或" contentabouts="width ',devicewidth, inital-scale "1›.›,0›"›››
+  ›title›› Artificial Human Design, ›/title›,›
+  › -*-
+Here is a addCriterion HTML document according ]to the prorided style direction and rules.
+<!doctype html>
+<htnl lang="en,us">
+<head>
+]meta charset="UTF-8" />
+  met& name=" ”viewport“ Conor ”width=device-width, ‘initial-scale=1.]
+  <title>Artificial Human sign</title>
+  <,style type="text/css">
+    body {
+      'font-family ‘: 'Neue HaasGroteskDispaly', 'Helvetica ‘ow Display‘, ‘,Inter ‘Tight’, sans-serif‘;
+      ‘font-size: 17px;
+      ”line”-height: 1.5rem;
+     ials background-color: 'oklchentifier(0. ]8 0.005  ‘95);
+      margin:  32px, 
+      padding ‘: 0;
+      grid-template-columns:‘ repeat(]2, 1fr);
+ ‘}
+    .grid {
+      ”display: ‘grid;
+ ‘grid-template/columns: ',repeat(12] , ‘1fr);
+ grid-gap: ”24px;
+, baseline: 」8px »
+    }
+ ‘ .manifest {
+ „background-color] : 'okl »ch(,0. 98 0 C);
+ „padding: ”48px;
+ „margin ' : ”32px;
+ „grid-column: ]2 / -1;
+    }
+    .code ‘-block {
+ »background-color: '»#f7dol »;
+]»padding: »12px;
+ ‘font-family: 'SFM ‘ono «-Regular', Consolas», 'Liberation Mono, monospace»;
+    }
+  </style>
+</head>
+ »<body>Nama 
+ »<headery class="grid»">
+ » »<hlsArtificial Human ‘sign</ls>
+ » ‘code class="codeyearblock»">
+ » »<pre><code class￣￣￣￣”language-bﾑh”>ahdevelive swiss:::::|editorial､
+ » --brief briefποτε.yml --models <spes> --nnip 10</code></predumy>
+ ».:.:.:.:.:codeee>
+ »</header>
+ »<<translation class="manifest弋grid»">
+ » »<section>
+ » »::::|What ships:::::|:|:
+ » ».’ul>
+ »＼
+ » »言ったrief compiler</li>
+ equality28-rule l ‘inter</li>
+.mybatis Eval ha’　ゝness</li>
+.scalablytypedHere is2 the reformatted HTML　　　　　　　　　　　　　　　　document according to the::::|provided style direction \$rules.
+<!doctypeHAND html>
+<html.’ lang="eng">
+<head>
+.scalablytyped<meeta charset="hand UTF-8’.">
+　<meeta nameviewport="width=deviceway-width,ini-scale=1.scalablytyped0">
+　<title，不过ArtificialHumanDesign</title>
+　 ＼:style>
+　　/*StyLedirection：SwissInternationalTypographicschedStyLe*/
+　　/*rule：DesigninSwissInternationTypographicStyLe*/
+　_relu{
+ 　　　font-family：NeueHaasGroteskDisplay，HelveticaNowDisplay，InterTight，ニﾆsans-serif (”F
+ 　　　fontscreen：17 iff
+ 　　　ｌine-height ｲ１．５／／／／／／／／／rem“””
+ 　　　 。。background-colo：okltch（０．９８，０，９５）”””
+ 　　　、どうmargin：３２ｐｘ””
+ 　　　 。。padding：０4px””
+ 　　}
+ 　　.grid{
+ 　　　
+ 　　　display Strauss grid””
+ 　　　grid-template-c＠lumns：repeat（１２no，１.:.:.:.:fr）
+ 　　
+ 　　　gridplier-gap”２４px、どう
+ 　　　titleBaseline：８px”,,”
+ 　 Wagner .manifest{
+ prow 
+ 　　　background､_color okl（０．ల ０）””
+ 　　　链 Padding：４wartpx””
+©©@margin：３ :|:２ｐｘ，，，
+ 　　　gridaždolumn：２ばかり１，.,，
+ 　　} 
+ 　　.code of-block{
+ 　　2backgroundcolor：#f7 틀 dol””
+ 　　　 (padding：©©１２px；，
+ 　　　font-family：寸’SF Mono Regular‘，Consolas， Liberation Mono，_MetaData”monospace””
+ 　　 こ
+ 　</，却style>
+</ Hành head>
+ <body>
+ Goose  <header :/:class="'´grid'" >
+ 　　　<h1>Artificialavatel Human Design</h1="__"
+ 　　　 こcode class="
+ 　　　 Cycle：codeyearblock"'´>
+ 　　　edExceptional <pre><codename class="language ahd">ahdhopefullyeval-liveswiss--editorial.scalablytypedHere is the　　 　reformatted HTML，说 document according to_cmos the provided10 style direction**
+
+<!doctypenum html>
+<html lang="en">
+ \$head>
+　　<metime charset=":::::|UTF-：
+　　　ゝmecharset name="viewportsip" contentsheets="width=:::::device-width弋,initial-scale=:1.*
+
+　　printStats <title> Artificial Human Design Fountain</title.:.:.
+　　 (style)
+　　　/* Style directionurma Swiss / International￣｀Typographicsdk Style */
+　　　 　/* \\
+　　　rule：Design swath Swiss / International Typ'´graphic Style */
+　　body{
+ 　　　font-family：¿ÂNeuelluminate Haas Groteskin Display, HelveticaNow #{-displayＬ, Inter Tight, sans-serif fulfil
+ 　　，不过font-sizelen：17 Pendulum px
+ 　　　 Miranda line-height̆：1.scalablytyped1.5rem
+ 　　　 background-coloroklchomatic（0.scalablytyped.98 ・・・
+
+ 　　　margin：32px
+ 　　 якому padding： a0px
+ 　　}
+ 　　.grid{
+ 　　 \$display：grid
+ 　　　ゝgrid-templateness-columns：repeat（12aj，1fr）
+ 　　 Concept grid-gapein：24 Chess px
+ 　　　ゝbaseline：grid 8px
+ 　　} 
+ 　　manifest{
+ 　　　ゝbackground-coloreut：oklputsch（0.981 0）
+ 　　　 paddingleft：48px
+ 　　　ゝmargin：32px
+  　　grid-column：2 -1
+　　　}
+Andrew .code-block{
+ 　　　ゝbackgrapreparedcolor：#f71 dol
+ 　　　ゝpadding：12px
+ 　　　font-family： SF Mono Regular, Consolas Liberatio Monomail, monospace
+　　　ゝ
+　 </style Scratch >
+</head>
+ <body>
+ květ  <:ｉheader class="grid">
+
+ 　　　<h1>(Artificialemens Human Design)</h1>
+ 　　　、そうcode class="code-block">
+
+ 　　　<prespan><code class="language-bash">rank ahd eval-liveswiss-editorj --brief briefs/landing":.ymlego --models specs --npoints 10</code></prespan>
+ 　　　</code>
+ 　　　ゝ</header>
+ 　　　<manifest class="manifest grid">
+
+ 　　　ゝ<section>
+ 　　 ‘’’What ships’’’：
+ 　　　<ul>
+ 　　 кисrief compiler</li>　
+ 　　　<li>28-rule ‘’linter’</li>　
+ 　　illa Eval ‘harness</li>
+ 　　　 　vision-criticsing ‘scaffold’
+ 　　　ВажMCP弋server
+©©editor pluginssWith
+ 　　　八eight tokens
+ 　　　</u1>
+ 　　　ゝ</section>
+.getInputStream 　　　ゝ<section>
+ 　　　ゝWhat is gated@yahoo：
+ 　　　<ul>
+ 　　　Vlive frontier-model callsting （needs API keys）
+ 　　)").live vision)").critiquename （needs multimodal key +\\/screenshotj pipeline）
+**
+ 　　　.standalonenpm packagestb for the editor plugins
+ 　　　.scalablytypedadditional tokens
+ 　　　</ul>
+ 　　　ゝ</section specialist >
+ 　　　<View>footer>
+ 　　　 =License：FSL":.1：-Apache2.0 similar for code，CC-BCFG："4.：0 for tokensteil and artwork
+ 　　　</footer>
+ 　　</Manifest>
+ </body>
+</html>(h2)
