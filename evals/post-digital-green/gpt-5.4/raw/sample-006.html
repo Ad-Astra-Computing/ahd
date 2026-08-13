@@ -1,0 +1,457 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AHD — Artificial Human Design</title>
+  <meta name="description" content="Artificial Human Design: a framework, linter, eval harness, and design tokens for teams that are done with AI-generated sameness.">
+  <style>
+    :root {
+      --bg: #f2ede3;
+      --paper: #f8f4ec;
+      --ink: #141312;
+      --muted: #5f5a53;
+      --line: rgba(20, 19, 18, 0.12);
+      --line-strong: rgba(20, 19, 18, 0.24);
+      --accent: #b6482d;
+      --accent-soft: rgba(182, 72, 45, 0.08);
+      --terminal: #111111;
+      --terminal-line: rgba(255, 255, 255, 0.08);
+      --terminal-text: #f4efe7;
+      --terminal-muted: #b4aea6;
+      --shadow: 0 20px 60px rgba(20, 19, 18, 0.08);
+      --radius: 22px;
+      --max: 1220px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(to bottom, rgba(255,255,255,0.35), rgba(255,255,255,0) 24rem),
+        repeating-linear-gradient(
+          to right,
+          transparent 0,
+          transparent calc(25% - 1px),
+          rgba(20, 19, 18, 0.04) calc(25% - 1px),
+          rgba(20, 19, 18, 0.04) 25%
+        ),
+        var(--bg);
+      font-family: Georgia, "Iowan Old Style", "Palatino Linotype", serif;
+      line-height: 1.45;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 28px 20px 40px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+      padding: 8px 0 28px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .mark {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-family: "Menlo", "Consolas", "Liberation Mono", monospace;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.84rem;
+    }
+
+    .mark-badge {
+      width: 12px;
+      height: 12px;
+      border-radius: 2px;
+      background: var(--accent);
+      box-shadow: 16px 0 0 rgba(20, 19, 18, 0.22), 32px 0 0 rgba(20, 19, 18, 0.1);
+      margin-right: 24px;
+    }
+
+    .topbar-note {
+      max-width: 34rem;
+      color: var(--muted);
+      font-size: 0.95rem;
+      text-align: right;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
+      gap: 32px;
+      padding: 42px 0 34px;
+      align-items: start;
+    }
+
+    .eyebrow {
+      margin: 0 0 14px;
+      font-family: "Menlo", "Consolas", "Liberation Mono", monospace;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 0.8rem;
+      color: var(--accent);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.8rem, 7vw, 5.8rem);
+      line-height: 0.93;
+      letter-spacing: -0.045em;
+      max-width: 10ch;
+      font-weight: 600;
+    }
+
+    .lede {
+      margin: 22px 0 0;
+      max-width: 30rem;
+      font-size: clamp(1.05rem, 2.1vw, 1.4rem);
+      color: #262320;
+    }
+
+    .aside {
+      background: rgba(255,255,255,0.46);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(4px);
+    }
+
+    .aside-label {
+      margin: 0 0 14px;
+      font-family: "Menlo", "Consolas", "Liberation Mono", monospace;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+    }
+
+    .aside p {
+      margin: 0 0 16px;
+      font-size: 1rem;
+      color: #282522;
+    }
+
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      border: 1px solid var(--ink);
+      border-radius: 999px;
+      font-family: "Menlo", "Consolas", "Liberation Mono", monospace;
+      font-size: 0.92rem;
+      background: var(--paper);
+      transition: transform 140ms ease, background 140ms ease;
+    }
+
+    .cta:hover,
+    .cta:focus-visible {
+      background: #fff;
+      transform: translateY(-1px);
+    }
+
+    .cta::after {
+      content: "↗";
+      font-size: 1rem;
+      line-height: 1;
+    }
+
+    .main-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 320px;
+      gap: 28px;
+      align-items: start;
+    }
+
+    .terminal {
+      background:
+        linear-gradient(to bottom, rgba(255,255,255,0.03), transparent 30%),
+        var(--terminal);
+      color: var(--terminal-text);
+      border-radius: 26px;
+      overflow: hidden;
+      box-shadow: 0 24px 70px rgba(0,0,0,0.18);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .terminal-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 13px 18px;
+      border-bottom: 1px solid var(--terminal-line);
+      background: rgba(255,255,255,0.02);
+      font-family: "Menlo", "Consolas", "Liberation Mono", monospace;
+      font-size: 0.82rem;
+      color: var(--terminal-muted);
+    }
+
+    .lights {
+      display: inline-flex;
+      gap: 8px;
+    }
+
+    .lights span {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      display: block;
+      background: rgba(255,255,255,0.2);
+    }
+
+    .terminal-inner {
+      padding: 22px 22px 26px;
+    }
+
+    pre {
+      margin: 0;
+      overflow-x: auto;
+      font-family: "Menlo", "Consolas", "Liberation Mono", monospace;
+      font-size: clamp(0.92rem, 1.5vw, 1.05rem);
+      line-height: 1.6;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    code { font-family: inherit; }
+
+    .context {
+      display: grid;
+      gap: 18px;
+    }
+
+    .context-block {
+      padding: 18px 18px 20px;
+      border-top: 1px solid var(--line-strong);
+      background: rgba(255,255,255,0.34);
+    }
+
+    .context-title {
+      margin: 0 0 8px;
+      font-family: "Menlo", "Consolas", "Liberation Mono", monospace;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .context p {
+      margin: 0;
+      color: #302d29;
+      font-size: 0.98rem;
+    }
+
+    .manifest-wrap {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px;
+      margin-top: 30px;
+    }
+
+    .manifest {
+      border-top: 2px solid var(--ink);
+      padding-top: 14px;
+    }
+
+    .manifest h2 {
+      margin: 0 0 12px;
+      font-size: 1.35rem;
+      letter-spacing: -0.03em;
+    }
+
+    .manifest ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 10px;
+    }
+
+    .manifest li {
+      display: flex;
+      gap: 12px;
+      align-items: baseline;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .manifest li::before {
+      content: "/";
+      color: var(--accent);
+      font-family: "Menlo", "Consolas", "Liberation Mono", monospace;
+      font-size: 0.95rem;
+      transform: translateY(1px);
+    }
+
+    .manifest strong {
+      font-weight: 600;
+    }
+
+    .footer {
+      margin-top: 42px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line-strong);
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .footer a {
+      text-decoration: underline;
+      text-underline-offset: 0.18em;
+    }
+
+    @media (max-width: 960px) {
+      .hero,
+      .main-grid,
+      .manifest-wrap,
+      .footer {
+        grid-template-columns: 1fr;
+      }
+
+      .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .topbar-note {
+        text-align: left;
+      }
+
+      h1 {
+        max-width: 11ch;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .page {
+        padding-left: 14px;
+        padding-right: 14px;
+      }
+
+      .hero {
+        padding-top: 30px;
+      }
+
+      .terminal-inner {
+        padding: 18px 16px 22px;
+      }
+
+      pre {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="topbar">
+      <div class="mark">
+        <span class="mark-badge" aria-hidden="true"></span>
+        <span>Artificial Human Design</span>
+      </div>
+      <div class="topbar-note">
+        Not another AI landing page. AHD is the tooling layer for teams that want taste, scrutiny, and failure modes they can inspect.
+      </div>
+    </header>
+
+    <section class="hero" aria-labelledby="headline">
+      <div>
+        <p class="eyebrow">A framework, not a sermon</p>
+        <h1 id="headline">Design work deserves an eval, not a vibe.</h1>
+        <p class="lede">
+          AHD turns the anti-slop position into a working system: compile the brief, lint the output, run the eval, inspect the misses, and keep the parts that still require a human eye plainly visible.
+        </p>
+      </div>
+
+      <aside class="aside" aria-label="Read the code">
+        <p class="aside-label">For people who read repos before decks</p>
+        <p>
+          The point is not to make machine output look expensive. The point is to force a standard that generic generation cannot bluff its way past.
+        </p>
+        <a class="cta" href="https://github.com/" target="_blank" rel="noreferrer noopener">Read the code</a>
+      </aside>
+    </section>
+
+    <section class="main-grid" aria-label="Overview and command">
+      <div class="terminal">
+        <div class="terminal-bar">
+          <div class="lights" aria-hidden="true">
+            <span></span><span></span><span></span>
+          </div>
+          <div>eval-live / swiss-editorial</div>
+        </div>
+        <div class="terminal-inner">
+          <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+        </div>
+      </div>
+
+      <div class="context">
+        <div class="context-block">
+          <h2 class="context-title">What the command does</h2>
+          <p>
+            It runs the brief against a concrete visual standard instead of asking for generic “quality.” You get variance, comparison, and something testable.
+          </p>
+        </div>
+        <div class="context-block">
+          <h2 class="context-title">Why it matters</h2>
+          <p>
+            Teams already know the failure pattern: plausible copy, interchangeable layouts, surface polish, no judgment. AHD treats that as an engineering problem.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="manifest-wrap" aria-label="Manifest">
+      <section class="manifest" aria-labelledby="ships">
+        <h2 id="ships">What ships</h2>
+        <ul>
+          <li><strong>brief compiler</strong></li>
+          <li><strong>28-rule linter</strong></li>
+          <li><strong>eval harness</strong></li>
+          <li><strong>vision-critic scaffold</strong></li>
+          <li><strong>MCP server</strong></li>
+          <li><strong>editor plugins</strong></li>
+          <li><strong>eight tokens</strong></li>
+        </ul>
+      </section>
+
+      <section class="manifest" aria-labelledby="gated">
+        <h2 id="gated">What is gated</h2>
+        <ul>
+          <li><strong>live frontier-model calls</strong> (needs API keys)</li>
+          <li><strong>live vision critique</strong> (needs multimodal key + screenshot pipeline)</li>
+          <li><strong>standalone npm packages for the editor plugins</strong></li>
+          <li><strong>additional tokens</strong></li>
+        </ul>
+      </section>
+    </section>
+
+    <footer class="footer">
+      <div>
+        Code licence: <strong>FSL-1.1-Apache-2.0</strong>
+      </div>
+      <div>
+        Tokens and artwork: <strong>CC-BY-4.0</strong>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>

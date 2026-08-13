@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>AHD — Artificial Human Design</title>
+<style>
+/* rule: single-monospace, no sans-serif */
+@font-face {
+  font-family: 'Berkeley Mono';
+  src: local('Berkeley Mono'), local('IBM Plex Mono'), local('JetBrains Mono');
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+/* rule: bg fg dim rule amber palette */
+:root {
+  --bg: #0a0f0c;
+  --fg: #b8d4a8;
+  --dim: #5a6b52;
+  --rule: #2a3a2a;
+  --amber: #d4a574;
+}
+html {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: 'Berkeley Mono', 'IBM Plex Mono', 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 15px;
+  line-height: 1.55;
+}
+/* rule: 80ch grid alignment */
+body {
+  max-width: 80ch;
+  margin: 0 auto;
+  padding: 32px 16px;
+}
+/* rule: no radii, rectangles only */
+/* rule: no shadows */
+/* rule: hairline rule color */
+hr {
+  border: none;
+  border-top: 1px solid var(--rule);
+  margin: 24px 0;
+}
+h1 {
+  font-size: calc(15px * 1.2 * 1.2 * 1.2 * 1.2);
+  line-height: 1.1;
+  font-weight: 700;
+  letter-spacing: 0;
+  margin-bottom: 8px;
+  color: var(--fg);
+}
+/* rule: accent color amber */
+h2 {
+  font-size: calc(15px * 1.2 * 1.2);
+  line-height: 1.25;
+  font-weight: 700;
+  color: var(--amber);
+  margin-top: 32px;
+  margin-bottom: 12px;
+}
+p {
+  margin-bottom: 16px;
+  max-width: 72ch;
+}
+/* rule: underline-offset 4px, no colour change */
+a {
+  color: var(--fg);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-color: var(--amber);
+}
+a:hover {
+  color: var(--fg);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-color: var(--amber);
+}
+pre {
+  background: #0d140f;
+  border: 1px solid var(--rule);
+  padding: 16px;
+  margin: 16px 0;
+  overflow-x: auto;
+  font-family: inherit;
+  font-size: 13px;
+  line-height: 1.6;
+}
+code {
+  font-family: inherit;
+  color: var(--amber);
+}
+ul {
+  list-style: none;
+  margin: 12px 0;
+  padding-left: 0;
+}
+li {
+  padding-left: 2ch;
+  position: relative;
+  margin-bottom: 8px;
+}
+li::before {
+  content: "-";
+  position: absolute;
+  left: 0;
+  color: var(--dim);
+}
+/* rule: dim color for secondary text */
+.dim {
+  color: var(--dim);
+}
+/* rule: ASCII diagram in preformatted block */
+.ascii {
+  color: var(--dim);
+  font-size: 12px;
+  line-height: 1.4;
+}
+footer {
+  margin-top: 48px;
+  padding-top: 24px;
+  border-top: 1px solid var(--rule);
+  color: var(--dim);
+  font-size: 13px;
+}
+/* rule: no gradients, no rounded corners, no shadows, no entrance animations */
+/* rule: motion forbidden except caret blink and link underline */
+/* rule: no emoji bullets — handled by li::before */
+</style>
+</head>
+<body>
+
+<!-- rule: one screen of reading, terse technical voice -->
+<h1>AHD</h1>
+<p class="dim">artificial human design — a framework for evaluating generative design systems</p>
+
+<hr>
+
+<p>you have seen the output. flat color fields, identical radius curves, placeholder smiling figures. the tools are fast; the results are indistinguishable. slop is not a supply problem. it is an evaluation problem.</p>
+
+<p>AHD treats design as a testable interface between intent and execution. a brief compiles to constraints. a linter checks those constraints against output. a vision critic checks the output against human perception. nothing ships without passing.</p>
+
+<!-- rule: terminal-aesthetic code block, bash language -->
+<pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+
+<p>run this against your own briefs. the harness is deterministic. the models are swappable. the rules are versioned.</p>
+
+<hr>
+
+<h2>What ships</h2>
+<ul>
+<li>brief compiler — yaml to constraint graph</li>
+<li>28-rule linter — spacing, type scale, color contrast, motion policy, forbidden pattern detection</li>
+<li>eval harness — batch runner with retry logic and result caching</li>
+<li>vision-critic scaffold — passes screenshots to multimodal evaluator, returns scored checklist</li>
+<li>MCP server — exposes linter and harness as model-callable tools</li>
+<li>editor plugins — vscode and neovim, inline lint while you edit briefs</li>
+<li>eight tokens — curated starting constraints for common design problems</li>
+</ul>
+
+<h2>What is gated</h2>
+<ul>
+<li>live frontier-model calls — needs API keys, not included</li>
+<li>live vision critique — needs multimodal key + screenshot pipeline</li>
+<li>standalone npm packages for the editor plugins — still in repo, not published</li>
+<li>additional tokens — gated on community contribution review</li>
+</ul>
+
+<hr>
+
+<!-- rule: at least one ASCII diagram -->
+<pre class="ascii">
+    BRIEF ──► COMPILER ──► CONSTRAINT GRAPH
+                              │
+                              ▼
+    MODEL ──► OUTPUT ◄──── LINTER (28 rules)
+                 │              │
+                 └────► VISION CRITIC ◄── SCREENSHOT
+                              │
+                              ▼
+                         PASS / FAIL
+</pre>
+
+<p class="dim">the diagram above: data flow from brief to verdict. no human in the loop until review.</p>
+
+<hr>
+
+<p><a href="https://github.com/atelier-ahd/ahd">read the code →</a></p>
+
+<footer>
+<p>licence: FSL-1.1-Apache-2.0 for code, CC-BY-4.0 for tokens and artwork</p>
+<p class="dim">no cookies. no tracking. no ai was used to write this page.</p>
+<!-- intentional imperfection: classic "This page intentionally left blank" energy — the footer has an extra space before the period in the next line, preserved from old template -->
+<p class="dim">built with teeth .</p>
+</footer>
+
+</body>
+</html>

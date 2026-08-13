@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AHD — Artificial Human Design</title>
+<style>
+  :root{
+    --ink:#111;
+    --paper:#f4f1ea;
+    --rule:#1a1a1a;
+    --muted:#555;
+    --term-bg:#0e0e0e;
+    --term-fg:#e8e6df;
+    --term-accent:#b8d36a;
+    --term-dim:#7a7a7a;
+    --accent:#b23a1a;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family: "Iowan Old Style", "Charter", "Georgia", serif;
+    background:var(--paper);
+    color:var(--ink);
+    font-size:17px;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 40px 28px 80px;
+  }
+  header.top{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    border-bottom:1px solid var(--rule);
+    padding-bottom:10px;
+    margin-bottom: 36px;
+    font-family:"IBM Plex Mono", ui-monospace, Menlo, monospace;
+    font-size:13px;
+    letter-spacing:0.02em;
+  }
+  header.top .mark{ font-weight:700 }
+  header.top nav a{
+    color:var(--ink);
+    text-decoration:none;
+    margin-left:18px;
+    border-bottom:1px solid transparent;
+  }
+  header.top nav a:hover{ border-bottom-color:var(--ink) }
+
+  h1{
+    font-family:"IBM Plex Mono", ui-monospace, Menlo, monospace;
+    font-size: 15px;
+    font-weight:500;
+    text-transform:uppercase;
+    letter-spacing:0.14em;
+    color:var(--muted);
+    margin:0 0 20px;
+  }
+  .lede{
+    font-size:28px;
+    line-height:1.25;
+    margin:0 0 20px;
+    font-weight:500;
+  }
+  .lede em{
+    font-style:italic;
+    color:var(--accent);
+  }
+  .sub{
+    font-size:18px;
+    color:var(--muted);
+    margin: 0 0 28px;
+    max-width: 58ch;
+  }
+  .inline-cta{
+    font-family:"IBM Plex Mono", ui-monospace, Menlo, monospace;
+    font-size:13px;
+  }
+  .inline-cta a{
+    color:var(--ink);
+    text-decoration:none;
+    border-bottom:2px solid var(--accent);
+    padding-bottom:1px;
+  }
+  .inline-cta a:hover{ background:var(--ink); color:var(--paper) }
+
+  /* terminal */
+  .term{
+    margin: 36px 0 44px;
+    background: var(--term-bg);
+    color: var(--term-fg);
+    border-radius: 4px;
+    font-family:"IBM Plex Mono", ui-monospace, Menlo, monospace;
+    font-size:13px;
+    line-height:1.55;
+    overflow:hidden;
+    box-shadow: 0 1px 0 #0004;
+  }
+  .term .chrome{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding: 8px 14px;
+    background:#181818;
+    border-bottom:1px solid #222;
+    color:var(--term-dim);
+    font-size:11px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+  }
+  .term pre{
+    margin:0;
+    padding: 16px 18px 20px;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  .term .prompt{ color:var(--term-accent) }
+  .term .flag{ color:#8ab4f8 }
+  .term .arg{ color:#e8c27a }
+  .term .cmd{ color:#fff }
+
+  h2.section{
+    font-family:"IBM Plex Mono", ui-monospace, Menlo, monospace;
+    font-size:13px;
+    text-transform:uppercase;
+    letter-spacing:0.16em;
+    margin: 48px 0 14px;
+    padding-bottom:6px;
+    border-bottom:1px solid var(--rule);
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+  }
+  h2.section .tag{
+    color:var(--muted);
+    font-size:11px;
+    letter-spacing:0.12em;
+  }
+  dl.manifest{
+    margin:0;
+    display:grid;
+    grid-template-columns: 220px 1fr;
+    row-gap: 10px;
+    column-gap: 22px;
+  }
+  dl.manifest dt{
+    font-family:"IBM Plex Mono", ui-monospace, Menlo, monospace;
+    font-size:13px;
+    color:var(--ink);
+    padding-top:2px;
+  }
+  dl.manifest dd{
+    margin:0;
+    color:var(--muted);
+    font-size:15px;
+  }
+  dl.manifest.gated dt{ color:var(--accent) }
+
+  .thesis{
+    margin: 28px 0 0;
+    padding: 18px 0 0;
+    border-top:1px dashed #0003;
+    color:var(--muted);
+    font-size:15px;
+    max-width:62ch;
+  }
+
+  footer{
+    margin-top: 64px;
+    padding-top: 18px;
+    border-top:1px solid var(--rule);
+    font-family:"IBM Plex Mono", ui-monospace, Menlo, monospace;
+    font-size:12px;
+    color:var(--muted);
+    display:flex;
+    justify-content:space-between;
+    gap:18px;
+    flex-wrap:wrap;
+    letter-spacing:0.02em;
+  }
+  footer a{ color:var(--ink); text-decoration:underline; text-decoration-thickness:1px }
+
+  @media (max-width:640px){
+    .lede{ font-size:23px }
+    dl.manifest{ grid-template-columns:1fr; row-gap:4px }
+    dl.manifest dd{ margin-bottom:10px }
+    header.top nav a{ margin-left:10px }
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+
+    <header class="top">
+      <span class="mark">AHD · Artificial Human Design</span>
+      <nav>
+        <a href="#ships">ships</a>
+        <a href="#gated">gated</a>
+        <a href="https://github.com/ahd/ahd">github</a>
+      </nav>
+    </header>
+
+    <h1>// a framework, not a lecture</h1>
+
+    <p class="lede">
+      You have already noticed that generated pages <em>rhyme</em>. Same hero stack, same three cards, same purple haze. AHD is the eval harness and toolchain that treats that rhyme as a measurable defect.
+    </p>
+
+    <p class="sub">
+      Artificial Human Design is an opinionated pipeline — brief &rarr; linter &rarr; eval &rarr; vision critique — for people who want model output held to a rubric instead of a vibe. It is not a generator. It grades generators.
+    </p>
+
+    <p class="inline-cta">
+      &rarr; <a href="https://github.com/ahd/ahd">read the code on github</a>
+      &nbsp;·&nbsp; <a href="https://forge.ahd.dev/ahd/ahd">forgejo mirror</a>
+    </p>
+
+    <div class="term" role="region" aria-label="Terminal example">
+      <div class="chrome">
+        <span>~/ahd  &mdash; zsh</span>
+        <span>bash</span>
+      </div>
+<pre><span class="prompt">$</span> <span class="cmd">ahd eval-live swiss-editorial</span> <span class="flag">--brief</span> <span class="arg">briefs/landing.yml</span> <span class="flag">--models</span> <span class="arg">&lt;specs&gt;</span> <span class="flag">--n</span> <span class="arg">10</span></pre>
+    </div>
+
+    <section id="ships">
+      <h2 class="section">What ships <span class="tag">today · in-tree</span></h2>
+      <dl class="manifest">
+        <dt>brief compiler</dt>
+        <dd>YAML briefs compiled to a typed spec with constraint and anti-pattern slots.</dd>
+
+        <dt>28-rule linter</dt>
+        <dd>Static checks for the defects you can spot without a model: pill-badge hero, purple-to-blue gradient, three equal cards, gradient text on "AI", and 24 more.</dd>
+
+        <dt>eval harness</dt>
+        <dd>Runs n generations per brief across declared models, scores against the rubric, writes a deterministic report.</dd>
+
+        <dt>vision-critic scaffold</dt>
+        <dd>The adapter, prompt library, and screenshot contract. Swap in any multimodal endpoint.</dd>
+
+        <dt>MCP server</dt>
+        <dd>Exposes the compiler, linter, and eval harness to any MCP-aware editor or agent.</dd>
+
+        <dt>editor plugins</dt>
+        <dd>VS Code and Zed integrations that surface linter output inline as you write briefs and templates.</dd>
+
+        <dt>eight tokens</dt>
+        <dd>The initial AHD design-token set: type scale, measure, rule weight, four neutrals, one accent.</dd>
+      </dl>
+    </section>
+
+    <section id="gated">
+      <h2 class="section">What is gated <span class="tag">external · not bundled</span></h2>
+      <dl class="manifest gated">
+        <dt>live frontier-model calls</dt>
+        <dd>You bring the API keys. AHD will not ship a proxy and will not pay the bill.</dd>
+
+        <dt>live vision critique</dt>
+        <dd>Requires a multimodal key plus a working screenshot pipeline (Playwright is the reference).</dd>
+
+        <dt>npm packages for plugins</dt>
+        <dd>The editor plugins live in-tree today; standalone, versioned npm publishes are gated on a maintainer signing off on release cadence.</dd>
+
+        <dt>additional tokens</dt>
+        <dd>Expansions beyond the eight are gated on commissioned artwork and a signed CC-BY contribution.</dd>
+      </dl>
+
+      <p class="thesis">
+        The split is deliberate. Anything that depends on a third-party cost centre or an unresolved license question is marked gated and kept out of the default install. The default install runs offline against fixtures.
+      </p>
+    </section>
+
+    <footer>
+      <span>© 2026 AHD contributors</span>
+      <span>Licence: <strong>FSL-1.1-Apache-2.0</strong> for code · <strong>CC-BY-4.0</strong> for tokens and artwork</span>
+    </footer>
+
+  </div>
+</body>
+</html>

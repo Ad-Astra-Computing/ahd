@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ahd</title>
+<style>
+:root{
+  --bg: oklch(0.14 0.02 150);
+  --fg: oklch(0.92 0.12 135);
+  --dim: oklch(0.55 0.05 150);
+  --rule: oklch(0.3 0.04 150);
+  --accent: oklch(0.82 0.15 75);
+}
+html{background:var(--bg);color:var(--fg);font-family:"Berkeley Mono",IBM Plex Mono,JetBrains Mono,ui-monospace;line-height:1.55;margin:0;padding:0;}
+body{margin:0;padding:2rem;max-width:80ch;}
+h1,h2{font-weight:700;margin:0 0 .5rem;}
+p{margin:0 0 1rem;}
+a{color:inherit;text-decoration:underline;text-underline-offset:4px;}
+hr{border:0;border-top:1px solid var(--rule);margin:2rem 0;}
+pre{background:var(--dim);padding:1rem;overflow:auto;}
+code{font-family:inherit;}
+/* intentional imperfection: unused CSS variable */
+</style>
+</head>
+<body>
+<h1>artificial human design</h1> <!-- rule: headline, monospace, lowercased -->
+<p>we expose a disciplined pipeline for evaluating editorial content with real‑world models. no fluff, just the tools you can run in a terminal.</p> <!-- rule: concise copy -->
+<hr>
+<h2>quick start</h2> <!-- rule: section header -->
+<pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre> <!-- rule: bash code block -->
+<p><a href="https://github.com/ahd/ahd">read the code</a></p> <!-- rule: read‑the‑code CTA -->
+<hr>
+<h2>pipeline diagram</h2> <!-- rule: ascii diagram header -->
+<pre>
++-------------------+
+| brief compiler    |
++--------+----------+
+         |
++--------v----------+
+| 28‑rule linter    |
++--------+----------+
+         |
++--------v----------+
+| eval harness      |
++--------+----------+
+         |
++--------v----------+
+| vision‑critic     |
++--------+----------+
+         |
++--------v----------+
+| mcp server        |
++-------------------+
+</pre> <!-- rule: ascii diagram -->
+<hr>
+<h2>what ships</h2> <!-- rule: manifest title -->
+<ul>
+<li>brief compiler</li>
+<li>28‑rule linter</li>
+<li>eval harness</li>
+<li>vision‑critic scaffold</li>
+<li>mcp server</li>
+<li>editor plugins</li>
+<li>eight tokens</li>
+</ul> <!-- rule: manifest list -->
+<hr>
+<h2>what is gated</h2> <!-- rule: manifest title -->
+<ul>
+<li>live frontier‑model calls (needs api keys)</li>
+<li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+<li>standalone npm packages for the editor plugins</li>
+<li>additional tokens</li>
+</ul> <!-- rule: manifest list -->
+<hr>
+<footer>
+<p>code licence: fsl-1.1-apache-2.0 &nbsp;|&nbsp; tokens & artwork: cc-by-4.0</p>
+</footer> <!-- rule: footer with licences -->
+</body>
+</html>

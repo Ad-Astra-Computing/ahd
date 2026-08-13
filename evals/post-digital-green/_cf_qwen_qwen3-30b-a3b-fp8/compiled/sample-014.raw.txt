@@ -1,0 +1,97 @@
+
+
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>AHD</title>
+  <style>
+    :root {
+      --bg: oklch(0.14 0.02 150);
+      --fg: oklch(0.92 0.12 135);
+      --rule: oklch(0.3 0.04 150);
+      --amber: oklch(0.82 0.15 75);
+      --font: 'Berkeley Mono', 'IBM Plex Mono', 'JetBrains Mono', ui-monospace;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--font);
+      line-height: 1.55;
+      max-width: 80ch;
+      margin: 0 auto;
+      padding: 2em 1em;
+    }
+    pre code {
+      background: var(--bg);
+      color: var(--fg);
+      padding: 1em;
+      display: block;
+      border: 1px solid var(--rule);
+      font-size: 0.9em;
+    }
+    h2 {
+      border-bottom: 1px solid var(--rule);
+      padding-bottom: 0.5em;
+      margin-top: 2em;
+    }
+    ul {
+      padding-left: 1em;
+      margin: 1em 0;
+    }
+    a {
+      text-decoration: underline;
+      text-underline-offset: 4px;
+      color: inherit;
+    }
+    footer {
+      margin-top: 3em;
+      font-size: 0.9em;
+      color: var(--dim);
+    }
+  </style>
+</head>
+<body>
+  <pre><code class="bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+
+  <h2>What ships</h2>
+  <ul>
+    <li>brief compiler</li>
+    <li>28-rule linter</li>
+    <li>eval harness</li>
+    <li>vision-critic scaffold</li>
+    <li>MCP server</li>
+    <li>editor plugins</li>
+    <li>eight tokens</li>
+  </ul>
+
+  <h2>What is gated</h2>
+  <ul>
+    <li>live frontier-model calls (needs API keys)</li>
+    <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+    <li>standalone npm packages for the editor plugins</li>
+    <li>additional tokens</li>
+  </ul>
+
+  <p><a href="https://github.com/ahd" target="_blank">read-the-code CTA</a></p>
+
+  <!-- ASCII diagram -->
+  <!-- rule: terminal-aesthetic code block -->
+  <pre><code>
++---------------------------------+
+|  AHD                            |
+|  Artificial Human Design        |
++---------+-----------------------+
+|  eval   | 10x                 |
+|  tokens | 8                   |
+|  linter | 28 rules            |
++---------+-----------------------+
+  </code></pre>
+
+  <footer>
+    FSL-1.1-Apache-2.0 for code, CC-BY-4.0 for tokens and artwork
+  </footer>
+</body>
+</html>

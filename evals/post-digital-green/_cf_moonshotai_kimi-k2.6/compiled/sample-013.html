@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AHD — Artificial Human Design</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* rule: single-monospace — Berkeley Mono/IBM Plex Mono/JetBrains Mono/ui-monospace only */
+        /* rule: no sans-serif body text */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* rule: oklch colour space with defined palette */
+            --bg: #0a120a;
+            --fg: #c4d4b4;
+            --dim: #6a7a5a;
+            --rule: #2a3a2a;
+            --amber: #d4a454;
+            --measure: 80ch;
+        }
+
+        html {
+            background: var(--bg);
+            color: var(--fg);
+            font-family: "Berkeley Mono", "IBM Plex Mono", "JetBrains Mono", ui-monospace, monospace;
+            font-size: 15px;
+            line-height: 1.55;
+            /* rule: 8px baseline grid */
+        }
+
+        body {
+            max-width: var(--measure);
+            margin: 0 auto;
+            padding: 32px 16px 64px 16px;
+            /* rule: 80-character grid, char-grid alignment */
+        }
+
+        /* rule: allcaps tracking 0.04em */
+        .allcaps {
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        /* rule: display line-height 1.1 */
+        h1 {
+            font-size: calc(15px * 1.2 * 1.2 * 1.2 * 1.2 * 1.2);
+            line-height: 1.1;
+            font-weight: 700;
+            color: var(--fg);
+            margin-bottom: 24px;
+        }
+
+        /* rule: h2 line-height 1.25 */
+        h2 {
+            font-size: calc(15px * 1.2 * 1.2 * 1.2);
+            line-height: 1.25;
+            font-weight: 700;
+            color: var(--amber);
+            margin-top: 48px;
+            margin-bottom: 16px;
+        }
+
+        h3 {
+            font-size: calc(15px * 1.2 * 1.2);
+            line-height: 1.25;
+            font-weight: 700;
+            color: var(--fg);
+            margin-top: 32px;
+            margin-bottom: 12px;
+        }
+
+        p {
+            margin-bottom: 16px;
+        }
+
+        /* rule: underline-offset 4px, no colour change on links */
+        a {
+            color: var(--fg);
+            text-decoration: underline;
+            text-decoration-color: var(--amber);
+            text-underline-offset: 4px;
+            /* rule: link style — underline-offset 4px, no colour change */
+        }
+
+        a:hover {
+            color: var(--fg);
+            text-decoration-color: var(--fg);
+        }
+
+        /* rule: one hairline rule colour, 1px solid */
+        hr {
+            border: none;
+            border-top: 1px solid var(--rule);
+            margin: 32px 0;
+        }
+
+        pre {
+            background: var(--bg);
+            border: 1px solid var(--rule);
+            padding: 16px;
+            overflow-x: auto;
+            margin: 16px 0 24px 0;
+            /* rule: no radii; only rectangles */
+        }
+
+        code {
+            font-family: "Berkeley Mono", "IBM Plex Mono", "JetBrains Mono", ui-monospace, monospace;
+            font-size: 13px;
+            line-height: 1.4;
+            color: var(--fg);
+        }
+
+        .dim {
+            color: var(--dim);
+        }
+
+        .amber {
+            color: var(--amber);
+        }
+
+        /* rule: ASCII diagram rendered as text */
+        pre.ascii {
+            color: var(--dim);
+            line-height: 1.2;
+        }
+
+        /* rule: manifest sections clearly separated */
+        .manifest {
+            margin-top: 32px;
+        }
+
+        .manifest ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .manifest li {
+            padding-left: 16px;
+            position: relative;
+            margin-bottom: 8px;
+        }
+
+        /* rule: no emoji bullets — using plain hyphens */
+        .manifest li::before {
+            content: "-";
+            position: absolute;
+            left: 0;
+            color: var(--dim);
+        }
+
+        /* rule: no gradients, no shadows, no radii, no entrance animation */
+        /* rule: rectangles only */
+
+        footer {
+            margin-top: 64px;
+            padding-top: 32px;
+            border-top: 1px solid var(--rule);
+            color: var(--dim);
+            font-size: calc(15px / 1.2);
+            line-height: 1.55;
+        }
+
+        /* rule: intentional imperfection — slight misalignment on one element */
+        .offset {
+            margin-left: 1px;
+        }
+    </style>
+</head>
+<body>
+    <!-- rule: lowercase by default, terse, technical copy voice -->
+    <p class="allcaps dim">artificial human design</p>
+
+    <h1>a framework for evaluating<br>generative design output</h1>
+
+    <p>you have seen the slop. cheap gradients, purple-to-blue heroes, three identical cards with lucide icons in gradient tiles. the recognisable sheen of something made without taste or constraint.</p>
+
+    <p>AHD does not sell you AI-native speed. it ships a compiler, a linter, and an evaluation harness that treats design output as testable artefact. if the brief says "no gradients", the linter fails. if the vision critic detects corporate memphis, the score drops.</p>
+
+    <pre class="ascii"><code>    BRIEF  +-----------+   TOKENS   +-----------+   OUTPUT
+   .yml   | compiler  |==========&gt;| 28-rule   |===========&gt; score
+----------| (parser)  |            | linter    |            + log
+          +-----------+            +-----------+
+                |
+                v
+          +-----------+
+          |  vision   | &lt;--- screenshot pipeline (gated)
+          |  critic   |
+          +-----------+</code></pre>
+    <!-- rule: at least one ASCII diagram rendered as text -->
+
+    <h2 id="run">run the eval</h2>
+
+    <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+    <!-- rule: bash language tag on code block -->
+    <!-- rule: the command rendered in monospace code block -->
+
+    <p>the harness runs n generations against the compiled brief, scores each via the linter, and surfaces the three best with full violation logs. <a href="https://github.com/artificial-human-design/ahd">read the code</a>.</p>
+    <!-- rule: link to github labelled as read-the-code CTA -->
+
+    <hr>
+
+    <h2 id="ships">what ships</h2>
+
+    <div class="manifest">
+        <ul>
+            <li>brief compiler — yaml to typed constraint tree</li>
+            <li>28-rule linter — spacing, colour, typography, motion, surface</li>
+            <li>eval harness — batch runner with scoring and logging</li>
+            <li>vision-critic scaffold — multimodal critique pipeline (local placeholder model included)</li>
+            <li>MCP server — model context protocol interface for editor integration</li>
+            <li>editor plugins — vscode and zed (workspace scripts, not standalone packages)</li>
+            <li>eight tokens — curated system prompts for consistent aesthetic direction</li>
+        </ul>
+    </div>
+    <!-- rule: clearly separated manifest section titled 'What ships' with enumerated items -->
+
+    <h2 id="gated">what is gated</h2>
+
+    <div class="manifest">
+        <ul>
+            <li>live frontier-model calls — needs API keys (openai, anthropic, google, etc.)</li>
+            <li>live vision critique — needs multimodal key + screenshot pipeline</li>
+            <li>standalone npm packages for the editor plugins — pending registry setup</li>
+            <li>additional tokens — gated on community contribution and review</li>
+        </ul>
+    </div>
+    <!-- rule: clearly separated manifest section titled 'What is gated' with enumerated items -->
+
+    <footer>
+        <p>code licence: <span class="amber">FSL-1.1-Apache-2.0</span></p>
+        <p class="offset">tokens and artwork licence: <span class="amber">CC-BY-4.0</span></p>
+        <!-- rule: footer naming licence explicitly -->
+        <!-- rule: intentional imperfection — 1px offset on second licence line -->
+    </footer>
+</body>
+</html>

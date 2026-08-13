@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ahd — artificial human design</title>
+<style>
+/* rule: single-monospace pairing, Berkeley Mono + fallbacks */
+@font-face {
+  font-family: 'Berkeley Mono';
+  src: local('Berkeley Mono'), local('IBM Plex Mono'), local('JetBrains Mono');
+  font-display: swap;
+}
+
+/* rule: base 15px, ratio 1.2 */
+:root {
+  --sz-0: 0px;
+  --sz-1: 4px;
+  --sz-2: 8px;
+  --sz-3: 12px;
+  --sz-4: 16px;
+  --sz-5: 24px;
+  --sz-6: 32px;
+  --sz-7: 48px;
+  --sz-8: 64px;
+  
+  /* rule: oklch palette, bg/fg/dim/rule/amber */
+  --bg: oklch(0.14 0.02 150);
+  --fg: oklch(0.92 0.12 135);
+  --dim: oklch(0.55 0.05 150);
+  --rule: oklch(0.3 0.04 150);
+  --amber: oklch(0.82 0.15 75);
+}
+
+/* rule: dark green-black bg, muted green fg, amber accent only */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: 'Berkeley Mono', 'IBM Plex Mono', 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 15px; /* rule: base 15px */
+  line-height: 1.55; /* rule: body line-height 1.55 */
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  max-width: 80ch; /* rule: 80 character grid alignment */
+  margin: 0 auto;
+  padding: var(--sz-5) var(--sz-4);
+}
+
+/* rule: underline offset 4px, no colour change for links */
+a {
+  color: var(--fg);
+  text-decoration: underline;
+  text-decoration-color: var(--amber);
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+}
+
+a:hover {
+  color: var(--fg); /* rule: no colour change */
+  text-decoration-color: var(--fg);
+}
+
+/* rule: display line-height 1.1 */
+h1 {
+  font-size: calc(15px * 1.2 * 1.2 * 1.2 * 1.2); /* step 4 */
+  line-height: 1.1;
+  font-weight: 700;
+  margin-bottom: var(--sz-3);
+  letter-spacing: 0;
+}
+
+/* rule: h2 line-height 1.25 */
+h2 {
+  font-size: calc(15px * 1.2 * 1.2); /* step 2 */
+  line-height: 1.25;
+  font-weight: 700;
+  margin-top: var(--sz-6);
+  margin-bottom: var(--sz-3);
+  letter-spacing: 0;
+}
+
+p {
+  margin-bottom: var(--sz-4);
+  max-width: 72ch; /* rule: measure 72ch */
+}
+
+/* rule: terminal-aesthetic code block */
+pre {
+  background: var(--bg);
+  border: 1px solid var(--rule); /* rule: hairline rule colour, 1px solid */
+  padding: var(--sz-3) var(--sz-4);
+  margin: var(--sz-4) 0 var(--sz-5) 0;
+  overflow-x: auto;
+  font-size: calc(15px / 1.2); /* step -1 */
+  line-height: 1.55;
+}
+
+/* rule: code inline */
+code {
+  font-family: inherit;
+  color: var(--fg);
+}
+
+pre code {
+  color: var(--fg);
+  font-size: inherit;
+}
+
+/* rule: bash syntax hint via comment colour */
+pre .comment {
+  color: var(--dim);
+}
+
+/* rule: ASCII diagram styling */
+.ascii-diagram {
+  color: var(--dim);
+  font-size: calc(15px / 1.2);
+  line-height: 1.2;
+  margin: var(--sz-4) 0 var(--sz-5) 0;
+  white-space: pre;
+  overflow-x: auto;
+}
+
+/* rule: manifest section separation via hairline rule */
+.manifest {
+  border-top: 1px solid var(--rule);
+  margin-top: var(--sz-6);
+  padding-top: var(--sz-5);
+}
+
+.manifest h2 {
+  margin-top: 0;
+  color: var(--fg);
+}
+
+/* rule: no radii, rectangles only */
+.manifest h2 {
+  border-left: 3px solid var(--amber);
+  padding-left: var(--sz-3);
+  /* intentional imperfection: border-left is 3px not 1px, slightly off-grid */
+}
+
+/* rule: dim colour for secondary text */
+.dim {
+  color: var(--dim);
+}
+
+/* rule: list styling, no emoji bullets */
+.manifest ul {
+  list-style: none;
+  margin: var(--sz-3) 0 var(--sz-4) 0;
+}
+
+.manifest li {
+  padding-left: var(--sz-4);
+  position: relative;
+  margin-bottom: var(--sz-2);
+  line-height: 1.55;
+}
+
+.manifest li::before {
+  content: "-";
+  position: absolute;
+  left: 0;
+  color: var(--dim);
+}
+
+/* rule: footer with explicit licence naming */
+footer {
+  border-top: 1px solid var(--rule);
+  margin-top: var(--sz-8);
+  padding-top: var(--sz-4);
+  padding-bottom: var(--sz-5);
+  font-size: calc(15px / 1.2);
+  line-height: 1.55;
+  color: var(--dim);
+}
+
+footer a {
+  color: var(--dim); /* rule: dim links in footer remain underlined */
+}
+
+/* rule: no entrance animations, but caret blink allowed */
+::selection {
+  background: var(--amber);
+  color: var(--bg);
+}
+
+/* rule: what is gated section has different left border */
+.manifest-gated h2 {
+  border-left-color: var(--dim);
+}
+
+/* rule: header minimal, no badge */
+header {
+  margin-bottom: var(--sz-5);
+  padding-bottom: var(--sz-3);
+  border-bottom: 1px solid var(--rule);
+}
+
+header p {
+  margin-bottom: 0;
+  color: var(--dim);
+}
+
+/* rule: tracking 0.04em for allcaps */
+.allcaps {
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: calc(15px / 1.2);
+  color: var(--dim);
+}
+</style>
+</head>
+<body>
+
+<header>
+<p class="allcaps">artificial human design</p>
+</header>
+
+<h1>ahd</h1>
+
+<p>you have seen the slop. thin gradients, rounded everything, three cards in a row, a testimonial from "sarah, pm" with a generic avatar. the suspicion that generative tools flatten taste into a single acceptable median. this is the problem ahd was built to address, not by lecture, but by tooling.</p>
+
+<p>ahd is an evaluation and linting framework for interface generation. it compiles structured briefs, runs models against them, and scores outputs against human-curated rules. the thesis: generated design can be held to a standard, and that standard can be automated.</p>
+
+<div class="ascii-diagram">
++--------+    +-------------+    +----------------+    +-------+
+| brief  | -> |  compiler   | -> | frontier model | -> | score |
+|  .yml  |    |  + linter   |    | (or local llm) |    |  /10  |
++--------+    +-------------+    +----------------+    +-------+
+                   ^                      |
+                   |              +-------+-------+
+                   +-------------+ vision critic |
+                                  | (multimodal)  |
+                                  +---------------+
+</div>
+
+<p>the eval loop is one command. no local dependencies beyond node 20+ and a key.</p>
+
+<pre><code><span class="comment"># run live eval against a brief, compare n variants</span>
+ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+
+<p>the linter runs 28 rules covering alignment, colour contrast, type scale consistency, motion policy enforcement, and forbidden-pattern detection. the vision-critic scaffold accepts screenshots and returns structured critique, gated on multimodal api access. the mcp server exposes the toolchain to editors that speak the protocol.</p>
+
+<p><a href="https://github.com/artificialhumandesign/ahd">read the code →</a></p>
+
+<section class="manifest">
+<h2>What ships</h2>
+<ul>
+<li>brief compiler — yaml-to-prompt with variable interpolation and constraint validation</li>
+<li>28-rule linter — static analysis for generated html/css, no model calls required</li>
+<li>eval harness — parallel execution, scoring aggregation, result export to ndjson</li>
+<li>vision-critic scaffold — image input, structured critique output, pluggable model backend</li>
+<li>mcp server — model context protocol implementation for editor integration</li>
+<li>editor plugins — lsp-compatible diagnostics for vscode and neovim (editor-side scripts, not standalone packages)</li>
+<li>eight tokens — curated design vocabularies: post-digital-green, brutalist-concrete, swiss-editorial, terminal-amber, lo-fi-zine, critical-engineering, soft-minimal, civic-systems</li>
+</ul>
+</section>
+
+<section class="manifest manifest-gated">
+<h2>What is gated</h2>
+<ul>
+<li>live frontier-model calls — needs api keys (openrouter, anthropic, openai, or ollama for local)</li>
+<li>live vision critique — needs multimodal key + screenshot pipeline (playwright, puppeteer, or manual capture)</li>
+<li>standalone npm packages for the editor plugins — currently vendored scripts; packaging pending registry setup</li>
+<li>additional tokens — two in draft, gated on community contribution and review</li>
+</ul>
+</section>
+
+<p class="dim" style="margin-top: var(--sz-5);">the framework assumes you already have opinions about what good design looks like. it does not generate taste; it enforces the taste you specify.</p>
+
+<footer>
+<p>code licensed under <span style="color: var(--fg);">fsl-1.1-apache-2.0</span>. tokens and artwork under <span style="color: var(--fg);">cc-by-4.0</span>.</p>
+<p style="margin-top: var(--sz-2);">ahd / 2025 / no rights reserved where prohibited</p>
+</footer>
+
+</body>
+</html>

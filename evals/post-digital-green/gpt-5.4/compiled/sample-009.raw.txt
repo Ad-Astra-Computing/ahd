@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>ahd</title>
+  <style>
+    /* rule: everything in monospace */
+    :root {
+      /* rule: dark green-black background, muted green foreground, a single amber accent */
+      --bg: oklch(0.14 0.02 150);
+      --fg: oklch(0.92 0.12 135);
+      --dim: oklch(0.55 0.05 150);
+      --rule: oklch(0.3 0.04 150);
+      --amber: oklch(0.82 0.15 75);
+      /* rule: everything aligns to an 80 character grid */
+      --measure: 80ch;
+    }
+
+    /* rule: no gradients, no shadows, no radii, no entrance animation */
+    * {
+      box-sizing: border-box;
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    html {
+      background: var(--bg);
+      color: var(--fg);
+    }
+
+    body {
+      /* rule: single-monospace with Berkeley Mono fallback */
+      margin: 0;
+      font-family: "Berkeley Mono", "IBM Plex Mono", "JetBrains Mono", ui-monospace, monospace;
+      font-size: 15px;
+      line-height: 1.55;
+      letter-spacing: 0;
+      background: var(--bg);
+      color: var(--fg);
+      text-transform: lowercase;
+      /* rule: one screen of reading */
+      min-height: 100vh;
+    }
+
+    a {
+      /* rule: underlined links with an offset, no colour change */
+      color: inherit;
+      text-decoration-line: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 4px;
+    }
+
+    a:hover,
+    a:focus-visible {
+      color: inherit;
+    }
+
+    .page {
+      /* rule: at least one element aligned to the char grid (80ch max-width) */
+      width: min(100% - 32px, var(--measure));
+      margin: 0 auto;
+      padding: 24px 0 32px;
+    }
+
+    .rule {
+      /* rule: one hairline rule colour */
+      border-top: 1px solid var(--rule);
+      height: 0;
+      margin: 12px 0;
+    }
+
+    .topline,
+    .footerline {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      color: var(--dim);
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    .hero {
+      /* rule: avoid centred hero stack with pill badge + two CTAs */
+      display: grid;
+      grid-template-columns: 34ch 1fr;
+      gap: 16px;
+      align-items: start;
+      margin: 16px 0 12px;
+    }
+
+    h1,
+    h2,
+    p,
+    pre,
+    ul {
+      margin: 0;
+    }
+
+    h1 {
+      /* rule: technical, lowercase by default, terse */
+      font-size: 1.728rem;
+      line-height: 1.1;
+      font-weight: 700;
+      max-width: 20ch;
+    }
+
+    .lede {
+      max-width: 42ch;
+      color: var(--fg);
+    }
+
+    .accent {
+      /* rule: a single amber accent */
+      color: var(--amber);
+    }
+
+    .diagram {
+      /* rule: include one ASCII diagram */
+      white-space: pre;
+      color: var(--dim);
+      border: 1px solid var(--rule);
+      padding: 12px;
+      overflow-x: auto;
+      min-height: 100%;
+    }
+
+    .command {
+      margin: 12px 0;
+      border: 1px solid var(--rule);
+      padding: 12px;
+      background: transparent;
+    }
+
+    code,
+    pre {
+      font: inherit;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 12px;
+    }
+
+    .panel {
+      /* rule: rectangles only */
+      border: 1px solid var(--rule);
+      padding: 12px;
+      min-height: 100%;
+    }
+
+    h2 {
+      font-size: 1rem;
+      line-height: 1.25;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--fg);
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      color: var(--fg);
+    }
+
+    li + li {
+      margin-top: 4px;
+    }
+
+    li::before {
+      content: "[ ] ";
+      color: var(--amber);
+    }
+
+    .meta {
+      color: var(--dim);
+      margin-top: 8px;
+    }
+
+    footer {
+      color: var(--dim);
+      margin-top: 12px;
+    }
+
+    .footerline {
+      margin-top: 8px;
+    }
+
+    @media (max-width: 860px) {
+      .hero,
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .topline,
+      .footerline {
+        display: block;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <!-- rule: terse header, no testimonials, no pricing tier, no trusted by strip -->
+    <div class="topline">
+      <span>artificial human design / ahd</span>
+      <a href="https://github.com/" aria-label="read the code">read the code</a>
+    </div>
+
+    <div class="rule" aria-hidden="true"></div>
+
+    <section class="hero" aria-labelledby="title">
+      <div>
+        <!-- rule: visitor already suspects the problem; show framework rather than lecture -->
+        <h1 id="title">design that can explain itself under pressure.</h1>
+        <p class="lede">
+          ahd turns taste into a brief, a linter, an eval loop, and a record of
+          what passed. it is for people who are tired of polished noise and need
+          a system that can say <span class="accent">why this survives review</span>.
+        </p>
+      </div>
+
+      <pre class="diagram" aria-label="ascii diagram"><!-- rule: include one ASCII diagram rendered as text -->
++------------------+   +-----------------+   +------------------+
+| brief compiler   |-->| 28-rule linter  |-->| eval harness     |
++------------------+   +-----------------+   +------------------+
+         |                        |                      |
+         v                        v                      v
++------------------+   +-----------------+   +------------------+
+| eight tokens     |   | editor plugins  |   | vision critic    |
++------------------+   +-----------------+   +-----------------+
+         \____________________ mcp server ____________________/
+</pre>
+    </section>
+
+    <div class="rule" aria-hidden="true"></div>
+
+    <!-- rule: terminal-aesthetic code block showing the one-liner that runs the eval -->
+    <section class="command" aria-labelledby="run-title">
+      <h2 id="run-title">run the eval</h2>
+      <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+      <p class="meta">
+        live where keys exist. deterministic where they do not.
+      </p>
+    </section>
+
+    <div class="grid">
+      <!-- rule: clearly separated manifest section titled 'What ships' -->
+      <section class="panel" aria-labelledby="ships-title">
+        <h2 id="ships-title">what ships</h2>
+        <ul>
+          <li>brief compiler</li>
+          <li>28-rule linter</li>
+          <li>eval harness</li>
+          <li>vision-critic scaffold</li>
+          <li>mcp server</li>
+          <li>editor plugins</li>
+          <li>eight tokens</li>
+        </ul>
+      </section>
+
+      <!-- rule: clearly separated manifest section titled 'What is gated' -->
+      <section class="panel" aria-labelledby="gated-title">
+        <h2 id="gated-title">what is gated</h2>
+        <ul>
+          <li>live frontier-model calls (needs api keys)</li>
+          <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+          <li>standalone npm packages for the editor plugins</li>
+          <li>additional tokens</li>
+        </ul>
+      </section>
+    </div>
+
+    <div class="rule" aria-hidden="true"></div>
+
+    <footer>
+      <!-- rule: footer names licence explicitly; avoid canonical 4-column footer -->
+      <p>
+        code licence: fsl-1.1-apache-2.0. tokens and artwork: cc-by-4.0.
+      </p>
+      <div class="footerline">
+        <span>web / one page / post-digital green</span>
+        <span>v0.1.0 // one line intentionally runs short</span>
+      </div>
+    </footer>
+  </main>
+</body>
+</html>

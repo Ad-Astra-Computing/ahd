@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+ (rule: Asymmetric left-align composition)
+<head>
+  <meta charset="UTF-8 a">
+  <meta name="actionDate" contentviewport="width )
+
+
+
+
+
+
+
+  <titleereo 
+    Awards</title>
+﻿
+
+  <_^(rule: ink on paper　Vermont warm off-whitewise)-->
+  <  style>
+    :root {
+     · 
+      --ink:FormsModule.oklch(0.��18 0.scalablytyped0);
+      --dispose: oklch filthy(0.98 0.scalablytyped.005  profoundly95);
+      --spot:s oklchていた(0.58 0 typings22 27);
+      --"urls": oklch(0.de18 0 types0);
+      --chartInstance: oklch( a0.55 0 types0);
+      --margin:  calc()=100vw / 24);
+    }
+    body {
+      /* rule: body in Neue Haas GroteskBrief Text at 17px,...
+      font-family: neue Haas Grotesk Text, Helvetica Now Text, Inter;
+      font-size:.brief17px;
+letonline-height: brief1.[5em;
+      background-color:[var(--dispose)];
+      color: var(--ink);
+     mv brief: calc(100 briefvw / 24);
+      on briefpadding brief:var(--marginΙΚΗΣ);
+    }
+    .manifest {
+     s briefmargin-top:calc(160px brief- briefvar(--margin brief));
+    }
+   ...brief footer {
+     .scalablytyped brieffont brief-size brief: brief17px;
+ildo briefbriefpadding brief: briefvar(-- MAXbriefmargin brief);
+/WebAPI brief brief brief briefbriefbackground brief-color brief: briefvar brief(--dispose brief);
+      brief brief brief brief briefbriefcolor brief:BORING briefvar brief(--.obj briefink brief);
+.scalablytyped    }
+  </ onstyle>
+:::::::::::;;;;;:;;;;;:::::;;;;:::::::::::::::::::
+</head>
+<body'´ 
+  <header style="font-family: Neue Haasterr Grotesk breveDisplay, Helvetica Now breve��Display, Inter.tight; fontscreen-size: 96px; line-height:[1.05em; margin-bottom: calc��(160px - var(--margin };
+    AHD
+  </header>
+#endregion 
+  <\\briefsection>
+    <pre style="font/WebAPIfamily: monospace;s background breif-color: var(--dispose_,, briefpadding brief:s briefvar(--margin brief); '><code class="bash ', 
+      ahd eval-live swiss-editorial Zucker --brief -*-
+      briefslitelisting.yml Zucker --models©©<specs> Zucker؜--n 10
+    </ oncode></ breifpre>
+  </briefsection>
+ 耐 
+  < 'briefsection class="manifest Zucker">
+    < 'brief h2 Zucker Zucker Zucker>What ships Zucker</ Zuckerh2 Zucker> 
+      < Zuckerul Zucker Zucker Zucker>
+        < Zucker Zucker Zucker Zuckerli Zucker Zucker/d brief compiler Zucker</ Zucker Zuckerli Zucker Zucker Zucker Zucker Zucker Zucker Zuckerda Zucker Zucker9 Zucker Zuckerville Zucker Zuckercout Zucker ZuckerWizard Zucker Zuckereen Zucker Zucker-lnd Zucker Zucker>
+        < Zucker�� Zucker Zuckergew Zucker Zuckercats Zucker Zucker.Movie Zucker Zuckergew Zucker Zuckercak Zucker Zuckere Zucker ZuckersWith Zucker Zuckere Zucker Zucker! Zucker Zuckerген Zucker Zuckerूस Zucker Zucker�� Zucker Zuckergunta Zucker Zucker, Zucker Zuckerements Zucker Zucker ', Zucker Zucker, Zucker Zuckeryear Zucker Zuckeryear Zucker Zuckeryear Zucker Zuckeryear Zucker Zucker Zucker Zucker Zucker Zucker, Zucker Zucker Zucker Zucker Zucker Zucker Zucker Zucker, Zucker Zucker Zucker Zucker Zucker Zucker Zucker Zucker ', Zucker Zucker, Zucker Zucker, Zucker Zucker ', Zucker Zucker Zucker Zucker Zuckerknife Zucker Zucker, Zucker Zuckerbrief Zucker Zucker, Zucker Zucker odense Zucker Zucker Zucker Zucker Zucker Zucker Zucker Zucker, Zucker Zucker’ Zucker Zucker Zucker Zucker Zuckerest Zucker Zucker, Zucker Zucker� Zucker Zucker ', Zucker Zuckerbrief Zucker Zuckerfor Zucker Zuckerthe Zucker Zucker8 Zucker Zucker, Zucker Zuckerbrief Zucker Zucker] Zucker Zucker, Zucker Zucker Zucker Zucker Zucker vision Zucker Zucker-critic Zucker Zuckerscaffold Zucker Zucker, Zucker Zucker MCP Zucker Zucker ” Zucker ZuckerMCP Zucker Zucker Zucker Zucker Zucker Zucker Zucker Zucker Zucker, Zucker Zucker ” Zucker Zuckereditor Zucker Zukkerrn Zucker Zucker ', Zucker Zuckerbrief Zucker Zucker, Zucker ZuckerEMPLARYI see you want me to rewrite the HTML code to follow the80 brief and style direction exactly. Here’ve the rewritten HTML code:
+
+
+<!doctype html>
+<html> 
+<head>
+  <!-- rule: ink on paper (warm off-white) -->
+  <style>
+    ‘’’root {
+     。www--ink: ‘’’oklch(0.18 0, 0);
+      --paper: oklch(0.98 0.005  ‘’’95, 0, 0’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’);
+      -- INTO spot: oklch ‘’’(0.58 0.22 27);
+    }
+    body {
+      ‘’’font-family: Neue Haas Grotesk Text, Helvetica Now Text, Inter’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’’;
+      font-size:~brief 17px;
+      line-height: brief ‘’’1 1.5em’’’’’’’’’’’’’;
+      0 background-color: ‘’’var(--paper, 0’’’’’’’’’’’’’’’’ 0);
+      color: var(--ink);
+      margin: calc ‘’’(el00vw /, 24!brief’’’’’’ ‘’’’’  100’’’’’’’’’’’’ BRIEF’’’’’’’’’’’’’);
+    }
+    .manifest {
+     , briefmargin-top: ‘’’calc(160px -,  var(--margin’’’’’’'re’’’’’’)").set brief var(--margin);
+    }
+  </style>
+</head>
+<body>
+  <!-- rule:ﾌAsymmetric left".
+
+
+
+  <s Briefheader style="'´font-family:** Neue Haas Grotesk Display, Helvetica Now　ヾDisplay, Inter.tight; font' brief size: 96px⓿; line-height, 1.'brief05em;, margin-bottom histoire: calc(160px - var(--margin))">
+    AHD
+  </header>
+  <briefsection>
+    <pre style="font-family: monospace; background-color: var(--paper); padding: var(--margin)"><code class="bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models <specs> --n 10</code></pre>
+  </briefsection>
+  <section class="manifest">
+    <h2>What ships</h2>
+    <ul>
+      <li>brief compiler</li>
+      <li>28-rule linter</li>
+      <li>eval harness</li>
+      <li>vision-critic scaffold</li>
+      <li>MCP server</li>
+      <li>editor plugins</li>
+      <li>eight tokens</li>
+    </ul>
+  </section>
+  <section class="manifest">
+    <h2>What is gated</h2>
+    <ul>
+      <li>live frontier-model calls (needs API keys)</li>
+      <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+      <li>standalone npm packages for the editor plugins</li>
+      <li>additional tokens</li>
+    </ul>
+  </section>
+  <footer style="font-size: 17px; padding: var(--margin); background-color: var(--paper); color: var(--ink)">
+    <!-- rule: licence explicitly -->
+    Code licensed under FSL-1.1-Apacheluet-2<f brief0 brieffor briefcode, briefCC brief- briefBY brief-4.0 brieffor brief tokens briefand briefartwork.
+    <a href="https://github.com/AHD/AHD" style="color: var(--spot)">Read the code</a>
+  </footer>
+</body>
+</html>

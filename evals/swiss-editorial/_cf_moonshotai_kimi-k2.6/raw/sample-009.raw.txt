@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AHD — Artificial Human Design</title>
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --bg-raised: #141414;
+    --surface: #1a1a1a;
+    --border: #2a2a2a;
+    --text: #c8c8c8;
+    --text-dim: #6a6a6a;
+    --text-bright: #e8e8e8;
+    --accent: #d4a853;
+    --accent-dim: #8a7340;
+    --false: #c76b6b;
+    --true: #6b9e6b;
+    --font-mono: "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", monospace;
+    --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-sans);
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  header {
+    padding: 64px 0 48px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .wordmark {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--text-dim);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .wordmark span {
+    color: var(--accent);
+  }
+
+  h1 {
+    font-size: 28px;
+    font-weight: 500;
+    color: var(--text-bright);
+    margin-top: 24px;
+    line-height: 1.3;
+    max-width: 560px;
+  }
+
+  .lede {
+    margin-top: 20px;
+    color: var(--text);
+    font-size: 16px;
+    max-width: 520px;
+  }
+
+  .lede strong {
+    color: var(--text-bright);
+    font-weight: 500;
+  }
+
+  .code-block {
+    margin: 40px 0;
+    background: var(--bg-raised);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .code-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .code-header::before {
+    content: "";
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent-dim);
+    margin-right: 8px;
+  }
+
+  pre {
+    padding: 16px;
+    overflow-x: auto;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--text);
+  }
+
+  code .kw { color: #7a9ec7; }
+  code .arg { color: #a5c7a5; }
+  code .val { color: #c7a5a5; }
+  code .flag { color: #c7c7a5; }
+  code .cmt { color: var(--text-dim); }
+
+  .copy-btn {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    padding: 2px 8px;
+    cursor: pointer;
+    border-radius: 2px;
+  }
+
+  .copy-btn:hover {
+    border-color: var(--text-dim);
+    color: var(--text);
+  }
+
+  section {
+    padding: 40px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  h2 {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-bright);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 20px;
+    font-family: var(--font-sans);
+  }
+
+  .manifest {
+    list-style: none;
+  }
+
+  .manifest li {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+  }
+
+  .manifest li:last-child {
+    border-bottom: none;
+  }
+
+  .status {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    flex-shrink: 0;
+    width: 56px;
+  }
+
+  .status.ships {
+    color: var(--true);
+  }
+
+  .status.gated {
+    color: var(--false);
+  }
+
+  .item-name {
+    color: var(--text-bright);
+    font-weight: 500;
+  }
+
+  .item-desc {
+    color: var(--text-dim);
+    font-size: 13px;
+  }
+
+  .cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 32px;
+    padding: 12px 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text-bright);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: border-color 0.15s;
+  }
+
+  .cta:hover {
+    border-color: var(--accent);
+  }
+
+  .cta svg {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+  }
+
+  .principles {
+    list-style: none;
+    display: grid;
+    gap: 16px;
+  }
+
+  .principles li {
+    padding: 16px;
+    background: var(--bg-raised);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+  }
+
+  .principle-num {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--accent-dim);
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .principle-title {
+    color: var(--text-bright);
+    font-weight: 500;
+    font-size: 14px;
+    margin-bottom: 6px;
+  }
+
+  .principle-body {
+    color: var(--text-dim);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  footer {
+    padding: 40px 0 64px;
+    color: var(--text-dim);
+    font-size: 13px;
+  }
+
+  footer p {
+    max-width: 480px;
+  }
+
+  .licence {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text);
+    margin-top: 12px;
+  }
+
+  .licence span {
+    color: var(--text-dim);
+  }
+
+  .github-link {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .github-link:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 600px) {
+    h1 {
+      font-size: 22px;
+    }
+    .lede {
+      font-size: 15px;
+    }
+    pre {
+      font-size: 12px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header class="wrap">
+  <p class="wordmark"><span>AHD</span> / Artificial Human Design</p>
+  <h1>A framework for evaluating design before it ships</h1>
+  <p class="lede">You have already seen the problem: mass-generated interfaces with no coherence, no constraint, no taste. <strong>AHD is not a generator.</strong> It is a compiler, a linter, and an eval harness for design systems—tools to keep human judgment in the loop when models are doing the mechanical work.</p>
+
+  <div class="code-block">
+    <div class="code-header">
+      <span>bash</span>
+      <button class="copy-btn" onclick="navigator.clipboard.writeText(this.closest('.code-block').querySelector('code').innerText)">copy</button>
+    </div>
+    <pre><code><span class="kw">ahd</span> <span class="arg">eval-live</span> <span class="val">swiss-editorial</span> <span class="flag">--brief</span> <span class="val">briefs/landing.yml</span> <span class="flag">--models</span> &lt;specs&gt; <span class="flag">--n</span> <span class="val">10</span><span class="cmt">  # compile, lint, evaluate, rank</span></code></pre>
+  </div>
+
+  <a href="https://github.com/artificial-human-design/ahd" class="cta" target="_blank" rel="noopener">
+    <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+    Read the code
+  </a>
+</header>
+
+<section class="wrap">
+  <h2 id="what-ships">What ships</h2>
+  <ul class="manifest" aria-labelledby="what-ships">
+    <li>
+      <span class="status ships">now</span>
+      <div>
+        <span class="item-name">Brief compiler</span>
+        <span class="item-desc"> — YAML-structured design briefs to type-checked evaluation specs</span>
+      </div>
+    </li>
+    <li>
+      <span class="status ships">now</span>
+      <div>
+        <span class="item-name">28-rule linter</span>
+        <span class="item-desc"> — Design-invariant heuristics: contrast, measure, rhythm, hierarchy, density</span>
+      </div>
+    </li>
+    <li>
+      <span class="status ships">now</span>
+      <div>
+        <span class="item-name">Eval harness</span>
+        <span class="item-desc"> — Batch runner with deterministic seeding, scoring, and rank aggregation</span>
+      </div>
+    </li>
+    <li>
+      <span class="status ships">now</span>
+      <div>
+        <span class="item-name">Vision-critic scaffold</span>
+        <span class="item-desc"> — Structured prompt templates for multimodal critique (model-agnostic)</span>
+      </div>
+    </li>
+    <li>
+      <span class="status ships">now</span>
+      <div>
+        <span class="item-name">MCP server</span>
+        <span class="item-desc"> — Model Context Protocol adapter for IDE integration</span>
+      </div>
+    </li>
+    <li>
+      <span class="status ships">now</span>
+      <div>
+        <span class="item-name">Editor plugins</span>
+        <span class="item-desc"> — VS Code and Zed extensions (source-available, build from repo)</span>
+      </div>
+    </li>
+    <li>
+      <span class="status ships">now</span>
+      <div>
+        <span class="item-name">Eight tokens</span>
+        <span class="item-desc"> — Curated aesthetic primitives: swiss-editorial, brutalist, academic, terminal, three others + blank</span>
+      </div>
+    </li>
+  </ul>
+</section>
+
+<section class="wrap">
+  <h2 id="what-is-gated">What is gated</h2>
+  <ul class="manifest" aria-labelledby="what-is-gated">
+    <li>
+      <span class="status gated">needs key</span>
+      <div>
+        <span class="item-name">Live frontier-model calls</span>
+        <span class="item-desc"> — Bring your own API keys for OpenAI, Anthropic, Google, or local endpoint</span>
+      </div>
+    </li>
+    <li>
+      <span class="status gated">needs key</span>
+      <div>
+        <span class="item-name">Live vision critique</span>
+        <span class="item-desc"> — Multimodal key + screenshot pipeline (Playwright or similar) for pixel-level evaluation</span>
+      </div>
+    </li>
+    <li>
+      <span class="status gated">pending</span>
+      <div>
+        <span class="item-name">Standalone npm packages</span>
+        <span class="item-desc"> — Editor plugins currently build from source; registry publish gated on CI hardening</span>
+      </div>
+    </li>
+    <li>
+      <span class="status gated">pending</span>
+      <div>
+        <span class="item-name">Additional tokens</span>
+        <span class="item-desc"> — Community submissions under review; CC-BY-4.0 required</span>
+      </div>
+    </li>
+  </ul>
+</section>
+
+<section class="wrap" style="border-bottom: none;">
+  <h2>Operating principles</h2>
+  <ul class="principles">
+    <li>
+      <span class="principle-num">01</span>
+      <p class="principle-title">Evaluation over generation</p>
+      <p class="principle-body">AHD does not make design. It makes design accountable to criteria that were written before the prompt.</p>
+    </li>
+    <li>
+      <span class="principle-num">02</span>
+      <p class="principle-title">Rules before models</p>
+      <p class="principle-body">The 28-rule linter runs offline, deterministic, no API call. Models are for judgment calls the rules cannot reach.</p>
+    </li>
+    <li>
+      <span class="principle-num">03</span>
+      <p class="principle-title">Brief as contract</p>
+      <p class="principle-body">A brief is not a prompt. It is a structured document: constraints, references, anti-examples, success criteria.</p>
+    </li>
+    <li>
+      <span class="principle-num">04</span>
+      <p class="principle-title">Human in the loop, not on the ladder</p>
+      <p class="principle-body">The framework automates ranking and surfaces disagreement. The designer decides.</p>
+    </li>
+  </ul>
+</section>
+
+<footer class="wrap">
+  <p>AHD is developed in the open. No venture backing, no waitlist, no credits system.</p>
+  <p class="licence">
+    Code: <a href="https://github.com/artificial-human-design/ahd/blob/main/LICENSE" class="github-link" target="_blank" rel="noopener">FSL-1.1-Apache-2.0</a><br>
+    <span>Tokens &amp; artwork: CC-BY-4.0</span>
+  </p>
+</footer>
+
+</body>
+</html>

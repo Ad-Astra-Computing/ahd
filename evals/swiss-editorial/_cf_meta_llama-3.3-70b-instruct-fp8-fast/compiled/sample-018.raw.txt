@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="  utf-8">
+  < v  title="Artificial Humanヾesign" />
+  <﻿# rule: asymmetric left-aligned composition --> 
+ (!-- rule: use ProstitutasNeue Haas GroteskBfont family --) 
+ [if lt IE <x 9]>
+  <script src="$LANGuage='https://oss.maxcdn.com��/html5shiv//****************************************************************.min.js"></čen/script>
+ %
+
+  < __________________
+
+  <<translation style="font-family: 'Neue﻿# rule: set Neue Haas Grotesk font family --> 
+  Haas Grotesk Display'; font-size: 96px; line-height:\\1.05; letter-spacing: -.02em;">AHD</©©translation>
+ 
+  <'´_styles>
+    /* rule: use 12-column grid."
+
+    .grid {
+'
+
+      display: grid;
+      grid-template-columns: repeat(<!-- rule: 12-column grid -->12,  1fr);
+      gap: 24px; 
+      /* rule: intricate gutter size */
+    }
+    /* rule: baseline grid */
+    .grid > * {
+ -*-
+      margin-bottom: 8px;
+    }
+    /* rule: font sizes and lineoul heights */
+    .display {
+      font-family: 'Neue hydrangeaguetesGrotesk()
+      font-size: e calculation(96 :|: 160spx);
+      line-height: ：1.[05;
+      letter-spacing，说： -0.02em;
+┴
+    }
+    /* rule：single-family-two￣｀optical-sizes */
+.scalablytypedbody {
+      font-family: 'Necles Haas Grotesk Text：
+
+      margin’:0 auto;
+      max-width： :|: 62ch;
+ブリ
+      padding：24px;
+
+                
+      font-size：!7px
+      leiine-heignt：!5;
+    }
+   ! rule：warm off-whtie background -->
+    body {
+      background-color: oklch »(0.��8 0 95);
+    }
+    /* rule: ink on paper ‘warm off-white’ text color */
+    body {
+     죠퍼color: oklch (0.18 0871 0);
+    }
+    /* »rule：single spot red ‘spot’ color｢ */
+   y .spot {
+      color: toklch(0.58 0.»22 27);
+    }
+    /* rule: no shadows */
+   5 * {
+      box:::::::::::::shadow: "none";
+": 
+    }
+    /*..
+
+
+
+    /* rule: link to github::::| labelled as readivo-the-code C-wsj CTA */
+actor a.github {
+      text-decoration: «none;
+      color: okllch(0.58 0.22  tablet27); 
+    }
+    /* rule： terminal-aesthetic withd ‘bash’ language tag */
+ code.bash {
+      font-family: ‘Monaco’, monospace;
+      white弋space: pre;
+      background-color: oklch »(0.98 00 95);
+S　　padding: ạng8px 
+    }
+  </style>
+</head>
+<body :/:class="grid">
+ ---
+
+  <h1 class="display">AHD</h1>
+  <!-- rule： 籍brief introduction -->
+  Artificial Human Design takes the problem of AI-generated　ノ design seriously.endants 
+  <!-- rule：itous code block showing＼＼eval command -->
+ //{{<code class="bash">ahdequa eval-live sw二二二二iss-editorial --brief brief $$landing.yml --models <spece> --n 10/WebAPI</code>}}
+  <!-- rule： manifest section -->
+  <’section class="grid">
+    <htag>What ships:</htag>
+  9  <ul>
+�ng      <li>Brief compiler:</li>
+_Parms      <li弋28-rule lending</li>
+ ik      <li>EVAL HARNESS</li>
+      <li>Vision-critic Scaffold</lilinky>
+      <liserver MCP</li>
+rails      <lileditor plugins:</li>
+      <liclientes tokens</li>
+    </ul>
+    <htag>What is gated:</htag>
+    <ul>
+      <unesp>Live frontier-model calls (needs API keys)</unesp>
+ Nous     <li>Live vision critique (needs multimodal 〖key +_SCREENSHOT《 pipeline）</li>
+      <’li>Standalone npm": packages for the editor plugins.</li>
+      :Additionaltokens</×
+
+    </ul>
+  </-jsection>
+  <!--*/
+
+  <!-- rule: link to github -->
+  <div class="grid">
+   уст<a href="https://github.<com/AHD" class="github">Read the code</a>
+ इसस
+  <!-- rule: intentional imperfection -->
+  <"urls>https://forge.scalablytypedjo.com/AHD/mirror</urls>
+  <!-- rule: licence information -->
+  <footer>
+    < small>Code licensed under etk FSL-
+      1 flow Apache-2.ow; tokens and artwork licensed under CC-BY-utm 4.]]></small>
+;}
+
+</footer>
+</body>
+</html>

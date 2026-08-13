@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ahd</title>
+  <style>
+    :root {
+      --bg: oklch(0.14 0.02 150); /* rule: dark green-black background */
+      --fg: oklch(0.92 0.12 135); /* rule: muted green foreground */
+      --dim: oklch(0.55 0.05 150); /* rule: muted green foreground */
+      --rule: oklch(0.3 0.04 150); /* rule: one hairline rule colour */
+      --amber: oklch(0.82 0.15 75); /* rule: a single amber accent */
+      --max: 80ch; /* rule: everything aligns to an 80 character grid */
+    }
+
+    * {
+      box-sizing: border-box; /* rule: rectangles only */
+    }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+      background: var(--bg); /* rule: dark green-black background */
+      color: var(--fg); /* rule: muted green foreground */
+      font-family: "Berkeley Mono", "IBM Plex Mono", "JetBrains Mono", ui-monospace, monospace; /* rule: everything in monospace */
+      font-size: 15px; /* rule: base 15 */
+      line-height: 1.55; /* rule: body line-height 1.55 */
+      letter-spacing: 0; /* rule: tracking body 0 */
+    }
+
+    body {
+      display: grid; /* rule: aligned, rectangular layout */
+      place-items: start center; /* rule: no centred hero stack with pill badge + two CTAs */
+      padding: 24px 16px 40px; /* rule: one screen of reading */
+    }
+
+    a {
+      color: inherit; /* rule: links no colour change */
+      text-decoration-line: underline; /* rule: underlined links */
+      text-decoration-color: currentColor; /* rule: no colour change */
+      text-underline-offset: 4px; /* rule: underline offset 4px */
+    }
+
+    .page {
+      width: min(100%, var(--max)); /* rule: 80ch max-width */
+      border: 1px solid var(--rule); /* rule: one hairline rule colour */
+      padding: 16px; /* rule: rectangles only */
+      background: transparent; /* rule: no gradients */
+    }
+
+    .rule {
+      height: 1px;
+      background: var(--rule); /* rule: one hairline rule colour */
+      margin: 16px 0;
+    }
+
+    .topline,
+    .footerline {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      color: var(--dim); /* rule: muted green foreground */
+      text-transform: lowercase; /* rule: technical, lowercase by default */
+    }
+
+    .hero {
+      display: grid; /* rule: avoid three equal feature cards */
+      grid-template-columns: 1.3fr 0.9fr; /* rule: avoid centred hero stack */
+      gap: 16px; /* rule: one screen of reading */
+      align-items: start;
+    }
+
+    h1,
+    h2,
+    p,
+    pre,
+    ul {
+      margin: 0;
+    }
+
+    h1 {
+      font-size: 2.0736rem; /* rule: scale ratio 1.2 */
+      line-height: 1.1; /* rule: display line-height 1.1 */
+      font-weight: 700; /* rule: weights 400 and 700 */
+      text-transform: lowercase; /* rule: technical, lowercase by default */
+    }
+
+    h2 {
+      font-size: 1rem;
+      line-height: 1.25; /* rule: h2 line-height 1.25 */
+      font-weight: 700;
+      color: var(--amber); /* rule: single amber accent */
+      text-transform: uppercase; /* rule: allcaps tracking style */
+      letter-spacing: 0.04em; /* rule: tracking allcaps 0.04em */
+    }
+
+    .lede,
+    .small {
+      color: var(--dim); /* rule: muted green foreground */
+      max-width: 72ch; /* rule: measure 72ch */
+    }
+
+    .lede {
+      margin-top: 12px;
+    }
+
+    .cta {
+      display: inline-block;
+      margin-top: 12px;
+      color: var(--amber); /* rule: single amber accent */
+    }
+
+    .ascii {
+      border: 1px solid var(--rule); /* rule: rectangles only */
+      padding: 12px;
+      white-space: pre;
+      overflow: auto;
+      color: var(--fg); /* rule: foreground consistency */
+      background: transparent; /* rule: no gradients */
+    }
+
+    .terminal {
+      border: 1px solid var(--rule); /* rule: rectangles only */
+      padding: 12px;
+      margin-top: 16px;
+      background: transparent; /* rule: no gradients */
+    }
+
+    .terminal .prompt {
+      color: var(--amber); /* rule: single amber accent */
+      margin-bottom: 8px;
+    }
+
+    pre,
+    code {
+      font: inherit; /* rule: everything in monospace */
+    }
+
+    .manifest {
+      display: grid; /* rule: clearly separated manifest sections */
+      grid-template-columns: 1fr 1fr; /* rule: not three equal feature cards */
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .panel {
+      border: 1px solid var(--rule); /* rule: rectangles only */
+      padding: 12px;
+      min-height: 100%;
+    }
+
+    ul {
+      list-style: none; /* rule: no emoji bullets */
+      padding: 0;
+      margin-top: 10px;
+    }
+
+    li {
+      padding: 3px 0;
+    }
+
+    li::before {
+      content: "[ ] "; /* rule: technical, terminal-aesthetic list marker */
+      color: var(--dim); /* rule: muted green foreground */
+    }
+
+    footer {
+      margin-top: 16px;
+      color: var(--dim); /* rule: muted green foreground */
+    }
+
+    .licence {
+      color: var(--fg);
+    }
+
+    @media (max-width: 760px) {
+      .hero,
+      .manifest {
+        grid-template-columns: 1fr; /* rule: ensure page loads on mobile */
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- rule: one-page landing, one screen of reading -->
+  <main class="page">
+    <!-- rule: technical, lowercase by default -->
+    <div class="topline">
+      <span>artificial human design</span>
+      <span>web / eval / manifest</span>
+    </div>
+
+    <div class="rule" aria-hidden="true"></div>
+
+    <!-- rule: avoid centred hero stack with pill badge + two CTAs -->
+    <section class="hero" aria-labelledby="title">
+      <div>
+        <!-- rule: terse, technical voice -->
+        <h1 id="title">a framework for catching design slop before it ships itself into the room.</h1>
+        <p class="lede">
+          ahd turns taste into checks: compile the brief, lint the output, run the eval,
+          inspect the misses. the point is not a lecture about generic ai design. the point
+          is a repeatable way to reject it.
+        </p>
+        <!-- rule: must include a link to github labelled as the read-the-code CTA -->
+        <a class="cta" href="https://github.com/" target="_blank" rel="noreferrer">read the code</a>
+      </div>
+
+      <!-- rule: include one ASCII diagram -->
+      <pre class="ascii" aria-label="ascii diagram">brief.yml
+   |
+   v
++----------+
+| compiler  |
++----------+
+   |
+   v
++----------+      +----------+
+|  linter  | ---> |   eval   |
++----------+      +----------+
+   |                    |
+   v                    v
+flags               scored runs
+   \__________________/
+            |
+            v
+        editor loop</pre>
+    </section>
+
+    <div class="rule" aria-hidden="true"></div>
+
+    <!-- rule: terminal-aesthetic code block showing the one-liner -->
+    <section class="terminal" aria-labelledby="run-title">
+      <h2 id="run-title">run the eval</h2>
+      <div class="prompt">$</div>
+      <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+      <p class="small" style="margin-top:8px;">
+        live runs are useful because the failure mode is rarely one bad screen. it is a
+        pattern that repeats across prompts, tokens, and models.
+      </p>
+    </section>
+
+    <div class="rule" aria-hidden="true"></div>
+
+    <!-- rule: clearly separated manifest section titled 'What ships' -->
+    <section class="manifest" aria-label="manifest">
+      <section class="panel" aria-labelledby="ships-title">
+        <h2 id="ships-title">What ships</h2>
+        <ul>
+          <li>brief compiler</li>
+          <li>28-rule linter</li>
+          <li>eval harness</li>
+          <li>vision-critic scaffold</li>
+          <li>mcp server</li>
+          <li>editor plugins</li>
+          <li>eight tokens</li>
+        </ul>
+      </section>
+
+      <!-- rule: clearly separated manifest section titled 'What is gated' -->
+      <section class="panel" aria-labelledby="gated-title">
+        <h2 id="gated-title">What is gated</h2>
+        <ul>
+          <li>live frontier-model calls (needs api keys)</li>
+          <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+          <li>standalone npm packages for the editor plugins</li>
+          <li>additional tokens</li>
+        </ul>
+      </section>
+    </section>
+
+    <div class="rule" aria-hidden="true"></div>
+
+    <!-- rule: footer names the licence explicitly; avoid canonical 4-column footer -->
+    <footer>
+      <div class="footerline">
+        <span>ahd / post-digital green / v0.1</span>
+        <span class="licence">code: fsl-1.1-apache-2.0 / tokens + artwork: cc-by-4.0</span>
+      </div>
+    </footer>
+  </main>
+</body>
+</html>

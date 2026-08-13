@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AHD — Artificial Human Design</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=Inter+Tight:wght@300;400;700;900&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet">
+  <!-- rule: type.families.display.fallback — Inter Tight as Neuue Haas Grotesk Display fallback -->
+  <!-- rule: type.families.text.fallback — Inter as Neue Haas Grotesk Text fallback -->
+  <style>
+    :root {
+      /* rule: colour.palette — oklch ink on paper with single spot red */
+      --ink: #1a1a1a;
+      --paper: #faf8f5;
+      --spot: #c41e2b; /* rule: spot colour used exactly once */
+      --rule: #1a1a1a;
+      --muted: #737373;
+      --spot-once: 0;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      font-size: 17px; /* rule: type.scale.base 17px */
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: 'Inter', 'Helvetica Now Text', -apple-system, sans-serif; /* rule: type.families.text */
+      font-weight: 400;
+      line-height: 1.5; /* rule: type.line-height.body */
+      color: var(--ink);
+      background: var(--paper);
+    }
+
+    /* 12-column grid with 24px gutters — rule: grid.kind swiss-12 */
+    .grid-12 {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 24px; /* rule: grid.gutter 24px */
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 max(32px, calc(100vw / 24)); /* rule: grid.margin min 32px preferred calc(100vw/24) */
+    }
+
+    /* Display type */
+    .display {
+      font-family: 'Inter Tight', 'Helvetica Now Display', 'Inter', sans-serif; /* rule: type.families.display */
+      font-weight: 900;
+      line-height: 1.05; /* rule: type.line-height.display */
+      letter-spacing: -0.02em; /* rule: type.tracking.display */
+      color: var(--ink);
+    }
+
+    .display-xl {
+      font-size: clamp(96px, 10vw, 160px); /* rule: type.scale 96-160px display */
+      line-height: 0.9;
+    }
+
+    .display-lg {
+      font-size: clamp(72px, 8vw, 120px); /* rule: required — single word at display >= 120px */
+      line-height: 1.05;
+    }
+
+    /* Body measure */
+    .measure {
+      max-width: 62ch; /* rule: type.measure 62ch */
+    }
+
+    /* 8px baseline rhythm */
+    .section {
+      padding-top: 160px; /* rule: space.rhythm-note — dramatic jump 160 between sections */
+      border-top: 1px solid var(--rule); /* rule: surface.border */
+    }
+
+    .section:first-of-type {
+      border-top: none;
+      padding-top: 64px;
+    }
+
+    /* Code block — terminal aesthetic */
+    .code-block {
+      font-family: 'Source Code Pro', 'SFMono-Regular', monospace;
+      font-size: 14px;
+      line-height: 1.6;
+      background: var(--ink);
+      color: #f0f0f0;
+      padding: 32px;
+      overflow-x: auto;
+      border-radius: 0; /* rule: surface.radius scale[0] — sharp by default */
+    }
+
+    .code-block .comment { color: #6b7280; }
+    .code-block .command { color: #f0f0f0; }
+    .code-block .flag { color: #a78bfa; }
+    .code-block .arg { color: #6ee7b7; }
+    .code-block .prompt { color: var(--muted); }
+
+    /* Structural elements */
+    h2 {
+      font-family: 'Inter Tight', 'Helvetica Now Display', 'Inter', sans-serif;
+      font-weight: 700;
+      font-size: 1rem; /* rule: type.scale.base 17px = 1rem */
+      letter-spacing: 0.08em; /* rule: type.tracking.allcaps */
+      text-transform: uppercase;
+      line-height: 1.2; /* rule: type.line-height.h2 */
+      margin-bottom: 48px;
+    }
+
+    p, li {
+      font-size: 17px; /* rule: type.scale.base */
+      line-height: 1.5; /* rule: type.line-height.body */
+      color: var(--ink);
+    }
+
+    .muted {
+      color: var(--muted); /* rule: colour.palette.muted */
+    }
+
+    ul.plain {
+      list-style: none;
+    }
+
+    ul.plain li {
+      position: relative;
+      padding-left: 24px;
+      margin-bottom: 12px;
+    }
+
+    ul.plain li::before {
+      content: "—";
+      position: absolute;
+      left: 0;
+      color: var(--muted);
+    }
+
+    /* Links */
+    a {
+      color: var(--ink);
+      text-decoration: none;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    a:hover {
+      border-bottom: 2px solid var(--ink);
+    }
+
+    /* Spot colour — used exactly once: the accent bar before "What ships" */
+    .spot-accent {
+      display: inline-block;
+      width: 4px;
+      height: 1em;
+      background: var(--spot); /* rule: required — spot colour used exactly once, here in h2 decoration */
+      margin-right: 16px;
+      vertical-align: baseline;
+    }
+
+    /* Status pill — only allowed rounded corners */
+    .pill {
+      display: inline-block;
+      padding: 4px 12px;
+      border: 1px solid var(--rule);
+      border-radius: 999px; /* rule: surface.radius pills for status tags only */
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    /* Bleed element — rule: required — at least one element bleeds past 12-col grid */
+    .bleed {
+      margin-left: calc(-1 * max(32px, calc(100vw / 24)));
+      margin-right: calc(-1 * max(32px, calc(100vw / 24)));
+      padding-left: max(32px, calc(100vw / 24));
+      padding-right: max(32px, calc(100vw / 24));
+    }
+
+    /* Structural motion only — rule: surface.motion policy */
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+
+    /* Asymmetric composition */
+    .col-narrow { grid-column: span 4; }
+    .col-wide { grid-column: span 7; }
+    .col-full { grid-column: 1 / -1; }
+    .col-1-7 { grid-column: 1 / 8; }
+    .col-5-12 { grid-column: 5 / 13; }
+    .col-2-6 { grid-column: 2 / 7; }
+
+    @media (max-width: 768px) {
+      .grid-12 { grid-template-columns: repeat(6, 1fr); }
+      .col-narrow, .col-wide, .col-1-7, .col-5-12, .col-2-6 { grid-column: 1 / -1; }
+      .display-xl { font-size: 72px; }
+      .display-lg { font-size: 64px; }
+      .section { padding-top: 96px; }
+      .bleed {
+        margin-left: -24px;
+        margin-right: -24px;
+        padding-left: 24px;
+        padding-right: 24px;
+      }
+    }
+
+    /* Intentional imperfection — slight misalignment */
+    .off-kilter {
+      transform: translateX(-3px); /* rule: required — intentional imperfection, micro-offset for tension */
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Hero — asymmetric, left-aligned, NOT centered — rule: forbidden centred heroes -->
+  <header class="section">
+    <div class="grid-12">
+      <div class="col-1-7">
+        <p class="muted" style="font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 32px;">
+          Artificial Human Design
+        </p>
+      </div>
+      <div class="col-full" style="margin-bottom: 48px;">
+        <!-- rule: required — one section anchored by a single word at display >= 120px with -0.02em tracking -->
+        <h1 class="display display-lg off-kilter">AHD</h1>
+      </div>
+      <div class="col-2-6 measure">
+        <p style="margin-bottom: 16px;">
+          A framework for evaluating design before it reaches a browser. It treats layout, type, motion and colour as measurable quality — not taste.
+        </p>
+        <p class="muted" style="margin-bottom: 32px;">
+          Made for teams who have already formed an opinion about generated design and want something to act on.
+        </p>
+        <a href="https://github.com/artificial-human-design/ahd" target="_blank" rel="noopener">
+          Read the code →
+        </a>
+        <!-- rule: required — A link to github labelled as the read-the-code CTA -->
+      </div>
+    </div>
+  </header>
+
+  <!-- Command — terminal aesthetic, bleeds past grid -->
+  <section class="section bleed">
+    <!-- rule: required — The command rendered in monospace code block with language tag bash -->
+    <!-- rule: required — at least one element bleeds past the 12-col grid -->
+    <div class="grid-12">
+      <div class="col-full">
+        <pre class="code-block"><code><span class="prompt">$</span> <span class="command">ahd</span> <span class="flag">eval-live</span> <span class="arg">swiss-editorial</span> <span class="flag">--brief</span> <span class="arg">briefs/landing.yml</span> <span class="flag">--models</span> <span class="arg">&lt;specs&gt;</span> <span class="flag">--n</span> <span class="arg">10</span></code></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- What ships — manifest section -->
+  <section class="section">
+    <div class="grid-12">
+      <div class="col-wide">
+        <!-- rule: required — spot colour used exactly once (the red bar) -->
+        <h2><span class="spot-accent"></span>What ships</h2>
+        <ul class="plain">
+          <li>Brief compiler — turns a description into a structured capture format</li>
+          <li>28-rule linter — checks spacing, type scale, contrast, motion policy, forbidden patterns</li>
+          <li>Eval harness — runs the same prompt across models and compares output</li>
+          <li>Vision-critic scaffold — hooks for multimodal critique of rendered output</li>
+          <li>MCP server — exposes the linter and compiler to editors via protocol</li>
+          <li>Editor plugins — VS Code and Zed extensions for inline feedback</li>
+          <li>Eight tokens — curated design-system seeds with complete type, colour and grid specs</li>
+        </ul>
+      </div>
+      <div class="col-narrow" style="padding-top: 64px;">
+        <span class="pill">Available now</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- What is gated — manifest section -->
+  <section class="section">
+    <div class="grid-12">
+      <div class="col-wide">
+        <h2>What is gated</h2>
+        <ul class="plain">
+          <li>Live frontier-model calls — needs API keys from your provider</li>
+          <li>Live vision critique — needs multimodal key plus screenshot pipeline</li>
+          <li>Standalone npm packages for the editor plugins — pending registry setup</li>
+          <li>Additional tokens — gated on completion and external review</li>
+        </ul>
+      </div>
+      <div class="col-narrow" style="padding-top: 64px;">
+        <span class="pill">Needs keys or time</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Manifest interlude — not a feature card, no equal cards, no three columns -->
+  <section class="section" style="padding-bottom: 160px;">
+    <div class="grid-12">
+      <div class="col-1-7 measure">
+        <p>
+          AHD does not generate. It evaluates. The compiler turns intent into constraints. The linter enforces them. The harness proves whether a model can follow.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer — not 4-column, explicit licence -->
+  <footer style="border-top: 1px solid var(--rule); padding: 64px 0;">
+    <div class="grid-12">
+      <div class="col-full" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 24px;">
+        <!-- rule: required — footer names licence: FSL-1.1-Apache-2.0 for code, CC-BY-4.0 for tokens and artwork -->
+        <p class="muted" style="font-size: 14px;">
+          Code: <strong style="color: var(--ink);">FSL-1.1-Apache-2.0</strong>
+          · Tokens &amp; artwork: <strong style="color: var(--ink);">CC-BY-4.0</strong>
+        </p>
+        <p class="muted" style="font-size: 14px;">
+          AHD — Artificial Human Design
+        </p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

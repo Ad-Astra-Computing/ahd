@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>AHD Landing</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  /* Colours – rule: palette */
+  :root{
+    --ink:#2A2A2A;/* okLCH(0.18 0 0) */
+    --paper:#FAF9F8;/* okLCH(0.98 0.005 95) */
+    --spot:#D7263D;/* okLCH(0.58 0.22 27) */
+    --rule:#2A2A2A;
+  }
+  html{background:var(--paper);color:var(--ink);font-family:"Neue Haas Grotesk Text",Helvetica,Arial,sans-serif;font-size:17px;line-height:1.5;/* rule: body typography */}
+  body{margin:0;padding:0;display:flex;flex-direction:column;align-items:flex-start;/* rule: left-aligned composition */}
+  h1{
+    font-family:"Neue Haas Grotesk Display","Helvetica Now Display","Inter Tight",sans-serif;
+    font-weight:900;
+    font-size:144px;/* within 96–160px */
+    line-height:1.05;
+    letter-spacing:-0.02em;/* rule: tracking -0.02em */
+    margin:0;
+    padding-top:calc(var(--baseline,8px)*4);
+  }
+  .container{
+    width:100%;
+    max-width:calc(100vw - 2*var(--margin));
+    margin:0 auto;
+    padding:0 var(--margin);
+    box-sizing:border-box;
+    display:grid;
+    grid-template-columns:repeat(12,1fr);
+    gap:24px;/* rule: 12‑col grid, 24px gutter */
+  }
+  :root{--margin:calc(100vw/24);}/* rule: margin preferred */
+  @media (max-width:640px){:root{--margin:32px;}}/* rule: min margin */
+  .col-span-8{grid-column:span 8;}
+  .col-span-12{grid-column:1 / -1;}
+  pre{
+    background:#f0f0f0;
+    padding:16px;
+    overflow:auto;
+    font-family:monospace;
+    font-size:15px;
+    border:1px solid var(--rule);
+  }
+  code{font-family:monospace;}
+  a.cta{
+    color:var(--ink);
+    text-decoration:none;
+    border-bottom:2px solid var(--ink);
+    font-weight:700;
+  }
+  .bleed{
+    background:var(--spot);/* rule: spot colour used exactly once */
+    height:8px;
+    margin-left:-9999px;
+    margin-right:-9999px;
+    position:relative;
+    left:50%;
+    right:50%;
+    width:100vw;
+  }
+  footer{
+    font-size:14px;
+    padding:32px 0;
+    border-top:1px solid var(--rule);
+    margin-top:160px;/* rule: dramatic jump between sections */
+  }
+</style>
+</head>
+<body>
+<div class="bleed"></div><!-- rule: intentional element bleeds past grid -->
+<div class="container">
+  <h1 class="col-span-8">AHD</h1><!-- rule: single‑word display heading -->
+  <p class="col-span-8" style="margin-top:var(--baseline);">
+    A framework for designers, engineers and founders who need control over AI‑generated design. No fluff. No promises. Just tools you can inspect and extend.
+  </p>
+  <pre class="col-span-8"><code class="bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre><!-- rule: bash code block -->
+  <p class="col-span-8"><a href="https://github.com/ahd/ahd" class="cta">read the code</a></p><!-- rule: read‑the‑code CTA -->
+  <section class="col-span-8" style="margin-top:160px;">
+    <h2 style="font-weight:700;margin:0 0 8px;">What ships</h2><!-- rule: manifest title -->
+    <ul style="margin:0;padding-left:20px;">
+      <li>brief compiler</li>
+      <li>28‑rule linter</li>
+      <li>eval harness</li>
+      <li>vision‑critic scaffold</li>
+      <li>MCP server</li>
+      <li>editor plugins</li>
+      <li>eight tokens</li>
+    </ul>
+  </section>
+  <section class="col-span-8" style="margin-top:160px;">
+    <h2 style="font-weight:700;margin:0 0 8px;">What is gated</h2><!-- rule: manifest title -->
+    <ul style="margin:0;padding-left:20px;">
+      <li>live frontier‑model calls (needs API keys)</li>
+      <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+      <li>standalone npm packages for the editor plugins</li>
+      <li>additional tokens</li>
+    </ul>
+  </section>
+</div>
+<footer class="container">
+  <div class="col-span-12">
+    Code licence: FSL‑1.1‑Apache‑2.0 • Tokens &amp; artwork licence: CC‑BY‑4.0
+  </div>
+</footer>
+</body>
+</html>

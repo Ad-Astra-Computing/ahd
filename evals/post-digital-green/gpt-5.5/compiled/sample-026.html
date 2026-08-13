@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <!-- rule: surfaces web; valid self-contained HTML5 document -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- rule: one-page landing for AHD itself -->
+  <title>AHD / Artificial Human Design</title>
+  <style>
+    /* rule: dark green-black background, muted green foreground, single amber accent */
+    :root {
+      --bg: oklch(0.14 0.02 150);
+      --fg: oklch(0.92 0.12 135);
+      --dim: oklch(0.55 0.05 150);
+      --rule: oklch(0.3 0.04 150);
+      --amber: oklch(0.82 0.15 75);
+      --measure: 80ch;
+      --step: 8px;
+    }
+
+    /* rule: no gradients, no shadows, no radii, no entrance animation */
+    * {
+      box-sizing: border-box;
+      border-radius: 0;
+      box-shadow: none;
+      animation-duration: 0s;
+      transition: none;
+    }
+
+    /* rule: everything in monospace; sans-serif body forbidden */
+    html {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: "Berkeley Mono", "IBM Plex Mono", "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 15px;
+      line-height: 1.55;
+      letter-spacing: 0;
+    }
+
+    /* rule: rectangles only; one hairline rule colour */
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--fg);
+      border-top: 1px solid var(--rule);
+    }
+
+    /* rule: at least one element aligned to the 80 character grid */
+    .page {
+      width: min(var(--measure), calc(100vw - 32px));
+      margin: 0 auto;
+      padding: 24px 0 16px;
+    }
+
+    /* rule: one screen of reading; technical, lowercase by default, terse */
+    header {
+      display: grid;
+      grid-template-columns: 18ch 1fr;
+      gap: 1ch;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    /* rule: brand/product/place/object must be first-viewport signal */
+    .mark {
+      color: var(--amber);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    /* rule: everything aligns to char grid */
+    nav {
+      text-align: right;
+    }
+
+    /* rule: underlined links with offset, no colour change */
+    a {
+      color: inherit;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+      text-decoration-thickness: 1px;
+    }
+
+    /* rule: no centred hero stack with pill badge and two CTAs */
+    main {
+      display: grid;
+      grid-template-columns: 47ch 32ch;
+      gap: 1ch;
+      padding-top: 24px;
+    }
+
+    /* rule: display line-height 1.1, tracking 0 */
+    h1 {
+      margin: 0 0 16px;
+      max-width: 17ch;
+      font-size: 2.074rem;
+      line-height: 1.1;
+      letter-spacing: 0;
+      font-weight: 700;
+      text-transform: lowercase;
+    }
+
+    /* rule: technical, lowercase by default, terse */
+    .dek {
+      margin: 0 0 24px;
+      max-width: 43ch;
+      color: var(--fg);
+    }
+
+    /* rule: amber is the single accent */
+    .accent {
+      color: var(--amber);
+    }
+
+    /* rule: terminal-aesthetic code block; rectangles only */
+    pre {
+      margin: 0 0 24px;
+      padding: 12px;
+      overflow-x: auto;
+      color: var(--fg);
+      background: transparent;
+      border: 1px solid var(--rule);
+      font: inherit;
+    }
+
+    /* rule: code command rendered in monospace */
+    code {
+      font: inherit;
+      white-space: pre;
+    }
+
+    /* rule: include one ASCII diagram rendered as text */
+    .diagram {
+      margin: 0 0 24px;
+      padding: 8px 0;
+      color: var(--dim);
+      white-space: pre;
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    /* rule: clearly separated manifest sections */
+    aside {
+      border-left: 1px solid var(--rule);
+      padding-left: 1ch;
+    }
+
+    /* rule: h2 line-height 1.25 */
+    h2 {
+      margin: 0 0 8px;
+      font-size: 1.2rem;
+      line-height: 1.25;
+      font-weight: 700;
+      color: var(--amber);
+      text-transform: lowercase;
+    }
+
+    /* rule: exact manifest titles required */
+    section {
+      margin: 0 0 24px;
+      padding-top: 8px;
+      border-top: 1px solid var(--rule);
+    }
+
+    /* rule: no emoji bullets; enumerate with plain decimal markers */
+    ol {
+      margin: 0;
+      padding-left: 3ch;
+    }
+
+    /* rule: body measure and baseline rhythm */
+    li {
+      padding-left: 1ch;
+      margin: 0 0 4px;
+    }
+
+    /* rule: intentional imperfection from required quirks list: one manual misregistration */
+    .quirk {
+      display: inline-block;
+      transform: translateX(1px);
+    }
+
+    /* rule: footer must name licence explicitly; avoid canonical 4-column footer */
+    footer {
+      margin-top: 8px;
+      padding-top: 16px;
+      border-top: 1px solid var(--rule);
+      color: var(--dim);
+    }
+
+    /* rule: responsive without changing type by viewport width */
+    @media (max-width: 760px) {
+      .page {
+        width: min(72ch, calc(100vw - 24px));
+        padding-top: 16px;
+      }
+
+      header,
+      main {
+        grid-template-columns: 1fr;
+      }
+
+      nav {
+        text-align: left;
+      }
+
+      aside {
+        border-left: 0;
+        padding-left: 0;
+      }
+
+      h1 {
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- rule: one-page landing; no testimonials, pricing tier, or trusted-by strip -->
+  <div class="page">
+    <!-- rule: 80 character grid container -->
+    <header>
+      <!-- rule: first viewport signal names AHD itself -->
+      <div class="mark">ahd</div>
+      <!-- rule: read-the-code CTA link to github labelled exactly -->
+      <nav><a href="https://github.com/ahd-labs/ahd">read-the-code CTA</a></nav>
+    </header>
+
+    <main>
+      <!-- rule: visitor already suspects the problem; framework rather than lecture -->
+      <article>
+        <!-- rule: no gradient text on AI; no forbidden phrase variants -->
+        <h1>artificial human design</h1>
+        <!-- rule: technical, lowercase by default, terse -->
+        <p class="dek">
+          ahd is an eval framework for generated interface work: briefs become
+          constraints, constraints become checks, and checks become reviewable
+          evidence before taste gets outsourced.
+        </p>
+
+        <!-- rule: terminal-aesthetic code block with required command and language-bash class -->
+        <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+
+        <!-- rule: at least one ASCII diagram rendered as text -->
+        <div class="diagram" aria-label="ASCII diagram">brief.yml ──&gt; compiler ──&gt; linter ──&gt; eval harness
+    │              │             │
+    └── tokens     └── rules     └── scored artifacts</div>
+
+        <!-- rule: one screen of reading; amber single accent -->
+        <p>
+          it does not ask teams to agree that generated design is bad.
+          it asks the output to satisfy a brief, then leaves a trail a designer,
+          engineer, or founder can inspect. <span class="accent quirk">one check is intentionally noisy.</span>
+        </p>
+      </article>
+
+      <aside aria-label="manifest">
+        <!-- rule: clearly separated manifest section titled What ships -->
+        <section>
+          <h2>What ships</h2>
+          <ol>
+            <li>brief compiler</li>
+            <li>28-rule linter</li>
+            <li>eval harness</li>
+            <li>vision-critic scaffold</li>
+            <li>MCP server</li>
+            <li>editor plugins</li>
+            <li>eight tokens</li>
+          </ol>
+        </section>
+
+        <!-- rule: clearly separated manifest section titled What is gated -->
+        <section>
+          <h2>What is gated</h2>
+          <ol>
+            <li>live frontier-model calls (needs API keys)</li>
+            <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+            <li>standalone npm packages for the editor plugins</li>
+            <li>additional tokens</li>
+          </ol>
+        </section>
+      </aside>
+    </main>
+
+    <!-- rule: footer names licence explicitly; no canonical 4-column footer -->
+    <footer>
+      licence: FSL-1.1-Apache-2.0 for code; CC-BY-4.0 for tokens and artwork.
+    </footer>
+  </div>
+</body>
+</html>

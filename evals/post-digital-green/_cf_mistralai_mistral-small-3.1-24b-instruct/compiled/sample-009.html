@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AHD - Artificial Human Design</title>
+  <style>
+    /* rule: Design post-digital. Everything in monospace. Dark green-black background, muted green foreground, a single amber accent. */
+    body {
+      font-family: 'Berkeley Mono', 'IBM Plex Mono', 'JetBrains Mono', ui-monospace; /* rule: type.families */
+      background-color: oklch(0.14 0.02 150); /* rule: colour.palette.bg */
+      color: oklch(0.92 0.12 135); /* rule: colour.palette.fg */
+      line-height: 1.55; /* rule: type.line-height.body */
+      max-width: 80ch; /* rule: grid.columns */
+      margin: 0 auto;
+      padding: 24px; /* rule: space.scale[5] */
+      /* rule: No shadows, no gradients, no radii, no entrance animation */
+    }
+
+    /* rule: Rectangles only. One hairline rule colour. */
+    .rule {
+      border: 1px solid oklch(0.3 0.04 150); /* rule: colour.palette.rule */
+    }
+
+    /* rule: Underlined links with an offset, no colour change */
+    a {
+      text-decoration: underline;
+      text-underline-offset: 4px;
+      color: inherit;
+    }
+
+    /* rule: Include one ASCII diagram */
+    .ascii-diagram {
+      font-size: 0.8em;
+      color: oklch(0.55 0.05 150); /* rule: colour.palette.dim */
+    }
+
+    /* rule: Manifest sections */
+    .manifest {
+      margin-top: 24px; /* rule: space.scale[5] */
+    }
+
+    .manifest h2 {
+      color: oklch(0.82 0.15 75); /* rule: colour.palette.amber */
+    }
+
+    /* rule: Footer */
+    footer {
+      margin-top: 48px; /* rule: space.scale[7] */
+      font-size: 0.8em;
+      color: oklch(0.55 0.05 150); /* rule: colour.palette.dim */
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Artificial Human Design</h1>
+    <p>A framework for serious design work.</p>
+  </header>
+
+  <main>
+    <section>
+      <p>AHD is a toolkit for designers, engineers, and founders who want to take control of their design process. We provide a set of tools that help you evaluate and critique design decisions, ensuring that your work stands out in a sea of AI-generated slop.</p>
+    </section>
+
+    <section class="rule">
+      <h2>Run the eval</h2>
+      <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+    </section>
+
+    <section class="manifest">
+      <h2>What ships</h2>
+      <ul>
+        <li>Brief compiler</li>
+        <li>28-rule linter</li>
+        <li>Eval harness</li>
+        <li>Vision-critic scaffold</li>
+        <li>MCP server</li>
+        <li>Editor plugins</li>
+        <li>Eight tokens</li>
+      </ul>
+    </section>
+
+    <section class="manifest">
+      <h2>What is gated</h2>
+      <ul>
+        <li>Live frontier-model calls (needs API keys)</li>
+        <li>Live vision critique (needs multimodal key + screenshot pipeline)</li>
+        <li>Standalone npm packages for the editor plugins</li>
+        <li>Additional tokens</li>
+      </ul>
+    </section>
+
+    <section class="ascii-diagram">
+      <pre>
+      +-----------------+
+      |                 |
+      |   AHD Framework |
+      |                 |
+      +---------+-------+
+                |
+                v
+      +---------+-------+
+      |                 |
+      |  Design Control  |
+      |                 |
+      +-----------------+
+      </pre>
+    </section>
+
+    <section>
+      <p>Ready to take control? <a href="https://github.com/ahd-framework/ahd" target="_blank" rel="noopener noreferrer">Read the code</a>.</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>Licence: FSL-1.1-Apache-2.0 for code, CC-BY-4.0 for tokens and artwork.</p>
+  </footer>
+</body>
+</html>

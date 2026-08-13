@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AHD — Artificial Human Design</title>
+<style>
+@font-face {
+  font-family: 'Inter';
+  src: local('Inter'), local('Inter Regular');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: local('Inter Medium'), local('Inter-Medium');
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: 'IBM Plex Mono';
+  src: local('IBM Plex Mono'), local('IBMPlexMono');
+  font-weight: 400;
+}
+
+:root {
+  --bg: #0a0a0a;
+  --surface: #141414;
+  --surface-2: #1a1a1a;
+  --border: #2a2a2a;
+  --border-subtle: #1f1f1f;
+  --text: #e8e6e3;
+  --text-secondary: #8a8580;
+  --text-tertiary: #5c5855;
+  --accent: #c4a574;
+  --accent-dim: #8a7a5a;
+  --red: #b85c5c;
+  --green: #5c8a5c;
+  --code-bg: #0d0d0d;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s;
+}
+
+a:hover {
+  border-bottom-color: var(--accent-dim);
+}
+
+/* Header */
+header {
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+header nav {
+  max-width: 720px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.logo span {
+  color: var(--text-tertiary);
+  font-weight: 400;
+}
+
+nav a {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+/* Main */
+main {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 4rem 2rem 6rem;
+}
+
+/* Hero */
+.hero {
+  margin-bottom: 4rem;
+}
+
+.hero h1 {
+  font-size: 1.875rem;
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  margin-bottom: 1.5rem;
+  color: var(--text);
+}
+
+.lede {
+  font-size: 1.125rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+}
+
+.lede strong {
+  color: var(--text);
+  font-weight: 500;
+}
+
+/* Code block */
+.code-block {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  margin: 2rem 0;
+  overflow: hidden;
+}
+
+.code-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--text-tertiary);
+}
+
+.dot:nth-child(1) { background: #5c5c5c; }
+.dot:nth-child(2) { background: var(--text-tertiary); }
+.dot:nth-child(3) { background: var(--border); }
+
+.lang-tag {
+  margin-left: auto;
+  font-family: 'IBM Plex Mono', 'SF Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+pre {
+  padding: 1.25rem 1.5rem;
+  overflow-x: auto;
+}
+
+code {
+  font-family: 'IBM Plex Mono', 'SF Mono', monospace;
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  color: var(--text);
+}
+
+.comment { color: var(--text-tertiary); }
+.keyword { color: #8aad8a; }
+.string { color: #ad8a8a; }
+.flag { color: var(--accent-dim); }
+
+/* Warning block */
+.warning {
+  border-left: 2px solid var(--red);
+  padding: 1rem 1.25rem;
+  background: var(--surface);
+  margin: 2rem 0;
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+}
+
+.warning strong {
+  color: var(--text);
+  font-weight: 500;
+}
+
+/* Sections */
+section {
+  margin-bottom: 4rem;
+}
+
+section:last-of-type {
+  margin-bottom: 3rem;
+}
+
+h2 {
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+h2.ships {
+  color: var(--green);
+  border-bottom-color: rgba(92, 138, 92, 0.2);
+}
+
+h2.gated {
+  color: var(--red);
+  border-bottom-color: rgba(184, 92, 92, 0.2);
+}
+
+.manifest-list {
+  list-style: none;
+}
+
+.manifest-list li {
+  padding: 0.625rem 0;
+  border-bottom: 1px solid var(--border-subtle);
+  font-size: 0.9375rem;
+  display: flex;
+  gap: 0.75rem;
+}
+
+.manifest-list li:last-child {
+  border-bottom: none;
+}
+
+.manifest-list li::before {
+  content: "—";
+  color: var(--text-tertiary);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.75rem;
+  margin-top: 0.125rem;
+}
+
+.manifest-list .note {
+  color: var(--text-tertiary);
+  font-size: 0.875rem;
+}
+
+/* Footer */
+footer {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 2rem;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.licence {
+  font-size: 0.875rem;
+  color: var(--text-tertiary);
+  line-height: 1.6;
+}
+
+.licence strong {
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.links {
+  margin-top: 1rem;
+  display: flex;
+  gap: 1.5rem;
+}
+
+.links a {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+/* Syntax responsive */
+@media (max-width: 600px) {
+  main {
+    padding: 2rem 1.5rem 4rem;
+  }
+  
+  .hero h1 {
+    font-size: 1.5rem;
+  }
+  
+  pre {
+    padding: 1rem;
+  }
+  
+  code {
+    font-size: 0.75rem;
+  }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <div class="logo">AHD <span>Artificial Human Design</span></div>
+    <a href="https://code.ahd.sh">read the code</a>
+  </nav>
+</header>
+
+<main>
+
+<div class="hero">
+  <h1>A framework for evaluating design systems with human judgment first.</h1>
+  <p class="lede">
+    <strong>The problem is not that AI generates design.</strong> The problem is that no one evaluates what it generates. AHD is a toolchain for running structured, repeatable critiques of design output—by humans, for humans, with machines only where they earn their place.
+  </p>
+  <p class="lede">
+    You write a brief in YAML. The compiler expands it into evaluation rules. A vision model scores the result against those rules. A human reviews the scores and overrides where the model is wrong. The override becomes training signal.
+  </p>
+</div>
+
+<div class="code-block">
+  <div class="code-header">
+    <span class="dot"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
+    <span class="lang-tag">bash</span>
+  </div>
+  <pre><code><span class="comment"># Evaluate a live design against a brief, with vision critique</span>
+$ <span class="keyword">ahd</span> <span class="flag">eval-live</span> swiss-editorial <span class="flag">--brief</span> briefs/landing.yml <span class="flag">--models</span> &lt;specs&gt; <span class="flag">--n</span> 10</code></pre>
+</div>
+
+<div class="warning">
+<strong>This runs local rules against remote models.</strong> The eval harness, linter, and compiler are yours. The frontier calls need your keys. The vision critique needs a multimodal model and a screenshot pipeline. Know what you are running.
+</div>
+
+<section>
+  <h2 class="ships">What ships</h2>
+  <ul class="manifest-list">
+    <li>Brief compiler <span class="note">— YAML to rule tree</span></li>
+    <li>28-rule linter <span class="note">— typographic, spatial, and compositional constraints</span></li>
+    <li>Eval harness <span class="note">— batch runner with deterministic scoring</span></li>
+    <li>Vision-critic scaffold <span class="note">— OpenAI / Anthropic / local vision adapter</span></li>
+    <li>MCP server <span class="note">— Model Context Protocol for IDE integration</span></li>
+    <li>Editor plugins <span class="note">— Neovim, VS Code, Zed; source in repo, install from source</span></li>
+    <li>Eight tokens <span class="note">— base set for spatial, type, and color evaluation</span></li>
+  </ul>
+</section>
+
+<section>
+  <h2 class="gated">What is gated</h2>
+  <ul class="manifest-list">
+    <li>Live frontier-model calls <span class="note">— needs API keys</span></li>
+    <li>Live vision critique <span class="note">— needs multimodal key + screenshot pipeline</span></li>
+    <li>Standalone npm packages for the editor plugins <span class="note">— pending registry setup</span></li>
+    <li>Additional tokens <span class="note">— under review for quality bar</span></li>
+  </ul>
+</section>
+
+</main>
+
+<footer>
+  <div class="licence">
+    <strong>Licence</strong><br>
+    Code: FSL-1.1-Apache-2.0. Tokens and artwork: CC-BY-4.0.
+  </div>
+  <div class="links">
+    <a href="https://code.ahd.sh">Git / Forgejo</a>
+    <a href="https://docs.ahd.sh">Documentation</a>
+    <a href="mailto:contact@ahd.sh">Contact</a>
+  </div>
+</footer>
+
+</body>
+</html>

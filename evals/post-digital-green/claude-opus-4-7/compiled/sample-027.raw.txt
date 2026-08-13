@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ahd — artificial human design</title>
+<!-- rule: single-monospace pairing -->
+<style>
+  /* rule: oklch palette, dark green-black background */
+  :root{
+    --bg: oklch(0.14 0.02 150);
+    --fg: oklch(0.92 0.12 135);
+    --dim: oklch(0.55 0.05 150);
+    --rule: oklch(0.3 0.04 150);
+    --amber: oklch(0.82 0.15 75);
+    --ch: 1ch;
+  }
+  /* rule: no entrance animation; only caret blink permitted */
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--fg)}
+  /* rule: monospace everywhere, no sans-serif body */
+  body{
+    font-family: "Berkeley Mono","IBM Plex Mono","JetBrains Mono",ui-monospace,monospace;
+    font-size:15px;
+    line-height:1.55;
+    font-weight:400;
+    letter-spacing:0;
+  }
+  /* rule: 80ch char-grid max width */
+  .page{
+    max-width:80ch;
+    margin:0 auto;
+    padding:24px 16px 48px;
+  }
+  /* rule: hairline rule colour, rectangles only, no radii, no shadow */
+  hr.rule{
+    border:0;
+    border-top:1px solid var(--rule);
+    margin:24px 0;
+  }
+  /* rule: underlined links with offset, no colour change */
+  a{
+    color:inherit;
+    text-decoration:underline;
+    text-underline-offset:4px;
+    text-decoration-thickness:1px;
+  }
+  a:hover{ text-decoration-thickness:1px }
+  .amber{ color:var(--amber) } /* rule: single amber accent */
+  .dim{ color:var(--dim) }
+  h1,h2,h3{
+    font-weight:700;
+    letter-spacing:0;
+    margin:0;
+  }
+  h1{ font-size:21.6px; line-height:1.1 }
+  h2{ font-size:18px; line-height:1.25; margin:0 0 8px }
+  h3{ font-size:15px; line-height:1.25; margin:0 0 4px }
+  p{ margin:0 0 12px }
+  ul{ list-style:none; margin:0; padding:0 }
+  li{ padding:0 }
+  li::before{ content:"- "; color:var(--dim) } /* rule: no emoji bullets */
+  /* rule: terminal-aesthetic code block, rectangle only */
+  pre{
+    margin:12px 0;
+    padding:12px;
+    border:1px solid var(--rule);
+    background:var(--bg);
+    overflow-x:auto;
+    font-size:13px;
+    line-height:1.55;
+  }
+  pre .tag{ color:var(--dim) }
+  pre .prompt{ color:var(--amber) }
+  .caret{
+    display:inline-block;
+    width:1ch;
+    background:var(--fg);
+    color:var(--bg);
+    animation:blink 1s steps(1) infinite; /* rule: only caret blink allowed */
+  }
+  @keyframes blink{ 50%{ background:transparent; color:var(--fg) } }
+  /* rule: ASCII diagram rendered as text */
+  pre.ascii{
+    border:1px solid var(--rule);
+    color:var(--fg);
+  }
+  /* rule: masthead rectangle, no centred hero stack, no pill badge */
+  header.mast{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:16px;
+    border:1px solid var(--rule);
+    padding:12px;
+  }
+  header.mast .meta{ text-align:right; color:var(--dim); font-size:13px }
+  /* rule: two-column manifest, not three equal feature cards */
+  .manifest{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap:0;
+    border:1px solid var(--rule);
+  }
+  .manifest > section{
+    padding:12px;
+  }
+  .manifest > section + section{
+    border-left:1px solid var(--rule);
+  }
+  @media (max-width:640px){
+    .manifest{ grid-template-columns:1fr }
+    .manifest > section + section{ border-left:0; border-top:1px solid var(--rule) }
+    header.mast{ flex-direction:column }
+    header.mast .meta{ text-align:left }
+  }
+  footer.foot{
+    margin-top:24px;
+    padding-top:12px;
+    border-top:1px solid var(--rule);
+    color:var(--dim);
+    font-size:13px;
+    display:flex;
+    justify-content:space-between;
+    gap:16px;
+    flex-wrap:wrap;
+  }
+  .kbd{ border:1px solid var(--rule); padding:0 4px }
+  .row{ display:flex; gap:16px; flex-wrap:wrap }
+  .row > *{ flex:1 1 30ch }
+  small{ font-size:13px }
+  /* allcaps tracking rule */
+  .caps{ text-transform:uppercase; letter-spacing:0.04em; font-size:13px; color:var(--dim) }
+</style>
+</head>
+<body>
+<main class="page">
+
+  <!-- rule: masthead, not centred hero; no pill badge, no two CTA stack -->
+  <header class="mast">
+    <div>
+      <div class="caps">ahd // artificial human design</div>
+      <h1>a framework against generated slop.</h1>
+    </div>
+    <div class="meta">
+      v0.1.0<br>
+      2026-04-24<br>
+      <a href="https://github.com/ahd/ahd">read the code &gt;</a>
+    </div>
+  </header>
+
+  <!-- rule: terse, lowercase-by-default voice -->
+  <section>
+    <p style="margin-top:16px">
+      you already know the shape of the problem. every landing page this month
+      looks like the same four cards under the same purple hero. ahd is not a
+      lecture about that. it is a compiler, a linter, an eval harness, and a
+      set of tokens that refuse to produce it.
+    </p>
+    <p>
+      one brief in. n variants out. each variant linted against 28 rules and
+      graded by a vision critic that can actually see the page. the
+      <span class="amber">amber</span> is the only accent you will see here,
+      and it is here on purpose.
+    </p>
+  </section>
+
+  <hr class="rule">
+
+  <!-- rule: terminal code block, bash language tag -->
+  <section>
+    <h2>run the eval</h2>
+    <p class="dim"><small>one line. ten renders. no ceremony.</small></p>
+<pre><code class="language-bash"><span class="tag"># bash</span>
+<span class="prompt">$</span> ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10<span class="caret">&nbsp;</span></code></pre>
+  </section>
+
+  <hr class="rule">
+
+  <!-- rule: at least one ASCII diagram -->
+  <section>
+    <h2>pipeline</h2>
+<pre class="ascii" aria-label="ahd pipeline"><code>  brief.yml
+     |
+     v
+  [ compiler ] ---&gt; compiled prompt (token + rules + forbiddens)
+     |
+     v
+  [ n models ] ---&gt; n candidate pages
+     |
+     v
+  [ 28-rule linter ] --fail--&gt; reject + diff
+     |  pass
+     v
+  [ vision critic ]  ---&gt; score, notes, screenshot
+     |
+     v
+  artefact/  (html, png, json, trace)
+</code></pre>
+  </section>
+
+  <hr class="rule">
+
+  <!-- rule: manifest, two separated sections, not three equal feature cards -->
+  <section>
+    <h2>the manifest</h2>
+    <p class="dim"><small>what is in the repo today, and what still needs a key.</small></p>
+    <div class="manifest">
+      <section>
+        <div class="caps">what ships</div>
+        <ul>
+          <li>brief compiler</li>
+          <li>28-rule linter</li>
+          <li>eval harness</li>
+          <li>vision-critic scaffold</li>
+          <li>mcp server</li>
+          <li>editor plugins</li>
+          <li>eight tokens</li>
+        </ul>
+      </section>
+      <section>
+        <div class="caps">what is gated</div>
+        <ul>
+          <li>live frontier-model calls <span class="dim">(needs api keys)</span></li>
+          <li>live vision critique <span class="dim">(needs multimodal key + screenshot pipeline)</span></li>
+          <li>standalone npm packages for the editor plugins</li>
+          <li>additional tokens</li>
+        </ul>
+      </section>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <section>
+    <h2>read, then run</h2>
+    <p>
+      the repository is the documentation. start at
+      <a href="https://github.com/ahd/ahd">github.com/ahd/ahd</a>
+      or the mirror at
+      <a href="https://code.ahd.tools/ahd/ahd">code.ahd.tools/ahd/ahd</a>.
+      the compiler is ~800 lines of typescript. the tokens are json. the
+      linter is a pure function. clone it, read it, bend it.
+    </p>
+  </section>
+
+  <!-- rule: footer names licence explicitly; not a 4-column product/company/resources/legal footer -->
+  <footer class="foot">
+    <div>
+      code: <span class="amber">FSL-1.1-Apache-2.0</span><br>
+      tokens &amp; artwork: <span class="amber">CC-BY-4.0</span>
+    </div>
+    <div>
+      <a href="https://github.com/ahd/ahd">/github</a>
+      &nbsp;·&nbsp;
+      <a href="https://code.ahd.tools/ahd/ahd">/forgejo</a>
+      &nbsp;·&nbsp;
+      <a href="mailto:hi@ahd.tools">/mail</a>
+    </div>
+    <div style="width:100%;color:var(--dim);border-top:1px solid var(--rule);padding-top:8px">
+      aligned to an 80-character grid. no shadows. no radii. no gradients.
+      <span class="kbd">esc</span> to leave.
+    </div>
+  </footer>
+
+</main>
+</body>
+</html>

@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>a.h.d. // artificial human design</title>
+  <style>
+    :root {
+      --bg: oklch(0.14 0.02 150); /* rule: dark green-black background */
+      --fg: oklch(0.92 0.12 135); /* rule: muted green foreground */
+      --dim: oklch(0.55 0.05 150); /* rule: one hairline rule colour / restrained palette */
+      --rule: oklch(0.3 0.04 150); /* rule: one hairline rule colour */
+      --amber: oklch(0.82 0.15 75); /* rule: a single amber accent */
+      --max: 80ch; /* rule: everything aligns to an 80 character grid */
+      --pad: 16px; /* rule: rectangular spacing on a char-grid surface */
+      --font: "Berkeley Mono", "IBM Plex Mono", "JetBrains Mono", ui-monospace, monospace; /* rule: everything in monospace / no sans-serif body text */
+    }
+
+    * {
+      box-sizing: border-box; /* rule: rectangles only */
+    }
+
+    html, body {
+      margin: 0; /* rule: terse, controlled layout */
+      min-height: 100%; /* rule: one-page landing for web */
+      background: var(--bg); /* rule: dark green-black background */
+      color: var(--fg); /* rule: muted green foreground */
+      font-family: var(--font); /* rule: single-monospace */
+      font-size: 15px; /* rule: base 15 */
+      line-height: 1.55; /* rule: body line-height 1.55 */
+      letter-spacing: 0; /* rule: tracking body 0 */
+    }
+
+    body {
+      display: grid; /* rule: web surface with intentional grid structure */
+      place-items: start center; /* rule: avoid centred hero stack; page itself remains readable */
+      padding: 24px 12px; /* rule: one screen of reading with restrained spacing */
+    }
+
+    a {
+      color: inherit; /* rule: underlined links with no colour change */
+      text-decoration-line: underline; /* rule: underlined links */
+      text-decoration-color: currentColor; /* rule: no colour change */
+      text-underline-offset: 4px; /* rule: underline-offset 4px */
+    }
+
+    a:hover,
+    a:focus-visible {
+      color: inherit; /* rule: no colour change */
+    }
+
+    .page {
+      width: min(100%, var(--max)); /* rule: at least one element aligned to the char grid (80ch max-width) */
+      border: 1px solid var(--rule); /* rule: rectangles only / hairline rule colour */
+      padding: 0; /* rule: no radii, no shadows, no ornamental framing */
+      background: transparent; /* rule: no gradients / no glassmorphism */
+    }
+
+    .band,
+    .manifest,
+    .footer,
+    .codewrap,
+    .diagram {
+      border-top: 1px solid var(--rule); /* rule: clearly separated manifest sections / one hairline rule colour */
+    }
+
+    .band:first-child {
+      border-top: 0; /* rule: restrained rule usage */
+    }
+
+    .inner {
+      padding: 16px; /* rule: rectangular spacing scale */
+    }
+
+    .mast {
+      display: grid; /* rule: avoid centred hero stack with two CTAs */
+      grid-template-columns: 1.3fr 0.9fr; /* rule: intentional, non-card layout */
+      gap: 16px; /* rule: char-grid spacing */
+    }
+
+    .kicker,
+    .label,
+    .footlabel {
+      color: var(--dim); /* rule: muted, technical voice */
+      text-transform: uppercase; /* rule: tracking allcaps */
+      letter-spacing: 0.04em; /* rule: allcaps tracking 0.04em */
+      font-size: 12px; /* rule: terse technical labelling */
+    }
+
+    h1,
+    h2,
+    p,
+    pre,
+    ul {
+      margin: 0; /* rule: terse, technical, one screen of reading */
+    }
+
+    h1 {
+      font-size: 2.074rem; /* rule: display scale step */
+      line-height: 1.1; /* rule: display line-height 1.1 */
+      font-weight: 700; /* rule: weights 400/700 only */
+      max-width: 28ch; /* rule: controlled measure */
+    }
+
+    h2 {
+      font-size: 1rem; /* rule: monospace technical sectioning */
+      line-height: 1.25; /* rule: h2 line-height 1.25 */
+      font-weight: 700; /* rule: weights 400/700 only */
+      text-transform: lowercase; /* rule: voice technical, lowercase by default */
+    }
+
+    p,
+    li {
+      max-width: 72ch; /* rule: measure 72ch */
+      color: var(--fg); /* rule: muted green foreground */
+    }
+
+    .lede {
+      color: var(--fg); /* rule: restrained copy */
+      max-width: 46ch; /* rule: one screen of reading */
+    }
+
+    .accent {
+      color: var(--amber); /* rule: a single amber accent */
+    }
+
+    .diagram pre,
+    .codewrap pre {
+      white-space: pre-wrap; /* rule: render ASCII diagram and command block as text on web */
+      overflow-wrap: anywhere; /* rule: resilient web surface */
+      font-family: var(--font); /* rule: everything in monospace */
+      font-size: 14px; /* rule: monospace code texture */
+      line-height: 1.55; /* rule: body rhythm */
+    }
+
+    .diagram pre {
+      color: var(--dim); /* rule: restrained technical diagram */
+    }
+
+    .codewrap code {
+      color: var(--amber); /* rule: single amber accent used in terminal-aesthetic code block */
+    }
+
+    .manifest-grid {
+      display: grid; /* rule: clearly separated manifest sections */
+      grid-template-columns: 1fr 1fr; /* rule: manifest shows what ships today versus what is gated */
+      gap: 0; /* rule: hard-edged rectangles only */
+    }
+
+    .manifest + .manifest {
+      border-left: 1px solid var(--rule); /* rule: clear separation using one hairline rule colour */
+    }
+
+    ul {
+      list-style: none; /* rule: no emoji bullets / technical restraint */
+      padding: 0; /* rule: controlled grid alignment */
+      margin-top: 12px; /* rule: spacing scale */
+    }
+
+    li {
+      padding-left: 2ch; /* rule: char-grid indentation */
+      position: relative; /* rule: simple rectangular list markers */
+      margin-top: 6px; /* rule: restrained vertical rhythm */
+    }
+
+    li::before {
+      content: "[ ]"; /* rule: terminal-aesthetic, no icons */
+      position: absolute; /* rule: rigid alignment */
+      left: 0; /* rule: char-grid alignment */
+      color: var(--dim); /* rule: restrained marker colour */
+    }
+
+    .footerline {
+      display: flex; /* rule: avoid canonical 4-column footer */
+      flex-wrap: wrap; /* rule: web surface resilience */
+      gap: 8px 16px; /* rule: compact footer */
+      justify-content: space-between; /* rule: one-line footer where possible */
+    }
+
+    .tiny {
+      font-size: 12px; /* rule: terse technical footer text */
+      color: var(--dim); /* rule: muted supporting text */
+    }
+
+    .short-rule {
+      width: calc(100% - 1ch); /* rule: intentional imperfection */
+      height: 1px; /* rule: one hairline rule colour */
+      background: var(--rule); /* rule: one hairline rule colour */
+    }
+
+    @media (max-width: 820px) {
+      .mast,
+      .manifest-grid {
+        grid-template-columns: 1fr; /* rule: ensure page loads properly on both desktop and mobile */
+      }
+
+      .manifest + .manifest {
+        border-left: 0; /* rule: rectangular separation adapts on mobile */
+        border-top: 1px solid var(--rule); /* rule: clear separation preserved */
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page"><!-- rule: one-page landing / aligned to 80 character grid -->
+    <section class="band">
+      <div class="inner mast">
+        <div>
+          <div class="kicker">artificial human design</div><!-- rule: technical, lowercase by default -->
+          <h1>design systems for people who are already tired of synthetic taste.</h1><!-- rule: audience already suspects the problem / framework rather than a lecture -->
+        </div>
+        <div>
+          <p class="lede">ahd compiles a brief into constraints, lint rules, and evals that make generic output fail fast. the point is not to moralise about slop. the point is to give teams a repeatable way to reject it.</p><!-- rule: terse technical voice / show that AHD takes it seriously and does something about it -->
+          <p class="lede" style="margin-top:12px;"><a href="https://github.com/" aria-label="read the code">read the code</a></p><!-- rule: link to github labelled as the read-the-code CTA -->
+        </div>
+      </div>
+    </section>
+
+    <section class="diagram">
+      <div class="inner">
+        <div class="label">diagram</div><!-- rule: include one ASCII diagram -->
+        <pre aria-label="ascii diagram"><!-- rule: at least one ASCII diagram rendered as text -->
+brief.yml
+    |
+    v
+[ compiler ] ---> [ 28-rule linter ] ---> [ eval harness ] ---> [ human review ]
+       \____________________ feedback _____________________________^</pre>
+      </div>
+    </section>
+
+    <section class="codewrap">
+      <div class="inner">
+        <div class="label">run the eval</div><!-- rule: terminal-aesthetic code block showing the one-liner -->
+        <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre><!-- rule: command rendered in a monospace code block with language tag bash -->
+      </div>
+    </section>
+
+    <section class="band">
+      <div class="inner">
+        <p>the system ships with enough structure to test design intent now, and enough seams to plug into live model and vision workflows later. what matters is the boundary: what is local and deterministic versus what depends on outside keys, screenshots, or model access.</p><!-- rule: manifest section listing exactly what ships today versus what is gated on external resources -->
+      </div>
+    </section>
+
+    <section class="manifest-grid"><!-- rule: clearly separated manifest sections -->
+      <section class="manifest">
+        <div class="inner">
+          <h2>what ships</h2><!-- rule: manifest section titled 'What ships' -->
+          <ul>
+            <li>brief compiler</li><!-- rule: enumerate required item -->
+            <li>28-rule linter</li><!-- rule: enumerate required item -->
+            <li>eval harness</li><!-- rule: enumerate required item -->
+            <li>vision-critic scaffold</li><!-- rule: enumerate required item -->
+            <li>mcp server</li><!-- rule: enumerate required item -->
+            <li>editor plugins</li><!-- rule: enumerate required item -->
+            <li>eight tokens</li><!-- rule: enumerate required item -->
+          </ul>
+        </div>
+      </section>
+
+      <section class="manifest">
+        <div class="inner">
+          <h2>what is gated</h2><!-- rule: manifest section titled 'What is gated' -->
+          <ul>
+            <li>live frontier-model calls (needs api keys)</li><!-- rule: enumerate required item -->
+            <li>live vision critique (needs multimodal key + screenshot pipeline)</li><!-- rule: enumerate required item -->
+            <li>standalone npm packages for the editor plugins</li><!-- rule: enumerate required item -->
+            <li>additional tokens</li><!-- rule: enumerate required item -->
+          </ul>
+        </div>
+      </section>
+    </section>
+
+    <section class="footer">
+      <div class="inner">
+        <div class="short-rule" aria-hidden="true"></div><!-- rule: intentional imperfection from required quirks direction / one hairline rule stops one character short -->
+        <div class="footerline" style="margin-top:12px;">
+          <div class="footlabel">a.h.d.</div><!-- rule: terse footer naming -->
+          <div class="tiny">licence: fsl-1.1-apache-2.0 for code, cc-by-4.0 for tokens and artwork.</div><!-- rule: footer names the licence explicitly -->
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

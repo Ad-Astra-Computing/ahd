@@ -1,0 +1,280 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AHD — Artificial Human Design</title>
+    <style>
+        /* rule: single monospace stack per type.families */
+        @font-face {
+            font-family: 'Berkeley Mono';
+            src: local('Berkeley Mono'), local('IBM Plex Mono'), local('JetBrains Mono');
+        }
+        
+        /* rule: colour.space oklch, colours from palette */
+        :root {
+            --bg: #0a120e;
+            --fg: #c4e0c2;
+            --dim: #5a7a5a;
+            --rule: #1a2e22;
+            --amber: #d4a574;
+        }
+        
+        /* rule: reset, bg/foreground from roles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            background: var(--bg);
+            color: var(--fg);
+            /* rule: type.scale base 15px */
+            font-size: 15px;
+            /* rule: type.line-height body 1.55 */
+            line-height: 1.55;
+        }
+        
+        body {
+            /* rule: type.families text */
+            font-family: 'Berkeley Mono', 'IBM Plex Mono', 'JetBrains Mono', ui-monospace, monospace;
+            /* rule: type.tracking body 0 */
+            letter-spacing: 0;
+            /* rule: type.measure 72ch, centered with auto margins */
+            max-width: 80ch;
+            margin: 0 auto;
+            /* rule: grid.baseline 8, spacing multiples of 8 */
+            padding: 32px 16px 64px;
+        }
+        
+        /* rule: surface.radius scale [0], no radii */
+        /* rule: surface.border weight 1, style solid, colour rule */
+        /* rule: surface.shadow policy forbidden */
+        
+        /* rule: type.scale steps [-1,0,1,2,3,4], ratio 1.2 */
+        h1 {
+            /* rule: type.line-height display 1.1 */
+            line-height: 1.1;
+            /* step 4: 15 * 1.2^4 ≈ 31px */
+            font-size: 31px;
+            font-weight: 700;
+            margin-bottom: 24px;
+        }
+        
+        h2 {
+            /* rule: type.line-height h2 1.25 */
+            line-height: 1.25;
+            /* step 2: 15 * 1.2^2 ≈ 21.6px */
+            font-size: 21.6px;
+            font-weight: 700;
+            margin-top: 48px;
+            margin-bottom: 16px;
+        }
+        
+        h3 {
+            /* step 1: 15 * 1.2^1 = 18px */
+            font-size: 18px;
+            font-weight: 700;
+            margin-top: 32px;
+            margin-bottom: 12px;
+        }
+        
+        p {
+            margin-bottom: 16px;
+        }
+        
+        /* rule: links underline offset 4px, no colour change */
+        a {
+            color: var(--amber);
+            text-decoration: underline;
+            text-underline-offset: 4px;
+            text-decoration-thickness: 1px;
+        }
+        
+        a:hover {
+            color: var(--amber);
+            /* rule: allowed motion: link underline */
+            text-decoration: none;
+        }
+        
+        /* rule: surface.border */
+        hr {
+            border: 0;
+            border-top: 1px solid var(--rule);
+            margin: 48px 0;
+        }
+        
+        /* rule: required code block with bash tag */
+        pre {
+            background: #0d1a12;
+            border: 1px solid var(--rule);
+            padding: 16px;
+            margin: 24px 0;
+            overflow-x: auto;
+            /* rule: char-grid alignment */
+            max-width: 80ch;
+        }
+        
+        code {
+            font-family: 'Berkeley Mono', 'IBM Plex Mono', 'JetBrains Mono', ui-monospace, monospace;
+            /* step 0: 15px, step -1 for inline: 12.5px */
+            font-size: 13px;
+            color: var(--fg);
+        }
+        
+        pre code {
+            font-size: 13px;
+            line-height: 1.6;
+        }
+        
+        /* rule: required ASCII diagram */
+        .ascii {
+            color: var(--dim);
+            line-height: 1.4;
+            margin: 24px 0;
+            white-space: pre;
+            font-size: 13px;
+            overflow-x: auto;
+            max-width: 80ch;
+        }
+        
+        /* rule: manifest sections clearly separated */
+        .manifest-section {
+            margin-bottom: 32px;
+        }
+        
+        .manifest-section ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .manifest-section li {
+            padding-left: 16px;
+            position: relative;
+            margin-bottom: 8px;
+        }
+        
+        .manifest-section li::before {
+            content: "-";
+            position: absolute;
+            left: 0;
+            color: var(--dim);
+        }
+        
+        /* rule: footer not 4-column canonical */
+        footer {
+            margin-top: 64px;
+            padding-top: 24px;
+            border-top: 1px solid var(--rule);
+        }
+        
+        footer p {
+            color: var(--dim);
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+        
+        .dim {
+            color: var(--dim);
+        }
+        
+        .amber {
+            color: var(--amber);
+        }
+        
+        /* rule: allowed motion: caret blink */
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+        
+        .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 15px;
+            background: var(--amber);
+            animation: blink 1s step-end infinite;
+            vertical-align: text-bottom;
+            margin-left: 2px;
+        }
+        
+        /* rule: intentional imperfection — single misaligned element */
+        .offset {
+            margin-left: 4px;
+        }
+    </style>
+</head>
+<body>
+    <!-- rule: one screen of reading, no hero stack with pill badge + two CTAs -->
+    <p class="dim">artificial human design <span class="offset">v0.1.0</span><span class="cursor"></span></p>
+    
+    <h1>design is not a prompt. it is a contract.</h1>
+    
+    <p>you have seen the slop. thin gradients, three identical cards, a "trusted by" bar of logos nobody recognises. you do not need another lecture on why this happens.</p>
+    
+    <p>ahd is a framework for evaluating design outputs against structured briefs. it treats generated work as a compile target and checks it like one.</p>
+    
+    <!-- rule: required ASCII diagram -->
+    <div class="ascii">
+┌─────────────┐     ┌─────────────┐     ┌─────────────┐
+│   BRIEF     │────▶│   LINTER    │────▶│   REPORT    │
+│  (.yml)     │     │ (28 rules)  │     │  (pass/fail)│
+└─────────────┘     └──────┬──────┘     └─────────────┘
+                           │
+                    ┌──────┴──────┐
+                    │   MODEL     │
+                    │   OUTPUT    │
+                    └─────────────┘</div>
+    
+    <p>the linter runs static. the eval harness runs live against frontier models. the vision critic takes screenshots and scores them. everything is versioned and reproducible.</p>
+    
+    <!-- rule: required code block with bash language tag -->
+    <pre><code class="language-bash">$ ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+    
+    <p>run this against your own briefs or ours. the tokens are published. the code is source-available.</p>
+    
+    <hr>
+    
+    <!-- rule: required manifest section What ships -->
+    <h2>what ships</h2>
+    
+    <div class="manifest-section">
+        <ul>
+            <li>brief compiler</li>
+            <li>28-rule linter</li>
+            <li>eval harness</li>
+            <li>vision-critic scaffold</li>
+            <li>mcp server</li>
+            <li>editor plugins</li>
+            <li>eight tokens</li>
+        </ul>
+    </div>
+    
+    <!-- rule: required manifest section What is gated -->
+    <h2>what is gated</h2>
+    
+    <div class="manifest-section">
+        <ul>
+            <li>live frontier-model calls (needs API keys)</li>
+            <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+            <li>standalone npm packages for the editor plugins</li>
+            <li>additional tokens</li>
+        </ul>
+    </div>
+    
+    <!-- rule: required github/forgejo link with read-the-code CTA -->
+    <p><a href="https://github.com/artificial-human-design/ahd">read the code →</a></p>
+    
+    <hr>
+    
+    <!-- rule: required footer with explicit licence -->
+    <footer>
+        <p>code: <span class="amber">FSL-1.1-Apache-2.0</span></p>
+        <p>tokens and artwork: <span class="amber">CC-BY-4.0</span></p>
+        <p class="dim">no tracking. no cookies. no newsletter.</p>
+    </footer>
+</body>
+</html>
+```

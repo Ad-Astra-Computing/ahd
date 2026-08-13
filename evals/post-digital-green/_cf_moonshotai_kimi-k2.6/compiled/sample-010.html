@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AHD — Artificial Human Design</title>
+<style>
+/* rule: single-monospace pairing, Berkeley Mono preferred */
+@font-face {
+  font-family: 'Berkeley Mono';
+  src: local('Berkeley Mono'), local('IBM Plex Mono'), local('JetBrains Mono');
+  font-display: swap;
+}
+
+/* rule: oklch palette, bg/fg/dim/rule/amber roles */
+:root {
+  --bg: oklch(0.14 0.02 150);
+  --fg: oklch(0.92 0.12 135);
+  --dim: oklch(0.55 0.05 150);
+  --rule: oklch(0.3 0.04 150);
+  --amber: oklch(0.82 0.15 75);
+}
+
+/* rule: no gradients, no shadows, no radii, motion forbidden except caret/link */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* rule: char-grid 80 columns, 1ch gutter */
+body {
+  font-family: 'Berkeley Mono', 'IBM Plex Mono', 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 15px; /* rule: base 15px */
+  line-height: 1.55; /* rule: body line-height 1.55 */
+  color: var(--fg);
+  background: var(--bg);
+  max-width: 80ch; /* rule: 80ch grid alignment */
+  margin: 0 auto;
+  padding: 32px 16px; /* rule: space scale 32, 16 */
+}
+
+/* rule: tracking 0 for display, weight 400/700 only */
+h1, h2, h3 {
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1.1; /* rule: display line-height 1.1 */
+}
+
+h2 {
+  line-height: 1.25; /* rule: h2 line-height */
+  font-size: 18px; /* rule: scale ratio 1.2, step 2 */
+  margin-top: 32px;
+  margin-bottom: 16px;
+  color: var(--amber); /* rule: amber accent role */
+}
+
+/* rule: no pill badges, no centred hero stack */
+header {
+  margin-bottom: 32px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--rule); /* rule: hairline rule colour */
+}
+
+h1 {
+  font-size: 22px; /* rule: scale step 3 */
+  margin-bottom: 8px;
+}
+
+header p {
+  color: var(--dim);
+  font-size: 13px; /* rule: scale step -1 */
+}
+
+/* rule: link underline-offset 4px, no colour change */
+a {
+  color: var(--fg);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+}
+
+a:hover {
+  color: var(--amber); /* rule: amber accent for interaction, not gradient */
+}
+
+/* rule: monospace code block, terminal aesthetic */
+pre {
+  background: oklch(0.1 0.02 150);
+  border: 1px solid var(--rule);
+  padding: 16px;
+  margin: 16px 0;
+  overflow-x: auto;
+  font-family: inherit;
+  font-size: 13px; /* rule: scale step -1 */
+  line-height: 1.55;
+}
+
+code {
+  font-family: inherit;
+}
+
+pre code {
+  color: var(--fg);
+}
+
+/* rule: dim colour for comments/placeholders */
+.syntax-comment, .syntax-placeholder {
+  color: var(--dim);
+}
+
+/* rule: amber accent for literals */
+.syntax-string {
+  color: var(--amber);
+}
+
+/* rule: manifest sections clearly separated with hairline borders */
+section {
+  margin: 32px 0;
+  padding: 24px 0;
+  border-top: 1px solid var(--rule);
+}
+
+/* rule: no emoji bullets, use plain text markers */
+ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+li {
+  margin: 8px 0;
+  padding-left: 24px;
+  position: relative;
+}
+
+li::before {
+  content: '-';
+  position: absolute;
+  left: 0;
+  color: var(--dim);
+}
+
+/* rule: ASCII diagram, rectangles only, no 3D */
+.diagram {
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--dim);
+  margin: 16px 0;
+  white-space: pre;
+  overflow-x: auto;
+}
+
+/* rule: no canonical 4-column footer */
+footer {
+  margin-top: 48px;
+  padding-top: 24px;
+  border-top: 1px solid var(--rule);
+  font-size: 13px;
+  color: var(--dim);
+  line-height: 1.55;
+}
+
+footer p {
+  margin: 8px 0;
+}
+
+/* intentional imperfection: slightly misaligned diagram text in one line */
+.diagram-misalign {
+  letter-spacing: 0.01em; /* subtle glitch in alignment */
+}
+</style>
+</head>
+<body>
+
+<!-- rule: no centred hero stack with pill badge + two CTAs -->
+<header>
+<h1>AHD</h1>
+<p>artificial human design — a framework for evaluating generated interfaces</p>
+</header>
+
+<main>
+
+<p>you have seen the output. flat gradients, rounded corners, three equal cards, a "trusted by" strip of logos nobody recognises. we do not need to describe the problem. we need to measure it.</p>
+
+<p>AHD is a toolchain for compiling design briefs, linting outputs against explicit constraints, and running model evaluations with reproducible scoring. it is for teams who want to know why a layout fails, not just that it fails.</p>
+
+<!-- rule: one ASCII diagram rendered as text -->
+<div class="diagram">
+<span class="diagram-misalign">INPUT                    PROCESS                  OUTPUT</span>
++----------------+       +----------------+       +----------------+
+| brief.yml      |------>| 28-rule linter |------>| score.json     |
+|                |       | + eval harness |       | + critique.txt |
+| constraints    |       | + vision critic|       |                |
+| token budget   |       | + model router |       | pass/fail      |
++----------------+       +----------------+       + ranking ---+   |
+         |                      ^                          |    |
+         |                      |                          v    |
+         +----------------------+--------------------+    report
+                            feedback loop
+</div>
+
+<!-- rule: the required bash command in monospace code block with language tag -->
+<pre><code class="language-bash"><span class="syntax-comment"># run evaluation against a live model with structured brief</span>
+ahd eval-live swiss-editorial --brief briefs/landing.yml --models <span class="syntax-placeholder">&lt;specs&gt;</span> --n 10</code></pre>
+
+<p>the command compiles the brief, runs the linter, calls the model <span class="syntax-placeholder">&lt;n&gt;</span> times, and scores each output against the same rule set. no manual review required for the first cut.</p>
+
+<!-- rule: 'What ships' manifest section, clearly separated -->
+<section>
+<h2>What ships</h2>
+<ul>
+<li>brief compiler — yaml to structured prompt with token budgeting</li>
+<li>28-rule linter — accessibility, layout, typography, forbidden patterns</li>
+<li>eval harness — parallel model execution with timeout and retry</li>
+<li>vision-critic scaffold — screenshot pipeline ready for multimodal review</li>
+<li>MCP server — model context protocol for editor integration</li>
+<li>editor plugins — vim, emacs, vscode (extension source included)</li>
+<li>eight tokens — curated design system primitives, versioned</li>
+</ul>
+</section>
+
+<!-- rule: 'What is gated' manifest section, clearly separated -->
+<section>
+<h2>What is gated</h2>
+<ul>
+<li>live frontier-model calls — needs API keys, not included</li>
+<li>live vision critique — needs multimodal key + screenshot pipeline setup</li>
+<li>standalone npm packages for the editor plugins — not yet published</li>
+<li>additional tokens — gated on contributor review</li>
+</ul>
+</section>
+
+<!-- rule: read-the-code CTA, link to github/forgejo -->
+<p><a href="https://github.com/ahd-org/ahd">read the code</a> — or <a href="https://git.ahd.dev/ahd/ahd">the forgejo mirror</a></p>
+
+</main>
+
+<!-- rule: footer names licence explicitly, FSL-1.1-Apache-2.0 and CC-BY-4.0 -->
+<footer>
+<p>licence: FSL-1.1-Apache-2.0 for code</p>
+<p>licence: CC-BY-4.0 for tokens and artwork</p>
+<p>no warranty. no enterprise sales team. no "build the future of" on this page.</p>
+</footer>
+
+</body>
+</html>

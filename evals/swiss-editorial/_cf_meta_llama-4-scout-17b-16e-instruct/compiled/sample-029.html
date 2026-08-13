@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Artificial Human Design</title>
+  <style>
+    /* rule: Swiss / International Typographic Style */
+    :root {
+      --font-display: 'Neue Haas Grotesk Display', 'Helvetica Now Display', 'Inter Tight';
+      --font-text: 'Neue Haas Grotesk Text', 'Helvetica Now Text', 'Inter';
+      --color-ink: oklch(0.18 0 0);
+      --color-paper: oklch(0.98 0.005 95);
+      --color-spot: oklch(0.58 0.22 27);
+      --color-rule: oklch(0.18 0 0);
+      --color-muted: oklch(0.55 0 0);
+    }
+
+    body {
+      /* rule: body in Neue Haas Grotesk Text at 17px, measure 62ch, line-height 1.5 */
+      font-family: var(--font-text);
+      font-size: 17px;
+      line-height: 1.5;
+      max-width: 62ch;
+      margin: 0 auto;
+      padding: 32px 24px;
+      background-color: var(--color-paper);
+      color: var(--color-ink);
+    }
+
+    h1 {
+      /* rule: display type in Neue Haas Grotesk Display at 96–160px with tracking -0.02em */
+      font-family: var(--font-display);
+      font-size: 96px;
+      letter-spacing: -0.02em;
+      margin-top: -16px;
+    }
+
+    code {
+      /* rule: terminal-aesthetic code block */
+      font-family: monospace;
+      background-color: var(--color-ink);
+      color: var(--color-paper);
+      padding: 8px;
+      border-radius: 2px;
+    }
+
+    .grid {
+      /* rule: 12-column grid with 24px gutters and an 8px baseline */
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 24px;
+    }
+
+    .bleed {
+      /* rule: one intentional element bleeds past the grid */
+      grid-column: 1 / -1;
+    }
+
+    .spot {
+      /* rule: single spot red used exactly once on the page */
+      color: var(--color-spot);
+    }
+  </style>
+</head>
+<body>
+  <h1>Artificial Human Design</h1>
+  <p>We take the problem of AI-generated design seriously.</p>
+  <pre><code>ahd eval-live swiss-editorial --brief briefs/landing.yml --models <specs> --n 10</code></pre>
+  <div class="grid">
+    <div class="bleed">
+      <h2>What ships</h2>
+      <ul>
+        <li>brief compiler</li>
+        <li>28-rule linter</li>
+        <li>eval harness</li>
+        <li>vision-critic scaffold</li>
+        <li>MCP server</li>
+        <li>editor plugins</li>
+        <li>eight tokens</li>
+      </ul>
+    </div>
+    <div>
+      <h2>What is gated</h2>
+      <ul>
+        <li>live frontier-model calls (needs API keys)</li>
+        <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+        <li>standalone npm packages for the editor plugins</li>
+        <li>additional tokens</li>
+      </ul>
+    </div>
+  </div>
+  <p>
+    <a href="https://github.com/ahd-design/ahd" target="_blank" rel="noopener noreferrer">Read the code on GitHub</a> <!-- rule: link to github labelled as read-the-code CTA -->
+  </p>
+  <footer>
+    <p>FSL-1.1-Apache-2.0 for code, CC-BY-4.0 for tokens and artwork.</p> <!-- rule: footer that names the licence explicitly -->
+  </footer>
+</body>
+</html>

@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AHD — Artificial Human Design</title>
+<style>
+  :root{
+    --bg:#f3f1ec;
+    --ink:#111110;
+    --mute:#6b6a63;
+    --rule:#111110;
+    --term-bg:#111110;
+    --term-ink:#e8e4d8;
+    --term-prompt:#8cc178;
+    --accent:#a3321f;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink)}
+  body{
+    font-family: "Iowan Old Style", "Charter", Georgia, "Times New Roman", serif;
+    font-size:17px;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:780px;margin:0 auto;padding:40px 28px 80px}
+  header.mast{
+    display:flex;align-items:baseline;justify-content:space-between;
+    border-bottom:1px solid var(--rule);padding-bottom:10px;margin-bottom:36px;
+    font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size:13px;letter-spacing:0.02em;
+  }
+  header.mast .lhs strong{font-weight:600}
+  header.mast .rhs a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--ink);padding-bottom:1px}
+  header.mast .rhs a:hover{color:var(--accent);border-color:var(--accent)}
+  h1{
+    font-family: "Iowan Old Style", "Charter", Georgia, serif;
+    font-weight:500;
+    font-size:44px;
+    line-height:1.08;
+    letter-spacing:-0.01em;
+    margin:0 0 18px;
+  }
+  h1 em{font-style:italic;color:var(--mute);font-weight:400}
+  .lede{font-size:19px;max-width:60ch;margin:0 0 8px}
+  .lede + p{max-width:60ch;color:var(--mute);margin:0 0 28px}
+  h2{
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--ink);
+    margin:48px 0 14px;
+    padding-bottom:6px;
+    border-bottom:1px solid var(--rule);
+    display:flex;justify-content:space-between;align-items:baseline;
+  }
+  h2 span.mark{color:var(--mute);font-weight:400}
+  p{max-width:62ch}
+  .term{
+    background:var(--term-bg);
+    color:var(--term-ink);
+    font-family:"IBM Plex Mono", ui-monospace, monospace;
+    font-size:13.5px;
+    line-height:1.55;
+    border-radius:4px;
+    margin:18px 0 8px;
+    overflow:hidden;
+  }
+  .term .bar{
+    display:flex;justify-content:space-between;
+    padding:8px 14px;
+    border-bottom:1px solid #2a2a27;
+    color:#8c897e;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;
+  }
+  .term pre{
+    margin:0;padding:16px 18px 20px;
+    white-space:pre-wrap;word-break:break-word;
+  }
+  .term .p{color:var(--term-prompt)}
+  .term .fl{color:#c9a86a}
+  .term .cm{color:#6f6d64;font-style:italic}
+  .caption{font-size:13px;color:var(--mute);margin:6px 0 0}
+  ul.manifest{
+    list-style:none;padding:0;margin:10px 0 0;
+    border-top:1px solid #d9d5c9;
+  }
+  ul.manifest li{
+    display:grid;
+    grid-template-columns:120px 1fr auto;
+    gap:18px;
+    padding:11px 2px;
+    border-bottom:1px solid #d9d5c9;
+    align-items:baseline;
+  }
+  ul.manifest li .k{
+    font-family:"IBM Plex Mono",ui-monospace,monospace;
+    font-size:11.5px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--mute);
+  }
+  ul.manifest li .d{font-size:16px}
+  ul.manifest li .s{
+    font-family:"IBM Plex Mono",ui-monospace,monospace;
+    font-size:11px;letter-spacing:0.06em;text-transform:uppercase;
+  }
+  .s.ok{color:#3f6b3a}
+  .s.gate{color:var(--accent)}
+  .two{display:grid;grid-template-columns:1fr;gap:4px}
+  aside.note{
+    border-left:2px solid var(--ink);
+    padding:4px 0 4px 14px;
+    color:var(--mute);
+    font-size:15px;
+    margin:14px 0 0;
+    max-width:60ch;
+  }
+  footer{
+    margin-top:72px;
+    padding-top:18px;
+    border-top:1px solid var(--rule);
+    font-family:"IBM Plex Mono",ui-monospace,monospace;
+    font-size:12px;
+    color:var(--mute);
+    line-height:1.7;
+    display:flex;flex-wrap:wrap;gap:18px;justify-content:space-between;
+  }
+  footer a{color:var(--ink);text-decoration:none;border-bottom:1px solid #b9b5a8}
+  footer a:hover{color:var(--accent);border-color:var(--accent)}
+  @media (max-width:560px){
+    h1{font-size:34px}
+    ul.manifest li{grid-template-columns:1fr;gap:2px}
+    ul.manifest li .s{justify-self:start}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="mast">
+  <div class="lhs"><strong>AHD</strong> &nbsp;/&nbsp; Artificial Human Design &nbsp;/&nbsp; v0.4.0</div>
+  <div class="rhs"><a href="https://github.com/ahd/ahd" rel="noopener">read the code →</a></div>
+</header>
+
+<h1>A design framework for the <em>post-slop</em> web.</h1>
+
+<p class="lede">You have opinions about AI-generated sites already. AHD is not here to change them. It is here to make them reproducible: a brief compiler, a 28-rule linter, and a live eval harness that scores n generations against an editorial rubric you can read and argue with.</p>
+
+<p>The working assumption is that the pattern — hero stack, three cards, gradient heading, logo strip — is not a style choice. It is the shape a model outputs when it is given no constraints. AHD supplies the constraints, then grades what comes out the other side.</p>
+
+<h2>The eval, in one line <span class="mark">› terminal</span></h2>
+<div class="term" aria-label="bash command">
+  <div class="bar"><span>bash</span><span>ahd ≥ 0.4</span></div>
+<pre><span class="cm"># run ten generations against the swiss-editorial rubric</span>
+<span class="p">$</span> ahd eval-live swiss-editorial <span class="fl">--brief</span> briefs/landing.yml <span class="fl">--models</span> &lt;specs&gt; <span class="fl">--n</span> 10</pre>
+</div>
+<p class="caption">Emits a JSON report plus an HTML diff grid. Rubric is a YAML file you can fork.</p>
+
+<h2>What ships <span class="mark">› today, in this repo</span></h2>
+<ul class="manifest">
+  <li><span class="k">01</span><span class="d">Brief compiler — YAML in, structured constraints out</span><span class="s ok">shipped</span></li>
+  <li><span class="k">02</span><span class="d">28-rule linter for the house editorial grammar</span><span class="s ok">shipped</span></li>
+  <li><span class="k">03</span><span class="d">Eval harness with deterministic seeding and diff grid</span><span class="s ok">shipped</span></li>
+  <li><span class="k">04</span><span class="d">Vision-critic scaffold (adapter interface, fixtures, tests)</span><span class="s ok">shipped</span></li>
+  <li><span class="k">05</span><span class="d">MCP server exposing the compiler and linter as tools</span><span class="s ok">shipped</span></li>
+  <li><span class="k">06</span><span class="d">Editor plugins for VS Code, Zed, and Neovim (in-tree)</span><span class="s ok">shipped</span></li>
+  <li><span class="k">07</span><span class="d">Eight foundation tokens: type, measure, scale, rule, ink, paper, mark, stop</span><span class="s ok">shipped</span></li>
+</ul>
+
+<h2>What is gated <span class="mark">› external dependencies</span></h2>
+<ul class="manifest">
+  <li><span class="k">G1</span><span class="d">Live frontier-model calls</span><span class="s gate">needs API keys</span></li>
+  <li><span class="k">G2</span><span class="d">Live vision critique of rendered output</span><span class="s gate">needs multimodal key + screenshot pipeline</span></li>
+  <li><span class="k">G3</span><span class="d">Standalone npm packages for the editor plugins</span><span class="s gate">registry publish pending</span></li>
+  <li><span class="k">G4</span><span class="d">Additional token packs beyond the eight</span><span class="s gate">in progress</span></li>
+</ul>
+
+<aside class="note">If you want to read the rubric before you form a view, the YAML is in <code>rubrics/swiss-editorial.yml</code>. It is 140 lines. Disagree with any of them and open an issue.</aside>
+
+<footer>
+  <div>
+    Code: <a href="https://github.com/ahd/ahd/blob/main/LICENSE">FSL-1.1-Apache-2.0</a>.
+    Tokens &amp; artwork: <a href="https://github.com/ahd/ahd/blob/main/LICENSE-CONTENT">CC-BY-4.0</a>.
+  </div>
+  <div>
+    <a href="https://github.com/ahd/ahd">github.com/ahd/ahd</a> · <a href="https://code.ahd.dev/ahd/ahd">forgejo mirror</a>
+  </div>
+</footer>
+
+</div>
+</body>
+</html>

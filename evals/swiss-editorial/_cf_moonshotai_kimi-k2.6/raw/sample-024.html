@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AHD — Artificial Human Design</title>
+  <style>
+    :root {
+      --bg: #0c0c0c;
+      --fg: #e6e6e6;
+      --muted: #737373;
+      --dim: #404040;
+      --accent: #b8b8b8;
+      --code-bg: #141414;
+      --border: #262626;
+      --ok: #6b8f6b;
+      --wait: #8f7d6b;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    main {
+      flex: 1;
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 4rem 1.5rem 3rem;
+      width: 100%;
+    }
+
+    h1 {
+      font-size: 1.25rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--fg);
+    }
+
+    .tagline {
+      color: var(--muted);
+      font-size: 0.9375rem;
+      margin-bottom: 2.5rem;
+      line-height: 1.7;
+    }
+
+    .tagline em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    section {
+      margin-bottom: 3rem;
+    }
+
+    .label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 1rem;
+      font-weight: 500;
+    }
+
+    .code-block {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+    }
+
+    .code-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.5rem 0.875rem;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .code-lang {
+      font-size: 0.6875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      font-family: "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", monospace;
+    }
+
+    .code-dots {
+      display: flex;
+      gap: 0.375rem;
+    }
+
+    .code-dots span {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--dim);
+    }
+
+    pre {
+      padding: 1rem 0.875rem;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    code {
+      font-family: "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", monospace;
+      font-size: 0.8125rem;
+      line-height: 1.6;
+      color: var(--fg);
+      white-space: pre;
+      word-wrap: normal;
+    }
+
+    .code-comment {
+      color: var(--muted);
+    }
+
+    .code-flag {
+      color: var(--accent);
+    }
+
+    .code-arg {
+      color: #8f9b8f;
+    }
+
+    .code-num {
+      color: #9b8f8f;
+    }
+
+    p {
+      color: var(--muted);
+      font-size: 0.9375rem;
+      margin-bottom: 1rem;
+      line-height: 1.7;
+    }
+
+    p strong {
+      color: var(--fg);
+      font-weight: 500;
+    }
+
+    .manifest {
+      border-top: 1px solid var(--border);
+      padding-top: 2.5rem;
+    }
+
+    .manifest h2 {
+      font-size: 1rem;
+      font-weight: 500;
+      margin-bottom: 1.25rem;
+      color: var(--fg);
+      letter-spacing: 0.01em;
+    }
+
+    .manifest ul {
+      list-style: none;
+      margin-bottom: 2rem;
+    }
+
+    .manifest ul:last-child {
+      margin-bottom: 0;
+    }
+
+    .manifest li {
+      position: relative;
+      padding-left: 1.25rem;
+      margin-bottom: 0.5rem;
+      font-size: 0.875rem;
+      color: var(--fg);
+      line-height: 1.6;
+    }
+
+    .manifest li::before {
+      content: "—";
+      position: absolute;
+      left: 0;
+      color: var(--dim);
+    }
+
+    .manifest .status {
+      display: inline-block;
+      font-size: 0.6875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0.125rem 0.375rem;
+      border-radius: 2px;
+      margin-left: 0.5rem;
+      font-weight: 500;
+    }
+
+    .status-ships {
+      background: rgba(107, 143, 107, 0.12);
+      color: var(--ok);
+    }
+
+    .status-gated {
+      background: rgba(143, 125, 107, 0.12);
+      color: var(--wait);
+    }
+
+    .manifest-note {
+      font-size: 0.8125rem;
+      color: var(--muted);
+      margin-top: 0.75rem;
+      padding-left: 1.25rem;
+      line-height: 1.6;
+    }
+
+    .cta {
+      margin-top: 1.5rem;
+    }
+
+    .cta a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--fg);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      border-bottom: 1px solid var(--dim);
+      padding-bottom: 0.125rem;
+      transition: border-color 0.15s;
+    }
+
+    .cta a:hover {
+      border-color: var(--accent);
+    }
+
+    .cta a::before {
+      content: "//";
+      color: var(--dim);
+      font-family: "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", monospace;
+      font-size: 0.6875rem;
+    }
+
+    footer {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 3rem;
+      width: 100%;
+      border-top: 1px solid var(--border);
+    }
+
+    .licence {
+      font-size: 0.8125rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .licence code {
+      font-size: 0.75rem;
+      color: var(--accent);
+      background: var(--code-bg);
+      padding: 0.125rem 0.375rem;
+      border-radius: 2px;
+    }
+
+    @media (max-width: 560px) {
+      main {
+        padding: 2.5rem 1rem 2rem;
+      }
+
+      code {
+        font-size: 0.75rem;
+      }
+
+      pre {
+        padding: 0.875rem;
+      }
+
+      .manifest li {
+        font-size: 0.8125rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<main>
+
+  <h1>Artificial Human Design</h1>
+
+  <p class="tagline">
+    A framework for evaluating whether a design system deserves the name. <em>Not</em> a generator. <em>Not</em> a critique of AI in the abstract. A specific, repeatable protocol for the moment when a working designer has to decide: does this output hold up, or is it slop?
+  </p>
+
+  <section>
+    <div class="label">Run it</div>
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-lang">bash</span>
+        <div class="code-dots">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+      <pre><code><span class="code-flag">ahd</span> eval-live swiss-editorial \
+  <span class="code-flag">--brief</span> <span class="code-arg">briefs/landing.yml</span> \
+  <span class="code-flag">--models</span> <span class="code-arg">&lt;specs&gt;</span> \
+  <span class="code-flag">--n</span> <span class="code-num">10</span></code></pre>
+    </div>
+    <p>
+      This runs ten candidates against a compiled brief, scores each through the linter, and surfaces the top two for human review. The vision-critic scaffold is callable but gated on your own multimodal key. Nothing phones home.
+    </p>
+    <div class="cta">
+      <a href="https://github.com/artificialhumandesign/ahd">read-the-code</a>
+    </div>
+  </section>
+
+  <section class="manifest">
+    <h2>What ships</h2>
+    <ul>
+      <li>Brief compiler <span class="status status-ships">shipped</span></li>
+      <li>28-rule linter <span class="status status-ships">shipped</span></li>
+      <li>Eval harness <span class="status status-ships">shipped</span></li>
+      <li>Vision-critic scaffold <span class="status status-ships">shipped</span></li>
+      <li>MCP server <span class="status status-ships">shipped</span></li>
+      <li>Editor plugins <span class="status status-ships">shipped</span></li>
+      <li>Eight tokens <span class="status status-ships">shipped</span></li>
+    </ul>
+
+    <h2>What is gated</h2>
+    <ul>
+      <li>Live frontier-model calls <span class="status status-gated">needs API keys</span></li>
+      <li>Live vision critique <span class="status status-gated">needs multimodal key + screenshot pipeline</span></li>
+      <li>Standalone npm packages for the editor plugins <span class="status status-gated">pending registry</span></li>
+      <li>Additional tokens <span class="status status-gated">external curators</span></li>
+    </ul>
+    <p class="manifest-note">
+      Gated items are gated on external resources, not on licensing or payment. The framework itself is unencumbered.
+    </p>
+  </section>
+
+</main>
+
+<footer>
+  <div class="licence">
+    Code licensed under <code>FSL-1.1-Apache-2.0</code>. Tokens and artwork licensed under <code>CC-BY-4.0</code>.
+  </div>
+</footer>
+
+</body>
+</html>

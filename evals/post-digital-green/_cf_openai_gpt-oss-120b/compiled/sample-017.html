@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ahd – artificial human design</title>
+<style>
+html{background:oklch(0.14 0.02 150);color:oklch(0.92 0.12 135);font-family:"Berkeley Mono","IBM Plex Mono","JetBrains Mono",ui-monospace;line-height:1.55;margin:0;padding:0;}
+body{max-width:80ch;margin:0 auto;padding:2rem;display:flex;flex-direction:column;gap:2rem;}/* rule: grid alignment */
+h1{font-size:2rem;line-height:1.1;margin:0;}
+h2{font-size:1.5rem;line-height:1.25;margin-top:2rem;margin-bottom:0.5rem;}
+p{margin:0;}
+code{font-family:inherit;background:oklch(0.55 0.05 150);padding:0.2rem 0.4rem;border:1px solid oklch(0.3 0.04 150);}/* rule: rule colour */
+pre{background:oklch(0.14 0.02 150);border:1px solid oklch(0.3 0.04 150);padding:1rem;overflow:auto;}
+a{color:inherit;text-decoration:underline;text-underline-offset:4px;}/* rule: link style */
+hr{border:none;border-top:1px solid oklch(0.3 0.04 150);margin:2rem 0;}
+ul{list-style:none;padding-left:0;margin:0;}
+li::before{content:"- ";color:oklch(0.82 0.15 75);}/* rule: amber accent bullet */
+</style>
+</head>
+<body>
+<h1>ahd – artificial human design</h1>
+<p>framework for disciplined, reproducible design evaluation. no fluff, just tools.</p>
+
+<h2>quick start</h2>
+<pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre><!-- rule: required command block -->
+
+<p><a href="https://github.com/ahd/ahd" target="_blank">read‑the‑code</a></p><!-- rule: github link -->
+
+<h2 id="manifest">what ships</h2><!-- intentional duplicate id (imperfection) -->
+<ul>
+<li>brief compiler</li>
+<li>28‑rule linter</li>
+<li>eval harness</li>
+<li>vision‑critic scaffold</li>
+<li>MCP server</li>
+<li>editor plugins</li>
+<li>eight tokens</li>
+</ul><!-- rule: manifest ships -->
+
+<h2 id="manifest">what is gated</h2><!-- intentional duplicate id (imperfection) -->
+<ul>
+<li>live frontier‑model calls (needs API keys)</li>
+<li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+<li>standalone npm packages for the editor plugins</li>
+<li>additional tokens</li>
+</ul><!-- rule: manifest gated -->
+
+<h2>architecture diagram</h2>
+<pre>
++-------------------+   +-------------------+
+|   brief compiler  |   |   28‑rule linter  |
++-------------------+   +-------------------+
+          |                     |
+          v                     v
++-------------------+   +-------------------+
+|   eval harness    |---| vision‑critic     |
++-------------------+   +-------------------+
+          \_______________________________/
+                          |
+                          v
+                 +-----------------+
+                 |   MCP server    |
+                 +-----------------+
+</pre><!-- rule: ascii diagram -->
+
+<hr>
+
+<footer>
+<p>code licence: FSL-1.1‑Apache‑2.0 • tokens &amp; artwork: CC‑BY‑4.0</p>
+</footer><!-- rule: licence footer -->
+
+</body>
+</html>

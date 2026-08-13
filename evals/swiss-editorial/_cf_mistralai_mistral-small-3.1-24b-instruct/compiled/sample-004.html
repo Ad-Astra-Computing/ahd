@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AHD - Artificial Human Design</title>
+  <style>
+    /* rule: Swiss / International Typographic Style */
+    body {
+      font-family: 'Neue Haas Grotesk Text', 'Helvetica Now Text', Inter, sans-serif;
+      color: oklch(0.18 0 0); /* ink */
+      background-color: oklch(0.98 0.005 95); /* paper */
+      line-height: 1.5;
+      margin: 0;
+      padding: 0;
+      font-size: 17px;
+      max-width: 62ch;
+      /* rule: 8px baseline */
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 32px;
+      /* rule: 12-column grid with 24px gutters */
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 24px;
+    }
+
+    .grid-item {
+      grid-column: span 12;
+    }
+
+    h1 {
+      font-family: 'Neue Haas Grotesk Display', 'Helvetica Now Display', 'Inter Tight', sans-serif;
+      font-size: 160px;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin: 0;
+      /* rule: Display type in Neue Haas Grotesk Display at 96–160px with tracking -0.02em */
+    }
+
+    p {
+      margin: 0 0 16px;
+      /* rule: 160 between sections */
+    }
+
+    .code-block {
+      background-color: oklch(0.18 0 0); /* ink */
+      color: oklch(0.98 0.005 95); /* paper */
+      padding: 16px;
+      border-radius: 0;
+      overflow-x: auto;
+      margin: 16px 0;
+      /* rule: No rounded corners except small status pills */
+    }
+
+    .code-block code {
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 17px;
+      white-space: pre;
+    }
+
+    .manifest {
+      margin: 16px 0;
+    }
+
+    .manifest h2 {
+      font-size: 48px;
+      line-height: 1.2;
+      margin: 0 0 8px;
+      /* rule: H2 line-height 1.2 */
+    }
+
+    .manifest ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .manifest li {
+      margin: 8px 0;
+    }
+
+    .spot-color {
+      color: oklch(0.58 0.22 27); /* spot */
+    }
+
+    .footer {
+      margin-top: 160px;
+      padding-top: 32px;
+      border-top: 1px solid oklch(0.18 0 0); /* rule */
+      text-align: left;
+      /* rule: Asymmetric left-aligned composition */
+    }
+
+    .footer p {
+      margin: 0;
+    }
+
+    .bleed {
+      position: relative;
+      left: -32px;
+      /* rule: One intentional element must bleed past the grid */
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="grid">
+      <div class="grid-item">
+        <h1 class="bleed">AHD</h1>
+        <p>Artificial Human Design. For designers, engineers, and founders who have seen too many AI-generated sites and suspect the problem. AHD takes it seriously and does something about it.</p>
+        <div class="code-block">
+          <code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code>
+        </div>
+        <div class="manifest">
+          <h2>What ships</h2>
+          <ul>
+            <li>Brief compiler</li>
+            <li>28-rule linter</li>
+            <li>Eval harness</li>
+            <li>Vision-critic scaffold</li>
+            <li>MCP server</li>
+            <li>Editor plugins</li>
+            <li>Eight tokens</li>
+          </ul>
+        </div>
+        <div class="manifest">
+          <h2>What is gated</h2>
+          <ul>
+            <li>Live frontier-model calls (needs API keys)</li>
+            <li>Live vision critique (needs multimodal key + screenshot pipeline)</li>
+            <li>Standalone npm packages for the editor plugins</li>
+            <li>Additional tokens</li>
+          </ul>
+        </div>
+        <p><a href="https://github.com/ahd" class="spot-color">Read the code</a></p>
+      </div>
+    </div>
+    <div class="footer">
+      <p>Licensed under FSL-1.1-Apache-2.0 for code, CC-BY-4.0 for tokens and artwork.</p>
+    </div>
+  </div>
+</body>
+</html>

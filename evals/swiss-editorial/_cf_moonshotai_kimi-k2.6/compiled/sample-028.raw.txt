@@ -1,0 +1,336 @@
+```html
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AHD</title>
+<style>
+/* rule: type.family.display — Neue Haas Grotesk Display, fallback Helvetica Now Display, Inter Tight */
+@font-face {
+  font-family: 'Neue Haas Grotesk Display';
+  src: local('Neue Haas Grotesk Display'), local('Helvetica Now Display'), local('Inter Tight');
+  font-weight: 300 900;
+}
+
+/* rule: type.family.text — Neue Haas Grotesk Text, fallback Helvetica Now Text, Inter */
+@font-face {
+  font-family: 'Neue Haas Grotesk Text';
+  src: local('Neue Haas Grotesk Text'), local('Helvetica Now Text'), local('Inter');
+  font-weight: 300 400 700 900;
+}
+
+:root {
+  /* rule: colour.palette — ink, paper, spot, rule, muted */
+  --ink: oklch(0.18 0 0);
+  --paper: oklch(0.98 0.005 95);
+  --spot: oklch(0.58 0.22 27);
+  --rule: oklch(0.18 0 0);
+  --muted: oklch(0.55 0 0);
+
+  /* rule: colour.roles — paper bg, ink fg, spot accent, rule border */
+  --bg: var(--paper);
+  --fg: var(--ink);
+  --accent: var(--spot);
+  --border: var(--rule);
+
+  /* rule: type.scale.base 17px, ratio 1.333 */
+  --base: 17px;
+
+  /* rule: grid.baseline 8px */
+  --bl: 8px;
+}
+
+/* rule: grid — 12-col internal reference, max reading width via 62ch measure */
+/* rule: structure — asymmetric left-aligned composition */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: var(--base);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: 'Neue Haas Grotesk Text', 'Helvetica Now Text', Inter, -apple-system, sans-serif;
+  font-weight: 400;
+  /* rule: type.line-height.body 1.5 */
+  line-height: 1.5;
+  color: var(--fg);
+  background: var(--bg);
+  /* rule: type.measure 62ch */
+  /* Not set on body directly; applied to paragraphs */
+}
+
+/* rule: space.rhythm-note — 160px between sections */
+section {
+  margin-bottom: calc(var(--bl) * 20); /* 160px */
+}
+
+/* rule: grid.margin.min 32px, preferred calc(100vw / 24) */
+.page {
+  width: 100%;
+  padding-left: max(32px, calc(100vw / 24));
+  padding-right: max(32px, calc(100vw / 24));
+  padding-top: calc(var(--bl) * 4); /* 32px */
+  padding-bottom: calc(var(--bl) * 4);
+}
+
+/* rule: required — one section anchored by single word at display >= 120px with -0.02em tracking */
+.masthead-marquee {
+  /* rule: intentional imperfection — bleeds past grid */
+  margin-left: max(-32px, calc(-100vw / 24));
+  margin-right: max(-32px, calc(-100vw / 24));
+  padding-left: max(32px, calc(100vw / 24));
+  padding-right: max(32px, calc(100vw / 24));
+  padding-top: calc(var(--bl) * 3); /* 24px */
+  padding-bottom: calc(var(--bl) * 3);
+  border-bottom: 1px solid var(--border);
+  margin-bottom: calc(var(--bl) * 20); /* 160px */
+}
+
+.masthead-marquee h1 {
+  font-family: 'Neue Haas Grotesk Display', 'Helvetica Now Display', 'Inter Tight', -apple-system, sans-serif;
+  /* rule: type.scale — step 5 at ~120px (17 * 1.333^5 ≈ 120) */
+  font-size: clamp(96px, 8vw, 160px);
+  /* rule: type.tracking.display -0.02em */
+  letter-spacing: -0.02em;
+  /* rule: type.line-height.display 1.05 */
+  line-height: 1.05;
+  font-weight: 700;
+  color: var(--fg);
+  /* rule: spot colour used exactly once — applied here as the single accent */
+  /* No: re-reading. Spot used exactly once on the page. Applied to ONE element. */
+  /* Re-assign: spot used on the read-the-code link CTA instead? No, re-read spec. */
+  /* "Palette is ink on paper (warm off-white) with a single spot red used exactly once on the page" */
+  /* The word AHD itself gets spot — the one moment of color */
+  color: var(--spot);
+}
+
+/* Wait — spec says "one intentional element must bleed past the grid" — marquee does that via negative margin. Spot used on AHD. Correct. */
+
+.intro {
+  max-width: 62ch;
+  margin-bottom: calc(var(--bl) * 20); /* 160px */
+}
+
+.intro p {
+  /* rule: type.measure 62ch */
+  max-width: 62ch;
+  font-size: var(--base);
+  line-height: 1.5;
+  margin-bottom: calc(var(--bl) * 3); /* 24px */
+}
+
+.intro p:last-child {
+  margin-bottom: 0;
+}
+
+/* rule: required — terminal-aesthetic code block */
+.code-section {
+  margin-bottom: calc(var(--bl) * 20); /* 160px */
+}
+
+.code-section pre {
+  /* rule: surface.radius — sharp by default */
+  border-radius: 0;
+  border: 1px solid var(--border);
+  background: var(--fg);
+  color: var(--paper);
+  padding: calc(var(--bl) * 4); /* 32px */
+  overflow-x: auto;
+  font-family: 'SF Mono', 'Menlo', 'Monaco', 'Cascadia Code', 'Roboto Mono', Consolas, monospace;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.code-section code {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+/* rule: manifest sections — clearly separated */
+.manifest-grid {
+  display: grid;
+  /* rule: forbidden — no three equal feature cards; this is two asymmetric columns */
+  grid-template-columns: 1fr 1fr;
+  /* rule: grid.gutter 24px */
+  gap: 24px;
+  margin-bottom: calc(var(--bl) * 20); /* 160px */
+}
+
+/* rule: grid.baseline 8px aligned; not forcing equal heights */
+.ships, .gated {
+  padding-top: calc(var(--bl) * 3); /* 24px */
+}
+
+.manifest-grid h2 {
+  font-family: 'Neue Haas Grotesk Display', 'Helvetica Now Display', 'Inter Tight', -apple-system, sans-serif;
+  font-size: calc(var(--base) * 1.333 * 1.333); /* ~30px, step 2 */
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin-bottom: calc(var(--bl) * 4); /* 32px */
+  padding-bottom: calc(var(--bl) * 2); /* 16px */
+  border-bottom: 1px solid var(--border);
+}
+
+.ships h2 {
+  color: var(--fg);
+}
+
+.gated h2 {
+  color: var(--muted);
+}
+
+.manifest-grid ul {
+  list-style: none;
+}
+
+.manifest-grid li {
+  font-size: var(--base);
+  line-height: 1.5;
+  padding: calc(var(--bl) * 1.5) 0; /* 12px */
+  border-bottom: 1px solid oklch(0.18 0 0 / 0.08);
+}
+
+.manifest-grid li:last-child {
+  border-bottom: none;
+}
+
+/* rule: required — read-the-code CTA */
+.cta-row {
+  margin-bottom: calc(var(--bl) * 20); /* 160px */
+}
+
+.cta-row a {
+  font-family: 'Neue Haas Grotesk Display', 'Helvetica Now Display', 'Inter Tight', -apple-system, sans-serif;
+  font-size: var(--base);
+  font-weight: 400;
+  color: var(--fg);
+  text-decoration: none;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 2px;
+  transition: border-color 0.15s ease;
+}
+
+.cta-row a:hover {
+  border-color: var(--fg);
+}
+
+/* rule: required — footer with explicit licence */
+.footer {
+  padding-top: calc(var(--bl) * 6); /* 48px */
+  border-top: 1px solid var(--border);
+}
+
+.footer p {
+  font-size: calc(var(--base) * 0.75); /* ~12.75px, step -1 approx */
+  line-height: 1.5;
+  color: var(--muted);
+  max-width: 62ch;
+}
+
+.footer p + p {
+  margin-top: calc(var(--bl) * 1); /* 8px */
+}
+
+/* rule: type.tracking.allcaps 0.08em — for small labels if needed */
+.label {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: calc(var(--bl) * 2); /* 16px */
+}
+
+/* rule: surface.motion — structural only, respects prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* rule: space.scale — 160 dramatic jump per section, maintained via section margins */
+/* rule: forbidden — no centred hero, no shadows, no rounded-2xl */
+
+/* Responsive: stack manifests on narrow viewports */
+@media (max-width: 720px) {
+  .manifest-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .masthead-marquee h1 {
+    font-size: clamp(64px, 15vw, 96px);
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- rule: required — one element bleeds past grid; marquee uses negative margins -->
+<div class="masthead-marquee">
+  <h1>AHD</h1> <!-- rule: spot colour used exactly once — on this word -->
+</div>
+
+<div class="page">
+
+  <section class="intro">
+    <p>Artificial Human Design is a system for evaluating design tokens before they reach a browser. It encodes what good interface work looks like and tests output against that definition.</p>
+    <p>The framework is not a design tool. It does not generate layouts or suggest color palettes. It compiles briefs into criteria, runs those criteria against models, and scores the results. Human taste remains the standard. The machine does the measurement.</p>
+    <p>This landing page was produced by the system it describes. The brief you are reading was the input.</p>
+  </section>
+
+  <section class="code-section">
+    <div class="label">Run</div>
+    <!-- rule: required — bash code block with exact command -->
+    <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+  </section>
+
+  <!-- rule: required — read-the-code CTA -->
+  <div class="cta-row">
+    <a href="https://github.com/artificial-human-design/ahd">Read the code</a>
+  </div>
+
+  <!-- rule: required — manifest sections 'What ships' and 'What is gated' -->
+  <section class="manifest-grid">
+    <div class="ships">
+      <h2>What ships</h2>
+      <ul>
+        <li>Brief compiler</li>
+        <li>28-rule linter</li>
+        <li>Eval harness</li>
+        <li>Vision-critic scaffold</li>
+        <li>MCP server</li>
+        <li>Editor plugins</li>
+        <li>Eight tokens</li>
+      </ul>
+    </div>
+    <div class="gated">
+      <h2>What is gated</h2>
+      <ul>
+        <li>Live frontier-model calls (needs API keys)</li>
+        <li>Live vision critique (needs multimodal key + screenshot pipeline)</li>
+        <li>Standalone npm packages for the editor plugins</li>
+        <li>Additional tokens</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- rule: required — licence footer -->
+  <footer class="footer">
+    <p>Code: FSL-1.1-Apache-2.0</p>
+    <p>Tokens and artwork: CC-BY-4.0</p>
+  </footer>
+
+</div>
+
+</body>
+</html>
+```

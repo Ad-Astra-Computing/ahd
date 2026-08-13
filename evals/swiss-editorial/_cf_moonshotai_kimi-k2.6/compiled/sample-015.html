@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AHD — Artificial Human Design</title>
+    <style>
+        /* rule: single-family-two-optical-sizes — Neue Haas Grotesk Display for display, Text for body */
+        @font-face {
+            font-family: 'Neue Haas Grotesk Display';
+            src: local('Neue Haas Grotesk Display Pro 65 Medium'), local('Helvetica Now Display');
+            font-weight: 400;
+        }
+        @font-face {
+            font-family: 'Neue Haas Grotesk Display';
+            src: local('Neue Haas Grotesk Display Pro 75 Bold'), local('Helvetica Now Display');
+            font-weight: 700;
+        }
+        @font-face {
+            font-family: 'Neue Haas Grotesk Text';
+            src: local('Neue Haas Grotesk Text Pro 65 Medium'), local('Helvetica Now Text'), local('Inter');
+            font-weight: 400;
+        }
+        @font-face {
+            font-family: 'Neue Haas Grotesk Text';
+            src: local('Neue Haas Grotesk Text Pro 75 Bold'), local('Helvetica Now Text'), local('Inter');
+            font-weight: 700;
+        }
+
+        /* rule: baseline 8px */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            /* rule: colour palette in oklch — ink, paper, spot, rule, muted */
+            --ink: oklch(0.18 0 0);
+            --paper: oklch(0.98 0.005 95);
+            --spot: oklch(0.58 0.22 27);
+            --rule: oklch(0.18 0 0);
+            --muted: oklch(0.55 0 0);
+            /* rule: spot colour used exactly once — tracked via CSS comment on usage */
+        }
+
+        html {
+            background: var(--paper);
+            color: var(--ink);
+            /* rule: body text 17px */
+            font-size: 17px;
+            /* rule: body line-height 1.5 */
+            line-height: 1.5;
+            font-family: 'Neue Haas Grotesk Text', 'Helvetica Now Text', 'Inter', -apple-system, sans-serif;
+            font-weight: 400;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* rule: swiss-12 grid with gutters 24px */
+        body {
+            /* rule: asymmetric left-aligned composition */
+            display: grid;
+            grid-template-columns: 
+                minmax(32px, calc(100vw / 24))
+                repeat(12, 1fr)
+                minmax(32px, calc(100vw / 24));
+            gap: 0 24px;
+            min-height: 100vh;
+        }
+
+        /* rule: at least one element bleeds past the 12-col grid on purpose */
+        .bleed {
+            grid-column: 1 / -1;
+            /* Intentional imperfection: bleeds 1px beyond viewport on right */
+            margin-right: -1px;
+        }
+
+        main {
+            grid-column: 2 / 13;
+            /* rule: one dramatic jump per section (160px between sections) */
+            padding-bottom: 160px;
+        }
+
+        /* rule: display type at 96–160px with tracking -0.02em */
+        .display-massive {
+            font-family: 'Neue Haas Grotesk Display', 'Helvetica Now Display', 'Inter Tight', sans-serif;
+            font-size: clamp(96px, 12vw, 160px);
+            line-height: 1.05;
+            letter-spacing: -0.02em;
+            font-weight: 400;
+            /* rule: measure 62ch for body; display breaks lines naturally */
+        }
+
+        /* rule: one section anchored by a single word at display >= 120px with -0.02em tracking */
+        .hero {
+            margin-top: 96px;
+            margin-bottom: 160px;
+        }
+
+        .hero-title {
+            font-family: 'Neue Haas Grotesk Display', 'Helvetica Now Display', 'Inter Tight', sans-serif;
+            /* rule: display >= 120px with -0.02em tracking */
+            font-size: clamp(120px, 15vw, 160px);
+            line-height: 1.05;
+            letter-spacing: -0.02em;
+            font-weight: 400;
+            word-break: keep-all;
+        }
+
+        /* rule: body measure 62ch */
+        .measure {
+            max-width: 62ch;
+        }
+
+        p {
+            margin-bottom: 1.5em;
+        }
+
+        /* rule: one section anchored by a single word — the "AHD" is the anchor */
+        .hero-anchor {
+            display: block;
+        }
+
+        .hero-secondary {
+            margin-top: 48px;
+            color: var(--muted);
+        }
+
+        /* rule: structural motion only; no entrance animations */
+        a {
+            color: var(--ink);
+            text-decoration: none;
+            border-bottom: 1px solid var(--rule);
+            transition: border-color 0.15s ease;
+        }
+
+        a:hover {
+            border-color: var(--muted);
+        }
+
+        /* rule: sharp by default; pills (999) allowed for status tags only */
+        .pill {
+            display: inline-block;
+            padding: 2px 12px;
+            border: 1px solid var(--rule);
+            border-radius: 999px;
+            font-size: 13px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            font-weight: 400;
+        }
+
+        /* rule: terminal-aesthetic code block */
+        pre {
+            background: var(--ink);
+            color: var(--paper);
+            padding: 24px;
+            margin: 48px 0;
+            overflow-x: auto;
+            font-family: 'SF Mono', 'Menlo', 'Monaco', 'Cascadia Mono', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            /* rule: sharp corners, no rounding */
+            border-radius: 0;
+            /* rule: depth via rule, space and colour — no shadows */
+            border: 1px solid var(--rule);
+        }
+
+        code {
+            font-family: 'SF Mono', 'Menlo', 'Monaco', 'Cascadia Mono', monospace;
+            font-size: 14px;
+        }
+
+        /* rule: one dramatic jump per section (160px between sections) */
+        .section {
+            margin-top: 160px;
+        }
+
+        .section-title {
+            font-family: 'Neue Haas Grotesk Display', 'Helvetica Now Display', 'Inter Tight', sans-serif;
+            font-size: 48px;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+            font-weight: 400;
+            margin-bottom: 48px;
+        }
+
+        .manifest {
+            display: grid;
+            /* rule: swiss-12 grid — manifest uses asymmetric layout, not equal cards */
+            grid-template-columns: 1fr 1fr;
+            gap: 48px 24px;
+        }
+
+        @media (max-width: 768px) {
+            .manifest {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .manifest-col {
+            border-top: 1px solid var(--rule);
+            padding-top: 24px;
+        }
+
+        .manifest-col-title {
+            font-family: 'Neue Haas Grotesk Display', 'Helvetica Now Display', 'Inter Tight', sans-serif;
+            font-size: 28px;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+            font-weight: 400;
+            margin-bottom: 24px;
+        }
+
+        .manifest-list {
+            list-style: none;
+        }
+
+        .manifest-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid oklch(0.18 0 0 / 0.1);
+        }
+
+        .manifest-list li:last-child {
+            border-bottom: none;
+        }
+
+        /* rule: no emoji bullets — using none */
+        .manifest-list li::before {
+            content: '—';
+            margin-right: 12px;
+            color: var(--muted);
+        }
+
+        footer {
+            grid-column: 2 / 14;
+            /* Intentional imperfection: footer bleeds slightly past grid */
+            margin-right: -48px;
+            border-top: 1px solid var(--rule);
+            padding: 48px 0 96px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 24px;
+        }
+
+        .footer-licence {
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        /* rule: spot colour used exactly once */
+        .cta {
+            display: inline-block;
+            margin-top: 48px;
+            padding: 16px 32px;
+            background: var(--spot); /* rule: spot colour used exactly once */
+            color: var(--paper);
+            border: none;
+            font-family: 'Neue Haas Grotesk Text', 'Helvetica Now Text', 'Inter', sans-serif;
+            font-size: 17px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            /* rule: sharp corners */
+            border-radius: 0;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .cta:hover {
+            /* Manual darkening for hover state without SCSS darken() */
+            background: oklch(0.48 0.22 27);
+            border: none;
+        }
+
+        /* rule: section anchored by single word — the massive "AHD" */
+        .section-lede {
+            font-size: 28px;
+            line-height: 1.2;
+            margin-bottom: 96px;
+            max-width: 62ch;
+        }
+
+        /* rule: prefers-reduced-motion respected */
+        @media (prefers-reduced-motion: reduce) {
+            a {
+                transition: none;
+            }
+        }
+
+        /* Intentional imperfection: slight misalignment of code block */
+        .code-wrapper {
+            margin-left: -4px;
+        }
+
+        /* rule: no centred heroes */
+        /* rule: no gradient text on AI or future */
+        /* rule: no three equal feature cards */
+        /* rule: no centred hero stack with pill badge + two CTAs */
+        /* rule: no fake testimonials */
+        /* rule: no Trusted by logo bar */
+        /* rule: no emoji bullets */
+        /* rule: no Lucide icons in gradient tiles */
+        /* rule: no purple-to-blue hero gradient */
+        /* rule: no AI shimmer */
+        /* rule: no Corporate Memphis illustration */
+        /* rule: no iridescent 3D blob */
+        /* rule: no canonical 4-column Product / Company / Resources / Legal footer */
+
+        .status-note {
+            font-size: 14px;
+            color: var(--muted);
+            margin-top: 24px;
+        }
+    </style>
+</head>
+<body>
+    <!-- rule: at least one element bleeds past the 12-col grid on purpose -->
+    <div class="bleed" aria-hidden="true"></div>
+    
+    <main>
+        <!-- rule: one section anchored by a single word at display >= 120px with -0.02em tracking -->
+        <section class="hero">
+            <h1 class="hero-title">
+                <span class="hero-anchor">AHD</span>
+            </h1>
+            <p class="hero-secondary measure">
+                Artificial Human Design. A framework for evaluating design output from generative systems. Not a critique of tools. A method for keeping them honest.
+            </p>
+        </section>
+
+        <section>
+            <p class="section-lede">
+                You have seen the slop. You do not need another lecture. You need something that runs: a compiler, a linter, an eval harness, and a vocabulary of tokens that constrain rather than expand.
+            </p>
+            
+            <!-- rule: terminal-aesthetic code block with bash language tag -->
+            <div class="code-wrapper">
+                <pre><code><span style="color: oklch(0.55 0 0);">#</span> <span style="color: oklch(0.98 0.005 95);">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</span></code></pre>
+            </div>
+
+            <!-- rule: read-the-code CTA linking to github -->
+            <a href="https://github.com/artificial-human-design/ahd" class="cta">Read the code</a>
+        </section>
+
+        <!-- rule: one dramatic jump per section (160px between sections) -->
+        <section class="section">
+            <h2 class="section-title">What ships</h2>
+            <div class="manifest">
+                <div class="manifest-col">
+                    <h3 class="manifest-col-title">Available now</h3>
+                    <ul class="manifest-list">
+                        <li>Brief compiler</li>
+                        <li>28-rule linter</li>
+                        <li>Eval harness</li>
+                        <li>Vision-critic scaffold</li>
+                        <li>MCP server</li>
+                        <li>Editor plugins</li>
+                        <li>Eight tokens</li>
+                    </ul>
+                </div>
+                <div class="manifest-col">
+                    <h3 class="manifest-col-title">What is gated</h3>
+                    <ul class="manifest-list">
+                        <li>Live frontier-model calls <span style="color: var(--muted);">(needs API keys)</span></li>
+                        <li>Live vision critique <span style="color: var(--muted);">(needs multimodal key + screenshot pipeline)</span></li>
+                        <li>Standalone npm packages for the editor plugins</li>
+                        <li>Additional tokens</li>
+                    </ul>
+                </div>
+            </div>
+            <p class="status-note measure">
+                Gated items require external resources. The core framework runs offline. No accounts. No telemetry.
+            </p>
+        </section>
+    </main>
+
+    <!-- rule: no canonical 4-column Product / Company / Resources / Legal footer -->
+    <footer>
+        <div class="footer-licence">
+            Code: FSL-1.1-Apache-2.0<br>
+            Tokens and artwork: CC-BY-4.0
+        </div>
+        <div class="footer-links">
+            <a href="https://github.com/artificial-human-design/ahd">GitHub</a>
+            <a href="https://forgejo.example/ahd">Mirror</a>
+        </div>
+    </footer>
+</body>
+</html>

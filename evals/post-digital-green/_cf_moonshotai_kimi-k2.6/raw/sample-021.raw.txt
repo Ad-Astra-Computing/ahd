@@ -1,0 +1,381 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AHD — Artificial Human Design</title>
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --fg: #e6e6e6;
+            --muted: #737373;
+            --dim: #404040;
+            --accent: #c4b5a0;
+            --accent-dim: #8a7d6b;
+            --code-bg: #111111;
+            --border: #1a1a1a;
+            --gated: #5a4a3a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: var(--bg);
+            color: var(--fg);
+            line-height: 1.6;
+            font-size: 15px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header */
+        header {
+            padding: 48px 0 32px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .site-title {
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 8px;
+        }
+
+        .site-sub {
+            font-size: 13px;
+            color: var(--muted);
+        }
+
+        /* Main content */
+        main {
+            padding: 40px 0;
+        }
+
+        section {
+            margin-bottom: 48px;
+        }
+
+        h2 {
+            font-size: 18px;
+            font-weight: 500;
+            color: var(--fg);
+            margin-bottom: 16px;
+            letter-spacing: -0.01em;
+        }
+
+        p {
+            color: var(--fg);
+            margin-bottom: 16px;
+        }
+
+        p.muted {
+            color: var(--muted);
+        }
+
+        /* The thesis */
+        .thesis {
+            font-size: 16px;
+            line-height: 1.7;
+        }
+
+        .thesis strong {
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        /* Code block */
+        .code-block {
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 24px 0;
+        }
+
+        .code-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 16px;
+            background: var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .code-lang {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--muted);
+            font-family: "SF Mono", Monaco, "Cascadia Code", monospace;
+        }
+
+        .code-dots {
+            display: flex;
+            gap: 6px;
+        }
+
+        .code-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--dim);
+        }
+
+        .code-dot:nth-child(1) { background: #5a5a5a; }
+        .code-dot:nth-child(2) { background: #4a4a4a; }
+        .code-dot:nth-child(3) { background: #3a3a3a; }
+
+        pre {
+            padding: 16px;
+            overflow-x: auto;
+            font-family: "SF Mono", Monaco, "Cascadia Code", "Fira Code", monospace;
+            font-size: 13px;
+            line-height: 1.6;
+            color: var(--fg);
+        }
+
+        code {
+            font-family: inherit;
+        }
+
+        .kw { color: #d4a373; }
+        .flag { color: #a8c5a8; }
+        .arg { color: #b8c4d0; }
+        .val { color: #c4b5a0; }
+        .comment { color: var(--muted); }
+
+        /* Manifests */
+        .manifest {
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 20px 24px;
+        }
+
+        .manifest h3 {
+            font-size: 13px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .manifest-ships h3 {
+            color: var(--accent);
+            border-color: var(--accent-dim);
+        }
+
+        .manifest-gated h3 {
+            color: var(--gated);
+            border-color: var(--gated);
+        }
+
+        .manifest ul {
+            list-style: none;
+        }
+
+        .manifest li {
+            padding: 8px 0;
+            padding-left: 16px;
+            position: relative;
+            font-size: 14px;
+            color: var(--fg);
+        }
+
+        .manifest li::before {
+            content: "—";
+            position: absolute;
+            left: 0;
+            color: var(--dim);
+        }
+
+        .manifest-ships li::before {
+            color: var(--accent-dim);
+        }
+
+        .manifest-gated li::before {
+            color: var(--gated);
+        }
+
+        .manifest .note {
+            display: block;
+            font-size: 12px;
+            color: var(--muted);
+            margin-top: 2px;
+        }
+
+        /* CTA */
+        .cta {
+            margin: 32px 0;
+        }
+
+        .cta a {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 12px 20px;
+            border: 1px solid var(--accent-dim);
+            border-radius: 4px;
+            transition: all 0.15s ease;
+        }
+
+        .cta a:hover {
+            background: var(--accent-dim);
+            color: var(--bg);
+        }
+
+        .cta a::after {
+            content: "→";
+            font-size: 13px;
+        }
+
+        .cta-note {
+            font-size: 12px;
+            color: var(--muted);
+            margin-top: 10px;
+        }
+
+        /* Footer */
+        footer {
+            padding: 32px 0 48px;
+            border-top: 1px solid var(--border);
+        }
+
+        .licence {
+            font-size: 12px;
+            color: var(--muted);
+            line-height: 1.8;
+        }
+
+        .licence strong {
+            color: var(--fg);
+            font-weight: 500;
+        }
+
+        .footer-links {
+            margin-top: 16px;
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-links a {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 12px;
+        }
+
+        .footer-links a:hover {
+            color: var(--fg);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="site-title">Artificial Human Design</div>
+            <div class="site-sub">A framework for evaluating design with structured taste, not pretrained averages.</div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <section class="thesis">
+                <p>You have already seen the problem. Templates regenerated at scale. Hero sections that all share the same five decisions. Copy that reads like latents interpolated between forty landing pages. The issue is not that tools exist; it is that most workflows have no mechanism for taste.</p>
+                <p><strong>AHD is an evaluation framework, not a generator.</strong> You write a brief in structured YAML. The compiler turns it into a rubric. A 28-rule linter catches patterns that correlate with genericoutput. An eval harness runs your design candidates against models you choose. A vision-critic scaffold lets multimodal models inspect rendered output when you have keys. The result is scored output you can argue with, reground, and version.</p>
+                <p class="muted">This is for teams who already have designers and already distrust the average case. It gives you vocabulary, guardrails, and a loop.</p>
+            </section>
+
+            <section>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-lang">bash</span>
+                        <div class="code-dots">
+                            <span class="code-dot"></span>
+                            <span class="code-dot"></span>
+                            <span class="code-dot"></span>
+                        </div>
+                    </div>
+                    <pre><code><span class="kw">ahd</span> <span class="flag">eval-live</span> <span class="val">swiss-editorial</span> \
+  <span class="flag">--brief</span> <span class="val">briefs/landing.yml</span> \
+  <span class="flag">--models</span> <span class="arg">&lt;specs&gt;</span> \
+  <span class="flag">--n</span> <span class="val">10</span></code></pre>
+                </div>
+            </section>
+
+            <section class="cta">
+                <a href="https://github.com/artificialhumandesign/ahd">Read the code</a>
+                <p class="cta-note">Mirror available on Forgejo. No install wizard; clone and run.</p>
+            </section>
+
+            <section>
+                <div class="manifest manifest-ships">
+                    <h3>What ships</h3>
+                    <ul>
+                        <li>Brief compiler — YAML to structured evaluation rubric</li>
+                        <li>28-rule linter — pattern detection for generic-output markers</li>
+                        <li>Eval harness — runner for candidate scoring against configured models</li>
+                        <li>Vision-critic scaffold — plumbing for multimodal critique when enabled</li>
+                        <li>MCP server — Model Context Protocol integration for editor/IDE loop</li>
+                        <li>Editor plugins — VS Code and Vim bindings for inline eval triggers</li>
+                        <li>Eight tokens — curated design-evaluation prompts, versioned and documented</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section>
+                <div class="manifest manifest-gated">
+                    <h3>What is gated</h3>
+                    <ul>
+                        <li>Live frontier-model calls
+                            <span class="note">Needs API keys for providers you configure</span>
+                        </li>
+                        <li>Live vision critique
+                            <span class="note">Needs multimodal key + working screenshot pipeline</span>
+                        </li>
+                        <li>Standalone npm packages for the editor plugins
+                            <span class="note">Pending registry setup; install from repo for now</span>
+                        </li>
+                        <li>Additional tokens
+                            <span class="note">Domain-specific rubrics in development</span>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="licence">
+                <strong>Licence</strong><br>
+                Code: FSL-1.1-Apache-2.0 (Functional Source License, converting to Apache-2.0 after two years)<br>
+                Tokens and artwork: CC-BY-4.0
+            </div>
+            <div class="footer-links">
+                <a href="https://github.com/artificialhumandesign/ahd">GitHub</a>
+                <a href="https://forgejo.example/ahd">Forgejo mirror</a>
+                <a href="https://github.com/artificialhumandesign/ahd/issues">Issues</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
+```

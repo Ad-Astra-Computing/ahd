@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AHD — Artificial Human Design</title>
+<style>
+  :root{
+    --ink:#111;
+    --paper:#f4f1ea;
+    --rule:#1a1a1a;
+    --muted:#5a584f;
+    --accent:#b3331d;
+    --term-bg:#1b1b1b;
+    --term-fg:#e8e6df;
+    --term-dim:#8a877e;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--paper);color:var(--ink);
+    font-family:"Iowan Old Style","Charter","Georgia",serif;
+    font-size:17px;line-height:1.5;-webkit-font-smoothing:antialiased}
+  a{color:var(--ink);text-underline-offset:3px;text-decoration-thickness:1px}
+  a:hover{color:var(--accent)}
+  .wrap{max-width:760px;margin:0 auto;padding:36px 28px 80px}
+  header.masthead{
+    display:flex;align-items:baseline;justify-content:space-between;
+    border-bottom:1px solid var(--rule);padding-bottom:10px;margin-bottom:28px;
+    font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:13px;
+    letter-spacing:.02em;text-transform:uppercase}
+  .masthead .lhs span{color:var(--muted);margin-left:10px;text-transform:none;letter-spacing:0}
+  .masthead nav a{margin-left:18px;text-decoration:none}
+  h1{font-family:"GT Sectra","Times New Roman",serif;
+    font-size:46px;line-height:1.05;font-weight:600;letter-spacing:-.01em;
+    margin:14px 0 18px}
+  h1 em{font-style:italic;color:var(--accent);font-weight:500}
+  .lede{font-size:19px;line-height:1.45;max-width:62ch;margin:0 0 22px}
+  .lede + p{max-width:62ch;color:#222;margin:0 0 26px}
+  .meta-row{
+    display:flex;gap:22px;flex-wrap:wrap;
+    font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:12px;
+    color:var(--muted);border-top:1px dashed #c9c4b6;border-bottom:1px dashed #c9c4b6;
+    padding:10px 0;margin:0 0 30px;text-transform:uppercase;letter-spacing:.06em}
+  .meta-row b{color:var(--ink);font-weight:600}
+  .term{
+    background:var(--term-bg);color:var(--term-fg);
+    border-radius:4px;padding:14px 16px 16px;margin:0 0 8px;
+    font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:13px;
+    line-height:1.55;overflow-x:auto}
+  .term .tag{
+    display:inline-block;color:var(--term-dim);font-size:11px;
+    text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
+  .term pre{margin:0;white-space:pre;color:var(--term-fg)}
+  .term .pr{color:#7aa37a}
+  .term .fl{color:#c9b070}
+  .term .arg{color:#9ec5d8}
+  .caption{font-size:13px;color:var(--muted);margin:0 0 38px}
+  h2{font-family:"GT Sectra","Times New Roman",serif;
+    font-size:24px;font-weight:600;margin:0 0 4px;letter-spacing:-.005em}
+  .sec-num{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+    font-size:11px;color:var(--accent);letter-spacing:.16em;text-transform:uppercase;
+    display:block;margin-top:30px;margin-bottom:6px}
+  .manifest{border-top:1px solid var(--rule);padding-top:16px;margin-top:8px}
+  .manifest p.intro{color:var(--muted);font-size:14px;margin:6px 0 14px;max-width:60ch}
+  ol.items{list-style:none;padding:0;margin:0;counter-reset:n}
+  ol.items li{
+    display:grid;grid-template-columns:34px 1fr;gap:14px;
+    padding:10px 0;border-bottom:1px dotted #c9c4b6}
+  ol.items li:last-child{border-bottom:0}
+  ol.items li::before{
+    counter-increment:n;content:"" counter(n,decimal-leading-zero);
+    font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+    font-size:12px;color:var(--muted);padding-top:3px}
+  ol.items b{font-weight:600}
+  ol.items .note{color:var(--muted);font-size:14px;display:block;margin-top:2px}
+  .gated b{color:var(--accent)}
+  footer{
+    border-top:2px solid var(--rule);margin-top:48px;padding-top:14px;
+    font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:12px;
+    color:var(--muted);line-height:1.7;
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px}
+  footer b{color:var(--ink);font-weight:600}
+  .colophon{max-width:46ch}
+  ::selection{background:#111;color:var(--paper)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="lhs">AHD <span>// artificial human design</span></div>
+    <nav>
+      <a href="#manifest">Manifest</a>
+      <a href="https://github.com/ahd/ahd">github</a>
+    </nav>
+  </header>
+
+  <main>
+    <p class="sec-num">§00 — premise</p>
+    <h1>An evaluator for design <em>that has stopped trying.</em></h1>
+
+    <p class="lede">You have seen the sites. Same hero, same gradient, same three
+      cards, same shimmer. AHD is the harness that names what's wrong, runs
+      the same brief through several models, and grades the output against a
+      Swiss-editorial rubric you can read.</p>
+
+    <p>It is not a generator. It is the thing the generators should have been
+      graded against before they shipped.</p>
+
+    <div class="meta-row">
+      <span><b>v0.4.0</b> · 2026-04</span>
+      <span>licence <b>FSL-1.1-Apache-2.0</b></span>
+      <span>repo <a href="https://github.com/ahd/ahd">github.com/ahd/ahd</a> · <a href="https://forge.ahd.tools/ahd/ahd">forgejo mirror</a></span>
+    </div>
+
+    <p class="sec-num">§01 — run it</p>
+    <div class="term" role="region" aria-label="bash command">
+      <span class="tag">bash</span>
+<pre><span class="pr">$</span> ahd eval-live swiss-editorial <span class="fl">--brief</span> <span class="arg">briefs/landing.yml</span> <span class="fl">--models</span> <span class="arg">&lt;specs&gt;</span> <span class="fl">-n</span> <span class="arg">10</span></pre>
+    </div>
+    <p class="caption">One brief, ten generations per model, scored by 28 rules
+      plus a vision pass. Produces a diff against the rubric, not a vibe.</p>
+
+    <section class="manifest" id="manifest">
+      <p class="sec-num" style="margin-top:6px">§02 — manifest</p>
+      <h2>What ships</h2>
+      <p class="intro">In the repo today. No keys, no waitlist, no signup.
+        Clone, install, run against local fixtures.</p>
+      <ol class="items">
+        <li><div><b>Brief compiler.</b><span class="note">YAML brief → typed
+          intermediate the rubric and the models both consume.</span></div></li>
+        <li><div><b>28-rule linter.</b><span class="note">Static checks for
+          the failure modes you already recognise: stacked CTAs, gradient AI,
+          three-card grid, shimmer, Memphis blobs.</span></div></li>
+        <li><div><b>Eval harness.</b><span class="note">Deterministic runner
+          with seeds, n-of-k sampling, and a JSONL report format.</span></div></li>
+        <li><div><b>Vision-critic scaffold.</b><span class="note">Pluggable
+          interface plus a fixture-mode critic that runs offline.</span></div></li>
+        <li><div><b>MCP server.</b><span class="note">Exposes brief, rubric,
+          and lint to any MCP-aware client.</span></div></li>
+        <li><div><b>Editor plugins.</b><span class="note">In-tree sources for
+          VS Code and Zed; lint-on-save against the 28 rules.</span></div></li>
+        <li><div><b>Eight tokens.</b><span class="note">The base editorial
+          set: ink, paper, rule, accent, muted, term-bg, term-fg, term-dim.</span></div></li>
+      </ol>
+    </section>
+
+    <section class="manifest gated">
+      <h2>What is gated</h2>
+      <p class="intro">Honest about the seams. These need something AHD
+        cannot ship for you.</p>
+      <ol class="items">
+        <li><div><b>Live frontier-model calls.</b><span class="note">Needs
+          your API keys. The harness runs against fixtures without them.</span></div></li>
+        <li><div><b>Live vision critique.</b><span class="note">Needs a
+          multimodal key plus a working screenshot pipeline (Playwright
+          or equivalent).</span></div></li>
+        <li><div><b>Standalone npm packages for the editor plugins.</b>
+          <span class="note">Sources are in-tree; published packages are
+          pending registry sign-off.</span></div></li>
+        <li><div><b>Additional tokens.</b><span class="note">Beyond the
+          eight, expanded scales (type, space, motion) land as the rubric
+          earns them.</span></div></li>
+      </ol>
+    </section>
+
+    <p class="sec-num">§03 — read the code</p>
+    <p style="max-width:60ch;margin:0 0 8px">The argument is the source.
+      <a href="https://github.com/ahd/ahd"><b>Read the code on GitHub →</b></a>
+      &nbsp;or the <a href="https://forge.ahd.tools/ahd/ahd">forgejo mirror</a>.</p>
+
+  </main>
+
+  <footer>
+    <div class="colophon">
+      <b>AHD</b> — Artificial Human Design.<br>
+      Code under <b>FSL-1.1-Apache-2.0</b>.<br>
+      Tokens and artwork under <b>CC-BY-4.0</b>.
+    </div>
+    <div>
+      <div>composed in Helvetica, Sectra, and IBM Plex Mono</div>
+      <div>last revision 2026-04-22</div>
+      <div>contact: hello@ahd.tools</div>
+    </div>
+  </footer>
+</div>
+</body>
+</html>

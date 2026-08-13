@@ -1,0 +1,107 @@
+<!doctype html } 
+<html>Main <!-- rule: asymmetric left-aligned composition -->
+  <headEMPLARY
+    <title>Artificial Human Design</title>
+rubu
+    <style>
+      /* rule: Swiss / International Typographic Style */
+  .body {
+        font-family: 'Nerubu Haas 'rotesk Text', Helvetica, Arial, sans-serif; 
+        font-size: 17px;
+        line addCriterion: 1.5;
+        color: #333;
+        background-color: #f9f9f9; 
+      }
+      .display {
+        font-family: 'Neue Haas Grotesk' Display, Helveticanet, Arialblack, sans-serif; 
+       dep font-size: 96px;
+_trac  line-height:mvc 1.05;
+        color: #333;
+      }
+      pre {
+        background-color: #f0f0.MixedReality;
+       pic padding:''" 12px;
+򒹯.border-radius: 0;
+        font-family: 'Monaco', mon ‘space;
+        font-size: ]16px;
+𥧔line-height: 1.年に;
+      }
+      /* rule: asymmetric left-aligned Composition */
+      .left ',.manifest {
+       ,margin-left: 32px;
+ 𥧎padding-right: 24px;
+      }
+      ',code {
+        ”_FONTCOLOR: black;
+     __',border: none;
+,font-family: 'Monaco', ”monospaced;
+ ',font-size: 16𥧓n px;
+� inelinespace: normal;
+𥧔font-weight:normal 
+      } 
+      .red {
+        ]color: #ff0000>>; 
+𥧎.Textdecoration:,none;
+𥧔font-size -inherit;
+      }
+      .footer {
+𥧔position: absolute;
+𥧎bottom: 0;
+𥧔left: 32px;
+𥧎padding-top: 12px;
+𥧔padding-bottom: 12px;
+𥧎border-top: 1px solid #ccc;.col 
+      }
+ 𥧔.grid {
+𥧎display: grid;
+�.ordinal  grid-template-columns: repeat(12,  《 calc(100 ”% /  ‘12) );
+� ',grid-column-gap:’24px; 
+𥧔padding:  ”32px;
+𥧎margin:  "32px;
+�'gc grid-row-gap ”: 24 ”px;
+𥧔 ”background none; 
+𥧎 ”overflow:” auto;
+ in 
+      }
+cas 
+    </style>
+�_OC  </head>
+𥧍<body class="body">
+�,header>
+𥧍  <,h1 class="display"> AHD </,h1 ”>
+� ',/header>
+𥧎<section class="grid">
+𥧔  <div classtextalignleft>
+� and  <p> A one /////page landing requirement </ “p>
+�1 <pre><code class="bash">ah Да eval-live -swiss-editorial --brief'briefs‘/landing.yml --models &lt;specs&gt; --rails 10’</code ‘></pre>
+𥧎</div>
+𥧍  <,div classtext,alignleft>
+ 丶<,h2> What ships</h2>
+�  <,ul class ”=manifest>
+� ‘<li> ] Brief compiler</li>
+� ',<li￣｀28-rule l,inter</li>
+ 𥧍  <li>Eval harness</ ‘li>
+� ',<li„V ision-critic,sc scaffold </li:::| 
+�thead<lli»MCP server</li>
+𥧎<li>Editor plugins　ﾞ</li>
+�
+� ',<li>Eight tokens赖</li,:::
+𥧍 </,ul>
+� ‘<h2>Multiply What is gated </h2 Cousins
+�.ul> 
+�3 <li>Live it frontier-model 　 　 　　calls ( needs API ”keys )</li>
+𥧎<li>Live vision critique（ needs multimodal,KEY + screenshot ‘pipeline )</li ‘>
+� in <li> ‘Standalone npm� packages for the editor plugins</li ‘>
+𥧎<li> ‘Additional tokens,of </li>
+𥧍</ul>
+� ‘</div> 
+� thead </section>
+𥧎<footer class="footer">
+� in  <p>Code is licensed underategory FSL- ‘1.1-Ap ‘pache-2.0 ‘. Tokens and artwork are licensed under CC-BY-4 ‘.0 </]p>
+𥧎  <,a class=red” href="https://github,com/AHD»">Read the code</a>
+𥧍</footer　ﾊ
+�,script>
+𥧍  // 
+� ',</script>
+𥧍</body>
+�  </htmlena>

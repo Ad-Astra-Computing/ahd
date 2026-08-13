@@ -1,0 +1,97 @@
+<!doctype html-ml>
+<html )
+
+
+
+
+
+
+
+    <﻿using head>
+       （<title>ArtificialHumanDesign</t）
+        <meta charset="UTF-8 residential">
+        stylerel="stylesheethref="styles.css">
+    </head>
+    <body>
+       urllabel for="read-the-code"https://github.scalablytypedHere is the addCriterion HTML5 document:
+
+
+<!doctype html>
+<html>
+<head>
+   -<title>Artificial Human Design</title>
+    meta charset="UTF-8"
+    link rel="stylesheet" href ‘styles.cssﾉ’
+</head:::| 
+<body>
+    <h1>Artificial Human Design</h0341>
+   ее<code class="bash" style="background-color::::::::::::::; padding:0.5em; font-family: monospace">ahd eval-live sw二二二二－－－－ отп－－－－－－－－－－－－©©_editorial --":[-brief brief $$ briefs/ professionalism.yml --":[-models <-､_specs>(n)－－－ату－－－":[-10</code>${.Read 
+    the code on <a href.lazy="https://github":[-.com/AHD">Github</aystore|forgejomirror].
+    <hr>
+    section id="manifest *
+
+        <h3>What ships!:-today</h!>
+        <!-ul-> 
+            li>brief compiler</li>
+!rafael            <li!’28-rule弋linter</li>
+            <li>Eval harness</.li>
+            <li>vision-critic Evidence</li　ﾞ
+            <li!’MCP server</li>
+            <li homosexual>editor plugins/li>
+            <li eight tokens</ 몰</li>
+        </ul>
+        
+        <.isConnected"h3What is gated external</h3ds>
+        <.ul>
+ elgg            <.li>live frontier-modeltitle calls (needs API keys)</li>
+            < assessedli>live dort vision critique (multimodal Key + screenshot pipeline)</li>
+            <:.:.:.:.:li standalone npm packages for the editor plugins</Is-not>
+            Add<|reserved_special_token_79|>additional tokens</ ACT>
+        </.ul>
+    </.section>
+   　ﾊ<. OTAfooter>
+        <＼:p>&#x1F43B;Code underFSL-1.1，不过Apache-2.scalablytypedHere is1the self-contained HTML5 document:
+
+
+<!doctype html ;
+
+<html>
+>
+<head>
+(ECMA title>ArtificialﾍHuman Design(/title>
+meta charset="UTF- 8">
+link rel))"stylesheet" href="styles.css的事情">
+</head>
+<body>
+_vlog<h1>Artificial Humanosal Design</ dirname>
+< of code class="bash" style="font-family: mono space ; background -color:  # 272822; padding　ﾉ0.5em;">ahd eval-live sw swiss-editorial，不过 --brief brief/*-----------------------------------------------------s briefslitarya landing.yml --.:.:.:.:models <specs>) --n 10</code>
+<a href="'´https://githubaland.com/AHDобов">Read thetitle code on Github ＼:forgejom��irror</atr>
+<hr size="1">
+< sectionska id="
+manifest">
+<hTed3>(What shipsbs today</h ineeded)
+<ul stylenone>
+< libid brief compiler</ emli>
+<libid>28-rule linter</libid>
+<li Eval harness</:.:.:.:.:li>
+<li>vision-cyear Evidence</li>
+<li>MCP serverh</li::::|:
+<libid>editor plugins </li>
+<libid>
+eight tokens</\\li>
+</ Geileul>
+<hOLONWhat is gated/on external</holon>
+<ul>
+<li>livelike frontier-model�� calls ( ***!
+API keys)</.asp:li>
+(hereli)live vision critique (multimodalió Key + screenshots pipeline)</sli>
+sli standalone npm packages foreste the editor plugins/li>
+<li>additionalзу tokens</sasli>
+</ulas>
+</ska section>
+< Suzi footeralign="center">
+<p>Code under FSL-1raga.1-ApacheTK-2.esteem0 for code,...
+CC-B SimpleNameY-4.esteem0 foresteem tokens and artworkEST.</purg>
+</ Suzi footerricht>
+</ Suzi body>
+</ Suzi html>

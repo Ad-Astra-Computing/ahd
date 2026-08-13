@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AHD - Artificial Human Design</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #171717;
+      --muted: #5f625f;
+      --paper: #f7f5ef;
+      --panel: #ffffff;
+      --rule: #d9d5ca;
+      --accent: #b83f28;
+      --accent-2: #1f6f68;
+      --code: #11130f;
+      --code-text: #e9eadf;
+      --code-muted: #9ea393;
+      --shadow: 0 18px 50px rgba(23, 23, 23, 0.08);
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      --sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      min-height: 100%;
+      background: var(--paper);
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(90deg, rgba(23, 23, 23, 0.035) 1px, transparent 1px),
+        linear-gradient(rgba(23, 23, 23, 0.025) 1px, transparent 1px),
+        var(--paper);
+      background-size: 48px 48px;
+      font-family: var(--sans);
+      line-height: 1.5;
+    }
+
+    a {
+      color: inherit;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 0.22em;
+    }
+
+    a:hover {
+      color: var(--accent);
+    }
+
+    .page {
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 24px 0 28px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 8px 0 24px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .brand {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .mark {
+      font-family: var(--mono);
+      font-size: 15px;
+      letter-spacing: 0;
+      padding: 4px 7px;
+      border: 1px solid var(--ink);
+      background: var(--panel);
+    }
+
+    .brand span:last-child {
+      color: var(--muted);
+      font-size: 14px;
+      white-space: nowrap;
+    }
+
+    .read-code {
+      font-family: var(--mono);
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+
+    main {
+      display: grid;
+      grid-template-columns: minmax(0, 1.06fr) minmax(360px, 0.94fr);
+      gap: 44px;
+      align-items: start;
+      padding: 52px 0 28px;
+    }
+
+    .hero {
+      display: grid;
+      gap: 28px;
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 720px;
+      font-family: var(--serif);
+      font-weight: 520;
+      font-size: clamp(48px, 7vw, 94px);
+      line-height: 0.94;
+      letter-spacing: 0;
+    }
+
+    .dek {
+      max-width: 620px;
+      margin: 0;
+      color: #30322f;
+      font-size: clamp(18px, 2vw, 23px);
+      line-height: 1.38;
+    }
+
+    .position {
+      display: grid;
+      grid-template-columns: 132px minmax(0, 1fr);
+      gap: 22px;
+      max-width: 680px;
+      padding-top: 16px;
+      border-top: 1px solid var(--rule);
+    }
+
+    .position .label {
+      color: var(--accent);
+      font-family: var(--mono);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .position p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .terminal {
+      background: var(--code);
+      color: var(--code-text);
+      border: 1px solid #2b2f28;
+      box-shadow: var(--shadow);
+      min-width: 0;
+    }
+
+    .terminal-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 12px 14px;
+      border-bottom: 1px solid #2b2f28;
+      color: var(--code-muted);
+      font-family: var(--mono);
+      font-size: 12px;
+    }
+
+    .terminal-title {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .term-dots {
+      display: flex;
+      gap: 6px;
+      flex: 0 0 auto;
+    }
+
+    .term-dots i {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      border: 1px solid #777b6f;
+      display: block;
+    }
+
+    pre {
+      margin: 0;
+      padding: 22px;
+      overflow-x: auto;
+      white-space: pre;
+      font-family: var(--mono);
+      font-size: clamp(13px, 1.4vw, 15px);
+      line-height: 1.6;
+    }
+
+    code {
+      font-family: var(--mono);
+    }
+
+    .prompt {
+      color: #c4c7b9;
+    }
+
+    .command {
+      color: var(--code-text);
+    }
+
+    .aside-note {
+      display: grid;
+      grid-template-columns: 72px minmax(0, 1fr);
+      gap: 16px;
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .aside-note strong {
+      color: var(--ink);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .manifest {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      margin-top: 26px;
+      border: 1px solid var(--rule);
+      background: rgba(255, 255, 255, 0.44);
+    }
+
+    .manifest section {
+      padding: 28px;
+    }
+
+    .manifest section + section {
+      border-left: 1px solid var(--rule);
+    }
+
+    h2 {
+      margin: 0 0 18px;
+      font-family: var(--mono);
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .manifest ol {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      counter-reset: item;
+      display: grid;
+      gap: 0;
+    }
+
+    .manifest li {
+      counter-increment: item;
+      display: grid;
+      grid-template-columns: 44px minmax(0, 1fr);
+      gap: 14px;
+      align-items: start;
+      padding: 12px 0;
+      border-top: 1px solid var(--rule);
+      font-size: 16px;
+    }
+
+    .manifest li::before {
+      content: counter(item, decimal-leading-zero);
+      color: var(--accent-2);
+      font-family: var(--mono);
+      font-size: 12px;
+      padding-top: 3px;
+    }
+
+    footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      padding-top: 22px;
+      border-top: 1px solid var(--rule);
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    footer strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    @media (max-width: 860px) {
+      .page {
+        width: min(100% - 28px, 680px);
+        padding-top: 16px;
+      }
+
+      header,
+      footer {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .brand {
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .brand span:last-child {
+        white-space: normal;
+      }
+
+      main {
+        grid-template-columns: 1fr;
+        gap: 34px;
+        padding-top: 36px;
+      }
+
+      .position,
+      .aside-note {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+
+      .manifest {
+        grid-template-columns: 1fr;
+      }
+
+      .manifest section + section {
+        border-left: 0;
+        border-top: 1px solid var(--rule);
+      }
+
+      .manifest section {
+        padding: 22px 18px;
+      }
+
+      .manifest li {
+        grid-template-columns: 38px minmax(0, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="brand">
+        <span class="mark">AHD</span>
+        <span>Artificial Human Design</span>
+      </div>
+      <a class="read-code" href="https://github.com/ahd-design/ahd" aria-label="Read the AHD code on GitHub">read-the-code</a>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="title">
+        <h1 id="title">Evaluation for generated design, before taste gets flattened.</h1>
+        <p class="dek">AHD turns design briefs into repeatable checks: lint rules, live evals, critic scaffolds, and editor surfaces that make generated work answer to a standard.</p>
+        <div class="position">
+          <div class="label">Premise</div>
+          <p>Not another lecture about generic output. AHD is a working framework for teams that already see the pattern and want a stricter loop between brief, model, critique, and artifact.</p>
+        </div>
+      </section>
+
+      <aside aria-label="Run the evaluation">
+        <div class="terminal">
+          <div class="terminal-bar">
+            <span class="terminal-title">run/live-eval</span>
+            <span class="term-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+          </div>
+          <pre><code class="language-bash"><span class="prompt">$</span> <span class="command">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</span></code></pre>
+        </div>
+        <div class="aside-note">
+          <strong>Output</strong>
+          <span>Structured scores, rule failures, critic notes, and fixture paths that can be inspected instead of hand-waved.</span>
+        </div>
+      </aside>
+
+      <div class="manifest" aria-label="AHD manifest">
+        <section aria-labelledby="ships-title">
+          <h2 id="ships-title">What ships</h2>
+          <ol>
+            <li>brief compiler</li>
+            <li>28-rule linter</li>
+            <li>eval harness</li>
+            <li>vision-critic scaffold</li>
+            <li>MCP server</li>
+            <li>editor plugins</li>
+            <li>eight tokens</li>
+          </ol>
+        </section>
+
+        <section aria-labelledby="gated-title">
+          <h2 id="gated-title">What is gated</h2>
+          <ol>
+            <li>live frontier-model calls (needs API keys)</li>
+            <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+            <li>standalone npm packages for the editor plugins</li>
+            <li>additional tokens</li>
+          </ol>
+        </section>
+      </div>
+    </main>
+
+    <footer>
+      <div><strong>Licence:</strong> FSL-1.1-Apache-2.0 for code, CC-BY-4.0 for tokens and artwork.</div>
+      <div>AHD is a one-page contract with the work: name the brief, run the checks, inspect the artifact.</div>
+    </footer>
+  </div>
+</body>
+</html>

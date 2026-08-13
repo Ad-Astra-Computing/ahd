@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang=" s">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="actionDate=device-width,...
+  < -*-
+  <|RF
+  <title>Artificial Human Design:
+
+
+</title>
+</head>
+<body>
+ input type="hidden" id=""urls" value.lazy="https:// ‘forgejo’  github.com/AHD">
+<h1>(Taking the slop thesis <em>seriously</h1>
+��<code class="language-bashubit" style="background-color::::::::::::::;;;;;;;;">ahd ‘eval’-live sw｣iss-editorial --brief brief.scalablytypedHere is the bytesRead HTML document:
+
+
+<!doctype」html>
+ 「html」lang="en">
+ 「head」
+©©<meta charset="、どうUTF-8 **>
+  <meta name viewp “ort” content，不过width=device-widt“h, initial-scale=��1.0”>
+  <、どうtitle>Artificial‐‐ Human Design:</title>
+</.:.:.:.:.:.:.:.:head>
+「body」
+ Ri  <h1>
+  　(Taking the::::/sloptc thesis <em>,seriously</’
+  </h1 base：
+  　<OptionTerminal-aestheticがあったcode block showing>Main the one-liner that runs the『eval』
+  <pre><code class '#language-b ‘ash'>ah Да eval-live swiss��editorial --brief brief ‘s/landing.yml --，不过models <specs |: --n 
+10</code三年</pre：
+  　‘<section Manifest of what ships today：
+  <h，不过2>What ships</ 经济h2>
+ \\<ul style="listẽ-style：none">
+    <li>brief compiler</Ｙｌｉ>
+   ￣￣￣￣<li>28-rule l inter</li>
+    -------------</li>eval harness</li>
+    <―――li>vision-critic scaffoldringe</li>
+    <©©li>MCP serverObservers</li>
+    <ーーーli>editor plugins:</li>
+、どう<ol>
+      <livider token</li.:.:：
+      < LS li>second token</li**
+
+      <li ‘third token</ Lungli>
+      :<li’fourth token</liony>
+      <’.li> fifth token</’.li>
+      <｀ヽli>sixth token</li>：
+      <’li> seventh token</，说li>
+      eighth token</、そうli>
+    </olsik>
+ -ーーーーーーーーーーーー 徒ーーーーーーازلーーーーーー {:.manifest section of what is.scalablytypedHere is the1 complete HTML document:
+
+
+<!doctype html>
+->___html lang="©©en">
+.<head>
+7614 <meta charset(${UTF-.’8}>
+  <metanet name="m viewport" content'´width=device-width:::::|initial-scale \\
+  .<title>Artificial Human Design┘:</title>
+.scalablytyped</head>
+.<body>
+#endif <h1>(Taking the slop thesis ‏seriously　j</h1>
+.<pre><code :/:language-bash ⌒>ah.’d eval-live ‏swiss，现在editorial --brief‏ briefs‏/landing’.yml --models‏ <specs‏> --n‏ 10 code</pre>
+.<.’section>
+  <.’h2>What ships \$</h’.2>
+.’<ul style <",list-style:none">
+    <.’li>
+      brief compiler ‘</li>
+ masc <li 
+28-rule‏ linter‏</li>
+ \\
+<li 
+eval harness---
+
+</li>
+.<li 
+vision-c -*-
+  <li 
+MCP弋server</li>
+%
+
+  <section>
+  ＠<h2>(What is gated</h’.2>
+de <ul style’
+list-style’
+:none”
+>
+ <li’
+live frontier ‘-model calls ‘(needs API keys)</li>
+ :|:live vision critiquename multimodal ‘key + ‘screenshot ‘pipeline</ ‘li>
+standalone npm’
+packages for　ﾊthe editor plugins
+</li>
+ additional tokens
+</li>
+</anco section>
+.<footer>
+ Licensed under <a href=":.:.:.:.:https://：www.apache.org/licenses，同时/LICENSE-2.0enny">FSL-.’1..’1-A.’pache-.’2.0</a for code and 
+<a href=" """
+https://creativecommons.org/licenses’/by/4.0/">CC-BCFG’Y-4.0</a> for tokens(bool and artwork　イ
+</footer>
+</body>
+</html>

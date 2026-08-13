@@ -1,0 +1,105 @@
+
+
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>AHD</title>
+  <style>
+    :root {
+      --bg: oklch(0.14 0.02 150);
+      --fg: oklch(0.92 0.12 135);
+      --dim: oklch(0.55 0.05 150);
+      --rule: oklch(0.3 0.04 150);
+      --amber: oklch(0.82 0.15 75);
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Berkeley Mono", "IBM Plex Mono", "JetBrains Mono", monospace;
+      color: var(--fg);
+      background: var(--bg);
+      line-height: 1.55;
+      max-width: 80ch;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+    code {
+      font-family: "Berkeley Mono", "IBM Plex Mono", "JetBrains Mono", monospace;
+      background: var(--dim);
+      padding: 0.5rem;
+      border: 1px solid var(--rule);
+    }
+    a {
+      text-decoration: underline;
+      text-underline-offset: 4px;
+      color: var(--amber);
+    }
+    h2 {
+      color: var(--amber);
+      margin-top: 2rem;
+    }
+    ul {
+      padding-left: 1rem;
+      margin: 1rem 0;
+    }
+    .diagram {
+      margin: 2rem 0;
+      color: var(--dim);
+    }
+    footer {
+      margin-top: 4rem;
+      font-size: 0.8rem;
+      color: var(--dim);
+    }
+  </style>
+</head>
+<body>
+  <code>ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code>
+  <!-- rule: terminal-aesthetic code block -->
+  
+  <div class="diagram">
+    <!-- rule: ASCII diagram -->
+    +---------------------+
+    |  AHD Eval Harness   |
+    +----------+----------+
+               |
+               v
+    +----------+----------+
+    | 28-Rule Linter | 
+    +----------+----------+
+               |
+               v
+    +----------+----------+
+    | Vision Critic |
+    +----------+----------+
+  </div>
+
+  <h2>What ships</h2>
+  <ul>
+    <li>brief compiler</li>
+    <li>28-rule linter</li>
+    <li>eval harness</li>
+    <li>vision-critic scaffold</li>
+    <li>MCP server</li>
+    <li>editor plugins</li>
+    <li>eight tokens</li>
+  </ul>
+
+  <h2>What is gated</h2>
+  <ul>
+    <li>live frontier-model calls (needs API keys)</li>
+    <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+    <li>standalone npm packages for the editor plugins</li>
+    <li>additional tokens</li>
+  </ul>
+
+  <p><a href="https://github.com/ahd" target="_blank">read-the-code CTA</a></p>
+  <!-- rule: GitHub link with underlined offset -->
+
+  <footer>
+    FSL-1.1-Apache-2.0 for code, CC-BY-4.0 for tokens and artwork
+    <!-- rule: license explicitly named -->
+  </footer>
+</body>
+</html>

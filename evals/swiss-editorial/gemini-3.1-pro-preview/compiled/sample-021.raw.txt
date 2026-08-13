@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AHD — Framework</title>
+<style>
+  /* rule: Palette is ink on paper (warm off-white) */
+  :root {
+    --color-ink: oklch(0.18 0 0);
+    --color-paper: oklch(0.98 0.005 95);
+    /* rule: single spot red used exactly once */
+    --color-spot: oklch(0.58 0.22 27);
+    --color-rule: oklch(0.18 0 0);
+
+    /* rule: single-family-two-optical-sizes */
+    --font-display: "Neue Haas Grotesk Display", "Helvetica Now Display", "Inter Tight", sans-serif;
+    --font-text: "Neue Haas Grotesk Text", "Helvetica Now Text", "Inter", sans-serif;
+    --font-mono: "JetBrains Mono", "Geist Mono", monospace;
+
+    /* rule: 8px baseline, 24px gutters */
+    --baseline: 8px;
+    --gutter: 24px;
+    --margin: max(32px, calc(100vw / 24));
+  }
+
+  /* rule: respects prefers-reduced-motion */
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    /* rule: sharp by default */
+    border-radius: 0;
+  }
+
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-text);
+    /* rule: Body at 17px, line-height 1.5 */
+    font-size: 17px;
+    line-height: 1.5;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* rule: 12-column grid with 24px gutters */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: var(--gutter);
+    padding: 0 var(--margin);
+  }
+
+  /* rule: One intentional element must bleed past the grid */
+  .bleed {
+    grid-column: 1 / -1;
+    margin-left: calc(var(--margin) * -1);
+    margin-right: calc(var(--margin) * -1);
+    border-top: 1px solid var(--color-rule);
+    /* rule: Require one dramatic jump per section (160 between sections) */
+    margin-top: calc(var(--baseline) * 20);
+    margin-bottom: calc(var(--baseline) * 20);
+  }
+
+  /* rule: one section anchored by a single word at display >= 120px with -0.02em tracking */
+  .hero-title {
+    grid-column: 1 / -1;
+    font-family: var(--font-display);
+    font-size: 160px;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    margin-top: calc(var(--baseline) * 16);
+    margin-bottom: calc(var(--baseline) * 8);
+    /* rule: Asymmetric left-aligned composition */
+    text-align: left;
+  }
+
+  /* rule: measure 62ch */
+  .hero-copy {
+    grid-column: 1 / 8;
+    max-width: 62ch;
+    margin-bottom: calc(var(--baseline) * 6);
+  }
+
+  .hero-copy p {
+    margin-bottom: calc(var(--baseline) * 3);
+  }
+
+  /* rule: small status pills allowed */
+  .status-pill {
+    display: inline-flex;
+    align-items: center;
+    /* rule: spot red used exactly once */
+    background-color: var(--color-spot);
+    color: var(--color-paper);
+    font-family: var(--font-text);
+    font-size: 13px;
+    line-height: 1;
+    padding: 6px 12px;
+    border-radius: 999px;
+    vertical-align: middle;
+    margin-bottom: calc(var(--baseline) * 4);
+    font-weight: 700;
+    letter-spacing: 0;
+  }
+
+  /* rule: A link to github labelled as the read-the-code CTA */
+  .cta {
+    grid-column: 1 / 5;
+    display: inline-block;
+    padding: calc(var(--baseline) * 2) calc(var(--baseline) * 3);
+    border: 1px solid var(--color-rule);
+    color: var(--color-ink);
+    text-decoration: none;
+    font-family: var(--font-display);
+    font-size: 22.6px;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    margin-bottom: calc(var(--baseline) * 20);
+    /* rule: Structural motion only */
+    transition: background-color 0.15s linear, color 0.15s linear;
+  }
+
+  .cta:hover {
+    background-color: var(--color-ink);
+    color: var(--color-paper);
+  }
+
+  /* rule: terminal-aesthetic code block */
+  .terminal-wrapper {
+    grid-column: 1 / 11;
+    background-color: var(--color-ink);
+    color: var(--color-paper);
+    padding: calc(var(--baseline) * 4) calc(var(--baseline) * 5);
+    margin-bottom: calc(var(--baseline) * 20);
+    overflow-x: auto;
+  }
+
+  code.language-bash {
+    font-family: var(--font-mono);
+    font-size: 15px;
+    line-height: 1.5;
+    white-space: pre;
+  }
+
+  .manifest-section {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: var(--gutter);
+    margin-bottom: calc(var(--baseline) * 10);
+  }
+
+  .manifest-col {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .col-ships {
+    grid-column: 1 / 6;
+  }
+
+  .col-gated {
+    grid-column: 7 / 12;
+    /* Intentional imperfection / asymmetric baseline shift */
+    margin-top: calc(var(--baseline) * 10);
+  }
+
+  h2 {
+    font-family: var(--font-display);
+    font-size: 30.1px;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    border-bottom: 1px solid var(--color-rule);
+    padding-bottom: calc(var(--baseline) * 1);
+    margin-bottom: calc(var(--baseline) * 3);
+  }
+
+  ul {
+    /* rule: Do not use emoji bullets */
+    list-style: none;
+  }
+
+  li {
+    margin-bottom: calc(var(--baseline) * 1.5);
+    padding-left: calc(var(--baseline) * 3);
+    position: relative;
+  }
+
+  li::before {
+    content: "—";
+    position: absolute;
+    left: 0;
+    color: var(--color-rule);
+  }
+
+  /* rule: No canonical 4-column footer */
+  footer {
+    grid-column: 1 / -1;
+    padding-bottom: calc(var(--baseline) * 8);
+    font-size: 13px;
+  }
+</style>
+</head>
+<body>
+
+<main class="grid">
+  <!-- rule: one section anchored by a single word at display >= 120px -->
+  <h1 class="hero-title">
+    <span class="status-pill">AHD</span><br>
+    Framework.
+  </h1>
+
+  <div class="hero-copy">
+    <!-- rule: declarative, short sentences, no hedges, no Oxford commas -->
+    <p>Artificial Human Design takes structural integrity seriously. AI generates slop. You already suspect the problem. We need a framework to govern machine output rather than a lecture on prompt engineering.</p>
+    <p>AHD is a compiler and evaluation harness for design tokens. It enforces layout logic over generative guesswork. One screen of reading provides everything you need to start.</p>
+  </div>
+
+  <!-- rule: A link to github labelled as the read-the-code CTA -->
+  <a href="https://github.com/ahd-project/ahd" class="cta">Read the code</a>
+
+  <div class="terminal-wrapper">
+    <!-- rule: The command rendered in a monospace code block with the language tag `bash` -->
+    <code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code>
+  </div>
+
+  <div class="manifest-section">
+    <!-- rule: A clearly separated manifest section titled 'What ships' -->
+    <div class="manifest-col col-ships">
+      <h2>What ships</h2>
+      <ul>
+        <li>Brief compiler</li>
+        <li>28-rule linter</li>
+        <li>Eval harness</li>
+        <li>Vision-critic scaffold</li>
+        <li>MCP server</li>
+        <li>Editor plugins</li>
+        <li>Eight tokens</li>
+      </ul>
+    </div>
+
+    <!-- rule: A clearly separated manifest section titled 'What is gated' -->
+    <div class="manifest-col col-gated">
+      <h2>What is gated</h2>
+      <ul>
+        <li>Live frontier-model calls (needs API keys)</li>
+        <li>Live vision critique (needs multimodal key + screenshot pipeline)</li>
+        <li>Standalone npm packages for the editor plugins</li>
+        <li>Additional tokens</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- rule: One intentional element must bleed past the grid -->
+  <div class="bleed"></div>
+
+  <footer>
+    <!-- rule: A footer that names the licence explicitly -->
+    <p>License: FSL-1.1-Apache-2.0 for code. CC-BY-4.0 for tokens and artwork.</p>
+  </footer>
+</main>
+
+</body>
+</html>

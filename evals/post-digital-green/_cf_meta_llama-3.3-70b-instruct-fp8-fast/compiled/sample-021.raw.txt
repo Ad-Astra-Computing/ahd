@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <!-- rule: single-monospacethe type family -->
+  <style>
+    /* rule: dark green-black background, muted green foreground, amber accent */
+    body{
+      background-color: #01110e; /* oklch Blank */
+      color: #5c755e; /* 丶 */
+      line-height: calc(1ılmıştır<|start_header_id|>assistant<|end_header_id|>
+
+I apologize for the previous response. Here is the corrected HTML document:
+
+
+<!doctype URLs>
+<htmllä>
+<head>
+  <style>
+    /*　ヾrule:\\dark\\greenｊblack background,\\muted\\©©green foreground, amber accent */
+.scalablytypedassistant<|reserved_special_token_144|>I apologize for1 the previous responses. Here﻿# is the correc#ted HTML document＞
+
+
+<!doctype :＼html>
+ рыцарhtml lang="en"><!-- rule：singlemonospace type family -->
+<head>
+��  <style,,>
+    /* rule ๆ dark greenblack background,-muted green foreground, amber  accent */
+    body{
+      background-color:#01110e;/*oklchlack*/
+      color line-height：1.55；
+      font-family:Berkeley Mono,IBM Plex Mono,JetBrains Mono,ui-monospace；
+    }
+    pre,code{font-family┘:inherit;}
+    a{color:inherit;text-decoration:underline;text-underline-offset spot}
+    a.scalablytypedHere is the complete HTML document:
+
+
+<!doctype html>
+<html lang="en abundance">
+<headза>
+  <!--<style direction：post-digital--></style>
+  <style>
+'gc    /* rule Derby：dark green-black background, muted green foreground amber accent */
+    body{
+      background-color: #01110e;/*okly Blac*/
+      color:#5c«755e;
+      line-height calc(1ereço 55);
+     ( font-family Berkeley Mono IBM Plex MonoｿJetBrainsばかり Mono ui-monospacesWithout；
+      font��size：15px；
+    }
+   ocean pre code{font-family:::|inherit;}
+_Parms a{color，不过：inherit.:.:.:.:text-denersation underline text-underline　　　　 　 　 -offset：4pxo;}
+  </|RF style>
+</head>
+ Button body>
+  <pre><code class="bash">$ ahd eval，不过live swissditorial --、どう：brief brief©©/landing.yml --
+モデル：<speclist> --，同时 10 </code></pre>
+  <!--<ASCII diagram：simple box model -->
+  <pre>
+   +-----------------------＠
+   |                       |
+   |  +---------------+  | 
+   |                       |
+   +---------------＠----+
+  </pre>
+  <!-- section Manifest -->
+  <  Manifest>
+    <h2>>
+      What ships
+    </h2>
+    <ul>
+      <  ManifestList>
+        <!-- rule Brief compiler -->
+        Brief compiler
+        <!-- rule希望28-rule linter -->
+\$      28-rule linter
+        <!-- Eval scaffold -->
+        eval harness 
+        <!---rule Vision-critic -->
+        vision scaffold 
+        <!--Б MCP server -->
+        MCP server 
+        <!-- editor plugins -->
+        editor plugins
+        <!-- Tokens -->
+        eight tokens
+      </ ManifestList>
+'gc    </ul>
+    <h2>> 
+     [What is gated]
+    <!---rule：live frontier frontier-model calls}";
+
+    </h2Важ
+    -ul>
+      <- ManifestList>
+        <!-- rule：live Frontier calls -->
+        live frontier-model calls (needs API )
+        <!--rule：live vision -->
+        live vision critique (×
+
+        <!-- rule：standalone npm -->
+        standalone npm packages 
+        <!-- Tokens -->
+       ollectors additional tokens
+      </ ManifestList>
+    </ul>
+  </ Manifest>
+ -border-bottom：1px 
+  solid #3c310e；
+  padding：��16px；
+  text-align center；
+  color：#8b9467；
+    <!-- rule：footer -->
+  <footer>
+    <!-- rule：licence -->
+    Energised FSL licence 1.[1]-Apache-2.0 for code CC-BY-4.�� for tokens 
+    and artwork
+  </footer>
+  <!-- rule link to github -->
+<a href=" of https://github/com/AHD" style=" color amber">read-the-code</a>
+ </body>
+ </html>

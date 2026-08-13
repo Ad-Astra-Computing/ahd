@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AHD - Artificial Human Design</title>
+    <style>
+        body {
+            background-color: oklch(0.14 0.02 150); /* rule: dark green-black background */
+            color: oklch(0.92 0.12 135); /* rule: muted green foreground */
+            font-family: 'Berkeley Mono', 'IBM Plex Mono', 'JetBrains Mono', ui-monospace; /* rule: monospace */
+            font-size: 15px; /* rule: base font size */
+            line-height: 1.55; /* rule: line height */
+            max-width: 80ch; /* rule: 80 character grid */
+            margin: 0 auto;
+            padding: 24px; /* rule: space scale */
+        }
+        h1, h2 {
+            color: oklch(0.82 0.15 75); /* rule: amber accent */
+        }
+        a {
+            text-decoration: underline;
+            text-underline-offset: 4px; /* rule: underline-offset 4px */
+        }
+        pre {
+            background-color: oklch(0.14 0.02 150); /* rule: dark green-black background */
+            color: oklch(0.92 0.12 135); /* rule: muted green foreground */
+            border: 1px solid oklch(0.3 0.04 150); /* rule: hairline rule colour */
+            padding: 8px; /* rule: space scale */
+            overflow-x: auto;
+        }
+        .manifest {
+            margin-top: 24px; /* rule: space scale */
+        }
+        .manifest h3 {
+            margin-top: 24px; /* rule: space scale */
+        }
+        .footer {
+            margin-top: 48px; /* rule: space scale */
+            border-top: 1px solid oklch(0.3 0.04 150); /* rule: hairline rule colour */
+            padding-top: 16px; /* rule: space scale */
+        }
+    </style>
+</head>
+<body>
+    <h1>ahd</h1>
+    <p>Artificial Human Design is a framework for serious designers, engineers, and founders who want to take control of AI-generated design.</p>
+    <p>No more slop. No more generic templates. Just a robust toolkit to evaluate and refine your design workflow.</p>
+
+    <h2>Run the eval</h2>
+    <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+
+    <div class="manifest">
+        <h3>what ships</h3>
+        <ul>
+            <li>brief compiler</li>
+            <li>28-rule linter</li>
+            <li>eval harness</li>
+            <li>vision-critic scaffold</li>
+            <li>MCP server</li>
+            <li>editor plugins</li>
+            <li>eight tokens</li>
+        </ul>
+    </div>
+
+    <div class="manifest">
+        <h3>what is gated</h3>
+        <ul>
+            <li>live frontier-model calls (needs API keys)</li>
+            <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+            <li>standalone npm packages for the editor plugins</li>
+            <li>additional tokens</li>
+        </ul>
+    </div>
+
+    <h2>read the code</h2>
+    <p><a href="https://github.com/ahd-framework/ahd" target="_blank">github.com/ahd-framework/ahd</a></p>
+
+    <div class="footer">
+        <p>Licensed under FSL-1.1-Apache-2.0 for code, CC-BY-4.0 for tokens and artwork.</p>
+        <p>ASCII diagram:</p>
+        <pre>
+        +-------------------------------+
+        |        Artificial Human       |
+        |             Design            |
+        +-------------------------------+
+        |  brief compiler              |
+        |  28-rule linter              |
+        |  eval harness                |
+        |  vision-critic scaffold      |
+        |  MCP server                  |
+        |  editor plugins              |
+        |  eight tokens                |
+        +-------------------------------+
+        |  live frontier-model calls    |
+        |  live vision critique         |
+        |  standalone npm packages      |
+        |  additional tokens            |
+        +-------------------------------+
+        </pre>
+    </div>
+</body>
+</html>

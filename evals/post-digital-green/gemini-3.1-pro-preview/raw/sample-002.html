@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Artificial Human Design</title>
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --fg: #e2e8f0;
+    --accent: #00ff94;
+    --dim: #64748b;
+    --border: #1e293b;
+    --font-mono: 'Geist Mono', 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  }
+  
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  
+  body {
+    background-color: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-mono);
+    font-size: 16px;
+    line-height: 1.6;
+    margin: 0;
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .container {
+    max-width: 800px;
+    width: 100%;
+    margin-top: 4vh;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  h2 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    color: var(--fg);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  p {
+    margin-bottom: 1.5rem;
+    max-width: 70ch;
+  }
+
+  .intro {
+    font-size: 1.125rem;
+    color: var(--fg);
+  }
+
+  .code-block {
+    background-color: #000;
+    border: 1px solid var(--border);
+    padding: 1.5rem;
+    margin: 3rem 0;
+    position: relative;
+    overflow-x: auto;
+  }
+
+  .code-block::before {
+    content: "bash";
+    display: block;
+    color: var(--dim);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    border-bottom: 1px dashed var(--border);
+    padding-bottom: 0.5rem;
+    letter-spacing: 0.1em;
+  }
+
+  code {
+    font-family: var(--font-mono);
+    color: var(--accent);
+    font-size: 0.875rem;
+    white-space: pre;
+  }
+
+  .cta-container {
+    margin-bottom: 4rem;
+  }
+
+  .cta {
+    display: inline-block;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    text-decoration: none;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: background-color 0.2s, color 0.2s;
+  }
+
+  .cta:hover {
+    background-color: var(--accent);
+    color: var(--bg);
+  }
+
+  .manifest-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    margin-top: 4rem;
+    padding-top: 4rem;
+    border-top: 1px solid var(--border);
+  }
+
+  @media (min-width: 600px) {
+    .manifest-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .manifest-section ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .manifest-section li {
+    padding-left: 1.5rem;
+    position: relative;
+    margin-bottom: 0.75rem;
+    color: var(--dim);
+    font-size: 0.875rem;
+  }
+
+  .manifest-section li::before {
+    content: "::";
+    position: absolute;
+    left: 0;
+    color: var(--border);
+  }
+
+  .manifest-section li span {
+    color: var(--fg);
+  }
+
+  footer {
+    margin-top: 6rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+    color: var(--dim);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Artificial Human Design</h1>
+    </header>
+
+    <main>
+      <p class="intro">
+        The web is drowning in synthetic slop. Every generated interface converges on the same mean. You already know this. You do not need a lecture on why the current state of output is unacceptable.
+      </p>
+      <p>
+        Artificial Human Design (AHD) is not an assistant. It is a strict evaluation and linting harness for interface generation. It forces models to respect structural constraints, typographic discipline and spatial logic. It provides the framework to encode aesthetic taste into programmable rules.
+      </p>
+
+      <div class="code-block">
+        <code>ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code>
+      </div>
+
+      <div class="cta-container">
+        <a href="https://github.com/ahd-project/ahd" class="cta">Read the code</a>
+      </div>
+
+      <div class="manifest-grid">
+        <div class="manifest-section">
+          <h2>What ships</h2>
+          <ul>
+            <li><span>brief compiler</span></li>
+            <li><span>28-rule linter</span></li>
+            <li><span>eval harness</span></li>
+            <li><span>vision-critic scaffold</span></li>
+            <li><span>MCP server</span></li>
+            <li><span>editor plugins</span></li>
+            <li><span>eight tokens</span></li>
+          </ul>
+        </div>
+
+        <div class="manifest-section">
+          <h2>What is gated</h2>
+          <ul>
+            <li><span>live frontier-model calls (needs API keys)</span></li>
+            <li><span>live vision critique (needs multimodal key + screenshot pipeline)</span></li>
+            <li><span>standalone npm packages for the editor plugins</span></li>
+            <li><span>additional tokens</span></li>
+          </ul>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      Licence: FSL-1.1-Apache-2.0 for code | CC-BY-4.0 for tokens and artwork
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,314 @@
+```html
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Artificial Human Design</title>
+<style>
+/* rule: grid-12-col-gutter-24px */
+@font-face {
+  font-family: 'Neue Haas Grotesk Display';
+  src: local('Helvetica Now Display'), local('Inter Tight');
+}
+@font-face {
+  font-family: 'Neue Haas Grotesk Text';
+  src: local('Helvetica Now Text'), local('Inter');
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  /* rule: palette-ink-on-paper-warm */
+  --ink: #1a1a18;
+  --paper: #faf8f5;
+  --spot: #c44d2e;
+  --muted: #6b6b6b;
+  --rule: #1a1a18;
+  /* rule: spot-colour-used-exactly-once - tracked via CSS var, applied once */
+}
+
+html {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Neue Haas Grotesk Text', 'Helvetica Now Text', Inter, sans-serif;
+  font-size: 17px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  min-height: 100vh;
+  padding: 0 calc(100vw / 24);
+}
+
+/* rule: 12-column-grid-24px-gutter */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* rule: 160px-dramatic-jump-between-sections */
+section { margin-bottom: 160px; }
+section:last-of-type { margin-bottom: 0; }
+
+/* rule: display-type-96-160px-tracking-negative-0.02em */
+.display-xl {
+  font-family: 'Neue Haas Grotesk Display', 'Helvetica Now Display', 'Inter Tight', sans-serif;
+  font-size: clamp(96px, 10vw, 160px);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  text-transform: uppercase;
+}
+
+.display-lg {
+  font-family: 'Neue Haas Grotesk Display', 'Helvetica Now Display', 'Inter Tight', sans-serif;
+  font-size: clamp(72px, 8vw, 120px);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  text-transform: uppercase;
+}
+
+/* rule: body-17px-measure-62ch-line-height-1.5 */
+.body-text {
+  max-width: 62ch;
+  font-size: 17px;
+  line-height: 1.5;
+}
+
+.caption {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* rule: structural-motion-only-no-entrance-animations */
+a {
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--rule);
+  transition: none;
+}
+a:hover {
+  border-bottom-width: 2px;
+}
+
+pre {
+  font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', monospace;
+  font-size: 14px;
+  line-height: 1.6;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 32px;
+  overflow-x: auto;
+  white-space: pre;
+  /* rule: sharp-corners-by-default */
+  border-radius: 0;
+}
+
+pre .prompt { color: var(--muted); }
+pre .cmd { color: #e8e6e3; }
+pre .flag { color: #8fbc8f; }
+pre .arg { color: #deb887; }
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+ul li {
+  position: relative;
+  padding-left: 24px;
+  margin-bottom: 12px;
+}
+
+ul li::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  color: var(--muted);
+}
+
+/* rule: one-element-intentionally-bleeds-past-grid */
+.bleed-left {
+  margin-left: calc(-100vw / 24);
+  padding-left: calc(100vw / 24);
+}
+
+/* rule: asymmetric-left-aligned-composition - no centering utilities */
+
+header {
+  padding-top: 48px;
+  padding-bottom: 96px;
+}
+
+header .grid {
+  align-items: baseline;
+}
+
+.status {
+  /* rule: pills-allowed-for-status-tags-only */
+  display: inline-block;
+  padding: 2px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--rule);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* rule: one-section-anchored-by-single-word-at-display-ge-120px */
+.hero-word {
+  grid-column: 1 / -1;
+  margin-top: 64px;
+  margin-bottom: 64px;
+}
+
+.manifest-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px 24px;
+}
+
+@media (max-width: 768px) {
+  .manifest-grid {
+    grid-template-columns: 1fr;
+  }
+  .bleed-left {
+    margin-left: -16px;
+    padding-left: 16px;
+  }
+  body {
+    padding: 0 16px;
+  }
+}
+
+footer {
+  padding: 96px 0 48px;
+  border-top: 1px solid var(--rule);
+}
+
+footer .grid {
+  row-gap: 48px;
+}
+
+/* rule: no-canonical-4-column-footer */
+.footer-simple {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 24px;
+  align-items: baseline;
+}
+
+/* rule: spot-colour-used-exactly-once */
+.spot-once {
+  color: var(--spot);
+}
+
+/* intentional imperfection: slight misalignment of code block */
+.code-misalign {
+  transform: translateX(-4px);
+}
+
+</style>
+</head>
+<body>
+
+<header>
+  <div class="grid">
+    <div style="grid-column: 1 / 4;">
+      <span class="caption">Artificial Human Design</span>
+    </div>
+    <div style="grid-column: 10 / 13; text-align: right;">
+      <span class="status">v0.1.0</span>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="grid">
+    <!-- rule: one-section-anchored-by-single-word-at-display-ge-120px -->
+    <h1 class="display-xl hero-word bleed-left" style="grid-column: 1 / 11;">AHD</h1>
+  </div>
+  <div class="grid">
+    <div class="body-text" style="grid-column: 2 / 8;">
+      <p>Design systems for machine output. Rigorous constraints stop slop before it starts. The framework compiles briefs to passes or failures. No scoring. No tiers. Pass or fail.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="grid">
+    <div style="grid-column: 1 / 13;">
+      <p class="caption" style="margin-bottom: 24px;">Run the eval</p>
+      <!-- rule: terminal-aesthetic-code-block-bash-language-tag -->
+      <pre class="code-misalign"><code class="language-bash"><span class="prompt">$</span> <span class="cmd">ahd</span> <span class="flag">eval-live</span> swiss-editorial <span class="flag">--brief</span> <span class="arg">briefs/landing.yml</span> <span class="flag">--models</span> <span class="arg">&lt;specs&gt;</span> <span class="flag">--n</span> <span class="arg">10</span></code></pre>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="manifest-grid grid">
+    <div style="grid-column: 1 / 7;">
+      <!-- rule: spot-colour-used-exactly-once -->
+      <h2 class="display-lg spot-once" style="font-size: 48px; margin-bottom: 48px;">What ships</h2>
+      <ul class="body-text">
+        <li>Brief compiler</li>
+        <li>28-rule linter</li>
+        <li>Eval harness</li>
+        <li>Vision-critic scaffold</li>
+        <li>MCP server</li>
+        <li>Editor plugins</li>
+        <li>Eight tokens</li>
+      </ul>
+    </div>
+    <div style="grid-column: 7 / 13;">
+      <h2 class="display-lg" style="font-size: 48px; margin-bottom: 48px;">What is gated</h2>
+      <ul class="body-text">
+        <li>Live frontier-model calls (needs API keys)</li>
+        <li>Live vision critique (needs multimodal key + screenshot pipeline)</li>
+        <li>Standalone npm packages for the editor plugins</li>
+        <li>Additional tokens</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="grid">
+    <div class="body-text" style="grid-column: 3 / 9;">
+      <p>The code is open. Read it before you run it.</p>
+      <p style="margin-top: 24px;"><a href="https://github.com/artificial-human-design/ahd">Read the code →</a></p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="grid">
+    <div class="footer-simple">
+      <div>
+        <p class="caption">Code licence</p>
+        <p style="margin-top: 8px;">FSL-1.1-Apache-2.0</p>
+      </div>
+      <div>
+        <p class="caption">Tokens &amp; artwork</p>
+        <p style="margin-top: 8px;">CC-BY-4.0</p>
+      </div>
+      <div>
+        <p class="caption">AHD · 2025</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
+```

@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Artificial Human Design (AHD)</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, sans-serif;
+      line-height: 1.6;
+      color: #222;
+      background: #fafafa;
+    }
+    header {
+      padding: 2rem 1rem;
+      background: #fff;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+      font-weight: 600;
+    }
+    main {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+    .intro {
+      margin-bottom: 2rem;
+    }
+    .code-block {
+      background: #1e1e1e;
+      color: #d4d4d4;
+      padding: 1rem;
+      border-radius: 4px;
+      overflow-x: auto;
+      font-family: "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      margin-bottom: 2rem;
+    }
+    .code-block::before {
+      content: "bash";
+      display: inline-block;
+      background: #333;
+      color: #fff;
+      padding: 0.2rem 0.5rem;
+      border-radius: 3px 3px 0 0;
+      font-size: 0.75rem;
+      margin-bottom: 0.5rem;
+    }
+    .manifest {
+      margin-bottom: 2rem;
+    }
+    .manifest h2 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+      border-bottom: 2px solid #ddd;
+      padding-bottom: 0.25rem;
+    }
+    .manifest ul {
+      list-style: disc;
+      margin-left: 1.5rem;
+    }
+    .cta {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.6rem 1.2rem;
+      background: #0066cc;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 4px;
+      font-weight: 500;
+    }
+    footer {
+      background: #fff;
+      border-top: 1px solid #e0e0e0;
+      padding: 1rem;
+      font-size: 0.875rem;
+      text-align: center;
+    }
+    footer a {
+      color: #0066cc;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Artificial Human Design (AHD)</h1>
+  </header>
+
+  <main>
+    <section class="intro">
+      <p>
+        AHD gives you a concrete, auditable framework for evaluating AI‑generated design
+        without the hype. All the pieces you need to run a live evaluation are bundled,
+        and the boundaries of what’s open‑source versus gated are explicit.
+      </p>
+      <a href="https://github.com/ahd/ahd" class="cta">Read the code</a>
+    </section>
+
+    <section class="code-block">
+<code>ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code>
+    </section>
+
+    <section class="manifest">
+      <h2>What ships</h2>
+      <ul>
+        <li>Brief compiler</li>
+        <li>28‑rule linter</li>
+        <li>Eval harness</li>
+        <li>Vision‑critic scaffold</li>
+        <li>MCP server</li>
+        <li>Editor plugins</li>
+        <li>Eight tokens</li>
+      </ul>
+    </section>
+
+    <section class="manifest">
+      <h2>What is gated</h2>
+      <ul>
+        <li>Live frontier‑model calls (needs API keys)</li>
+        <li>Live vision critique (needs multimodal key + screenshot pipeline)</li>
+        <li>Standalone npm packages for the editor plugins</li>
+        <li>Additional tokens</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    Code licensed under <a href="https://spdx.org/licenses/FSL-1.1-Apache-2.0.html">FSL‑1.1‑Apache‑2.0</a>. Tokens &amp; artwork licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC‑BY‑4.0</a>.
+  </footer>
+</body>
+</html>

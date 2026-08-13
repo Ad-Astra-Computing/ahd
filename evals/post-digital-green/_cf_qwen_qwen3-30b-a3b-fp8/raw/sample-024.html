@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AHD - Artificial Human Design</title>
+  <style>
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      margin: 0;
+      padding: 0;
+      background: #000;
+      color: #0f0;
+      line-height: 1.5;
+    }
+    pre {
+      background: #000;
+      padding: 1rem;
+      border: 1px solid #0f0;
+      overflow-x: auto;
+    }
+    code {
+      color: #0f0;
+    }
+    .manifest {
+      padding: 1rem;
+    }
+    .manifest h2 {
+      color: #0f0;
+      border-bottom: 1px solid #0f0;
+      padding-bottom: 0.5rem;
+      margin-top: 2rem;
+    }
+    .manifest ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    .manifest li {
+      margin: 0.5rem 0;
+    }
+    footer {
+      padding: 1rem;
+      color: #888;
+      font-size: 0.9rem;
+      border-top: 1px solid #0f0;
+    }
+    a {
+      color: #0f0;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <pre><code class="bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+    <div class="manifest">
+      <h2>What ships</h2>
+      <ul>
+        <li>brief compiler</li>
+        <li>28-rule linter</li>
+        <li>eval harness</li>
+        <li>vision-critic scaffold</li>
+        <li>MCP server</li>
+        <li>editor plugins</li>
+        <li>eight tokens</li>
+      </ul>
+      <h2>What is gated</h2>
+      <ul>
+        <li>live frontier-model calls (needs API keys)</li>
+        <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+        <li>standalone npm packages for the editor plugins</li>
+        <li>additional tokens</li>
+      </ul>
+    </div>
+  </main>
+  <footer>
+    <p><a href="https://github.com/ahd">Read the code</a> | License: FSL-1.1-Apache-2.0 for code, CC-BY-4.0 for tokens and artwork</p>
+  </footer>
+</body>
+</html>

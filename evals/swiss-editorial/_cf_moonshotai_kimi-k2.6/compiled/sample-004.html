@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Artificial Human Design — AHD</title>
+<style>
+/* rule: swiss-12 grid with 24px gutter, 8px baseline */
+/* rule: ink on paper palette with single spot red used exactly once */
+/* rule: Neue Haas Grotesk Display for display, Text for body */
+/* rule: structural motion only, no entrance animations */
+/* rule: no shadows, no rounded corners except small status pills */
+
+@font-face {
+  font-family: 'Neue Haas Grotesk Display';
+  src: local('Helvetica Now Display'), local('Inter Tight'), local('HelveticaNeue');
+  font-weight: 300 900;
+}
+@font-face {
+  font-family: 'Neue Haas Grotesk Text';
+  src: local('Helvetica Now Text'), local('Inter'), local('HelveticaNeue');
+  font-weight: 300 900;
+}
+
+:root {
+  --ink: oklch(0.18 0 0);
+  --paper: oklch(0.98 0.005 95);
+  --spot: oklch(0.58 0.22 27);
+  --rule: oklch(0.18 0 0);
+  --muted: oklch(0.55 0 0);
+  --gutter: 24px;
+  --base: 17px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: var(--base);
+  line-height: 1.5;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Neue Haas Grotesk Text', 'Helvetica Now Text', Inter, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* rule: 12-column grid with 24px gutters */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--gutter);
+  padding: 0 calc(100vw / 24);
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+/* rule: 8px baseline grid alignment */
+body {
+  padding-top: 32px;
+}
+
+/* rule: display type 96-160px with tracking -0.02em */
+.display-massive {
+  font-family: 'Neue Haas Grotesk Display', 'Helvetica Now Display', 'Inter Tight', sans-serif;
+  font-size: clamp(96px, 12vw, 160px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+  color: var(--ink);
+  text-transform: none;
+}
+
+/* rule: one section anchored by single word at display >= 120px with -0.02em tracking */
+.word-anchor {
+  font-family: 'Neue Haas Grotesk Display', 'Helvetica Now Display', 'Inter Tight', sans-serif;
+  font-size: clamp(120px, 14vw, 180px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  font-weight: 900;
+  color: var(--ink);
+}
+
+/* rule: body 17px, measure 62ch, line-height 1.5 */
+.measure {
+  max-width: 62ch;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+/* rule: asymmetric left-aligned composition, no centred hero */
+.header {
+  padding-bottom: 160px; /* rule: dramatic jump between sections */
+}
+
+.header-content {
+  grid-column: 1 / 8;
+  padding-top: 48px;
+}
+
+/* rule: at least one element bleeds past the 12-col grid on purpose */
+.bleed-right {
+  grid-column: 6 / 14; /* bleeds past right edge */
+  margin-right: calc(-100vw / 24);
+}
+
+.tag {
+  display: inline-block;
+  padding: 4px 12px;
+  border: 1px solid var(--rule);
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 400;
+  margin-bottom: 32px;
+  /* rule: pills (999) allowed for status tags only — this is rectilinear, not a pill */
+  border-radius: 0;
+}
+
+h2 {
+  font-family: 'Neue Haas Grotesk Display', 'Helvetica Now Display', 'Inter Tight', sans-serif;
+  font-size: 48px;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+  margin-bottom: 32px;
+}
+
+p {
+  margin-bottom: 24px;
+}
+
+/* rule: terminal-aesthetic code block */
+pre {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 32px;
+  font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', monospace;
+  font-size: 14px;
+  line-height: 1.6;
+  overflow-x: auto;
+  margin: 48px 0;
+}
+
+pre code {
+  font-family: inherit;
+}
+
+.copy {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border: 1px solid var(--rule);
+  text-decoration: none;
+  color: var(--ink);
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 400;
+  transition: background 0.15s;
+}
+
+.copy:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+/* rule: spot colour used exactly once — applied to status tag in What ships */
+.spot-used {
+  color: var(--spot);
+  border-color: var(--spot);
+}
+
+/* rule: clearly separated manifest sections */
+.section-gap {
+  padding-bottom: 160px; /* rule: dramatic jump between sections */
+}
+
+/* rule: no rounded-2xl, sharp by default */
+.manifest-list {
+  list-style: none;
+  border-top: 1px solid var(--rule);
+}
+
+.manifest-list li {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--rule);
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.manifest-list li span:last-child {
+  color: var(--muted);
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* rule: footer not canonical 4-column Product/Company/Resources/Legal */
+.footer {
+  border-top: 1px solid var(--rule);
+  padding: 48px 0 96px;
+}
+
+.footer-content {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.footer-left {
+  max-width: 62ch;
+}
+
+.footer-right {
+  text-align: right;
+}
+
+.license {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .grid {
+    padding: 0 16px;
+  }
+  
+  .header-content {
+    grid-column: 1 / -1;
+  }
+  
+  .bleed-right {
+    grid-column: 1 / -1;
+    margin-right: 0;
+  }
+  
+  .display-massive {
+    font-size: 64px;
+  }
+  
+  .word-anchor {
+    font-size: 80px;
+  }
+  
+  .footer-content {
+    flex-direction: column;
+    gap: 32px;
+  }
+  
+  .footer-right {
+    text-align: left;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- rule: no centred hero, asymmetric left-aligned -->
+<header class="header">
+  <div class="grid">
+    <div class="header-content">
+      <div class="tag">Tooling for design evaluation</div>
+      <h1 class="display-massive">Artificial<br>Human<br>Design</h1>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- rule: one screen of reading, declarative short sentences -->
+  <section class="section-gap">
+    <div class="grid">
+      <div style="grid-column: 1 / 7;">
+        <p class="measure">AHD is a framework for evaluating generative design. It compiles briefs into structured prompts. It runs models against guardrails. It scores output against intent.</p>
+        <p class="measure">You have seen the slop. This is a countermeasure.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- rule: terminal-aesthetic code block with bash language tag -->
+  <section class="section-gap">
+    <div class="grid">
+      <div class="bleed-right">
+        <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+        <p style="margin-top: 16px;">
+          <a href="https://github.com/artificialhumandesign/ahd" class="copy" target="_blank" rel="noopener">
+            read-the-code
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" style="vertical-align: middle;">
+              <path d="M1 11L11 1M11 1H3M11 1V9" stroke="currentColor" stroke-width="1.5"/>
+            </svg>
+          </a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- rule: section anchored by single word at display >= 120px -->
+  <section class="section-gap">
+    <div class="grid">
+      <div style="grid-column: 1 / 13;">
+        <p class="word-anchor" style="margin-bottom: 160px;">Standards</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- rule: clearly separated manifest section titled 'What ships' -->
+  <section class="section-gap">
+    <div class="grid">
+      <div style="grid-column: 1 / 7;">
+        <h2>What ships</h2>
+        <ul class="manifest-list">
+          <li>
+            Brief compiler
+            <span class="tag spot-used">core</span> <!-- rule: spot colour used exactly once -->
+          </li>
+          <li>
+            28-rule linter
+            <span>style + accessibility</span>
+          </li>
+          <li>
+            Eval harness
+            <span>batch runner</span>
+          </li>
+          <li>
+            Vision-critic scaffold
+            <span>screenshot pipeline ready</span>
+          </li>
+          <li>
+            MCP server
+            <span>model context protocol</span>
+          </li>
+          <li>
+            Editor plugins
+            <span>vscode + zed</span>
+          </li>
+          <li>
+            Eight tokens
+            <span>cc-by-4.0</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- rule: clearly separated manifest section titled 'What is gated' -->
+  <section class="section-gap">
+    <div class="grid">
+      <div style="grid-column: 2 / 8;">
+        <h2>What is gated</h2>
+        <ul class="manifest-list">
+          <li>
+            Live frontier-model calls
+            <span>needs api keys</span>
+          </li>
+          <li>
+            Live vision critique
+            <span>multimodal key + screenshot pipeline</span>
+          </li>
+          <li>
+            Standalone npm packages
+            <span>editor plugins</span>
+          </li>
+          <li>
+            Additional tokens
+            <span>pending curation</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- rule: footer naming licence explicitly, not canonical 4-column -->
+<footer class="footer">
+  <div class="grid">
+    <div class="footer-content">
+      <div class="footer-left">
+        <p style="font-size: 14px; color: var(--muted); margin-bottom: 8px;">Artificial Human Design</p>
+        <p class="license">Code: FSL-1.1-Apache-2.0<br>Tokens and artwork: CC-BY-4.0</p>
+      </div>
+      <div class="footer-right">
+        <a href="https://github.com/artificialhumandesign/ahd" style="font-size: 14px; color: var(--muted); text-decoration: none; border-bottom: 1px solid var(--rule); padding-bottom: 2px;">github</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

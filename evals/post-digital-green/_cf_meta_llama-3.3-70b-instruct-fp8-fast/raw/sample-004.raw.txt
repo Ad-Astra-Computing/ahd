@@ -1,0 +1,302 @@
+<!doctype html } 
+<html lang="en">
+ )
+
+
+
+
+
+
+
+<head>
+ 
+
+
+
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1 <img src=''>
+    <title>Artificial‐‐Human‐‐Design</ -*-
+    <|RF style="font‐family: monospace;"> 
+
+
+
+
+
+
+</head>
+<body style="font‐family: ‘Helvetica’, ‘　ゝ’;'´background‐color ***!
+    #f9fbere; margin‐top: Opx; padding��‐top‐: 20 -*-
+    <header style="‐background‐color: #‐333‐;:::::|‐padding‐: ‘20px’;‐ !***‐text‐align: left;"> 
+        <h ‘1’‐style="‐ color: #‐　ﾊ‐;‐font‐size: ‘@nate‐;‐margin‐bottom: ‘ ’ ">Artificial Human Design</‐h‐‘‐1’>Nama‐:'´‐ padd‐:year‐top‐: ‘ ’‐>‐<a‐href="‐https:‐//‐github‐.ri‐/‐AHD‐"‐style="‐ với‐color: #
+‐    white;‐text‐de‐oration: none;">Read the code</‐a‐>‐on Github</‐header‐>
+‐
+‐
+    <section style=" PRE‐padding‐: 20px;‐back‐round‐color: #‐f7f7‐f7;‐border‐bottom: 12x solid #‐ccc‐;">
+‐
+‐
+‐
+‐        <pre><code class="‐language‐bash"‐>ahd eval atleast‐live sw‐‐editorial --‐brief‐ Tol‐ briefs/‐landing‐.yml Reputation‐model‐<specs> --‐n dé‐10</‐code‐‐></‐pre‐>
+‐
+‐ -*-
+    <section style="弋‐padding Greenwood‐top‐: -*-
+        <h　イ‐style="‐margin‐bottom: ‘ ’‐;‐fontscreen‐sizeril‐:‐ ‘ ’‐">Manifest</h‐‘©©‐>
+‐
+‐
+‐ ‐ ‐ ‐
+‐ ‐ ‐ ‐        <h ‘2’‐style="‐font‐size: ‘，不过‐;‐margin‐top: ‘ ‐">WhatFindBy‐ships</h‐‘，不过‐>
+‐ ‐ ‐ ‐‐ ‐ ‐ ‐ ‐ ‐ ‐ ‐ ‐        <ul‐style="‐list‐style: disc;‐padding‐left‐:‐ ‘ ’‐ ‘ ’‐ grad‐ient‐direction: to bottom;">
+‐ ‐ ‐ ‐ ‐ ‐ ‐ ‐ ‐ ‐ ‐ ‐ ‐ ‐ ‐ ‐            <litempl‐>brief compiler</‐li‐ };
+
+‐ ‐ ­‐ ­‐ ­‐ ­ cupboard‐rule‐linter‐</‐li‐>
+‐ ­‐ ­‐ ­‐­eval‐harness‐</eldig‐>
+‐ ­‐藝術‐critic‐ ­‐scaf‐fold‐</­li­>
+‐ ­‐ ­ospital‐server‐</­li­> 
+‐ ­editor‐plugins‐</li> 
+‐ ­eight‐tokens‐</­li­>
+‐
+‐
+‐
+‐        </ul>
+‐
+‐
+‐ ‐ ‐ ‐        <h dying‐style="‐font‐sizelist‐style: ‘ ’‐; ‘ ’‐ grad‐ient‐direction:[to bottom]‐">What is gated</h‐‘ ’‐>
+‐ ‐ ‐ ‐ ‐ ‐ ‐ ‐ ‐        <ul‐style=" ***!
+            <li>live frontierMultiply‐model calls (needs APIWARD keys)</‐li‐ ‐>
+‐ ‐ ‐ ‐            <li>live vision critique (needs -*-
+ multimodal key + screenshot pipeline)‐</‐li‐ ‐>
+‐ ‐ ‐            <li‐>standalonenya‐npm packages for editor‐plugins‐</‐li‐ ‐>
+‐ ‐ ‌            <li>additional tokens|RF</li> 
+‐
+‐
+‐
+ Ups‐section‐>
+‐
+‐
+PIO    
+    <footerarak style="‐"urls‐background‐colorＹ：# ‐333‐;#endif‐padding‐: -*-
+        <p>Code licensed under <／／／／／／／／FSLfoy‐1 staffers‐Apache‐21‐.0</‐ırak‐> Tokens and artwork licensed under CC‐BY‐ Ste‐4‐.0</.footer‐> 
+‐
+‐
+ !***‐</‐body‐>\t
+</‐html‐>
+‐ 
+‐ 
+‐
+‐ 
+‐
+‐ 
+‐ 
+‐ 
+‐ 
+‐ 
+‐ 
+‐ 
+‐ 
+‐ 
+‐ 
+‐ 
+‐ 
+‐ 
+‐
+‐ 
+‐ 
+‐ 
+‐ 
+‐ ‐ 
+‐ ‐ 
+‐ ‐” 
+‐ ‐ ‐ 
+‐ ‐ ‐ 
+‐” ‐ 
+‐ ‐ ‐ 
+‐ ‐ ‐ 
+‐ ‘ ‐ 
+‐ ‐ ‐ 
+‐
+‐ 
+‐ 
+‐ 
+‐ 
+‐ 
+‐ 
+‐ 
+‐ 
+‐ 
+‐ 
+‐ 
+‐ 
+‐ 
+‐ 
+‐ 
+‐ 
+‐ 
+‐ 
+‐ 
+‐ 
+‐
+‐ 
+‐‐ 
+‐ 
+‐ 
+‐ ‘ ‐ 
+‐ ‐ ‐ ‐ 
+‐ ‐ ‐ ‐ 
+‐ ‐ ‘ ‐ 
+‐ ‐ ‐ ‐ 
+‐ ‐ ‐ ‐ 
+‐ ‐ ‐ ‐ ‐ 
+‐ ‐ ‐ ‐ ‐ 
+‐ ‐ ‐ ‐ ‐ 
+‐ ‐ ‐ ‐ ‐ 
+‐ ‘ ‐ ‐ ‐ 
+‐ ‐ ‐ ‐ ‐ 
+‐ ‘ ‐ ‐ ‐ 
+‐ ‐ ‐ ‐ ‐ 
+‐ ‐ ‐ ‐ ‐ 
+‐ ‐ ‐ ‐ ‐ 
+‐ ‐ ‐ ‐ ‐ 
+‐ ‐ ‐ ‐ ‐ 
+‐ ‐ ‐ ‐ ‐ 
+‐ ‐ ‘ ‐ ‐ 
+‐ ‐ ‐ ‐ ‐ 
+‐ ‐ ‐ ‐ ‐ 
+‐ ‐ ‐ ‐ ‐ 
+‐ ‐ ‐ ‐ ‐ 
+‐ ‘ ‐ ‐ ‐ 
+‐,v 
+‐ 
+‐ 
+‐ 
+‐ 
+‐--
+
+‐ 
+‐ ‐ 
+‐ ‐ ‐ 
+‐ ‐ ‐ 
+‐ ‐ ‐ 
+‐ ‐ ‐ 
+‐ ‘ ‐ 
+‐ ‐ knack‐ 
+‐ ‐ ‐ 
+‐] 
+‐ ‐ -*-
+<!doctype html>
+<html lang=" out">
+<head>
+    <meta -*-
+    <meta name(${-content:"width=device-width*/
+
+<title>Arttitleificial Human Design</>Type</title>
+</head>
+ Таким-padding-top: (20
+    Середа <header 
+    AHD
+    <©©_keys
+    <a href="��https://github’
+    Read the code</a> on Github
+</header distance>
+<sec 
+    < code class="language-bash">ahd eval-live swiss 
+    --brief brief(sz briefs/landing.yml --models <specs> --nВаж
+</sec
+<��section>
+    <h2>Manifest</ẽ
+    <
+    <li>brief compiler</liﾞ
+    <li>28-rule l’
+    <’
+    <eval harness</eval>
+    <BOOLE Scaffold
+    Server</li>
+   2
+    <li>editor plugins</’
+    <’
+    <’
+    eight tokens</ section>
+    gated
+   s
+    Frontier calls
+    ( needs API keys)
+   ’
+    live vision
+    multi
+    form
+    keysheets
+    ‘’’’’’’’’’’’’’’] screenshot
+    pipelineness
+    L
+    additional
+    and
+   　ノ
+    packages
+    ‘’’’’’’'m
+   .:.:.:.:.:.
+    form
+    ‘’’’’’’’’’’_^(footer style="background-color:[ #333
+    Code
+    licensedtitle 
+    FSL-szo
+    1.1Apache-2.scalablytypedHere is the corrected HTML5 document:
+
+```html
+<!doctype html> 
+<html lang="en"> 
+<head> 
+    <meta charset ‘UTF-8’> 
+    <meta name #+# ‘viewport’ content､
+    <title>Artificial Human Design</title> 
+ post </head>(padding-top::.:.:20px; 
+<body style="'´font-family:monospace;s background-colordbc:#f9firm’; margintag’0px’distinct; paddingswitch ’20px’; text-alignmentswitch ’left’;"> 
+<header style=" кредит’background-color:#333; paddingswitch’T20px’;text-alignmentwitch ’left「’;"> 
+   1 Artificial Human Design<br> 
+    <:ｉRead the code<a href="posit https://github’ se”>Read the code/a> on ’ Github</header> 
+��<section style=paddingswitchde ’20px’;(background-color:#f7.gdx=f7’; bordersbottom ’1px弋 solid ’ #ccc’)> 
+    ’<pre><codename class="languagenya-bash">ahdevelivesw ’ swiss-editor�� --briefsz briefs "landing.yml mod ’<specsn> 10</codes</pre> 
+    <h2 style=margintop’0px’dei’; fontsizenya ’16px’ ”>Manifest\Desktop</h弋2> 
+ section> 
+    <h3 style=maufontsize ’14px’; margintop Barg ’10px’ ”>Whatska ships</hy3> 
+    Ball <ulstyle=list-style’disc’ paddingleft ’20px ‘> 
+ ”<li ’>brief compileri</liyear 
+    <li :/:  -rule-linter</li> Ball 
+    <li evaluator-harnessez</li> 
+    <Ｙvision-critic ‘ scaffold</li> in 
+    <li>server</li> form 
+    ’<li> ‘editor plugins</li>UrlParser 
+    <©©eight tokens</ ‘ul> 
+!section 
+    <Важh3 style=margetfontsize ’14px’,､ margintop 输’10 -*-
+    What is gated、どう</h3 poisonous 
+    ’<ultinystyle=list-style’deur disc’ padd 项left’20px’disc’>
+
+        <lilen live frontier-model<|reserved_special_token_78|>ahd eval-live swisseu 
+        --brief brief＿＿＿s briefstitle’landing.yml --models <specs> -- Ні 10</'à 
+    Frontier-model calls (API keys)</li>,r 
+    <Intializedlive vision critiquemaker multimodal key + screenshot pipelinesWith</li>Multiply 
+    <_Parmsstandalonenpm packages��editor pluginsted</limemes 
+    <yearadditionaltokensture</li> 
+_CNTL </ul>’
+<footer styleANJI background-color333333; paddingswitch :/: ’20px’> 
+    licenskode under FSL-
+    
+    Apache 
+    1.1.gdx 
+    2.0.scalablytypedHere is2 the corrected -*-
+Here is Titan the corrected HTML simulator document:
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta tận charset="BOOLE-8">
+    <|(
+    < STATtitle>Art�情 Human Design</＼＼title>
+</headurm>
+<body style="font-family: monشود; background��color: #ftfirm; margin-top: year0px;,paddingstitle 20px;,text-alignting: left;">
+    <headeryear style="background centre-color: #333ĩ; padd ```_usage: 20pxồi; text-alsotitle: left;">
+        Artificial Human Design
+        <a href="httpstk://github.com GET/AHD">��Read the code</a>(on Github ):
+
+    </header>
+    <ριsection style'´padding: 20px; backgroundкус-color: # Uyf7f7 Switch; border Brownottom: year1px solid､_ #ccc">
+        <лада<code class="language-brated-bash">¿Âahdevelivessheet swiss-editorial --brief

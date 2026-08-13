@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AHD — Artificial Human Design</title>
+<style>
+  @font-face {
+    font-family: 'Berkeley Mono';
+    src: local('Berkeley Mono'), local('JetBrains Mono'), local('Fira Code'), local('SF Mono'), local('Consolas'), monospace;
+  }
+
+  :root {
+    --bg: #0c0c0c;
+    --fg: #c5c5c5;
+    --fg-dim: #6b6b6b;
+    --fg-bright: #e8e8e8;
+    --accent: #d4a574;
+    --accent-dim: #8b7355;
+    --border: #1e1e1e;
+    --border-hover: #2a2a2a;
+    --code-bg: #111111;
+    --ok: #7a9a6d;
+    --warn: #b8956a;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.65;
+    min-height: 100vh;
+  }
+
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  header {
+    padding: 48px 0 32px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .signature {
+    font-size: 0.8125rem;
+    color: var(--fg-dim);
+    font-family: 'Berkeley Mono', monospace;
+    letter-spacing: 0.02em;
+    margin-bottom: 24px;
+  }
+
+  .signature::before {
+    content: '/// ';
+    color: var(--accent-dim);
+  }
+
+  h1 {
+    font-size: 1.75rem;
+    font-weight: 500;
+    color: var(--fg-bright);
+    letter-spacing: -0.02em;
+    line-height: 1.3;
+  }
+
+  h1 span {
+    color: var(--fg-dim);
+    font-weight: 400;
+  }
+
+  .lede {
+    margin-top: 20px;
+    font-size: 1rem;
+    color: var(--fg);
+    max-width: 560px;
+  }
+
+  .lede em {
+    font-style: normal;
+    color: var(--accent);
+  }
+
+  main {
+    padding: 40px 0;
+  }
+
+  section {
+    margin-bottom: 48px;
+  }
+
+  h2 {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--fg-dim);
+    margin-bottom: 20px;
+    font-family: 'Berkeley Mono', monospace;
+  }
+
+  p {
+    margin-bottom: 16px;
+    color: var(--fg);
+  }
+
+  .code-block {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 20px 24px;
+    margin: 24px 0;
+    overflow-x: auto;
+  }
+
+  .code-block header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0;
+    border: none;
+    margin-bottom: 16px;
+  }
+
+  .code-lang {
+    font-family: 'Berkeley Mono', monospace;
+    font-size: 0.6875rem;
+    color: var(--fg-dim);
+    text-transform: lowercase;
+  }
+
+  .code-block pre {
+    font-family: 'Berkeley Mono', monospace;
+    font-size: 0.8125rem;
+    line-height: 1.6;
+    color: var(--fg-bright);
+    overflow-x: auto;
+  }
+
+  .code-block .prompt {
+    color: var(--accent-dim);
+    user-select: none;
+  }
+
+  .code-block .flag {
+    color: var(--ok);
+  }
+
+  .code-block .arg {
+    color: var(--warn);
+  }
+
+  .code-block .var {
+    color: var(--fg-dim);
+  }
+
+  .manifest {
+    border-top: 1px solid var(--border);
+    padding-top: 40px;
+  }
+
+  .manifest-grid {
+    display: grid;
+    gap: 40px;
+  }
+
+  @media (min-width: 600px) {
+    .manifest-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+    }
+  }
+
+  .manifest h3 {
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--fg-bright);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .status {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .status.ships {
+    background: var(--ok);
+  }
+
+  .status.gated {
+    background: var(--warn);
+  }
+
+  .manifest ul {
+    list-style: none;
+  }
+
+  .manifest li {
+    font-size: 0.875rem;
+    padding: 6px 0;
+    color: var(--fg);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+
+  .manifest li:last-child {
+    border-bottom: none;
+  }
+
+  .manifest li::before {
+    content: '·';
+    color: var(--fg-dim);
+    font-family: 'Berkeley Mono', monospace;
+    font-size: 0.75rem;
+    flex-shrink: 0;
+  }
+
+  .manifest .note {
+    font-size: 0.75rem;
+    color: var(--fg-dim);
+    margin-left: 4px;
+  }
+
+  .cta-strip {
+    margin: 48px 0;
+    padding: 24px 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Berkeley Mono', monospace;
+    font-size: 0.8125rem;
+    color: var(--fg-bright);
+    text-decoration: none;
+    padding: 10px 16px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    transition: border-color 0.15s;
+  }
+
+  .cta:hover {
+    border-color: var(--accent-dim);
+  }
+
+  .cta::before {
+    content: '<>';
+    color: var(--accent);
+    font-size: 0.75rem;
+  }
+
+  footer {
+    padding: 32px 0 64px;
+    border-top: 1px solid var(--border);
+  }
+
+  footer p {
+    font-size: 0.8125rem;
+    color: var(--fg-dim);
+    line-height: 1.7;
+  }
+
+  footer .licence {
+    font-family: 'Berkeley Mono', monospace;
+    font-size: 0.6875rem;
+    color: var(--fg-dim);
+    margin-top: 12px;
+  }
+
+  .sep {
+    color: var(--border);
+  }
+</style>
+</head>
+<body>
+
+<header class="container">
+  <div class="signature">artificial-human-design</div>
+  <h1>A framework for evaluating design <span>without the slop</span></h1>
+  <p class="lede">You have already seen the problem. This is a toolchain that <em>measures</em> it: compile a brief, lint against 28 rules, run multi-model eval, and get a critique you can argue with. The code is open. The tokens are inspectable. The frontier calls are yours.</p>
+</header>
+
+<main class="container">
+  <section>
+    <h2>Usage</h2>
+    <p>Run a live evaluation against your brief. Models are specified by config; results are scored and can be piped to the vision critic for screenshot validation.</p>
+    
+    <div class="code-block">
+      <header>
+        <span class="code-lang">bash</span>
+      </header>
+      <pre><span class="prompt">$</span> ahd eval-live swiss-editorial <span class="flag">--brief</span> briefs/landing.yml <span class="flag">--models</span> <span class="var">&lt;specs&gt;</span> <span class="flag">--n</span> <span class="arg">10</span></pre>
+    </div>
+  </section>
+
+  <div class="cta-strip">
+    <a href="https://github.com/artificial-human-design/ahd" class="cta">Read the code</a>
+  </div>
+
+  <div class="manifest">
+    <div class="manifest-grid">
+      <section>
+        <h3><span class="status ships"></span> What ships</h3>
+        <ul>
+          <li>Brief compiler</li>
+          <li>28-rule linter</li>
+          <li>Eval harness</li>
+          <li>Vision-critic scaffold</li>
+          <li>MCP server</li>
+          <li>Editor plugins</li>
+          <li>Eight tokens</li>
+        </ul>
+      </section>
+
+      <section>
+        <h3><span class="status gated"></span> What is gated</h3>
+        <ul>
+          <li>Live frontier-model calls <span class="note">(needs API keys)</span></li>
+          <li>Live vision critique <span class="note">(needs multimodal key + screenshot pipeline)</span></li>
+          <li>Standalone npm packages for the editor plugins</li>
+          <li>Additional tokens</li>
+        </ul>
+      </section>
+    </div>
+  </div>
+</main>
+
+<footer class="container">
+  <p>AHD is built for designers who still want to make the call.</p>
+  <p class="licence">Code: FSL-1.1-Apache-2.0 <span class="sep">|</span> Tokens &amp; artwork: CC-BY-4.0</p>
+</footer>
+
+</body>
+</html>

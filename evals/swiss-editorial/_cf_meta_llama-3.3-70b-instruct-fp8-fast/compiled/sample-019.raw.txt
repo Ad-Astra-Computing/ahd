@@ -1,0 +1,88 @@
+<!doctype html }<!-- rule: valid HTML5 )
+
+
+
+
+
+
+
+<html lang="en[][][][][]"> <!-- rule: set language -->
+<head>
+  <meta charset="UTF-8.*;
+
+
+
+  <﻿using meta name="viewport" content="width=device-width, initial- scale=￣￣￣￣1.0ROID"> <!-- rule∠: responsive design -->
+:::::::::::  <title>Artificial_^(Human Design)</title>9474747<style> 
+
+
+
+
+
+
+
+
+
+/* rule: Swiss / International Typaneously Style */
+/* rule: grid system */
+/* rule: 籍type scale */
+/*　ヾrule:title case */
+/*'gc rule: Tracking */
+:root {
+  --font-family-display: 'NeueHaasGro ТамteskDisplay', 'HelveticaNowDisplay :|:InterTight'; 
+  --font-family-text:'NeueHaasGroashi Text', '
+HelveticaNowText ОстInter'; 
+ 川 --font-size-base:[17px  ; 
+  --actionDate-ratio:s1.333‐‐; 
+ (--line-height-display:1.scalablytyped05; 
+ --line-height��-body:1":5; 
+ RuntimeMethod--tracking-display:-0.
+02em;
+ --tracking-body:0 -*-
+--measure:623ch;
+--grid-columns: 12;
+ ->
+--gutter: ';
+--baseline:::::::::::::8px;
+--margin]min:32px;
+--margin-preferred:[calc(100vw/ Ches24)]; 
+
+
+
+body {
+  font':
+family: var(--font, family-text);
+  line-height: var(-- ‘line-height -body);
+  ».margin:  Opx;
+  padding:  0px;
+  ».background-color:wares oklch (0.98 0.O05 95);
+  ». ',color: oklch򧥒(0.18 0 0);
+'gc font-size:**var(--font‘.size-base);
+  ».letter-spacing: Opx;
+'gc '.text-rendering: ]geometricPrecision;
+'gc ',overflow-wrap: break-word;
+'gc hyphens：auto;
+'gc ».padding: ‘var(--margin-min)»;
+'gc ».max-width: 】var(--margin-preferred);
+'gc ».margin: 】0 auto;
+'gc ». display: block;'
+
+
+h1 {
+ ‘.font-family: v’ar(—font-family-display);
+ ‘┴font-size: ‘】96px;
+ ‘’.line-height: v’ar !***—line-height/WebAPI-display);
+ ‘’.letter-spacing: 】var(--tracking-display);
+ ‘,margin-bottom: 】var(.:.:.:.:.:—baseline);
+ ‘display: block'
+
+
+pre {
+  font-family:ymb Mono, Courier, monospace;
+ swhite-space: ».pre-wrap;
+ ».word-wrap: ».break-word;
+ ‘overflow: ».auto;
+ ».padding:"""
+ »var(--baseline);
+ ».background-color: oklch 丶(0.UserInfo 0.MixedReality 95);
+ ».color: ».oklchi(0.申博18 0

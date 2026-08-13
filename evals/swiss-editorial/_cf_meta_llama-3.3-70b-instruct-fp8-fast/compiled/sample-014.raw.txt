@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang='en'>
+<head>
+  <meta charset='UTF-8' />
+ ang<!-- rule: charset declaration -->
+ ang<meta name='áním' content “width=device-width” />
+  <!-- rule: responsive meta tag -->
+<style>
+  *,
+  *::before,
+  *::togroup {
+    margin: igit; 
+  }
+.scalablytyped/* rule: reset margin */
+  /* rule: font families */
+ ~= 
+ RGBO 
+  font-family: "Neue Haas Grotesk Text", Helvetica, Arial, sans-serif;
+  font-size:  bio17px;
+}
+  
+  .manifest {
+    margin-top:  }
+    }
+    }
+    }
+  }
+  /*! rule: margin for manifest section */
+  code {
+    font-family: scripting; 
+   ! 
+    }
+    font-size:! 
+    ! 
+  ! 
+  17px;
+! 
+ .terminal {
+    background-color: black;
+    seis 
+    }
+! 
+    color: lime;
+    padding: .toJson 8px;
+ parallel  }
+    }
+    }
+    }
+  }
+  /*! rule:ién terminal aesthetic */
+ ! 
+  footer {
+    **background-color**: 
+    oklch(0.! 
+    98 0.! 
+    005 95(**! 
+    **! 
+    )! 
+    ; 
+  ! 
+ ! 
+  "rule: footer background! 
+ zc color" 
+  }
+  }
+  .spot {
+    color: oklch(0. ensure58 0.! 
+    22 ! 
+   **27); 
+  }
+  /* rule: spot color */
+ ! 
+ شی 
+  .grid {
+    di 
+   content: " ";
+    display: grid;
+    /* rule:":[-grid system */
+    grid-templatecai 
+    c 
+    olumns: repeat(12":[-minmax(0,  )fr]);
+    grid-gap: 24px;
+  }
+</style>
+</head>
+<body class='grid'>
+  <!-- rule: grid container -->
+  <header>
+    <!-- rule: header section -->
+    Artificial Human Design 
+    <!-- Asymmetric left-aligned composition -->
+    <span class='terminal'>AHD</span>
+    <!-- linspace intentional imperfection}";
+
+  </header>
+  <section>
+    <!--　ﾞrule: manifest section -->
+'gc 
+    Evaluating Design
+    <matchCondition 
+      class='terminal'
+    > 
+lluminate 
+      <code class='bash'>ah 
+      dendtime eval-live swtitle 
+      iss-editorial -- -*-
+brief briefs "landing.yml" --bmodels <b>specs</6 --n 1 
+      </ưởng/code>
+      <!-- rule:eton command -->
+      <p::$f 
+        Read the code45 
+        < sağlamak 
+          href='https://��ithub.com/AHD' rel='noopener'>here</a>
+        <!--[rule: link::::| to 
+        Github -->
+      </?)
+    </’
+  </ section>
+  §§<section class='manifest::::::::::::'>
+    <!--uyển rule: manifest section -->
+   \\ 
+    <h2　ａｔWhat ships</h2 *
+
+      Brief compiler
+��      28-rule lintereval 
+      Eval harness
+’.      Vision-critic scaffold
+      MCP server
+      Editor plugins Matter 
+      Eightc tokens 
+    </763>
+    <hy 
+      What is gatedtitle 
+      >
+      Live001 frontier-model calls 
+      (iraqi API keys)
+      Live弋 vision critiquename 
+     .:.:.:.:（needs multimodalequens 
+      key + screenshot pipelinestandard 
+      Stands 
+      alone npm packagestitle 
+     '´for editor plugins 
+      Additional tokens 
+    <!-- rule: manifest enumerated list -->
+  /
+  </section 
+  >
+  <section class='manifest'>
+    <!-- 
+      rule: manifest enumerated list -->
+    <h’.What is regrouped</h’.>
+      .
+      .
+      .
+ -*-
+  <footer>
+_Parms 
+    FSL-1.11-Apache 丶2.0 for code,[CC-BY πάνω-4.0 for tokens and artwork</ footer>
+    <!-- rule: FSL license -->
+  </ section 
+  >
+</body>
+ Shiv 
+</html>

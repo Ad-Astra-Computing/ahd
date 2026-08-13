@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AHD | Artificial Human Design</title>
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --text: #a1a1a1;
+            --text-bright: #ededed;
+            --accent: #ffffff;
+            --code-bg: #141414;
+            --border: #262626;
+            --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: var(--font-sans);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 680px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 64px;
+        }
+
+        h1 {
+            color: var(--text-bright);
+            font-size: 1.25rem;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+        }
+
+        .hero {
+            margin-bottom: 48px;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--text-bright);
+            max-width: 500px;
+        }
+
+        .terminal-container {
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 16px;
+            margin-bottom: 64px;
+            overflow-x: auto;
+        }
+
+        pre {
+            margin: 0;
+        }
+
+        code {
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            color: var(--text-bright);
+        }
+
+        .manifest {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            margin-bottom: 64px;
+            border-top: 1px solid var(--border);
+            padding-top: 32px;
+        }
+
+        @media (max-width: 600px) {
+            .manifest {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+        }
+
+        h2 {
+            color: var(--text-bright);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 16px;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        li {
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            position: relative;
+            padding-left: 14px;
+        }
+
+        li::before {
+            content: "—";
+            position: absolute;
+            left: 0;
+            color: var(--border);
+        }
+
+        .gated-note {
+            font-size: 0.75rem;
+            color: #666;
+            display: block;
+            margin-top: 2px;
+        }
+
+        .cta-section {
+            margin-bottom: 80px;
+        }
+
+        .cta-link {
+            color: var(--text-bright);
+            text-decoration: none;
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 2px;
+            transition: border-color 0.2s;
+        }
+
+        .cta-link:hover {
+            border-color: var(--text-bright);
+        }
+
+        footer {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: #555;
+            border-top: 1px solid var(--border);
+            padding-top: 24px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>AHD</h1>
+        </header>
+
+        <main>
+            <section class="hero">
+                <p>A framework for evaluating and enforcing design heuristics in automated workflows. Moving from stochastic mimicry to structured evaluation.</p>
+            </section>
+
+            <section class="terminal">
+                <div class="terminal-container">
+                    <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+                </div>
+            </section>
+
+            <section class="manifest">
+                <div class="column">
+                    <h2>What ships</h2>
+                    <ul>
+                        <li>brief compiler</li>
+                        <li>28-rule linter</li>
+                        <li>eval harness</li>
+                        <li>vision-critic scaffold</li>
+                        <li>MCP server</li>
+                        <li>editor plugins</li>
+                        <li>eight tokens</li>
+                    </ul>
+                </div>
+                <div class="column">
+                    <h2>What is gated</h2>
+                    <ul>
+                        <li>live frontier-model calls<span class="gated-note">(needs API keys)</span></li>
+                        <li>live vision critique<span class="gated-note">(needs multimodal key + screenshot pipeline)</span></li>
+                        <li>standalone npm packages for the editor plugins</li>
+                        <li>additional tokens</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="cta-section">
+                <a href="https://github.com/ahd-org" class="cta-link">read-the-code</a>
+            </section>
+        </main>
+
+        <footer>
+            FSL-1.1-Apache-2.0 for code, CC-BY-4.0 for tokens and artwork.
+        </footer>
+    </div>
+</body>
+</html>

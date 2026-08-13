@@ -1,0 +1,201 @@
+<!doctype html>
+<!-- rule: Return a single, self-contained, valid HTML5 document. Start with <!doctype html> and end with </html> -->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>ahd — artificial human design</title>
+  <!-- rule: Every design decision in your output must cite the brief rule it follows, as an inline comment -->
+  <style>
+    /* rule: "single-monospace" rule from type.pairing-rule */
+    /* rule: "Dark green-black background" */
+    /* rule: "muted green foreground" */
+    /* rule: "a single amber accent" */
+    /* rule: "One hairline rule colour" */
+    :root {
+      --bg: oklch(0.14 0.02 150);
+      --fg: oklch(0.92 0.12 135);
+      --dim: oklch(0.55 0.05 150);
+      --rule: oklch(0.3 0.04 150);
+      --amber: oklch(0.82 0.15 75);
+    }
+
+    body {
+      /* rule: type.families.text.name and fallback */
+      /* rule: "Do not use sans-serif body text" */
+      font-family: 'Berkeley Mono', 'IBM Plex Mono', 'JetBrains Mono', ui-monospace, monospace;
+      background-color: var(--bg);
+      color: var(--fg);
+      margin: 0;
+      /* rule: space.scale[6] = 32 */
+      padding: 32px;
+      /* rule: type.line-height.body = 1.55 */
+      line-height: 1.55;
+      /* rule: type.scale.base = 15 */
+      font-size: 15px;
+      display: flex;
+      justify-content: center;
+      /* rule: "No shadows, no gradients, no entrance animation" (applied by omission) */
+    }
+
+    main {
+      /* rule: "Everything aligns to an 80 character grid." */
+      max-width: 80ch;
+      width: 100%;
+    }
+
+    h1, h2 {
+      /* rule: type.weights[1] = 700 */
+      font-weight: 700;
+      /* rule: space.scale[7] = 48 */
+      margin-top: 48px;
+      /* rule: space.scale[5] = 24 */
+      margin-bottom: 24px;
+    }
+
+    h1 {
+      /* rule: type.line-height.display = 1.1 */
+      line-height: 1.1;
+      /* rule: type.scale.steps[2] approx 21.6px based on 1.2 ratio */
+      font-size: 21.6px;
+    }
+
+    h2 {
+      /* rule: type.line-height.h2 = 1.25 */
+      line-height: 1.25;
+      /* rule: type.scale.steps[1] approx 18px */
+      font-size: 18px;
+    }
+
+    /* rule: "Underlined links with an offset, no colour change." */
+    a {
+      color: inherit;
+      text-decoration: underline;
+      /* rule: "link style: underline-offset 4px" */
+      text-underline-offset: 4px;
+      text-decoration-color: var(--dim);
+    }
+    
+    a:hover {
+      text-decoration-color: var(--amber);
+    }
+
+    /* rule: "Rectangles only. No radii." */
+    .box {
+      border: 1px solid var(--rule);
+      /* rule: space.scale[5] = 24 */
+      padding: 24px;
+      margin-bottom: 24px;
+      border-radius: 0; 
+    }
+
+    /* rule: "terminal-aesthetic code block" */
+    pre {
+      border: 1px solid var(--rule);
+      /* rule: space.scale[4] = 16 */
+      padding: 16px;
+      overflow-x: auto;
+      color: var(--fg);
+      border-radius: 0;
+      white-space: pre;
+    }
+
+    /* rule: "at least one ASCII diagram rendered as text" */
+    pre.ascii-diagram {
+      color: var(--amber);
+      border: none;
+      padding: 0;
+      /* rule: type.scale.steps[-1] approx 12.5px */
+      font-size: 12.5px;
+      line-height: 1.1;
+      /* rule: space.scale[6] = 32 */
+      margin-bottom: 32px;
+      margin-top: 32px;
+      overflow-x: hidden;
+    }
+
+    ul {
+      /* rule: "emoji bullets forbidden" */
+      list-style-type: none;
+      padding-left: 0;
+    }
+
+    li {
+      /* rule: space.scale[2] = 8 */
+      margin-bottom: 8px;
+    }
+
+    li::before {
+      content: "- ";
+      color: var(--dim);
+    }
+
+    footer {
+      border-top: 1px solid var(--rule);
+      /* rule: space.scale[5] = 24 */
+      padding-top: 24px;
+      /* rule: space.scale[8] = 64 */
+      margin-top: 64px;
+      color: var(--dim);
+      font-size: 12.5px;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <!-- rule: copy.voice = "technical, lowercase by default, terse" -->
+    <h1>artificial human design</h1>
+    
+    <p>
+      you already know the problem. the web is filling with generated output that looks identical. artificial human design (ahd) is a framework to enforce strict design constraints through deterministic rules and structured evaluations. it removes ambiguity rather than relying on prompt engineering.
+    </p>
+
+    <!-- rule: "at least one ASCII diagram rendered as text" -->
+    <pre class="ascii-diagram">
++-------------+      +-------------+      +-------------+
+|    brief    | ---> |   compiler  | ---> |   lint/eval |
++-------------+      +-------------+      +-------------+
+    </pre>
+
+    <!-- rule: "A link to github (or the forgejo mirror) labelled as the read-the-code CTA." -->
+    <!-- quirk: manual non-breaking space for optical alignment -->
+    <p>
+      <a href="https://github.com/ahd-project/ahd">read-the-code</a>&nbsp;
+    </p>
+
+    <h2>evaluate locally</h2>
+    <!-- rule: "rendered in a monospace code block with the language tag `bash`." -->
+    <pre class="bash" data-language="bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</pre>
+
+    <!-- rule: "A clearly separated manifest section titled 'What ships'" -->
+    <div class="box">
+      <h2>what ships</h2>
+      <ul>
+        <li>brief compiler</li>
+        <li>28-rule linter</li>
+        <li>eval harness</li>
+        <li>vision-critic scaffold</li>
+        <li>mcp server</li>
+        <li>editor plugins</li>
+        <li>eight tokens</li>
+      </ul>
+    </div>
+
+    <!-- rule: "A clearly separated manifest section titled 'What is gated'" -->
+    <div class="box">
+      <h2>what is gated</h2>
+      <ul>
+        <li>live frontier-model calls (needs api keys)</li>
+        <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+        <li>standalone npm packages for the editor plugins</li>
+        <li>additional tokens</li>
+      </ul>
+    </div>
+
+    <!-- rule: "A footer that names the licence explicitly: FSL-1.1-Apache-2.0 for code, CC-BY-4.0 for tokens and artwork." -->
+    <!-- rule: "a canonical 4-column Product / Company / Resources / Legal footer forbidden" -->
+    <footer>
+      licence: fsl-1.1-apache-2.0 for code, cc-by-4.0 for tokens and artwork.
+    </footer>
+  </main>
+</body>
+</html>

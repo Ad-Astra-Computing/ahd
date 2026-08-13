@@ -1,0 +1,468 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AHD — Artificial Human Design</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;700;900&family=Inter:wght@300;400;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* rule: CSS reset with border-box */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* rule: root variables from colour palette and space scale */
+    :root {
+      --ink: oklch(0.18 0 0);
+      --paper: oklch(0.98 0.005 95);
+      --spot: oklch(0.58 0.22 27);
+      --rule: oklch(0.18 0 0);
+      --muted: oklch(0.55 0 0);
+      
+      --space-0: 0;
+      --space-1: 4px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 24px;
+      --space-6: 32px;
+      --space-7: 48px;
+      --space-8: 64px;
+      --space-9: 96px;
+      --space-10: 160px;
+
+      --font-display: "Inter Tight", "Helvetica Now Display", sans-serif;
+      --font-text: "Inter", "Helvetica Now Text", sans-serif;
+      --font-mono: "IBM Plex Mono", monospace;
+    }
+
+    /* rule: base typography at 17px with 1.5 line-height, 62ch measure */
+    html {
+      font-size: 17px;
+    }
+
+    body {
+      font-family: var(--font-text);
+      font-weight: 400;
+      line-height: 1.5;
+      color: var(--ink);
+      background: var(--paper);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* rule: 12-column grid with 24px gutters and margin calc(100vw / 24) */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: var(--space-5);
+      padding-left: calc(100vw / 24);
+      padding-right: calc(100vw / 24);
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    /* rule: dramatic 160px jump between sections */
+    section {
+      margin-bottom: var(--space-10);
+    }
+
+    /* rule: display type at 96-160px with -0.02em tracking, line-height 1.05 */
+    .display-xl {
+      font-family: var(--font-display);
+      font-size: clamp(96px, 10vw, 160px);
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+      text-indent: -0.03em; /* optical alignment adjustment */
+    }
+
+    /* rule: h2 at line-height 1.2 from type spec */
+    .display-lg {
+      font-family: var(--font-display);
+      font-size: clamp(48px, 5vw, 72px);
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+
+    /* rule: h3/medium display */
+    .display-md {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 3vw, 40px);
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+
+    /* rule: body text with 62ch measure */
+    .body-text {
+      max-width: 62ch;
+      font-size: 17px;
+      line-height: 1.5;
+      color: var(--ink);
+    }
+
+    .body-text.muted {
+      color: var(--muted);
+    }
+
+    /* rule: spot colour used exactly once — applied to status pill only */
+    .status-pill {
+      display: inline-block;
+      padding: var(--space-1) var(--space-3);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--paper);
+      background: var(--spot);
+      border-radius: 999px; /* rule: pills allowed for status tags only */
+    }
+
+    /* rule: structural border instead of shadow */
+    .border-structural {
+      border: 1px solid var(--rule);
+    }
+
+    /* rule: monospace for code blocks */
+    pre, code {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    /* rule: terminal-aesthetic code block */
+    .code-block {
+      background: var(--ink);
+      color: var(--paper);
+      padding: var(--space-6);
+      overflow-x: auto;
+      border: 1px solid var(--rule);
+    }
+
+    .code-block .prompt {
+      color: var(--muted);
+    }
+
+    /* rule: link styling — no underline by default, spot on hover */
+    a {
+      color: var(--ink);
+      text-decoration: underline;
+      text-underline-offset: 0.2em;
+    }
+
+    a:hover {
+      color: var(--spot);
+    }
+
+    /* rule: sharp corners by default, no rounded-2xl */
+    .sharp {
+      border-radius: 0;
+    }
+
+    /* rule: footer explicit layout — not canonical 4-column */
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: var(--space-5);
+      border-top: 1px solid var(--rule);
+      padding-top: var(--space-6);
+    }
+
+    /* rule: bleed element past grid — the display-xl heading */
+    .bleed-left {
+      margin-left: calc(-100vw / 24);
+      padding-left: calc(100vw / 24);
+    }
+
+    /* rule: list styling — no emoji bullets, structural dashes */
+    .manifest-list {
+      list-style: none;
+      font-family: var(--font-text);
+      font-size: 17px;
+      line-height: 1.5;
+    }
+
+    .manifest-list li {
+      position: relative;
+      padding-left: var(--space-4);
+      margin-bottom: var(--space-2);
+    }
+
+    .manifest-list li::before {
+      content: "—";
+      position: absolute;
+      left: 0;
+      color: var(--muted);
+    }
+
+    /* rule: section label with allcaps tracking 0.08em */
+    .section-label {
+      font-family: var(--font-display);
+      font-size: 12px;
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: var(--space-5);
+    }
+
+    /* rule: structural motion only, no entrance animations */
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+
+    /* rule: responsive grid adjustments */
+    @media (max-width: 768px) {
+      .grid {
+        padding-left: var(--space-4);
+        padding-right: var(--space-4);
+      }
+      
+      .bleed-left {
+        margin-left: calc(-1 * var(--space-4));
+        padding-left: var(--space-4);
+      }
+    }
+
+    /* rule: layout helpers for 12-column placement */
+    .col-1-7 {
+      grid-column: 1 / 7;
+    }
+
+    .col-7-13 {
+      grid-column: 7 / 13;
+    }
+
+    .col-1-5 {
+      grid-column: 1 / 5;
+    }
+
+    .col-5-9 {
+      grid-column: 5 / 9;
+    }
+
+    .col-9-13 {
+      grid-column: 9 / 13;
+    }
+
+    .col-1-13 {
+      grid-column: 1 / 13;
+    }
+
+    .col-2-12 {
+      grid-column: 2 / 12;
+    }
+
+    .col-1-6 {
+      grid-column: 1 / 6;
+    }
+
+    .col-6-13 {
+      grid-column: 6 / 13;
+    }
+
+    @media (max-width: 768px) {
+      .col-1-7, .col-7-13, .col-1-5, .col-5-9, .col-9-13,
+      .col-1-6, .col-6-13, .col-2-12 {
+        grid-column: 1 / 13;
+      }
+    }
+
+    /* rule: spacing utilities from space scale */
+    .mt-0 { margin-top: var(--space-0); }
+    .mt-1 { margin-top: var(--space-1); }
+    .mt-2 { margin-top: var(--space-2); }
+    .mt-3 { margin-top: var(--space-3); }
+    .mt-4 { margin-top: var(--space-4); }
+    .mt-5 { margin-top: var(--space-5); }
+    .mt-6 { margin-top: var(--space-6); }
+    .mt-7 { margin-top: var(--space-7); }
+    .mt-8 { margin-top: var(--space-8); }
+    .mt-9 { margin-top: var(--space-9); }
+    .mt-10 { margin-top: var(--space-10); }
+
+    .mb-5 { margin-bottom: var(--space-5); }
+    .mb-6 { margin-bottom: var(--space-6); }
+    .mb-7 { margin-bottom: var(--space-7); }
+    .mb-8 { margin-bottom: var(--space-8); }
+
+    .pt-6 { padding-top: var(--space-6); }
+    .pt-10 { padding-top: var(--space-10); }
+
+    .pb-6 { padding-bottom: var(--space-6); }
+
+    /* rule: intentional imperfection — slight misalignment on decorative element */
+    .imperfect-rule {
+      width: 47px; /* odd number, deliberately not 48 */
+      height: 2px;
+      background: var(--rule);
+      margin-bottom: var(--space-5);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- rule: asymmetric left-aligned composition, no centred hero -->
+
+  <!-- rule: one section anchored by single word at display >= 120px with -0.02em tracking -->
+  <section class="pt-10">
+    <div class="grid">
+      <div class="col-1-13">
+        <div class="bleed-left">
+          <h1 class="display-xl" style="font-size: clamp(120px, 12vw, 160px);">
+            AHD
+          </h1>
+        </div>
+      </div>
+    </div>
+    <div class="grid mt-6">
+      <div class="col-1-7">
+        <p class="body-text">
+          Artificial Human Design. A framework for evaluating design output from generative tools against explicit criteria. Not a critique of the tools. A method for making them accountable.
+        </p>
+      </div>
+      <div class="col-7-13">
+        <p class="body-text muted">
+          For designers who have reviewed enough AI-generated layouts to know the pattern. For engineers who need reproducible benchmarks. For founders who want quality without hiring a studio.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- rule: terminal-aesthetic code block with bash language tag -->
+  <section>
+    <div class="grid">
+      <div class="col-1-13">
+        <div class="imperfect-rule"></div>
+        <p class="section-label">Evaluation</p>
+      </div>
+    </div>
+    <div class="grid mt-5">
+      <div class="col-1-13 col-1-6@md" style="margin-bottom: var(--space-5);">
+        <p class="body-text">
+          Run the evaluation against a brief. Compare outputs across models. Get a scored report with specific failures.
+        </p>
+      </div>
+      <div class="col-1-13">
+        <!-- rule: code block with language tag bash -->
+        <figure>
+          <pre class="code-block sharp"><code><span class="prompt">$</span> ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+          <figcaption style="margin-top: var(--space-2); font-family: var(--font-mono); font-size: 12px; color: var(--muted);">
+            bash
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- rule: manifest section — What ships -->
+  <section>
+    <div class="grid">
+      <div class="col-1-13">
+        <div class="imperfect-rule"></div>
+      </div>
+      <div class="col-1-5">
+        <p class="section-label">Manifest</p>
+        <h2 class="display-md">What ships</h2>
+      </div>
+      <div class="col-5-9">
+        <ul class="manifest-list">
+          <li>Brief compiler</li>
+          <li>28-rule linter</li>
+          <li>Eval harness</li>
+          <li>Vision-critic scaffold</li>
+        </ul>
+      </div>
+      <div class="col-9-13">
+        <ul class="manifest-list">
+          <li>MCP server</li>
+          <li>Editor plugins</li>
+          <li>Eight tokens</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- rule: manifest section — What is gated -->
+  <section>
+    <div class="grid">
+      <div class="col-1-13">
+        <div class="imperfect-rule"></div>
+      </div>
+      <div class="col-1-5">
+        <p class="section-label">Dependencies</p>
+        <h2 class="display-md">What is gated</h2>
+      </div>
+      <div class="col-5-9">
+        <ul class="manifest-list">
+          <li>Live frontier-model calls (needs API keys)</li>
+          <li>Live vision critique (needs multimodal key + screenshot pipeline)</li>
+        </ul>
+      </div>
+      <div class="col-9-13">
+        <ul class="manifest-list">
+          <li>Standalone npm packages for the editor plugins</li>
+          <li>Additional tokens</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- rule: link to github labelled as read-the-code CTA -->
+  <section>
+    <div class="grid">
+      <div class="col-1-13">
+        <div class="imperfect-rule"></div>
+      </div>
+      <div class="col-1-7">
+        <p class="body-text">
+          The framework is open source. Read the code, file an issue, or run the linter against your own outputs.
+        </p>
+        <p class="mt-5">
+          <a href="https://github.com/artificial-human-design/ahd" style="font-family: var(--font-display); font-size: 28px; font-weight: 300; letter-spacing: -0.02em; text-decoration: none; border-bottom: 1px solid var(--rule); padding-bottom: var(--space-1);">
+            Read the code &rarr;
+          </a>
+        </p>
+      </div>
+      <div class="col-7-13">
+        <!-- rule: spot colour used exactly once — the status pill -->
+        <div style="margin-top: var(--space-2);">
+          <span class="status-pill">Active</span>
+          <span style="font-family: var(--font-mono); font-size: 12px; color: var(--muted); margin-left: var(--space-3);">FSL-1.1-Apache-2.0</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- rule: footer explicit licence naming, non-canonical 2-column layout -->
+  <footer class="pb-6">
+    <div class="grid">
+      <div class="col-1-13">
+        <div class="footer-grid">
+          <div>
+            <p class="body-text muted" style="font-size: 14px;">
+              Code licensed under FSL-1.1-Apache-2.0. Tokens and artwork licensed under CC-BY-4.0.
+            </p>
+          </div>
+          <div style="text-align: right;">
+            <p style="font-family: var(--font-mono); font-size: 12px; color: var(--muted);">
+              AHD — 2025
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

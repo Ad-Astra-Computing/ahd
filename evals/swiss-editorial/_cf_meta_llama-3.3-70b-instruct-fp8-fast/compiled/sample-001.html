@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Artificial Human Design</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* rule: Design in the Swiss / International Typographic Style */
+    body {
+      font-family: 'Neue Haas Grotesk Text', sans-serif;
+      font-size: 17px;
+      line-height: 1.5;
+      margin: 0;
+      padding: 0;
+    }
+    /* rule: 12-column grid with 24px gutters and an 8px baseline */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      grid-gap: 24px;
+      padding: 32px;
+    }
+    /* rule: Asymmetric left-aligned composition */
+    .content {
+      grid-column: 1 / 7;
+    }
+    /* rule: Display type in Neue Haas Grotesk Display at 96–160px with tracking -0.02em */
+    h1 {
+      font-family: 'Neue Haas Grotesk Display', sans-serif;
+      font-size: 120px;
+      letter-spacing: -0.02em;
+    }
+    /* rule: Palette is ink on paper (warm off-white) with a single spot red used exactly once on the page */
+    body {
+      background-color: #f5f5f5; /* ink on paper */
+    }
+    .spot {
+      color: #ff0000; /* spot red */
+    }
+    /* rule: No shadows, no rounded corners except small status pills */
+    .pill {
+      border-radius: 999px;
+      background-color: #ccc;
+      padding: 4px 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="grid">
+    <div class="content">
+      <h1>Artificial Human Design</h1>
+      <p>We take the problem of AI minded design seriously.</p ="
+        <!-- rule: A link to github (or the forgejo mirror)
+             labelled as the )
+
+
+
+
+
+
+
+        read-the-code Çağrı -->
+      <p><a href="https://github.com/ahd-design" class="read-the-code">Read the "code"</a> to learn morei about our approach.</p>
+      <pre><code class="bash">// rule: The command `ahd eval-live swiss-editorial --brief briefs/landing.yml " --models &lt; ‘specs’ --n 10` 
+      ahd eval-live swiss "editorial  --brief briefs/ ‘landing.yml --models Кри specs --n’ 10 ‘
+      </code></pre:::::::::::::
+      < botton  class="‘manifest”>
+        <div class="manifest">
+          <h2>What ships</h2>
+          < "ul" >
+            < "li" >Brief compiler</]li>
+            <li>28-rule linter</li>
+            <li>Eval harness</ “li”>
+            <“li”, >Vision-critic scaffold</ ‘li” “>
+            < ‘li”>MCP ‘server</ “li” “>
+            < ‘li”>Editor 'plugins</, “li”, >
+            <,li,Eight tokens</ “li”, ”>
+          ”</ “ul”, “>
+          < ”h2”, >What-------------</is gated</h‘2’, >
+          < ”ul”, >
+            ”<li”, >Live ‘frontier-model calls (needs API ‘keys)</ “]li”>
+            < “li”>Live vision ‘critique (needs multimodal key + screenshot pipeline)</li>
+            < “li”>Standalone npm packages for the editor plugins</li>
+            <li>Additional tokens</li>
+          </ “ul”, >
+        </div>
+      </div>
+      <footer>
+        <!-- rule: A footer that names the licence explicitly -->
+        <p>Code licensed under FSL-1.1-Apache-2.0, tokens and artwork under CC-BY-4.0.</p>
+      </footer>
+    </div>
+  </div>
+</body>
+</html>

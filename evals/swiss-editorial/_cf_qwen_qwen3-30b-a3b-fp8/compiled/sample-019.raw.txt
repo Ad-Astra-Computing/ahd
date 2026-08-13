@@ -1,0 +1,151 @@
+
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AHD: Swiss Editorial</title>
+  <style>
+    /* rule: Swiss grid setup */
+    :root {
+      --grid-columns: 12;
+      --grid-gutter: 24px;
+      --grid-baseline: 8px;
+      --font-display: 'Neue Haas Grotesk Display', 'Helvetica Now Display', 'Inter Tight';
+      --font-text: 'Neue Haas Grotesk Text', 'Helvetica Now Text', 'Inter';
+      --ink: oklch(0.18 0 0);
+      --paper: oklch(0.98 0.005 95);
+      --spot: oklch(0.58 0.22 27);
+      --base-font-size: 17px;
+      --line-height: 1.5;
+      --measure: 62ch;
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--font-text);
+      font-size: var(--base-font-size);
+      line-height: var(--line-height);
+      color: var(--ink);
+      background-color: var(--paper);
+      padding: 0 24px;
+    }
+
+    /* rule: 12-column grid with 24px gutters */
+    .container {
+      display: grid;
+      grid-template-columns: repeat(var(--grid-columns), 1fr);
+      gap: var(--grid-gutter);
+      max-width: calc(var(--grid-columns) * 1fr - (var(--grid-columns) - 1) * var(--grid-gutter));
+      margin: 0 auto;
+    }
+
+    /* rule: asymmetric left-aligned composition */
+    main {
+      grid-column: 1 / -1;
+      padding-top: 64px;
+    }
+
+    /* rule: display type with tracking */
+    .hero {
+      font-family: var(--font-display);
+      font-size: 96px;
+      letter-spacing: -0.02em;
+      margin-bottom: 32px;
+      grid-column: 1 / 5;
+    }
+
+    /* rule: terminal-aesthetic code block */
+    .code-block {
+      background: var(--ink);
+      color: var(--paper);
+      padding: 16px 24px;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.4;
+      margin: 48px -24px 48px -24px; /* rule: intentional bleed past grid */
+      border: 1px solid var(--ink);
+    }
+
+    /* rule: manifest sections */
+    .manifest {
+      margin: 64px 0;
+    }
+
+    .manifest h2 {
+      font-size: 24px;
+      margin-bottom: 16px;
+    }
+
+    .manifest ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .manifest li {
+      margin: 8px 0;
+    }
+
+    /* rule: spot colour used once */
+    .cta {
+      color: var(--spot);
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    /* rule: footer with explicit licence */
+    footer {
+      margin-top: 128px;
+      font-size: 14px;
+      color: var(--ink);
+    }
+
+    /* rule: structural motion only */
+    @media (prefers-reduced-motion: no-preference) {
+      .fade-in {
+        animation: fadeIn 0.5s ease-in-out;
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <main>
+      <div class="hero">AHD: Swiss Editorial</div>
+      <div class="code-block">
+        <pre><code class="bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+      </div>
+      <section class="manifest">
+        <h2>What ships</h2>
+        <ul>
+          <li>brief compiler</li>
+          <li>28-rule linter</li>
+          <li>eval harness</li>
+          <li>vision-critic scaffold</li>
+          <li>MCP server</li>
+          <li>editor plugins</li>
+          <li>eight tokens</li>
+        </ul>
+      </section>
+      <section class="manifest">
+        <h2>What is gated</h2>
+        <ul>
+          <li>live frontier-model calls (needs API keys)</li>
+          <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+          <li>standalone npm packages for the editor plugins</li>
+          <li>additional tokens</li>
+        </ul>
+      </section>
+      <footer>
+        <p><a href="https://github.com/ahd/swiss-editorial" class="cta">Read the code</a> · FSL-1.1-Apache-2.0 for code, CC-BY-4.0 for tokens and artwork</p>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

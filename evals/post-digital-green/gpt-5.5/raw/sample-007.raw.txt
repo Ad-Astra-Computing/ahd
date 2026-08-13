@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AHD — Artificial Human Design</title>
+  <style>
+    :root {
+      --paper: #f4f1ea;
+      --ink: #171615;
+      --muted: #625e57;
+      --line: #c9c1b4;
+      --code-bg: #11110f;
+      --code-ink: #e9e2d5;
+      --accent: #b3482d;
+      --panel: #ebe5da;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        linear-gradient(rgba(23, 22, 21, 0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(23, 22, 21, 0.035) 1px, transparent 1px),
+        var(--paper);
+      background-size: 28px 28px;
+    }
+
+    a {
+      color: inherit;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 4px;
+    }
+
+    .page {
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 28px 0 22px;
+    }
+
+    header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 24px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .brand {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 15px;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    .code-link {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 14px;
+    }
+
+    main {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(360px, 0.95fr);
+      gap: 44px;
+      align-items: start;
+      padding: 46px 0 30px;
+    }
+
+    .hero h1 {
+      max-width: 760px;
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(44px, 7vw, 88px);
+      line-height: 0.92;
+      font-weight: 500;
+      letter-spacing: 0;
+    }
+
+    .hero p {
+      max-width: 650px;
+      margin: 24px 0 0;
+      color: var(--muted);
+      font-size: clamp(18px, 2vw, 22px);
+      line-height: 1.42;
+    }
+
+    .run {
+      margin-top: 34px;
+    }
+
+    .run-label {
+      margin-bottom: 10px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 13px;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    pre {
+      margin: 0;
+      padding: 20px;
+      overflow-x: auto;
+      background: var(--code-bg);
+      color: var(--code-ink);
+      border: 1px solid #000;
+      border-radius: 0;
+      box-shadow: 8px 8px 0 rgba(23, 22, 21, 0.16);
+    }
+
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 14px;
+      line-height: 1.6;
+      white-space: pre;
+    }
+
+    .manifest {
+      display: grid;
+      gap: 18px;
+    }
+
+    section {
+      padding: 18px 0 2px;
+      border-top: 2px solid var(--ink);
+    }
+
+    section h2 {
+      margin: 0 0 14px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    ol {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      counter-reset: item;
+    }
+
+    li {
+      counter-increment: item;
+      display: grid;
+      grid-template-columns: 44px 1fr;
+      gap: 12px;
+      padding: 10px 0;
+      border-top: 1px solid var(--line);
+      font-size: 16px;
+      line-height: 1.25;
+    }
+
+    li::before {
+      content: counter(item, decimal-leading-zero);
+      color: var(--accent);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 13px;
+    }
+
+    footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    @media (max-width: 860px) {
+      .page {
+        width: min(100% - 28px, 680px);
+        padding-top: 18px;
+      }
+
+      header,
+      footer {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      main {
+        grid-template-columns: 1fr;
+        gap: 32px;
+        padding-top: 34px;
+      }
+
+      pre {
+        padding: 16px;
+      }
+
+      code {
+        font-size: 13px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="brand">AHD / Artificial Human Design</div>
+      <a class="code-link" href="https://github.com/ahd-labs/ahd">read-the-code</a>
+    </header>
+
+    <main>
+      <div class="hero">
+        <h1>Design evals for people who can see the problem.</h1>
+        <p>
+          AHD turns taste, craft, and interface judgment into inspectable checks:
+          briefs, lint rules, live runs, and critic hooks that make generated work
+          answer to a standard.
+        </p>
+
+        <div class="run" aria-label="Run the live evaluation">
+          <div class="run-label">Run the eval</div>
+          <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+        </div>
+      </div>
+
+      <div class="manifest">
+        <section aria-labelledby="ships-title">
+          <h2 id="ships-title">What ships</h2>
+          <ol>
+            <li>brief compiler</li>
+            <li>28-rule linter</li>
+            <li>eval harness</li>
+            <li>vision-critic scaffold</li>
+            <li>MCP server</li>
+            <li>editor plugins</li>
+            <li>eight tokens</li>
+          </ol>
+        </section>
+
+        <section aria-labelledby="gated-title">
+          <h2 id="gated-title">What is gated</h2>
+          <ol>
+            <li>live frontier-model calls (needs API keys)</li>
+            <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+            <li>standalone npm packages for the editor plugins</li>
+            <li>additional tokens</li>
+          </ol>
+        </section>
+      </div>
+    </main>
+
+    <footer>
+      <div>Licence: FSL-1.1-Apache-2.0 for code.</div>
+      <div>CC-BY-4.0 for tokens and artwork.</div>
+    </footer>
+  </div>
+</body>
+</html>

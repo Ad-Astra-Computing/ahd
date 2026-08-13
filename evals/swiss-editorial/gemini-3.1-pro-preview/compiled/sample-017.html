@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>AHD</title>
+<style>
+  /* rule: Palette is ink on paper (warm off-white) with a single spot red used exactly once on the page. */
+  :root {
+    --color-paper: oklch(0.98 0.005 95);
+    --color-ink: oklch(0.18 0 0);
+    --color-spot: oklch(0.58 0.22 27);
+    --color-rule: oklch(0.18 0 0);
+    --color-muted: oklch(0.55 0 0);
+    
+    /* rule: Set display type in Neue Haas Grotesk Display */
+    --font-display: "Neue Haas Grotesk Display", "Helvetica Now Display", "Inter Tight", sans-serif;
+    /* rule: Body in Neue Haas Grotesk Text */
+    --font-text: "Neue Haas Grotesk Text", "Helvetica Now Text", "Inter", sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    
+    /* rule: 8px baseline */
+    --baseline: 8px;
+  }
+
+  /* rule: respects prefers-reduced-motion, no entrance animations, structural motion only */
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-text);
+    /* rule: Body at 17px */
+    font-size: 17px;
+    /* rule: line-height 1.5 */
+    line-height: 1.5;
+    margin: 0;
+    overflow-x: hidden;
+    /* rule: No shadows. No glassmorphism. */
+  }
+
+  /* rule: Work on a 12-column grid with 24px gutters */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    column-gap: 24px;
+    /* rule: margin preferred calc(100vw / 24) */
+    padding: max(32px, calc(100vw / 24));
+  }
+
+  /* rule: Asymmetric left-aligned composition. Do not centre the hero. */
+  .hero {
+    grid-column: 1 / 10;
+    margin-top: calc(var(--baseline) * 12);
+    /* rule: Require one dramatic jump per section (160 between sections) */
+    margin-bottom: 160px;
+  }
+
+  .title {
+    font-family: var(--font-display);
+    /* rule: Set display type at 96–160px with tracking -0.02em */
+    font-size: 120px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    /* rule: line-height display 1.05 */
+    line-height: 1.05;
+    margin: 0 0 calc(var(--baseline) * 4) 0;
+  }
+
+  .measure {
+    /* rule: measure 62ch */
+    max-width: 62ch;
+    margin-bottom: calc(var(--baseline) * 4);
+  }
+
+  /* rule: No rounded corners except small status pills allowed */
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    padding: 4px 12px;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .pill-spot {
+    /* rule: spot red used exactly once on the page */
+    background-color: var(--color-spot);
+    color: var(--color-paper);
+  }
+
+  .bleed-container {
+    grid-column: 1 / 13;
+    position: relative;
+    margin-bottom: 160px;
+  }
+
+  .bleed-rule {
+    /* rule: One intentional element must bleed past the grid on purpose. */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200vw;
+    height: 1px;
+    background-color: var(--color-rule);
+  }
+
+  /* rule: one section anchored by a single word at display >= 120px with -0.02em tracking */
+  .anchor {
+    font-family: var(--font-display);
+    font-size: 160px;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    margin: calc(var(--baseline) * 6) 0 0 0;
+    grid-column: 1 / 13;
+  }
+
+  /* rule: terminal-aesthetic code block */
+  .terminal {
+    grid-column: 1 / 11;
+    background-color: var(--color-ink);
+    color: var(--color-paper);
+    padding: calc(var(--baseline) * 3) calc(var(--baseline) * 4);
+    /* rule: No rounded corners */
+    border-radius: 0;
+    margin-bottom: 160px;
+    overflow-x: auto;
+  }
+
+  .terminal code {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    white-space: pre;
+  }
+
+  .manifest {
+    grid-column: 1 / 13;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    column-gap: 24px;
+    margin-bottom: 160px;
+  }
+
+  .manifest-section {
+    grid-column: span 5;
+  }
+
+  .manifest-section:last-child {
+    grid-column: 7 / 12;
+  }
+
+  h2 {
+    font-family: var(--font-display);
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin: 0 0 calc(var(--baseline) * 3) 0;
+  }
+
+  ul {
+    /* rule: Do not use emoji bullets */
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  li {
+    border-bottom: 1px solid var(--color-rule);
+    padding: calc(var(--baseline) * 2) 0;
+  }
+  
+  li:first-child {
+    border-top: 1px solid var(--color-rule);
+  }
+
+  .cta {
+    display: inline-block;
+    border: 1px solid var(--color-rule);
+    padding: calc(var(--baseline) * 1.5) calc(var(--baseline) * 3);
+    text-decoration: none;
+    font-weight: 700;
+    margin-bottom: calc(var(--baseline) * 4);
+    /* rule: structural motion only */
+    transition: background-color 0.1s linear, color 0.1s linear;
+  }
+
+  .cta:hover {
+    background-color: var(--color-ink);
+    color: var(--color-paper);
+  }
+
+  footer {
+    grid-column: 1 / 13;
+    border-top: 1px solid var(--color-rule);
+    padding-top: calc(var(--baseline) * 4);
+    font-size: 14px;
+    /* rule: avoid a canonical 4-column Product / Company / Resources / Legal footer */
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: calc(var(--baseline) * 8);
+  }
+
+</style>
+</head>
+<body>
+  <!-- rule: Work on a 12-column grid -->
+  <div class="grid">
+    
+    <!-- rule: Asymmetric left-aligned composition. Do not centre the hero. -->
+    <section class="hero">
+      <div style="margin-bottom: 24px;">
+        <!-- rule: spot red used exactly once on the page. small status pills allowed. -->
+        <span class="pill pill-spot">v0.1.0</span>
+      </div>
+      <h1 class="title">Artificial<br>Human Design</h1>
+      <!-- rule: declarative, short sentences, no hedges, no Oxford commas. Avoid "AI-native", "build the future", etc. -->
+      <p class="measure">The visitor is a working designer, senior engineer or founder who has seen too many AI-generated sites in the last month. You suspect the problem. We do not need to sell you on the slop thesis. AHD takes it seriously and enforces typographic discipline, spatial rhythm and structural intent.</p>
+      
+      <!-- rule: A link to github (or the forgejo mirror) labelled as the read-the-code CTA. -->
+      <a href="https://github.com/ahd-project/ahd" class="cta">Read the code</a>
+    </section>
+
+    <!-- rule: The command rendered in a monospace code block with the language tag bash. -->
+    <div class="terminal">
+      <code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code>
+    </div>
+
+    <!-- rule: one section anchored by a single word at display >= 120px with -0.02em tracking -->
+    <div class="bleed-container">
+      <!-- rule: One intentional element must bleed past the grid on purpose. -->
+      <div class="bleed-rule"></div>
+      <div class="anchor">MANIFEST</div>
+    </div>
+
+    <!-- rule: clearly separated manifest section -->
+    <section class="manifest">
+      <div class="manifest-section">
+        <!-- rule: clearly separated manifest section titled 'What ships' -->
+        <h2>What ships</h2>
+        <ul>
+          <li>brief compiler</li>
+          <li>28-rule linter</li>
+          <li>eval harness</li>
+          <li>vision-critic scaffold</li>
+          <li>MCP server</li>
+          <li>editor plugins</li>
+          <li>eight tokens</li>
+        </ul>
+      </div>
+      
+      <div class="manifest-section">
+        <!-- rule: clearly separated manifest section titled 'What is gated' -->
+        <h2>What is gated</h2>
+        <ul>
+          <li>live frontier-model calls (needs API keys)</li>
+          <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+          <li>standalone npm packages for the editor plugins</li>
+          <li>additional tokens</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- rule: A footer that names the licence explicitly -->
+    <footer>
+      <div>AHD</div>
+      <div>Licence: FSL-1.1-Apache-2.0 for code, CC-BY-4.0 for tokens and artwork.</div>
+    </footer>
+
+  </div>
+</body>
+</html>

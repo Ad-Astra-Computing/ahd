@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AHD / Artificial Human Design</title>
+  <style>
+    /* rule: post-digital-green token 0.1.0 */
+    /* rule: single-monospace Berkeley Mono fallback */
+    :root {
+      --bg: oklch(0.14 0.02 150);
+      --fg: oklch(0.92 0.12 135);
+      --dim: oklch(0.55 0.05 150);
+      --rule: oklch(0.3 0.04 150);
+      --amber: oklch(0.82 0.15 75);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      border-radius: 0; /* rule: no radii */
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--fg);
+      font-family: "Berkeley Mono", "IBM Plex Mono", "JetBrains Mono", ui-monospace, monospace; /* rule: single-monospace */
+      font-size: 15px; /* rule: scale base 15 */
+      line-height: 1.55; /* rule: body line-height */
+      padding: 32px; /* rule: space scale step 6 */
+      display: flex;
+      justify-content: center;
+    }
+
+    /* rule: align to 80 character grid */
+    .container {
+      width: 100%;
+      max-width: 80ch;
+      border-left: 1px solid var(--rule); /* rule: one hairline rule colour */
+      border-right: 1px solid var(--rule);
+      padding: 0 1ch;
+    }
+
+    header {
+      margin-bottom: 48px;
+    }
+
+    h1 {
+      font-size: 18px; /* rule: scale step 1 */
+      font-weight: 700;
+      color: var(--amber); /* rule: amber accent */
+      text-transform: lowercase; /* rule: lowercase voice */
+      margin-bottom: 16px;
+    }
+
+    p {
+      margin-bottom: 24px;
+      max-width: 72ch; /* rule: measure 72ch */
+    }
+
+    a {
+      color: inherit;
+      text-decoration: underline;
+      text-underline-offset: 4px; /* rule: link style underline-offset 4px */
+    }
+
+    /* rule: terminal-aesthetic code block */
+    .code-block {
+      background: transparent;
+      border: 1px solid var(--rule);
+      padding: 16px;
+      margin-bottom: 48px;
+      position: relative;
+    }
+
+    .code-block::before {
+      content: "terminal";
+      position: absolute;
+      top: -10px;
+      left: 10px;
+      background: var(--bg);
+      padding: 0 5px;
+      color: var(--dim);
+      font-size: 12px;
+    }
+
+    pre {
+      overflow-x: auto;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+
+    code {
+      font-family: inherit;
+      color: var(--fg);
+    }
+
+    .bash-command {
+      color: var(--amber);
+    }
+
+    /* rule: ASCII diagram as text */
+    .ascii-art {
+      color: var(--dim);
+      line-height: 1.1;
+      margin-bottom: 48px;
+      user-select: none;
+    }
+
+    /* rule: manifest sections */
+    .manifest-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 32px;
+      margin-bottom: 64px;
+      border-top: 1px solid var(--rule);
+      padding-top: 32px;
+    }
+
+    .manifest-section h2 {
+      font-size: 15px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em; /* rule: allcaps tracking */
+      margin-bottom: 16px;
+      color: var(--dim);
+    }
+
+    .manifest-list {
+      list-style: none;
+    }
+
+    .manifest-list li {
+      padding: 4px 0;
+      border-bottom: 1px solid oklch(0.2 0.02 150); /* internal rule for grid feel */
+    }
+
+    .manifest-list li::before {
+      content: "> ";
+      color: var(--amber);
+    }
+
+    footer {
+      border-top: 1px solid var(--rule);
+      padding-top: 24px;
+      padding-bottom: 48px;
+      font-size: 12px;
+      color: var(--dim);
+    }
+
+    .cta-link {
+      display: inline-block;
+      margin-top: 24px;
+      border: 1px solid var(--amber);
+      padding: 8px 16px;
+      text-decoration: none;
+    }
+
+    /* rule: forbidden animations, gradients, shadows, radii */
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>artificial human design</h1>
+      <p>
+        the industrialization of visual synthesis has reached the slop horizon. 
+        AHD is not a generator; it is a deterministic framework for designers 
+        who require control over the latent space. we treat pixels as 
+        compiled artifacts, not hallucinated suggestions.
+      </p>
+    </header>
+
+    <div class="ascii-art">
+<pre>
+[ brief ] --------+
+                  |
+          ( compiler: ahd-v1 )
+                  |
+         +--------+--------+
+         |                 |
+    [ tokens ]        [ linter ]
+         |                 |
+         +--------+--------+
+                  |
+          ( eval: vision-critic )
+                  |
+          [ verified output ]
+</pre>
+    </div>
+
+    <section class="code-block">
+      <!-- rule: bash code block with specific command -->
+      <pre><code class="language-bash"><span class="bash-command">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</span></code></pre>
+    </section>
+
+    <div class="manifest-grid">
+      <!-- rule: Manifest 'What ships' -->
+      <section class="manifest-section">
+        <h2>What ships</h2>
+        <ul class="manifest-list">
+          <li>brief compiler</li>
+          <li>28-rule linter</li>
+          <li>eval harness</li>
+          <li>vision-critic scaffold</li>
+          <li>mcp server</li>
+          <li>editor plugins</li>
+          <li>eight tokens</li>
+        </ul>
+      </section>
+
+      <!-- rule: Manifest 'What is gated' -->
+      <section class="manifest-section">
+        <h2>What is gated</h2>
+        <ul class="manifest-list">
+          <li>live frontier-model calls (needs api keys)</li>
+          <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+          <li>standalone npm packages for the editor plugins</li>
+          <li>additional tokens</li>
+        </ul>
+      </section>
+    </div>
+
+    <!-- rule: read-the-code CTA -->
+    <a href="https://github.com/ahd-org/ahd" class="cta-link">read-the-code</a>
+
+    <footer>
+      <!-- rule: footer with explicit licenses -->
+      <p>
+        code: FSL-1.1-Apache-2.0<br>
+        tokens + artwork: CC-BY-4.0
+      </p>
+      <p>
+        AHD_SYSTEM_INIT: SUCCESS // 2026-04-24
+      </p>
+    </footer>
+  </div>
+</body>
+</html>

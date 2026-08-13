@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AHD — Artificial Human Design</title>
+  <meta name="description" content="AHD is a framework for evaluating and shaping AI-generated design output with explicit rules, critique scaffolds, and runnable manifests.">
+  <style>
+    :root {
+      --bg: #f4f0e8;
+      --paper: #fbf8f2;
+      --ink: #111111;
+      --muted: #5f5a52;
+      --line: #d5cfc3;
+      --accent: #b54b2e;
+      --terminal: #131313;
+      --terminal-ink: #ece7dc;
+      --terminal-dim: #a39b8d;
+      --max: 1180px;
+      --radius: 18px;
+      --shadow: 0 20px 60px rgba(17, 17, 17, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background:
+        linear-gradient(to bottom, rgba(181, 75, 46, 0.05), transparent 220px),
+        repeating-linear-gradient(
+          to right,
+          transparent 0,
+          transparent 79px,
+          rgba(17, 17, 17, 0.025) 79px,
+          rgba(17, 17, 17, 0.025) 80px
+        ),
+        var(--bg);
+      color: var(--ink);
+      font-family: Georgia, "Times New Roman", serif;
+      line-height: 1.45;
+    }
+
+    a {
+      color: inherit;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 0.14em;
+    }
+
+    .page {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 28px 22px 40px;
+    }
+
+    .masthead {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 16px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--line);
+      font-family: "Courier New", Courier, monospace;
+      font-size: 0.92rem;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+
+    .masthead .mark {
+      font-weight: 700;
+    }
+
+    .lead {
+      display: grid;
+      grid-template-columns: 1.3fr 0.9fr;
+      gap: 28px;
+      align-items: start;
+      padding: 34px 0 28px;
+    }
+
+    h1 {
+      margin: 0 0 14px;
+      font-size: clamp(3rem, 7vw, 6.2rem);
+      line-height: 0.92;
+      letter-spacing: -0.05em;
+      font-weight: 700;
+      max-width: 8ch;
+    }
+
+    .intro {
+      font-size: clamp(1.08rem, 1.6vw, 1.26rem);
+      color: var(--muted);
+      max-width: 36rem;
+      margin: 0 0 22px;
+    }
+
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px 18px;
+      align-items: center;
+      margin-top: 18px;
+      font-family: "Courier New", Courier, monospace;
+      font-size: 0.95rem;
+    }
+
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 14px;
+      border: 1px solid var(--ink);
+      border-radius: 999px;
+      text-decoration: none;
+      background: rgba(255,255,255,0.5);
+    }
+
+    .cta:hover,
+    .cta:focus-visible {
+      background: #fff;
+      outline: none;
+    }
+
+    .aside-note {
+      border-left: 2px solid var(--accent);
+      padding-left: 16px;
+      color: var(--ink);
+      font-size: 1rem;
+      margin-top: 6px;
+    }
+
+    .terminal {
+      background: var(--terminal);
+      color: var(--terminal-ink);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      border: 1px solid #242424;
+    }
+
+    .terminal-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 16px;
+      background: #1c1c1c;
+      border-bottom: 1px solid #2e2e2e;
+      font-family: "Courier New", Courier, monospace;
+      font-size: 0.86rem;
+      color: var(--terminal-dim);
+    }
+
+    pre {
+      margin: 0;
+      padding: 18px 18px 20px;
+      overflow-x: auto;
+      font-size: 0.98rem;
+      line-height: 1.55;
+      font-family: "Courier New", Courier, monospace;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+      margin-top: 8px;
+    }
+
+    .manifest {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 20px 20px 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .manifest h2 {
+      margin: 0 0 12px;
+      font-size: 1.25rem;
+      letter-spacing: -0.03em;
+    }
+
+    .manifest p {
+      margin: 0 0 14px;
+      color: var(--muted);
+      font-size: 0.98rem;
+    }
+
+    .manifest ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 8px;
+    }
+
+    .manifest li {
+      padding: 9px 0;
+      border-top: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: baseline;
+    }
+
+    .manifest li:first-child {
+      border-top: 0;
+      padding-top: 0;
+    }
+
+    .item {
+      font-weight: 600;
+    }
+
+    .state {
+      color: var(--muted);
+      font-family: "Courier New", Courier, monospace;
+      font-size: 0.88rem;
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    footer {
+      margin-top: 26px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: baseline;
+      flex-wrap: wrap;
+      font-size: 0.96rem;
+      color: var(--muted);
+    }
+
+    .footer-mark {
+      font-family: "Courier New", Courier, monospace;
+      color: var(--ink);
+      text-transform: uppercase;
+      font-size: 0.88rem;
+      letter-spacing: 0.03em;
+    }
+
+    @media (max-width: 900px) {
+      .lead,
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        max-width: 10ch;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .page {
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+
+      .masthead,
+      footer {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .manifest li {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .state {
+        white-space: normal;
+        text-align: left;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="masthead" aria-label="Site header">
+      <div class="mark">AHD / Artificial Human Design</div>
+      <div>Framework, not lecture.</div>
+    </header>
+
+    <main>
+      <section class="lead" aria-labelledby="hero-title">
+        <div>
+          <h1 id="hero-title">Less output. More taste under pressure.</h1>
+          <p class="intro">
+            AHD is for people who already know the failure mode: polished sameness, synthetic confidence, no editorial spine. It turns that instinct into a runnable brief, a linter, and an eval path you can inspect instead of a vibe you have to argue about.
+          </p>
+          <p class="aside-note">
+            The point is not to automate judgment. The point is to make judgment legible, repeatable, and difficult to hand-wave away.
+          </p>
+          <div class="cta-row">
+            <a class="cta" href="https://github.com/artificial-human-design/ahd" target="_blank" rel="noreferrer">Read the code</a>
+            <span>One screen. No slogan inflation. No decorative certainty.</span>
+          </div>
+        </div>
+
+        <section class="terminal" aria-labelledby="eval-title">
+          <div class="terminal-head">
+            <span id="eval-title">eval-live.sh</span>
+            <span>terminal / runnable</span>
+          </div>
+          <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+        </section>
+      </section>
+
+      <section class="grid" aria-label="Manifest sections">
+        <section class="manifest" aria-labelledby="ships-title">
+          <h2 id="ships-title">What ships</h2>
+          <p>Available in the repo and intended to be inspected, run, or adapted now.</p>
+          <ul>
+            <li><span class="item">brief compiler</span><span class="state">included</span></li>
+            <li><span class="item">28-rule linter</span><span class="state">included</span></li>
+            <li><span class="item">eval harness</span><span class="state">included</span></li>
+            <li><span class="item">vision-critic scaffold</span><span class="state">included</span></li>
+            <li><span class="item">MCP server</span><span class="state">included</span></li>
+            <li><span class="item">editor plugins</span><span class="state">included in-repo</span></li>
+            <li><span class="item">eight tokens</span><span class="state">included</span></li>
+          </ul>
+        </section>
+
+        <section class="manifest" aria-labelledby="gated-title">
+          <h2 id="gated-title">What is gated</h2>
+          <p>These depend on external accounts, keys, packaging work, or infrastructure outside the repo.</p>
+          <ul>
+            <li><span class="item">live frontier-model calls</span><span class="state">needs API keys</span></li>
+            <li><span class="item">live vision critique</span><span class="state">needs multimodal key + screenshot pipeline</span></li>
+            <li><span class="item">standalone npm packages for the editor plugins</span><span class="state">packaging not published</span></li>
+            <li><span class="item">additional tokens</span><span class="state">not bundled</span></li>
+          </ul>
+        </section>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-mark">AHD</div>
+      <div>Licence: FSL-1.1-Apache-2.0 for code, CC-BY-4.0 for tokens and artwork.</div>
+    </footer>
+  </div>
+</body>
+</html>

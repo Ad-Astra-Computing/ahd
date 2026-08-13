@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>AHD | Artificial Human Design</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0f;
+            --fg: #e2e8f0;
+            --accent: #00ff94;
+            --muted: #8892b0;
+            --border: #232323;
+        }
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            background-color: var(--bg);
+            color: var(--fg);
+            font-family: 'JetBrains Mono', monospace;
+            line-height: 1.6;
+            margin: 0;
+            padding: 4rem 2rem;
+            display: flex;
+            justify-content: center;
+        }
+        main {
+            max-width: 720px;
+            width: 100%;
+        }
+        h1 {
+            color: var(--accent);
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        h2 {
+            font-size: 1.1rem;
+            color: var(--fg);
+            margin-top: 3rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.5rem;
+        }
+        p {
+            margin-bottom: 1.5rem;
+            color: var(--muted);
+        }
+        .intro p {
+            color: var(--fg);
+            font-size: 1.1rem;
+        }
+        pre {
+            background: #111116;
+            border: 1px solid var(--border);
+            padding: 1.5rem;
+            overflow-x: auto;
+            border-left: 4px solid var(--accent);
+            margin: 2rem 0;
+        }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--accent);
+            font-size: 0.95rem;
+            white-space: pre;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 2rem 0;
+        }
+        li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.75rem;
+            color: var(--muted);
+        }
+        li::before {
+            content: '>';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+        .cta {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 0.75rem 1.5rem;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            text-decoration: none;
+            text-transform: uppercase;
+            font-weight: 700;
+            transition: all 0.2s ease;
+        }
+        .cta:hover {
+            background: var(--accent);
+            color: var(--bg);
+        }
+        footer {
+            margin-top: 5rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            color: var(--muted);
+            font-size: 0.8rem;
+        }
+        ::selection {
+            background: var(--accent);
+            color: var(--bg);
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <h1>AHD / Artificial Human Design</h1>
+
+        <div class="intro">
+            <p>You have seen the stylistic void of generated interfaces. You already know the problem. We do not need another lecture on slop. We need a framework to enforce taste, structure and intent.</p>
+            <p>AHD provides the deterministic scaffolding required to lint, evaluate and constrain generative output to human-level design systems. No magic. Just mechanics.</p>
+        </div>
+
+        <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+
+        <section class="manifest">
+            <h2>What ships</h2>
+            <ul>
+                <li>Brief compiler</li>
+                <li>28-rule linter</li>
+                <li>Eval harness</li>
+                <li>Vision-critic scaffold</li>
+                <li>MCP server</li>
+                <li>Editor plugins</li>
+                <li>Eight tokens</li>
+            </ul>
+
+            <h2>What is gated</h2>
+            <ul>
+                <li>Live frontier-model calls (needs API keys)</li>
+                <li>Live vision critique (needs multimodal key + screenshot pipeline)</li>
+                <li>Standalone npm packages for the editor plugins</li>
+                <li>Additional tokens</li>
+            </ul>
+        </section>
+
+        <a href="https://github.com/ahd-project/ahd" class="cta">Read the code</a>
+
+        <footer>
+            Licence: FSL-1.1-Apache-2.0 for code | CC-BY-4.0 for tokens and artwork.
+        </footer>
+    </main>
+</body>
+</html>

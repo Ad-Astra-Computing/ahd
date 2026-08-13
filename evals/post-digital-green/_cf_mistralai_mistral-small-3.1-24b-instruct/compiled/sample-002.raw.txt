@@ -1,0 +1,108 @@
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AHD - Artificial Human Design</title>
+  <style>
+    /* rule: Design post-digital. Everything in monospace. Dark green-black background, muted green foreground, a single amber accent. */
+    body {
+      font-family: 'Berkeley Mono', 'IBM Plex Mono', 'JetBrains Mono', ui-monospace;
+      background-color: oklch(0.14 0.02 150); /* rule: Dark green-black background */
+      color: oklch(0.92 0.12 135); /* rule: Muted green foreground */
+      margin: 0;
+      padding: 0;
+      line-height: 1.55; /* rule: line-height: body */
+      max-width: 80ch; /* rule: Aligns to an 80 character grid */
+      margin: 0 auto;
+      padding: 24px; /* rule: space scale */
+    }
+    /* rule: Rectangles only. One hairline rule colour. No shadows, no gradients, no radii, no entrance animation. */
+    .container {
+      border: 1px solid oklch(0.3 0.04 150); /* rule: One hairline rule colour */
+      padding: 16px; /* rule: space scale */
+      margin-bottom: 24px; /* rule: space scale */
+    }
+    h1, h2 {
+      color: oklch(0.82 0.15 75); /* rule: Single amber accent */
+    }
+    a {
+      text-decoration: underline;
+      text-underline-offset: 4px; /* rule: link style: underline-offset 4px, no colour change */
+      color: inherit;
+    }
+    pre {
+      background-color: oklch(0.1 0.02 150);
+      padding: 8px; /* rule: space scale */
+      border: 1px solid oklch(0.3 0.04 150); /* rule: One hairline rule colour */
+      overflow-x: auto;
+    }
+    code {
+      color: oklch(0.92 0.12 135);
+    }
+    .manifest {
+      margin-top: 24px; /* rule: space scale */
+    }
+    .manifest h3 {
+      margin-top: 24px; /* rule: space scale */
+    }
+    footer {
+      border-top: 1px solid oklch(0.3 0.04 150); /* rule: One hairline rule colour */
+      padding-top: 16px; /* rule: space scale */
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>ahd</h1>
+    <p>Artificial Human Design</p>
+    <p>For designers, engineers, and founders who want a framework, not a lecture.</p>
+    <p>We take the slop thesis seriously and provide a solution.</p>
+    <div class="container">
+      <h2>Run the eval</h2>
+      <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+    </div>
+    <div class="manifest">
+      <h2>What ships</h2>
+      <ul>
+        <li>brief compiler</li>
+        <li>28-rule linter</li>
+        <li>eval harness</li>
+        <li>vision-critic scaffold</li>
+        <li>MCP server</li>
+        <li>editor plugins</li>
+        <li>eight tokens</li>
+      </ul>
+      <h2>What is gated</h2>
+      <ul>
+        <li>live frontier-model calls (needs API keys)</li>
+        <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+        <li>standalone npm packages for the editor plugins</li>
+        <li>additional tokens</li>
+      </ul>
+    </div>
+    <p>Read the code: <a href="https://github.com/ahd-framework/ahd" target="_blank">github.com/ahd-framework/ahd</a></p>
+    <p>ASCII diagram:</p>
+    <pre><code>
+      +-----------------+
+      |                 |
+      |   AHD Framework  |
+      |                 |
+      +---------+-------+
+               |
+               v
+      +---------+-------+
+      |                 |
+      |   Design System  |
+      |                 |
+      +-----------------+
+    </code></pre>
+  </div>
+  <footer>
+    <p>Licensed under FSL-1.1-Apache-2.0 for code, CC-BY-4.0 for tokens and artwork.</p>
+  </footer>
+</body>
+</html>
+```

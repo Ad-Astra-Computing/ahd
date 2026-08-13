@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><!-- rule: valid HTML5 document -->
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- rule: surfaces: web -->
+  <title>ahd / artificial human design</title><!-- rule: brief: landing for AHD itself -->
+  <style>
+    :root {
+      --bg: oklch(0.14 0.02 150); /* rule: background = bg */
+      --fg: oklch(0.92 0.12 135); /* rule: foreground = fg */
+      --dim: oklch(0.55 0.05 150); /* rule: muted green foreground */
+      --rule: oklch(0.3 0.04 150); /* rule: one hairline rule colour */
+      --amber: oklch(0.82 0.15 75); /* rule: a single amber accent */
+    }
+
+    * {
+      box-sizing: border-box; /* rule: rectangles only */
+    }
+
+    html {
+      background: var(--bg); /* rule: dark green-black background */
+      color: var(--fg); /* rule: muted green foreground */
+      font-family: "Berkeley Mono", "IBM Plex Mono", "JetBrains Mono", ui-monospace, monospace; /* rule: everything in monospace */
+      font-size: 15px; /* rule: type scale base 15 */
+      line-height: 1.55; /* rule: body line-height 1.55 */
+      text-transform: lowercase; /* rule: copy voice: lowercase by default */
+    }
+
+    body {
+      margin: 0; /* rule: remove unnecessary ornament */
+      min-height: 100vh; /* rule: surfaces: web */
+      background: var(--bg); /* rule: no gradients */
+      color: var(--fg); /* rule: high-contrast foreground */
+    }
+
+    a {
+      color: inherit; /* rule: underlined links with no colour change */
+      text-decoration-line: underline; /* rule: underlined links */
+      text-decoration-color: currentColor; /* rule: no colour change */
+      text-underline-offset: 4px; /* rule: underline-offset 4px */
+    }
+
+    .page {
+      width: min(100%, 80ch); /* rule: align to an 80 character grid */
+      margin: 0 auto; /* rule: one-column reading surface, not centred hero stack */
+      padding: 24px 16px 32px; /* rule: use spacing scale */
+    }
+
+    .rule {
+      height: 1px; /* rule: one hairline rule colour */
+      background: var(--rule); /* rule: border colour = rule */
+      margin: 16px 0; /* rule: use spacing scale */
+    }
+
+    .mast {
+      display: grid; /* rule: rectangles only */
+      grid-template-columns: 1fr auto; /* rule: avoid centred hero stack */
+      gap: 8px; /* rule: use spacing scale */
+      align-items: start; /* rule: left-weighted layout */
+    }
+
+    .kicker {
+      color: var(--amber); /* rule: a single amber accent */
+      letter-spacing: 0.04em; /* rule: tracking allcaps 0.04em */
+    }
+
+    h1, h2, p, pre, ul {
+      margin: 0; /* rule: terse composition */
+    }
+
+    h1 {
+      font-size: 2.074rem; /* rule: type scale step 4 */
+      line-height: 1.1; /* rule: display line-height 1.1 */
+      font-weight: 700; /* rule: weights 400, 700 */
+      max-width: 24ch; /* rule: concise one-screen reading */
+    }
+
+    h2 {
+      font-size: 1rem; /* rule: technical, terse hierarchy */
+      line-height: 1.25; /* rule: h2 line-height 1.25 */
+      font-weight: 700; /* rule: weights 400, 700 */
+      margin-bottom: 8px; /* rule: use spacing scale */
+    }
+
+    .lede,
+    .note,
+    footer {
+      color: var(--dim); /* rule: muted secondary text */
+      max-width: 72ch; /* rule: measure 72ch */
+    }
+
+    .stack {
+      display: grid; /* rule: simple rectangular layout */
+      gap: 12px; /* rule: use spacing scale */
+    }
+
+    pre {
+      overflow-x: auto; /* rule: surfaces: web */
+      padding: 12px; /* rule: use spacing scale */
+      border: 1px solid var(--rule); /* rule: surface border 1 solid rule */
+      background: transparent; /* rule: no gradients, no glassmorphism */
+      border-radius: 0; /* rule: no radii; only rectangles */
+      box-shadow: none; /* rule: shadows forbidden */
+      white-space: pre; /* rule: preserve ASCII diagram */
+    }
+
+    code {
+      font: inherit; /* rule: everything in monospace */
+      color: var(--fg); /* rule: no syntax rainbow; maintain palette discipline */
+    }
+
+    .grid {
+      display: grid; /* rule: rectangles only */
+      grid-template-columns: 1fr 1fr; /* rule: avoid three equal feature cards */
+      gap: 16px; /* rule: use spacing scale */
+    }
+
+    .panel {
+      border: 1px solid var(--rule); /* rule: clear separated manifest sections */
+      padding: 12px; /* rule: use spacing scale */
+      border-radius: 0; /* rule: no rounded corners */
+      background: transparent; /* rule: no gradients */
+    }
+
+    ul {
+      padding-left: 18px; /* rule: functional list formatting */
+    }
+
+    li + li {
+      margin-top: 4px; /* rule: use spacing scale */
+    }
+
+    .cta {
+      white-space: nowrap; /* rule: read-the-code CTA remains legible */
+      color: var(--amber); /* rule: single amber accent */
+    }
+
+    footer {
+      display: grid; /* rule: avoid canonical 4-column footer */
+      gap: 8px; /* rule: concise footer */
+      padding-top: 8px; /* rule: use spacing scale */
+    }
+
+    @media (max-width: 760px) {
+      .mast,
+      .grid {
+        grid-template-columns: 1fr; /* rule: ensure the page loads properly on mobile */
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page"><!-- rule: one-page landing, 80ch max-width -->
+    <div class="mast"><!-- rule: avoid centred hero stack with pill badge + two CTAs -->
+      <div class="stack">
+        <div class="kicker">ahd / artificial human design</div><!-- rule: technical, lowercase by default, terse -->
+        <h1>the problem is not that models can draw. it is that most outputs do not survive contact with taste, constraints, or review.</h1><!-- rule: audience already suspects the problem; show seriousness instead of selling the thesis -->
+        <p class="lede">ahd turns that suspicion into a working method: compile the brief, lint the output, run a repeatable eval, and keep the visual language accountable to explicit rules. this is for people who already know what slop looks like and want a framework that catches it before it ships.</p><!-- rule: framework rather than a lecture -->
+      </div>
+      <a class="cta" href="https://github.com/" target="_blank" rel="noreferrer">read-the-code</a><!-- rule: must include a link to github labelled as the read-the-code CTA -->
+    </div>
+
+    <div class="rule"></div><!-- rule: one hairline rule colour -->
+
+    <pre aria-label="ascii diagram"><!-- rule: include one ASCII diagram rendered as text -->
+brief.yml
+   |
+   v
+[compiler] -> [28-rule linter] -> [eval harness] -> [critic]
+   |                                                |
+   '--------------------------> report <------------'
+</pre><!-- rule: intentional imperfection included as slight asymmetry in the loop closure -->
+
+    <div class="rule"></div><!-- rule: one hairline rule colour -->
+
+    <section class="stack"><!-- rule: one screen of reading -->
+      <h2>run the eval</h2><!-- rule: terminal-aesthetic code block -->
+      <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre><!-- rule: exact command in a bash code block -->
+      <p class="note">the point is not another style preset. the point is a system that can explain why an output passes, fails, or looks suspiciously like the last ten sites you saw.</p><!-- rule: audience wants seriousness and a framework -->
+    </section>
+
+    <div class="rule"></div><!-- rule: one hairline rule colour -->
+
+    <section class="grid"><!-- rule: clearly separated manifest sections -->
+      <section class="panel">
+        <h2>what ships</h2><!-- rule: manifest section titled 'What ships' -->
+        <ul>
+          <li>brief compiler</li><!-- rule: enumerate required shipped items -->
+          <li>28-rule linter</li><!-- rule: enumerate required shipped items -->
+          <li>eval harness</li><!-- rule: enumerate required shipped items -->
+          <li>vision-critic scaffold</li><!-- rule: enumerate required shipped items -->
+          <li>mcp server</li><!-- rule: enumerate required shipped items -->
+          <li>editor plugins</li><!-- rule: enumerate required shipped items -->
+          <li>eight tokens</li><!-- rule: enumerate required shipped items -->
+        </ul>
+      </section>
+
+      <section class="panel">
+        <h2>what is gated</h2><!-- rule: manifest section titled 'What is gated' -->
+        <ul>
+          <li>live frontier-model calls (needs api keys)</li><!-- rule: enumerate required gated items -->
+          <li>live vision critique (needs multimodal key + screenshot pipeline)</li><!-- rule: enumerate required gated items -->
+          <li>standalone npm packages for the editor plugins</li><!-- rule: enumerate required gated items -->
+          <li>additional tokens</li><!-- rule: enumerate required gated items -->
+        </ul>
+      </section>
+    </section>
+
+    <div class="rule"></div><!-- rule: one hairline rule colour -->
+
+    <footer>
+      <p>licence: fsl-1.1-apache-2.0 for code, cc-by-4.0 for tokens and artwork.</p><!-- rule: footer names the licence explicitly -->
+      <p>no testimonials. no pricing theatre. no trust strip. just the compiler, the checks, and the parts that still depend on external keys.</p><!-- rule: must avoid testimonials, pricing tier, trusted by strip -->
+    </footer>
+  </main>
+</body>
+</html>

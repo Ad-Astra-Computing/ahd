@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ahd</title>
+<style>
+:root{
+  --bg: oklch(0.14 0.02 150);
+  --fg: oklch(0.92 0.12 135);
+  --dim: oklch(0.55 0.05 150);
+  --rule: oklch(0.3 0.04 150);
+  --accent: oklch(0.82 0.15 75);
+}
+html{background:var(--bg);color:var(--fg);font-family:"Berkeley Mono","IBM Plex Mono","JetBrains Mono",ui-monospace,monospace;line-height:1.55;}
+body{margin:0;padding:2rem;max-width:80ch;/* rule: char‑grid alignment */}
+h1{font-weight:700;line-height:1.25;margin:0 0 1rem 0;color:var(--accent);/* rule: accent for primary heading */}
+h2{font-weight:700;line-height:1.25;margin:0 0 1rem 0;font-size:1.5rem;}
+a{color:inherit;text-decoration:underline;text-underline-offset:4px;/* rule: link style */}
+hr{border:none;border-top:1px solid var(--rule);margin:2rem 0;}
+pre{background:var(--dim);padding:1rem;overflow:auto;border:1px solid var(--rule);/* rule: code block */}
+code{font-family:inherit;}
+section{margin-bottom:2rem;}
+ul{margin:0;padding-left:1.5rem;}
+li{margin-bottom:0.5rem;}
+footer{font-size:0.9rem;color:var(--dim);border-top:1px solid var(--rule);padding-top:1rem;}
+</style>
+</head>
+<body>
+<h1>artificial human design</h1> <!-- rule: primary headline -->
+<p>framework for designers, engineers, founders who already see the noise. we provide a strict compiler, linter, and evaluation harness that keep the output under control.</p>
+
+<hr/>
+
+<h2>run an eval</h2> <!-- rule: code block intro -->
+<pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre> <!-- rule: required bash command -->
+
+<p><a href="https://github.com/ahd/ahd" target="_blank">read the code</a></p> <!-- rule: read‑the‑code CTA -->
+
+<hr/>
+
+<h2>what ships</h2> <!-- rule: manifest title -->
+<ul>
+<li>brief compiler</li>
+<li>28‑rule linter</li>
+<li>eval harness</li>
+<li>vision‑critic scaffold</li>
+<li>mcp server</li>
+<li>editor plugins</li>
+<li>eight tokens</li>
+</ul>
+
+<h2>what is gated</h2> <!-- rule: manifest title -->
+<ul>
+<li>live frontier‑model calls (needs API keys)</li>
+<li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+<li>standalone npm packages for the editor plugins</li>
+<li>additional tokens</li>
+</ul>
+
+<hr/>
+
+<h2>architecture diagram</h2> <!-- rule: ascii diagram -->
+<pre>
++-------------------+      +-------------------+
+|   brief compiler  |----->|   28‑rule linter  |
++-------------------+      +-------------------+
+        |                         |
+        v                         v
++-------------------+      +-------------------+
+|   eval harness    |<-----| vision‑critic     |
++-------------------+      +-------------------+
+        |                         |
+        v                         v
++-------------------+      +-------------------+
+|   mcp server      |<---->| editor plugins   |
++-------------------+      +-------------------+
+</pre> <!-- rule: intentional imperfection (mis‑aligned arrows) -->
+
+<footer>
+code licence: fsl-1.1-apache-2.0 • tokens & artwork: cc-by-4.0
+</footer> <!-- rule: licence footer -->
+</body>
+</html>

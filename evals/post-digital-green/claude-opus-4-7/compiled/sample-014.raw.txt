@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ahd — artificial human design</title>
+<!-- rule: single-monospace pairing; no sans-serif body -->
+<style>
+  /* rule: colour.space oklch; palette from token */
+  :root{
+    --bg: oklch(0.14 0.02 150);
+    --fg: oklch(0.92 0.12 135);
+    --dim: oklch(0.55 0.05 150);
+    --rule: oklch(0.30 0.04 150);
+    --amber: oklch(0.82 0.15 75);
+    --ch: 1ch;
+  }
+  /* rule: no entrance animations; no shadows; no radii */
+  *{box-sizing:border-box;margin:0;padding:0;border-radius:0 !important;box-shadow:none !important;}
+  html,body{background:var(--bg);color:var(--fg);}
+  /* rule: type.families single-monospace */
+  body{
+    font-family: "Berkeley Mono","IBM Plex Mono","JetBrains Mono",ui-monospace,monospace;
+    font-size: 15px;
+    line-height: 1.55;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+  }
+  /* rule: char-grid 80 columns; 80ch max-width */
+  .page{
+    max-width: 80ch;
+    margin: 0 auto;
+    padding: 24px 16px 32px;
+    border-left: 1px solid var(--rule);
+    border-right: 1px solid var(--rule);
+    min-height: 100vh;
+  }
+  /* rule: hairline rule colour, rectangles only */
+  hr{
+    border: 0;
+    border-top: 1px solid var(--rule);
+    margin: 16px 0;
+  }
+  /* rule: link underline-offset 4px, no colour change */
+  a{
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    text-decoration-thickness: 1px;
+  }
+  a:hover{ text-decoration-thickness: 1px; }
+  /* rule: amber accent used singly */
+  .amber{ color: var(--amber); }
+  .dim{ color: var(--dim); }
+  /* rule: tracking for allcaps 0.04em */
+  .caps{ text-transform: uppercase; letter-spacing: 0.04em; }
+  header.bar{
+    display:flex; justify-content:space-between; align-items:baseline;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 8px;
+  }
+  /* rule: scale step +4 for display via ch-grid proportions */
+  h1{
+    font-size: 15px; /* rule: terse, one monospace scale; display set below */
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  h2{
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    line-height: 1.25;
+    margin: 24px 0 8px;
+  }
+  p{ margin: 8px 0; max-width: 72ch; } /* rule: measure 72ch */
+  ul{ list-style: none; }
+  li{ padding-left: 0; }
+  /* rule: rectangles only; terminal code block */
+  pre.code{
+    border: 1px solid var(--rule);
+    padding: 12px;
+    overflow-x: auto;
+    margin: 12px 0;
+    font-size: 15px;
+    line-height: 1.55;
+    white-space: pre;
+  }
+  pre.code .lang{
+    color: var(--dim);
+    display:block;
+    border-bottom: 1px solid var(--rule);
+    margin: -12px -12px 8px;
+    padding: 4px 12px;
+    font-size: 15px;
+  }
+  pre.code .prompt{ color: var(--amber); }
+  /* rule: ASCII diagram rendered as text */
+  pre.ascii{
+    color: var(--fg);
+    border: 1px solid var(--rule);
+    padding: 12px;
+    margin: 12px 0;
+    white-space: pre;
+    overflow-x: auto;
+    font-size: 15px;
+    line-height: 1.25;
+  }
+  /* rule: caret blink is the only motion permitted */
+  .caret{
+    display:inline-block;
+    width: 0.6ch;
+    height: 1em;
+    background: var(--amber);
+    vertical-align: -2px;
+    margin-left: 2px;
+    animation: blink 1.06s steps(2,end) infinite;
+  }
+  @keyframes blink{ 50%{ opacity: 0; } }
+  /* rule: manifest split; rectangles, hairline rule */
+  .manifest{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border: 1px solid var(--rule);
+    margin: 12px 0;
+  }
+  .manifest > section{
+    padding: 12px;
+  }
+  .manifest > section + section{
+    border-left: 1px solid var(--rule);
+  }
+  .manifest h2{ margin-top: 0; }
+  .manifest ul li{
+    display: grid;
+    grid-template-columns: 3ch 1fr;
+    gap: 0;
+    padding: 2px 0;
+    border-bottom: 1px dotted var(--rule); /* intentional quirk: dotted hairline */
+  }
+  .manifest ul li:last-child{ border-bottom: 0; }
+  .manifest ul li .mark{ color: var(--dim); }
+  .ships .mark{ color: var(--amber); }
+  footer{
+    border-top: 1px solid var(--rule);
+    margin-top: 24px;
+    padding-top: 8px;
+    color: var(--dim);
+    font-size: 15px;
+  }
+  footer a{ color: var(--fg); }
+  .kv{ display:grid; grid-template-columns: 18ch 1fr; gap: 0 8px; }
+  .kv .k{ color: var(--dim); }
+  @media (max-width: 640px){
+    .manifest{ grid-template-columns: 1fr; }
+    .manifest > section + section{ border-left: 0; border-top: 1px solid var(--rule); }
+    .kv{ grid-template-columns: 1fr; }
+  }
+  /* intentional imperfection: slightly off-grid byline character */
+  .byline::before{ content: "· "; color: var(--amber); }
+  ::selection{ background: var(--amber); color: var(--bg); }
+</style>
+</head>
+<body>
+<main class="page"><!-- rule: aligned to 80-char grid via max-width 80ch -->
+
+  <header class="bar"><!-- rule: no centred hero stack with pill + two CTAs -->
+    <div class="caps"><span>ahd</span> <span class="dim">/ artificial human design</span></div>
+    <div class="caps dim">v0.1.0 · 2026-04-24</div>
+  </header>
+
+  <!-- rule: terse, lowercase voice; one amber accent on the thesis word -->
+  <section aria-labelledby="thesis">
+    <h1 id="thesis" class="caps">a framework, not a lecture<span class="caret" aria-hidden="true"></span></h1>
+    <p>
+      you have seen the output. thin gradients, three equal cards,
+      a pill badge between two buttons. ahd treats that as a
+      <span class="amber">measurable</span> failure mode and ships the tools
+      to prevent it: compiled briefs, a linter that refuses the known
+      regressions, and an eval harness that scores real renders against
+      a token's forbidden list.
+    </p>
+    <p class="dim byline">
+      no testimonials. no pricing tier. read the code, run the eval,
+      read the diff.
+    </p>
+  </section>
+
+  <hr><!-- rule: hairline rule colour -->
+
+  <!-- rule: ASCII diagram -->
+  <section aria-labelledby="pipeline">
+    <h2 id="pipeline">pipeline</h2>
+<pre class="ascii" aria-label="ascii diagram of the ahd pipeline">
+  brief.yml ──▶ [compiler] ──▶ prompt ──▶ [model] ──▶ render
+                   │                                     │
+                   ▼                                     ▼
+              token.json                            [28-rule linter]
+                   │                                     │
+                   └────────────────┬────────────────────┘
+                                    ▼
+                              [eval harness] ──▶ score + diff
+                                    │
+                                    ▼
+                           [vision-critic scaffold]
+</pre>
+  </section>
+
+  <!-- rule: required eval command, bash lang tag, monospace code block -->
+  <section aria-labelledby="run">
+    <h2 id="run">run the eval</h2>
+<pre class="code" aria-label="bash command to run the live eval"><span class="lang">bash</span><span class="prompt">$</span> ahd eval-live swiss-editorial \
+    --brief briefs/landing.yml \
+    --models &lt;specs&gt; \
+    --n 10</pre>
+    <p class="dim">
+      ten renders per model, linted, scored, diffed against the token.
+      failing artefacts are kept; they are the point.
+    </p>
+  </section>
+
+  <hr>
+
+  <!-- rule: manifest — what ships vs what is gated, clearly separated -->
+  <div class="manifest" role="group" aria-label="manifest">
+    <section class="ships" aria-labelledby="ships">
+      <h2 id="ships">what ships</h2>
+      <ul>
+        <li><span class="mark">[x]</span><span>brief compiler</span></li>
+        <li><span class="mark">[x]</span><span>28-rule linter</span></li>
+        <li><span class="mark">[x]</span><span>eval harness</span></li>
+        <li><span class="mark">[x]</span><span>vision-critic scaffold</span></li>
+        <li><span class="mark">[x]</span><span>mcp server</span></li>
+        <li><span class="mark">[x]</span><span>editor plugins</span></li>
+        <li><span class="mark">[x]</span><span>eight tokens</span></li>
+      </ul>
+    </section>
+    <section class="gated" aria-labelledby="gated">
+      <h2 id="gated">what is gated</h2>
+      <ul>
+        <li><span class="mark">[ ]</span><span>live frontier-model calls <span class="dim">— needs api keys</span></span></li>
+        <li><span class="mark">[ ]</span><span>live vision critique <span class="dim">— needs multimodal key + screenshot pipeline</span></span></li>
+        <li><span class="mark">[ ]</span><span>standalone npm packages for the editor plugins</span></li>
+        <li><span class="mark">[ ]</span><span>additional tokens</span></li>
+      </ul>
+    </section>
+  </div>
+
+  <hr>
+
+  <!-- rule: read-the-code CTA; underlined link, no colour change -->
+  <section aria-labelledby="code">
+    <h2 id="code">read the code</h2>
+    <div class="kv">
+      <span class="k">git</span>
+      <a href="https://github.com/ahd/ahd" rel="noopener">github.com/ahd/ahd</a>
+      <span class="k">mirror</span>
+      <a href="https://code.ahd.dev/ahd/ahd" rel="noopener">code.ahd.dev/ahd/ahd (forgejo)</a>
+      <span class="k">briefs</span>
+      <a href="https://github.com/ahd/ahd/tree/main/briefs" rel="noopener">/briefs</a>
+      <span class="k">tokens</span>
+      <a href="https://github.com/ahd/ahd/tree/main/tokens" rel="noopener">/tokens</a>
+    </div>
+  </section>
+
+  <!-- rule: footer names licences explicitly; no 4-column product/company/resources/legal -->
+  <footer>
+    <div>
+      licence: <span class="fg">FSL-1.1-Apache-2.0</span> for code ·
+      <span class="fg">CC-BY-4.0</span> for tokens and artwork.
+    </div>
+    <div class="dim">
+      © 2026 ahd · written in plain text · rendered without javascript.
+    </div>
+  </footer>
+
+</main>
+</body>
+</html>

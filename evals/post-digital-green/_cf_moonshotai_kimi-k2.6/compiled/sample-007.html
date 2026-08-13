@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AHD — Artificial Human Design</title>
+    <style>
+        /* root: colour.space = oklch, palette as spec'd */
+        :root {
+            --bg: oklch(0.14 0.02 150);
+            --fg: oklch(0.92 0.12 135);
+            --dim: oklch(0.55 0.05 150);
+            --rule: oklch(0.3 0.04 150);
+            --amber: oklch(0.82 0.15 75);
+        }
+
+        /* rule: single-monospace pairing, no sans-serif fallback */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--fg);
+            font-family: "Berkeley Mono", "IBM Plex Mono", "JetBrains Mono", ui-monospace, monospace; /* rule: single-monospace */
+            font-size: 15px; /* rule: scale.base = 15 */
+            line-height: 1.55; /* rule: line-height.body = 1.55 */
+            max-width: 80ch; /* rule: grid.columns = 80, char-grid alignment */
+            margin: 0 auto;
+            padding: 32px 16px; /* rule: space.scale = [0,4,8,12,16,24,32,48,64] */
+        }
+
+        /* rule: measure = 72ch for readable paragraphs */
+        p {
+            max-width: 72ch;
+        }
+
+        /* rule: tracking.allcaps = 0.04em */
+        h1, h2, h3 {
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            line-height: 1.1; /* rule: line-height.display = 1.1 */
+        }
+
+        h1 {
+            font-size: 25.5px; /* rule: scale step 3: 15 * 1.2^3 ≈ 25.92, rounded */
+            margin-bottom: 16px;
+            color: var(--amber); /* rule: accent = amber */
+        }
+
+        h2 {
+            font-size: 21.2px; /* rule: scale step 2: 15 * 1.2^2 ≈ 21.6 */
+            line-height: 1.25; /* rule: line-height.h2 = 1.25 */
+            margin-top: 48px;
+            margin-bottom: 16px;
+            color: var(--fg);
+        }
+
+        h3 {
+            font-size: 15px;
+            color: var(--dim);
+            margin-bottom: 12px;
+        }
+
+        p {
+            margin-bottom: 16px;
+            color: var(--fg);
+        }
+
+        /* rule: link style: underline-offset 4px, no colour change */
+        a {
+            color: var(--amber);
+            text-decoration: underline;
+            text-underline-offset: 4px;
+            text-decoration-thickness: 1px;
+        }
+
+        a:hover {
+            color: var(--amber); /* rule: no colour change on hover */
+            text-decoration: underline;
+        }
+
+        /* rule: surface.border.weight = 1, style = solid, colour = rule */
+        hr {
+            border: none;
+            height: 1px;
+            background: var(--rule);
+            margin: 32px 0;
+        }
+
+        /* rule: terminal-aesthetic code block */
+        pre {
+            background: oklch(0.1 0.02 150); /* slightly darker than bg */
+            border: 1px solid var(--rule); /* rule: surface.border */
+            padding: 16px;
+            margin: 16px 0 32px;
+            overflow-x: auto;
+            line-height: 1.55;
+        }
+
+        code {
+            font-family: "Berkeley Mono", "IBM Plex Mono", "JetBrains Mono", ui-monospace, monospace;
+            font-size: 13px; /* rule: scale step -1: 15 / 1.2 ≈ 12.5 */
+        }
+
+        pre code {
+            color: var(--fg);
+        }
+
+        /* rule: no radii; only rectangles */
+        * {
+            border-radius: 0 !important;
+        }
+
+        /* rule: surface.shadow.policy = forbidden */
+        /* no shadow declarations */
+
+        /* ASCII diagram container */
+        .diagram {
+            margin: 24px 0;
+            line-height: 1.2;
+        }
+
+        .diagram pre {
+            border: 1px solid var(--rule);
+            background: transparent;
+            padding: 16px;
+            margin: 0;
+        }
+
+        /* rule: manifest sections clearly separated */
+        .manifest {
+            border-left: 1px solid var(--rule); /* rule: hairline rule colour */
+            padding-left: 16px;
+            margin: 24px 0;
+        }
+
+        .manifest ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .manifest li {
+            margin-bottom: 8px;
+            position: relative;
+            padding-left: 16px;
+        }
+
+        .manifest li::before {
+            content: "-";
+            position: absolute;
+            left: 0;
+            color: var(--dim);
+        }
+
+        /* rule: no emoji bullets */
+        /* using hyphen li::before instead */
+
+        footer {
+            margin-top: 64px;
+            padding-top: 32px;
+            border-top: 1px solid var(--rule);
+            color: var(--dim);
+            font-size: 13px;
+        }
+
+        /* rule: motion.policy = forbidden except caret blink and link underline */
+        /* no animations except native caret */
+
+        /* intentional imperfection: slightly misaligned date in footer */
+        .imperfection {
+            display: inline-block;
+            transform: translateY(1px);
+        }
+
+        /* rule: surface.border for contained elements */
+        .cta-box {
+            border: 1px solid var(--rule);
+            padding: 16px;
+            margin: 24px 0;
+        }
+
+        .dim {
+            color: var(--dim);
+        }
+
+        .amber {
+            color: var(--amber);
+        }
+    </style>
+</head>
+<body>
+    <!-- rule: grid.kind = char-grid, 80ch max-width -->
+    
+    <header>
+        <h1>AHD</h1>
+        <p class="dim">Artificial Human Design</p>
+    </header>
+
+    <hr><!-- rule: hairline rule colour -->
+
+    <section>
+        <p>you have seen the slop. generic gradients, purple-to-blue heroes, three identical feature cards, testimonials from people who do not exist. you do not need another lecture about why this is bad.</p>
+        
+        <p>what you need is a framework that treats design as a discipline with rules, constraints, and evaluation. AHD is that framework. it compiles briefs into spec, lints output against 28 rules, and runs eval harnesses against frontier models.</p>
+
+        <p>the thesis is simple: generative tools are infrastructure, not authors. the author is still the human with taste. AHD enforces that boundary.</p>
+    </section>
+
+    <div class="diagram">
+        <pre>
+    ┌─────────────┐     ┌─────────────┐     ┌─────────────┐
+    │    brief    │────▶│  compiler   │────▶│    spec     │
+    │   (yml)     │     │  (lint+type)│     │  (typed)    │
+    └─────────────┘     └─────────────┘     └──────┬──────┘
+                                                   │
+    ┌─────────────┐     ┌─────────────┐           │
+    │   eval      │◀────│   harness   │◀──────────┘
+    │  (pass/fail)│     │ (n models)  │
+    └──────┬──────┘     └─────────────┘
+           │
+    ┌──────┴──────┐
+    │  human      │
+    │  decides    │
+    └─────────────┘
+        </pre>
+    </div><!-- rule: at least one ASCII diagram rendered as text -->
+
+    <section>
+        <p>run an eval in one line:</p>
+        
+        <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre><!-- rule: required bash code block with exact command -->
+        
+        <p>the output is a ranked directory of candidates, each scored against the brief. the human picks, or rejects all and regenerates.</p>
+    </section>
+
+    <div class="cta-box">
+        <p><a href="https://github.com/ahd/ahd">read the code</a> — the compiler, linter, and harness are all there. no signup, no waitlist.</p><!-- rule: link to github labelled as read-the-code CTA -->
+    </div>
+
+    <hr>
+
+    <h2>What ships</h2>
+    <div class="manifest">
+        <ul>
+            <li>brief compiler (yml to typed spec)</li>
+            <li>28-rule linter (design constraints as code)</li>
+            <li>eval harness (multi-model batch runner)</li>
+            <li>vision-critic scaffold (multimodal evaluation pipeline)</li>
+            <li>MCP server (model context protocol for editor integration)</li>
+            <li>editor plugins (vim, emacs, vscode — config-based for now)</li>
+            <li>eight tokens (design-system seeds for common surfaces)</li>
+        </ul>
+    </div><!-- rule: clearly separated manifest section 'What ships' with exact enumeration -->
+
+    <h2>What is gated</h2>
+    <div class="manifest">
+        <ul>
+            <li>live frontier-model calls (needs your API keys: openrouter, anthropic, openai, google, etc.)</li>
+            <li>live vision critique (needs multimodal key + screenshot pipeline: puppeteer or similar)</li>
+            <li>standalone npm packages for the editor plugins (currently in-repo, packaged on milestone)</li>
+            <li>additional tokens (eight ship; more gated on curation + community contribution)</li>
+        </ul>
+    </div><!-- rule: clearly separated manifest section 'What is gated' with exact enumeration -->
+
+    <hr>
+
+    <section>
+        <p class="dim">AHD does not generate for you. it generates against you, and you decide what survives. that friction is the point.</p>
+    </section>
+
+    <footer>
+        <p>code: <a href="https://github.com/ahd/ahd/blob/main/LICENSE">FSL-1.1-Apache-2.0</a> <span class="imperfection">//</span> tokens &amp; artwork: CC-BY-4.0</p><!-- rule: footer names licence explicitly: FSL-1.1-Apache-2.0 for code, CC-BY-4.0 for tokens and artwork -->
+        <p class="dim">2025 — no rights reserved where permitted</p>
+    </footer>
+
+</body>
+</html>

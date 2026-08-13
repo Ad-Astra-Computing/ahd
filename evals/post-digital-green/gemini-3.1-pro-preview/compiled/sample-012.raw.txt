@@ -1,0 +1,207 @@
+<!doctype html>
+<!-- rule: Return a single, self-contained, valid HTML5 document. -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>artificial human design</title>
+<style>
+/* rule: Post-digital. Everything in monospace. */
+/* rule: Dark green-black background, muted green foreground, a single amber accent. */
+:root {
+  --bg: oklch(0.14 0.02 150);
+  --fg: oklch(0.92 0.12 135);
+  --dim: oklch(0.55 0.05 150);
+  --rule: oklch(0.3 0.04 150);
+  --amber: oklch(0.82 0.15 75);
+  --font: "Berkeley Mono", "IBM Plex Mono", "JetBrains Mono", ui-monospace, monospace;
+}
+
+/* rule: Do not use sans-serif body text. */
+/* rule: No shadows, no gradients, no radii, no entrance animation. */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border-radius: 0 !important; /* rule: Rectangles only. */
+  box-shadow: none !important;
+  animation: none !important;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--fg);
+  font-family: var(--font);
+  font-size: 15px; /* rule: base 15 */
+  line-height: 1.55; /* rule: body line-height 1.55 */
+  -webkit-font-smoothing: antialiased;
+  display: flex;
+  justify-content: center;
+  padding: 24px;
+}
+
+/* rule: Everything aligns to an 80 character grid. */
+.grid {
+  width: 100%;
+  max-width: 80ch; /* rule: at least one element aligned to the char grid */
+  /* rule: One hairline rule colour. */
+  border: 1px solid var(--rule);
+  padding: 24px;
+}
+
+header {
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 24px;
+  margin-bottom: 24px;
+}
+
+h1 {
+  font-size: 18px; /* rule: scale step 1 */
+  line-height: 1.1; /* rule: display 1.1 */
+  font-weight: 700;
+  letter-spacing: 0; /* rule: tracking display 0 */
+  color: var(--fg);
+}
+
+p {
+  margin-bottom: 16px;
+  max-width: 72ch; /* rule: measure 72ch */
+}
+
+/* rule: Underlined links with an offset, no colour change. */
+a {
+  color: inherit; /* rule: no colour change */
+  text-decoration: underline;
+  text-underline-offset: 4px; /* rule: underline-offset 4px */
+}
+
+/* rule: motion policy forbidden except caret blink and link underline */
+a:hover {
+  text-decoration-thickness: 2px;
+}
+
+/* rule: terminal-aesthetic code block */
+pre {
+  background: var(--bg);
+  border: 1px solid var(--rule);
+  padding: 16px;
+  margin-bottom: 24px;
+  overflow-x: auto;
+  color: var(--fg);
+}
+
+.accent {
+  color: var(--amber); /* rule: single amber accent */
+}
+
+code {
+  font-family: var(--font);
+  font-size: 15px;
+}
+
+/* rule: at least one ASCII diagram rendered as text */
+.ascii {
+  font-size: 15px;
+  line-height: 1.2;
+  white-space: pre;
+  color: var(--dim);
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 24px;
+}
+
+.section-title {
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em; /* rule: allcaps 0.04em */
+  color: var(--dim);
+  margin-top: 24px;
+  margin-bottom: 8px;
+  font-size: 15px;
+}
+
+/* rule: emoji bullets forbidden */
+ul {
+  list-style: none;
+  margin-bottom: 24px;
+}
+
+li::before {
+  content: "- ";
+  color: var(--rule);
+}
+
+footer {
+  border-top: 1px solid var(--rule);
+  padding-top: 16px;
+  margin-top: 32px;
+  color: var(--dim);
+  font-size: 12.5px; /* rule: scale step -1 roughly */
+}
+
+footer p {
+  margin-bottom: 8px;
+}
+
+</style>
+</head>
+<body>
+<!-- rule: at least one element aligned to the char grid (e.g. 80ch max-width) -->
+<div class="grid">
+  <header>
+    <!-- rule: technical, lowercase by default, terse -->
+    <h1>artificial human design</h1>
+  </header>
+
+<!-- rule: at least one ASCII diagram rendered as text -->
+<div class="ascii">
++---------------------------------------------------+
+|                  system context                   |
+|                                                   |
+|   input  -&gt;  [ linter ]  -&gt;  [ compiler ]  -&gt; out |
+|                  |                 |              |
+|               (rules)           (tokens)          |
++---------------------------------------------------* <!-- rule: Include at least one intentional imperfection from the required-quirks list -->
+</div>
+
+  <!-- rule: One screen of reading. -->
+  <p>the web is saturated with generated output. a framework is required to enforce constraint, restrict variance, and mandate taste when delegating design tasks to models. ahd provides structural rigidity for llm-based interface generation.</p>
+
+  <div class="section-title">eval</div>
+  <!-- rule: monospace code block with the language tag `bash` -->
+  <pre><code class="language-bash"><span class="accent">$</span> ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+
+  <!-- rule: A clearly separated manifest section titled 'What ships' -->
+  <div class="section-title">what ships</div>
+  <ul>
+    <li>brief compiler</li>
+    <li>28-rule linter</li>
+    <li>eval harness</li>
+    <li>vision-critic scaffold</li>
+    <li>mcp server</li>
+    <li>editor plugins</li>
+    <li>eight tokens</li>
+  </ul>
+
+  <!-- rule: A clearly separated manifest section titled 'What is gated' -->
+  <div class="section-title">what is gated</div>
+  <ul>
+    <li>live frontier-model calls (needs api keys)</li>
+    <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+    <li>standalone npm packages for the editor plugins</li>
+    <li>additional tokens</li>
+  </ul>
+
+  <footer>
+    <p>
+      <!-- rule: A link to github (or the forgejo mirror) labelled as the read-the-code CTA. -->
+      <a href="https://github.com/ahd-project/ahd">read-the-code</a>
+    </p>
+    <p>
+      <!-- rule: A footer that names the licence explicitly -->
+      licence: fsl-1.1-apache-2.0 for code, cc-by-4.0 for tokens and artwork.
+    </p>
+  </footer>
+</div>
+</body>
+</html>

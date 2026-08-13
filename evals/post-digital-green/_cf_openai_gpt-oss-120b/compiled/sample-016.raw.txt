@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ahd</title>
+<style>
+:root{
+  --bg: oklch(0.14 0.02 150);
+  --fg: oklch(0.92 0.12 135);
+  --dim: oklch(0.55 0.05 150);
+  --rule: oklch(0.3 0.04 150);
+  --accent: oklch(0.82 0.15 75);
+}
+html{
+  background: var(--bg);
+  color: var(--fg);
+  font-family: "Berkeley Mono","IBM Plex Mono","JetBrains Mono",ui-monospace,monospace; /* rule: single-monospace */
+  line-height: 1.55; /* rule: line-height body */
+}
+.container{
+  max-width: 80ch; /* rule: char-grid */
+  margin: 0 auto;
+  padding: 2rem; /* rule: space scale */
+}
+h1{
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--accent); /* rule: accent usage */
+}
+h2{
+  font-weight: 700;
+  line-height: 1.25; /* rule: line-height h2 */
+}
+code{
+  font-family: inherit;
+  background: var(--dim);
+  padding: .2rem .4rem;
+}
+pre{
+  background: var(--dim);
+  border: 1px solid var(--rule);
+  overflow-x:auto;
+}
+a{
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 4px; /* rule: underline offset */
+}
+hr{
+  border: none;
+  border-top: 1px solid var(--rule);
+  margin: 2rem 0;
+}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>artificial human design</h1> <!-- rule: terse lowercase -->
+<p>framework for designers, engineers, founders tired of generic AI‑generated output.</p>
+<hr>
+<h2>quick eval</h2> <!-- rule: section header -->
+<pre><code class="bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre> <!-- rule: bash code block -->
+<hr>
+<h2>what ships</h2> <!-- rule: manifest title -->
+<ul>
+<li>brief compiler</li>
+<li>28‑rule linter</li>
+<li>eval harness</li>
+<li>vision‑critic scaffold</li>
+<li>mcp server</li>
+<li>editor plugins</li>
+<li>eight tokens</li>
+</ul>
+<hr>
+<h2>what is gated</h2> <!-- rule: manifest title -->
+<ul>
+<li>live frontier‑model calls (needs API keys)</li>
+<li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+<li>standalone npm packages for the editor plugins</li>
+<li>additional tokens</li>
+</ul>
+<hr>
+<h2>read the code</h2> <!-- rule: CTA -->
+<p><a href="https://github.com/ahd/ahd">github repository</a></p>
+<hr>
+<pre>
++-------------------+
+|   ascii diagram   |
+|   ──────────────   |
+|   AHD pipeline    |
++-------------------+
+X
+</pre> <!-- rule: ascii diagram, intentional imperfection: stray character -->
+</div>
+<footer style="text-align:center; margin-top:2rem;">
+<p>code licence: fsl-1.1-apache-2.0 | tokens &amp; artwork: cc-by-4.0</p>
+</footer>
+</body>
+</html>

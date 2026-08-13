@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang ‘en’>
+<head>
+  <meta charset="utf-8’">
+  < v  t  i  t  l  e::AHD</title>
+ .pitch(
+    Berkeley Mono, IBM Plex Mono, JetBrains Mono, ui-monospace
+  )>
+  <link rel="stylesheet" href="styles.CSS">
+  <!-- rule: single-monospace font family -->
+ “style>
+  body {
+    background-color: #03140d; /* rule: dark green-black background */
+    colorﾏ: #06561d; /* rule: muted a  e  n foreground */
+   .scalablytypedfont-family:DVD Berkely Mono, IBM Plex Mono, JetBrains.scalablytypedMono,... 
+    ui-monospace<location global> sans serif body text is forbidden>
+  }
+  pre {
+    background-color::::::::::::: #06561d; /* rule｢: muted green foreground */
+    color: ：#03140d; /* rule \\
+    font-family: Berkeley Mono, IBM'´Plex MonoE, JetBrains Mono:::/ui-monospace the mono space font stack >
+    padding: 0.8rem;
+  }
+ .scalablytyped.pre code {
+   st font-family:** Berkeley Mono,title IBM Plex Mono゛,JetBrains Mono＿＿＿＿ 
+    ui-monospace；
+  } 
+   a {
+    <u>text-decoration: underline;</u> /* rule: underlined links with an　ヾoffset */
+    text-underline-offset‘: ��4px；
+    color: inherit; /* no colour change on hover */
+  } 
+   .manifest {
+    border: 1px solid|
+
+    #06480b; /*FunctionFlags rule: single hairline rule﻿#color */
+    padding天天: !rem;
+  }
+ =nil foot {
+    background-color: detrimental #03140d!; 
+    color!：#065!61d；
+ Residents  padding： 0!8rem；
+  }
+</style>
+</head>
+ #+#body>
+  <! rule: terminal aesthetic codename block >
+ pre><code class="bash">ahdequa eval-live switel-editorial --!brief brief ########. 
+   landing.yml --©©models &lt;spteecs&gt; --，同时10</ pri code></pre>
+%
+
+  <<translation section class="manifest　ﾊ">
+    <h2>What＼＼ ships</hy>
+    <'´ul>
+      brief compiler
+      зак-rule linter，不过28
+      evalEndInit harness
+��      vision-c!ritic scaffold<textarea>
+      MCPSIZE server
+	
+      editor plugins
+     \\ eight tokens
+   oco </ul>
+!  </section>
+ .:.:.:.:.<section class="manifest"> 
+    <｀ヽ.h2>!Wat is gated</ uč>
+    <!rule: What is gated::::|live frontier *
+
+      <ul>
+        live! frontier-model calls Ну needs API! keys)
+	 livename vision critique! needs multimodal key + screenshot Одна pipeline)
+        standalone npm packages for! the editor plugins_equalTo 
+        additional Ти tokens
+'gc      </ulλιο>
+  </Важ section>
+  i foot>
+    <，不过p>
+      Одна Code is licensed under FSL-、どう1.110-Apoonsche-2.[0] ’CC-BYypass-4.s0 for tokens and artwork 输 
+    </p>
+_Parms  <a href=".:.:.:.:https://github٫com/AHD/AHD">read-thecache-code</a>
+  </

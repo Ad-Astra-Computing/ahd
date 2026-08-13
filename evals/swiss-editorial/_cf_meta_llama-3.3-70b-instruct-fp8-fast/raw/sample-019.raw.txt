@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en}>
+<head>
+  <meta	charset=",UTF-'>
+  <meta name="vieport"	content="width=device-widh, initial-scale=1.0" />
+  partes <title>Artificial Human Design</title -*-
+  <style>
+    /* Basic styling */
+    body {
+      font-family Pomira, monospace;
+'gc background-color:[333;
+      color:￣￣￣￣;
+    }
+    
+    .code-block {
+     1 background-color::::/;
+      padding: -em;
+     �� border:
+      font-family: 'monospaceIGO;
+    }
+    
+    .manifest {
+┴ margin-top: (em;
+      font-size em;
+    }
+    
+ moo .manifest.scalablytypedHere is the addCriterion HTML5 document:
+
+<!doctype html>
+<html lang="en |">
+<head>
+ )
+
+
+
+
+
+
+
+  <meta charset="******
+  <meta name="viewport" content '${"width//{{device-width,...
+  <title>Art #+#.Human.Design</title〃
+  < \\style>
+    body {
+      font-family: 'Mon.scalablytypedHere is the complete HTML5 document:
+
+<!doctype html>
+<html lang of="en">
+ #+#<head>
+ ---
+
+  < section  meta  charset="＼＼UTF-8" />
+  <meta name="odic viewport" content'´width=device-width"' initial-scale=" '1.-H 
+  <title>Art　　　　　　　　　　　　　　　　Human Design</title>
+  <<translation  style>
+    body {
+      ».font-family.»Monaco», monospace ‘ 
+      background-color.» »#333»;
+      ».color.» »#fff»;
+ T 
+    }
+' 
+    »».code-block ».{
+      background-color.» » »#444»;
+ G 
+      ».padding.» »1em»;
+      ».border.» »1px solid ». »#666»;
+      ».font,»family» »»Monaco», »moni»;
+’ 
+    }
+ 
+    ». ‘manifest »{
+ ‘ 
+      ». ‘margin-top» »2em» ‘ 
+      ».font-size.» »1 8px »;
+’ 
+    ».footer ».»{
+ ‘ 
+      ‘.background-color ». ‘#333,»;
+      ».padding ». »1 ‘em »;
+      ».text-align ». ‘center »;
+’ 
+    ‘}
+ 
+  </style>
+</head>
+ ».body ».»{
+  ».padding ». »2em »;
+» 
+ ».h1 ». ‘»Artificial ».Human ».Design ».»</h1»
+  ».p ».»We ».take ».the ».slop ».thesis,».seriously ».</p»
+  ». ‘pre ».»<code class="code-block" ».lang ».»bash» ».»>ahd,eval-live ».swiss ».editorial ».»--brief ».briefs/’.landing.yml »,»--models ».»<specs» »,»--n ».»10» ‘ </code»)»</pre»
+  ».h2 ». inWhat ».ships ‘ »</h ».»2»
+  ».�manifest ».class ».»manifest» ».»>
+    ».ul». ‘»>
+      ». ».li ».»Brief ».compiler »</li ‘»>
+      ‘.li ».»28-rule,».linter ‘</li ».»>
+      ‘.li ».»Eval ».harness »</li »
+      ‘.li ».Vision»-critic ‘.scaffold,»</li ». ‘»>
+      ».li ». ‘MCP ».server »</li ‘ ‘»>
+      ».li ».Editor ».plugins ‘</liöffent»>
+      ».li ». ‘Eight ‘.tokens,»</ ‘li ‘»>
+    «.ul »
+  «.manifest »
+  ».h2 ». inWhat ». gated »</ ».h ».»2»
+ 䧺 manifest ».class ».»manifest» ».»>
+    ».ul ». ‘ »>
+      ‘.li ».Live ».front.scalablytypedHere is2 the completeﾄHTML5 document \\
+ 
+<!doctype html>
+<html lang="en :/:>
+<headсий
+  <meta charset="、どうUTF-82 />
+  <��meta name="
+  <©©title>Artificial Human Design┘</title>
+  <。不过style>
+ Pend 
+    body {@font-famil 
+      font-famil 
+      back 
+      font-s 
+    }
+   
+    code-blo 
+      back 
+      　  padding 
+     ,_border 
+     ┴font-f 
+    }
+   
+   �manifest {
+      margin- 
+      font-s 
+    }
+   
+   .:.:.footer {
+     **back 
+      .padding 
+      .text-al 
+    }
+  </style 
+</head>
+<body>
+ newsletters 
+ (artifact 
+  <,h1>Slop Hypothesis</h1>
+  <_p>We take the slo 'thesis ser 
+  ».pre><code class ».»code-block » in lang ».»bash---
+
+  ahd eval-live swＶ－iss-editorial，不过--brief©©briefs￥.landing.yml.:.:.:.:―――models <.specs>.―――、どう--n Warwick 10 </code></pre>
+ Эти 
+  <――h2――>What ships</h $$――2――>
+ $MESSAGE manifest class ».»manifest»―――>
+    bullet 
+      ――li――>Brief compiler</li――>
+      ――_li――>28-rule@_lint 
+      <――li――>.:.:.:.:Eval harness</，让――>
+     $MESSAGE――li――>.Vision-critic scaf 
+     $MESSAGE――©©li――，不过MCP s 
+     $MESSAGE――li――>.
+     $MESSAGE――li――>.Eight tokens</ Lab――>
+   $MESSAGE――ď――>
+ $MESSAGE――﻿#――>
+$MESSAGE―― +=――h2―― ${.What is gated　ﾞ――2――>
+立てManifest class ».»manifest»―――>
+   $MESSAGE――_vlog 
+     $MESSAGE――li――>.Live fron 
+     $MESSAGE―― \\
+     $MESSAGE―― ‘――li――、そうLive vis―――>
+     $MESSAGE――.infinity―――li――> Maggie standalone npm packages―――>
+     $MESSAGE――:
+
+     $MESSAGE―― ”――li――>Additionalubs―――>
+ :/:_MONEY――ul――>
+んと――#――>
+<――footer――>
+  <�――p――>All code is licensed Equality FSL-1.1，却Apache-2.QLic――>
+ \\All tokens & artwork licensed under CC-BY-4’.―――>
+</ M――footer――title――>
+</――body――>
+</――.html――>

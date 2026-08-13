@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AHD — Artificial Human Design</title>
+    <style>
+        /* rule: Palette is ink on paper (warm off-white) */
+        :root {
+            --ink: oklch(0.18 0 0);
+            --paper: oklch(0.98 0.005 95);
+            --spot: oklch(0.58 0.22 27);
+            --rule: oklch(0.18 0 0);
+            --muted: oklch(0.55 0 0);
+        }
+
+        /* rule: 8px baseline & 17px body scale */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--paper);
+            color: var(--ink);
+            font-family: "Neue Haas Grotesk Text", "Inter", sans-serif;
+            font-size: 17px;
+            line-height: 1.5; /* rule: body line-height 1.5 */
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        /* rule: One intentional element must bleed past the grid */
+        .bleed-line {
+            position: absolute;
+            top: 0;
+            left: -40px; 
+            width: 1px;
+            height: 100%;
+            background-color: var(--ink);
+            z-index: -1;
+        }
+
+        /* rule: 12-column grid with 24px gutters */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 24px;
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 calc(100vw / 24); /* rule: preferred margin */
+        }
+
+        /* rule: Asymmetric left-aligned composition */
+        section {
+            padding-top: 160px; /* rule: dramatic jump per section 160 */
+            padding-bottom: 160px;
+        }
+
+        /* rule: Display type Neue Haas Grotesk Display at 96–160px with tracking -0.02em */
+        h1 {
+            grid-column: 1 / span 12;
+            font-family: "Neue Haas Grotesk Display", "Helvetica Now Display", "Inter Tight", sans-serif;
+            font-size: 160px; /* rule: anchored by single word >= 120px */
+            font-weight: 900;
+            line-height: 1.05;
+            letter-spacing: -0.02em;
+            margin: 0;
+        }
+
+        .hero-sub {
+            grid-column: 1 / span 7; /* rule: asymmetric */
+            font-size: 24px;
+            line-height: 1.2;
+            margin-top: 32px;
+        }
+
+        /* rule: terminal-aesthetic code block */
+        .code-block-wrapper {
+            grid-column: 1 / span 12;
+            background-color: var(--paper);
+            border: 1px solid var(--rule); /* rule: depth via rule */
+            padding: 32px;
+            margin-top: 64px;
+        }
+
+        pre {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            font-size: 16px;
+            color: var(--ink);
+        }
+
+        code {
+            display: block;
+            white-space: pre;
+        }
+
+        /* rule: Manifest section */
+        .manifest-title {
+            grid-column: 1 / span 12;
+            font-family: "Neue Haas Grotesk Display", sans-serif;
+            font-size: 40px;
+            font-weight: 700;
+            margin-bottom: 48px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em; /* rule: allcaps tracking 0.08em */
+        }
+
+        .manifest-grid {
+            display: contents;
+        }
+
+        .manifest-col {
+            /* rule: Avoid three equal feature cards. Using 7/5 split. */
+        }
+
+        .ships-col {
+            grid-column: 1 / span 7;
+        }
+
+        .gated-col {
+            grid-column: 8 / span 5;
+        }
+
+        h2 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 24px;
+        }
+
+        /* rule: No emoji bullets */
+        ul {
+            list-style: none;
+        }
+
+        ul li {
+            position: relative;
+            padding-left: 24px;
+            margin-bottom: 12px;
+        }
+
+        ul li::before {
+            content: "-";
+            position: absolute;
+            left: 0;
+        }
+
+        /* rule: single spot red used exactly once on the page */
+        .status-pill {
+            display: inline-block;
+            background-color: var(--spot);
+            color: white;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 999px; /* rule: pills allowed for status tags only */
+            margin-bottom: 16px;
+            text-transform: uppercase;
+        }
+
+        .cta-wrapper {
+            grid-column: 1 / span 12;
+            margin-top: 96px;
+        }
+
+        .cta-link {
+            color: var(--ink);
+            text-decoration: none;
+            font-weight: 700;
+            border-bottom: 2px solid var(--ink);
+            padding-bottom: 4px;
+            transition: opacity 0.2s ease;
+        }
+
+        .cta-link:hover {
+            opacity: 0.6;
+        }
+
+        /* rule: No canonical 4-column footer. Using simple single-line footer. */
+        footer {
+            grid-column: 1 / span 12;
+            padding: 64px 0;
+            border-top: 1px solid var(--rule);
+            font-size: 14px;
+            color: var(--muted);
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 80px; }
+            .ships-col, .gated-col { grid-column: 1 / span 12; }
+            .hero-sub { grid-column: 1 / span 12; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bleed-line"></div>
+
+    <main class="grid-container">
+        <!-- Hero Section -->
+        <section>
+            <h1>AHD</h1> <!-- rule: anchored by a single word -->
+            <p class="hero-sub">
+                Artificial Human Design is a framework for high-fidelity editorial output. We solve for the collapse of design quality in generative workflows.
+            </p>
+        </section>
+
+        <!-- Code Section -->
+        <section>
+            <div class="code-block-wrapper">
+                <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+            </div>
+        </section>
+
+        <!-- Manifest Section -->
+        <section>
+            <div class="manifest-title">Manifest</div>
+            
+            <div class="manifest-grid">
+                <div class="ships-col">
+                    <span class="status-pill">Stable</span> <!-- rule: spot red used exactly once -->
+                    <h2>What ships</h2>
+                    <ul>
+                        <li>brief compiler</li>
+                        <li>28-rule linter</li>
+                        <li>eval harness</li>
+                        <li>vision-critic scaffold</li>
+                        <li>MCP server</li>
+                        <li>editor plugins</li>
+                        <li>eight tokens</li>
+                    </ul>
+                </div>
+
+                <div class="gated-col">
+                    <h2>What is gated</h2>
+                    <ul>
+                        <li>live frontier-model calls (needs API keys)</li>
+                        <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+                        <li>standalone npm packages for the editor plugins</li>
+                        <li>additional tokens</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="cta-wrapper">
+                <a href="https://github.com/ahd-design" class="cta-link">read-the-code</a>
+            </div>
+        </section>
+
+        <!-- Footer Section -->
+        <footer>
+            FSL-1.1-Apache-2.0 for code, CC-BY-4.0 for tokens and artwork.
+        </footer>
+    </main>
+
+</body>
+</html>

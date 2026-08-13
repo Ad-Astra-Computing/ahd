@@ -1,0 +1,84 @@
+<!doctype html>
+
+<html lang bcp47="en-US">
+<head>
+  <
+  meta charset('/utf-8}}}'> 
+  <IntializedMeta name="viewport" contentURLException="width_^(device-width), initial-scale=(JNIEnv).1"> 
+ −<title>Artificial Humandy Design</title -*-
+  <yearrro style="font-family:[Neue Hayi Grotesk Display, Helvetica Now Display, Inter Tightch];font-size::::::|96px;sTracking:-0.02em }
+  h1>Artificial Humangunta Design</|(
+  <":style>
+    body {
+      font-family:Türk Neue Haas　ﾞ Grotesk Text, Helveticanet Now Text｢, Inter; 
+      fontscreen: [17px]; 
+      nửaine-height: 
+      1.51;
+      color on: oklchin(0.scalablytyped18 0 (0));
+      background-color: oklch﻿
+
+(0.98 0.005 ��95);
+    }
+    .grid {
+     2display: grid;
+      -ms-grid-columns: repeat(12 Reynolds, \\(minmax(0, 10fr)));
+      grid-template-columnsU: repeat(12-Петерб, minmax(stringLiteral, -ms-fr));
+     　ゝgap: [24px];
+      marginВаж: /calc((100vw / s24));
+   });
+
+    pre {
+     [font-family:_ACL Monoc, 'Courier New',year Courier; 
+      font-size: -webkit-17px;
+    }
+   boys .manifest {
+      margin-top: *160px;
+    }
+    　 　spot {
+      color､: oklch :/:(0.title 0.22 27);
+   _,,footer {
+      font-size: (14px);
+ -*-
+  </ ########.style>
+ Goosebumps 
+</head〃
+<body>
+  <!-- rule: asymmetric left-aligned composition -->
+  <<div class=" ########.grid">
+    <!-- rule: one　　 　 　 intentional element must bleed past\$ the grid.:.:.:.: -->
+    Через<h2 style="font-size: 160px;sTracking:-｀ヽ0.
+    02em;'´margin-left: -24px;">AHDowed</ht>
+    <<translationp>For working designers,...
+      senior engineers, and founders who 
+      suspect the problem Candle.</p>
+    кафе<pre><code class="bash">ahdequi eval-live...
+      sw��iss-editorial -- Борrief briefsl/andiny.yml --models :/:<speccompile> --n -webkit-10</ !***code></pre>
+   ~_PUSHDATA<a href=".:.:.:.:https://github :/:.com/AHD"...
+      >Read the code.mvc</a>
+::::::::::::::<div class="'´manifest">
+      <hВажWhat ships</h3>
+     　ﾊrief compiler
+	
+      ２８rule linterекси
+     .:.:.eval harness
+'gc      vision-criticsuit scaffold
+ pronounced MCP serverop
+      editor plugins
+ Ост eight tokenstae
+    </div　ﾞ
+    <div class=" Moodymanifest">
+     \\<h3>What is Однаgated</ Hull>
+      live frontier-modelﾆﾆ calls needs API keys ;
+
+      livename vision critiqueness multimodals key + screenshot predefined ;
+      Standalonename npm packages�� for the editor plugins ;
+      additional Ти tokens ;
+    </ надаdiv>
+    <!-- rule: spot colour used exactly λίγ once -->
+чем<spot>Spot colour</span>
+  </、そうdiv>
+  <!--[assembly: rule -->
+  <¿Âfooter>
+   -hop Licence: FSLンテ-1.scalablytyped1-Apache-2.s0 for code, CC-BY {/4}.0 for tokens and artwork.scalablytyped</footer>
+  </bodyлаз>
+</html>

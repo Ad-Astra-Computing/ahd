@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AHD | Artificial Human Design</title>
+<style>
+:root {
+  --bg: #0a0a0f;
+  --fg: #f4f4f5;
+  --muted: #a1a1aa;
+  --border: #27272a;
+  --accent: #00ff94;
+  --font-sans: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: 'Geist Mono', 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 2rem 1.5rem;
+  background-color: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.grid-layout {
+  max-width: 1024px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+}
+
+@media (min-width: 768px) {
+  body {
+    padding: 6rem 4rem;
+  }
+  .grid-layout {
+    grid-template-columns: 240px 1fr;
+    gap: 4rem;
+  }
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 2rem;
+}
+
+.brand {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0;
+  color: var(--fg);
+}
+
+.cta {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: var(--bg);
+  background-color: var(--accent);
+  text-decoration: none;
+  padding: 0.75rem 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: max-content;
+  font-weight: 600;
+  transition: opacity 0.2s ease;
+}
+
+.cta:hover {
+  opacity: 0.9;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  max-width: 65ch;
+}
+
+.prose p {
+  margin: 0 0 1.5rem 0;
+  font-size: 1.125rem;
+  color: var(--fg);
+  letter-spacing: -0.01em;
+}
+
+.prose p:last-child {
+  margin-bottom: 0;
+}
+
+.terminal-block {
+  background-color: transparent;
+  border: 1px solid var(--border);
+  padding: 1.5rem;
+  position: relative;
+  overflow-x: auto;
+}
+
+.terminal-block::before {
+  content: "TERMINAL";
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: var(--border);
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  padding: 0.25rem 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.terminal-block pre {
+  margin: 1rem 0 0 0;
+}
+
+.terminal-block code {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: var(--accent);
+  white-space: pre;
+}
+
+.manifest-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+  border-top: 1px solid var(--border);
+  padding-top: 3rem;
+}
+
+@media (min-width: 640px) {
+  .manifest-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+}
+
+.manifest-section h2 {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--fg);
+  margin: 0 0 1.25rem 0;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.manifest-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.manifest-section li {
+  font-size: 0.9375rem;
+  color: var(--muted);
+  padding-left: 1.25rem;
+  position: relative;
+  line-height: 1.4;
+}
+
+.manifest-section li::before {
+  content: ">";
+  font-family: var(--font-mono);
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--border);
+  font-size: 0.875rem;
+}
+
+footer {
+  margin-top: 1rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--muted);
+  grid-column: 1 / -1;
+}
+
+@media (min-width: 768px) {
+  footer {
+    grid-column: 2 / -1;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="grid-layout">
+  <aside class="sidebar">
+    <h1 class="brand">Artificial Human Design</h1>
+    <a href="https://github.com/artificial-human-design/ahd" class="cta">Read the code</a>
+  </aside>
+
+  <main class="content">
+    <section class="prose">
+      <p>The web is saturated with generated interfaces. You recognize the signatures: homogenous layout patterns, indiscriminate structural decisions and a systemic reversion to the mean. The problem is not generation itself. The problem is generating without constraint, critique or intent.</p>
+      <p>AHD is a deterministic framework for interface generation. It replaces conversational prompting with a strict editorial pipeline. It enforces architectural rules, lints output against defined design principles and evaluates results continuously. It is built for teams who require a compiler for design rather than a chatbot.</p>
+    </section>
+
+    <section class="terminal-block">
+      <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+    </section>
+
+    <div class="manifest-grid">
+      <section class="manifest-section">
+        <h2>What ships</h2>
+        <ul>
+          <li>brief compiler</li>
+          <li>28-rule linter</li>
+          <li>eval harness</li>
+          <li>vision-critic scaffold</li>
+          <li>MCP server</li>
+          <li>editor plugins</li>
+          <li>eight tokens</li>
+        </ul>
+      </section>
+
+      <section class="manifest-section">
+        <h2>What is gated</h2>
+        <ul>
+          <li>live frontier-model calls (needs API keys)</li>
+          <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+          <li>standalone npm packages for the editor plugins</li>
+          <li>additional tokens</li>
+        </ul>
+      </section>
+    </div>
+
+    <footer>
+      <span>Code: FSL-1.1-Apache-2.0 | Tokens and artwork: CC-BY-4.0</span>
+    </footer>
+  </main>
+</div>
+
+</body>
+</html>

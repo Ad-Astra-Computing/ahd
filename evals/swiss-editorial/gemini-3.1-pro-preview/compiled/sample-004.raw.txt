@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AHD — Artificial Human Design</title>
+<style>
+  /* rule: Design in the Swiss / International Typographic Style */
+  :root {
+    /* rule: Palette is ink on paper (warm off-white) */
+    --ink: oklch(0.18 0 0);
+    --paper: oklch(0.98 0.005 95);
+    /* rule: with a single spot red used exactly once on the page */
+    --spot: oklch(0.58 0.22 27);
+    --rule: oklch(0.18 0 0);
+    
+    /* rule: Work on a 12-column grid with 24px gutters and an 8px baseline. */
+    --baseline: 8px;
+    --gutter: 24px;
+    --margin-preferred: max(32px, calc(100vw / 24));
+
+    /* rule: Set display type in Neue Haas Grotesk Display */
+    --font-display: "Neue Haas Grotesk Display", "Helvetica Now Display", "Inter Tight", sans-serif;
+    /* rule: Body in Neue Haas Grotesk Text */
+    --font-text: "Neue Haas Grotesk Text", "Helvetica Now Text", "Inter", sans-serif;
+    --font-mono: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas, monospace;
+
+    /* spacing scale based on 8px baseline */
+    --s4: 4px;
+    --s8: 8px;
+    --s12: 12px;
+    --s16: 16px;
+    --s24: 24px;
+    --s32: 32px;
+    --s48: 48px;
+    --s64: 64px;
+    --s96: 96px;
+    --s160: 160px;
+  }
+
+  body {
+    background-color: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-text);
+    /* rule: Body at 17px, line-height 1.5 */
+    font-size: 17px;
+    line-height: 1.5;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* rule: Work on a 12-column grid with 24px gutters */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    column-gap: var(--gutter);
+    margin-left: var(--margin-preferred);
+    margin-right: var(--margin-preferred);
+  }
+
+  /* rule: Asymmetric left-aligned composition */
+  .col-start-1 { grid-column-start: 1; }
+  .col-start-5 { grid-column-start: 5; }
+  .col-span-4 { grid-column: span 4; }
+  .col-span-8 { grid-column: span 8; }
+  .col-span-12 { grid-column: span 12; }
+
+  /* rule: one section anchored by a single word at display >= 120px with -0.02em tracking */
+  .hero-word {
+    font-family: var(--font-display);
+    font-size: 160px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    margin: 0;
+    padding-top: var(--s96);
+  }
+
+  h2 {
+    font-family: var(--font-display);
+    font-size: 48px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  /* rule: measure 62ch */
+  .text-measure {
+    max-width: 62ch;
+  }
+
+  .mt-160 { margin-top: var(--s160); }
+  .mt-96 { margin-top: var(--s96); }
+  .mt-48 { margin-top: var(--s48); }
+  .mb-24 { margin-bottom: var(--s24); }
+  .pt-24 { padding-top: var(--s24); }
+  .pb-64 { padding-bottom: var(--s64); }
+
+  /* rule: A terminal-aesthetic code block showing the one-liner */
+  .terminal-block {
+    background-color: var(--ink);
+    color: var(--paper);
+    font-family: var(--font-mono);
+    font-size: 14px;
+    padding: var(--s24) var(--s32);
+    margin: 0;
+    /* rule: No rounded corners except small status pills */
+    border-radius: 0;
+    overflow-x: auto;
+    white-space: pre;
+  }
+
+  /* rule: No rounded corners except small status pills */
+  .status-pill {
+    /* rule: spot red used exactly once on the page. */
+    background-color: var(--spot);
+    color: var(--paper);
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0;
+    padding: var(--s4) var(--s12);
+    border-radius: 999px;
+    vertical-align: top;
+    margin-top: 40px;
+    margin-left: var(--s16);
+    display: inline-block;
+  }
+
+  ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  li {
+    border-bottom: 1px solid var(--rule);
+    padding: var(--s16) 0;
+  }
+
+  /* rule: A link to github labelled as the read-the-code CTA */
+  .cta-link {
+    display: inline-block;
+    color: var(--ink);
+    text-decoration: none;
+    font-family: var(--font-display);
+    font-size: 24px;
+    font-weight: 700;
+    border-bottom: 2px solid var(--ink);
+    margin-top: var(--s48);
+    /* rule: Structural motion only */
+    transition: background-color 0.2s, color 0.2s;
+  }
+
+  .cta-link:hover {
+    background-color: var(--ink);
+    color: var(--paper);
+  }
+
+  /* rule: One intentional element must bleed past the grid. */
+  .grid-bleed {
+    grid-column: 1 / -1;
+    width: 200vw;
+    height: 1px;
+    background-color: var(--rule);
+    margin-left: calc(-1 * var(--margin-preferred));
+  }
+
+  .border-top {
+    border-top: 1px solid var(--rule);
+  }
+
+  .label {
+    font-weight: 700;
+  }
+
+  @media (max-width: 1024px) {
+    .col-start-5 { grid-column-start: 1; }
+    .col-span-8 { grid-column: span 12; }
+    .col-span-4 { grid-column: span 12; }
+    .hero-word { font-size: 96px; }
+    .status-pill { margin-top: var(--s24); }
+    h2 { padding-bottom: var(--s24); }
+  }
+</style>
+</head>
+<body>
+
+  <main class="grid">
+    <div class="col-start-1 col-span-12">
+      <!-- rule: one section anchored by a single word at display >= 120px -->
+      <!-- rule: spot red used exactly once on the page via .status-pill -->
+      <h1 class="hero-word">AHD<span class="status-pill">v0.1.0</span></h1>
+    </div>
+    
+    <div class="col-start-5 col-span-8 mt-48">
+      <!-- rule: declarative, short sentences, no hedges, no Oxford commas -->
+      <p class="text-measure">
+        Generative models produce slop by default. They regress to the mean. They output standard structural components draped in gradient noise. Artificial Human Design enforces rigid constraints. We treat layout as a compilation target. We require strict typographic grids and explicit colour roles. We maintain zero tolerance for unprompted aesthetic decisions. This framework restricts model freedom to force intentional outcomes.
+      </p>
+      
+      <!-- rule: A link to github labelled as the read-the-code CTA -->
+      <a href="https://github.com/ahd-org/ahd" class="cta-link">Read the code</a>
+    </div>
+
+    <div class="col-start-1 col-span-12 mt-96">
+      <!-- rule: A terminal-aesthetic code block showing the one-liner that runs the eval. -->
+      <pre class="terminal-block"><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+    </div>
+
+    <!-- rule: at least one element bleeds past the 12-col grid on purpose -->
+    <div class="grid-bleed mt-160"></div>
+  </main>
+
+  <section class="grid mt-96">
+    <div class="col-start-1 col-span-4">
+      <!-- rule: A clearly separated manifest section titled 'What ships' -->
+      <h2>What ships</h2>
+    </div>
+    <div class="col-start-5 col-span-8">
+      <!-- rule: enumerates specific shipped components -->
+      <ul>
+        <li>Brief compiler</li>
+        <li>28-rule linter</li>
+        <li>Eval harness</li>
+        <li>Vision-critic scaffold</li>
+        <li>MCP server</li>
+        <li>Editor plugins</li>
+        <li>Eight tokens</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- rule: Require one dramatic jump per section (160 between sections) -->
+  <section class="grid mt-160">
+    <div class="col-start-1 col-span-4">
+      <!-- rule: A clearly separated manifest section titled 'What is gated' -->
+      <h2>What is gated</h2>
+    </div>
+    <div class="col-start-5 col-span-8">
+      <!-- rule: enumerates specific gated components -->
+      <ul>
+        <li>Live frontier-model calls (needs API keys)</li>
+        <li>Live vision critique (needs multimodal key + screenshot pipeline)</li>
+        <li>Standalone npm packages for the editor plugins</li>
+        <li>Additional tokens</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer class="grid mt-160 pt-24 pb-64 border-top">
+    <div class="col-start-1 col-span-12">
+      <!-- rule: A footer that names the licence explicitly -->
+      <p class="text-measure">
+        <span class="label">Licence:</span> FSL-1.1-Apache-2.0 for code. CC-BY-4.0 for tokens and artwork.
+      </p>
+    </div>
+  </footer>
+
+</body>
+</html>

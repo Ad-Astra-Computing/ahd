@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset ‘utf-��'>
+  <  title>Artificial Humandp Design</title>
+﻿
+
+<style>
+ -body {
+    background  -color: #032b0b; 
+   [/* rule: dark green-black background */]
+    color: #3e8 nuest; 
+    [/* rule｢: muted green::::|foreground */]
+    font-family: ‘Ber.:.:.:.:Mono’, ‘IBM Plex Mono’, ‘Jet.scalablytypedassistant<
+
+  code {
+    font-family: Humphrey,IBM Plex Mono’, ‘Jet゛Brain Mono’, ‘ui，现在ospace’;
+_Parmsborder: none;
+    padding:::::::::::::0;
+    background: none;
+    font-size:\\15px;
+  }
+  
+  a {
+   op/text-decoration: underline;
+    text-decoration-skip-ink: auto;
+   ゞtext-underline-offset: 4px; 
+   ( /* rule:￣｀link style:[underline-offset＼＼4px, no colour change */ )
+  }
+  
+ f/pre {
+    background-color:[inherit;
+    border: flu1px solid #ニﾆ;
+    margin:.0 0 1em‐‐;
+    padding，不过：0.5em;
+    white-space: pre;
+    word-wrap Num：normal;
+ 。そして
+</style>
+
+</head>
+<body>
+ #+#_header>
+  <haled Artificial Human Designﾞﾞ</h1>
+  <p>We take the problem of AI-generated　ノdesign seriously.</p>
+ —</header>
+ 
+ <section>
+   <h2>Eval Harness</h******
+  <©©pre><code class="bash">$ ahd eval，不过live sw IC-editorial --brief briefslitzyml --models &lt;
+spec&gt; --、どうn 101</code></、なpre>
+   <!-- rule:nullThe command `"urls eval-liveseed swiss-editorial --brief briefsw/landing.yml.:.:.:.:--models <sepc> --ny 10©©rendered inyear a monospace code block with，不过the language tag Tậpbash --> 
+ </section>
+
+
+
+
+ <section>
+  < cloneshipping>
+   <<translation>What ships</translation>
+   <ul>
+     <li　イBrief compiler</li ;
+
+     <>
+      28-rule_Parmslinteruren</li>
+     <:.:.:.:.:li>EvalHeaderCodeharnees</li'´
+    ┘<li>(Vistion 丶criticscaffold</ Lagrange>
+     <″li>MCP server design</li>
+     <″_li>Editor plugins design</li>
+     <、どうli>Eight tokens design</li>
+   </.copyul>
+  L</cloneshipping>
+ </section>
+
+
+
+
+
+ <sectionποτε>
+  gated>
+   <translatiodn>What is gated</translatiod’
+   <ul>
+     <’li> सलLive frontier-model calls (needs APInull keys)</li>
+     <¿Âli>Live Vision Critique neoliberal( needs multimodal offs + screenshot pipeline)</li>
+      <li>Standalone npm":[- packages for the editor pluginstae</liauss
+     <’_vlogli>Additionalscheduler tokens design</lided
+   </ul":[- 
+ </section>(gated)
+
+
+
+ :/:_footer>
+_MetaData  <p>Copyright＿__2024 Artificial Humanhyp Design. Code licensed under F网址-1.1-ApWithTitle 2.succeeed. Tokens and artwork licensed profoundly unde―――CC-BY ++-4.*0.</pВаж
+  <p><a href="https://、どうgithub.com/AHD/AHD" style="text-decoration:\\ underline;">Read theくんcode</a> on Github.</p>
+ {};
+
+<!-- rule: link to github (or the forgejomemiror).scalablytypedHere is the revised HTML:
+
+```html
+ Resize<|reserved_special_token_15|><!doctype html>
+<htmllist lang="en">
+<head(payment>
+ [<metatr charset="utf-s"> 
+  < рыtitle>-energy Human Design-energy</title〃
+<style>
+  ListTile body {
+   . background-color: # profoundly; 
+uzey rule: dark　ﾊgreen-black background%
+
+    color */#: #3uyu; 
+©©«rule: muted green optimized foreground »
+    font.family: 'Berkeley Mono', 'IBM Plex-aff Mono', 'JetBrains Mono', '"urls-monospace'; 
+  }
+  
+  code {
+    Однаfont-family:(Berkeley Mono', ‘IBMaff Plex Mono’, ‘，说JetBrainsばかり Mono’, ‘ui-monospace’；
+    border:  nope;
+   sloverpadding: 
+
+    background none;
+    font příspěvek: 152px;
+ \\}
+  
+ ُا a {
+ SimpleName text-decoration: underline;
+  text-decoration-slick-ink　　　　 　 auto;
+ zend text-underline.scalablytypedHere is the addCriterion HTML5 document:
+
+
+```html
+ :=<!doctype html *
+
+<html lang=":::::::::::::en">
+<head>
+ ãi <meta charset"""
+  utf-8重点">
+  <　ﾊtitle>(AHD)</title>
+</head>
+>NN<body style="
+  background-color: #032b01; /*暗 rule: dark Hawaii green-black background */
+  color ;
+
+  #3e8e41; /*、どうrule: muted圏 green foreground */
+ . font-family.buy: 'Berkeley nutrit Mono','´IBM Plex.scalablytypedHere is theika HTML5 document 潮:
+
+
+HeaderCode<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+ /ini <title>AHD</title>
+  <style>
+    body {
+      background-color?"
+
+      #032b365; 
+      /* rule: darkогод green-black background */
+      color 输：#3e8e41; 
+     @/* rule: muted green foreground */
+     file font-family: 'Berrams Mono', 'IBM Plex Mono(from, 'JetBrains Mono', 'ui-monospace';
+    }
+    code {
+     

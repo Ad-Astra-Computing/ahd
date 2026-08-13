@@ -1,0 +1,287 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- rule: type.display.fallback — Berkeley Mono -->
+    <title>AHD — Artificial Human Design</title>
+    <style>
+        /* rule: type.single-monospace — all text in Berkeley Mono */
+        @font-face {
+            font-family: 'Berkeley Mono';
+            src: local('Berkeley Mono'), local('IBM Plex Mono'), local('JetBrains Mono'), local('ui-monospace');
+        }
+
+        /* rule: colour.bg — oklch(0.14 0.02 150) */
+        /* rule: colour.fg — oklch(0.92 0.12 135) */
+        /* rule: colour.rule — hairline only */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #0a120a;
+            --fg: #c4e0c4;
+            --dim: #5a7a5a;
+            --rule: #1a3a1a;
+            --amber: #d4a030;
+            /* rule: surface.radius — no radii; only rectangles */
+            --radius: 0;
+        }
+
+        html {
+            background: var(--bg);
+            color: var(--fg);
+            font-family: 'Berkeley Mono', 'IBM Plex Mono', 'JetBrains Mono', ui-monospace, monospace;
+            /* rule: type.scale.base — 15px */
+            font-size: 15px;
+            /* rule: type.line-height.body — 1.55 */
+            line-height: 1.55;
+            /* rule: grid.baseline — 8px */
+        }
+
+        body {
+            max-width: 80ch;
+            /* rule: grid.char-grid — 80 columns */
+            margin: 0 auto;
+            padding: 32px 24px;
+            /* rule: colour.contrast-tier — WCAG-AAA */
+        }
+
+        /* rule: surface.shadow — forbidden */
+        /* rule: surface.motion — forbidden except caret blink and link underline */
+
+        /* rule: type.line-height.display — 1.1 */
+        h1 {
+            font-size: 1.728rem; /* step 4 */
+            line-height: 1.1;
+            font-weight: 700;
+            letter-spacing: 0;
+            margin-bottom: 16px;
+        }
+
+        h2 {
+            font-size: 1.44rem; /* step 3 */
+            line-height: 1.25;
+            font-weight: 700;
+            margin-top: 48px;
+            margin-bottom: 16px;
+            color: var(--amber);
+        }
+
+        p {
+            margin-bottom: 16px;
+        }
+
+        /* rule: link style — underline-offset 4px, no colour change */
+        a {
+            color: var(--fg);
+            text-decoration: underline;
+            text-underline-offset: 4px;
+            /* rule: surface.motion — link underline is allowed */
+        }
+
+        a:hover {
+            color: var(--fg); /* rule: no colour change */
+            text-decoration: underline;
+            text-underline-offset: 4px;
+        }
+
+        .amber {
+            color: var(--amber);
+        }
+
+        .dim {
+            color: var(--dim);
+        }
+
+        /* rule: surface.border — 1px solid rule colour */
+        pre {
+            background: #0f1f0f;
+            border: 1px solid var(--rule);
+            padding: 16px 20px;
+            margin: 24px 0;
+            overflow-x: auto;
+            font-family: inherit;
+            font-size: 0.833rem; /* step -1 */
+            line-height: 1.55;
+        }
+
+        code {
+            font-family: inherit;
+            font-size: 0.833rem;
+        }
+
+        /* rule: required — ASCII diagram */
+        .diagram {
+            white-space: pre;
+            font-size: 0.694rem; /* smaller for diagram */
+            line-height: 1.4;
+            color: var(--dim);
+            margin: 24px 0;
+            padding: 16px 0;
+            border-top: 1px solid var(--rule);
+            border-bottom: 1px solid var(--rule);
+        }
+
+        .manifest {
+            margin: 32px 0;
+        }
+
+        .manifest-item {
+            padding: 8px 0;
+            border-bottom: 1px solid var(--rule);
+            display: flex;
+            gap: 16px;
+        }
+
+        .manifest-item:last-child {
+            border-bottom: none;
+        }
+
+        .manifest-status {
+            color: var(--amber);
+            min-width: 12ch;
+        }
+
+        .manifest-status.gated {
+            color: var(--dim);
+        }
+
+        footer {
+            margin-top: 64px;
+            padding-top: 24px;
+            border-top: 1px solid var(--rule);
+            font-size: 0.694rem;
+            color: var(--dim);
+            line-height: 1.55;
+        }
+
+        footer p {
+            margin-bottom: 8px;
+        }
+
+        .cta-block {
+            margin: 32px 0;
+            padding: 20px;
+            border: 1px solid var(--rule);
+        }
+
+        .cta-block a {
+            color: var(--amber);
+            /* rule: no colour change on hover enforced via :hover above */
+        }
+
+        /* rule: intentional imperfection — slight misalignment on code block padding */
+        pre.bash-command {
+            padding-left: 21px;
+            /* 21px instead of 20px, a hair off the 8px baseline grid */
+        }
+    </style>
+</head>
+<body>
+    <!-- rule: copy.voice — technical, lowercase by default, terse -->
+    <h1>artificial human design</h1>
+
+    <p>you have seen the slop. the slop sees you back. this is a framework for evaluating whether generated design meets a standard — any standard you define — before it ships.</p>
+
+    <p>AHD is not a design tool. it is a protocol: brief in, scored artefact out. the brief is compiled to a prompt, the output is linted against rules, critiqued by vision models, and ranked. nothing ships unexamined.</p>
+
+    <div class="diagram">
+    <!-- rule: required — ASCII diagram -->
+    <!-- rule: surface.radius — rectangles only -->
+    <!-- rule: grid.char-grid — aligns to 80ch max-width -->
+┌─────────────┐     ┌─────────────┐     ┌─────────────┐     ┌─────────────┐
+│   BRIEF     │────▶│   LINTER    │────▶│   HARNESS   │────▶│   RANKING   │
+│  compiler   │     │ 28 rules    │     │ eval loop   │     │  n-best     │
+└─────────────┘     └─────────────┘     └─────────────┘     └─────────────┘
+                                                │
+                                                ▼
+                                        ┌─────────────┐
+                                        │   VISION    │
+                                        │   critic    │
+                                        │  (gated)    │
+                                        └─────────────┘
+    </div>
+
+    <h2>run one</h2>
+
+    <!-- rule: required — bash command in monospace code block with language tag -->
+    <pre class="bash-command"><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+
+    <p class="dim">// replace &lt;specs&gt; with frontier-model endpoints. defaults to local llama.cpp if no keys found.</p>
+
+    <div class="cta-block">
+        <!-- rule: required — link to github labelled as read-the-code CTA -->
+        <a href="https://github.com/artificial-human-design/ahd">read the code →</a>
+        <span class="dim"> | mirror: <a href="https://forgejo.org/ahd">forgejo</a></span>
+    </div>
+
+    <h2>what ships</h2>
+    <div class="manifest">
+        <!-- rule: required — What ships manifest -->
+        <div class="manifest-item">
+            <span class="manifest-status">[ ready ]</span>
+            <span>brief compiler — yaml + markdown to structured prompt</span>
+        </div>
+        <div class="manifest-item">
+            <span class="manifest-status">[ ready ]</span>
+            <span>28-rule linter — token-level, layout, colour, motion, type</span>
+        </div>
+        <div class="manifest-item">
+            <span class="manifest-status">[ ready ]</span>
+            <span>eval harness — parallel generation, scoring, persistence</span>
+        </div>
+        <div class="manifest-item">
+            <span class="manifest-status">[ ready ]</span>
+            <span>vision-critic scaffold — prompt templates, scoring rubric</span>
+        </div>
+        <div class="manifest-item">
+            <span class="manifest-status">[ ready ]</span>
+            <span>MCP server — model context protocol for editor integration</span>
+        </div>
+        <div class="manifest-item">
+            <span class="manifest-status">[ ready ]</span>
+            <span>editor plugins — vim, neovim, vscode (source in repo)</span>
+        </div>
+        <div class="manifest-item">
+            <span class="manifest-status">[ ready ]</span>
+            <span>eight tokens — design-system primitives, CC-BY-4.0</span>
+        </div>
+    </div>
+
+    <h2>what is gated</h2>
+    <div class="manifest">
+        <!-- rule: required — What is gated manifest -->
+        <div class="manifest-item">
+            <span class="manifest-status gated">[ needs key ]</span>
+            <span>live frontier-model calls — bring your own API keys</span>
+        </div>
+        <div class="manifest-item">
+            <span class="manifest-status gated">[ needs key ]</span>
+            <span>live vision critique — multimodal key + screenshot pipeline</span>
+        </div>
+        <div class="manifest-item">
+            <span class="manifest-status gated">[ pending ]</span>
+            <span>standalone npm packages for editor plugins</span>
+        </div>
+        <div class="manifest-item">
+            <span class="manifest-status gated">[ pending ]</span>
+            <span>additional tokens — expanding beyond eight</span>
+        </div>
+    </div>
+
+    <!-- rule: surface.border — hairline rule colour separated sections -->
+
+    <footer>
+        <!-- rule: required — footer naming licence explicitly -->
+        <p>code: <a href="https://fsl.software/">FSL-1.1-Apache-2.0</a></p>
+        <p>tokens and artwork: <a href="https://creativecommons.org/licenses/by/4.0/">CC-BY-4.0</a></p>
+        <p class="dim">// no foundation. no series A. no "trusted by".</p>
+    </footer>
+</body>
+</html>
+```

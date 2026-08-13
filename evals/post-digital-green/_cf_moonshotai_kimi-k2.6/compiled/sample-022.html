@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AHD — Artificial Human Design</title>
+<style>
+/* rule: single-monospace pairing */
+@font-face {
+  font-family: 'Berkeley Mono';
+  src: local('Berkeley Mono'), local('IBM Plex Mono'), local('JetBrains Mono'), local('ui-monospace');
+}
+
+/* rule: dark green-black background, muted green foreground, amber accent */
+:root {
+  --bg: oklch(0.14 0.02 150);
+  --fg: oklch(0.92 0.12 135);
+  --dim: oklch(0.55 0.05 150);
+  --rule: oklch(0.3 0.04 150);
+  --amber: oklch(0.82 0.15 75);
+}
+
+/* rule: no radii; only rectangles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  border-radius: 0;
+}
+
+/* rule: char-grid 80ch max-width */
+html {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: 'Berkeley Mono', 'IBM Plex Mono', 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+/* rule: 72ch measure */
+body {
+  max-width: 80ch;
+  margin: 0 auto;
+  padding: 32px 16px 64px;
+}
+
+/* rule: underline-offset 4px, no colour change for links */
+a {
+  color: var(--fg);
+  text-decoration: underline;
+  text-decoration-color: var(--amber);
+  text-underline-offset: 4px;
+}
+
+a:hover {
+  color: var(--fg); /* rule: no colour change */
+}
+
+/* rule: amber accent for focused states only */
+a:focus-visible {
+  outline: 1px solid var(--amber);
+  outline-offset: 2px;
+}
+
+/* rule: 1px hairline rule colour borders */
+hr {
+  border: none;
+  border-top: 1px solid var(--rule);
+  margin: 32px 0;
+}
+
+/* rule: base 15px, ratio 1.2 */
+h1 {
+  font-size: 25.92px; /* 15 * 1.2^4 */
+  line-height: 1.1;
+  font-weight: 700;
+  letter-spacing: 0;
+  margin-bottom: 16px;
+}
+
+h2 {
+  font-size: 21.6px; /* 15 * 1.2^3 */
+  line-height: 1.25;
+  font-weight: 700;
+  margin-top: 48px;
+  margin-bottom: 16px;
+  color: var(--amber);
+}
+
+h3 {
+  font-size: 18px; /* 15 * 1.2^2 */
+  line-height: 1.25;
+  font-weight: 700;
+  margin-top: 32px;
+  margin-bottom: 12px;
+}
+
+p, ul, ol, pre {
+  margin-bottom: 16px;
+}
+
+/* rule: dim colour for secondary text */
+.dim {
+  color: var(--dim);
+}
+
+/* rule: monospace code block with bash tag */
+pre {
+  background: oklch(0.1 0.02 150);
+  border: 1px solid var(--rule);
+  padding: 16px 20px;
+  overflow-x: auto;
+  line-height: 1.4;
+}
+
+code {
+  font-family: inherit;
+  font-size: 13px;
+}
+
+/* rule: ASCII diagram in preformatted text */
+.ascii-diagram {
+  color: var(--dim);
+  line-height: 1.4;
+  margin: 24px 0;
+}
+
+/* rule: manifest sections clearly separated */
+.manifest {
+  border-left: 1px solid var(--rule);
+  padding-left: 20px;
+  margin: 24px 0;
+}
+
+.manifest ul {
+  list-style: none;
+  padding: 0;
+}
+
+.manifest li {
+  position: relative;
+  padding-left: 16px;
+  margin-bottom: 8px;
+}
+
+/* rule: no emoji bullets — using ASCII dash */
+.manifest li::before {
+  content: "-";
+  position: absolute;
+  left: 0;
+  color: var(--dim);
+}
+
+/* rule: footer not canonical 4-column */
+footer {
+  margin-top: 64px;
+  padding-top: 32px;
+  border-top: 1px solid var(--rule);
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--dim);
+}
+
+/* rule: no entrance animations; caret blink allowed */
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+.caret {
+  display: inline-block;
+  width: 8px;
+  height: 15px;
+  background: var(--amber);
+  animation: blink 1s step-end infinite;
+  vertical-align: text-bottom;
+  margin-left: 2px;
+}
+
+/* intentional imperfection: slightly misaligned header ornament */
+.header-ornament {
+  color: var(--dim);
+  margin-bottom: 8px;
+  letter-spacing: -0.5px; /* slight tracking inconsistency */
+}
+
+/* rule: section spacing per 8px baseline */
+section {
+  margin-bottom: 0;
+}
+
+/* rule: no shadows */
+/* rule: no gradients */
+/* rule: no rounded corners */
+
+/* responsive: maintain char grid on small screens */
+@media (max-width: 600px) {
+  body {
+    padding: 24px 12px 48px;
+  }
+  
+  h1 {
+    font-size: 21.6px;
+  }
+  
+  h2 {
+    font-size: 18px;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- rule: at least one element aligned to char grid -->
+<header>
+  <div class="header-ornament">/* ----------------------------------------------- */</div>
+  <p class="dim">AHD v0.1.0 — artificial human design</p>
+  <h1>framework for evaluating<br>generative design output</h1>
+  <p>you have seen the slop. this is the linter.</p>
+</header>
+
+<hr>
+
+<section>
+  <p>AHD treats design as a testable artifact. brief in, rules enforced, scores out. no prompt engineering as substitute for taste.</p>
+  
+  <p>the system compiles a creative brief into an eval harness, runs it against frontier models, and scores the output against a 28-rule lint suite. vision critique checks the rendered result. you get a number, a trace, and a fix list.</p>
+
+  <!-- rule: at least one ASCII diagram rendered as text -->
+  <pre class="ascii-diagram" aria-label="system diagram">
+   brief.yml ──► compiler ──► harness ──┬──► model call ──► response
+                                       │                    │
+                                       └──► vision critic ◄─┘
+                                                │
+                                                ▼
+                                           score + trace
+  </pre>
+
+  <p>the eval is one command. no ui, no ceremony.</p>
+
+  <!-- rule: command in monospace code block with bash language -->
+  <pre><code class="language-bash"><span class="dim">$</span> ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10<span class="caret"></span></code></pre>
+  
+  <p>run it locally. read the trace. decide if the design holds.</p>
+</section>
+
+<hr>
+
+<section>
+  <h2>what ships</h2>
+  <div class="manifest">
+    <ul>
+      <li>brief compiler — yaml spec to typed eval plan</li>
+      <li>28-rule linter — spacing, colour, typography, motion, surface</li>
+      <li>eval harness — parallel runner with deterministic seeding</li>
+      <li>vision-critic scaffold — multimodal scoring pipeline (bring your own endpoint)</li>
+      <li>MCP server — model context protocol for editor integration</li>
+      <li>editor plugins — vscode, neovim, zed (install from repo)</li>
+      <li>eight tokens — cc-by-4.0 design system seeds</li>
+    </ul>
+  </div>
+
+  <h2>what is gated</h2>
+  <div class="manifest">
+    <ul>
+      <li>live frontier-model calls — needs api keys</li>
+      <li>live vision critique — needs multimodal key + screenshot pipeline</li>
+      <li>standalone npm packages for the editor plugins — wip, install from source</li>
+      <li>additional tokens — in draft, not yet released</li>
+    </ul>
+  </div>
+</section>
+
+<hr>
+
+<section>
+  <h2>read the code</h2>
+  <p>the repo contains the full compiler, linter, and harness. no distributed binaries.</p>
+  <!-- rule: link to github labelled as read-the-code CTA -->
+  <p><a href="https://github.com/artificial-human-design/ahd">github.com/artificial-human-design/ahd</a> — read-the-code</p>
+  <p class="dim">mirror: <a href="https://codeberg.org/ahd/ahd">codeberg.org/ahd/ahd</a></p>
+</section>
+
+<!-- rule: footer naming licence explicitly -->
+<footer>
+  <p>code: FSL-1.1-Apache-2.0</p>
+  <p>tokens and artwork: CC-BY-4.0</p>
+  <p class="dim">no commercial usage restrictions after two years.</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AHD - Artificial Human Design</title>
+  <style>
+    /* rule: Swiss / International Typographic Style */
+    body {
+      font-family: 'Neue Haas Grotesk Text', 'Helvetica Now Text', Inter, sans-serif;
+      color: oklch(0.18 0 0); /* rule: ink */
+      background-color: oklch(0.98 0.005 95); /* rule: paper */
+      line-height: 1.5;
+      margin: 0;
+      padding: 0;
+      font-size: 17px;
+      max-width: 62ch;
+      margin: 0 auto;
+      padding: 32px;
+    }
+
+    h1 {
+      font-family: 'Neue Haas Grotesk Display', 'Helvetica Now Display', 'Inter Tight', sans-serif;
+      font-size: 160px;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+
+    h2 {
+      font-family: 'Neue Haas Grotesk Display', 'Helvetica Now Display', 'Inter Tight', sans-serif;
+      font-size: 96px;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+
+    p {
+      margin-bottom: 24px;
+    }
+
+    .code-block {
+      background-color: oklch(0.18 0 0);
+      color: oklch(0.98 0.005 95);
+      padding: 16px;
+      border-radius: 0;
+      overflow-x: auto;
+      margin-bottom: 24px;
+    }
+
+    .code-block code {
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 17px;
+    }
+
+    .manifest {
+      margin-bottom: 48px;
+    }
+
+    .manifest h3 {
+      font-size: 32px;
+      margin-bottom: 16px;
+    }
+
+    .manifest ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .manifest li {
+      margin-bottom: 8px;
+    }
+
+    .spot-color {
+      color: oklch(0.58 0.22 27); /* rule: spot */
+    }
+
+    .footer {
+      border-top: 1px solid oklch(0.18 0 0); /* rule: rule */
+      padding-top: 16px;
+      margin-top: 64px;
+    }
+
+    .footer p {
+      margin: 0;
+    }
+
+    .read-the-code {
+      display: inline-block;
+      margin-top: 32px;
+      padding: 8px 16px;
+      background-color: oklch(0.18 0 0);
+      color: oklch(0.98 0.005 95);
+      text-decoration: none;
+      border-radius: 999px; /* rule: sharp by default; pills allowed for status tags only */
+    }
+
+    .bleed {
+      position: relative;
+      left: -32px; /* rule: one intentional element must bleed past the grid */
+    }
+  </style>
+</head>
+<body>
+  <div class="bleed">
+    <h1>AHD</h1>
+  </div>
+  <p>Artificial Human Design is a framework for designers, engineers, and founders who want to take control of AI-generated design. We provide tools to evaluate, lint, and critique design outputs, ensuring that the results are meaningful and intentional.</p>
+
+  <h2>Eval</h2>
+  <div class="code-block">
+    <code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code>
+  </div>
+
+  <div class="manifest">
+    <h3>What ships</h3>
+    <ul>
+      <li>Brief compiler</li>
+      <li>28-rule linter</li>
+      <li>Eval harness</li>
+      <li>Vision-critic scaffold</li>
+      <li>MCP server</li>
+      <li>Editor plugins</li>
+      <li>Eight tokens</li>
+    </ul>
+  </div>
+
+  <div class="manifest">
+    <h3>What is gated</h3>
+    <ul>
+      <li>Live frontier-model calls (needs API keys)</li>
+      <li>Live vision critique (needs multimodal key + screenshot pipeline)</li>
+      <li>Standalone npm packages for the editor plugins</li>
+      <li>Additional tokens</li>
+    </ul>
+  </div>
+
+  <a href="https://github.com/ahd-framework/ahd" class="read-the-code" target="_blank">Read the code</a>
+
+  <div class="footer">
+    <p>Licensed under FSL-1.1-Apache-2.0 for code, CC-BY-4.0 for tokens and artwork.</p>
+  </div>
+</body>
+</html>

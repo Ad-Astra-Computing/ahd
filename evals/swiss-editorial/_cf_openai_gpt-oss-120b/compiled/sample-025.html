@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>AHD Landing</title>
+<style>
+/* rule: typefaces */
+@font-face{font-family:"Neue Haas Grotesk Display";src:local("Arial");font-weight:400;font-style:normal;}
+@font-face{font-family:"Neue Haas Grotesk Text";src:local("Arial");font-weight:400;font-style:normal;}
+html{font-size:100%;}
+body{
+  margin:0;
+  font-family:"Neue Haas Grotesk Text",Helvetica,Arial,sans-serif; /* rule: body font */
+  font-size:17px; /* rule: base body size */
+  line-height:1.5; /* rule: body line-height */
+  color:#2b2b2b; /* ink */
+  background:#fdfdfc; /* paper */
+  max-width:62ch; /* rule: measure */
+  padding:8px 32px; /* baseline rhythm */
+}
+/* rule: grid */
+.container{
+  display:grid;
+  grid-template-columns:repeat(12,1fr);
+  gap:24px; /* gutter */
+  margin:0 auto;
+}
+h1{
+  grid-column:1 / span 8;
+  font-family:"Neue Haas Grotesk Display",Helvetica,Arial,sans-serif; /* rule: display font */
+  font-size:144px; /* >=120px, within 96–160px */
+  line-height:1.05;
+  letter-spacing:-0.02em; /* tracking */
+  margin:0;
+}
+p{
+  grid-column:1 / span 8;
+}
+a.cta{
+  text-decoration:none;
+  color:#2b2b2b; /* ink, not spot */
+  border:1px solid #2b2b2b;
+  padding:4px 8px;
+  font-weight:700;
+}
+code{
+  font-family:monospace;
+  background:#f5f5f5;
+  padding:8px;
+  display:block;
+  overflow-x:auto;
+}
+section{
+  margin-top:160px; /* rule: dramatic jump */
+}
+h2{
+  grid-column:1 / span 8;
+  font-family:"Neue Haas Grotesk Display",Helvetica,Arial,sans-serif;
+  font-size:48px;
+  line-height:1.2;
+  margin-top:0;
+}
+ul{
+  grid-column:1 / span 8;
+  padding-left:1.2em;
+}
+li{
+  margin-bottom:4px;
+}
+/* rule: bleed element uses spot exactly once */
+.bleed{
+  grid-column:1 / -1;
+  background:#c41e3a; /* spot */
+  height:4px;
+  margin:32px 0;
+}
+footer{
+  grid-column:1 / -1;
+  font-size:14px;
+  margin-top:160px;
+  border-top:1px solid #2b2b2b;
+  padding-top:16px;
+}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>AHD</h1><!-- rule: single-word anchor -->
+<p>Artificial Human Design. A framework that lets you evaluate AI‑generated layouts with rigor.</p>
+<a href="https://github.com/ahd/ahd" class="cta">read‑the‑code</a><!-- rule: read‑the‑code CTA -->
+<div class="bleed"></div><!-- rule: element bleeds past grid, spot used once -->
+<section>
+<h2>Run an eval</h2>
+<code class="bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code><!-- rule: bash code block -->
+</section>
+<section>
+<h2>What ships</h2>
+<ul>
+<li>brief compiler</li>
+<li>28‑rule linter</li>
+<li>eval harness</li>
+<li>vision‑critic scaffold</li>
+<li>MCP server</li>
+<li>editor plugins</li>
+<li>eight tokens</li>
+</ul>
+</section>
+<section>
+<h2>What is gated</h2>
+<ul>
+<li>live frontier‑model calls (needs API keys)</li>
+<li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+<li>standalone npm packages for the editor plugins</li>
+<li>additional tokens</li>
+</ul>
+</section>
+<footer>
+Code licence: FSL‑1.1‑Apache‑2.0. Tokens & artwork: CC‑BY‑4.0.
+</footer>
+</div>
+</body>
+</html>

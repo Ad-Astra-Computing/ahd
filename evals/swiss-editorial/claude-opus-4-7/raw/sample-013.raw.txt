@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AHD — Artificial Human Design</title>
+<style>
+  :root{
+    --ink:#111;
+    --paper:#f4f1ea;
+    --rule:#111;
+    --muted:#555;
+    --term-bg:#141414;
+    --term-fg:#e8e6df;
+    --term-dim:#8a8a80;
+    --accent:#b63a2b;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--paper);color:var(--ink);font-family:"Times New Roman",Times,"Source Serif Pro",serif}
+  body{font-size:17px;line-height:1.5}
+  .wrap{max-width:860px;margin:0 auto;padding:40px 28px 80px}
+  header.top{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--rule);padding-bottom:12px;margin-bottom:36px}
+  header.top .mark{font-weight:700;letter-spacing:.02em;font-size:18px}
+  header.top .mark span{color:var(--accent)}
+  header.top nav{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px}
+  header.top nav a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--ink);margin-left:18px}
+  header.top nav a:hover{color:var(--accent);border-color:var(--accent)}
+  h1{font-size:46px;line-height:1.05;letter-spacing:-.015em;font-weight:700;margin:0 0 18px;max-width:18ch}
+  h1 em{font-style:italic;font-weight:400;color:var(--accent)}
+  .lede{font-size:19px;max-width:62ch;margin:0 0 10px;color:#222}
+  .lede + .lede{margin-top:8px}
+  .meta{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.12em;margin-bottom:10px}
+  section{margin-top:48px}
+  h2{font-size:13px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.14em;text-transform:uppercase;border-bottom:1px solid var(--rule);padding-bottom:6px;margin:0 0 18px;display:flex;justify-content:space-between;align-items:baseline}
+  h2 .count{color:var(--muted);font-weight:400}
+  p{margin:0 0 14px}
+  .term{background:var(--term-bg);color:var(--term-fg);border-radius:4px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13.5px;overflow:hidden;border:1px solid #000}
+  .term-head{display:flex;justify-content:space-between;align-items:center;padding:8px 14px;background:#1d1d1d;border-bottom:1px solid #000;color:var(--term-dim);font-size:11px;letter-spacing:.1em;text-transform:uppercase}
+  .term-head .dots{display:inline-flex;gap:6px}
+  .term-head .dots i{width:10px;height:10px;border-radius:50%;background:#333;display:inline-block}
+  .term-body{padding:16px 18px;white-space:pre-wrap;word-break:break-word}
+  .term-body .p{color:var(--term-dim)}
+  .term-body .c{color:#d7b86e}
+  .term-body .s{color:#9ec5d9}
+  .term-body .f{color:#c9a4f0}
+  .term-body .n{color:#e8e6df}
+  .manifest{display:grid;grid-template-columns:14ch 1fr;gap:4px 18px;font-size:16px}
+  .manifest .item{display:contents}
+  .manifest .k{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;color:var(--muted);padding-top:4px;border-top:1px dotted #bcb7ab}
+  .manifest .v{padding-top:4px;border-top:1px dotted #bcb7ab}
+  .manifest .v b{font-weight:700}
+  .manifest .v small{display:block;color:var(--muted);font-size:13.5px;margin-top:2px}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+  @media (max-width:720px){
+    h1{font-size:34px}
+    .two{grid-template-columns:1fr;gap:30px}
+    .manifest{grid-template-columns:1fr}
+    .manifest .k{border-top:none;padding-top:10px;color:var(--accent)}
+    .manifest .v{border-top:none;padding-top:0}
+  }
+  .thesis p{max-width:62ch}
+  .thesis .callout{border-left:3px solid var(--accent);padding:4px 0 4px 14px;font-style:italic;color:#222;margin:18px 0}
+  footer{margin-top:70px;border-top:1px solid var(--rule);padding-top:14px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;color:var(--muted);display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
+  footer b{color:var(--ink);font-weight:400}
+  a.inline{color:var(--ink);border-bottom:1px solid var(--ink);text-decoration:none}
+  a.inline:hover{color:var(--accent);border-color:var(--accent)}
+  .cta-row{margin:28px 0 0;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px;display:flex;gap:22px;flex-wrap:wrap}
+  .cta-row a{color:var(--ink);border:1px solid var(--ink);padding:9px 14px;text-decoration:none}
+  .cta-row a.prim{background:var(--ink);color:var(--paper)}
+  .cta-row a:hover{background:var(--accent);color:var(--paper);border-color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div class="mark">AHD<span>.</span> Artificial Human Design</div>
+    <nav>
+      <a href="#thesis">thesis</a>
+      <a href="#eval">eval</a>
+      <a href="#ships">manifest</a>
+      <a href="https://github.com/ahd/ahd">github</a>
+    </nav>
+  </header>
+
+  <div class="meta">v0.4.0 · specimen 001 · updated 2026-04-22</div>
+  <h1>A framework for design that <em>isn't slop</em>, evaluated out loud.</h1>
+
+  <section class="thesis" id="thesis">
+    <p class="lede">You've seen the pattern. Centred hero, two CTAs, a pill badge, three feature cards with gradient tiles, a shimmer on the word that sells. The visual grammar of an industry that stopped looking.</p>
+    <p class="lede">AHD treats the problem as a measurement problem first and a taste problem second. A compiled brief, a deterministic linter, a harness that runs N rollouts across frontier models on the same spec, a vision critic that scores what actually renders.</p>
+    <div class="callout">If a generator will produce a page, the generator should also have to defend it — per rule, per token, per render.</div>
+  </section>
+
+  <section id="eval">
+    <h2><span>The one-liner</span><span class="count">bash</span></h2>
+    <div class="term" role="region" aria-label="terminal">
+      <div class="term-head">
+        <span class="dots"><i></i><i></i><i></i></span>
+        <span>~/ahd — bash</span>
+        <span>n=10</span>
+      </div>
+<div class="term-body"><span class="p">$</span> <span class="c">ahd</span> <span class="f">eval-live</span> <span class="n">swiss-editorial</span> <span class="s">--brief</span> briefs/landing.yml <span class="s">--models</span> &lt;specs&gt; <span class="s">--n</span> 10</div>
+    </div>
+    <p style="font-size:14px;color:var(--muted);margin-top:10px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace">// runs the brief against N rollouts, lints each, renders each, critiques each, writes a scorecard to <a class="inline" href="#">./out/</a>.</p>
+
+    <div class="cta-row">
+      <a class="prim" href="https://github.com/ahd/ahd">Read the code → github.com/ahd/ahd</a>
+      <a href="https://code.ahd.dev/ahd/ahd">forgejo mirror</a>
+    </div>
+  </section>
+
+  <div class="two">
+    <section id="ships">
+      <h2><span>What ships</span><span class="count">today · 8</span></h2>
+      <div class="manifest">
+        <div class="item"><div class="k">01</div><div class="v"><b>Brief compiler</b><small>YAML → constraint graph. Typed, diffable, reviewable in PRs.</small></div></div>
+        <div class="item"><div class="k">02</div><div class="v"><b>28-rule linter</b><small>Deterministic checks: no centred hero+pill+two CTAs, no gradient shimmer on product nouns, no three-card equality, etc.</small></div></div>
+        <div class="item"><div class="k">03</div><div class="v"><b>Eval harness</b><small>N rollouts per model, scorecards, seed pinning, diff viewer.</small></div></div>
+        <div class="item"><div class="k">04</div><div class="v"><b>Vision-critic scaffold</b><small>Screenshot → rubric pipeline. Offline rubric ships; live critique is gated.</small></div></div>
+        <div class="item"><div class="k">05</div><div class="v"><b>MCP server</b><small>Exposes compile, lint, eval, critique as tools to any MCP-aware client.</small></div></div>
+        <div class="item"><div class="k">06</div><div class="v"><b>Editor plugins</b><small>In-tree VS Code and Zed extensions, built from the monorepo.</small></div></div>
+        <div class="item"><div class="k">07</div><div class="v"><b>Eight tokens</b><small>A deliberately small starter set: ink, paper, rule, accent, mono, serif, measure, rhythm.</small></div></div>
+      </div>
+    </section>
+
+    <section id="gated">
+      <h2><span>What is gated</span><span class="count">external · 4</span></h2>
+      <div class="manifest">
+        <div class="item"><div class="k">g1</div><div class="v"><b>Live frontier-model calls</b><small>Needs your API keys. The harness runs; the rollouts don't until you bring credentials.</small></div></div>
+        <div class="item"><div class="k">g2</div><div class="v"><b>Live vision critique</b><small>Needs a multimodal key + a working screenshot pipeline (Playwright on your box, not ours).</small></div></div>
+        <div class="item"><div class="k">g3</div><div class="v"><b>Standalone npm packages for editor plugins</b><small>In-tree today. Split-out registries are queued behind signing and publish policy.</small></div></div>
+        <div class="item"><div class="k">g4</div><div class="v"><b>Additional tokens</b><small>Beyond the eight. Extensions land in packs, reviewed against the linter like anything else.</small></div></div>
+      </div>
+    </section>
+  </div>
+
+  <section>
+    <h2><span>Working assumption</span><span class="count">read once</span></h2>
+    <p style="max-width:62ch">AHD is not a design system and not a generator. It is the part in between: a way to describe what a page must be, and a way to fail builds that aren't. Fork it, break it, tell us which rules are wrong. The repo is the artefact; this page is a specimen of it.</p>
+  </section>
+
+  <footer>
+    <div><b>AHD</b> · Artificial Human Design · specimen 001</div>
+    <div>Code: <b>FSL-1.1-Apache-2.0</b> &nbsp;·&nbsp; Tokens &amp; artwork: <b>CC-BY-4.0</b></div>
+    <div><a class="inline" href="https://github.com/ahd/ahd">github</a> · <a class="inline" href="https://code.ahd.dev/ahd/ahd">forgejo</a> · <a class="inline" href="mailto:hello@ahd.dev">hello@ahd.dev</a></div>
+  </footer>
+
+</div>
+</body>
+</html>

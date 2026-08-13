@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AHD — Artificial Human Design</title>
+<style>
+@font-face {
+  font-family: 'Inter';
+  src: local('Inter'), local('Inter-Regular');
+}
+@font-face {
+  font-family: 'IBM Plex Mono';
+  src: local('IBM Plex Mono'), local('IBMPlexMono-Regular');
+}
+
+:root {
+  --bg: #0a0a0a;
+  --surface: #121212;
+  --surface-raised: #1a1a1a;
+  --text-primary: #e8e6e3;
+  --text-secondary: #8a8678;
+  --muted: #5a574d;
+  --accent: #c4b896;
+  --accent-dim: #8a7f5a;
+  --border: #222;
+  --border-subtle: #1a1a1a;
+  --code-bg: #0c0c0c;
+  --code-fg: #d4d0c8;
+  --code-keyword: #c4b896;
+  --code-string: #8fbc8f;
+  --code-comment: #5a574d;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: var(--text-primary);
+  line-height: 1.65;
+  font-size: 0.9375rem;
+}
+
+/* Layout */
+.container {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* Header */
+.site-header {
+  border-bottom: 1px solid var(--border);
+  padding: 1rem 0;
+}
+
+.site-header .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logotype {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.nav-link {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.nav-link:hover {
+  color: var(--accent);
+}
+
+/* Hero */
+.hero {
+  padding: 4rem 0 3rem;
+}
+
+.hero h1 {
+  font-size: 1.625rem;
+  font-weight: 480;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  margin-bottom: 1.25rem;
+}
+
+.hero-desc {
+  color: var(--text-secondary);
+  max-width: 560px;
+  font-size: 0.9375rem;
+  line-height: 1.7;
+}
+
+/* Code block */
+.terminal {
+  margin: 2.5rem 0 3.5rem;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  background: var(--code-bg);
+  overflow: hidden;
+}
+
+.terminal-header {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.625rem 0.875rem;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--muted);
+}
+
+.terminal-header .lang-tag {
+  margin-left: auto;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.6875rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.terminal pre {
+  padding: 1rem 0.875rem;
+  overflow-x: auto;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  color: var(--code-fg);
+}
+
+.terminal .kw { color: var(--code-keyword); }
+.terminal .str { color: var(--code-string); }
+.terminal .flag { color: var(--code-fg); opacity: 0.7; }
+.terminal .arg { color: #bc8f8f; }
+
+/* Sections */
+.section-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent-dim);
+  margin-bottom: 1.25rem;
+}
+
+.problem {
+  padding-bottom: 2.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.problem p {
+  color: var(--text-secondary);
+  font-size: 0.9375rem;
+}
+
+.problem p + p {
+  margin-top: 1rem;
+}
+
+/* Manifests */
+.manifests {
+  padding: 2.5rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.manifest-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.manifest h3 {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 0.875rem;
+}
+
+.manifest ul {
+  list-style: none;
+}
+
+.manifest li {
+  position: relative;
+  padding-left: 1.125rem;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  line-height: 1.8;
+}
+
+.manifest li::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  color: var(--muted);
+}
+
+.manifest.ships li::before {
+  content: "+";
+  color: var(--accent-dim);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.75rem;
+}
+
+.manifest.gated li::before {
+  content: "~";
+  color: var(--muted);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.75rem;
+}
+
+/* Footer */
+.site-footer {
+  padding: 2.5rem 0 3rem;
+}
+
+.footer-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.licence {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.footer-links {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.footer-links a {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.footer-links a:hover {
+  color: var(--accent);
+}
+
+@media (max-width: 520px) {
+  .hero h1 {
+    font-size: 1.375rem;
+  }
+  
+  .terminal pre {
+    font-size: 0.6875rem;
+  }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <span class="logotype">AHD</span>
+    <a href="https://forgejo.ahd.dev/ahd/ahd" class="nav-link">read the code ↗</a>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="container">
+      <h1>A framework for evaluating design quality at the point of generation.</h1>
+      <p class="hero-desc">You have already seen what infinite mediocre output looks like. We are not here to warn you about slop. We are here to give you a toolchain to catch it before it ships.</p>
+    </div>
+  </section>
+
+  <div class="container">
+    <div class="terminal">
+      <div class="terminal-header">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="lang-tag">bash</span>
+      </div>
+      <pre><span class="kw">ahd</span> <span class="flag">eval-live</span> <span class="arg">swiss-editorial</span> <span class="flag">--brief</span> <span class="str">briefs/landing.yml</span> <span class="flag">--models</span> <span class="arg">&lt;specs&gt;</span> <span class="flag">--n</span> <span class="arg">10</span></pre>
+    </div>
+  </div>
+
+  <section class="problem">
+    <div class="container">
+      <div class="section-label">Thesis</div>
+      <p>Most generated design fails at the level of system: inconsistent spacing hierarchies, unresolved contrast relationships, type pairings that work in isolation and collapse at scale. Current tooling optimises for first-glance coherence, not structural integrity.</p>
+      <p>AHD treats a design as a program with invariants. The brief compiler turns your intent into constraints. The linter checks 28 rules against every candidate. The eval harness runs batches against multiple models. The vision-critic scaffold verifies render output against the source tokens. Everything is inspectable, everything is versioned, nothing is assumed correct because it looks polished.</p>
+    </div>
+  </section>
+
+  <section class="manifests">
+    <div class="container">
+      <div class="manifest-grid">
+        <div class="manifest ships">
+          <h3>What ships</h3>
+          <ul>
+            <li>Brief compiler (YAML design constraint DSL)</li>
+            <li>28-rule linter with severity levels</li>
+            <li>Eval harness with batch scoring and regression tracking</li>
+            <li>Vision-critic scaffold (self-hosted multimodal pipeline ready)</li>
+            <li>MCP server for IDE integration</li>
+            <li>Editor plugins (Vim, VS Code, Zed — install from repo)</li>
+            <li>Eight base tokens covering spacing, type scale, and colour systems</li>
+          </ul>
+        </div>
+        
+        <div class="manifest gated">
+          <h3>What is gated</h3>
+          <ul>
+            <li>Live frontier-model calls: supply your own API keys (OpenAI, Anthropic, Google, etc.)</li>
+            <li>Live vision critique: requires multimodal key plus screenshot pipeline setup</li>
+            <li>Standalone npm packages for editor plugins: in progress, install from source for now</li>
+            <li>Additional tokens beyond the base eight: contributed from working systems, released on validation</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="licence">
+        Code: FSL-1.1-Apache-2.0<br>
+        Tokens &amp; artwork: CC-BY-4.0
+      </div>
+      <div class="footer-links">
+        <a href="https://forgejo.ahd.dev/ahd/ahd">Forgejo mirror</a>
+        <a href="https://github.com/artificialhumandesign/ahd">GitHub</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

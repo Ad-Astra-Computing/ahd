@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Artificial Human Design</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root{
+  --ink:#000; /* rule: ink colour */
+  --paper:#fdfdfd; /* rule: warm off‑white */
+  --spot:#d72631; /* rule: spot red, used once */
+  --rule:#000; /* rule: border colour */
+}
+html{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:"Neue Haas Grotesk Text",Helvetica,Arial,sans-serif;
+  line-height:1.5; /* rule: body line‑height */
+}
+h1{
+  font-family:"Neue Haas Grotesk Display","Helvetica Now Display","Inter Tight",sans-serif;
+  font-size:144px; /* rule: display ≥120px */
+  line-height:1.05;
+  letter-spacing:-0.02em; /* rule: tracking -0.02em */
+  margin:0;
+}
+.container{
+  display:grid;
+  grid-template-columns:repeat(12,1fr);
+  gap:24px; /* rule: 24px gutter */
+  margin-left:32px; /* rule: left‑aligned composition */
+}
+.section{
+  grid-column:span 8; /* rule: main content spans 8 columns */
+  margin-top:160px; /* rule: dramatic jump between sections */
+}
+.bleed{
+  background:var(--ink);
+  color:var(--paper);
+  padding:8px 0;
+  margin-left:-24px; /* rule: intentional bleed past grid */
+  margin-right:-24px;
+  text-align:left;
+}
+code{
+  font-family:"Neue Haas Grotesk Text",monospace;
+  background:#f5f5f5;
+  display:block;
+  padding:12px;
+  overflow-x:auto;
+}
+a.cta{
+  color:var(--spot); /* rule: spot colour used exactly once */
+  text-decoration:none;
+  font-weight:700;
+}
+footer{
+  border-top:1px solid var(--rule);
+  padding:24px 0;
+  font-size:14px;
+}
+ul{
+  list-style:none;
+  padding-left:0;
+}
+li::before{
+  content:"– ";
+}
+</style>
+</head>
+<body>
+<div class="container"><!-- rule: 12‑col grid, gutter, left‑aligned -->
+  <div class="section"><!-- rule: main content area -->
+    <h1>Artificial Human Design</h1><!-- rule: single large display word, tracking, size ≥120px -->
+    <p>Design framework that treats AI as tool, not author. No fluff. No promises.</p>
+    <p><a href="https://github.com/ahd/ahd" class="cta">read the code</a></p><!-- rule: read‑the‑code CTA -->
+    <pre><code class="bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre><!-- rule: bash code block -->
+    <h2>What ships</h2><!-- rule: clearly separated manifest section -->
+    <ul>
+      <li>brief compiler</li>
+      <li>28-rule linter</li>
+      <li>eval harness</li>
+      <li>vision-critic scaffold</li>
+      <li>MCP server</li>
+      <li>editor plugins</li>
+      <li>eight tokens</li>
+    </ul>
+    <h2>What is gated</h2><!-- rule: clearly separated manifest section -->
+    <ul>
+      <li>live frontier-model calls (needs API keys)</li>
+      <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+      <li>standalone npm packages for the editor plugins</li>
+      <li>additional tokens</li>
+    </ul>
+  </div>
+  <div class="bleed"><!-- rule: intentional bleed past grid -->
+    <p>Open, auditable, accountable.</p>
+  </div>
+</div>
+<footer><!-- rule: licence footer -->
+  Code licence: FSL-1.1-Apache-2.0. Tokens & artwork: CC-BY-4.0.
+</footer>
+</body>
+</html>

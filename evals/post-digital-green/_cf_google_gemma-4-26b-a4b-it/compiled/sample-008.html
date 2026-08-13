@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ahd | artificial human design</title>
+    <style>
+        /* rule: single-monospace pairing */
+        /* rule: background oklch(0.14 0.02 150) */
+        /* rule: foreground oklch(0.92 0.12 135) */
+        /* rule: no radii; only rectangles */
+        /* rule: no shadows; no gradients; no entrance animation */
+        body {
+            background-color: oklch(0.14 0.02 150);
+            color: oklch(0.92 0.12 135);
+            font-family: 'IBM Plex Mono', 'JetBrains Mono', monospace;
+            margin: 0;
+            padding: 48px 24px; /* rule: space.scale 48/24 */
+            line-height: 1.55; /* rule: line-height.body 1.55 */
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        /* rule: measure 72ch */
+        main, header, footer, section {
+            max-width: 72ch;
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 3.6rem; /* rule: scale.ratio 1.2 * steps */
+            line-height: 1.1; /* rule: line-height.display 1.1 */
+            margin: 0 0 24px 0; /* rule: space.scale 24 */
+            font-weight: 700;
+            text-transform: lowercase;
+        }
+
+        p {
+            margin: 0 0 24px 0;
+        }
+
+        /* rule: rule colour oklch(0.3 0.04 150) */
+        hr {
+            border: none;
+            border-top: 1px solid oklch(0.3 0.04 150);
+            margin: 48px 0; /* rule: space.scale 48 */
+        }
+
+        /* rule: terminal-aesthetic code block */
+        pre {
+            background-color: oklch(0.14 0.02 150);
+            border: 1px solid oklch(0.3 0.04 150);
+            padding: 16px; /* rule: space.scale 16 */
+            margin: 24px 0;
+            overflow-x: auto;
+        }
+
+        code {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 15px; /* rule: scale.base 15 */
+        }
+
+        /* rule: terminal accent colour amber oklch(0.82 0.15 75) */
+        .accent {
+            color: oklch(0.82 0.15 75);
+        }
+
+        /* rule: underline-offset 4px, no colour change */
+        a {
+            color: inherit;
+            text-decoration: underline;
+            text-underline-offset: 4px;
+        }
+
+        /* rule: ASCII diagram */
+        .ascii {
+            font-family: monospace;
+            white-space: pre;
+            line-height: 1.2;
+            margin-bottom: 48px;
+            color: oklch(0.55 0.05 150); /* rule: dim oklch(0.55 0.05 150) */
+        }
+
+        .manifest-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* rule: avoid 3 equal cards */
+            gap: 48px;
+            margin-top: 24px;
+        }
+
+        @media (max-width: 600px) {
+            .manifest-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        h2 {
+            font-size: 1.2rem; /* rule: scale.ratio 1.2 */
+            text-transform: lowercase;
+            margin-bottom: 16px;
+            color: oklch(0.82 0.15 75); /* rule: amber accent */
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        /* intentional imperfection: slightly uneven spacing in list */
+        li:nth-child(3) {
+            margin-left: 2px;
+        }
+
+        footer {
+            margin-top: 64px; /* rule: space.scale 64 */
+            font-size: 0.8rem;
+            color: oklch(0.55 0.05 150);
+        }
+
+        .cta-link {
+            display: inline-block;
+            margin-bottom: 24px;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>artificial human design</h1>
+        <div class="ascii">
++---------------------------------------+
+| ahd [v0.1.0]                          |
+| status: operational                   |
+|                                       |
+| [brief] -> [linter] -> [eval]         |
+|              ^            |           |
+|              |____feedback|           |
++---------------------------------------+
+        </div>
+        <p>
+            the problem isn't generation. it's the lack of constraints. 
+            ahd provides the ruleset to move from stochastic imitation 
+            to structured output.
+        </p>
+    </header>
+
+    <main>
+        <pre><code><span class="accent">$</span> ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+
+        <section>
+            <div class="manifest-grid">
+                <div>
+                    <h2>what ships</h2>
+                    <ul>
+                        <li>brief compiler</li>
+                        <li>28-rule linter</li>
+                        <li>eval harness</li>
+                        <li>vision-critic scaffold</li>
+                        <li>mcp server</li>
+                        <li>editor plugins</li>
+                        <li>eight tokens</li>
+                    </ul>
+                </div>
+                <div>
+                    <h2>what is gated</h2>
+                    <ul>
+                        <li>live frontier-model calls (needs api keys)</li>
+                        <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+                        <li>standalone npm packages for the editor plugins</li>
+                        <li>additional tokens</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <hr>
+
+        <a href="https://github.com/ahd-framework" class="cta-link">read-the-code</a>
+    </main>
+
+    <footer>
+        licence: fsl-1.1-apache-2.0 (code) | cc-by-4.0 (tokens & artwork)
+    </footer>
+
+</body>
+</html>

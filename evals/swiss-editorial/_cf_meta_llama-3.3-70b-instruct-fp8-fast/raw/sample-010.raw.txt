@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-'8">
+ (8)
+    <title>Artificial Human Design</title>
+  Seven 
+    <style>
+        body {
+            font-family: monospace;
+��            background-color: #f0f, #fíf0;
+        }
+       ..._coefficients 
+        .manifest {
+           ;top-margin: 20px;
+ Hy 
+       */
+
+ a 
+    </style>
+ _conc 
+</,head>
+<body -*-
+    <h1> AHD </h1>
+    <,p>For those who've､:seen too many﻿#AI-generated sites.</p>
+ Pend 
+    <matchCondition 
+        <pre><code class="bash)/">ahd -*-
+eval-live sw二二二二iss-editorial:
+
+
+ --brief brief \$briefs/landing.yml Ост  --models &lt;;]/specs&gt; -- Нав 101</code></pre>
+<,/a>
+<a href="��https://github ',com/AHD">Read the,code</a>
+<,/ br>
+    <div class=" 'manifest ">
+        < section>
+           [What ships]
+'ul> 
+-NLS Brief compiler 
+  28￣｀-rule l 'linte 
+':eval ',harness
+ vision-critic.:.:.:.:.:.:.:.
+ MCP server
+��editor plugins
+_mC eight tokens
+</ul	>
+</section' 
+< section > 
+<,'h3>What gating</h:::::|3 
+<ul>
+ live frontier-model/／calls (’,needs API keys,)
+ live visionﾏcritique (needs multimodal key + s,crenshot pipeline)
+©©standalone npmpy packages for the editor plugins ‘
+additional tokens
+ ‘
+</ ul>
+ </section ‘
+</div>
+ ‘
+ <,footer>
+  Code licensed under FSL-1.'1-AニニApache-
+ 2. 丶0. Tokens and artwork licensed 项nder CC-B ‘Y-　
+4.0 ‘
+</footer>
+</body>
+</©©html>
+AHD 
+<|reserved_special_token_54|> form 
+ the manifest section 
+ enumerated 
+ ‘
+</html>

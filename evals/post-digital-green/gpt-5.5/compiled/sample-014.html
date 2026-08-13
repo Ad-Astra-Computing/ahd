@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <!-- rule: return a single self-contained valid HTML5 document -->
+  <meta charset="utf-8">
+  <!-- rule: surfaces web -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- rule: one-page landing for AHD itself -->
+  <title>AHD / Artificial Human Design</title>
+  <style>
+    /* rule: self-contained document, no external assets */
+    :root {
+      /* rule: dark green-black background */
+      --bg: oklch(0.14 0.02 150);
+      /* rule: muted green foreground */
+      --fg: oklch(0.92 0.12 135);
+      /* rule: muted supporting text */
+      --dim: oklch(0.55 0.05 150);
+      /* rule: one hairline rule colour */
+      --rule: oklch(0.3 0.04 150);
+      /* rule: single amber accent */
+      --amber: oklch(0.82 0.15 75);
+      /* rule: everything aligns to an 80 character grid */
+      --measure: 80ch;
+      /* rule: baseline 8 */
+      --step: 8px;
+    }
+
+    * {
+      /* rule: rectangles only */
+      box-sizing: border-box;
+    }
+
+    html {
+      /* rule: dark green-black background */
+      background: var(--bg);
+      /* rule: no entrance animation */
+      scroll-behavior: auto;
+    }
+
+    body {
+      /* rule: no sans-serif body text */
+      font-family: "Berkeley Mono", "IBM Plex Mono", "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      /* rule: type scale base 15 */
+      font-size: 15px;
+      /* rule: body line-height 1.55 */
+      line-height: 1.55;
+      /* rule: muted green foreground */
+      color: var(--fg);
+      /* rule: dark green-black background */
+      background: var(--bg);
+      /* rule: everything aligns to an 80 character grid */
+      max-width: var(--measure);
+      /* rule: one screen of reading */
+      min-height: 100vh;
+      /* rule: baseline 8 */
+      margin: 0 auto;
+      padding: calc(var(--step) * 4) 2ch calc(var(--step) * 3);
+      /* rule: tracking body 0 */
+      letter-spacing: 0;
+    }
+
+    a {
+      /* rule: underlined links with an offset, no colour change */
+      color: inherit;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+      text-decoration-thickness: 1px;
+    }
+
+    a:visited,
+    a:hover,
+    a:active {
+      /* rule: link style no colour change */
+      color: inherit;
+    }
+
+    header,
+    section,
+    footer {
+      /* rule: clearly separated sections */
+      border-top: 1px solid var(--rule);
+      /* rule: baseline 8 */
+      padding-top: calc(var(--step) * 2);
+      margin-top: calc(var(--step) * 3);
+    }
+
+    header {
+      /* rule: brand/product must be first-viewport signal */
+      margin-top: 0;
+    }
+
+    h1,
+    h2,
+    p,
+    pre,
+    ul {
+      /* rule: align text to char grid */
+      margin: 0;
+    }
+
+    h1 {
+      /* rule: H1 is brand/product/place/person name */
+      font-size: 25.92px;
+      /* rule: display line-height 1.1 */
+      line-height: 1.1;
+      /* rule: display tracking 0 */
+      letter-spacing: 0;
+      /* rule: weights 700 */
+      font-weight: 700;
+      /* rule: terse technical voice */
+      text-transform: lowercase;
+    }
+
+    h2 {
+      /* rule: manifest section title */
+      font-size: 18px;
+      /* rule: h2 line-height 1.25 */
+      line-height: 1.25;
+      /* rule: weights 700 */
+      font-weight: 700;
+      /* rule: clearly separated manifest section */
+      margin-bottom: var(--step);
+    }
+
+    .kicker {
+      /* rule: single amber accent */
+      color: var(--amber);
+      /* rule: allcaps tracking */
+      letter-spacing: 0.04em;
+      /* rule: technical terse voice */
+      text-transform: uppercase;
+      /* rule: baseline 8 */
+      margin-bottom: var(--step);
+    }
+
+    .dek {
+      /* rule: measure 72ch */
+      max-width: 72ch;
+      /* rule: one screen of reading */
+      margin-top: calc(var(--step) * 2);
+    }
+
+    .cta {
+      /* rule: read-the-code CTA required */
+      display: inline-block;
+      /* rule: baseline 8 */
+      margin-top: calc(var(--step) * 2);
+    }
+
+    pre {
+      /* rule: terminal-aesthetic code block */
+      border: 1px solid var(--rule);
+      /* rule: rectangles only */
+      border-radius: 0;
+      /* rule: no shadows */
+      box-shadow: none;
+      /* rule: no gradients */
+      background: transparent;
+      /* rule: monospace code */
+      font-family: inherit;
+      /* rule: baseline 8 */
+      padding: calc(var(--step) * 2) 2ch;
+      margin-top: var(--step);
+      /* rule: char-grid */
+      overflow-x: auto;
+      /* rule: muted green foreground */
+      color: var(--fg);
+    }
+
+    code {
+      /* rule: command rendered in monospace code block */
+      font-family: inherit;
+      font-size: 1em;
+    }
+
+    .manifest {
+      /* rule: manifest section lists exactly what ships and what is gated */
+      display: grid;
+      /* rule: avoid three equal feature cards */
+      grid-template-columns: 1fr;
+      gap: calc(var(--step) * 3);
+    }
+
+    ul {
+      /* rule: no emoji bullets */
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      /* rule: enumerates required manifest items */
+      padding-left: 4ch;
+      position: relative;
+    }
+
+    li::before {
+      /* rule: rectangles/text only, no icons */
+      content: "[]";
+      position: absolute;
+      left: 0;
+      color: var(--amber);
+    }
+
+    .diagram {
+      /* rule: at least one ASCII diagram rendered as text */
+      color: var(--dim);
+      /* rule: monospace ASCII */
+      white-space: pre;
+      /* rule: baseline 8 */
+      margin-top: calc(var(--step) * 2);
+    }
+
+    .scar {
+      /* rule: include one intentional imperfection from required-quirks list */
+      margin-left: 1ch;
+    }
+
+    footer {
+      /* rule: footer names licence explicitly */
+      color: var(--dim);
+      /* rule: no canonical four-column footer */
+      display: block;
+    }
+
+    @media (max-width: 720px) {
+      /* rule: text must fit on mobile and desktop */
+      body {
+        padding-left: 1ch;
+        padding-right: 1ch;
+      }
+
+      pre {
+        padding-left: 1ch;
+        padding-right: 1ch;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- rule: no centred hero stack with pill badge plus two CTAs -->
+  <header>
+    <!-- rule: technical lowercase by default -->
+    <p class="kicker">framework / eval / linter</p>
+    <!-- rule: landing page H1 is brand name -->
+    <h1>artificial human design</h1>
+    <!-- rule: audience already suspects the problem, no lecture -->
+    <p class="dek">
+      AHD turns a brief into constraints, runs the work against those
+      constraints, and leaves a readable trail. it treats design output as
+      something to inspect, not admire.
+    </p>
+    <!-- rule: github link labelled as the read-the-code CTA -->
+    <a class="cta" href="https://github.com/artificial-human-design/ahd">read-the-code CTA</a>
+  </header>
+
+  <!-- rule: terminal-aesthetic code block showing one-liner -->
+  <section aria-labelledby="run-eval">
+    <!-- rule: clearly separated section -->
+    <h2 id="run-eval">run the eval</h2>
+    <!-- rule: command rendered in monospace code block with language tag bash -->
+    <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+    <!-- rule: include one ASCII diagram -->
+    <pre class="diagram" aria-label="ascii process diagram"><code>brief.yml
+   |
+   v
++----------+     +---------+     +---------------+
+| compiler |--&gt;--| linter  |--&gt;--| eval harness  |
++----------+     +---------+     +---------------+
+      \                              /
+       \-- tokens / mcp / plugins --/
+<span class="scar">^ one calibration mark is deliberately off-grid</span></code></pre>
+  </section>
+
+  <!-- rule: manifest sections list exactly what ships versus gated resources -->
+  <main class="manifest">
+    <!-- rule: clearly separated manifest section titled What ships -->
+    <section aria-labelledby="what-ships">
+      <h2 id="what-ships">What ships</h2>
+      <ul>
+        <!-- rule: enumerate brief compiler -->
+        <li>brief compiler</li>
+        <!-- rule: enumerate 28-rule linter -->
+        <li>28-rule linter</li>
+        <!-- rule: enumerate eval harness -->
+        <li>eval harness</li>
+        <!-- rule: enumerate vision-critic scaffold -->
+        <li>vision-critic scaffold</li>
+        <!-- rule: enumerate MCP server -->
+        <li>MCP server</li>
+        <!-- rule: enumerate editor plugins -->
+        <li>editor plugins</li>
+        <!-- rule: enumerate eight tokens -->
+        <li>eight tokens</li>
+      </ul>
+    </section>
+
+    <!-- rule: clearly separated manifest section titled What is gated -->
+    <section aria-labelledby="what-is-gated">
+      <h2 id="what-is-gated">What is gated</h2>
+      <ul>
+        <!-- rule: enumerate live frontier-model calls and dependency -->
+        <li>live frontier-model calls (needs API keys)</li>
+        <!-- rule: enumerate live vision critique and dependency -->
+        <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+        <!-- rule: enumerate standalone npm packages for editor plugins -->
+        <li>standalone npm packages for the editor plugins</li>
+        <!-- rule: enumerate additional tokens -->
+        <li>additional tokens</li>
+      </ul>
+    </section>
+  </main>
+
+  <!-- rule: footer names licence explicitly and avoids canonical columns -->
+  <footer>
+    code licence: FSL-1.1-Apache-2.0. tokens and artwork: CC-BY-4.0.
+  </footer>
+</body>
+</html>

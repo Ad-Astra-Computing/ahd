@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AHD - Artificial Human Design</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1e1e1e;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+        .code-block {
+            background-color: #2e2e2e;
+            padding: 1rem;
+            border-radius: 4px;
+            overflow-x: auto;
+            margin-bottom: 2rem;
+        }
+        .manifest {
+            margin-bottom: 2rem;
+        }
+        .manifest h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .manifest ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .manifest li {
+            margin-bottom: 0.5rem;
+        }
+        footer {
+            text-align: center;
+            padding: 1rem;
+            background-color: #1a1a1a;
+            margin-top: 2rem;
+        }
+        .cta {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            background-color: #007acc;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>AHD - Artificial Human Design</h1>
+        <p>AHD is a framework designed for working designers, senior engineers, and early-stage founders who are looking for a serious solution to the problems of AI-generated design. We provide a robust set of tools to evaluate and improve design workflows without the fluff.</p>
+        <div class="code-block">
+            <code class="bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code>
+        </div>
+        <div class="manifest">
+            <h2>What ships</h2>
+            <ul>
+                <li>Brief compiler</li>
+                <li>28-rule linter</li>
+                <li>Eval harness</li>
+                <li>Vision-critic scaffold</li>
+                <li>MCP server</li>
+                <li>Editor plugins</li>
+                <li>Eight tokens</li>
+            </ul>
+        </div>
+        <div class="manifest">
+            <h2>What is gated</h2>
+            <ul>
+                <li>Live frontier-model calls (needs API keys)</li>
+                <li>Live vision critique (needs multimodal key + screenshot pipeline)</li>
+                <li>Standalone npm packages for the editor plugins</li>
+                <li>Additional tokens</li>
+            </ul>
+        </div>
+        <a href="https://github.com/ahd" class="cta">Read the code</a>
+    </div>
+    <footer>
+        Code licensed under FSL-1.1-Apache-2.0. Tokens and artwork licensed under CC-BY-4.0.
+    </footer>
+</body>
+</html>

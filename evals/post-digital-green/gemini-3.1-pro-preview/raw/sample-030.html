@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AHD | Artificial Human Design</title>
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --fg: #ededed;
+    --muted: #a1a1aa;
+    --accent: #00ff94;
+    --mono: "Geist Mono", "JetBrains Mono", Menlo, Monaco, Consolas, monospace;
+    --sans: system-ui, -apple-system, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--sans);
+    line-height: 1.6;
+    margin: 0;
+    padding: 3rem 2rem;
+    display: flex;
+    justify-content: center;
+  }
+  main {
+    max-width: 680px;
+    width: 100%;
+  }
+  h1 {
+    font-family: var(--mono);
+    font-size: 1rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    margin: 0 0 2rem 0;
+  }
+  p.lead {
+    font-size: 1.25rem;
+    color: var(--muted);
+    margin: 0 0 3rem 0;
+    max-width: 50ch;
+  }
+  pre.terminal {
+    background: #000;
+    border: 1px solid #27272a;
+    padding: 1.5rem;
+    margin: 0 0 3rem 0;
+    overflow-x: auto;
+  }
+  pre.terminal code {
+    font-family: var(--mono);
+    font-size: 0.875rem;
+    color: var(--accent);
+  }
+  pre.terminal code::before {
+    content: "$ ";
+    color: var(--muted);
+  }
+  h2 {
+    font-family: var(--mono);
+    font-size: 0.875rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--fg);
+    margin: 0 0 1.5rem 0;
+    border-bottom: 1px solid #27272a;
+    padding-bottom: 0.5rem;
+  }
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 3rem 0;
+  }
+  li {
+    position: relative;
+    padding-left: 1.5rem;
+    margin-bottom: 0.75rem;
+    color: var(--muted);
+  }
+  li::before {
+    content: "|";
+    position: absolute;
+    left: 0;
+    color: #27272a;
+    font-family: var(--mono);
+  }
+  .cta-container {
+    margin: 4rem 0;
+  }
+  a.cta {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 0.875rem;
+    color: var(--bg);
+    background: var(--accent);
+    text-decoration: none;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: opacity 0.2s;
+  }
+  a.cta:hover {
+    opacity: 0.8;
+  }
+  footer {
+    border-top: 1px solid #27272a;
+    padding-top: 2rem;
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: #52525b;
+  }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Artificial Human Design</h1>
+    <p class="lead">You know the problem. The web is saturating with identical generated layouts. AHD is a framework to enforce constraints, apply rigorous rules and evaluate outputs mechanically.</p>
+  </header>
+
+  <pre class="terminal"><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+
+  <section>
+    <h2>What ships</h2>
+    <ul>
+      <li>brief compiler</li>
+      <li>28-rule linter</li>
+      <li>eval harness</li>
+      <li>vision-critic scaffold</li>
+      <li>MCP server</li>
+      <li>editor plugins</li>
+      <li>eight tokens</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>What is gated</h2>
+    <ul>
+      <li>live frontier-model calls (needs API keys)</li>
+      <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+      <li>standalone npm packages for the editor plugins</li>
+      <li>additional tokens</li>
+    </ul>
+  </section>
+
+  <div class="cta-container">
+    <a href="https://github.com/artificial-human-design/ahd" class="cta">Read the code</a>
+  </div>
+
+  <footer>
+    FSL-1.1-Apache-2.0 for code | CC-BY-4.0 for tokens and artwork
+  </footer>
+</main>
+</body>
+</html>

@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>AHD | Artificial Human Design</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;600&display=swap');
+
+    :root {
+      --bg: #0a0a0f;
+      --fg: #e0e0e0;
+      --accent: #00ff94;
+      --muted: #666666;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--fg);
+      font-family: 'Geist Mono', monospace;
+      font-size: 14px;
+      line-height: 1.6;
+      margin: 0;
+      padding: 6vh 8vw;
+      box-sizing: border-box;
+      max-width: 960px;
+    }
+
+    h1 {
+      font-size: 20px;
+      font-weight: 600;
+      margin: 0 0 32px 0;
+      color: var(--fg);
+      letter-spacing: 0.05em;
+    }
+
+    p {
+      margin: 0 0 24px 0;
+      max-width: 680px;
+      color: #b0b0b0;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    a:hover {
+      color: #ffffff;
+    }
+
+    .terminal {
+      background: #050508;
+      border: 1px solid #1a1a24;
+      padding: 24px;
+      margin: 40px 0;
+      overflow-x: auto;
+      color: var(--accent);
+    }
+
+    pre {
+      margin: 0;
+    }
+
+    code {
+      font-family: 'Geist Mono', monospace;
+    }
+
+    .manifest {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      margin: 64px 0 48px 0;
+      border-top: 1px solid #1a1a24;
+      padding-top: 48px;
+    }
+
+    @media (max-width: 600px) {
+      .manifest {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+    }
+
+    .manifest-section h2 {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--fg);
+      margin: 0 0 24px 0;
+      font-weight: 600;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    li {
+      margin-bottom: 12px;
+      padding-left: 24px;
+      position: relative;
+      color: #b0b0b0;
+    }
+
+    li::before {
+      content: "+";
+      position: absolute;
+      left: 0;
+      color: var(--muted);
+    }
+
+    .cta-container {
+      margin: 48px 0;
+    }
+
+    .cta-link {
+      display: inline-block;
+      padding: 12px 24px;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      text-transform: uppercase;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .cta-link:hover {
+      background: var(--accent);
+      color: var(--bg);
+    }
+
+    footer {
+      margin-top: 96px;
+      padding-top: 24px;
+      border-top: 1px solid #1a1a24;
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: 0.05em;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>AHD : Artificial Human Design</h1>
+
+  <p>The output is a known quantity. The default generation patterns are unacceptable. You do not need a lecture on the state of the industry; you need a mechanical way to enforce rules. AHD is a strict evaluation and linting framework designed to override defaults and guarantee structural design intent.</p>
+
+  <p>Run the evaluation suite locally to verify the delta against baseline models.</p>
+
+  <div class="terminal">
+    <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+  </div>
+
+  <div class="manifest">
+    <div class="manifest-section">
+      <h2>What ships</h2>
+      <ul>
+        <li>brief compiler</li>
+        <li>28-rule linter</li>
+        <li>eval harness</li>
+        <li>vision-critic scaffold</li>
+        <li>MCP server</li>
+        <li>editor plugins</li>
+        <li>eight tokens</li>
+      </ul>
+    </div>
+    
+    <div class="manifest-section">
+      <h2>What is gated</h2>
+      <ul>
+        <li>live frontier-model calls (needs API keys)</li>
+        <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+        <li>standalone npm packages for the editor plugins</li>
+        <li>additional tokens</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="cta-container">
+    <a href="https://github.com/artificial-human-design/ahd" class="cta-link">Read the code : GitHub</a>
+  </div>
+
+  <footer>
+    Licence: FSL-1.1-Apache-2.0 for code | CC-BY-4.0 for tokens and artwork.
+  </footer>
+
+</body>
+</html>

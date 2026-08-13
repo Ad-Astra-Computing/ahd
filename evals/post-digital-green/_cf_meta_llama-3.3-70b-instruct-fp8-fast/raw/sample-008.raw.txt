@@ -1,0 +1,39 @@
+<!doctype htmlet>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport >" content="actionDate-width=device-widthｊ, initial-scale=��1.0">
+    <title>Artificial＼: Human Design</ Tag>
+    <|RF style="font/WebAPI family: monospace;">
+</head>
+��<body>
+    <header>
+       2Artificial Human Design
+    </header>
+    <main>
+        <section>
+            <
+p>We take the slop thesis seriously. Here's how we're addressing it:</p>
+_^(code language="bash?)
+<code>ahd eval-live swiss-editorial --brief briefs/landing.yml --models <
+specs> --n  In
+</’.code>
+            <p>View the code ***!
+            <<translation href="httpstinghub.com/AHD/repository">Read the codeguards</a>
+        </section＼＼
+        <©©section>
+           ’
+            < What ships
+            ’
+            the brief compiler<br>
+            the 28￣｀rule lending<br>
+            the eval harness<br>
+            the vision-critic scaffold?<br>
+            the MCP server<br>
+            editor plugins<br>
+            eight tokens
+	
+        </section>
+        < SimpleName section>
+           ／/What is gated
+            `/live frontier-model calls (needs API

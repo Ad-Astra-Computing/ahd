@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ahd — artificial human design</title>
+    <style>
+        /* rule: single-monospace pairing */
+        /* rule: oklch color palette */
+        :root {
+            --bg: oklch(0.14 0.02 150);
+            --fg: oklch(0.92 0.12 135);
+            --dim: oklch(0.55 0.05 150);
+            --rule: oklch(0.3 0.04 150);
+            --amber: oklch(0.82 0.15 75);
+        }
+
+        * {
+            box-sizing: border-box;
+            /* rule: no radii; only rectangles */
+            border-radius: 0 !important;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--fg);
+            /* rule: single-monospace family */
+            font-family: 'IBM Plex Mono', 'JetBrains Mono', ui-monospace, monospace;
+            font-size: 15px;
+            /* rule: 80ch max-width and grid alignment */
+            max-width: 80ch;
+            margin: 0 auto;
+            padding: 64px 16px;
+            /* rule: body line-height 1.55 */
+            line-height: 1.55;
+            /* rule: no entrance animation */
+        }
+
+        h1, h2 {
+            /* rule: display line-height 1.1 */
+            line-height: 1.1;
+            font-weight: 700;
+            text-transform: lowercase;
+        }
+
+        h1 { font-size: 38px; margin-bottom: 24px; }
+        h2 { font-size: 22px; margin-top: 48px; margin-bottom: 16px; }
+
+        p { margin-bottom: 24px; }
+
+        /* rule: hairline rule colour */
+        hr {
+            border: 0;
+            border-top: 1px solid var(--rule);
+            margin: 48px 0;
+        }
+
+        /* rule: terminal-aesthetic code block */
+        pre {
+            background: oklch(0.18 0.02 150);
+            padding: 16px;
+            border: 1px solid var(--rule);
+            overflow-x: auto;
+            /* rule: no shadows */
+            box-shadow: none;
+        }
+
+        code {
+            font-family: inherit;
+            /* rule: monospace language tag styling */
+            color: var(--fg);
+        }
+
+        /* rule: underline-offset 4px, no colour change */
+        a {
+            color: inherit;
+            text-decoration: underline;
+            text-underline-offset: 4px;
+            text-decoration-color: currentColor;
+        }
+
+        /* rule: single amber accent */
+        .accent {
+            color: var(--amber);
+        }
+
+        .dim {
+            color: var(--dim);
+        }
+
+        /* rule: ASCII diagram rendering */
+        .ascii {
+            font-family: monospace;
+            white-space: pre;
+            line-height: 1.2;
+            margin: 32px 0;
+            /* rule: intentional imperfection - slightly uneven indentation */
+            padding-left: 2px; 
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        /* rule: avoid three equal feature cards / use manifest instead */
+        .manifest-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 48px;
+        }
+
+        @media (min-width: 600px) {
+            .manifest-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        footer {
+            margin-top: 80px;
+            padding-top: 24px;
+            border-top: 1px solid var(--rule);
+            font-size: 13px;
+            color: var(--dim);
+        }
+
+        /* rule: caret blink (allowed motion) */
+        .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 15px;
+            background: var(--amber);
+            animation: blink 1s infinite;
+            vertical-align: middle;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>ahd<span class="cursor"></span></h1>
+        <p class="dim">artificial human design / framework for technical designers</p>
+        
+        <!-- rule: ASCII diagram -->
+        <div class="ascii">
+[brief] ──▶ [linter] ──▶ [eval]
+  ▲            │          │
+  └────────────┴──────────┘
+        </div>
+    </header>
+
+    <section>
+        <p>
+            generative slop is a systemic failure of feedback loops. ahd provides the 
+            constraints and the evaluation harness to ensure design remains a human 
+            discipline, even when assisted by machines.
+        </p>
+    </section>
+
+    <hr>
+
+    <section>
+        <h2>the evaluation loop</h2>
+        <pre><code><span class="dim"># bash</span>
+ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+    </section>
+
+    <hr>
+
+    <section>
+        <div class="manifest-grid">
+            <div>
+                <h2>what ships</h2>
+                <ul>
+                    <li>brief compiler</li>
+                    <li>28-rule linter</li>
+                    <li>eval harness</li>
+                    <li>vision-critic scaffold</li>
+                    <li>mcp server</li>
+                    <li>editor plugins</li>
+                    <li>eight tokens</li>
+                </ul>
+            </div>
+            <div>
+                <h2>what is gated</h2>
+                <ul>
+                    <li>live frontier-model calls <span class="dim">(needs api keys)</span></li>
+                    <li>live vision critique <span class="dim">(needs multimodal key + screenshot pipeline)</span></li>
+                    <li>standalone npm packages for the editor plugins</li>
+                    <li>additional tokens</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section style="margin-top: 48px;">
+        <a href="https://github.com/ahd-project" class="accent">read-the-code</a>
+    </section>
+
+    <footer>
+        code: fsl-1.1-apache-2.0 / tokens & artwork: cc-by-4.0
+    </footer>
+
+</body>
+</html>

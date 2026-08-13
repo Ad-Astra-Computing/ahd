@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Artificial Human Design</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background-color: #0a0a0f;
+            color: #e0e0e0;
+            font-family: 'JetBrains Mono', 'Geist Mono', SFMono-Regular, Consolas, monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            padding: 4rem 2rem;
+            display: flex;
+            justify-content: center;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        .container {
+            width: 100%;
+            max-width: 720px;
+        }
+        header {
+            margin-bottom: 3rem;
+        }
+        h1 {
+            font-size: 14px;
+            font-weight: 700;
+            color: #ffffff;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .intro {
+            margin-bottom: 2rem;
+            color: #a0a0b0;
+            max-width: 640px;
+        }
+        a.cta {
+            display: inline-block;
+            color: #00ff94;
+            text-decoration: none;
+            border: 1px solid #00ff94;
+            padding: 0.5rem 1rem;
+            transition: background-color 0.2s, color 0.2s;
+            margin-bottom: 3rem;
+        }
+        a.cta:hover {
+            background-color: #00ff94;
+            color: #0a0a0f;
+        }
+        .terminal {
+            margin-bottom: 4rem;
+        }
+        pre {
+            background-color: #000000;
+            border: 1px solid #1a1a24;
+            padding: 1.5rem;
+            overflow-x: auto;
+        }
+        code.language-bash {
+            color: #00ff94;
+            font-family: inherit;
+        }
+        .manifest-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            border-top: 1px solid #1a1a24;
+            padding-top: 3rem;
+            margin-bottom: 4rem;
+        }
+        @media (max-width: 600px) {
+            .manifest-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+        h2 {
+            font-size: 14px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        ul {
+            list-style: none;
+        }
+        li {
+            margin-bottom: 0.75rem;
+            color: #a0a0b0;
+            display: flex;
+        }
+        li::before {
+            content: "|";
+            color: #303040;
+            margin-right: 0.75rem;
+        }
+        footer {
+            border-top: 1px solid #1a1a24;
+            padding-top: 2rem;
+            font-size: 12px;
+            color: #606070;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Artificial Human Design</h1>
+        </header>
+        
+        <main>
+            <div class="intro">
+                You know the problem. The baseline for machine-generated interfaces is functional code paired with unacceptable aesthetics. Artificial Human Design is a rigorous framework to enforce structural design principles through automated evaluation. No lectures: just a pipeline that treats design as a measurable engineering constraint.
+            </div>
+            
+            <a href="https://github.com/artificial-human-design/ahd" class="cta">Read the code on GitHub</a>
+
+            <div class="terminal">
+                <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+            </div>
+
+            <div class="manifest-grid">
+                <section>
+                    <h2>What ships</h2>
+                    <ul>
+                        <li>Brief compiler</li>
+                        <li>28-rule linter</li>
+                        <li>Eval harness</li>
+                        <li>Vision-critic scaffold</li>
+                        <li>MCP server</li>
+                        <li>Editor plugins</li>
+                        <li>Eight tokens</li>
+                    </ul>
+                </section>
+                
+                <section>
+                    <h2>What is gated</h2>
+                    <ul>
+                        <li>Live frontier-model calls (needs API keys)</li>
+                        <li>Live vision critique (needs multimodal key + screenshot pipeline)</li>
+                        <li>Standalone npm packages for the editor plugins</li>
+                        <li>Additional tokens</li>
+                    </ul>
+                </section>
+            </div>
+        </main>
+
+        <footer>
+            Licence: FSL-1.1-Apache-2.0 for code | CC-BY-4.0 for tokens and artwork
+        </footer>
+    </div>
+</body>
+</html>

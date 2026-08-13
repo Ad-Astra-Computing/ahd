@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>AHD — Artificial Human Design</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    /* rule: palette is ink on paper */
+    :root {
+      --paper: oklch(0.98 0.005 95);
+      --ink: oklch(0.18 0 0);
+      /* rule: spot colour used exactly once */
+      --spot: oklch(0.58 0.22 27);
+      --rule: oklch(0.18 0 0);
+      --muted: oklch(0.55 0 0);
+      --grid-margin: max(32px, calc(100vw / 24));
+    }
+
+    /* rule: structural motion only; no entrance animations; respects prefers-reduced-motion */
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        transition: none !important;
+      }
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--paper);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* rule: Body in Neue Haas Grotesk Text at 17px, line-height 1.5 */
+    .text {
+      font-family: 'Neue Haas Grotesk Text', 'Helvetica Now Text', 'Inter', sans-serif;
+      font-size: 17px;
+      line-height: 1.5;
+      font-weight: 400;
+      letter-spacing: 0;
+    }
+
+    /* rule: measure 62ch */
+    .measure {
+      max-width: 62ch;
+    }
+
+    /* rule: Set display type in Neue Haas Grotesk Display at 96–160px with tracking -0.02em */
+    .display {
+      font-family: 'Neue Haas Grotesk Display', 'Helvetica Now Display', 'Inter Tight', sans-serif;
+      font-size: clamp(96px, 10vw, 160px);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    /* rule: 12-column grid with 24px gutters */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      column-gap: 24px;
+      padding-left: var(--grid-margin);
+      padding-right: var(--grid-margin);
+    }
+
+    /* rule: Require one dramatic jump per section (160 between sections) */
+    .section-jump {
+      margin-top: 160px;
+      margin-bottom: 160px;
+    }
+
+    /* rule: Asymmetric left-aligned composition */
+    .col-1-12 { grid-column: 1 / 13; }
+    .col-1-6 { grid-column: 1 / 7; }
+    .col-7-12 { grid-column: 7 / 13; }
+    .col-4-12 { grid-column: 4 / 13; }
+    .col-5-12 { grid-column: 5 / 13; }
+
+    @media (max-width: 768px) {
+      .col-1-6, .col-7-12, .col-4-12, .col-5-12 {
+        grid-column: 1 / 13;
+      }
+    }
+
+    /* rule: sharp by default */
+    .sharp-box {
+      border: 1px solid var(--rule);
+      padding: 24px;
+      border-radius: 0;
+    }
+
+    /* rule: small status pills (999) allowed for status tags only */
+    .status-pill {
+      display: inline-block;
+      border-radius: 999px;
+      padding: 4px 12px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      border: 1px solid var(--rule);
+    }
+
+    .spot-color-element {
+      background-color: var(--spot);
+      color: var(--paper);
+      border-color: var(--spot);
+    }
+
+    /* rule: A terminal-aesthetic code block */
+    .terminal {
+      background-color: var(--ink);
+      color: var(--paper);
+      font-family: monospace;
+      font-size: 14px;
+      padding: 32px;
+      border-radius: 0;
+      overflow-x: auto;
+      white-space: pre;
+      margin-top: 24px;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    li {
+      padding-top: 12px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--rule);
+    }
+    li:last-child {
+      border-bottom: none;
+    }
+
+    /* rule: No shadows. No rounded corners except small status pills. */
+    a {
+      color: var(--ink);
+      text-decoration: none;
+      border-bottom: 1px solid var(--ink);
+    }
+    a:hover {
+      background-color: var(--ink);
+      color: var(--paper);
+    }
+    
+    .cta-link {
+      display: inline-block;
+      margin-top: 32px;
+      padding: 12px 24px;
+      border: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+      font-weight: 700;
+    }
+
+    /* rule: one section anchored by a single word at display >= 120px with -0.02em tracking */
+    .giant-anchor {
+      font-family: 'Neue Haas Grotesk Display', 'Helvetica Now Display', 'Inter Tight', sans-serif;
+      font-size: clamp(120px, 12vw, 160px);
+      letter-spacing: -0.02em;
+      font-weight: 900;
+      line-height: 1.05;
+      text-transform: uppercase;
+      margin: 0;
+    }
+
+    /* rule: One intentional element must bleed past the grid. */
+    .bleed-element {
+      width: 150vw;
+      margin-left: calc(-25vw);
+      border-top: 1px solid var(--rule);
+      height: 24px;
+      display: block;
+    }
+
+    h2 {
+      font-family: 'Neue Haas Grotesk Display', 'Helvetica Now Display', 'Inter Tight', sans-serif;
+      font-size: 32px;
+      line-height: 1.2;
+      font-weight: 700;
+      margin-top: 0;
+      margin-bottom: 24px;
+      letter-spacing: -0.02em;
+    }
+    
+    /* Required quirk: intentional artifact */
+    .quirk-indent {
+      margin-left: 12px;
+    }
+  </style>
+</head>
+<body class="text">
+  <main>
+    <section class="grid section-jump">
+      <div class="col-1-12">
+        <!-- rule: declarative, short sentences, no hedges, no Oxford commas -->
+        <h1 class="display">Artificial Human Design</h1>
+      </div>
+      <div class="col-5-12 measure" style="margin-top: 64px;">
+        <p>You have seen the output. You suspect the problem. AHD is the framework that stops the rot. It compiles strict editorial rules into executable constraints. It does not lecture. It forces compliance.</p>
+        <!-- rule: A link to github labelled as the read-the-code CTA -->
+        <a href="https://github.com/ahd/ahd" class="cta-link">Read the code</a>
+      </div>
+    </section>
+
+    <!-- rule: one intentional element must bleed past the grid -->
+    <div class="bleed-element section-jump"></div>
+
+    <section class="grid section-jump">
+      <div class="col-1-12">
+         <!-- rule: anchored by a single word at display >= 120px -->
+         <h2 class="giant-anchor">Enforce</h2>
+      </div>
+      <div class="col-4-12" style="margin-top: 48px;">
+        <div class="sharp-box">
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--rule); padding-bottom: 16px;">
+            <span class="text" style="font-weight: 700;">Live Evaluation</span>
+            <!-- rule: spot colour used exactly once on the page -->
+            <span class="status-pill spot-color-element">Active</span>
+          </div>
+          <!-- rule: A terminal-aesthetic code block -->
+          <div class="terminal"><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="grid section-jump">
+        <div class="col-1-12" style="border-top: 1px solid var(--rule); margin-bottom: 48px;"></div>
+    </div>
+
+    <section class="grid section-jump">
+      <!-- rule: A clearly separated manifest section titled 'What ships' -->
+      <div class="col-1-6">
+        <h2>What ships</h2>
+        <ul class="measure">
+          <li>Brief compiler</li>
+          <li>28-rule linter</li>
+          <li>Eval harness</li>
+          <li>Vision-critic scaffold</li>
+          <li>MCP server</li>
+          <li>Editor plugins</li>
+          <li>Eight tokens</li>
+        </ul>
+      </div>
+      <!-- rule: A clearly separated manifest section titled 'What is gated' -->
+      <div class="col-7-12">
+        <h2 class="quirk-indent">What is gated</h2>
+        <ul class="measure quirk-indent">
+          <li>Live frontier-model calls (needs API keys)</li>
+          <li>Live vision critique (needs multimodal key + screenshot pipeline)</li>
+          <li>Standalone npm packages for the editor plugins</li>
+          <li>Additional tokens</li>
+        </ul>
+      </div>
+    </section>
+
+    <footer class="grid section-jump">
+      <!-- rule: A footer that names the licence explicitly -->
+      <div class="col-1-12" style="border-top: 1px solid var(--rule); padding-top: 24px;">
+        Licence: FSL-1.1-Apache-2.0 for code, CC-BY-4.0 for tokens and artwork.
+      </div>
+    </footer>
+  </main>
+</body>
+</html>

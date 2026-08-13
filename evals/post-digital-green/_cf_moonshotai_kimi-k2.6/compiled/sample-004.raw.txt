@@ -1,0 +1,284 @@
+```html
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AHD — artificial human design</title>
+<style>
+/* rule: single-monospace */
+/* rule: no sans-serif body */
+@font-face {
+  font-family: 'Berkeley Mono';
+  src: local('Berkeley Mono'), local('IBM Plex Mono'), local('JetBrains Mono'), local('ui-monospace');
+}
+
+/* rule: bg oklch(0.14 0.02 150) */
+/* rule: fg oklch(0.92 0.12 135) */
+/* rule: dim oklch(0.55 0.05 150) */
+/* rule: rule oklch(0.3 0.04 150) */
+/* rule: amber oklch(0.82 0.15 75) */
+:root {
+  --bg: oklch(0.14 0.02 150);
+  --fg: oklch(0.92 0.12 135);
+  --dim: oklch(0.55 0.05 150);
+  --rule: oklch(0.3 0.04 150);
+  --amber: oklch(0.82 0.15 75);
+}
+
+/* rule: base 15, ratio 1.2 */
+/* rule: line-height body 1.55 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 15px;
+}
+
+body {
+  font-family: 'Berkeley Mono', 'IBM Plex Mono', 'JetBrains Mono', ui-monospace, monospace;
+  background: var(--bg);
+  color: var(--fg);
+  line-height: 1.55;
+  /* rule: measure 72ch */
+  max-width: 80ch;
+  margin: 0 auto;
+  padding: 32px 16px;
+  /* rule: char-grid 80 columns */
+}
+
+/* rule: no radii; only rectangles */
+/* rule: no shadows */
+/* rule: no gradients */
+
+/* rule: no entrance animations */
+/* rule: motion forbidden except caret blink and link underline */
+
+h1 {
+  font-size: 1.728rem; /* step 4: 15 * 1.2^4 */
+  line-height: 1.1;
+  font-weight: 700;
+  letter-spacing: 0;
+  margin-bottom: 8px;
+}
+
+h2 {
+  font-size: 1.44rem; /* step 3 */
+  line-height: 1.25;
+  font-weight: 700;
+  letter-spacing: 0;
+  margin-top: 32px;
+  margin-bottom: 12px;
+}
+
+/* rule: amber accent for h2 */
+h2::before {
+  content: '# ';
+  color: var(--amber);
+}
+
+p {
+  margin-bottom: 12px;
+}
+
+/* rule: link underline-offset 4px, no colour change */
+a {
+  color: var(--fg);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+}
+
+a:hover {
+  color: var(--fg); /* no colour change */
+}
+
+/* rule: dim colour for secondary text */
+.dim {
+  color: var(--dim);
+}
+
+/* rule: amber accent */
+.amber {
+  color: var(--amber);
+}
+
+/* rule: 1px solid border rule colour */
+pre {
+  border: 1px solid var(--rule);
+  padding: 16px;
+  margin: 16px 0;
+  overflow-x: auto;
+  font-family: inherit;
+  font-size: 0.833rem; /* step -1 */
+  line-height: 1.55;
+}
+
+code {
+  font-family: inherit;
+}
+
+/* rule: bash language tag */
+pre code {
+  display: block;
+}
+
+/* rule: 1px hairline rule colour */
+hr {
+  border: none;
+  border-top: 1px solid var(--rule);
+  margin: 32px 0;
+}
+
+/* rule: char-grid alignment */
+header, main, footer {
+  max-width: 72ch;
+}
+
+/* rule: manifest sections clearly separated */
+.manifest {
+  margin-top: 32px;
+}
+
+.manifest ul {
+  list-style: none;
+  padding: 0;
+}
+
+/* rule: no emoji bullets — use ascii */
+.manifest li::before {
+  content: '[*] ';
+  color: var(--dim);
+}
+
+.manifest li {
+  margin-bottom: 4px;
+}
+
+/* rule: required ASCII diagram */
+.ascii-diagram {
+  margin: 24px 0;
+  line-height: 1.2;
+  font-size: 0.694rem; /* step -2 */
+  color: var(--dim);
+  white-space: pre;
+  overflow-x: auto;
+}
+
+section.manifest {
+  border-top: 1px solid var(--rule);
+  padding-top: 24px;
+}
+
+/* rule: footer licence explicit */
+footer {
+  margin-top: 48px;
+  padding-top: 24px;
+  border-top: 1px solid var(--rule);
+  font-size: 0.694rem;
+  color: var(--dim);
+  line-height: 1.55;
+}
+
+/* rule: intentional imperfection — slight misalignment on header */
+header h1 {
+  position: relative;
+  left: -1px; /* imperfection: 1px offset breaking strict grid */
+}
+
+/* rule: read-the-code CTA */
+.cta-block {
+  margin: 24px 0;
+}
+
+.cta-block a {
+  color: var(--amber);
+  text-underline-offset: 4px;
+}
+
+.cta-block a:hover {
+  color: var(--amber);
+}
+
+/* rule: no centred hero stack with pill badge + two CTAs */
+/* rule: no three equal feature cards */
+
+</style>
+</head>
+<body>
+
+<header>
+  <h1>artificial human design</h1>
+  <p class="dim">a framework for evaluating generative design output without pretending it is human-made</p>
+</header>
+
+<main>
+
+<p>you have seen the slop. the same gradients, the same three cards, the same "build the future of" headline rewritten by a model that has read every other landing page. you do not need another lecture on why this is bad. you need a way to measure whether what ships is deliberate.</p>
+
+<p>AHD is a compiler, a linter, and an eval harness for design briefs. you write constraints. the system generates candidates, scores them against those constraints, and surfaces the failures. the human decides what ships.</p>
+
+<div class="cta-block">
+  <a href="https://github.com/artificialhumandesign/ahd">read the code →</a> <!-- rule: link to github labelled as read-the-code CTA -->
+</div>
+
+<h2>run an eval</h2>
+
+<pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre> <!-- rule: command rendered in monospace code block with language tag bash -->
+
+<p class="dim">outputs a scored matrix. failures are explicit. no "vibe" metric.</p>
+
+<div class="ascii-diagram"> <!-- rule: at least one ASCII diagram rendered as text -->
+    ┌─────────────┐     ┌─────────────┐     ┌─────────────┐
+    │   BRIEF     │────▶│  COMPILER   │────▶│   TOKENS    │
+    │   (.yml)    │     │  (parse)    │     │  (8 rules)  │
+    └─────────────┘     └─────────────┘     └──────┬──────┘
+                                                   │
+    ┌─────────────┐     ┌─────────────┐           │
+    │   REPORT    │◀────│    LINT     │◀──────────┘
+    │  (scores)   │     │ (28 rules)  │
+    └─────────────┘     └─────────────┘
+           ▲
+           │
+    ┌──────┴──────┐
+    │   HARNESS   │◀──── frontier model output
+    │  (eval n)   │
+    └─────────────┘
+</div>
+
+<section class="manifest">
+  <h2>what ships</h2>
+  <ul>
+    <li>brief compiler — structured constraint definition from yaml</li>
+    <li>28-rule linter — spacing, measure, contrast, motion policy, forbidden pattern detection</li>
+    <li>eval harness — batch runner with deterministic seeding, scoring matrix output</li>
+    <li>vision-critic scaffold — rule-based image analysis pipeline (local models)</li>
+    <li>MCP server — model context protocol for editor integration</li>
+    <li>editor plugins — vscode, zed, neovim (submodule builds, not standalone)</li>
+    <li>eight tokens — base set covering type, colour, grid, surface, motion, forbidden, required, voice</li>
+  </ul>
+</section> <!-- rule: What ships manifest section -->
+
+<section class="manifest">
+  <h2>what is gated</h2>
+  <ul>
+    <li>live frontier-model calls — needs API keys (openai, anthropic, google)</li>
+    <li>live vision critique — needs multimodal key + screenshot pipeline (playwright/ puppeteer)</li>
+    <li>standalone npm packages for the editor plugins — waiting on registry automation</li>
+    <li>additional tokens — community contributions, not core maintainer reviewed</li>
+  </ul>
+</section> <!-- rule: What is gated manifest section -->
+
+</main>
+
+<footer>
+  <p>licence: FSL-1.1-Apache-2.0 for code / CC-BY-4.0 for tokens and artwork</p> <!-- rule: footer names licence explicitly -->
+  <p class="dim">artificial human design // no claims of human-like output</p>
+</footer>
+
+</body>
+</html>
+```

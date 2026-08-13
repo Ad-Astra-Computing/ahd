@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AHD - Artificial Human Design</title>
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            padding: 0;
+            background: #000;
+            color: #0f0;
+        }
+        pre {
+            padding: 1em;
+            background: #000;
+            border: 1px solid #0f0;
+        }
+        code {
+            color: #0f0;
+        }
+        h2 {
+            color: #0f0;
+            margin-top: 2em;
+        }
+        ul {
+            padding-left: 1em;
+        }
+        .read-the-code {
+            display: inline-block;
+            margin: 2em auto;
+            padding: 0.5em 1em;
+            background: #0f0;
+            color: #000;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        footer {
+            margin-top: 3em;
+            color: #888;
+            font-size: 0.9em;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <pre><code class="bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+        <section>
+            <h2>What ships</h2>
+            <ul>
+                <li>brief compiler</li>
+                <li>28-rule linter</li>
+                <li>eval harness</li>
+                <li>vision-critic scaffold</li>
+                <li>MCP server</li>
+                <li>editor plugins</li>
+                <li>eight tokens</li>
+            </ul>
+        </section>
+        <section>
+            <h2>What is gated</h2>
+            <ul>
+                <li>live frontier-model calls (needs API keys)</li>
+                <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+                <li>standalone npm packages for the editor plugins</li>
+                <li>additional tokens</li>
+            </ul>
+        </section>
+        <a href="https://github.com/ahd" class="read-the-code">read-the-code</a>
+    </main>
+    <footer>
+        Code: FSL-1.1-Apache-2.0 | Tokens & Artwork: CC-BY-4.0
+    </footer>
+</body>
+</html>

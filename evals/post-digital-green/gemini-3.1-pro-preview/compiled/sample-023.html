@@ -1,0 +1,193 @@
+<!doctype html>
+<!-- rule: Return a single, self-contained, valid HTML5 document. No prose. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ahd</title>
+<style>
+/* rule: Design post-digital. Everything in monospace. */
+/* rule: dark green-black background, muted green foreground, single amber accent, one hairline rule colour */
+:root {
+  --bg: oklch(0.14 0.02 150);
+  --fg: oklch(0.92 0.12 135);
+  --dim: oklch(0.55 0.05 150);
+  --rule: oklch(0.3 0.04 150);
+  --amber: oklch(0.82 0.15 75);
+  /* rule: FORBIDDEN: Do not use sans-serif body text. */
+  --mono: "Berkeley Mono", "IBM Plex Mono", "JetBrains Mono", ui-monospace, monospace;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--fg);
+  font-family: var(--mono);
+  /* rule: copy voice: technical, lowercase by default, terse */
+  text-transform: lowercase;
+  line-height: 1.55;
+  font-size: 15px;
+  margin: 0;
+  padding: 4rem 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+/* rule: Everything aligns to an 80 character grid. */
+.grid-container {
+  max-width: 80ch;
+  width: 100%;
+}
+
+/* rule: Rectangles only. No radii. */
+.rect {
+  border: 1px solid var(--rule);
+  padding: 2rem;
+  margin-bottom: 2rem;
+  border-radius: 0;
+  /* rule: intentional imperfection from the required-quirks list (off-grid padding) */
+  padding-left: calc(2rem + 1px);
+}
+
+/* rule: Underlined links with an offset, no colour change. */
+a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--rule);
+  text-underline-offset: 4px;
+}
+
+/* rule: terminal-aesthetic code block */
+pre {
+  margin: 0 0 2rem 0;
+  padding: 1.5rem;
+  border: 1px solid var(--rule);
+  background: transparent;
+  color: var(--amber);
+  overflow-x: auto;
+  white-space: pre;
+  border-radius: 0;
+}
+
+code {
+  font-family: var(--mono);
+}
+
+/* rule: Include one ASCII diagram. */
+.ascii-art {
+  color: var(--dim);
+  border: none;
+  padding: 0;
+  margin-bottom: 3rem;
+}
+
+/* rule: FORBIDDEN: emoji bullets. Use text-based markers. */
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 2rem 0;
+}
+
+li {
+  position: relative;
+  padding-left: 2ch;
+  margin-bottom: 0.5rem;
+}
+
+li::before {
+  content: "::";
+  position: absolute;
+  left: 0;
+  color: var(--dim);
+}
+
+.manifest-wrapper {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.manifest-col {
+  flex: 1;
+  min-width: 30ch;
+}
+
+h1, h2, h3 {
+  font-weight: 400;
+  font-size: 1rem;
+  color: var(--dim);
+  margin-top: 0;
+  margin-bottom: 1rem;
+  letter-spacing: 0.04em;
+}
+
+footer {
+  color: var(--dim);
+  font-size: 0.85em;
+  margin-top: 4rem;
+  border-top: 1px solid var(--rule);
+  padding-top: 1rem;
+}
+</style>
+</head>
+<body>
+<!-- rule: at least one element aligned to the char grid (e.g. 80ch max-width) -->
+<div class="grid-container">
+
+  <!-- rule: at least one ASCII diagram rendered as text -->
+  <pre class="ascii-art" aria-hidden="true">
+      _   _  _ ___ 
+     /_\ | || |   \
+    / _ \| __ | |) |
+   /_/ \_\_||_|___/
+  </pre>
+
+  <div class="rect">
+    <!-- rule: The visitor is a working designer, a senior engineer, or a founder who has seen too many AI-generated sites in the last month and already suspects the problem. -->
+    <p>artificial human design.</p>
+    <p>you already suspect the problem. the web is drowning in generative output. we do not lecture on the thesis; we ship the tooling to enforce rigid, token-driven constraints on generation. pure structure. pure post-digital logic. zero fluff.</p>
+  </div>
+
+  <h2>run the eval</h2>
+  <!-- rule: The command rendered in a monospace code block with the language tag `bash`. -->
+  <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+
+  <div class="manifest-wrapper">
+    <!-- rule: A clearly separated manifest section titled 'What ships' -->
+    <div class="manifest-col">
+      <h2>what ships</h2>
+      <ul>
+        <li>brief compiler</li>
+        <li>28-rule linter</li>
+        <li>eval harness</li>
+        <li>vision-critic scaffold</li>
+        <li>mcp server</li>
+        <li>editor plugins</li>
+        <li>eight tokens</li>
+      </ul>
+    </div>
+
+    <!-- rule: A clearly separated manifest section titled 'What is gated' -->
+    <div class="manifest-col">
+      <h2>what is gated</h2>
+      <ul>
+        <li>live frontier-model calls (needs api keys)</li>
+        <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+        <li>standalone npm packages for the editor plugins</li>
+        <li>additional tokens</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="rect">
+    <!-- rule: A link to github (or the forgejo mirror) labelled as the read-the-code CTA. -->
+    <a href="https://github.com/artificial-human-design/ahd">read-the-code</a>
+  </div>
+
+  <!-- rule: A footer that names the licence explicitly: FSL-1.1-Apache-2.0 for code, CC-BY-4.0 for tokens and artwork. -->
+  <footer>
+    <p>code: fsl-1.1-apache-2.0. tokens &amp; artwork: cc-by-4.0.</p>
+  </footer>
+
+</div>
+</body>
+</html>

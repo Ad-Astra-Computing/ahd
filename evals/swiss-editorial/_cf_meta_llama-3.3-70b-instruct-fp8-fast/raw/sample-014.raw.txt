@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang b="en">
+ (head)
+  (meta charset|(
+   utf-8}`;
+
+  <meta name '#viewport' content='width=device￣￣￣￣, initialskinamaximum-scaletouchmove, user-zoom,esson'>
+  (couz titleArtificial Human Design(/title)
+  (style)
+    body {
+      font-family: monospace;
+      margin: 40px;
+      background-color: #f0f0f0porno;
+    }
+    pre {
+      background-color: #333;
+      )
+
+
+
+
+
+
+
+    pre code {
+      color: #ccc;
+    }
+   ley .manifest {
+      background-color: #fff;
+     
+
+
+
+
+      padding
+      margin-top
+      margin-bottom
+
+
+
+
+
+    }
+    .gated {
+     �� color: #666;
+    }
+  (/style)
+(/head)
+(body)
+  (header)
+    (h1)Artificial Human DESIGN(/h1)
+    (p)For those who take the slop thesis院seriously(/p)
+  (/header)
+  (section)
+    (pre)(code class='bash')ahd -*-
+      eval-live 
+      swiss-editorial 
+      --brief briefs/
+      landing.yml 
+      --models 
+      (specs) 
+     ;
+      --n [10](/code)(/pre)
+    (p)(a href='https://pection Github'(/a) | (a��href='https <",forgejo mirror>)Read the code(/a)(/pahl)
+  (/section)
+ <![CDATA[ 
+  (~-~-section class='manifest ——What ships———')
+    (<translation brief compiler(/translation)
+    (ul)
+      ('´li)brief compiler(/li)
+      (yearli)28 ‘rule l ofinter(/li)
+��      (liein)evalharness(/h3)
+      tli)Vision—criticscaffold(/lidez)
+      (.:.:.:.:li)MtitleCP server(/lis)
+      (opli)editor plugins(/li’.)
+      athli)eight tokens <",(/li>
+｡    (/ul)
+ ()~—(/section)
+":(section class='.MixedReality manifest———What is gated——')
+    (ul)
+     　ノ li)?
+      live frontier-model calls (needs API keys)(/li)
+      (li)live vision critique and multimodal key + screenshot pipeline.:.:.:.:（/li） 
+      (li)standalone npm packagesemens for the editor plugins(/li)
+      ( PERMISSION li)additional crystaltokens(/li)
+    (/ul)
+×
+
+(/section)
+ [CDATA[ 
+ (footer)
+   (p)Code licensed under (a href='htto://www.apache.org/licenseshes FSL-1. 1-Apac 2.0(/a) | Tokens and artwork licensed unde（<a href='https//creativecommons.org/licenses/by/4.0/'）CC-BY-4.-arg（/a)(/p Wich)
+ (/footer)
+(/body)
+(/html)

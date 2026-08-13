@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><!-- rule: return a single, self-contained, valid HTML5 document -->
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- rule: surfaces: web -->
+  <title>ahd / artificial human design</title>
+  <style>
+    :root {
+      --bg: oklch(0.14 0.02 150); /* rule: dark green-black background */
+      --fg: oklch(0.92 0.12 135); /* rule: muted green foreground */
+      --dim: oklch(0.55 0.05 150); /* rule: muted supporting text */
+      --rule: oklch(0.3 0.04 150); /* rule: one hairline rule colour */
+      --amber: oklch(0.82 0.15 75); /* rule: a single amber accent */
+    }
+
+    * {
+      box-sizing: border-box; /* rule: rectangles only */
+    }
+
+    html,
+    body {
+      margin: 0; /* rule: remove decorative browser spacing when in doubt */
+      background: var(--bg); /* rule: dark green-black background */
+      color: var(--fg); /* rule: muted green foreground */
+      font-family: "Berkeley Mono", "IBM Plex Mono", "JetBrains Mono", ui-monospace, monospace; /* rule: everything in monospace */
+      font-size: 15px; /* rule: type scale base 15 */
+      line-height: 1.55; /* rule: body line-height 1.55 */
+    }
+
+    body {
+      min-height: 100vh; /* rule: one-page landing on web surface */
+      padding: 24px 16px; /* rule: space scale */
+    }
+
+    .page {
+      width: min(100%, 80ch); /* rule: everything aligns to an 80 character grid */
+      margin: 0 auto; /* rule: at least one element aligned to the char grid */
+    }
+
+    .rule {
+      border-top: 1px solid var(--rule); /* rule: one hairline rule colour */
+      height: 0; /* rule: rectangles only */
+      margin: 16px 0; /* rule: clearly separated sections */
+    }
+
+    .masthead,
+    .panel,
+    .footer {
+      border: 1px solid var(--rule); /* rule: border weight 1, solid, rule colour */
+      border-radius: 0; /* rule: no radii; only rectangles */
+      padding: 16px; /* rule: space scale */
+      background: transparent; /* rule: no gradients, no glassmorphism */
+      box-shadow: none; /* rule: shadows forbidden */
+    }
+
+    .masthead {
+      display: grid; /* rule: web layout with intentional structure instead of centred hero stack */
+      grid-template-columns: 1.35fr 0.9fr; /* rule: avoid three equal feature cards */
+      gap: 16px; /* rule: space scale */
+      align-items: start; /* rule: terse, technical composition */
+    }
+
+    h1,
+    h2,
+    p,
+    pre,
+    ul {
+      margin: 0; /* rule: remove excess framing when in doubt */
+    }
+
+    h1,
+    h2 {
+      font-size: 1rem; /* rule: technical, lowercase by default, terse */
+      font-weight: 700; /* rule: weights 400, 700 */
+      text-transform: lowercase; /* rule: voice technical, lowercase by default */
+      letter-spacing: 0.04em; /* rule: allcaps tracking alternative applied to labels/titles */
+    }
+
+    p + p,
+    ul + ul,
+    .panel > * + *,
+    .footer > * + * {
+      margin-top: 12px; /* rule: space scale */
+    }
+
+    .lead {
+      color: var(--fg); /* rule: muted green foreground */
+      max-width: 60ch; /* rule: measure under 72ch */
+    }
+
+    .dim {
+      color: var(--dim); /* rule: dim supporting text */
+    }
+
+    .accent {
+      color: var(--amber); /* rule: single amber accent */
+    }
+
+    a {
+      color: inherit; /* rule: links with no colour change */
+      text-decoration-line: underline; /* rule: underlined links */
+      text-decoration-color: currentColor; /* rule: no colour change */
+      text-underline-offset: 4px; /* rule: underline-offset 4px */
+    }
+
+    .cta {
+      display: inline-block; /* rule: rectangular link target */
+      padding: 0; /* rule: no pill badge */
+      color: var(--amber); /* rule: single amber accent used sparingly */
+    }
+
+    .diagram {
+      white-space: pre; /* rule: include one ASCII diagram rendered as text */
+      color: var(--dim); /* rule: muted secondary material */
+      overflow-x: auto; /* rule: surfaces: web */
+      border: 1px solid var(--rule); /* rule: rectangles only */
+      padding: 12px; /* rule: space scale */
+    }
+
+    pre {
+      overflow-x: auto; /* rule: surfaces: web */
+    }
+
+    code,
+    pre,
+    kbd {
+      font: inherit; /* rule: everything in monospace */
+    }
+
+    .command {
+      border: 1px solid var(--rule); /* rule: terminal-aesthetic code block */
+      padding: 12px; /* rule: space scale */
+      background: transparent; /* rule: no gradients */
+      color: var(--fg); /* rule: muted green foreground */
+    }
+
+    .manifest {
+      display: grid; /* rule: clearly separated manifest section */
+      grid-template-columns: 1fr 1fr; /* rule: two-column manifest, not centred hero stack */
+      gap: 16px; /* rule: space scale */
+    }
+
+    ul {
+      padding-left: 18px; /* rule: functional list structure */
+    }
+
+    li + li {
+      margin-top: 4px; /* rule: space scale */
+    }
+
+    .footer {
+      margin-top: 16px; /* rule: clearly separated footer */
+      color: var(--dim); /* rule: subdued footer */
+    }
+
+    .footer strong {
+      color: var(--fg); /* rule: foreground emphasis */
+      font-weight: 700; /* rule: weights 400, 700 */
+    }
+
+    @media (max-width: 760px) {
+      .masthead,
+      .manifest {
+        grid-template-columns: 1fr; /* rule: ensure the page loads properly on both desktop and mobile */
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page"><!-- rule: 80 character grid container -->
+    <section class="masthead"><!-- rule: avoid centred hero stack with pill badge + two CTAs -->
+      <div class="panel"><!-- rule: rectangles only -->
+        <h1>ahd / artificial human design</h1><!-- rule: technical, lowercase by default, terse -->
+        <div class="rule" aria-hidden="true"></div><!-- rule: one hairline rule colour -->
+        <p class="lead">
+          a framework for evaluating whether generated design holds up under
+          scrutiny, not just whether it looks expensive for six seconds.
+          <!-- rule: audience already suspects the problem and needs a framework rather than a lecture -->
+        </p>
+        <p class="dim">
+          the brief compiler constrains the ask. the linter names the violations.
+          the eval harness runs variants. the system stays plain about what is
+          ready now and what still depends on external keys or pipelines.
+          <!-- rule: one screen of reading; manifest-driven clarity -->
+        </p>
+        <p>
+          <a class="cta" href="https://github.com/artificialhumandesign/ahd">read the code</a>
+          <!-- rule: link to github labelled as the read-the-code CTA -->
+        </p>
+      </div>
+
+      <aside class="panel"><!-- rule: include at least one ASCII diagram rendered as text -->
+<pre class="diagram" aria-label="ascii diagram">brief -> linter -> eval -> critic -> notes
+   |        |        |        |
+   |        |        |        +-- gated live vision
+   |        |        +----------- ranked runs
+   |        +-------------------- 28 rules
+   +----------------------------- source of intent</pre>
+        <p class="dim">
+          one intentional imperfection: the first line lands one character off
+          the visual rhythm.
+          <!-- rule: include at least one intentional imperfection -->
+        </p>
+      </aside>
+    </section>
+
+    <div class="rule" aria-hidden="true"></div><!-- rule: clearly separated sections -->
+
+    <section class="panel"><!-- rule: terminal-aesthetic code block showing the one-liner -->
+      <h2>run the eval</h2><!-- rule: terse section title -->
+      <div class="rule" aria-hidden="true"></div><!-- rule: clearly separated content -->
+      <pre class="command"><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre><!-- rule: command rendered in a monospace code block with the language tag bash -->
+    </section>
+
+    <div class="rule" aria-hidden="true"></div><!-- rule: clearly separated manifest sections -->
+
+    <section class="manifest"><!-- rule: manifest section lists exactly what ships today versus what is gated -->
+      <section class="panel"><!-- rule: clearly separated manifest section titled 'What ships' -->
+        <h2>what ships</h2>
+        <div class="rule" aria-hidden="true"></div>
+        <ul>
+          <li>brief compiler</li><!-- rule: enumerates brief compiler -->
+          <li>28-rule linter</li><!-- rule: enumerates 28-rule linter -->
+          <li>eval harness</li><!-- rule: enumerates eval harness -->
+          <li>vision-critic scaffold</li><!-- rule: enumerates vision-critic scaffold -->
+          <li>mcp server</li><!-- rule: enumerates MCP server -->
+          <li>editor plugins</li><!-- rule: enumerates editor plugins -->
+          <li>eight tokens</li><!-- rule: enumerates eight tokens -->
+        </ul>
+      </section>
+
+      <section class="panel"><!-- rule: clearly separated manifest section titled 'What is gated' -->
+        <h2>what is gated</h2>
+        <div class="rule" aria-hidden="true"></div>
+        <ul>
+          <li>live frontier-model calls (needs api keys)</li><!-- rule: enumerates live frontier-model calls (needs API keys) -->
+          <li>live vision critique (needs multimodal key + screenshot pipeline)</li><!-- rule: enumerates live vision critique (needs multimodal key + screenshot pipeline) -->
+          <li>standalone npm packages for the editor plugins</li><!-- rule: enumerates standalone npm packages for the editor plugins -->
+          <li>additional tokens</li><!-- rule: enumerates additional tokens -->
+        </ul>
+      </section>
+    </section>
+
+    <footer class="footer"><!-- rule: footer names the licence explicitly -->
+      <p>
+        <strong>licence</strong>: fsl-1.1-apache-2.0 for code, cc-by-4.0 for tokens and artwork.
+        <!-- rule: footer must name the licence explicitly -->
+      </p>
+      <p class="dim">
+        no testimonials. no pricing theatre. no trust-bar furniture.
+        <!-- rule: no testimonials, no pricing tier, no "Trusted by" strip -->
+      </p>
+    </footer>
+  </main>
+</body>
+</html>

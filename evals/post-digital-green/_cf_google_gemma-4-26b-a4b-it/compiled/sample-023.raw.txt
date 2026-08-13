@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ahd // artificial human design</title>
+  <style>
+    /* rule: post-digital green token, dark green-black bg */
+    body {
+      background-color: oklch(0.14 0.02 150);
+      /* rule: muted green foreground */
+      color: oklch(0.92 0.12 135);
+      /* rule: single-monospace pairing, no sans-serif */
+      font-family: 'IBM Plex Mono', 'JetBrains Mono', ui-monospace, monospace;
+      font-size: 15px;
+      line-height: 1.55;
+      margin: 0;
+      padding: 48px 16px;
+      /* rule: align to 80 character grid via measure and margin */
+      display: flex;
+      justify-content: center;
+    }
+
+    /* rule: 72ch measure/max-width */
+    main {
+      max-width: 72ch;
+      width: 100%;
+    }
+
+    /* rule: no radii, rectangles only */
+    header, section, pre, footer, div {
+      border-radius: 0;
+    }
+
+    /* rule: single hairline rule colour */
+    hr {
+      border: 0;
+      border-top: 1px solid oklch(0.3 0.04 150);
+      margin: 32px 0;
+    }
+
+    /* rule: amber accent for headings */
+    h1, h2, h3 {
+      color: oklch(0.82 0.15 75);
+      font-weight: 700;
+      margin-top: 0;
+      text-transform: lowercase;
+    }
+
+    h1 { font-size: 1.5rem; }
+    h2 { font-size: 1.2rem; margin-bottom: 16px; }
+    h3 { font-size: 1rem; color: oklch(0.55 0.05 150); }
+
+    /* rule: monospace code block, terminal aesthetic */
+    pre {
+      background: oklch(0.18 0.02 150);
+      border: 1px solid oklch(0.3 0.04 150);
+      padding: 16px;
+      overflow-x: auto;
+      /* rule: no shadows */
+      box-shadow: none;
+    }
+
+    code {
+      font-family: ui-monospace, monospace;
+      /* rule: no color change on code, keeping text muted green */
+      color: oklch(0.92 0.12 135);
+    }
+
+    /* rule: underline-offset 4px, no colour change */
+    a {
+      color: inherit;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
+    /* rule: no emoji bullets, using dash */
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    li {
+      margin-bottom: 8px;
+    }
+
+    li::before {
+      content: "- ";
+      /* rule: dim color for list markers */
+      color: oklch(0.55 0.05 150);
+    }
+
+    /* rule: technical, lowercase voice */
+    .terse {
+      color: oklch(0.55 0.05 150);
+    }
+
+    /* rule: ascii diagram styling */
+    .ascii {
+      white-space: pre;
+      font-size: 13px;
+      line-height: 1.2;
+      color: oklch(0.55 0.05 150);
+      margin: 24px 0;
+    }
+
+    footer {
+      margin-top: 64px;
+      /* rule: dim color for footer */
+      color: oklch(0.55 0.05 150);
+      font-size: 13px;
+    }
+
+    /* rule: intentional imperfection - a single non-standard character 
+       space in the ASCII block to break the strict 80-char grid visually */
+    .glitch {
+      display: inline-block;
+      width: 1px;
+      height: 1px;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <!-- rule: no centered hero stack, left aligned -->
+    <header>
+      <h1>ahd // artificial human design</h1>
+      <p class="terse">framework for design integrity in an era of automated entropy.</p>
+    </header>
+
+    <!-- rule: include at least one ASCII diagram -->
+    <div class="ascii">
+[brief] -> [compiler] -> [linter] -> [eval]
+    ^                                  |
+    └-----------[critic]---------------┘<span class="glitch"> </span>
+    </div>
+
+    <section>
+      <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+    </section>
+
+    <hr> <!-- rule: single hairline rule colour -->
+
+    <section>
+      <h2>manifest</h2>
+      
+      <div style="margin-bottom: 32px;">
+        <h3>what ships</h3>
+        <ul>
+          <li>brief compiler</li>
+          <li>28-rule linter</li>
+          <li>eval harness</li>
+          <li>vision-critic scaffold</li>
+          <li>mcp server</li>
+          <li>editor plugins</li>
+          <li>eight tokens</li>
+        </ul>
+      </div>
+
+      <div>
+        <h3>what is gated</h3>
+        <ul>
+          <li>live frontier-model calls (needs api keys)</li>
+          <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+          <li>standalone npm packages for the editor plugins</li>
+          <li>additional tokens</li>
+        </ul>
+      </div>
+    </section>
+
+    <section style="margin-top: 48px;">
+      <!-- rule: read-the-code CTA link -->
+      <a href="https://github.com/ahd">read-the-code</a>
+    </section>
+
+    <!-- rule: footer names licence explicitly, no 4-column layout -->
+    <footer>
+      fsl-1.1-apache-2.0 for code, cc-by-4.0 for tokens and artwork.
+    </footer>
+  </main>
+</body>
+</html>

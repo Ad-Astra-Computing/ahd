@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>AHD</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+/* rule: Design in the Swiss / International Typographic Style */
+/* rule: Palette is ink on paper (warm off-white) */
+:root {
+  --ink: oklch(0.18 0 0);
+  --paper: oklch(0.98 0.005 95);
+  --spot: oklch(0.58 0.22 27);
+  --rule: oklch(0.18 0 0);
+  --muted: oklch(0.55 0 0);
+  
+  /* rule: Set display type in Neue Haas Grotesk Display */
+  --font-display: "Neue Haas Grotesk Display", "Helvetica Now Display", "Inter Tight", Helvetica, sans-serif;
+  /* rule: Body in Neue Haas Grotesk Text */
+  --font-text: "Neue Haas Grotesk Text", "Helvetica Now Text", "Inter", Helvetica, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  
+  /* rule: margin min 32, preferred calc(100vw/24) */
+  --margin: max(32px, calc(100vw / 24));
+}
+
+/* rule: 8px baseline */
+body {
+  background-color: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-text);
+  font-size: 17px;
+  line-height: 1.5;
+  margin: 0;
+  /* rule: Require one dramatic jump per section (160) */
+  padding: 0 0 160px 0; 
+  -webkit-font-smoothing: antialiased;
+}
+
+/* rule: Work on a 12-column grid with 24px gutters */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: 24px;
+  padding-left: var(--margin);
+  padding-right: var(--margin);
+}
+
+/* rule: Asymmetric left-aligned composition */
+.col-1-7 { grid-column: 1 / 8; }
+.col-1-12 { grid-column: 1 / 13; }
+.col-1-5 { grid-column: 1 / 6; }
+.col-7-11 { grid-column: 7 / 12; }
+.col-4-13 { grid-column: 4 / 13; }
+
+/* rule: Set display type in Neue Haas Grotesk Display at 96–160px with tracking -0.02em */
+.display {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.display-large {
+  font-size: 160px;
+  line-height: 1.05;
+  margin: 0;
+}
+
+/* rule: one section anchored by a single word at display >= 120px */
+.display-huge {
+  font-size: 144px;
+  line-height: 1.05;
+  margin: 0;
+  word-break: break-all;
+}
+
+/* rule: measure 62ch */
+.measure {
+  max-width: 62ch;
+}
+
+/* rule: 8px baseline spacing scale */
+.mt-160 { margin-top: 160px; }
+.mt-48 { margin-top: 48px; }
+.mt-32 { margin-top: 32px; }
+.mt-24 { margin-top: 24px; }
+.mt-16 { margin-top: 16px; }
+.pt-160 { padding-top: 160px; }
+.pt-24 { padding-top: 24px; }
+.pb-24 { padding-bottom: 24px; }
+
+/* Typography steps */
+.text-step-0 { font-size: 17px; }
+.text-step-minus-1 { font-size: 13px; }
+.text-step-1 { font-size: 23px; }
+.text-step-2 { font-size: 30px; }
+.text-muted { color: var(--muted); }
+
+.lh-h2 { line-height: 1.2; }
+
+/* rule: depth via rule, space and colour (no shadows) */
+.border-top { border-top: 1px solid var(--rule); }
+
+ul {
+  list-style: none; /* rule: no emoji bullets */
+  padding: 0;
+  margin: 0;
+}
+li {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--rule);
+}
+li:last-child {
+  border-bottom: none;
+}
+
+/* rule: single spot red used exactly once on the page */
+.spot {
+  color: var(--spot);
+}
+
+/* rule: No rounded corners except small status pills */
+.pill {
+  border-radius: 999px;
+  border: 1px solid var(--rule);
+  padding: 4px 12px;
+  font-size: 13px;
+  display: inline-block;
+  line-height: 1;
+  vertical-align: middle;
+  margin-left: 16px;
+  font-family: var(--font-text);
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+/* rule: A link to github labelled as the read-the-code CTA */
+.cta-link {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 23px;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 2px solid var(--ink);
+  padding-bottom: 4px;
+}
+/* rule: structural motion only; no entrance animations */
+.cta-link:hover {
+  color: var(--muted);
+  border-bottom-color: var(--muted);
+}
+
+/* rule: A terminal-aesthetic code block */
+pre {
+  background-color: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  padding: 24px;
+  margin: 0;
+  overflow-x: auto;
+  border: none;
+}
+code {
+  font-family: var(--font-mono);
+}
+
+/* rule: One intentional element must bleed past the grid */
+.bleed-right {
+  margin-right: calc(var(--margin) * -1);
+}
+
+@media (max-width: 800px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  .col-1-7, .col-1-12, .col-1-5, .col-7-11, .col-4-13 {
+    grid-column: 1 / -1;
+  }
+  .display-large { font-size: 96px; }
+  /* rule: anchored by single word at display >= 120px */
+  .display-huge { font-size: 120px; }
+  .bleed-right {
+    margin-right: calc(var(--margin) * -1);
+  }
+  .mt-160 { margin-top: 96px; }
+  .pt-160 { padding-top: 96px; }
+}
+</style>
+</head>
+<body>
+
+  <!-- rule: Asymmetric left-aligned composition -->
+  <!-- rule: Do not centre the hero -->
+  <div class="grid pt-160">
+    <div class="col-1-7">
+      <h1 class="display display-large">
+        AHD<!-- rule: single spot red used exactly once --><span class="spot">.</span>
+        <!-- rule: small status pills allowed for status tags -->
+        <span class="pill">v0.1.0</span>
+      </h1>
+      
+      <!-- rule: declarative, short sentences, no hedges, no Oxford commas -->
+      <p class="measure mt-32 text-step-0">
+        Artificial Human Design is a constraint framework. Generative interfaces default to probability and average aesthetics. We enforce rigid typographical and structural rulesets to produce deterministic results.
+      </p>
+      
+      <p class="measure mt-16 text-step-0">
+        We rely on mathematical grids and strict design tokens. The system rejects loose interpretations. It builds predictability into the pipeline.
+      </p>
+      
+      <div class="mt-48">
+        <!-- rule: A link to github labelled as the read-the-code CTA -->
+        <a href="https://github.com/ahd-org/ahd" aria-label="read-the-code CTA" class="cta-link">Read the code &rarr;</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid mt-160">
+    <div class="col-1-12">
+      <!-- rule: one section anchored by a single word at display >= 120px with -0.02em tracking -->
+      <h2 class="display display-huge">EVALUATE</h2>
+    </div>
+    
+    <!-- rule: One intentional element must bleed past the grid -->
+    <div class="col-4-13 mt-32 bleed-right">
+      <!-- rule: The command rendered in a monospace code block with the language tag bash -->
+      <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+    </div>
+  </div>
+
+  <div class="grid mt-160 pt-24 border-top">
+    <div class="col-1-5">
+      <!-- rule: A clearly separated manifest section titled 'What ships' -->
+      <h3 class="display text-step-2 lh-h2">What ships</h3>
+      <ul class="mt-32 text-step-0">
+        <!-- rule: enumerates specific items -->
+        <li>Brief compiler</li>
+        <li>28-rule linter</li>
+        <li>Eval harness</li>
+        <li>Vision-critic scaffold</li>
+        <li>MCP server</li>
+        <li>Editor plugins</li>
+        <li>Eight tokens</li>
+      </ul>
+    </div>
+    <div class="col-7-11">
+      <!-- rule: A clearly separated manifest section titled 'What is gated' -->
+      <h3 class="display text-step-2 lh-h2">What is gated</h3>
+      <ul class="mt-32 text-step-0">
+        <!-- rule: enumerates specific items -->
+        <li>Live frontier-model calls (needs API keys)</li>
+        <li>Live vision critique (needs multimodal key + screenshot pipeline)</li>
+        <li>Standalone npm packages for the editor plugins</li>
+        <li>Additional tokens</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- rule: A footer that names the licence explicitly -->
+  <!-- rule: avoid a canonical 4-column Product / Company / Resources / Legal footer -->
+  <footer class="grid mt-160 pt-24 pb-24 border-top">
+    <div class="col-1-12">
+      <p class="text-step-minus-1 text-muted">
+        Licences: FSL-1.1-Apache-2.0 for code. CC-BY-4.0 for tokens and artwork.
+      </p>
+    </div>
+  </footer>
+
+</body>
+</html>

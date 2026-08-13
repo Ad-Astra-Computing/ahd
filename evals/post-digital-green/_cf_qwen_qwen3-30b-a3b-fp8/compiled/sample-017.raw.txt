@@ -1,0 +1,119 @@
+
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AHD</title>
+  <style>
+    /* rule: single-monospace */
+    @import url('https://fonts.googleapis.com/css2?family=Berkeley+Mono:wght@400;700&display=swap');
+    body {
+      margin: 0;
+      font-family: 'Berkeley Mono', monospace;
+      background-color: oklch(0.14 0.02 150);
+      color: oklch(0.92 0.12 135);
+      line-height: 1.55;
+      max-width: 80ch;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+    code {
+      font-family: 'Berkeley Mono', monospace;
+      background-color: oklch(0.08 0.01 150);
+      padding: 0.25rem 0.5rem;
+      border: 1px solid oklch(0.3 0.04 150);
+    }
+    pre {
+      background-color: oklch(0.08 0.01 150);
+      border: 1px solid oklch(0.3 0.04 150);
+      padding: 1rem;
+      overflow-x: auto;
+    }
+    h1, h2 {
+      color: oklch(0.82 0.15 75);
+      margin-top: 2rem;
+    }
+    ul {
+      padding-left: 1.5rem;
+      margin: 1rem 0;
+    }
+    a {
+      text-decoration: underline;
+      text-underline-offset: 4px;
+      color: inherit;
+    }
+    footer {
+      margin-top: 4rem;
+      font-size: 0.875rem;
+      color: oklch(0.55 0.05 150);
+    }
+    /* rule: 80ch max-width */
+    main {
+      max-width: 80ch;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <pre>
+      <!-- rule: terminal-aesthetic code block -->
+      $ ahd eval-live swiss-editorial --brief briefs/landing.yml --models <specs> --n 10
+    </pre>
+
+    <h2>What ships</h2>
+    <ul>
+      <li>brief compiler</li>
+      <li>28-rule linter</li>
+      <li>eval harness</li>
+      <li>vision-critic scaffold</li>
+      <li>MCP server</li>
+      <li>editor plugins</li>
+      <li>eight tokens</li>
+    </ul>
+
+    <h2>What is gated</h2>
+    <ul>
+      <li>live frontier-model calls (needs API keys)</li>
+      <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+      <li>standalone npm packages for the editor plugins</li>
+      <li>additional tokens</li>
+    </ul>
+
+    <!-- rule: ASCII diagram -->
+    <pre>
+      +-----------------------------+
+      |   AHD EVAL-LIVE ARCHITECTURE   |
+      +---------+-------------------+
+                |                   |
+      +---------v---------+     +-----------------+
+      |   BRIEF COMPILER  |     |   28-RULE LINER |
+      +---------+---------+     +--------+--------+
+                |                           |
+      +---------v---------+     +-----------------+
+      |   EVAL HARNES   |-----| VISION-CRITIC   |
+      +---------+---------+     +--------+--------+
+                |                           |
+      +---------v---------+     +-----------------+
+      |   MCP SERVER    |-----| EDITOR PLUGINS  |
+      +-----------------+     +--------+--------+
+                                 |
+                         +-----v-----+
+                         |  EIGHT TOKENS |
+                         +-------------+
+    </pre>
+
+    <p>
+      <a href="https://github.com/ahd" target="_blank" rel="noopener noreferrer">
+        <!-- rule: read-the-code CTA -->
+        read-the-code
+      </a>
+    </p>
+  </main>
+  <footer>
+    <!-- rule: license -->
+    code: FSL-1.1-Apache-2.0 | tokens/artwork: CC-BY-4.0
+  </footer>
+</body>
+</html>

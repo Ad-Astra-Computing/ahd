@@ -1,0 +1,5 @@
+<!doctype html>
+<html lang b="en">
+ (head)
+  (meta charset="printStats-8")
+ [title]Artificial Human

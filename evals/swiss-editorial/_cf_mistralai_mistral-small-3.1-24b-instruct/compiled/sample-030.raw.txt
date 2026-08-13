@@ -1,0 +1,176 @@
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AHD - Artificial Human Design</title>
+  <style>
+    :root {
+      --ink: oklch(0.18 0 0);
+      --paper: oklch(0.98 0.005 95);
+      --spot: oklch(0.58 0.22 27);
+      --rule: oklch(0.18 0 0);
+      --muted: oklch(0.55 0 0);
+      --font-display: 'Neue Haas Grotesk Display', 'Helvetica Now Display', 'Inter Tight';
+      --font-text: 'Neue Haas Grotesk Text', 'Helvetica Now Text', 'Inter';
+      --base-font-size: 17px;
+      --line-height-body: 1.5;
+      --measure: 62ch;
+      --tracking-display: -0.02em;
+      --tracking-body: 0;
+      --tracking-allcaps: 0.08em;
+      --grid-gutter: 24px;
+      --grid-baseline: 8px;
+      --space-scale: 0, 4px, 8px, 12px, 16px, 24px, 32px, 48px, 64px, 96px, 160px;
+    }
+
+    body {
+      font-family: var(--font-text);
+      font-size: var(--base-font-size);
+      line-height: var(--line-height-body);
+      color: var(--ink);
+      background-color: var(--paper);
+      margin: 0;
+      padding: 0;
+      max-width: var(--measure);
+      /* rule: asymmetric left-aligned composition */
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 var(--grid-gutter);
+      /* rule: 12-column grid with 24px gutters */
+    }
+
+    h1, h2 {
+      font-family: var(--font-display);
+      letter-spacing: var(--tracking-display);
+      /* rule: display type in Neue Haas Grotesk Display at 96–160px with tracking -0.02em */
+    }
+
+    h1 {
+      font-size: 120px;
+      margin-bottom: var(--space-scale, 4);
+      /* rule: one section anchored by a single word at display >= 120px with -0.02em tracking */
+    }
+
+    h2 {
+      font-size: 64px;
+      margin-bottom: var(--space-scale, 3);
+    }
+
+    p {
+      margin-bottom: var(--space-scale, 3);
+    }
+
+    .code-block {
+      background-color: var(--ink);
+      color: var(--paper);
+      padding: var(--space-scale, 2);
+      border-radius: 0;
+      overflow-x: auto;
+      margin-bottom: var(--space-scale, 4);
+      /* rule: no shadows, no rounded corners except small status pills */
+    }
+
+    .code-block code {
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 16px;
+    }
+
+    .manifest {
+      margin-bottom: var(--space-scale, 5);
+    }
+
+    .manifest h2 {
+      margin-top: var(--space-scale, 5);
+    }
+
+    .manifest ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .manifest li {
+      margin-bottom: var(--space-scale, 2);
+    }
+
+    .manifest li::before {
+      content: "•";
+      margin-right: var(--space-scale, 1);
+      color: var(--spot);
+      /* rule: spot colour used exactly once */
+    }
+
+    .footer {
+      padding: var(--space-scale, 4) 0;
+      border-top: 1px solid var(--rule);
+      text-align: left;
+      /* rule: asymmetric left-aligned composition */
+    }
+
+    .footer p {
+      margin: 0;
+    }
+
+    .read-the-code {
+      color: var(--spot);
+      text-decoration: none;
+      /* rule: spot colour used exactly once */
+    }
+
+    .read-the-code:hover {
+      text-decoration: underline;
+    }
+
+    .bleed {
+      position: relative;
+      left: -24px;
+      /* rule: one intentional element must bleed past the grid */
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="bleed">AHD</h1>
+    <p>Artificial Human Design takes the problem of AI-generated design seriously. We provide a framework rather than a lecture. This is what ships today and what is gated on external resources.</p>
+
+    <div class="code-block">
+      <code class="language-bash">
+        ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10
+      </code>
+    </div>
+
+    <div class="manifest">
+      <h2>What ships</h2>
+      <ul>
+        <li>Brief compiler</li>
+        <li>28-rule linter</li>
+        <li>Eval harness</li>
+        <li>Vision-critic scaffold</li>
+        <li>MCP server</li>
+        <li>Editor plugins</li>
+        <li>Eight tokens</li>
+      </ul>
+
+      <h2>What is gated</h2>
+      <ul>
+        <li>Live frontier-model calls (needs API keys)</li>
+        <li>Live vision critique (needs multimodal key + screenshot pipeline)</li>
+        <li>Standalone npm packages for the editor plugins</li>
+        <li>Additional tokens</li>
+      </ul>
+    </div>
+
+    <a href="https://github.com/ahd" class="read-the-code">Read the code</a>
+  </div>
+
+  <div class="footer">
+    <p>Licence: FSL-1.1-Apache-2.0 for code, CC-BY-4.0 for tokens and artwork.</p>
+  </div>
+</body>
+</html>
+```

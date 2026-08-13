@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AHD — artificial human design</title>
+    <style>
+        /* rule: post-digital-green token */
+        /* rule: single-monospace pairing-rule */
+        :root {
+            --bg: oklch(0.14 0.02 150);
+            --fg: oklch(0.92 0.12 135);
+            --dim: oklch(0.55 0.05 150);
+            --rule: oklch(0.3 0.04 150);
+            --amber: oklch(0.82 0.15 75);
+            --font: 'Berkeley Mono', 'IBM Plex Mono', 'JetBrains Mono', ui-monospace, monospace;
+        }
+
+        /* rule: dark green-black background, muted green foreground */
+        body {
+            background-color: var(--bg);
+            color: var(--fg);
+            font-family: var(--font);
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            line-height: 1.55; /* rule: line-height body 1.55 */
+            /* rule: forbidden entrance animation, shadows, gradients, radii */
+        }
+
+        /* rule: 80 character grid alignment */
+        .container {
+            max-width: 80ch;
+            width: 100%;
+        }
+
+        /* rule: lowercase by default, terse */
+        h1, h2, h3, p, div, span, a {
+            text-transform: lowercase;
+        }
+
+        h1 {
+            font-size: 24px; /* rule: type scale steps */
+            font-weight: 700;
+            margin-bottom: 32px;
+            border-bottom: 1px solid var(--rule); /* rule: one hairline rule colour */
+            padding-bottom: 8px;
+        }
+
+        h2 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-top: 48px;
+            margin-bottom: 16px;
+            color: var(--dim);
+        }
+
+        /* rule: single amber accent */
+        .accent {
+            color: var(--amber);
+        }
+
+        /* rule: underlined links with an offset, no colour change */
+        a {
+            color: inherit;
+            text-decoration: underline;
+            text-underline-offset: 4px;
+        }
+
+        /* rule: terminal-aesthetic code block */
+        pre {
+            background-color: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--rule);
+            padding: 16px;
+            overflow-x: auto;
+            margin: 24px 0;
+            /* rule: rectangles only, no radii */
+        }
+
+        code {
+            font-family: var(--font);
+        }
+
+        .manifest-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            margin-top: 32px;
+            border-top: 1px solid var(--rule);
+            padding-top: 24px;
+        }
+
+        /* rule: avoid three equal feature cards */
+        @media (max-width: 600px) {
+            .manifest-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .manifest-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .manifest-section li {
+            margin-bottom: 8px;
+            position: relative;
+            padding-left: 15px;
+        }
+
+        /* rule: no emoji bullets */
+        .manifest-section li::before {
+            content: ">";
+            position: absolute;
+            left: 0;
+            color: var(--dim);
+        }
+
+        .ascii-art {
+            color: var(--dim);
+            line-height: 1.2;
+            margin: 32px 0;
+            user-select: none;
+        }
+
+        footer {
+            margin-top: 64px;
+            padding-top: 16px;
+            border-top: 1px solid var(--rule);
+            font-size: 12px;
+            color: var(--dim);
+        }
+
+        .cta-container {
+            margin-top: 48px;
+            padding: 24px;
+            border: 1px solid var(--amber); /* rule: single amber accent */
+            text-align: center;
+        }
+
+        /* rule: forbidden sans-serif body text */
+        * {
+            font-family: var(--font) !important;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- rule: name of the project -->
+        <h1>ahd: artificial human design</h1>
+
+        <p>
+            the internet is saturated with generic interpolation. we provide the framework to verify, 
+            lint, and enforce high-fidelity design intent in automated pipelines. ahd is not a 
+            generator; it is a standard for machine-readable aesthetics.
+        </p>
+
+        <!-- rule: at least one ASCII diagram rendered as text -->
+        <pre class="ascii-art">
++-----------------+       +-----------------+       +-----------------+
+|  brief compiler | ----> |  28-rule linter | ----> |  eval harness   |
++-----------------+       +-----------------+       +-----------------+
+                                   |
+                          +-----------------+
+                          |  vision critic  |
+                          +-----------------+
+        </pre>
+
+        <p>
+            run the evaluation harness against your local design briefs to measure 
+            compliance before deployment.
+        </p>
+
+        <!-- rule: command rendered in a monospace code block with language tag bash -->
+        <pre><code class="language-bash"><span class="accent">$</span> ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+
+        <div class="manifest-grid">
+            <!-- rule: manifest section titled 'What ships' -->
+            <div class="manifest-section">
+                <h2>what ships</h2>
+                <ul>
+                    <li>brief compiler</li>
+                    <li>28-rule linter</li>
+                    <li>eval harness</li>
+                    <li>vision-critic scaffold</li>
+                    <li>mcp server</li>
+                    <li>editor plugins</li>
+                    <li>eight tokens</li>
+                </ul>
+            </div>
+
+            <!-- rule: manifest section titled 'What is gated' -->
+            <div class="manifest-section">
+                <h2>what is gated</h2>
+                <ul>
+                    <li>live frontier-model calls (needs api keys)</li>
+                    <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+                    <li>standalone npm packages for the editor plugins</li>
+                    <li>additional tokens</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="cta-container">
+            <!-- rule: link to github labelled as the read-the-code CTA -->
+            <a href="https://github.com/ahd-org/ahd">read-the-code</a>
+        </div>
+
+        <footer>
+            <!-- rule: names the licence explicitly -->
+            <div>code: fsl-1.1-apache-2.0</div>
+            <div>tokens/artwork: cc-by-4.0</div>
+            <div style="margin-top: 8px;">© 2024 artificial human design</div>
+        </footer>
+    </div>
+
+</body>
+</html>

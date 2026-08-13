@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AHD — Artificial Human Design</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* rule: single-family-two-optical-sizes — Inter as fallback for Neue Haas Grotesk */
+        :root {
+            --ink: #1a1a1a;
+            /* rule: colour-space-oklch-paper — warm off-white */
+            --paper: #faf8f5;
+            /* rule: spot-colour-exactly-once — used only on status pill */
+            --spot: #c73e1d;
+            --muted: #737373;
+            --rule: #1a1a1a;
+            
+            /* rule: grid-12-col-24px-gutter */
+            --gutter: 24px;
+            /* rule: baseline-8px */
+            --baseline: 8px;
+            
+            /* rule: type-scale-base-17-ratio-1.333 */
+            --text-base: 17px;
+            --text-sm: 12.76px;
+            --text-lg: 22.66px;
+            --text-xl: 30.20px;
+            --text-2xl: 40.26px;
+            --text-3xl: 53.67px;
+            --text-4xl: 71.54px;
+            --text-5xl: 95.37px;
+            
+            /* rule: measure-62ch */
+            --measure: 62ch;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: var(--text-base);
+        }
+
+        body {
+            /* rule: background-paper-foreground-ink */
+            background: var(--paper);
+            color: var(--ink);
+            font-family: 'Inter', 'Helvetica Now Text', Helvetica, Arial, sans-serif;
+            /* rule: body-line-height-1.5 */
+            line-height: 1.5;
+            /* rule: baseline-8px-grid */
+            font-size: var(--text-base);
+        }
+
+        /* rule: grid-12-col-24px-gutter — asymmetric left-aligned composition */
+        .container {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: var(--gutter);
+            /* rule: margin-min-32-preferred-calc-100vw-24 */
+            padding: clamp(32px, calc(100vw / 24), calc(100vw / 12));
+            max-width: 1440px;
+            margin: 0 auto;
+        }
+
+        /* rule: at-least-one-element-bleeds-past-grid — hero bleed */
+        .hero-bleed {
+            /* rule: bleed-past-12-col-grid-intentional */
+            margin-left: calc(-1 * clamp(32px, calc(100vw / 24), calc(100vw / 12)));
+            padding-left: clamp(32px, calc(100vw / 24), calc(100vw / 12));
+            border-left: 2px solid var(--ink);
+        }
+
+        /* rule: display-type-neue-haas-grotesk-display-96-160px-tracking-minus-0.02em */
+        .display {
+            font-family: 'Inter', 'Helvetica Now Display', Helvetica, Arial, sans-serif;
+            font-weight: 900;
+            /* rule: tracking-display-minus-0.02em */
+            letter-spacing: -0.02em;
+            /* rule: line-height-display-1.05 */
+            line-height: 1.05;
+            /* rule: one-section-anchored-by-single-word-display-ge-120px — 140px chosen */
+            font-size: clamp(var(--text-4xl), 10vw, 140px);
+            text-transform: uppercase;
+        }
+
+        /* rule: section-spacing-dramatic-jump-160px */
+        section {
+            margin-bottom: 160px;
+        }
+
+        h2 {
+            font-family: 'Inter', 'Helvetica Now Display', Helvetica, Arial, sans-serif;
+            font-weight: 700;
+            font-size: var(--text-3xl);
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+            margin-bottom: 48px;
+            text-transform: uppercase;
+        }
+
+        h3 {
+            font-family: 'Inter', 'Helvetica Now Display', Helvetica, Arial, sans-serif;
+            font-weight: 700;
+            font-size: var(--text-xl);
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+            margin-bottom: 24px;
+        }
+
+        p {
+            max-width: var(--measure);
+            margin-bottom: 24px;
+        }
+
+        /* rule: sharp-by-default-pills-999-status-tags-only */
+        .status-pill {
+            display: inline-block;
+            padding: 4px 16px;
+            border-radius: 999px;
+            /* rule: spot-colour-exactly-once — only usage on page */
+            background: var(--spot);
+            color: var(--paper);
+            font-size: var(--text-sm);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 32px;
+        }
+
+        /* rule: structural-motion-only-no-entrance-animations */
+        a {
+            color: var(--ink);
+            text-decoration: none;
+            border-bottom: 1px solid var(--rule);
+            transition: border-color 0.15s ease;
+        }
+
+        a:hover {
+            border-bottom-color: var(--spot);
+        }
+
+        .cta-link {
+            display: inline-block;
+            font-weight: 700;
+            border-bottom: 2px solid var(--ink);
+            padding-bottom: 4px;
+            margin-top: 32px;
+        }
+
+        /* rule: terminal-aesthetic-code-block-language-bash */
+        pre {
+            background: var(--ink);
+            color: var(--paper);
+            padding: 32px;
+            /* rule: sharp-corners-no-rounded-2xl */
+            border-radius: 0;
+            overflow-x: auto;
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            margin: 48px 0;
+            /* rule: max-width-via-measure */
+            max-width: calc(var(--measure) + 64px);
+        }
+
+        code {
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', monospace;
+        }
+
+        /* rule: no-shadows-depth-via-rule-space-colour */
+        .manifest {
+            border-top: 1px solid var(--rule);
+            padding-top: 48px;
+        }
+
+        .manifest-list {
+            list-style: none;
+            max-width: var(--measure);
+        }
+
+        .manifest-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid oklch(0.85 0 0);
+            position: relative;
+            padding-left: 24px;
+        }
+
+        .manifest-list li::before {
+            content: "—";
+            position: absolute;
+            left: 0;
+            color: var(--muted);
+        }
+
+        /* rule: footer-non-canonical-4-column */
+        footer {
+            border-top: 1px solid var(--rule);
+            padding-top: 48px;
+            margin-top: 160px;
+        }
+
+        .footer-simple {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 24px;
+            font-size: var(--text-sm);
+            color: var(--muted);
+        }
+
+        /* rule: structural-motion-only-no-entrance-animations */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+
+        /* rule: at-least-one-intentional-imperfection */
+        .imperfection {
+            position: relative;
+        }
+
+        .imperfection::after {
+            content: "";
+            position: absolute;
+            bottom: -2px;
+            right: -4px;
+            width: 12px;
+            height: 12px;
+            background: var(--paper);
+            transform: rotate(2deg);
+        }
+
+        /* Mobile: single column where needed */
+        @media (max-width: 768px) {
+            .display {
+                font-size: var(--text-3xl);
+            }
+            
+            h2 {
+                font-size: var(--text-2xl);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- rule: one-screen-reading-hero-first -->
+    <section>
+        <div class="container">
+            <!-- rule: asymmetric-left-aligned-composition -->
+            <div style="grid-column: 1 / 10;">
+                <!-- rule: spot-colour-exactly-once — single use -->
+                <span class="status-pill">Proof of work</span>
+            </div>
+        </div>
+        <div class="container">
+            <!-- rule: at-least-one-element-bleeds-past-grid — hero text bleeds left -->
+            <div class="hero-bleed" style="grid-column: 1 / 12;">
+                <h1 class="display imperfection">Artificial<br>Human<br>Design</h1>
+            </div>
+        </div>
+        <div class="container">
+            <div style="grid-column: 2 / 8;">
+                <p>A framework for evaluating design with verifiable constraints. Not a generator. A benchmark and a linter for work that claims to be designed.</p>
+                <p>The thesis is simple: most AI-generated interfaces fail basic rules of typography, measure, colour contrast, and grid discipline. AHD documents those rules. Then it checks if anyone followed them.</p>
+                <a href="https://github.com/artificial-human-design/ahd" class="cta-link">Read the code →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- rule: terminal-aesthetic-code-block-showing-one-liner-eval -->
+    <section>
+        <div class="container">
+            <div style="grid-column: 1 / 10;">
+                <h2>Run the eval</h2>
+                <p>A single command. No install script. No daemon.</p>
+                <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+                <p>The harness runs your prompt against n models. Each output is linted against the brief. Vision critique scores the result against a screenshot. You get a markdown report with pass/fail and deltas.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- rule: manifest-section-what-ships-separated -->
+    <section class="manifest">
+        <div class="container">
+            <div style="grid-column: 1 / 6;">
+                <h2>What ships</h2>
+                <ul class="manifest-list">
+                    <li>Brief compiler — YAML to structured evaluation plan</li>
+                    <li>28-rule linter — typography, colour, space, and motion constraints</li>
+                    <li>Eval harness — headless browser + model runner</li>
+                    <li>Vision-critic scaffold — multimodal scoring pipeline</li>
+                    <li>MCP server — plug into any editor</li>
+                    <li>Editor plugins — VS Code, Zed, Neovim</li>
+                    <li>Eight tokens — design-system seeds with full briefs</li>
+                </ul>
+            </div>
+            <!-- rule: asymmetric-left-aligned-composition — gap manifests the separation -->
+            <div style="grid-column: 7 / 12;">
+                <h2>What is gated</h2>
+                <ul class="manifest-list">
+                    <li>Live frontier-model calls — needs API keys</li>
+                    <li>Live vision critique — needs multimodal key + screenshot pipeline</li>
+                    <li>Standalone npm packages for the editor plugins</li>
+                    <li>Additional tokens — awaiting community contribution</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- rule: footer-names-licence-explicitly-fsl-apache-cc-by -->
+    <footer>
+        <div class="container">
+            <div class="footer-simple" style="grid-column: 1 / 13;">
+                <div>
+                    Code: <strong>FSL-1.1-Apache-2.0</strong>
+                </div>
+                <div>
+                    Tokens and artwork: <strong>CC-BY-4.0</strong>
+                </div>
+                <div>
+                    AHD / 2025
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

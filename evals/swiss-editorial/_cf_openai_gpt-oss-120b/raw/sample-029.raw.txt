@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Artificial Human Design – AHD</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  body {
+    font-family: system-ui, sans-serif;
+    margin: 0;
+    line-height: 1.6;
+    color: #111;
+    background: #fdfdfd;
+    padding: 2rem;
+  }
+  h1 { font-size: 2.2rem; margin-bottom: .5rem; }
+  h2 { font-size: 1.6rem; margin-top: 2rem; }
+  a.cta {
+    display: inline-block;
+    margin-top: .5rem;
+    padding: .4rem .8rem;
+    background:#0066cc;
+    color:#fff;
+    text-decoration:none;
+    border-radius:4px;
+    font-weight:600;
+  }
+  pre {
+    background:#272822;
+    color:#f8f8f2;
+    padding:1rem;
+    overflow:auto;
+    border-radius:4px;
+    margin-top:1rem;
+  }
+  code {
+    font-family: Menlo,Monaco,Consolas,"Courier New",monospace;
+  }
+  ul { padding-left:1.2rem; }
+  li { margin-bottom:.4rem; }
+  footer {
+    margin-top:3rem;
+    font-size:.9rem;
+    color:#555;
+    border-top:1px solid #e0e0e0;
+    padding-top:1rem;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Artificial Human Design (AHD)</h1>
+  <p>A pragmatic framework for designers, engineers, and founders who want to keep control over AI‑generated output.</p>
+  <a class="cta" href="https://github.com/yourorg/ahd" target="_blank" rel="noopener">read‑the‑code</a>
+</header>
+
+<section>
+  <h2>One‑liner evaluation</h2>
+  <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+</section>
+
+<section>
+  <h2>What ships</h2>
+  <ul>
+    <li>Brief compiler</li>
+    <li>28‑rule linter</li>
+    <li>Eval harness</li>
+    <li>Vision‑critic scaffold</li>
+    <li>MCP server</li>
+    <li>Editor plugins</li>
+    <li>Eight tokens</li>
+  </ul>
+</section>
+
+<section>
+  <h2>What is gated</h2>
+  <ul>
+    <li>Live frontier‑model calls (needs API keys)</li>
+    <li>Live vision critique (needs multimodal key + screenshot pipeline)</li>
+    <li>Standalone npm packages for the editor plugins</li>
+    <li>Additional tokens</li>
+  </ul>
+</section>
+
+<footer>
+  <p>Code licence: <strong>FSL‑1.1‑Apache‑2.0</strong></p>
+  <p>Tokens &amp; artwork licence: <strong>CC‑BY‑4.0</strong></p>
+</footer>
+
+</body>
+</html>

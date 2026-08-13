@@ -1,0 +1,146 @@
+
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AHD — Swiss Editorial</title>
+  <style>
+    :root {
+      --font-display: "Neue Haas Grotesk Display", "Helvetica Now Display", "Inter Tight";
+      --font-text: "Neue Haas Grotesk Text", "Helvetica Now Text", "Inter";
+      --ink: oklch(0.18 0 0);
+      --paper: oklch(0.98 0.005 95);
+      --spot: oklch(0.58 0.22 27);
+      --rule: oklch(0.18 0 0);
+      --baseline: 8px;
+      --gutter: 24px;
+      --margin: calc(100vw / 24);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font-text);
+      font-size: 17px;
+      line-height: 1.5;
+      color: var(--ink);
+      background: var(--paper);
+      padding: 32px var(--margin);
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: var(--gutter);
+      min-height: 100vh;
+      scroll-behavior: smooth;
+    }
+
+    h1 {
+      grid-column: 1 / -1;
+      font-family: var(--font-display);
+      font-size: 96px;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      margin-bottom: 24px;
+      /* rule: asymmetric left-aligned composition */
+    }
+
+    pre {
+      grid-column: 1 / -1;
+      background: var(--ink);
+      color: var(--paper);
+      padding: 16px 24px;
+      border: 1px solid var(--rule);
+      font-family: 'Courier New', monospace;
+      font-size: 16px;
+      margin-bottom: 48px;
+      /* rule: terminal-aesthetic code block */
+    }
+
+    .manifest {
+      grid-column: 1 / -1;
+      margin-bottom: 48px;
+    }
+
+    .manifest h2 {
+      font-size: 24px;
+      margin-bottom: 16px;
+      color: var(--ink);
+    }
+
+    .manifest ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .manifest li {
+      margin-bottom: 8px;
+    }
+
+    .cta {
+      grid-column: 1 / -1;
+      margin-bottom: 48px;
+    }
+
+    .cta a {
+      display: inline-block;
+      padding: 8px 16px;
+      background: var(--spot);
+      color: var(--paper);
+      text-decoration: none;
+      border-radius: 2px;
+      font-weight: 700;
+      /* rule: small status pills allowed */
+    }
+
+    footer {
+      grid-column: 1 / -1;
+      font-size: 14px;
+      color: var(--ink);
+      margin-top: auto;
+    }
+
+    .bleed {
+      grid-column: 1 / -1;
+      margin-left: -24px;
+      width: calc(100% + 24px);
+      /* rule: one intentional element bleeds past the grid */
+    }
+  </style>
+</head>
+<body>
+  <h1>AHD</h1>
+  <pre class="bleed"><code class="bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+  <div class="manifest">
+    <h2>What ships</h2>
+    <ul>
+      <li>brief compiler</li>
+      <li>28-rule linter</li>
+      <li>eval harness</li>
+      <li>vision-critic scaffold</li>
+      <li>MCP server</li>
+      <li>editor plugins</li>
+      <li>eight tokens</li>
+    </ul>
+  </div>
+  <div class="manifest">
+    <h2>What is gated</h2>
+    <ul>
+      <li>live frontier-model calls (needs API keys)</li>
+      <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+      <li>standalone npm packages for the editor plugins</li>
+      <li>additional tokens</li>
+    </ul>
+  </div>
+  <div class="cta">
+    <a href="https://github.com" class="read-the-code">Read the code</a>
+  </div>
+  <footer>
+    <p>Code: FSL-1.1-Apache-2.0 | Tokens & artwork: CC-BY-4.0</p>
+  </footer>
+</body>
+</html>

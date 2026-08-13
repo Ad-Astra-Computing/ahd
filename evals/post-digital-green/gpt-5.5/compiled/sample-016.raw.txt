@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <!-- rule: self-contained valid HTML5 document -->
+  <meta charset="utf-8">
+  <!-- rule: web surface -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- rule: one-page landing for AHD itself -->
+  <title>AHD / Artificial Human Design</title>
+  <style>
+    /* rule: single-monospace type family; no sans-serif body text */
+    :root {
+      --font: "Berkeley Mono", "IBM Plex Mono", "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      /* rule: Post-Digital Green token palette */
+      --bg: oklch(0.14 0.02 150);
+      --fg: oklch(0.92 0.12 135);
+      --dim: oklch(0.55 0.05 150);
+      --rule: oklch(0.3 0.04 150);
+      --amber: oklch(0.82 0.15 75);
+      /* rule: 80 character grid */
+      --grid: 80ch;
+      --baseline: 8px;
+    }
+
+    /* rule: no gradients, no shadows, no radii, no entrance animation */
+    * {
+      box-sizing: border-box;
+      border-radius: 0;
+      box-shadow: none;
+      animation: none;
+      letter-spacing: 0;
+    }
+
+    /* rule: dark green-black background, muted green foreground */
+    html {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--font);
+      font-size: 15px;
+      line-height: 1.55;
+    }
+
+    /* rule: rectangles only; one screen of reading */
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--fg);
+    }
+
+    /* rule: align to 80 character grid */
+    main {
+      width: min(var(--grid), calc(100vw - 32px));
+      margin: 0 auto;
+      padding: 32px 0 24px;
+    }
+
+    /* rule: hairline rule colour only */
+    header,
+    section,
+    footer {
+      border-top: 1px solid var(--rule);
+    }
+
+    /* rule: terse technical voice, lowercase by default */
+    header {
+      display: grid;
+      grid-template-columns: 18ch 1fr;
+      gap: 1ch;
+      padding: 12px 0 16px;
+      text-transform: lowercase;
+    }
+
+    /* rule: brand must be first-viewport signal */
+    h1 {
+      grid-column: 1 / -1;
+      margin: 0;
+      color: var(--fg);
+      font-size: 2.074rem;
+      line-height: 1.1;
+      font-weight: 700;
+    }
+
+    /* rule: no centred hero stack */
+    .kicker {
+      color: var(--amber);
+      font-weight: 700;
+    }
+
+    /* rule: one amber accent */
+    .accent {
+      color: var(--amber);
+    }
+
+    /* rule: compact one-screen copy for designers, engineers, founders */
+    .lede {
+      grid-column: 1 / -1;
+      max-width: 72ch;
+      margin: 8px 0 0;
+      color: var(--fg);
+    }
+
+    /* rule: underlined links with offset, no colour change */
+    a {
+      color: inherit;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+      text-decoration-thickness: 1px;
+    }
+
+    /* rule: terminal-aesthetic code block */
+    pre {
+      margin: 16px 0 0;
+      padding: 12px;
+      overflow-x: auto;
+      color: var(--fg);
+      background: transparent;
+      border: 1px solid var(--rule);
+      font: 400 0.92rem/1.55 var(--font);
+    }
+
+    /* rule: monospace code everywhere */
+    code {
+      font-family: var(--font);
+    }
+
+    /* rule: clearly separated manifest sections */
+    section {
+      padding: 12px 0 14px;
+    }
+
+    /* rule: smaller headings inside compact panels */
+    h2 {
+      margin: 0 0 8px;
+      color: var(--amber);
+      font-size: 1rem;
+      line-height: 1.25;
+      font-weight: 700;
+      text-transform: lowercase;
+    }
+
+    /* rule: enumerate manifest without emoji bullets */
+    ol {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0 2ch;
+      margin: 0;
+      padding-left: 3ch;
+    }
+
+    /* rule: rectangular dense information layout */
+    li {
+      padding: 1px 0;
+    }
+
+    /* rule: include one ASCII diagram rendered as text */
+    .diagram {
+      margin: 12px 0 0;
+      padding: 8px 0 0;
+      color: var(--dim);
+      white-space: pre;
+      border-top: 1px solid var(--rule);
+    }
+
+    /* rule: footer names licence explicitly; no 4-column canonical footer */
+    footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 2ch;
+      padding: 12px 0 0;
+      color: var(--dim);
+      font-size: 0.833rem;
+    }
+
+    /* rule: intentional imperfection from quirks: one line is offset by one character */
+    .quirk {
+      padding-left: 1ch;
+    }
+
+    /* rule: text must fit on mobile */
+    @media (max-width: 620px) {
+      main {
+        width: calc(100vw - 24px);
+        padding-top: 20px;
+      }
+
+      header {
+        grid-template-columns: 1fr;
+      }
+
+      ol {
+        grid-template-columns: 1fr;
+      }
+
+      footer {
+        display: block;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- rule: actual usable landing page first screen, not marketing fluff -->
+  <main>
+    <!-- rule: brand/product is first viewport signal -->
+    <header>
+      <!-- rule: terse technical voice -->
+      <div class="kicker">ahd</div>
+      <!-- rule: read-the-code CTA link required -->
+      <nav aria-label="source"><a href="https://github.com/ahd-design/ahd">read-the-code CTA</a></nav>
+      <!-- rule: H1 names brand/product -->
+      <h1>artificial human design</h1>
+      <!-- rule: audience already suspects the problem; no slop lecture -->
+      <p class="lede">
+        AHD is a brief compiler, rule linter, and eval harness for checking whether generated interfaces obey a design system instead of merely resembling one.
+      </p>
+      <!-- rule: intentional imperfection required; offset one character -->
+      <p class="lede quirk">
+        it treats taste as constraints, evidence, and repeatable criticism.
+      </p>
+      <!-- rule: required bash one-liner rendered in monospace code block -->
+      <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+      <!-- rule: at least one ASCII diagram rendered as text -->
+      <pre class="diagram" aria-label="AHD evaluation flow"><code>brief.yml -&gt; compiler -&gt; rules -&gt; eval harness -&gt; report
+             |             |             |
+             v             v             v
+          tokens       linter       vision critic</code></pre>
+    </header>
+
+    <!-- rule: clearly separated manifest section titled What ships -->
+    <section aria-labelledby="ships">
+      <h2 id="ships">What ships</h2>
+      <!-- rule: exactly enumerates required shipped items -->
+      <ol>
+        <li>brief compiler</li>
+        <li>28-rule linter</li>
+        <li>eval harness</li>
+        <li>vision-critic scaffold</li>
+        <li>MCP server</li>
+        <li>editor plugins</li>
+        <li>eight tokens</li>
+      </ol>
+    </section>
+
+    <!-- rule: clearly separated manifest section titled What is gated -->
+    <section aria-labelledby="gated">
+      <h2 id="gated">What is gated</h2>
+      <!-- rule: exactly enumerates required gated items -->
+      <ol>
+        <li>live frontier-model calls (needs API keys)</li>
+        <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+        <li>standalone npm packages for the editor plugins</li>
+        <li>additional tokens</li>
+      </ol>
+    </section>
+
+    <!-- rule: footer names licence explicitly -->
+    <footer>
+      <span>code: FSL-1.1-Apache-2.0</span>
+      <span>tokens and artwork: CC-BY-4.0</span>
+    </footer>
+  </main>
+</body>
+</html>

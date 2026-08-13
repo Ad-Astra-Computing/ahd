@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AHD | Artificial Human Design</title>
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --fg: #f5f5f5;
+    --muted: #888888;
+    --border: #222222;
+    --mono: "JetBrains Mono", "Geist Mono", SFMono-Regular, Consolas, monospace;
+    --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    padding: 12vh 6vw;
+    font-family: var(--sans);
+    background-color: var(--bg);
+    color: var(--fg);
+    line-height: 1.6;
+    max-width: 800px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1 {
+    font-size: 2rem;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    margin: 0 0 2rem 0;
+    color: #ffffff;
+  }
+
+  p {
+    font-size: 1.125rem;
+    color: var(--muted);
+    margin: 0 0 1.5rem 0;
+    max-width: 65ch;
+  }
+
+  .terminal {
+    background: #000000;
+    border: 1px solid var(--border);
+    padding: 1.5rem;
+    margin: 3rem 0;
+    overflow-x: auto;
+  }
+
+  .terminal pre {
+    margin: 0;
+  }
+
+  .terminal code {
+    font-family: var(--mono);
+    font-size: 0.875rem;
+    color: #d4d4d4;
+  }
+
+  .manifest-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4rem;
+    margin: 4rem 0;
+    border-top: 1px solid var(--border);
+    padding-top: 3rem;
+  }
+
+  .manifest-section {
+    flex: 1;
+    min-width: 300px;
+  }
+
+  h2 {
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+    margin: 0 0 1.5rem 0;
+    color: #ffffff;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  li {
+    font-size: 0.9375rem;
+    color: var(--muted);
+    margin-bottom: 0.75rem;
+    padding-left: 1rem;
+    position: relative;
+  }
+
+  li::before {
+    content: "+";
+    position: absolute;
+    left: 0;
+    color: #444444;
+  }
+
+  .cta-container {
+    margin: 4rem 0;
+  }
+
+  a.cta {
+    display: inline-flex;
+    align-items: center;
+    background: #ffffff;
+    color: #000000;
+    text-decoration: none;
+    padding: 0.75rem 1.5rem;
+    font-weight: 500;
+    font-size: 0.9375rem;
+    transition: background-color 0.2s ease;
+  }
+
+  a.cta:hover {
+    background: #e0e0e0;
+  }
+
+  footer {
+    margin-top: 6rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: #555555;
+  }
+</style>
+</head>
+<body>
+
+  <h1>Artificial Human Design</h1>
+
+  <p>You have seen the state of generated interfaces over the last month. The default output is unstructured, illegible and detached from intent. AHD (Artificial Human Design) is a framework that takes the problem of slop seriously. It provides the leverage to force large language models into rendering structurally sound code.</p>
+
+  <p>Instead of writing open-ended prompts, you compile rigid briefs. You evaluate outputs against a strict ruleset. You rely on mechanical linting and vision-critic scaffolds to enforce baseline layout invariants. AHD provides the harness. You provide the constraints.</p>
+
+  <div class="terminal">
+    <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+  </div>
+
+  <div class="manifest-container">
+    <div class="manifest-section">
+      <h2>What ships</h2>
+      <ul>
+        <li>brief compiler</li>
+        <li>28-rule linter</li>
+        <li>eval harness</li>
+        <li>vision-critic scaffold</li>
+        <li>MCP server</li>
+        <li>editor plugins</li>
+        <li>eight tokens</li>
+      </ul>
+    </div>
+    
+    <div class="manifest-section">
+      <h2>What is gated</h2>
+      <ul>
+        <li>live frontier-model calls (needs API keys)</li>
+        <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+        <li>standalone npm packages for the editor plugins</li>
+        <li>additional tokens</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="cta-container">
+    <a href="https://github.com/ahd-project/ahd" class="cta">Read the code on GitHub</a>
+  </div>
+
+  <footer>
+    FSL-1.1-Apache-2.0 for code | CC-BY-4.0 for tokens and artwork
+  </footer>
+
+</body>
+</html>

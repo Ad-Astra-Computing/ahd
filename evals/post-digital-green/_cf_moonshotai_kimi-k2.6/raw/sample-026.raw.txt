@@ -1,0 +1,518 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AHD — Aesthetic & Ethos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+    <style type="text/tailwindcss">
+        @layer base {
+            :root {
+                --font-sans: 'Inter', system-ui, sans-serif;
+                --font-mono: 'Space Mono', monospace;
+                --font-serif: 'Cormorant Garamond', serif;
+                --bg-primary: #0a0a0a;
+                --bg-secondary: #111111;
+                --bg-tertiary: #161616;
+                --bg-terminal: #0d0d0d;
+                --text-primary: #e8e6e3;
+                --text-secondary: #a0a0a0;
+                --text-muted: #666666;
+                --text-dim: #444444;
+                --accent-amber: #c9a96e;
+                --accent-amber-dim: #8a7340;
+                --border-subtle: #222222;
+                --border-dim: #1a1a1a;
+                --token-warm: #b88a5e;
+                --token-cool: #7a9e8c;
+                --token-neutral: #9a9a9a;
+            }
+            
+            body {
+                font-family: var(--font-sans);
+                background-color: var(--bg-primary);
+                color: var(--text-primary);
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+            }
+            
+            ::selection {
+                background: rgba(201, 169, 110, 0.2);
+                color: var(--text-primary);
+            }
+        }
+        
+        @layer components {
+            .font-mono { font-family: var(--font-mono); }
+            .font-serif { font-family: var(--font-serif); }
+            
+            .text-amber { color: var(--accent-amber); }
+            .text-amber-dim { color: var(--accent-amber-dim); }
+            .text-token-warm { color: var(--token-warm); }
+            .text-token-cool { color: var(--token-cool); }
+            .text-token-neutral { color: var(--token-neutral); }
+            .bg-terminal { background-color: var(--bg-terminal); }
+            .bg-secondary-custom { background-color: var(--bg-secondary); }
+            .bg-tertiary { background-color: var(--bg-tertiary); }
+            .border-subtle { border-color: var(--border-subtle); }
+            .border-dim { border-color: var(--border-dim); }
+            .text-muted-custom { color: var(--text-muted); }
+            .text-dim { color: var(--text-dim); }
+            .text-secondary-custom { color: var(--text-secondary); }
+            
+            .terminal-glow {
+                box-shadow: 0 0 0 1px rgba(201, 169, 110, 0.08), 
+                            inset 0 1px 0 0 rgba(201, 169, 110, 0.05);
+            }
+            
+            .aberration-text {
+                position: relative;
+            }
+            
+            .noise-overlay {
+                background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+                background-repeat: repeat;
+            }
+            
+            .stat-number {
+                font-variant-numeric: tabular-nums;
+                letter-spacing: -0.04em;
+            }
+            
+            .hover-lift {
+                transition: transform 0.3s ease, border-color 0.3s ease;
+            }
+            
+            .hover-lift:hover {
+                transform: translateY(-2px);
+                border-color: var(--accent-amber-dim);
+            }
+            
+            .section-divider {
+                height: 1px;
+                background: linear-gradient(90deg, transparent, var(--border-subtle) 20%, var(--border-subtle) 80%, transparent);
+            }
+            
+            .manifest-marker {
+                position: relative;
+            }
+            
+            .manifest-marker::before {
+                content: '';
+                position: absolute;
+                left: -1.25rem;
+                top: 0.5rem;
+                width: 6px;
+                height: 6px;
+                border-radius: 50%;
+                background: var(--accent-amber-dim);
+                opacity: 0.5;
+            }
+            
+            .code-prompt {
+                color: var(--accent-amber-dim);
+                user-select: none;
+            }
+            
+            .code-command {
+                color: var(--text-primary);
+            }
+            
+            .code-arg {
+                color: var(--token-cool);
+            }
+            
+            .code-flag {
+                color: var(--token-warm);
+            }
+            
+            .code-value {
+                color: #9ab;
+            }
+            
+            @keyframes cursor-blink {
+                0%, 100% { opacity: 1; }
+                50% { opacity: 0; }
+            }
+            
+            .cursor-blink::after {
+                content: '▋';
+                color: var(--accent-amber);
+                animation: cursor-blink 1s step-end infinite;
+                margin-left: 2px;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Ambient grain -->
+    <div class="fixed inset-0 pointer-events-none z-50 noise-overlay"></div>
+    
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-40 bg-[#0a0a0a]/90 backdrop-blur-md border-b border-dim">
+        <div class="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <rect x="2" y="2" width="7" height="7" stroke="var(--accent-amber)" stroke-width="1" fill="none" opacity="0.6"/>
+                    <rect x="11" y="2" width="7" height="7" stroke="var(--accent-amber)" stroke-width="1" fill="none" opacity="0.3"/>
+                    <rect x="2" y="11" width="7" height="7" stroke="var(--accent-amber)" stroke-width="1" fill="none" opacity="0.3"/>
+                    <rect x="11" y="11" width="7" height="7" stroke="var(--accent-amber)" stroke-width="1" fill="none"/>
+                </svg>
+                <span class="font-mono text-sm tracking-wider text-primary">AHD</span>
+                <span class="text-dim text-xs font-mono hidden sm:inline">— Artificial Human Design</span>
+            </div>
+            <div class="flex items-center gap-6">
+                <a href="https://github.com/artificialhuma/design" 
+                   class="font-mono text-xs text-secondary-custom hover:text-amber transition-colors duration-300 flex items-center gap-2 group">
+                    <span class="border-b border-transparent group-hover:border-amber-dim transition-colors">read-the-code</span>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="opacity-50 group-hover:opacity-100 transition-opacity">
+                        <path d="M7 17L17 7M17 7H7M17 7V17"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="pt-32 pb-16 px-6">
+        <div class="max-w-5xl mx-auto">
+            <!-- Top line -->
+            <div class="flex items-center gap-4 mb-10">
+                <div class="h-px w-12 bg-amber-dim"></div>
+                <span class="font-mono text-xs text-amber-dim tracking-widest uppercase">Evaluation Framework</span>
+                <div class="h-px flex-1 max-w-xs bg-dim"></div>
+            </div>
+            
+            <!-- Main title -->
+            <h1 class="font-serif text-5xl sm:text-6xl lg:text-7xl font-semibold leading-[0.95] mb-8 text-primary">
+                Design is a decision.<br>
+                <span class="text-muted-custom italic">Every other output is slop.</span>
+            </h1>
+            
+            <!-- Context paragraph -->
+            <div class="max-w-2xl">
+                <p class="text-base leading-relaxed text-secondary-custom mb-2">
+                    AHD is a framework for evaluating whether an AI-generated design artifact 
+                    meets a human standard — before it ships. It does not generate. It does not 
+                    prompt-engineer. It compiles a brief, runs a 28-rule linter, and returns 
+                    a structured critique that a senior designer can act on.
+                </p>
+                <p class="text-sm leading-relaxed text-muted-custom">
+                    For teams who have already seen the problem and want a rig, not a pitch.
+                </p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Terminal Section -->
+    <section class="px-6 pb-20">
+        <div class="max-w-5xl mx-auto">
+            <div class="mb-4 flex items-center justify-between">
+                <span class="font-mono text-xs text-dim uppercase tracking-widest">One-liner</span>
+                <span class="font-mono text-xs text-dim">bash</span>
+            </div>
+            
+            <div class="bg-terminal terminal-glow rounded-sm overflow-hidden">
+                <!-- Terminal header -->
+                <div class="flex items-center justify-between px-5 py-3 border-b border-dim/50">
+                    <div class="flex items-center gap-2">
+                        <div class="w-2.5 h-2.5 rounded-full bg-[#2a2a2a]"></div>
+                        <div class="w-2.5 h-2.5 rounded-full bg-[#2a2a2a]"></div>
+                        <div class="w-2.5 h-2.5 rounded-full bg-[#2a2a2a]"></div>
+                    </div>
+                    <span class="font-mono text-xs text-dim">~ ahd</span>
+                    <div class="w-16"></div>
+                </div>
+                
+                <!-- Terminal body -->
+                <div class="p-6 sm:p-8 overflow-x-auto">
+                    <div class="font-mono text-sm leading-loose whitespace-pre cursor-blink" id="terminal-text">
+<span class="code-prompt">$</span> <span class="code-command">ahd</span> <span class="code-flag">eval-live</span> <span class="code-arg">swiss-editorial</span> <span class="code-flag">--brief</span> <span class="code-value">briefs/landing.yml</span> <span class="code-flag">--models</span> <span class="code-value">&lt;specs&gt;</span> <span class="code-flag">--n</span> <span class="code-value">10</span></div>
+                
+                <!-- Terminal output preview -->
+                <div class="mt-8 pt-6 border-t border-dim/30 font-mono text-xs">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-dim"># 10 variations evaluated against 28 rules</span>
+                        <span class="text-token-cool">PASS 6 | WARN 3 | FAIL 1</span>
+                    </div>
+                    <div class="space-y-2 text-muted-custom">
+                        <div class="flex items-center gap-3">
+                            <span class="text-token-cool w-12">01:13</span>
+                            <span class="text-dim">━</span>
+                            <span>baseline.grid — 8pt system, ok</span>
+                            <span class="ml-auto text-dim">✓</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span class="text-token-cool w-12">01:14</span>
+                            <span class="text-dim">━</span>
+                            <span>typography.scale — max 3 weights, warn: 4 found</span>
+                            <span class="ml-auto text-amber-dim">~</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span class="text-token-cool w-12">01:15</span>
+                            <span class="text-dim">━</span>
+                            <span>color.contrast — 4.5:1 minimum, fail: 3.2 on .text-muted</span>
+                            <span class="ml-auto text-red-500/60">✗</span>
+                        </div>
+                        <div class="flex items-center gap-3 text-dim">
+                            <span class="w-12">...</span>
+                            <span>...</span>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            
+            <p class="mt-4 font-mono text-xs text-dim max-w-2xl">
+                The <code class="text-secondary-custom">eval-live</code> command compiles the brief, 
+                generates <code class="text-secondary-custom">n</code> candidate outputs through the 
+                specified models, and runs each through the linter + vision critic. Results are 
+                structured JSON; human review is still required.
+            </p>
+        </div>
+    </section>
+
+    <!-- Divider -->
+    <div class="max-w-5xl mx-auto px-6">
+        <div class="section-divider"></div>
+    </div>
+
+    <!-- Manifest Section -->
+    <section class="py-20 px-6">
+        <div class="max-w-5xl mx-auto">
+            <!-- Section header -->
+            <div class="flex items-center gap-4 mb-16">
+                <span class="font-mono text-xs text-amber-dim tracking-widest uppercase">Manifest</span>
+                <div class="h-px flex-1 bg-dim"></div>
+                <span class="font-mono text-xs text-dim">v0.8.2</span>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-12 lg:gap-20">
+                <!-- What ships -->
+                <div>
+                    <div class="flex items-center gap-3 mb-8">
+                        <div class="w-1.5 h-1.5 rounded-full bg-token-cool"></div>
+                        <h2 class="font-serif text-2xl font-semibold text-primary">What ships</h2>
+                    </div>
+                    
+                    <div class="space-y-0">
+                        <div class="manifest-item group py-4 border-b border-dim/50">
+                            <div class="flex items-start justify-between gap-4">
+                                <div>
+                                    <span class="font-mono text-sm text-secondary-custom group-hover:text-amber transition-colors">brief compiler</span>
+                                    <p class="mt-1 text-xs text-dim leading-relaxed">YAML → structured design brief with constraints, references, and success criteria</p>
+                                </div>
+                                <span class="font-mono text-xs text-token-cool mt-0.5 shrink-0">core</span>
+                            </div>
+                        </div>
+                        
+                        <div class="manifest-item group py-4 border-b border-dim/50">
+                            <div class="flex items-start justify-between gap-4">
+                                <div>
+                                    <span class="font-mono text-sm text-secondary-custom group-hover:text-amber transition-colors">28-rule linter</span>
+                                    <p class="mt-1 text-xs text-dim leading-relaxed">Typography, color, layout, interaction, and accessibility rules with severity weights</p>
+                                </div>
+                                <span class="font-mono text-xs text-token-cool mt-0.5 shrink-0">core</span>
+                            </div>
+                        </div>
+                        
+                        <div class="manifest-item group py-4 border-b border-dim/50">
+                            <div class="flex items-start justify-between gap-4">
+                                <div>
+                                    <span class="font-mono text-sm text-secondary-custom group-hover:text-amber transition-colors">eval harness</span>
+                                    <p class="mt-1 text-xs text-dim leading-relaxed">Batch runner for multi-model comparison with deterministic seeding</p>
+                                </div>
+                                <span class="font-mono text-xs text-token-cool mt-0.5 shrink-0">core</span>
+                            </div>
+                        </div>
+                        
+                        <div class="manifest-item group py-4 border-b border-dim/50">
+                            <div class="flex items-start justify-between gap-4">
+                                <div>
+                                    <span class="font-mono text-sm text-secondary-custom group-hover:text-amber transition-colors">vision-critic scaffold</span>
+                                    <p class="mt-1 text-xs text-dim leading-relaxed">Screenshot pipeline + multimodal prompt templates for visual review</p>
+                                </div>
+                                <span class="font-mono text-xs text-token-warm mt-0.5 shrink-0">scaffold</span>
+                            </div>
+                        </div>
+                        
+                        <div class="manifest-item group py-4 border-b border-dim/50">
+                            <div class="flex items-start justify-between gap-4">
+                                <div>
+                                    <span class="font-mono text-sm text-secondary-custom group-hover:text-amber transition-colors">MCP server</span>
+                                    <p class="mt-1 text-xs text-dim leading-relaxed">Model Context Protocol adapter for IDE integration</p>
+                                </div>
+                                <span class="font-mono text-xs text-token-cool mt-0.5 shrink-0">core</span>
+                            </div>
+                        </div>
+                        
+                        <div class="manifest-item group py-4 border-b border-dim/50">
+                            <div class="flex items-start justify-between gap-4">
+                                <div>
+                                    <span class="font-mono text-sm text-secondary-custom group-hover:text-amber transition-colors">editor plugins</span>
+                                    <p class="mt-1 text-xs text-dim leading-relaxed">VS Code extension and Vim plugin for in-editor linting</p>
+                                </div>
+                                <span class="font-mono text-xs text-token-cool mt-0.5 shrink-0">core</span>
+                            </div>
+                        </div>
+                        
+                        <div class="manifest-item group py-4">
+                            <div class="flex items-start justify-between gap-4">
+                                <div>
+                                    <span class="font-mono text-sm text-secondary-custom group-hover:text-amber transition-colors">eight tokens</span>
+                                    <p class="mt-1 text-xs text-dim leading-relaxed">Base design tokens: color, type, space, radius, shadow, motion, breakpoint, z-index</p>
+                                </div>
+                                <span class="font-mono text-xs text-token-cool mt-0.5 shrink-0">core</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- What is gated -->
+                <div>
+                    <div class="flex items-center gap-3 mb-8">
+                        <div class="w-1.5 h-1.5 rounded-full bg-token-warm"></div>
+                        <h2 class="font-serif text-2xl font-semibold text-primary">What is gated</h2>
+                    </div>
+                    
+                    <div class="space-y-0">
+                        <div class="manifest-item group py-4 border-b border-dim/50">
+                            <div class="flex items-start justify-between gap-4">
+                                <div>
+                                    <span class="font-mono text-sm text-secondary-custom group-hover:text-token-warm transition-colors">live frontier-model calls</span>
+                                    <p class="mt-1 text-xs text-dim leading-relaxed">Requires API keys (OpenAI, Anthropic, Google, etc.) — bring your own</p>
+                                </div>
+                                <span class="font-mono text-xs text-muted-custom mt-0.5 shrink-0">BYOK</span>
+                            </div>
+                        </div>
+                        
+                        <div class="manifest-item group py-4 border-b border-dim/50">
+                            <div class="flex items-start justify-between gap-4">
+                                <div>
+                                    <span class="font-mono text-sm text-secondary-custom group-hover:text-token-warm transition-colors">live vision critique</span>
+                                    <p class="mt-1 text-xs text-dim leading-relaxed">Requires multimodal API key + running screenshot pipeline (Playwright)</p>
+                                </div>
+                                <span class="font-mono text-xs text-muted-custom mt-0.5 shrink-0">BYOK</span>
+                            </div>
+                        </div>
+                        
+                        <div class="manifest-item group py-4 border-b border-dim/50">
+                            <div class="flex items-start justify-between gap-4">
+                                <div>
+                                    <span class="font-mono text-sm text-secondary-custom group-hover:text-token-warm transition-colors">standalone npm packages</span>
+                                    <p class="mt-1 text-xs text-dim leading-relaxed">Editor plugins as independent publishes — pending registry setup</p>
+                                </div>
+                                <span class="font-mono text-xs text-muted-custom mt-0.5 shrink-0">pending</span>
+                            </div>
+                        </div>
+                        
+                        <div class="manifest-item group py-4">
+                            <div class="flex items-start justify-between gap-4">
+                                <div>
+                                    <span class="font-mono text-sm text-secondary-custom group-hover:text-token-warm transition-colors">additional tokens</span>
+                                    <p class="mt-1 text-xs text-dim leading-relaxed">Extended token sets for specific domains (dataviz, e-commerce, editorial)</p>
+                                </div>
+                                <span class="font-mono text-xs text-muted-custom mt-0.5 shrink-0">pending</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Gated note -->
+                    <div class="mt-8 p-4 bg-tertiary border border-dim rounded-sm">
+                        <p class="font-mono text-xs text-dim leading-relaxed">
+                            <span class="text-token-warm">Note:</span> The framework runs fully offline with local models 
+                            (Ollama, llama.cpp). Frontier calls are optional for higher-quality 
+                            generation; the linter and harness work without them.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Divider -->
+    <div class="max-w-5xl mx-auto px-6">
+        <div class="section-divider"></div>
+    </div>
+
+    <!-- Closing -->
+    <section class="py-20 px-6">
+        <div class="max-w-5xl mx-auto">
+            <p class="font-serif text-xl lg:text-2xl text-muted-custom leading-relaxed max-w-3xl">
+                This page was generated by AHD, then hand-reviewed. 
+                The framework does not remove the human; it makes the human's 
+                judgment explicit, repeatable, and auditable.
+            </p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 px-6 border-t border-dim">
+        <div class="max-w-5xl mx-auto">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+                <div class="flex items-center gap-3">
+                    <svg width="16" height="16" viewBox="0 0 20 20" fill="none" class="opacity-40">
+                        <rect x="2" y="2" width="7" height="7" stroke="var(--accent-amber)" stroke-width="1" fill="none"/>
+                        <rect x="11" y="11" width="7" height="7" stroke="var(--accent-amber)" stroke-width="1" fill="none"/>
+                    </svg>
+                    <span class="font-mono text-xs text-dim">AHD</span>
+                </div>
+                
+                <div class="flex items-center gap-6 font-mono text-xs text-dim">
+                    <span class="text-dim hover:text-secondary-custom transition-colors cursor-default" title="Functional Source License">
+                        FSL-1.1-Apache-2.0 <span class="text-dim/50">· code</span>
+                    </span>
+                    <span class="text-dim hover:text-secondary-custom transition-colors cursor-default">
+                        CC-BY-4.0 <span class="text-dim/50">· tokens & artwork</span>
+                    </span>
+                </div>
+                
+                <div class="font-mono text-xs text-dim">
+                    <a href="https://github.com/artificialhuma/design" class="text-secondary-custom hover:text-amber transition-colors border-b border-transparent hover:border-amber-dim">
+                        github
+                    </a>
+                    <span class="mx-3 text-dim/30">/</span>
+                    <a href="#" class="text-secondary-custom hover:text-amber transition-colors border-b border-transparent hover:border-amber-dim">
+                        forgejo mirror
+                    </a>
+                </div>
+            </div>
+            
+            <div class="mt-8 pt-6 border-t border-dim/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <p class="font-mono text-xs text-dim">
+                    No cookies. No tracking. No newsletter.
+                </p>
+                <p class="font-mono text-xs text-dim">
+                    Last commit: <span class="text-secondary-custom">a7f3d2e</span> · <time>2025-01-13</time>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Subtle entrance animations -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            document.querySelectorAll('.manifest-item').forEach((el, i) => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(8px)';
+                el.style.transition = `opacity 0.5s ease ${i * 0.05}s, transform 0.5s ease ${i * 0.05}s`;
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
+```

@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ahd</title>
+  <style>
+    /* rule: single-monospace pairing */
+    /* rule: dark green-black background, muted green foreground, amber accent */
+    :root {
+      --bg: oklch(0.14 0.02 150); /* rule: bg */
+      --fg: oklch(0.92 0.12 135); /* rule: fg */
+      --dim: oklch(0.55 0.05 150); /* rule: dim */
+      --rule: oklch(0.3 0.04 150); /* rule: hairline rule colour */
+      --amber: oklch(0.82 0.15 75); /* rule: amber accent */
+    }
+
+    * {
+      box-sizing: border-box;
+      /* rule: no radii; only rectangles */
+      border-radius: 0 !important;
+      /* rule: no shadows, no gradients */
+      box-shadow: none !important;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--fg);
+      font-family: 'Berkeley Mono', 'IBM Plex Mono', 'JetBrains Mono', ui-monospace, monospace;
+      font-size: 15px; /* rule: base scale 15 */
+      line-height: 1.55; /* rule: body line-height 1.55 */
+      margin: 0;
+      padding: 48px 20px; /* rule: space scale 48 */
+      display: flex;
+      justify-content: center;
+    }
+
+    main {
+      max-width: 80ch; /* rule: 80 character grid */
+      width: 100%;
+    }
+
+    h1, h2 {
+      font-weight: 700;
+      text-transform: lowercase;
+      margin-top: 0;
+    }
+
+    h1 {
+      font-size: 1.8rem; /* rule: scale step 3 */
+      color: var(--amber); /* rule: single amber accent */
+    }
+
+    h2 {
+      font-size: 1.2rem; /* rule: scale step 1 */
+      border-bottom: 1px solid var(--rule); /* rule: hairline rule */
+      width: fit-content;
+      margin-bottom: 16px; /* rule: space scale 16 */
+    }
+
+    p {
+      margin-bottom: 24px; /* rule: space scale 24 */
+    }
+
+    pre {
+      background: transparent;
+      border: 1px solid var(--rule); /* rule: hairline rule */
+      padding: 16px; /* rule: space scale 16 */
+      margin: 32px 0; /* rule: space scale 32 */
+      overflow-x: auto;
+    }
+
+    code {
+      font-family: inherit;
+    }
+
+    .ascii {
+      color: var(--dim);
+      white-space: pre;
+      font-size: 0.85rem;
+      line-height: 1.2;
+      margin: 32px 0;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    li {
+      margin-bottom: 8px; /* rule: space scale 8 */
+    }
+
+    li::before {
+      content: "- "; /* rule: no emoji bullets */
+      color: var(--dim);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: underline;
+      text-underline-offset: 4px; /* rule: underlined links with an offset, no colour change */
+    }
+
+    footer {
+      margin-top: 64px; /* rule: space scale 64 */
+      padding-top: 24px;
+      border-top: 1px solid var(--rule); /* rule: hairline rule */
+      font-size: 0.8rem;
+      color: var(--dim);
+      letter-spacing: 0.04em; /* rule: allcaps tracking */
+    }
+
+    .cta-section {
+      margin-top: 48px; /* rule: space scale 48 */
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>ahd</h1><!-- rule: lowercase, terse -->
+      <p>artificial human design</p>
+    </header>
+
+    <div class="ascii">
++---------------------------------------+
+| ahd.engine                            |
+| [brief] --> [compiler] --> [linter]   |
+|                |                      |
+|                v                      |
+| [output] <-- [eval_harness]           |
++---------------------------------------+
+    </div><!-- rule: include one ASCII diagram -->
+
+    <section>
+      <p>the framework for rigorous, non-slop machine output. for those who require constraints rather than prompts. we treat machine design as a verifiable engineering problem, not a stochastic guessing game.</p>
+    </section>
+
+    <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre><!-- rule: terminal-aesthetic code block -->
+
+    <section>
+      <h2>what ships</h2>
+      <ul>
+        <li>brief compiler</li>
+        <li>28-rule linter</li>
+        <li>eval harness</li>
+        <li>vision-critic scaffold</li>
+        <li>mcp server</li>
+        <li>editor plugins</li>
+        <li>eight tokens</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>what is gated</h2>
+      <ul>
+        <li>live frontier-model calls (needs api keys)</li>
+        <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+        <li>standalone npm packages for the editor plugins</li>
+        <li>additional tokens</li>
+      </ul>
+    </section>
+
+    <div class="cta-section">
+      <a href="https://github.com/ahd-project/ahd">read-the-code</a><!-- rule: link to github labelled as read-the-code CTA -->
+    </div>
+
+    <footer>
+      fsl-1.1-apache-2.0 for code, cc-by-4.0 for tokens and artwork<!-- rule: explicit licence naming -->
+    </footer>
+  </main>
+</body>
+</html>

@@ -1,0 +1,497 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AHD — Artificial Human Design</title>
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #0c0c0c;
+            --bg-raised: #141414;
+            --border: #2a2a2a;
+            --text: #c4c4c4;
+            --text-dim: #6b6b6b;
+            --text-bright: #e8e8e8;
+            --accent: #d4a574;
+            --accent-dim: #8b7355;
+            --ok: #7a9e6d;
+            --pending: #c4a35a;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.65;
+            font-size: 15px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        ::selection {
+            background: var(--accent-dim);
+            color: var(--bg);
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Layout */
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header */
+        header {
+            padding: 48px 0 32px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .mark {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .mark svg {
+            width: 28px;
+            height: 28px;
+        }
+
+        .mark-name {
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--text-bright);
+        }
+
+        .mark-version {
+            font-size: 12px;
+            color: var(--text-dim);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .lede {
+            font-size: 20px;
+            line-height: 1.5;
+            color: var(--text-bright);
+            max-width: 600px;
+        }
+
+        .lede span {
+            color: var(--text-dim);
+        }
+
+        /* Sections */
+        section {
+            padding: 40px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        h2 {
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            margin-bottom: 20px;
+        }
+
+        p {
+            margin-bottom: 16px;
+            max-width: 640px;
+        }
+
+        p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Code block */
+        .code-block {
+            background: var(--bg-raised);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 24px 0;
+        }
+
+        .code-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            background: #0a0a0a;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .code-header .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--border);
+        }
+
+        .code-header .lang {
+            margin-left: auto;
+            font-size: 11px;
+            color: var(--text-dim);
+            font-family: "SF Mono", Monaco, Inconsolata, "Fira Code", monospace;
+        }
+
+        pre {
+            padding: 16px 20px;
+            overflow-x: auto;
+            font-family: "SF Mono", Monaco, Inconsolata, "Fira Code", monospace;
+            font-size: 13px;
+            line-height: 1.6;
+            color: var(--text-bright);
+        }
+
+        code {
+            font-family: inherit;
+            color: var(--accent);
+        }
+
+        .comment {
+            color: var(--text-dim);
+        }
+
+        /* Manifest */
+        .manifest-item {
+            display: flex;
+            gap: 16px;
+            padding: 14px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .manifest-item:last-child {
+            border-bottom: none;
+        }
+
+        .manifest-status {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            padding: 2px 8px;
+            border-radius: 2px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .status-ok {
+            background: rgba(122, 158, 109, 0.12);
+            color: var(--ok);
+        }
+
+        .status-pending {
+            background: rgba(196, 163, 90, 0.12);
+            color: var(--pending);
+        }
+
+        .manifest-body {
+            flex: 1;
+        }
+
+        .manifest-name {
+            font-weight: 500;
+            color: var(--text-bright);
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .manifest-desc {
+            font-size: 13px;
+            color: var(--text-dim);
+            line-height: 1.5;
+        }
+
+        /* CTA */
+        .cta-block {
+            margin-top: 32px;
+            padding: 24px;
+            background: var(--bg-raised);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+        }
+
+        .cta-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-bright);
+            margin-bottom: 12px;
+        }
+
+        .cta-primary:hover {
+            text-decoration: underline;
+        }
+
+        .cta-primary svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .cta-note {
+            font-size: 13px;
+            color: var(--text-dim);
+        }
+
+        /* Footer */
+        footer {
+            padding: 40px 0 64px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .footer-col h3 {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            margin-bottom: 12px;
+        }
+
+        .footer-col p,
+        .footer-col a {
+            font-size: 13px;
+            color: var(--text-dim);
+            line-height: 1.7;
+        }
+
+        .footer-col a {
+            color: var(--accent-dim);
+        }
+
+        .footer-col a:hover {
+            color: var(--accent);
+        }
+
+        .footer-bottom {
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+            font-size: 12px;
+            color: var(--text-dim);
+            line-height: 1.7;
+        }
+
+        @media (max-width: 520px) {
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <div class="mark">
+            <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="1" y="1" width="26" height="26" stroke="currentColor" stroke-width="1.5"/>
+                <line x1="7" y1="14" x2="21" y2="14" stroke="currentColor" stroke-width="1.5"/>
+                <line x1="14" y1="7" x2="14" y2="21" stroke="currentColor" stroke-width="1.5"/>
+            </svg>
+            <span class="mark-name">Artificial Human Design</span>
+            <span class="mark-version">v0.8.2</span>
+        </div>
+        <p class="lede">
+            A framework for evaluating design before it ships.
+            <span>Not for generating more. For catching what generators miss.</span>
+        </p>
+    </div>
+</header>
+
+<section>
+    <div class="container">
+        <h2>The Thesis</h2>
+        <p>
+            You have already seen the problem. Sites with identical tension curves,
+            identical padding logic, identical suggestions for "modern" typography.
+            The generators are fast; the output is coherent; the coherence is the flaw.
+        </p>
+        <p>
+            AHD does not add another model. It adds structure:
+            a compiler for design briefs, a linter with explicit rules,
+            a harness for running comparative evaluation,
+            and a scaffolding for human-in-the-loop critique.
+            Use it against generated output, against your own work, or against a contractor deliverable.
+        </p>
+    </div>
+</section>
+
+<section>
+    <div class="container">
+        <h2>Run an Eval</h2>
+        <div class="code-block">
+            <div class="code-header">
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="lang">bash</span>
+            </div>
+            <pre>$ ahd eval-live swiss-editorial <span class="comment">\</span>
+    --brief briefs/landing.yml <span class="comment">\</span>
+    --models &lt;specs&gt; <span class="comment">\</span>
+    --n 10</pre>
+        </div>
+        <p>
+            <code>eval-live</code> compiles the brief, runs the linter against each candidate,
+            scores against the vision-critic scaffold, and emits a ranked report.
+            The <code>--models &lt;specs&gt;</code> flag accepts any OpenAI-compatible endpoint
+            or local server via the MCP layer.
+        </p>
+    </div>
+</section>
+
+<section>
+    <div class="container">
+        <h2>What Ships</h2>
+        <div class="manifest">
+            <div class="manifest-item">
+                <span class="manifest-status status-ok">Now</span>
+                <div class="manifest-body">
+                    <div class="manifest-name">Brief compiler</div>
+                    <div class="manifest-desc">YAML-to-structured-design-spec with inheritance and override. Validates constraints before any model sees them.</div>
+                </div>
+            </div>
+            <div class="manifest-item">
+                <span class="manifest-status status-ok">Now</span>
+                <div class="manifest-body">
+                    <div class="manifest-name">28-rule linter</div>
+                    <div class="manifest-desc">Detects spacing violations, hierarchy collapse, visual rhyme without meaning, and other patterns that pass visual inspection but fail design intent.</div>
+                </div>
+            </div>
+            <div class="manifest-item">
+                <span class="manifest-status status-ok">Now</span>
+                <div class="manifest-body">
+                    <div class="manifest-name">Eval harness</div>
+                    <div class="manifest-desc">Parallel runner for A/B and n-ary comparison. Handles scoring aggregation, tie-break rules, and reproducible seeding.</div>
+                </div>
+            </div>
+            <div class="manifest-item">
+                <span class="manifest-status status-ok">Now</span>
+                <div class="manifest-body">
+                    <div class="manifest-name">Vision-critic scaffold</div>
+                    <div class="manifest-desc">Prompt engineering and response-parsing layer for multimodal critique. Includes rubric templates and confidence calibration.</div>
+                </div>
+            </div>
+            <div class="manifest-item">
+                <span class="manifest-status status-ok">Now</span>
+                <div class="manifest-body">
+                    <div class="manifest-name">MCP server</div>
+                    <div class="manifest-desc">Model Context Protocol implementation for IDE integration. Accepts tool calls from any MCP client.</div>
+                </div>
+            </div>
+            <div class="manifest-item">
+                <span class="manifest-status status-ok">Now</span>
+                <div class="manifest-body">
+                    <div class="manifest-name">Editor plugins</div>
+                    <div class="manifest-desc">VS Code and Vim extensions for inline linting and brief preview. Installs from source today; packaged distribution pending.</div>
+                </div>
+            </div>
+            <div class="manifest-item">
+                <span class="manifest-status status-ok">Now</span>
+                <div class="manifest-body">
+                    <div class="manifest-name">Eight tokens</div>
+                    <div class="manifest-desc">Curated design-token sets for systematic evaluation: Swiss, Brutalist, Editorial, Product, Dense, Aerial, Warm, and Neutral.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="cta-block">
+            <a href="https://github.com/ahd-design/ahd" class="cta-primary">
+                <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+                Read the code
+            </a>
+            <p class="cta-note">Primary repository on GitHub. Forgejo mirror at <a href="https://git.ahd.design/ahd">git.ahd.design</a> for offline or self-hosted workflows.</p>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="container">
+        <h2>What Is Gated</h2>
+        <div class="manifest">
+            <div class="manifest-item">
+                <span class="manifest-status status-pending">External</span>
+                <div class="manifest-body">
+                    <div class="manifest-name">Live frontier-model calls</div>
+                    <div class="manifest-desc">Requires your own API keys. No proxy, no bundled credits. AHD orchestrates; you provide the endpoint.</div>
+                </div>
+            </div>
+            <div class="manifest-item">
+                <span class="manifest-status status-pending">External</span>
+                <div class="manifest-body">
+                    <div class="manifest-name">Live vision critique</div>
+                    <div class="manifest-desc">Needs multimodal model key plus screenshot pipeline (Puppeteer or Playwright). The scaffold is yours; the runtime is not.</div>
+                </div>
+            </div>
+            <div class="manifest-item">
+                <span class="manifest-status status-pending">Pending</span>
+                <div class="manifest-body">
+                    <div class="manifest-name">Standalone npm packages for editor plugins</div>
+                    <div class="manifest-desc">Install from source now. Pre-built packages gated on CI migration and registry signing.</div>
+                </div>
+            </div>
+            <div class="manifest-item">
+                <span class="manifest-status status-pending">Pending</span>
+                <div class="manifest-body">
+                    <div class="manifest-name">Additional tokens</div>
+                    <div class="manifest-desc">Six more token sets in review. Released when they pass the same linting threshold we apply to generated work.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h3>Code</h3>
+                <p>Licensed under <strong>FSL-1.1-Apache-2.0</strong></p>
+                <p>Functional Source License, converting to Apache 2.0 after two years.</p>
+            </div>
+            <div class="footer-col">
+                <h3>Tokens & Artwork</h3>
+                <p>Licensed under <strong>CC-BY-4.0</strong></p>
+                <p>Attribution required for derivative token sets.</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            AHD is a project by <a href="https://ahd.design">ahd.design</a>.
+            No investors. No advisory board. No quarterly roadmap.
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>

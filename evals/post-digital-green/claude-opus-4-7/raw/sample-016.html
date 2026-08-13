@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AHD — Artificial Human Design</title>
+<style>
+  :root {
+    --ink: #111110;
+    --paper: #f4f1ea;
+    --rule: #1a1a18;
+    --muted: #5a574f;
+    --accent: #b8341a;
+    --term-bg: #15140f;
+    --term-fg: #e8e3d2;
+    --term-prompt: #c9a227;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--paper); color: var(--ink); }
+  body {
+    font-family: "Iowan Old Style", "Charter", "Georgia", serif;
+    font-size: 17px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 36px 28px 0;
+  }
+  header.masthead {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    border-bottom: 1.5px solid var(--rule);
+    padding-bottom: 10px;
+    margin-bottom: 28px;
+  }
+  .wordmark {
+    font-family: "JetBrains Mono", "IBM Plex Mono", ui-monospace, Menlo, monospace;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.06em;
+  }
+  .wordmark .dot { color: var(--accent); }
+  .meta {
+    font-family: "JetBrains Mono", ui-monospace, Menlo, monospace;
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+  h1 {
+    font-family: "Iowan Old Style", "Charter", "Georgia", serif;
+    font-weight: 600;
+    font-size: 44px;
+    line-height: 1.05;
+    letter-spacing: -0.015em;
+    margin: 6px 0 14px;
+  }
+  h1 em {
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 500;
+  }
+  .lede {
+    font-size: 18px;
+    line-height: 1.55;
+    margin: 0 0 18px;
+    max-width: 62ch;
+  }
+  .lede + p { max-width: 62ch; }
+  .ctas {
+    margin: 22px 0 28px;
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+    align-items: center;
+    font-family: "JetBrains Mono", ui-monospace, Menlo, monospace;
+    font-size: 13px;
+  }
+  a.code-cta {
+    color: var(--ink);
+    text-decoration: none;
+    border: 1.5px solid var(--rule);
+    padding: 9px 14px;
+    background: var(--paper);
+    transition: background 80ms linear, color 80ms linear;
+  }
+  a.code-cta:hover { background: var(--rule); color: var(--paper); }
+  a.code-cta .arrow { color: var(--accent); margin-left: 6px; }
+  a.text-cta {
+    color: var(--ink);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+  .term {
+    background: var(--term-bg);
+    color: var(--term-fg);
+    border: 1.5px solid var(--rule);
+    margin: 30px 0 8px;
+    font-family: "JetBrains Mono", "IBM Plex Mono", ui-monospace, Menlo, monospace;
+    font-size: 13px;
+    line-height: 1.55;
+  }
+  .term-bar {
+    display: flex;
+    justify-content: space-between;
+    padding: 7px 12px;
+    border-bottom: 1px solid #2a2823;
+    color: #8a857a;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .term-bar .lang { color: var(--term-prompt); }
+  pre.term-body {
+    margin: 0;
+    padding: 14px 16px 18px;
+    overflow-x: auto;
+    white-space: pre;
+  }
+  .term-body .prompt { color: var(--term-prompt); user-select: none; }
+  .term-body .cmd { color: var(--term-fg); }
+  .term-body .flag { color: #7fb1c9; }
+  .term-body .arg  { color: #c4b48b; }
+  .caption {
+    font-size: 12px;
+    color: var(--muted);
+    font-family: "JetBrains Mono", ui-monospace, Menlo, monospace;
+    margin: 0 0 36px;
+  }
+  section.manifest {
+    border-top: 1.5px solid var(--rule);
+    padding-top: 18px;
+    margin-top: 36px;
+  }
+  section.manifest:first-of-type { margin-top: 0; }
+  .manifest-head {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    margin-bottom: 12px;
+  }
+  .manifest-head h2 {
+    font-family: "Iowan Old Style", "Charter", "Georgia", serif;
+    font-size: 22px;
+    font-weight: 600;
+    margin: 0;
+    letter-spacing: -0.005em;
+  }
+  .manifest-head .tag {
+    font-family: "JetBrains Mono", ui-monospace, Menlo, monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+  }
+  ol.items {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    counter-reset: row;
+  }
+  ol.items li {
+    counter-increment: row;
+    display: grid;
+    grid-template-columns: 38px 1fr auto;
+    gap: 12px;
+    align-items: baseline;
+    padding: 9px 0;
+    border-bottom: 1px dotted #c8c2b4;
+  }
+  ol.items li:last-child { border-bottom: none; }
+  ol.items li::before {
+    content: counter(row, decimal-leading-zero);
+    font-family: "JetBrains Mono", ui-monospace, Menlo, monospace;
+    font-size: 11px;
+    color: var(--muted);
+  }
+  .item-name {
+    font-family: "JetBrains Mono", ui-monospace, Menlo, monospace;
+    font-size: 13px;
+  }
+  .item-note {
+    font-size: 13px;
+    color: var(--muted);
+    font-style: italic;
+    text-align: right;
+  }
+  .gated .item-name { color: #6b6557; }
+  .gated .item-name::after {
+    content: " — gated";
+    color: var(--accent);
+    font-style: normal;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+  }
+  .colophon {
+    border-top: 1.5px solid var(--rule);
+    margin-top: 44px;
+    padding: 18px 0 28px;
+    font-family: "JetBrains Mono", ui-monospace, Menlo, monospace;
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .colophon strong { color: var(--ink); font-weight: 600; }
+  .small { font-size: 14px; color: var(--muted); margin-top: 4px; }
+  ::selection { background: var(--accent); color: var(--paper); }
+  @media (max-width: 520px) {
+    h1 { font-size: 34px; }
+    .wrap { padding: 24px 18px 0; }
+    ol.items li { grid-template-columns: 28px 1fr; }
+    .item-note { grid-column: 2 / 3; text-align: left; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="wordmark">AHD<span class="dot">.</span> ARTIFICIAL HUMAN DESIGN</div>
+    <div class="meta">v0.4 · 2026-04</div>
+  </header>
+
+  <h1>A framework for treating <em>generated design</em> as a first-class artefact — and grading it.</h1>
+
+  <p class="lede">
+    You have already noticed the pattern: the same hero, the same gradient, the
+    same three cards, the same purple. AHD does not argue with that diagnosis.
+    AHD ships the linter, the brief compiler, and the eval harness that let you
+    measure how often a model produces it — and how to push the score down.
+  </p>
+
+  <p>
+    The thesis is small. Most generated layouts fail not because the model
+    cannot draw, but because nothing in the loop is willing to call a layout
+    derivative. AHD is that thing. It is a Swiss-editorial style guide
+    expressed as 28 lint rules, a set of eight typographic and spatial tokens,
+    and a vision-critic that judges renderings against the brief that produced
+    them.
+  </p>
+
+  <div class="ctas">
+    <a class="code-cta" href="https://github.com/ahd/ahd">read the code on github <span class="arrow">→</span></a>
+    <a class="text-cta" href="#ships">jump to the manifest</a>
+  </div>
+
+  <div class="term" role="region" aria-label="Run the live eval">
+    <div class="term-bar">
+      <span>~/ahd</span>
+      <span class="lang">bash</span>
+    </div>
+<pre class="term-body"><span class="prompt">$ </span><span class="cmd">ahd eval-live swiss-editorial</span> <span class="flag">--brief</span> <span class="arg">briefs/landing.yml</span> <span class="flag">--models</span> <span class="arg">&lt;specs&gt;</span> <span class="flag">--n</span> <span class="arg">10</span></pre>
+  </div>
+  <p class="caption">// runs the brief through n=10 generations per model, lints each, screenshots, and scores against the vision-critic rubric.</p>
+
+  <section class="manifest" id="ships">
+    <div class="manifest-head">
+      <h2>What ships</h2>
+      <span class="tag">in tree, today</span>
+    </div>
+    <ol class="items">
+      <li><span class="item-name">brief compiler</span><span class="item-note">YAML brief → typed prompt + rubric</span></li>
+      <li><span class="item-name">28-rule linter</span><span class="item-note">structural and typographic anti-slop</span></li>
+      <li><span class="item-name">eval harness</span><span class="item-note">deterministic runner, JSON scorecards</span></li>
+      <li><span class="item-name">vision-critic scaffold</span><span class="item-note">rubric loader, render diff, no key required</span></li>
+      <li><span class="item-name">MCP server</span><span class="item-note">exposes lint / eval / brief tools to any client</span></li>
+      <li><span class="item-name">editor plugins</span><span class="item-note">VS Code + Zed, in-repo source</span></li>
+      <li><span class="item-name">eight tokens</span><span class="item-note">scale, measure, grid, ink, paper, rule, accent, mono</span></li>
+    </ol>
+  </section>
+
+  <section class="manifest" id="gated">
+    <div class="manifest-head">
+      <h2>What is gated</h2>
+      <span class="tag">depends on something outside the repo</span>
+    </div>
+    <ol class="items">
+      <li class="gated"><span class="item-name">live frontier-model calls</span><span class="item-note">needs your API keys</span></li>
+      <li class="gated"><span class="item-name">live vision critique</span><span class="item-note">needs multimodal key + screenshot pipeline</span></li>
+      <li class="gated"><span class="item-name">standalone npm packages for the editor plugins</span><span class="item-note">in-tree works; published artefacts pending</span></li>
+      <li class="gated"><span class="item-name">additional tokens</span><span class="item-note">beyond the core eight, RFC stage</span></li>
+    </ol>
+    <p class="small">The split is deliberate. Anything that would make the repo silently call a paid endpoint, or imply a polish it does not have, lives on the gated side until it is honest.</p>
+  </section>
+
+  <footer class="colophon">
+    <div>
+      <strong>Licence —</strong> FSL-1.1-Apache-2.0 for code · CC-BY-4.0 for tokens and artwork
+    </div>
+    <div>
+      set in Iowan Old Style &amp; JetBrains Mono · <a class="text-cta" href="https://codeberg.org/ahd/ahd" style="color:var(--muted);">forgejo mirror</a>
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>

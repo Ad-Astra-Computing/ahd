@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>artificial human design</title>
+    <style>
+        /* rule: everything in monospace */
+        /* rule: dark green-black background */
+        /* rule: muted green foreground */
+        /* rule: one hairline rule colour */
+        /* rule: no shadows, no gradients, no radii */
+        body {
+            background-color: oklch(0.14 0.02 150);
+            color: oklch(0.92 0.12 135);
+            font-family: 'IBM Plex Mono', 'JetBrains Mono', monospace;
+            line-height: 1.55; /* rule: body line-height 1.55 */
+            margin: 0;
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* rule: aligns to 80 character grid / 72ch measure */
+        main {
+            max-width: 72ch;
+            width: 100%;
+        }
+
+        /* rule: technical, lowercase by default, terse */
+        h1 {
+            font-size: 1.5rem; /* rule: scale ratio */
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-transform: lowercase;
+        }
+
+        h2 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            text-transform: lowercase;
+        }
+
+        /* rule: include one ascii diagram */
+        .ascii {
+            color: oklch(0.55 0.05 150);
+            font-size: 0.85rem;
+            line-height: 1.2;
+            margin: 2rem 0;
+            white-space: pre;
+        }
+
+        /* rule: terminal-aesthetic code block */
+        pre {
+            background-color: oklch(0.1 0.01 150);
+            border: 1px solid oklch(0.3 0.04 150); /* rule: one hairline rule colour */
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 2rem 0;
+        }
+
+        code {
+            font-family: inherit;
+        }
+
+        /* rule: a single amber accent */
+        .amber {
+            color: oklch(0.82 0.15 75);
+        }
+
+        /* rule: manifest section clearly separated */
+        .manifest {
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* rule: avoid three equal feature cards */
+            gap: 2rem;
+            border-top: 1px solid oklch(0.3 0.04 150);
+            padding-top: 2rem;
+            margin-top: 2rem;
+        }
+
+        /* rule: no emoji bullets */
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        li::before {
+            content: "> ";
+            color: oklch(0.55 0.05 150);
+        }
+
+        /* rule: underlined links with an offset, no colour change */
+        a {
+            color: inherit;
+            text-decoration: underline;
+            text-underline-offset: 4px;
+        }
+
+        /* rule: footer names licence explicitly */
+        footer {
+            margin-top: 4rem;
+            padding-top: 1rem;
+            border-top: 1px solid oklch(0.3 0.04 150);
+            font-size: 0.8rem;
+            color: oklch(0.55 0.05 150);
+        }
+
+        /* intentional imperfection: slightly inconsistent terminal prompt spacing */
+        .prompt {
+            margin-right: 0.2ch;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <!-- rule: technical, lowercase, terse voice -->
+        <h1>artificial human design</h1>
+
+        <!-- rule: ascii diagram -->
+        <div class="ascii">
+[brief] --&gt; [compiler] --&gt; [linter] --&gt; [eval] --&gt; [verified]
+        </div>
+
+        <p>
+            a framework for verifying design intent against codified rules. 
+            we stop the generative slop by introducing high-precision constraints.
+        </p>
+
+        <!-- rule: terminal-aesthetic code block with bash tag -->
+        <pre><code><span class="amber">$</span> ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+
+        <div class="manifest">
+            <!-- rule: manifest section 'what ships' -->
+            <section>
+                <h2>what ships</h2>
+                <ul>
+                    <li>brief compiler</li>
+                    <li>28-rule linter</li>
+                    <li>eval harness</li>
+                    <li>vision-critic scaffold</li>
+                    <li>mcp server</li>
+                    <li>editor plugins</li>
+                    <li>eight tokens</li>
+                </ul>
+            </section>
+
+            <!-- rule: manifest section 'what is gated' -->
+            <section>
+                <h2>what is gated</h2>
+                <ul>
+                    <li>live frontier-model calls (needs api keys)</li>
+                    <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+                    <li>standalone npm packages for the editor plugins</li>
+                    <li>additional tokens</li>
+                </ul>
+            </section>
+        </div>
+
+        <div style="margin-top: 3rem;">
+            <!-- rule: link to github labelled as read-the-code CTA -->
+            <a href="https://github.com/ahd-framework">read-the-code</a>
+        </div>
+
+        <!-- rule: footer with explicit licenses -->
+        <footer>
+            code: fsl-1.1-apache-2.0 / tokens & artwork: cc-by-4.0
+        </footer>
+    </main>
+</body>
+</html>

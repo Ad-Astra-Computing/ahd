@@ -1,0 +1,223 @@
+```html
+<!doctype html>
+<!-- rule: Return a single, self-contained, valid HTML5 document. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ahd : artificial human design</title>
+<style>
+  /* rule: Design post-digital. Everything in monospace. */
+  /* rule: Dark green-black background, muted green foreground, single amber accent. */
+  /* rule: One hairline rule colour. */
+  :root {
+    --bg: oklch(0.14 0.02 150);
+    --fg: oklch(0.92 0.12 135);
+    --dim: oklch(0.55 0.05 150);
+    --rule: oklch(0.3 0.04 150);
+    --amber: oklch(0.82 0.15 75);
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--fg);
+    /* rule: Do not use sans-serif body text. */
+    font-family: 'Berkeley Mono', 'IBM Plex Mono', 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 15px; /* rule: base: 15 */
+    line-height: 1.55; /* rule: body: 1.55 */
+    margin: 0;
+    padding: 64px 24px;
+    /* rule: No entrance animation. */
+  }
+
+  main {
+    /* rule: Everything aligns to an 80 character grid. */
+    max-width: 80ch;
+    margin: 0 auto;
+  }
+
+  /* rule: Rectangles only. No shadows, no gradients, no radii. */
+  * {
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+
+  h1, h2 {
+    font-weight: 700;
+    text-transform: lowercase; /* rule: technical, lowercase by default, terse */
+    margin-top: 64px;
+    margin-bottom: 24px;
+  }
+
+  h1 {
+    font-size: 21.6px;
+    line-height: 1.1;
+  }
+
+  h2 {
+    font-size: 18px;
+    line-height: 1.25;
+    color: var(--amber);
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 8px;
+  }
+
+  p {
+    margin-bottom: 24px;
+  }
+
+  /* rule: A terminal-aesthetic code block */
+  pre {
+    border: 1px solid var(--rule);
+    padding: 16px;
+    background-color: transparent;
+    overflow-x: auto;
+    font-size: 15px;
+    white-space: pre-wrap;
+    word-break: break-all;
+    color: var(--fg);
+  }
+
+  .diagram {
+    color: var(--dim);
+    line-height: 1.2;
+    margin-bottom: 64px;
+    border: none;
+    padding: 0;
+  }
+
+  code.bash {
+    color: var(--amber); /* rule: single amber accent */
+  }
+
+  /* rule: Underlined links with an offset, no colour change. */
+  a {
+    color: var(--fg);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  a:hover {
+    text-decoration-thickness: 2px;
+  }
+
+  ul {
+    list-style-type: none; /* rule: No emoji bullets */
+    padding: 0;
+    margin: 0 0 48px 0;
+  }
+
+  li {
+    margin-bottom: 8px;
+    display: flex;
+  }
+
+  li::before {
+    content: "+ ";
+    color: var(--dim);
+    margin-right: 8px;
+  }
+
+  hr {
+    border: none;
+    border-top: 1px solid var(--rule);
+    margin: 64px 0;
+  }
+
+  /* rule: No canonical 4-column footer */
+  footer {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    color: var(--dim);
+    font-size: 15px;
+    margin-bottom: 64px;
+  }
+
+  .blink {
+    animation: blinker 1s step-end infinite;
+  }
+
+  @keyframes blinker {
+    50% { opacity: 0; }
+  }
+</style>
+</head>
+<body>
+
+<main>
+  <!-- rule: Include one ASCII diagram. -->
+  <pre class="diagram">
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                                                                              │
+│   A H D  [ artificial human design ]                                         │
+│                                                                              │
+│   +── inputs ──────+         +── pipeline ──────+        +── output ─────+   │
+│   │   raw brief    │   ──>   │   compile        │   ──>  │   structure   │   │
+│   │   design slop  │         │   lint (28)      │        │   tokens      │   │
+│   +────────────────+         │   eval-live      │        +───────────────+   │
+│                              +──────────────────+                            │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+  </pre>
+
+  <!-- rule: One screen of reading. -->
+  <!-- rule: They do not need to be sold on the slop thesis; they need to be shown that AHD takes it seriously and does something about it. -->
+  <!-- rule: Must avoid any variant of 'build the future of', 'ship faster', 'AI-native'. -->
+  <section>
+    <h1>artificial human design.</h1>
+    <p>a framework for structured logic against generative slop. no lectures on design theory. just tools to lint, evaluate, and enforce predictable interfaces across post-digital constraints.</p>
+  </section>
+
+  <!-- rule: The command rendered in a monospace code block with the language tag bash. -->
+  <section>
+    <pre><code class="bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10<span class="blink">_</span></code></pre>
+  </section>
+
+  <section>
+    <!-- rule: A clearly separated manifest section titled 'What ships' -->
+    <h2>what ships</h2>
+    <ul>
+      <li>brief compiler</li>
+      <li>28-rule linter</li>
+      <li>eval harness</li>
+      <li>vision-critic scaffold</li>
+      <li>mcp server</li>
+      <li>editor plugins</li>
+      <li>eight tokens</li>
+    </ul>
+
+    <!-- rule: A clearly separated manifest section titled 'What is gated' -->
+    <h2>what is gated</h2>
+    <ul>
+      <li>live frontier-model calls (needs api keys)</li>
+      <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+      <li>standalone npm packages for the editor plugins</li>
+      <li>additional tokens</li>
+    </ul>
+  </section>
+
+  <hr>
+
+  <footer>
+    <!-- rule: A link to github labelled as the read-the-code CTA. -->
+    <div>
+      <a href="https://github.com/ahd-framework/ahd" target="_blank" rel="noopener">read-the-code</a>
+    </div>
+    
+    <!-- rule: A footer that names the licence explicitly. -->
+    <div>
+      fsl-1.1-apache-2.0 for code | cc-by-4.0 for tokens and artwork
+    </div>
+    
+    <!-- rule: Include at least one intentional imperfection (raw comment artifact) -->
+    <div>
+      /* eof: ahd-0.1.0 */
+    </div>
+  </footer>
+
+</main>
+
+</body>
+</html>
+```

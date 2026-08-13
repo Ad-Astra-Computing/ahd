@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AHD — Artificial Human Design</title>
+<style>
+  :root{
+    --ink:#111;
+    --paper:#f4f1ea;
+    --rule:#111;
+    --mute:#5a5550;
+    --term-bg:#0e0e0e;
+    --term-fg:#e6e4df;
+    --term-accent:#c6f36d;
+    --flag:#a8301c;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--paper);color:var(--ink);
+    font-family: "Iowan Old Style","Charter","Source Serif Pro",Georgia,serif;
+    font-size:17px;line-height:1.45;}
+  a{color:var(--ink);text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
+  a:hover{background:var(--ink);color:var(--paper);text-decoration:none}
+  .wrap{max-width:880px;margin:0 auto;padding:40px 28px 64px}
+  header.top{display:flex;justify-content:space-between;align-items:baseline;
+    border-bottom:1px solid var(--rule);padding-bottom:10px;margin-bottom:32px;
+    font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;font-size:12px;
+    letter-spacing:.08em;text-transform:uppercase}
+  header.top .id b{font-weight:700}
+  header.top nav a{margin-left:18px}
+  h1{font-family: "Times New Roman","EB Garamond",Georgia,serif;
+    font-weight:400;font-size:58px;line-height:1;letter-spacing:-.02em;
+    margin:18px 0 6px}
+  h1 .small{display:block;font-size:14px;letter-spacing:.22em;text-transform:uppercase;
+    font-family:ui-monospace,Menlo,Consolas,monospace;margin-bottom:14px;color:var(--mute)}
+  .lede{font-size:20px;line-height:1.4;max-width:62ch;margin:18px 0 28px}
+  .lede em{font-style:italic}
+  .thesis{border-left:3px solid var(--ink);padding:4px 0 4px 18px;margin:0 0 28px;
+    max-width:62ch;color:#2a2723}
+  pre.term{
+    background:var(--term-bg);color:var(--term-fg);
+    border-radius:4px;padding:0;margin:26px 0 10px;
+    font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    font-size:13.5px;overflow:hidden;border:1px solid #000;
+  }
+  pre.term .bar{
+    display:flex;align-items:center;gap:8px;
+    background:#1a1a1a;border-bottom:1px solid #000;
+    padding:8px 12px;color:#8a877f;font-size:11px;letter-spacing:.15em;text-transform:uppercase
+  }
+  pre.term .bar .dot{width:10px;height:10px;border-radius:50%;background:#333;display:inline-block}
+  pre.term .bar .lang{margin-left:auto;color:var(--term-accent)}
+  pre.term code{display:block;padding:18px 16px;white-space:pre-wrap;word-break:break-word;line-height:1.55}
+  pre.term .pr{color:var(--term-accent)}
+  pre.term .fl{color:#8ab4ff}
+  pre.term .st{color:#f0c36b}
+  .caption{font-size:13px;color:var(--mute);margin:0 0 36px;max-width:62ch}
+  .cta-row{display:flex;gap:14px;flex-wrap:wrap;margin:8px 0 44px}
+  .cta{
+    display:inline-block;border:1px solid var(--ink);padding:10px 16px;
+    font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px;
+    letter-spacing:.1em;text-transform:uppercase;text-decoration:none;background:transparent
+  }
+  .cta.primary{background:var(--ink);color:var(--paper)}
+  .cta.primary:hover{background:var(--paper);color:var(--ink)}
+  .cta:hover{background:var(--ink);color:var(--paper)}
+  section.manifest{
+    border-top:1px solid var(--rule);padding-top:22px;margin-top:32px;
+    display:grid;grid-template-columns:180px 1fr;gap:28px
+  }
+  section.manifest h2{
+    margin:0;font-family:ui-monospace,Menlo,Consolas,monospace;
+    font-size:12px;letter-spacing:.22em;text-transform:uppercase;font-weight:600;
+    color:var(--ink);align-self:start
+  }
+  section.manifest h2 .flag{display:block;font-size:10px;color:var(--flag);margin-top:6px;letter-spacing:.18em}
+  section.manifest ol{
+    list-style:none;counter-reset:m;margin:0;padding:0;
+    columns:1;
+  }
+  section.manifest li{
+    counter-increment:m;padding:10px 0;border-bottom:1px dotted #bfb9af;
+    display:grid;grid-template-columns:42px 1fr;align-items:baseline;gap:8px
+  }
+  section.manifest li:last-child{border-bottom:none}
+  section.manifest li::before{
+    content:counter(m,decimal-leading-zero);
+    font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;
+    color:var(--mute);letter-spacing:.1em
+  }
+  section.manifest li b{font-weight:600;font-family:"Iowan Old Style",Charter,Georgia,serif}
+  section.manifest li .note{display:block;color:var(--mute);font-size:14px;margin-top:2px}
+  section.gated li::marker{color:var(--flag)}
+  section.gated li .note{color:#6b3a31}
+  footer{
+    margin-top:56px;border-top:1px solid var(--rule);padding-top:18px;
+    font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;
+    color:var(--mute);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px
+  }
+  footer b{color:var(--ink);font-weight:600}
+  @media (max-width:640px){
+    h1{font-size:42px}
+    section.manifest{grid-template-columns:1fr;gap:10px}
+    section.manifest h2{border-bottom:1px solid var(--rule);padding-bottom:8px}
+  }
+  ::selection{background:var(--ink);color:var(--paper)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div class="id"><b>AHD</b> · Artificial Human Design</div>
+    <nav>
+      <a href="#command">command</a>
+      <a href="#ships">ships</a>
+      <a href="#gated">gated</a>
+      <a href="https://github.com/ahd/ahd">github</a>
+    </nav>
+  </header>
+
+  <h1>
+    <span class="small">A framework, not a lecture</span>
+    A taste harness for machines that have none.
+  </h1>
+
+  <p class="lede">
+    You have spent the last month looking at sites that all came from the same bucket:
+    the centred hero, the pill, the two buttons, the three cards, the gradient word.
+    You already know what is wrong. AHD is the part where someone writes the ruleset down
+    and runs it against the models, out loud, on a schedule.
+  </p>
+
+  <p class="thesis">
+    AHD is a brief compiler, a linter, and an eval harness. It takes a design brief
+    in YAML, compiles it into a verifiable specification, and scores model output against
+    28 rules that working designers actually argue about. Nothing is hidden behind a login.
+    The rules are readable. The scores are reproducible. The disagreements are the point.
+  </p>
+
+  <div class="cta-row">
+    <a class="cta primary" href="https://github.com/ahd/ahd">Read the code → github</a>
+    <a class="cta" href="https://code.ahd.dev/ahd/ahd">forgejo mirror</a>
+    <a class="cta" href="#ships">what ships</a>
+  </div>
+
+  <h2 id="command" style="font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;letter-spacing:.22em;text-transform:uppercase;margin:12px 0 4px">One-liner, live eval</h2>
+<pre class="term"><span class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span>~/ahd</span><span class="lang">bash</span></span><code><span class="pr">$</span> ahd eval-live swiss-editorial <span class="fl">--brief</span> <span class="st">briefs/landing.yml</span> <span class="fl">--models</span> <span class="st">&lt;specs&gt;</span> <span class="fl">--n</span> <span class="st">10</span></code></pre>
+  <p class="caption">
+    Runs the swiss-editorial rubric against the brief, ten samples per model, prints per-rule deltas
+    and writes an artifact bundle you can diff across runs. Uses local stubs by default; see <i>What is gated</i>.
+  </p>
+
+  <section class="manifest" id="ships">
+    <h2>What ships <span style="display:block;font-size:10px;color:#2a6b2a;margin-top:6px;letter-spacing:.18em">TODAY · LOCAL · MIT-TO-TEST</span></h2>
+    <ol>
+      <li><div><b>Brief compiler.</b><span class="note">YAML → specification tree with typed constraints and rule bindings.</span></div></li>
+      <li><div><b>28-rule linter.</b><span class="note">The argued-over rules, each with a citation, a counterexample, and a severity.</span></div></li>
+      <li><div><b>Eval harness.</b><span class="note">Deterministic fixtures, seeded sampling, artifact bundles, JSON reports.</span></div></li>
+      <li><div><b>Vision-critic scaffold.</b><span class="note">Prompts, graders, and a stubbed screenshot loop — wire up a key to go live.</span></div></li>
+      <li><div><b>MCP server.</b><span class="note">Exposes compiler, linter, and eval to any MCP-speaking editor or agent.</span></div></li>
+      <li><div><b>Editor plugins.</b><span class="note">In-tree plugins for VS Code and Neovim. Read the source, symlink to use.</span></div></li>
+      <li><div><b>Eight tokens.</b><span class="note">A small, honest set: ink, paper, rule, mute, accent, flag, measure, grid.</span></div></li>
+    </ol>
+  </section>
+
+  <section class="manifest gated" id="gated">
+    <h2>What is gated <span class="flag">REQUIRES · EXTERNAL</span></h2>
+    <ol>
+      <li><div><b>Live frontier-model calls.</b><span class="note">Needs your own API keys. AHD does not resell tokens or proxy credentials.</span></div></li>
+      <li><div><b>Live vision critique.</b><span class="note">Needs a multimodal key <i>and</i> the screenshot pipeline (headless Chromium + capture worker).</span></div></li>
+      <li><div><b>Standalone npm packages for the editor plugins.</b><span class="note">Pending registry publication; in-tree versions work now.</span></div></li>
+      <li><div><b>Additional tokens.</b><span class="note">Extended sets (editorial, interface, data-viz) land as the rubric for each stabilises.</span></div></li>
+    </ol>
+  </section>
+
+  <footer>
+    <div><b>AHD</b> · Artificial Human Design · 2026</div>
+    <div>Licence: <b>FSL-1.1-Apache-2.0</b> for code · <b>CC-BY-4.0</b> for tokens and artwork</div>
+  </footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AHD — Artificial Human Design</title>
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --fg: #c4c4c4;
+            --muted: #6b6b6b;
+            --accent: #e8e4d9;
+            --accent-dim: #b8b4a9;
+            --border: #1e1e1e;
+            --surface: #111111;
+            --syntax-keyword: #7c9a6a;
+            --syntax-string: #a8906c;
+            --syntax-comment: #4a4a4a;
+            --syntax-command: #8a9ab0;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        @font-face {
+            font-family: 'system';
+            src: local('system-ui'), local(-apple-system), local(BlinkMacSystemFont), local('Segoe UI');
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--fg);
+            line-height: 1.6;
+            font-size: 14px;
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 64px 24px;
+        }
+
+        header {
+            margin-bottom: 48px;
+        }
+
+        .mark {
+            font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--muted);
+            margin-bottom: 16px;
+        }
+
+        h1 {
+            font-size: 20px;
+            font-weight: 500;
+            color: var(--accent);
+            letter-spacing: -0.01em;
+            line-height: 1.3;
+            margin-bottom: 16px;
+        }
+
+        .abstract {
+            color: var(--fg);
+            line-height: 1.7;
+            font-size: 14px;
+        }
+
+        .abstract p + p {
+            margin-top: 12px;
+        }
+
+        .abstract em {
+            color: var(--accent-dim);
+            font-style: normal;
+        }
+
+        section {
+            margin-bottom: 48px;
+        }
+
+        .terminal {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .terminal-header {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 14px;
+            background: rgba(255,255,255,0.02);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .terminal-header span {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--border);
+        }
+
+        .terminal-header span:nth-child(1) { background: #3a3a3a; }
+        .terminal-header span:nth-child(2) { background: #2a2a2a; }
+        .terminal-header span:nth-child(3) { background: #1a1a1a; }
+
+        .terminal-tag {
+            font-family: 'SF Mono', Monaco, monospace;
+            font-size: 10px;
+            color: var(--muted);
+            margin-left: auto;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        pre {
+            padding: 16px 18px;
+            overflow-x: auto;
+            font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+            font-size: 12.5px;
+            line-height: 1.5;
+            color: var(--syntax-command);
+        }
+
+        code { font-family: inherit; }
+
+        .keyword { color: var(--syntax-keyword); }
+        .string { color: var(--syntax-string); }
+        .flag { color: var(--syntax-string); }
+        .arg { color: var(--accent-dim); }
+
+        h2 {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--muted);
+            margin-bottom: 20px;
+            font-weight: 500;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .manifest {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .manifest-item {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .manifest-item:last-child {
+            border-bottom: none;
+        }
+
+        .manifest-status {
+            font-family: 'SF Mono', Monaco, monospace;
+            font-size: 10px;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            min-width: 64px;
+            flex-shrink: 0;
+        }
+
+        .manifest-item.gated .manifest-status {
+            color: #7a7060;
+        }
+
+        .manifest-name {
+            color: var(--accent-dim);
+            font-weight: 400;
+        }
+
+        .manifest-desc {
+            color: var(--muted);
+            font-size: 12px;
+            margin-left: auto;
+            text-align: right;
+            max-width: 280px;
+            line-height: 1.5;
+        }
+
+        .cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 32px;
+            padding: 10px 18px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--accent-dim);
+            text-decoration: none;
+            font-size: 12px;
+            letter-spacing: 0.02em;
+            border-radius: 3px;
+            transition: border-color 0.15s;
+        }
+
+        .cta:hover {
+            border-color: var(--muted);
+        }
+
+        .cta::after {
+            content: "→";
+            color: var(--muted);
+        }
+
+        footer {
+            margin-top: 80px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+            font-size: 11px;
+            color: var(--muted);
+            line-height: 1.8;
+        }
+
+        footer a {
+            color: var(--accent-dim);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        .license-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 12px;
+        }
+
+        .license-block {
+            padding: 12px 14px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 3px;
+        }
+
+        .license-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--muted);
+            margin-bottom: 6px;
+        }
+
+        .license-name {
+            color: var(--accent-dim);
+            font-family: 'SF Mono', Monaco, monospace;
+            font-size: 11px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="mark">Artificial Human Design</div>
+    <h1>A framework for evaluating design output,<br>not generating it.</h1>
+    <div class="abstract">
+        <p>AHD is built on the observation that most AI design tools optimize for <em>speed of production</em>, not <em>quality of decision</em>. This creates a predictable failure mode: coherent surfaces, broken structures, and no mechanism to catch either.</p>
+        <p>We do not generate layouts. We compile design briefs into evaluation targets, run multi-model critique against those targets, and score the gap. If you already believe the current generation of tools produces slop, AHD is the infrastructure to prove it and replace it.</p>
+    </div>
+</header>
+
+<section>
+    <div class="terminal">
+        <div class="terminal-header">
+            <span></span><span></span><span></span>
+            <span class="terminal-tag">bash</span>
+        </div>
+<pre><code><span class="keyword">ahd</span> <span class="string">eval-live</span> <span class="flag">swiss-editorial</span> \
+  <span class="flag">--brief</span> <span class="arg">briefs/landing.yml</span> \
+  <span class="flag">--models</span> <span class="arg">&lt;specs&gt;</span> \
+  <span class="flag">--n</span> <span class="arg">10</span></code></pre>
+    </div>
+</section>
+
+<section>
+    <h2>What ships</h2>
+    <div class="manifest">
+        <div class="manifest-item">
+            <span class="manifest-status">Binary</span>
+            <span class="manifest-name">Brief compiler</span>
+            <span class="manifest-desc">YAML + front-matter to typed evaluation targets</span>
+        </div>
+        <div class="manifest-item">
+            <span class="manifest-status">Binary</span>
+            <span class="manifest-name">28-rule linter</span>
+            <span class="manifest-desc">Structural, contrast, hierarchy, and density rules</span>
+        </div>
+        <div class="manifest-item">
+            <span class="manifest-status">Binary</span>
+            <span class="manifest-name">Eval harness</span>
+            <span class="manifest-desc">Parallel model execution with schema-locked output</span>
+        </div>
+        <div class="manifest-item">
+            <span class="manifest-status">Binary</span>
+            <span class="manifest-name">Vision-critic scaffold</span>
+            <span class="manifest-desc">Screenshot pipeline hooks and prompt templates</span>
+        </div>
+        <div class="manifest-item">
+            <span class="manifest-status">Binary</span>
+            <span class="manifest-name">MCP server</span>
+            <span class="manifest-desc">Model Context Protocol for editor integration</span>
+        </div>
+        <div class="manifest-item">
+            <span class="manifest-status">Binary</span>
+            <span class="manifest-name">Editor plugins</span>
+            <span class="manifest-desc">VS Code, Zed, Vim extension sources; build from repo</span>
+        </div>
+        <div class="manifest-item">
+            <span class="manifest-status">Tokens</span>
+            <span class="manifest-name">Eight tokens</span>
+            <span class="manifest-desc">Design-system primitives, CC-BY-4.0 licensed</span>
+        </div>
+    </div>
+
+    <a class="cta" href="https://github.com/artificialhuman/ahd">Read the code</a>
+</section>
+
+<section>
+    <h2>What is gated</h2>
+    <div class="manifest">
+        <div class="manifest-item gated">
+            <span class="manifest-status">Gated</span>
+            <span class="manifest-name">Live frontier-model calls</span>
+            <span class="manifest-desc">Requires your own API keys; no proxy or bundled access</span>
+        </div>
+        <div class="manifest-item gated">
+            <span class="manifest-status">Gated</span>
+            <span class="manifest-name">Live vision critique</span>
+            <span class="manifest-desc">Requires multimodal key + running screenshot pipeline</span>
+        </div>
+        <div class="manifest-item gated">
+            <span class="manifest-status">Gated</span>
+            <span class="manifest-name">Standalone npm packages</span>
+            <span class="manifest-desc">Editor plugins publish to registry pending CI migration</span>
+        </div>
+        <div class="manifest-item gated">
+            <span class="manifest-status">Gated</span>
+            <span class="manifest-name">Additional tokens</span>
+            <span class="manifest-desc">Extended set blocked on contributor agreement finalization</span>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <p>Artificial Human Design is not a company. It is a project with a license.</p>
+    <div class="license-grid">
+        <div class="license-block">
+            <div class="license-label">Code</div>
+            <div class="license-name">FSL-1.1-Apache-2.0</div>
+        </div>
+        <div class="license-block">
+            <div class="license-label">Tokens & Artwork</div>
+            <div class="license-name">CC-BY-4.0</div>
+        </div>
+    </div>
+    <p style="margin-top: 16px;">Source: <a href="https://github.com/artificialhuman/ahd">github.com/artificialhuman/ahd</a> · Mirror: <a href="https://git.ahd.dev">git.ahd.dev</a></p>
+</footer>
+
+</body>
+</html>

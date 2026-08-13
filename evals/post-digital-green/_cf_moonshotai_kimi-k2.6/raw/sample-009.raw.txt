@@ -1,0 +1,474 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AHD — Artificial Human Design</title>
+<style>
+  @font-face {
+    font-family: 'IBM Plex Mono';
+    src: local('IBM Plex Mono'), local('IBMPlexMono-Regular');
+    font-weight: 400;
+  }
+
+  :root {
+    --bg: #0c0c0c;
+    --bg-elevated: #141414;
+    --text: #e6e6e6;
+    --text-muted: #808080;
+    --text-dim: #555;
+    --accent: #c75e3a;
+    --border: #222;
+    --code-bg: #0f0f0f;
+    --green-dim: #6b8f5e;
+    --yellow-dim: #a89060;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background: var(--accent);
+    color: var(--bg);
+  }
+
+  /* Layout */
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* Header */
+  header {
+    padding: 48px 0 32px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .header-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .mark {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .mark span {
+    color: var(--accent);
+  }
+
+  .version {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+  }
+
+  /* Main */
+  main {
+    padding: 40px 0;
+  }
+
+  /* Hero */
+  .hero {
+    margin-bottom: 48px;
+  }
+
+  .hero h1 {
+    font-size: 22px;
+    font-weight: 500;
+    line-height: 1.35;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+    color: var(--text);
+  }
+
+  .hero p {
+    color: var(--text-muted);
+    font-size: 15px;
+    line-height: 1.7;
+    max-width: 640px;
+  }
+
+  .hero p + p {
+    margin-top: 12px;
+  }
+
+  /* Code block */
+  .code-section {
+    margin: 36px 0;
+  }
+
+  .code-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 16px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-bottom: none;
+    border-radius: 4px 4px 0 0;
+  }
+
+  .code-lang {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+    text-transform: lowercase;
+  }
+
+  .code-copy {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 2px 6px;
+  }
+
+  .code-copy:hover {
+    color: var(--text-muted);
+  }
+
+  pre {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+    padding: 20px 16px;
+    overflow-x: auto;
+  }
+
+  code {
+    font-family: 'IBM Plex Mono', 'SF Mono', monospace;
+    font-size: 12.5px;
+    line-height: 1.65;
+    color: var(--text);
+    display: block;
+    white-space: pre;
+    overflow-x: auto;
+  }
+
+  .code-comment {
+    color: var(--text-dim);
+  }
+
+  .code-flag {
+    color: var(--accent);
+  }
+
+  .code-arg {
+    color: var(--text-muted);
+  }
+
+  /* Manifest sections */
+  .manifest {
+    margin: 48px 0;
+  }
+
+  .manifest h2 {
+    font-size: 13px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text);
+    margin-bottom: 20px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .manifest ul {
+    list-style: none;
+  }
+
+  .manifest li {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .status {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 2px;
+    flex-shrink: 0;
+    margin-top: 2px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .ships .status {
+    background: rgba(107, 143, 94, 0.12);
+    color: var(--green-dim);
+  }
+
+  .gated .status {
+    background: rgba(168, 144, 96, 0.12);
+    color: var(--yellow-dim);
+  }
+
+  .item-name {
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 2px;
+  }
+
+  .item-desc {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  /* CTA */
+  .cta {
+    margin: 40px 0;
+  }
+
+  .cta a {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--text);
+    text-decoration: none;
+    border: 1px solid var(--border);
+    padding: 10px 18px;
+    border-radius: 3px;
+    transition: border-color 0.15s;
+  }
+
+  .cta a:hover {
+    border-color: var(--accent);
+  }
+
+  .cta a::before {
+    content: '→';
+    color: var(--accent);
+  }
+
+  /* Footer */
+  footer {
+    padding: 32px 0 48px;
+    border-top: 1px solid var(--border);
+  }
+
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .licences {
+    font-size: 12px;
+    color: var(--text-dim);
+    line-height: 1.7;
+  }
+
+  .licences strong {
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+
+  .meta {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+  }
+
+  /* Utilities */
+  .accent-line {
+    width: 32px;
+    height: 2px;
+    background: var(--accent);
+    margin-bottom: 20px;
+  }
+
+  @media (max-width: 600px) {
+    .header-inner {
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .footer-inner {
+      flex-direction: column;
+    }
+
+    code {
+      font-size: 11px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <div class="header-inner">
+      <div class="mark">AHD<span>.</span>design</div>
+      <div class="version">v0.4.2</div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="container">
+
+    <section class="hero">
+      <div class="accent-line"></div>
+      <h1>A framework for evaluating whether interface designs are machine-generated slop</h1>
+      <p>Every designer now recognizes the symptoms: the same rounded rectangles, the identical hero trajectories, the gradient text that reads "AI" in every language. The tools are not the problem. The absence of judgment is.</p>
+      <p>AHD provides a compile-evaluate pipeline for design briefs—structured linting, model-based critique, and human review—so that generated work can be measured against intent rather than trend.</p>
+    </section>
+
+    <section class="code-section">
+      <div class="code-header">
+        <span class="code-lang">bash</span>
+        <button class="code-copy" onclick="navigator.clipboard.writeText(this.parentElement.nextElementSibling.textContent.trim())">copy</button>
+      </div>
+      <pre><code><span class="code-comment"># Evaluate a brief against 10 model variants</span>
+ahd eval-live swiss-editorial <span class="code-flag">\</span>
+  <span class="code-flag">--brief</span> <span class="code-arg">briefs/landing.yml</span> <span class="code-flag">\</span>
+  <span class="code-flag">--models</span> <span class="code-arg">&lt;specs&gt;</span> <span class="code-flag">\</span>
+  <span class="code-flag">--n</span> <span class="code-arg">10</span></code></pre>
+    </section>
+
+    <section class="manifest ships">
+      <h2>What ships</h2>
+      <ul>
+        <li>
+          <span class="status">Ready</span>
+          <div>
+            <div class="item-name">Brief compiler</div>
+            <div class="item-desc">YAML-to-structured-prompt with schema validation and token budgeting</div>
+          </div>
+        </li>
+        <li>
+          <span class="status">Ready</span>
+          <div>
+            <div class="item-name">28-rule linter</div>
+            <div class="item-desc">Static analysis for slop signatures: canonical gradients, repetitive spacing, template structures</div>
+          </div>
+        </li>
+        <li>
+          <span class="status">Ready</span>
+          <div>
+            <div class="item-name">Eval harness</div>
+            <div class="item-desc">Parallel generation, diff capture, and comparative scoring across model configurations</div>
+          </div>
+        </li>
+        <li>
+          <span class="status">Ready</span>
+          <div>
+            <div class="item-name">Vision-critic scaffold</div>
+            <div class="item-desc">Local pipeline for screenshot ingestion and structured critique generation</div>
+          </div>
+        </li>
+        <li>
+          <span class="status">Ready</span>
+          <div>
+            <div class="item-name">MCP server</div>
+            <div class="item-desc">Model Context Protocol implementation for editor integration</div>
+          </div>
+        </li>
+        <li>
+          <span class="status">Ready</span>
+          <div>
+            <div class="item-name">Editor plugins</div>
+            <div class="item-desc">VS Code and Neovim extensions; standalone builds gated pending packaging</div>
+          </div>
+        </li>
+        <li>
+          <span class="status">Ready</span>
+          <div>
+            <div class="item-name">Eight tokens</div>
+            <div class="item-desc">Curated design tokens for spacing, type scale, and color with provenance attribution</div>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <section class="manifest gated">
+      <h2>What is gated</h2>
+      <ul>
+        <li>
+          <span class="status">Needs key</span>
+          <div>
+            <div class="item-name">Live frontier-model calls</div>
+            <div class="item-desc">Requires API keys for GPT-4, Claude, or equivalent; local models run without</div>
+          </div>
+        </li>
+        <li>
+          <span class="status">Needs key</span>
+          <div>
+            <div class="item-name">Live vision critique</div>
+            <div class="item-desc">Requires multimodal API key plus screenshot pipeline; scaffold runs locally</div>
+          </div>
+        </li>
+        <li>
+          <span class="status">Pending</span>
+          <div>
+            <div class="item-name">Standalone npm packages</div>
+            <div class="item-desc">Editor plugins currently build from source; registry packages blocked on audit</div>
+          </div>
+        </li>
+        <li>
+          <span class="status">Pending</span>
+          <div>
+            <div class="item-name">Additional tokens</div>
+            <div class="item-desc">Extended token sets awaiting design-system partner review</div>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <section class="cta">
+      <a href="https://github.com/artificial-human-design/ahd">Read the code</a>
+    </section>
+
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="licences">
+        <strong>Code:</strong> FSL-1.1-Apache-2.0<br>
+        <strong>Tokens &amp; artwork:</strong> CC-BY-4.0
+      </div>
+      <div class="meta">
+        Built without slop detection irony
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,179 @@
+```html
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AHD - Artificial Human Design</title>
+    <style>
+        /* rule: Swiss / International Typographic Style */
+        body {
+            font-family: 'Neue Haas Grotesk Text', Helvetica Now Text, Inter, sans-serif;
+            font-size: 17px;
+            line-height: 1.5;
+            color: oklch(0.18 0 0); /* ink */
+            background-color: oklch(0.98 0.005 95); /* paper */
+            margin: 0;
+            padding: 0;
+            max-width: 1200px;
+            margin: 0 auto;
+            /* rule: asymmetric left-aligned composition */
+            text-align: left;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 24px;
+            padding: 32px;
+            /* rule: 12-column grid with 24px gutters */
+        }
+
+        .hero {
+            grid-column: span 12;
+            /* rule: asymmetric left-aligned composition */
+            text-align: left;
+        }
+
+        .hero h1 {
+            font-family: 'Neue Haas Grotesk Display', Helvetica Now Display, Inter Tight, sans-serif;
+            font-size: 160px;
+            line-height: 1.05;
+            letter-spacing: -0.02em;
+            color: oklch(0.18 0 0); /* ink */
+            /* rule: display type in Neue Haas Grotesk Display at 96–160px with tracking -0.02em */
+        }
+
+        .hero p {
+            font-size: 17px;
+            line-height: 1.5;
+            margin-top: 16px;
+            /* rule: body in Neue Haas Grotesk Text at 17px, measure 62ch, line-height 1.5 */
+        }
+
+        .code-block {
+            background-color: oklch(0.18 0 0); /* ink */
+            color: oklch(0.98 0.005 95); /* paper */
+            padding: 16px;
+            border-radius: 0;
+            overflow-x: auto;
+            margin-top: 32px;
+            /* rule: no rounded corners except small status pills */
+        }
+
+        .code-block code {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 17px;
+            line-height: 1.5;
+        }
+
+        .manifest {
+            grid-column: span 12;
+            margin-top: 64px;
+            /* rule: 160 between sections */
+        }
+
+        .manifest h2 {
+            font-family: 'Neue Haas Grotesk Display', Helvetica Now Display, Inter Tight, sans-serif;
+            font-size: 96px;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+            color: oklch(0.18 0 0); /* ink */
+            /* rule: display type in Neue Haas Grotesk Display at 96–160px with tracking -0.02em */
+        }
+
+        .manifest ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .manifest li {
+            margin-bottom: 8px;
+            /* rule: 8px baseline */
+        }
+
+        .manifest li::before {
+            content: "•";
+            margin-right: 8px;
+            color: oklch(0.55 0 0); /* muted */
+        }
+
+        .spot {
+            color: oklch(0.58 0.22 27); /* spot */
+            /* rule: spot colour used exactly once */
+        }
+
+        .footer {
+            grid-column: span 12;
+            margin-top: 64px;
+            padding-top: 32px;
+            border-top: 1px solid oklch(0.18 0 0); /* rule */
+            text-align: left;
+            /* rule: asymmetric left-aligned composition */
+        }
+
+        .footer p {
+            font-size: 17px;
+            line-height: 1.5;
+        }
+
+        .read-the-code {
+            display: inline-block;
+            margin-top: 32px;
+            padding: 8px 16px;
+            background-color: oklch(0.18 0 0); /* ink */
+            color: oklch(0.98 0.005 95); /* paper */
+            text-decoration: none;
+            border-radius: 999px;
+            /* rule: small status pills */
+        }
+
+        .read-the-code:hover {
+            background-color: oklch(0.55 0 0); /* muted */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="hero">
+            <h1>AHD</h1>
+            <p>Artificial Human Design. For designers, engineers, and founders who demand more than AI-generated slop.</p>
+        </div>
+
+        <div class="code-block">
+            <code class="language-bash">
+                ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10
+            </code>
+        </div>
+
+        <div class="manifest">
+            <h2>What ships</h2>
+            <ul>
+                <li>Brief compiler</li>
+                <li>28-rule linter</li>
+                <li>Eval harness</li>
+                <li>Vision-critic scaffold</li>
+                <li>MCP server</li>
+                <li>Editor plugins</li>
+                <li>Eight tokens</li>
+            </ul>
+        </div>
+
+        <div class="manifest">
+            <h2>What is gated</h2>
+            <ul>
+                <li>Live frontier-model calls (needs API keys)</li>
+                <li>Live vision critique (needs multimodal key + screenshot pipeline)</li>
+                <li>Standalone npm packages for the editor plugins</li>
+                <li>Additional tokens</li>
+            </ul>
+        </div>
+
+        <div class="footer">
+            <p>Licensed under FSL-1.1-Apache-2.0 for code, CC-BY-4.0 for tokens and artwork.</p>
+            <a href="https://github.com/ahd" class="read-the-code">Read the code</a>
+        </div>
+    </div>
+</body>
+</html>
+```

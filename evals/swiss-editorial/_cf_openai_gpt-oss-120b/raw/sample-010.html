@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Artificial Human Design (AHD) – Framework for Real‑World AI‑Generated Design</title>
+<style>
+  body {
+    margin: 0;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.6;
+    color: #111;
+    background: #fafafa;
+  }
+  header {
+    padding: 2rem 1rem;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  h1 {
+    margin: 0 0 .5rem;
+    font-size: 2.2rem;
+    font-weight: 600;
+  }
+  p.lead {
+    margin: .5rem 0 1.5rem;
+    font-size: 1.1rem;
+    color: #555;
+  }
+  .cta {
+    display: inline-block;
+    margin-top: .5rem;
+    padding: .6rem 1.2rem;
+    background: #0070f3;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: 500;
+  }
+  .code-block {
+    background: #1e1e1e;
+    color: #d4d4d4;
+    padding: 1rem;
+    border-radius: 4px;
+    overflow-x: auto;
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    margin: 2rem 0;
+  }
+  .manifest {
+    max-width: 800px;
+    margin: 0 auto 3rem;
+    padding: 0 1rem;
+  }
+  .manifest h2 {
+    font-size: 1.6rem;
+    margin-top: 2rem;
+    border-bottom: 2px solid #e0e0e0;
+    padding-bottom: .3rem;
+  }
+  .manifest ul {
+    list-style: disc inside;
+    margin: .8rem 0 0;
+    padding-left: 1rem;
+  }
+  footer {
+    background: #f0f0f0;
+    padding: 1rem;
+    font-size: .9rem;
+    text-align: center;
+    color: #666;
+  }
+  a {
+    color: #0066cc;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Artificial Human Design (AHD)</h1>
+  <p class="lead">
+    A concise framework that lets designers, engineers, and founders run a
+    reproducible evaluation of AI‑generated layouts without the usual
+    boilerplate and hidden services.
+  </p>
+  <a href="https://github.com/ahd/ahd" class="cta">read‑the‑code</a>
+</header>
+
+<pre class="code-block"><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+
+<section class="manifest">
+  <h2>What ships</h2>
+  <ul>
+    <li>brief compiler</li>
+    <li>28‑rule linter</li>
+    <li>eval harness</li>
+    <li>vision‑critic scaffold</li>
+    <li>MCP server</li>
+    <li>editor plugins</li>
+    <li>eight tokens</li>
+  </ul>
+
+  <h2>What is gated</h2>
+  <ul>
+    <li>live frontier‑model calls (needs API keys)</li>
+    <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+    <li>standalone npm packages for the editor plugins</li>
+    <li>additional tokens</li>
+  </ul>
+</section>
+
+<footer>
+  Code licensed under <strong>FSL‑1.1‑Apache‑2.0</strong>. Tokens and artwork licensed under <strong>CC‑BY‑4.0</strong>.
+</footer>
+
+</body>
+</html>

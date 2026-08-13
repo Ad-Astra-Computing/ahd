@@ -1,0 +1,75 @@
+
+
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>AHD</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      background: #0d0d0d;
+      color: #e0e0e0;
+      line-height: 1.6;
+    }
+    pre {
+      background: #1a1a1a;
+      padding: 1em;
+      border-radius: 4px;
+      overflow-x: auto;
+    }
+    code {
+      font-family: 'Courier New', Courier, monospace;
+    }
+    h1, h2 {
+      color: #ffffff;
+    }
+    ul {
+      padding-left: 1em;
+    }
+    .footer {
+      margin-top: 2em;
+      font-size: 0.9em;
+      color: #888;
+    }
+    a {
+      color: #00aaff;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <main style="max-width: 800px; margin: 2em auto; padding: 0 1em;">
+    <pre><code class="bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+    <section>
+      <h2>What ships</h2>
+      <ul>
+        <li>brief compiler</li>
+        <li>28-rule linter</li>
+        <li>eval harness</li>
+        <li>vision-critic scaffold</li>
+        <li>MCP server</li>
+        <li>editor plugins</li>
+        <li>eight tokens</li>
+      </ul>
+    </section>
+    <section>
+      <h2>What is gated</h2>
+      <ul>
+        <li>live frontier-model calls (needs API keys)</li>
+        <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+        <li>standalone npm packages for the editor plugins</li>
+        <li>additional tokens</li>
+      </ul>
+    </section>
+    <footer class="footer">
+      <p><a href="https://github.com/ahd">Read the code</a></p>
+      <p>License: FSL-1.1-Apache-2.0 for code, CC-BY-4.0 for tokens and artwork.</p>
+    </footer>
+  </main>
+</body>
+</html>

@@ -1,0 +1,410 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AHD — Artificial Human Design</title>
+    <style>
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --bg: #0a0a0b;
+        --surface: #111111;
+        --surface-2: #161616;
+        --text: #e8e6e3;
+        --text-dim: #8a8585;
+        --text-faint: #555251;
+        --accent: #c4b7a6;
+        --accent-2: #7a9e7a;
+        --border: #222222;
+        --border-subtle: #1a1a1a;
+        --code-bg: #0d0d0e;
+        --error: #b8574d;
+        --ok: #6b9e6b;
+      }
+
+      @media (prefers-color-scheme: light) {
+        :root {
+          --bg: #faf9f7;
+          --surface: #f0eeeb;
+          --surface-2: #e8e5e1;
+          --text: #1a1918;
+          --text-dim: #5c5856;
+          --text-faint: #999591;
+          --accent: #4a443d;
+          --accent-2: #3d6b3d;
+          --border: #d9d5d0;
+          --border-subtle: #e5e2de;
+          --code-bg: #f4f2ef;
+          --error: #9a3d38;
+          --ok: #3d6b3d;
+        }
+      }
+
+      html {
+        font-size: 16px;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      body {
+        font-family: "SF Mono", "Monaco", "Inconsolata", "Fira Code", "Fira Mono", monospace;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.65;
+        min-height: 100vh;
+      }
+
+      .wrap {
+        max-width: 640px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      /* Header */
+      header {
+        padding: 48px 0 32px;
+        border-bottom: 1px solid var(--border-subtle);
+      }
+
+      .mark {
+        display: inline-flex;
+        align-items: baseline;
+        gap: 10px;
+        margin-bottom: 16px;
+      }
+
+      .mark::before {
+        content: "///";
+        color: var(--text-faint);
+        font-size: 0.85rem;
+        letter-spacing: 0.05em;
+      }
+
+      .mark strong {
+        font-weight: 500;
+        font-size: 0.9rem;
+        letter-spacing: 0.02em;
+        color: var(--text);
+      }
+
+      header h1 {
+        font-size: 1.35rem;
+        font-weight: 400;
+        line-height: 1.4;
+        color: var(--text);
+        letter-spacing: -0.01em;
+      }
+
+      header h1 em {
+        font-style: normal;
+        color: var(--text-dim);
+      }
+
+      /* Main */
+      main {
+        padding: 32px 0 48px;
+      }
+
+      section {
+        margin-bottom: 36px;
+      }
+
+      h2 {
+        font-size: 0.65rem;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--text-faint);
+        margin-bottom: 14px;
+        padding-bottom: 6px;
+        border-bottom: 1px solid var(--border-subtle);
+      }
+
+      p {
+        font-size: 0.875rem;
+        color: var(--text-dim);
+        margin-bottom: 14px;
+      }
+
+      p strong {
+        color: var(--text);
+        font-weight: 500;
+      }
+
+      /* Code block */
+      .code-block {
+        background: var(--code-bg);
+        border: 1px solid var(--border);
+        border-radius: 0;
+        margin: 18px 0;
+        overflow: hidden;
+      }
+
+      .code-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 8px 14px;
+        background: var(--surface-2);
+        border-bottom: 1px solid var(--border);
+      }
+
+      .code-lang {
+        font-size: 0.6rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--text-faint);
+        font-weight: 500;
+      }
+
+      .code-dots {
+        display: flex;
+        gap: 6px;
+      }
+
+      .code-dots span {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        display: block;
+      }
+
+      .code-dots span:nth-child(1) {
+        background: var(--error);
+      }
+
+      .code-dots span:nth-child(2) {
+        background: var(--accent);
+        opacity: 0.6;
+      }
+
+      .code-dots span:nth-child(3) {
+        background: var(--ok);
+      }
+
+      .code-block pre {
+        padding: 14px 16px;
+        overflow-x: auto;
+        font-size: 0.8rem;
+        line-height: 1.6;
+        color: var(--text);
+      }
+
+      .code-block code {
+        font-family: inherit;
+      }
+
+      .code-comment {
+        color: var(--text-faint);
+      }
+
+      .code-prompt {
+        color: var(--text-faint);
+      }
+
+      .code-flag {
+        color: var(--accent-2);
+      }
+
+      .code-arg {
+        color: var(--accent);
+      }
+
+      .code-num {
+        color: var(--text-dim);
+      }
+
+      /* Manifest sections */
+      .manifest h2 {
+        margin-bottom: 16px;
+      }
+
+      .manifest ul {
+        list-style: none;
+        font-size: 0.82rem;
+      }
+
+      .manifest li {
+        padding: 7px 0;
+        border-bottom: 1px solid var(--border-subtle);
+        color: var(--text-dim);
+        display: flex;
+        align-items: baseline;
+        gap: 10px;
+      }
+
+      .manifest li:last-child {
+        border-bottom: none;
+      }
+
+      .manifest .status {
+        font-size: 0.6rem;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        font-weight: 500;
+        flex-shrink: 0;
+        min-width: 42px;
+      }
+
+      .status-in {
+        color: var(--ok);
+      }
+
+      .status-out {
+        color: var(--error);
+      }
+
+      .manifest li span:not(.status) {
+        color: var(--text);
+      }
+
+      /* CTA */
+      .cta {
+        margin: 28px 0;
+      }
+
+      .cta a {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 18px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        color: var(--text);
+        text-decoration: none;
+        font-size: 0.82rem;
+        transition: border-color 0.15s ease;
+      }
+
+      .cta a:hover {
+        border-color: var(--text-faint);
+      }
+
+      .cta a::before {
+        content: ">";
+        color: var(--text-faint);
+      }
+
+      .cta a::after {
+        content: "→";
+        color: var(--text-faint);
+        margin-left: 4px;
+      }
+
+      /* Divider */
+      .divider {
+        height: 1px;
+        background: var(--border);
+        margin: 36px 0;
+      }
+
+      /* Footer */
+      footer {
+        padding: 24px 0 48px;
+        border-top: 1px solid var(--border-subtle);
+      }
+
+      footer p {
+        font-size: 0.75rem;
+        color: var(--text-faint);
+        margin-bottom: 6px;
+      }
+
+      footer p:last-child {
+        margin-bottom: 0;
+      }
+
+      /* Spacing utilities */
+      .spacer {
+        height: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="wrap">
+        <div class="mark">
+          <strong>AHD</strong>
+        </div>
+        <h1>Artificial Human Design.<br><em>A framework for measuring what people mean when they say a design is "too AI."</em></h1>
+      </div>
+    </header>
+
+    <main>
+      <div class="wrap">
+        <section>
+          <h2>The problem</h2>
+          <p>"Looks AI-generated" is not feedback designers can act on. It collapses a dozen distinct failure modes — hierarchy, spacing, tone, cultural sensitivity, temporal context — into a single verdict that helps no one.</p>
+          <p><strong>AHD provides a specific, auditable alternative.</strong> Write a brief. Compile it to a structured evaluation plan. Run it against models with consistent prompting. Score outputs against public, versioned rules. Review failures with a vision critic that references the same brief.</p>
+        </section>
+
+        <section>
+          <h2>One command</h2>
+          <p>Evaluations are reproducible and version-controlled. The full toolchain is open source.</p>
+
+          <div class="code-block">
+            <div class="code-header">
+              <span class="code-lang">bash</span>
+              <div class="code-dots">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
+            <pre><code><span class="code-prompt">$</span> <span class="code-arg">ahd</span> <span class="code-flag">eval-live</span> swiss-editorial \
+  <span class="code-flag">--brief</span> <span class="code-arg">briefs/landing.yml</span> \
+  <span class="code-flag">--models</span> <span class="code-arg">&lt;specs&gt;</span> \
+  <span class="code-flag">--n</span> <span class="code-num">10</span>
+
+<span class="code-comment"># Outputs: scored.jsonl, failed_rules.json,
+# screenshots/, and a summary markdown file.</span></code></pre>
+          </div>
+
+          <div class="cta">
+            <a href="https://github.com/artificialhumandesign/ahd">Read the code</a>
+          </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <section class="manifest">
+          <h2>What ships</h2>
+          <ul>
+            <li><span class="status status-in">in</span> <span>Brief compiler</span> — YAML/JSON to structured eval plan</li>
+            <li><span class="status status-in">in</span> <span>28-rule linter</span> — versioned, auditable design rules</li>
+            <li><span class="status status-in">in</span> <span>Eval harness</span> — parallel generation, consistent prompting</li>
+            <li><span class="status status-in">in</span> <span>Vision-critic scaffold</span> — multimodal critique pipeline (local)</li>
+            <li><span class="status status-in">in</span> <span>MCP server</span> — Model Context Protocol integration</li>
+            <li><span class="status status-in">in</span> <span>Editor plugins</span> — VS Code, Zed (source in repo)</li>
+            <li><span class="status status-in">in</span> <span>Eight tokens</span> — base design vocabulary</li>
+          </ul>
+        </section>
+
+        <section class="manifest">
+          <h2>What is gated</h2>
+          <ul>
+            <li><span class="status status-out">out</span> <span>Live frontier-model calls</span> — requires your own API keys</li>
+            <li><span class="status status-out">out</span> <span>Live vision critique</span> — requires multimodal key + screenshot pipeline</li>
+            <li><span class="status status-out">out</span> <span>Standalone npm packages</span> — for editor plugins; build from source today</li>
+            <li><span class="status status-out">out</span> <span>Additional tokens</span> — expanded vocabulary pending</li>
+          </ul>
+        </section>
+      </div>
+    </main>
+
+    <footer>
+      <div class="wrap">
+        <p>Code: FSL-1.1-Apache-2.0</p>
+        <p>Tokens and artwork: CC-BY-4.0</p>
+      </div>
+    </footer>
+  </body>
+</html>
+```

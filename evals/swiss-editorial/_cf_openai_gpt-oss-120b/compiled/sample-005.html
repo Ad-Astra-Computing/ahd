@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>AHD – Artificial Human Design</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+/* rule: colour palette */
+:root{
+  --ink:#000000;/* ok */
+  --paper:#fdfdfd;/* warm off‑white */
+  --spot:#d72631;/* spot red used once */
+  --rule:#222222;
+  --baseline:8px;
+  --gutter:24px;
+  --margin-min:32px;
+}
+
+/* rule: grid system */
+.container{
+  display:grid;
+  grid-template-columns:repeat(12,1fr);
+  gap:var(--gutter);
+  max-width:calc(100vw - var(--margin-min)*2);
+  margin:0 auto;
+  padding:var(--baseline) var(--margin-min);
+  background:var(--paper);
+  color:var(--ink);
+}
+
+/* rule: typography */
+body{
+  font-family:"Neue Haas Grotesk Text",Helvetica,Arial,sans-serif;
+  font-size:17px;
+  line-height:1.5;
+  margin:0;
+}
+h1{
+  font-family:"Neue Haas Grotesk Display",Helvetica,Arial,sans-serif;
+  font-size:144px;/* display >=120px */
+  line-height:1.05;
+  letter-spacing:-0.02em;/* tracking -0.02em */
+  margin:0;
+}
+h2{
+  font-size:48px;
+  line-height:1.2;
+  margin:calc(var(--baseline)*4) 0 calc(var(--baseline)*2);
+}
+p,li{
+  max-width:62ch;
+}
+
+/* rule: baseline rhythm */
+section{margin-bottom:160px;}
+
+/* rule: spot colour exactly once */
+a.cta{
+  color:var(--spot);
+  text-decoration:none;
+  font-weight:700;
+}
+
+/* rule: bleed element */
+.bleed{
+  grid-column:1 / -1;
+  margin-left:-12%;/* intentional bleed past grid */
+  margin-right:-12%;
+  background:var(--ink);
+  height:var(--baseline);
+}
+
+/* rule: list styling */
+ul{list-style:none;padding:0;margin:0;}
+li::before{
+  content:"– ";
+  color:var(--rule);
+}
+
+/* rule: footer */
+footer{
+  font-size:14px;
+  border-top:1px solid var(--rule);
+  padding-top:calc(var(--baseline)*2);
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <!-- rule: hero with left‑aligned large word -->
+  <header style="grid-column:1 / span 8;">
+    <h1>AHD</h1>
+    <p>Artificial Human Design</p>
+  </header>
+
+  <!-- rule: code block terminal aesthetic -->
+  <section style="grid-column:1 / span 8;">
+    <h2>Run the evaluation</h2>
+    <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+  </section>
+
+  <!-- rule: read‑the‑code CTA using spot colour -->
+  <section style="grid-column:1 / span 8;">
+    <a href="https://github.com/ahd/ahd" class="cta">read the code</a>
+  </section>
+
+  <!-- rule: bleed element past grid -->
+  <div class="bleed"></div>
+
+  <!-- rule: manifest – what ships -->
+  <section style="grid-column:1 / span 8;">
+    <h2>What ships</h2>
+    <ul>
+      <li>brief compiler</li>
+      <li>28‑rule linter</li>
+      <li>eval harness</li>
+      <li>vision‑critic scaffold</li>
+      <li>MCP server</li>
+      <li>editor plugins</li>
+      <li>eight tokens</li>
+    </ul>
+  </section>
+
+  <!-- rule: manifest – what is gated -->
+  <section style="grid-column:1 / span 8;">
+    <h2>What is gated</h2>
+    <ul>
+      <li>live frontier‑model calls (needs API keys)</li>
+      <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+      <li>standalone npm packages for the editor plugins</li>
+      <li>additional tokens</li>
+    </ul>
+  </section>
+
+  <!-- rule: footer with licences -->
+  <footer style="grid-column:1 / -1;">
+    Code licence: FSL‑1.1‑Apache‑2.0 • Tokens &amp; artwork licence: CC‑BY‑4.0
+  </footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,69 @@
+{
+  "token": "swiss-editorial",
+  "briefPath": "briefs/landing.yml",
+  "n": 30,
+  "maxTokens": 12000,
+  "runAt": "2026-04-22T23:13:15.073Z",
+  "models": [
+    {
+      "spec": "claude-code:claude-opus-4-7",
+      "canonicalId": "claude-opus-4-7",
+      "sanitizedId": "claude-opus-4-7",
+      "provider": "claude-code-cli"
+    },
+    {
+      "spec": "codex-cli:gpt-5.4",
+      "canonicalId": "gpt-5.4",
+      "sanitizedId": "gpt-5.4",
+      "provider": "codex-cli"
+    },
+    {
+      "spec": "gemini-cli:gemini-3.1-pro-preview",
+      "canonicalId": "gemini-3.1-pro-preview",
+      "sanitizedId": "gemini-3.1-pro-preview",
+      "provider": "gemini-cli"
+    },
+    {
+      "spec": "cf:@cf/google/gemma-4-26b-a4b-it",
+      "canonicalId": "@cf/google/gemma-4-26b-a4b-it",
+      "sanitizedId": "_cf_google_gemma-4-26b-a4b-it",
+      "provider": "cloudflare-workers-ai"
+    },
+    {
+      "spec": "cf:@cf/meta/llama-3.3-70b-instruct-fp8-fast",
+      "canonicalId": "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
+      "sanitizedId": "_cf_meta_llama-3.3-70b-instruct-fp8-fast",
+      "provider": "cloudflare-workers-ai"
+    },
+    {
+      "spec": "cf:@cf/meta/llama-4-scout-17b-16e-instruct",
+      "canonicalId": "@cf/meta/llama-4-scout-17b-16e-instruct",
+      "sanitizedId": "_cf_meta_llama-4-scout-17b-16e-instruct",
+      "provider": "cloudflare-workers-ai"
+    },
+    {
+      "spec": "cf:@cf/mistralai/mistral-small-3.1-24b-instruct",
+      "canonicalId": "@cf/mistralai/mistral-small-3.1-24b-instruct",
+      "sanitizedId": "_cf_mistralai_mistral-small-3.1-24b-instruct",
+      "provider": "cloudflare-workers-ai"
+    },
+    {
+      "spec": "cf:@cf/moonshotai/kimi-k2.6",
+      "canonicalId": "@cf/moonshotai/kimi-k2.6",
+      "sanitizedId": "_cf_moonshotai_kimi-k2.6",
+      "provider": "cloudflare-workers-ai"
+    },
+    {
+      "spec": "cf:@cf/openai/gpt-oss-120b",
+      "canonicalId": "@cf/openai/gpt-oss-120b",
+      "sanitizedId": "_cf_openai_gpt-oss-120b",
+      "provider": "cloudflare-workers-ai"
+    },
+    {
+      "spec": "cf:@cf/qwen/qwen3-30b-a3b-fp8",
+      "canonicalId": "@cf/qwen/qwen3-30b-a3b-fp8",
+      "sanitizedId": "_cf_qwen_qwen3-30b-a3b-fp8",
+      "provider": "cloudflare-workers-ai"
+    }
+  ]
+}

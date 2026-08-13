@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Artificial Human Design</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root{
+  --ink: oklch(0.18 0 0);
+  --paper: oklch(0.98 0.005 95);
+  --spot: oklch(0.58 0.22 27);
+  --rule: oklch(0.18 0 0);
+}
+@font-face{
+  font-family:"Neue Haas Grotesk Display";
+  src:local("Helvetica Neue");
+}
+@font-face{
+  font-family:"Neue Haas Grotesk Text";
+  src:local("Helvetica Neue");
+}
+html{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:"Neue Haas Grotesk Text",Helvetica,Arial,sans-serif;
+  line-height:1.5;
+  font-size:17px;
+}
+h1{
+  font-family:"Neue Haas Grotesk Display",Helvetica,Arial,sans-serif;
+  font-size:120px; /* rule: display size >=120px */
+  line-height:1.05;
+  letter-spacing:-0.02em; /* rule: tracking */
+  margin:0;
+}
+h2{
+  font-family:"Neue Haas Grotesk Display",Helvetica,Arial,sans-serif;
+  font-size:48px;
+  line-height:1.2;
+  margin-top:160px; /* rule: dramatic jump between sections */
+}
+p{
+  max-width:62ch;
+}
+code{
+  font-family:monospace;
+  background:var(--paper);
+  color:var(--ink);
+  padding:4px 8px;
+  border:1px solid var(--rule);
+}
+pre{
+  overflow-x:auto;
+  background:var(--paper);
+  border:1px solid var(--rule);
+  padding:16px;
+}
+.container{
+  display:grid;
+  grid-template-columns:repeat(12,1fr);
+  gap:24px; /* rule: gutter */
+  max-width:calc(100vw - 64px);
+  margin:0 auto;
+  padding:32px 0;
+}
+.full-bleed{
+  position:relative;
+  left:-50vw; /* rule: bleed past grid */
+  width:200vw;
+  height:4px;
+  background:var(--spot); /* rule: spot used once */
+}
+a.cta{
+  text-decoration:none;
+  color:var(--paper);
+  background:var(--ink);
+  padding:8px 16px;
+  display:inline-block;
+  margin-top:24px;
+}
+ul{
+  list-style:none;
+  padding-left:0;
+}
+li::before{
+  content:"– ";
+  margin-right:4px;
+}
+footer{
+  font-size:14px;
+  margin-top:160px; /* rule: dramatic jump */
+  padding:32px 0;
+  border-top:1px solid var(--rule);
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>AHD</h1><!-- rule: single word hero -->
+  <p>Artificial Human Design provides a concrete framework. No fluff. No promises that never deliver. The tools work now, not later.</p>
+  <a href="https://github.com/ahd/ahd" class="cta">read the code</a><!-- rule: read-the-code CTA -->
+  <div class="full-bleed"></div><!-- rule: bleed element -->
+  <h2>Run the eval</h2><!-- rule: section heading -->
+  <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre><!-- rule: command block -->
+  <h2>What ships</h2><!-- rule: manifest title -->
+  <ul>
+    <li>brief compiler</li>
+    <li>28-rule linter</li>
+    <li>eval harness</li>
+    <li>vision-critic scaffold</li>
+    <li>MCP server</li>
+    <li>editor plugins</li>
+    <li>eight tokens</li>
+  </ul>
+  <h2>What is gated</h2><!-- rule: manifest title -->
+  <ul>
+    <li>live frontier-model calls (needs API keys)</li>
+    <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+    <li>standalone npm packages for the editor plugins</li>
+    <li>additional tokens</li>
+  </ul>
+</div>
+<footer>
+  Code licence: FSL-1.1-Apache-2.0. Tokens &amp; artwork licence: CC-BY-4.0.
+</footer>
+</body>
+</html>

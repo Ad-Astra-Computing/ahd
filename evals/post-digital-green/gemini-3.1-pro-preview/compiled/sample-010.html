@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ahd</title>
+<style>
+/* rule: Post-digital. Everything in monospace. */
+/* rule: dark green-black background, muted green foreground */
+:root {
+  --bg: oklch(0.14 0.02 150);
+  --fg: oklch(0.92 0.12 135);
+  --dim: oklch(0.55 0.05 150);
+  --rule: oklch(0.3 0.04 150);
+  --amber: oklch(0.82 0.15 75);
+}
+
+body {
+  /* rule: No radii, only rectangles. */
+  margin: 0;
+  padding: 48px 24px;
+  background-color: var(--bg);
+  color: var(--fg);
+  font-family: "Berkeley Mono", "IBM Plex Mono", "JetBrains Mono", "ui-monospace", monospace;
+  font-size: 15px;
+  line-height: 1.55;
+  /* rule: Everything aligns to an 80 character grid. */
+  max-width: 80ch;
+  margin-left: auto;
+  margin-right: auto;
+  /* rule: technical, lowercase by default, terse */
+  text-transform: lowercase;
+}
+
+/* rule: Underlined links with an offset, no colour change. */
+a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+a:hover {
+  text-decoration-style: dashed;
+}
+
+/* rule: Rectangles only. One hairline rule colour. */
+* {
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  box-sizing: border-box;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid var(--rule);
+  margin: 48px 0;
+}
+
+/* rule: No shadows, no gradients, no radii, no entrance animation. */
+
+pre, code {
+  font-family: inherit;
+  font-size: inherit;
+  margin: 0;
+}
+
+.terminal {
+  border: 1px solid var(--rule);
+  padding: 16px;
+  margin: 32px 0;
+  color: var(--amber); /* rule: a single amber accent */
+}
+
+ul {
+  /* rule: forbidden: emoji bullets */
+  list-style-type: square; 
+  padding-left: 2ch;
+  margin: 0;
+}
+
+li {
+  margin-bottom: 8px;
+}
+
+.manifest {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+@media (min-width: 60ch) {
+  .manifest {
+    flex-direction: row;
+    gap: 48px;
+  }
+}
+
+.manifest-col {
+  flex: 1;
+}
+
+h1, h2 {
+  font-weight: 700;
+  margin: 0 0 24px 0;
+}
+
+h1 {
+  font-size: 15px;
+  line-height: 1.1;
+  letter-spacing: 0.04em;
+}
+
+h2 {
+  font-size: 15px;
+  line-height: 1.25;
+  color: var(--dim);
+}
+
+.ascii-art {
+  /* rule: Include one ASCII diagram. */
+  /* rule: include at least one intentional imperfection (slight misalignment) */
+  margin-left: -2ch;
+  color: var(--dim);
+  line-height: 1.2;
+  margin-bottom: 48px;
+  overflow-x: hidden;
+  white-space: pre;
+}
+
+header {
+  margin-bottom: 48px;
+}
+
+header p {
+  margin: 0 0 24px 0;
+}
+
+footer {
+  margin-top: 64px;
+  border-top: 1px solid var(--rule);
+  padding-top: 24px;
+  color: var(--dim);
+}
+
+/* rule: motion forbidden except caret blink and link underline */
+.caret {
+  display: inline-block;
+  width: 1ch;
+  height: 1em;
+  background-color: var(--amber);
+  vertical-align: middle;
+  animation: blink 1s step-end infinite;
+  margin-left: 1ch;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+</style>
+</head>
+<body>
+
+<div class="ascii-art">
+<!-- rule: at least one ASCII diagram rendered as text -->
++-------------------------------------------------------+
+|  [ ahd : artificial human design ]                    |
+|  >> framework . compiler . eval                       |
++-------------------------------------------------------+
+</div>
+
+<header>
+  <!-- rule: voice: technical, lowercase by default, terse -->
+  <h1>ahd.</h1>
+  <p>
+    ai-generated design output is currently unacceptable. you already know this. 
+    the problem is not a lack of context; it is a lack of rigorous, enforceable constraints.
+    ahd is a framework to constrain, evaluate, and compile design specifications into a format 
+    that language models cannot ignore. 
+  </p>
+  <p>
+    <!-- rule: A link to github (or the forgejo mirror) labelled as the read-the-code CTA. -->
+    <a href="https://github.com/ahd-project/ahd">read the code</a><span class="caret"></span>
+  </p>
+</header>
+
+<div class="terminal">
+  <!-- rule: The command ... rendered in a monospace code block with the language tag `bash`. -->
+  <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+</div>
+
+<hr>
+
+<div class="manifest">
+  <div class="manifest-col">
+    <!-- rule: A clearly separated manifest section titled 'What ships' -->
+    <h2>what ships</h2>
+    <ul>
+      <li>brief compiler</li>
+      <li>28-rule linter</li>
+      <li>eval harness</li>
+      <li>vision-critic scaffold</li>
+      <li>mcp server</li>
+      <li>editor plugins</li>
+      <li>eight tokens</li>
+    </ul>
+  </div>
+  
+  <div class="manifest-col">
+    <!-- rule: A clearly separated manifest section titled 'What is gated' -->
+    <h2>what is gated</h2>
+    <ul>
+      <li>live frontier-model calls (needs api keys)</li>
+      <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+      <li>standalone npm packages for the editor plugins</li>
+      <li>additional tokens</li>
+    </ul>
+  </div>
+</div>
+
+<footer>
+  <!-- rule: A footer that names the licence explicitly -->
+  <p>
+    licence: fsl-1.1-apache-2.0 for code, cc-by-4.0 for tokens and artwork.
+  </p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ahd | artificial human design</title>
+<style>
+  /* rule: post-digital green token implementation */
+  :root {
+    --bg: oklch(0.14 0.02 150);
+    --fg: oklch(0.92 0.12 135);
+    --dim: oklch(0.55 0.05 150);
+    --rule: oklch(0.3 0.04 150);
+    --amber: oklch(0.82 0.15 75);
+  }
+
+  /* rule: everything in monospace */
+  * {
+    box-sizing: border-box;
+    font-family: 'Berkeley Mono', 'IBM Plex Mono', 'JetBrains Mono', ui-monospace, monospace;
+    font-weight: 400;
+    text-transform: lowercase; /* rule: technical, lowercase by default */
+  }
+
+  /* rule: dark green-black background, muted green foreground */
+  body {
+    background-color: var(--bg);
+    color: var(--fg);
+    margin: 0;
+    padding: 0;
+    line-height: 1.55; /* rule: line-height body 1.55 */
+    display: flex;
+    justify-content: center;
+  }
+
+  /* rule: aligns to an 80 character grid */
+  .grid-container {
+    width: 100%;
+    max-width: 80ch; 
+    padding: 48px 16px; /* rule: space 48, 16 */
+  }
+
+  /* rule: measure 72ch */
+  .content-block {
+    max-width: 72ch;
+    margin: 0 auto;
+  }
+
+  /* rule: rectangles only, no radii, no shadows, no gradients */
+  h1, h2, pre, div, section, footer, a {
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  h1 {
+    font-size: 31px; /* rule: scale step 4 */
+    line-height: 1.1; /* rule: line-height display 1.1 */
+    margin: 0 0 16px 0;
+  }
+
+  h2 {
+    font-size: 22px; /* rule: scale step 2 */
+    line-height: 1.25; /* rule: line-height h2 1.25 */
+    margin: 0 0 12px 0;
+    border-bottom: 1px solid var(--rule); /* rule: one hairline rule colour */
+    padding-bottom: 4px;
+  }
+
+  p {
+    margin: 0 0 24px 0;
+    color: var(--fg);
+  }
+
+  /* rule: terminal-aesthetic code block */
+  pre {
+    background: var(--bg);
+    border: 1px solid var(--rule);
+    padding: 16px;
+    margin: 24px 0;
+    overflow-x: auto;
+  }
+
+  code {
+    font-size: 15px; /* rule: base 15 */
+  }
+
+  /* rule: single amber accent */
+  .accent {
+    color: var(--amber);
+  }
+
+  /* rule: underlined links with an offset, no colour change */
+  a {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  /* rule: avoid three equal feature cards - using a list/manifest approach */
+  .manifest-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    margin-top: 48px;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  li {
+    margin-bottom: 8px;
+    display: flex;
+  }
+
+  /* rule: avoid emoji bullets - using '-' */
+  li::before {
+    content: "- ";
+    margin-right: 8px;
+    color: var(--dim);
+  }
+
+  /* rule: ascii diagram */
+  .ascii {
+    font-size: 12px; /* rule: scale step -1 */
+    color: var(--dim);
+    line-height: 1.2;
+    margin: 32px 0;
+    white-space: pre;
+  }
+
+  /* intentional imperfection: slightly misaligned character in ascii */
+  .glitch {
+    display: inline-block;
+    transform: translateX(2px); 
+  }
+
+  footer {
+    margin-top: 64px;
+    padding-top: 24px;
+    border-top: 1px solid var(--rule);
+    font-size: 12px;
+    color: var(--dim);
+  }
+
+  /* rule: avoid centered hero stack - content is left-aligned */
+</style>
+</head>
+<body>
+
+<div class="grid-container">
+  <main class="content-block">
+    <header>
+      <h1>artificial human design</h1>
+      <p>a framework for high-fidelity generative design. no slop. just rules.</p>
+    </header>
+
+    <div class="ascii">
+[input.yml] --(compile)--> [ahd_engine] --(eval)--> [output.json]
+                                |
+                         [28_rule_linter]<span class="glitch">.</span>
+    </div>
+
+    <section>
+      <pre><code class="language-bash">$ ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10<span class="accent">_</span></code></pre>
+    </section>
+
+    <div class="manifest-grid">
+      <section>
+        <h2>what ships</h2>
+        <ul>
+          <li>brief compiler</li>
+          <li>28-rule linter</li>
+          <li>eval harness</li>
+          <li>vision-critic scaffold</li>
+          <li>mcp server</li>
+          <li>editor plugins</li>
+          <li>eight tokens</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>what is gated</h2>
+        <ul>
+          <li>live frontier-model calls (needs api keys)</li>
+          <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+          <li>standalone npm packages for the editor plugins</li>
+          <li>additional tokens</li>
+        </ul>
+      </section>
+    </div>
+
+    <section style="margin-top: 48px;">
+      <a href="https://github.com/ahd-project" target="_blank">read-the-code</a>
+    </section>
+
+    <footer>
+      fsl-1.1-apache-2.0 for code | cc-by-4.0 for tokens and artwork
+    </footer>
+  </main>
+</div>
+
+</body>
+</html>

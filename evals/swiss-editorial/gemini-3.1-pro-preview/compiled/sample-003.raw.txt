@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Artificial Human Design</title>
+<style>
+  /* rule: Palette is ink on paper (warm off-white) with a single spot red. */
+  :root {
+    --paper: oklch(0.98 0.005 95);
+    --ink: oklch(0.18 0 0);
+    --spot: oklch(0.58 0.22 27);
+    --rule: oklch(0.18 0 0);
+    --grid-margin: max(32px, calc(100vw / 24));
+  }
+
+  /* rule: Asymmetric left-aligned composition. */
+  body {
+    margin: 0;
+    padding: var(--grid-margin);
+    background-color: var(--paper);
+    color: var(--ink);
+    /* rule: Body in Neue Haas Grotesk Text at 17px, line-height 1.5. */
+    font-family: "Neue Haas Grotesk Text", "Helvetica Now Text", Inter, sans-serif;
+    font-size: 17px;
+    line-height: 1.5;
+    text-align: left;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* rule: Work on a 12-column grid with 24px gutters. */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    column-gap: 24px;
+  }
+
+  /* rule: Set display type in Neue Haas Grotesk Display at 96-160px with tracking -0.02em. */
+  .display {
+    font-family: "Neue Haas Grotesk Display", "Helvetica Now Display", "Inter Tight", sans-serif;
+    font-size: clamp(96px, 12vw, 160px);
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    font-weight: 400;
+    margin: 0;
+    text-transform: uppercase;
+  }
+
+  /* rule: measure 62ch. */
+  .measure {
+    max-width: 62ch;
+  }
+
+  /* rule: single spot red used exactly once on the page. */
+  .spot {
+    color: var(--spot);
+  }
+
+  /* rule: small status pills allowed. */
+  .pill {
+    display: inline-block;
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    padding: 4px 12px;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 32px;
+  }
+
+  /* rule: Require one dramatic jump per section (160 between sections). */
+  .mt-160 {
+    margin-top: 160px;
+  }
+
+  .mt-48 {
+    margin-top: 48px;
+  }
+
+  .mt-24 {
+    margin-top: 24px;
+  }
+
+  /* rule: One intentional element must bleed past the grid. */
+  .bleed {
+    width: 100vw;
+    margin-left: calc(-1 * var(--grid-margin));
+    height: 1px;
+    background-color: var(--rule);
+    border: none;
+    display: block;
+  }
+
+  h2 {
+    font-family: "Neue Haas Grotesk Display", "Helvetica Now Display", "Inter Tight", sans-serif;
+    font-size: 32px;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    font-weight: 400;
+    margin: 0 0 24px 0;
+  }
+
+  /* rule: No emoji bullets. Structural alignment only. */
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  li {
+    border-top: 1px solid var(--rule);
+    padding: 12px 0;
+  }
+
+  li:last-child {
+    border-bottom: 1px solid var(--rule);
+  }
+
+  /* rule: No rounded corners except pills. */
+  .cta {
+    display: inline-block;
+    padding: 12px 24px;
+    border: 1px solid var(--rule);
+    color: var(--ink);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 15px;
+    transition: background-color 0s, color 0s; /* rule: structural motion only */
+  }
+
+  .cta:hover {
+    background-color: var(--ink);
+    color: var(--paper);
+  }
+
+  .terminal {
+    background-color: var(--ink);
+    color: var(--paper);
+    padding: 24px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 15px;
+    overflow-x: auto;
+  }
+
+  code {
+    font-family: inherit;
+  }
+
+  footer {
+    border-top: 1px solid var(--rule);
+    padding-top: 24px;
+    font-size: 14px;
+  }
+
+  /* Grid placements enforcing asymmetry */
+  .hero-container {
+    grid-column: 1 / 13;
+  }
+
+  .hero-text {
+    grid-column: 1 / 9;
+  }
+
+  .terminal-container {
+    grid-column: 2 / 12;
+  }
+
+  .manifest-col-left {
+    grid-column: 1 / 5;
+  }
+
+  .manifest-col-right {
+    grid-column: 6 / 13;
+  }
+
+  .footer-container {
+    grid-column: 1 / 8;
+  }
+</style>
+</head>
+<body>
+
+  <div class="grid">
+    <div class="hero-container">
+      <span class="pill">v0.1.0</span>
+      <!-- rule: one section anchored by a single word at display >= 120px -->
+      <h1 class="display">SYSTEM<span class="spot">.</span></h1>
+    </div>
+    
+    <div class="hero-text mt-48">
+      <!-- rule: declarative, short sentences, no hedges, no Oxford commas -->
+      <p class="measure">Artificial Human Design forces constraints on generative output. The industry accepts approximations. We measure strict adherence. This framework provides structural correction for interface development.</p>
+      
+      <div class="mt-48">
+        <a href="https://github.com/ahd/ahd" class="cta">Read the code</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid mt-160">
+    <div class="terminal-container">
+      <pre class="terminal"><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+    </div>
+  </div>
+
+  <hr class="bleed mt-160">
+
+  <div class="grid mt-160">
+    <div class="manifest-col-left">
+      <h2>What ships</h2>
+      <ul>
+        <li>Brief compiler</li>
+        <li>28-rule linter</li>
+        <li>Eval harness</li>
+        <li>Vision-critic scaffold</li>
+        <li>MCP server</li>
+        <li>Editor plugins</li>
+        <li>Eight tokens</li>
+      </ul>
+    </div>
+
+    <div class="manifest-col-right">
+      <h2>What is gated</h2>
+      <ul>
+        <li>Live frontier-model calls (needs API keys)</li>
+        <li>Live vision critique (needs multimodal key + screenshot pipeline)</li>
+        <li>Standalone npm packages for the editor plugins</li>
+        <li>Additional tokens</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="grid mt-160">
+    <!-- rule: not a canonical 4-column footer -->
+    <footer class="footer-container">
+      FSL-1.1-Apache-2.0 for code. CC-BY-4.0 for tokens and artwork.
+    </footer>
+  </div>
+
+</body>
+</html>

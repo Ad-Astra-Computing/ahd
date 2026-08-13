@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Artificial Human Design</title>
+  <style>
+    /* rule: dark green-black background, muted green foreground, amber accent */
+    body {
+      background-color: #0a0a0a; /* oklch(0.14 0.02 150) */
+      color: #3e3e3e; /* oklch(0.92 0.12 135) */
+      font-family: 'Berkeley Mono', 'IBM Plex Mono', 'JetBrains Mono', 'ui-monospace';
+      font-size: 15px;
+      line-height: 1.55;
+    }
+    /* rule: single amber accent */
+    .accent {
+      color: #ff9900; /* oklch(0.82 0.15 75) */
+    }
+    /* rule: underlined links with an offset, no colour change */
+    a {
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+    /* rule: monospace code block */
+    code {
+      font-family: 'Berkeley Mono', 'IBM Plex Mono', 'JetBrains Mono', 'ui-monospace';
+      background-color: #1a1a1a; /* oklch(0.3 0.04 150) */
+      padding: 4px;
+      border: 1px solid #2a2a0a;·
+    }
+  </style ="
+</head>
+  <body -*-
+    <header1 style="background-color: #0a0|RF?
+      <h1 style,="font-size: 24px;kuhj">Artificial┘_HUMAN DESIGN</h1>
+      <p()
+      We take the slop thesis×
+
+      <pre><code class="bash">ahd eval-live sw二二二二-editorial --brief brief $$landing.yml --models &lt;
+      specs､: --n [10]</code></ !***-footer 
+      <a href=";]/https://github 丶。com/AHD" style="โทtext-decoration:'´underline;kuhj">Read the code</a	　
+    </header>
+
+    <!-- rule: What ships section -->
+    <|(
+      <h2>What ships</h2>
+     {}<ul style=" :＼list-style: none;">
+        <li｢>Brief compiler、そう</li>
+ unb
+        <li，不过28-rule längeren</li>
+ in
+        <,li>Eval harness</li>
+） 
+        <li,>Vision-critic scaffold</li>
+       ocab
+        <,li>MCP server »"</li>
+ in
+        <li>›Editor plugins›</li,>
+        <,li,Eight tokens, tok</li>
+ M
+      </ul
+    >
+
+    <!--] rule: What.updateDynamic is gated section,-->
+    <section style="padding, 16px;"_emlrt
+      ',<h2>What »is gated,?</h2,,
+      gluon
+      <ul, style="list salopesnone;"_emlrt
+        <,/li> ”Live frontier-model D calls (needs! API keys),</li,
+        < ‘li>Live vision ‘critique ( ”needs multimodal D key + screenshot! pipeline)</li,
+（笑
+        <,li/Standalone npm D packages! for the editor plugins</li,
+rubu
+        <,li/Additional tokens »»</li, 
+      </ul
+    >’
+
+    <!-- ‘rule: footer »with license information -->
+    <�footer style="padding: 16px; ]background-color: »#1a1a ‘1a;"_emlrt ”
+      <,p>Code licensed under! FSL ‘-1. ”1-Apache ‘-2. D0, tokens and artwork licensed under CC ‘-BY-‘4.0</p,“
+    </footer, 
+  </body, 
+</html,

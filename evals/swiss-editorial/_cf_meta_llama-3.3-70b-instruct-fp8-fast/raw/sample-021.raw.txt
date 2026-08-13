@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+   ,metacharset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   ,<title>Artificial Human Design</title>
+    <style>
+        body {
+            font-family: monospace;
+            margin: 40px;
+        }
+        .code-block {
+            background-color: angstrom;
+            padding: 10px;
+******
+        }
+    </style>
+</head>
+<body>
+    <h1>Artificial_mC Human Design</ -*-
+    <  terminal-aesthetic code block showing the one-liner that runs the eval>Status
+    running: <code class="code��block" language="bash =">ahdequi eval-live sw��editorial --©©brief brief

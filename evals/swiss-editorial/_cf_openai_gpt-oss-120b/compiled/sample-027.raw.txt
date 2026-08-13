@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>AHD – Artificial Human Design</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+/* rule: colour palette */
+:root{
+  --ink: oklch(0.18 0 0);
+  --paper: oklch(0.98 0.005 95);
+  --spot: oklch(0.58 0.22 27);
+  --rule: oklch(0.18 0 0);
+}
+
+/* rule: responsive margin */
+@media (min-width:600px){
+  :root{--margin:calc(100vw/24);}
+}
+@media (max-width:599px){
+  :root{--margin:32px;}
+}
+
+/* rule: base typography */
+body{
+  margin:0;
+  font-family:"Neue Haas Grotesk Text","Helvetica Now Text","Inter",sans-serif;
+  font-size:1rem;               /* 17px base */
+  line-height:1.5;              /* rule: body line‑height */
+  color:var(--ink);
+  background:var(--paper);
+  padding:2rem var(--margin);
+}
+
+/* rule: 12‑column grid */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(12,1fr);
+  gap:24px;                     /* gutter */
+}
+
+/* rule: display heading – single word anchor, ≥120px, tracking -0.02em */
+h1{
+  grid-column:span 8;
+  font-family:"Neue Haas Grotesk Display","Helvetica Now Display","Inter Tight",sans-serif;
+  font-size:clamp(96px,12vw,160px);
+  line-height:1.05;
+  letter-spacing:-0.02em;
+  margin:0;
+}
+
+/* rule: pill badge – allowed radius */
+.pill{
+  background:var(--ink);
+  color:var(--paper);
+  padding:.1rem .5rem;
+  border-radius:999px;
+  font-size:.875rem;
+}
+
+/* rule: code block */
+code{
+  font-family:Menlo,Monaco,Consolas,"Courier New",monospace;
+  background:var(--paper);
+  padding:.5rem;
+  display:block;
+  overflow-x:auto;
+}
+
+/* rule: spot colour used exactly once */
+.spot-link{
+  color:var(--spot);
+  text-decoration:none;
+  font-weight:700;
+}
+
+/* rule: bleeding element */
+.bleed{
+  background:var(--ink);
+  height:4px;
+  margin-left:-24px;   /* bleed left */
+  margin-right:-24px;  /* bleed right */
+}
+
+/* rule: section spacing – dramatic jump */
+section{
+  margin-top:160px;
+}
+
+/* rule: list styling */
+ul{
+  padding-left:1.5rem;
+}
+
+/* rule: footer */
+footer{
+  margin-top:160px;
+  font-size:.875rem;
+  border-top:1px solid var(--rule);
+  padding-top:1rem;
+}
+</style>
+</head>
+<body>
+<div class="grid">
+  <!-- rule: single‑word anchor -->
+  <h1>AHD</h1>
+  <!-- rule: status pill -->
+  <p class="pill" style="grid-column:span 4;">beta</p>
+  <p style="grid-column:span 8;">A framework that treats AI‑generated design as a tool, not a crutch. Code, tokens, and editors you can audit.</p>
+
+  <!-- rule: intentional bleed past grid -->
+  <div class="bleed" style="grid-column:1/-1;"></div>
+
+  <!-- rule: required code block -->
+  <section style="grid-column:span 8;">
+    <h2 style="font-size:1.5rem;margin-bottom:.5rem;">Run the evaluation</h2>
+    <pre><code class="bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+    <p><a href="https://github.com/ahd/ahd" class="spot-link">read the code</a></p>
+  </section>
+
+  <!-- rule: manifest – What ships -->
+  <section style="grid-column:span 8;">
+    <h2 style="font-size:1.5rem;margin-bottom:.5rem;">What ships</h2>
+    <ul>
+      <li>brief compiler</li>
+      <li>28‑rule linter</li>
+      <li>eval harness</li>
+      <li>vision‑critic scaffold</li>
+      <li>MCP server</li>
+      <li>editor plugins</li>
+      <li>eight tokens</li>
+    </ul>
+  </section>
+
+  <!-- rule: manifest – What is gated -->
+  <section style="grid-column:span 8;">
+    <h2 style="font-size:1.5rem;margin-bottom:.5rem;">What is gated</h2>
+    <ul>
+      <li>live frontier‑model calls (needs API keys)</li>
+      <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+      <li>standalone npm packages for the editor plugins</li>
+      <li>additional tokens</li>
+    </ul>
+  </section>
+</div>
+
+<footer>
+  <p>Code licence: FSL‑1.1‑Apache‑2.0. Tokens &amp; artwork licence: CC‑BY‑4.0.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AHD | Artificial Human Design</title>
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --fg: #e5e5e5;
+    --muted: #888;
+    --accent: #fff;
+    --terminal: #00ff94;
+  }
+  body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background-color: var(--bg);
+    color: var(--fg);
+    margin: 0;
+    padding: 0;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  .container {
+    max-width: 56rem;
+    margin: 0 auto;
+    padding: 6rem 2rem;
+  }
+  header {
+    margin-bottom: 5rem;
+  }
+  h1 {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--accent);
+    margin: 0 0 0.25rem 0;
+    letter-spacing: -0.02em;
+  }
+  .subtitle {
+    color: var(--muted);
+    font-size: 1rem;
+  }
+  p.intro {
+    font-size: 1.5rem;
+    max-width: 44rem;
+    margin-bottom: 2rem;
+    color: var(--fg);
+    letter-spacing: -0.01em;
+  }
+  a.cta {
+    display: inline-block;
+    color: var(--bg);
+    background-color: var(--accent);
+    text-decoration: none;
+    padding: 0.75rem 1.5rem;
+    font-weight: 500;
+    font-size: 1rem;
+    margin-bottom: 4rem;
+    transition: opacity 0.2s;
+  }
+  a.cta:hover {
+    opacity: 0.8;
+  }
+  pre {
+    background: #000;
+    border: 1px solid #222;
+    padding: 1.5rem;
+    overflow-x: auto;
+    margin: 0 0 5rem 0;
+  }
+  code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 0.95rem;
+    color: var(--terminal);
+  }
+  .manifest {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 4rem;
+    margin-bottom: 6rem;
+    border-top: 1px solid #222;
+    padding-top: 4rem;
+  }
+  @media (min-width: 640px) {
+    .manifest {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  h2 {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--accent);
+    margin: 0 0 1.5rem 0;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  li {
+    margin-bottom: 0.875rem;
+    padding-left: 1.25rem;
+    position: relative;
+    color: var(--muted);
+  }
+  li::before {
+    content: "-";
+    position: absolute;
+    left: 0;
+    color: var(--muted);
+  }
+  footer {
+    border-top: 1px solid #222;
+    padding-top: 2rem;
+    font-size: 0.875rem;
+    color: var(--muted);
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>AHD</h1>
+      <div class="subtitle">Artificial Human Design</div>
+    </header>
+
+    <main>
+      <p class="intro">
+        You have seen the generated output and you already suspect the problem. AHD is a framework to evaluate and constrain it.
+      </p>
+
+      <a href="https://github.com/ahd-project/ahd" class="cta">Read the code on GitHub</a>
+
+      <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+
+      <div class="manifest">
+        <div>
+          <h2>What ships</h2>
+          <ul>
+            <li>brief compiler</li>
+            <li>28-rule linter</li>
+            <li>eval harness</li>
+            <li>vision-critic scaffold</li>
+            <li>MCP server</li>
+            <li>editor plugins</li>
+            <li>eight tokens</li>
+          </ul>
+        </div>
+        <div>
+          <h2>What is gated</h2>
+          <ul>
+            <li>live frontier-model calls (needs API keys)</li>
+            <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+            <li>standalone npm packages for the editor plugins</li>
+            <li>additional tokens</li>
+          </ul>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      Licence: FSL-1.1-Apache-2.0 for code | CC-BY-4.0 for tokens and artwork
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ahd — artificial human design</title>
+<!-- rule: single-monospace; display and text share one family -->
+<style>
+  /* rule: colour.space oklch; palette from token */
+  :root{
+    --bg: oklch(0.14 0.02 150);
+    --fg: oklch(0.92 0.12 135);
+    --dim: oklch(0.55 0.05 150);
+    --rule: oklch(0.30 0.04 150);
+    --amber: oklch(0.82 0.15 75);
+    --ch: 9.2px; /* approx char cell */
+  }
+  /* rule: no radii; rectangles only / rule: shadow forbidden */
+  *{box-sizing:border-box;border-radius:0!important;box-shadow:none!important;}
+  html,body{background:var(--bg);color:var(--fg);}
+  /* rule: monospace body, no sans-serif */
+  body{
+    font-family: "Berkeley Mono","IBM Plex Mono","JetBrains Mono",ui-monospace,monospace;
+    font-size:15px; line-height:1.55; font-weight:400;
+    margin:0; padding:32px 24px 24px;
+    /* rule: char-grid, 80 columns */
+    max-width: 80ch;
+    margin-inline:auto;
+  }
+  /* rule: no entrance animation; only caret blink and link underline allowed */
+  @media (prefers-reduced-motion: no-preference){
+    .caret{animation:blink 1.05s steps(1) infinite;}
+    @keyframes blink{50%{opacity:0;}}
+  }
+  /* rule: hairline rule colour, one weight */
+  hr{border:0;border-top:1px solid var(--rule);margin:24px 0;}
+  .rule-top{border-top:1px solid var(--rule);}
+  .rule-bot{border-bottom:1px solid var(--rule);}
+  /* rule: underlined links with offset, no colour change */
+  a{color:inherit;text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:1px;}
+  a:hover{text-decoration-thickness:2px;}
+  /* rule: allcaps tracking 0.04em */
+  .caps{letter-spacing:0.04em;text-transform:uppercase;}
+  .dim{color:var(--dim);}
+  .amber{color:var(--amber);} /* rule: single amber accent */
+  h1,h2,h3{font-weight:700;margin:0;}
+  /* rule: scale base 15, ratio 1.2 */
+  h1{font-size:calc(15px * 1.2 * 1.2 * 1.2);line-height:1.1;} /* step 3 */
+  h2{font-size:calc(15px * 1.2);line-height:1.25;}            /* step 1 */
+  h3{font-size:15px;line-height:1.25;}
+  p{margin:0 0 12px 0;}
+  ul{list-style:none;margin:0;padding:0;}
+  li{padding:0;}
+  li::before{content:"- ";color:var(--dim);} /* rule: no emoji bullets; ascii dash */
+  /* rule: terminal code block, monospace, language tag bash */
+  pre{
+    margin:0; padding:12px;
+    border:1px solid var(--rule);
+    overflow-x:auto;
+    background:transparent;
+    font-size:15px; line-height:1.55;
+  }
+  .code-wrap{border:1px solid var(--rule);}
+  .code-head{
+    display:flex;justify-content:space-between;
+    padding:4px 12px;border-bottom:1px solid var(--rule);
+    font-size:calc(15px / 1.2); color:var(--dim);
+  }
+  .code-head .tag{color:var(--amber);} /* rule: single amber accent, used sparingly */
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--rule);}
+  .grid2 > section{padding:16px;}
+  .grid2 > section + section{border-left:1px solid var(--rule);}
+  @media (max-width: 640px){
+    .grid2{grid-template-columns:1fr;}
+    .grid2 > section + section{border-left:0;border-top:1px solid var(--rule);}
+  }
+  /* rule: char-grid alignment; ascii diagram preserves whitespace */
+  .ascii{
+    white-space:pre;
+    font-size:calc(15px / 1.2);
+    color:var(--fg);
+    border:1px solid var(--rule);
+    padding:12px;
+    overflow-x:auto;
+    line-height:1.25;
+  }
+  header.masthead{
+    display:flex;justify-content:space-between;align-items:baseline;
+    padding-bottom:8px;border-bottom:1px solid var(--rule);
+    /* rule: not a centred hero stack */
+  }
+  .kv{display:grid;grid-template-columns:14ch 1fr;gap:0 8px;}
+  .kv dt{color:var(--dim);}
+  .kv dd{margin:0;}
+  footer{margin-top:24px;padding-top:12px;border-top:1px solid var(--rule);color:var(--dim);font-size:calc(15px / 1.2);}
+  /* imperfection: a single line-length overrun column marker at 80ch */
+  .ruler{color:var(--rule);white-space:pre;font-size:calc(15px / 1.2);}
+  .section-title{
+    display:flex;justify-content:space-between;align-items:baseline;
+    border-bottom:1px solid var(--rule);
+    padding-bottom:4px;margin-bottom:12px;
+  }
+  .tag-amber{color:var(--amber);border:1px solid var(--rule);padding:0 6px;}
+  strong{font-weight:700;}
+</style>
+</head>
+<body>
+
+<!-- rule: masthead, left-aligned, not a hero stack with pill+2 CTAs -->
+<header class="masthead">
+  <div>
+    <span class="caps">ahd</span><span class="dim"> / artificial human design</span>
+  </div>
+  <div class="dim caps">v0.1.0 &middot; 2026-04-24</div>
+</header>
+
+<!-- rule: one-screen reading; terse, lowercase voice -->
+<section style="padding:16px 0 8px 0;">
+  <h1>design that fails the eval is slop.<br><span class="dim">ahd writes the eval.</span></h1>
+  <p style="margin-top:12px;">
+    you have already seen the pattern this month: centred hero, pill badge, two
+    CTAs, purple-to-blue on the word <em>ai</em>, three equal cards, a trust bar
+    of logos nobody verified. the thesis is not the interesting part. what
+    is interesting is a framework that catches it before a human has to.
+  </p>
+  <p>
+    ahd is a brief compiler, a linter, and a live eval harness. it compiles
+    a token + brief into a prompt that forbids specific visual clichés, runs
+    <span class="amber">n</span> frontier models against it, and scores the
+    outputs against 28 hairline rules. the cli one-liner is the whole pitch<span class="caret">_</span>
+  </p>
+</section>
+
+<!-- rule: terminal-aesthetic code block, language tag bash -->
+<div class="code-wrap" aria-label="terminal">
+  <div class="code-head">
+    <span>~/ahd</span>
+    <span class="tag">bash</span>
+  </div>
+<pre><code><span class="dim">$</span> ahd eval-live swiss-editorial \
+    --brief briefs/landing.yml \
+    --models &lt;specs&gt; \
+    --n 10</code></pre>
+</div>
+
+<p style="margin-top:8px;" class="dim">
+  output: one html per model, one lint report per html, one vision critique
+  per render, one aggregate score. artefacts land in <code>./runs/&lt;ts&gt;/</code>.
+</p>
+
+<!-- rule: ascii diagram required -->
+<pre class="ascii" aria-label="pipeline diagram">
+  briefs/*.yml          tokens/*.json         rules/*.ts
+        \                    |                    /
+         \                   |                   /
+          +----[ brief compiler ]----+----[ 28-rule linter ]
+                      |                          ^
+                      v                          |
+               prompt packet   ---->    render (n models)
+                      |                          |
+                      v                          v
+              vision-critic scaffold  --->  aggregate score
+                      |
+                      v
+                 ./runs/&lt;ts&gt;/
+</pre>
+
+<!-- rule: two clearly separated manifest sections; not three equal cards -->
+<div class="grid2" style="margin-top:24px;">
+  <section>
+    <div class="section-title">
+      <h2>what ships</h2>
+      <span class="caps dim">today</span>
+    </div>
+    <ul>
+      <li>brief compiler</li>
+      <li>28-rule linter</li>
+      <li>eval harness</li>
+      <li>vision-critic scaffold</li>
+      <li>mcp server</li>
+      <li>editor plugins</li>
+      <li>eight tokens</li>
+    </ul>
+  </section>
+  <section>
+    <div class="section-title">
+      <h2>what is gated</h2>
+      <span class="caps amber">external</span>
+    </div>
+    <ul>
+      <li>live frontier-model calls <span class="dim">— needs api keys</span></li>
+      <li>live vision critique <span class="dim">— needs multimodal key + screenshot pipeline</span></li>
+      <li>standalone npm packages for the editor plugins</li>
+      <li>additional tokens</li>
+    </ul>
+  </section>
+</div>
+
+<!-- rule: read-the-code CTA as underlined link, not a button stack -->
+<section style="margin-top:24px;" class="rule-top">
+  <div style="padding-top:12px;">
+    <dl class="kv">
+      <dt class="caps">read</dt>
+      <dd><a href="https://github.com/ahd/ahd">github.com/ahd/ahd</a> <span class="dim">(read the code)</span></dd>
+      <dt class="caps">mirror</dt>
+      <dd><a href="https://code.ahd.dev/ahd/ahd">code.ahd.dev/ahd/ahd</a> <span class="dim">(forgejo)</span></dd>
+      <dt class="caps">specs</dt>
+      <dd><a href="https://github.com/ahd/ahd/tree/main/specs">/specs</a> <span class="dim">— 28 rules, 8 tokens, brief schema</span></dd>
+      <dt class="caps">contact</dt>
+      <dd><a href="mailto:ops@ahd.dev">ops@ahd.dev</a></dd>
+    </dl>
+  </div>
+</section>
+
+<!-- imperfection: retained 80-char ruler, a small engineering tell -->
+<div class="ruler" aria-hidden="true">0........1.........2.........3.........4.........5.........6.........7.........8</div>
+
+<!-- rule: not a 4-column Product/Company/Resources/Legal footer -->
+<footer>
+  <div style="display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+    <span>
+      code: <strong>FSL-1.1-Apache-2.0</strong> &middot;
+      tokens &amp; artwork: <strong>CC-BY-4.0</strong>
+    </span>
+    <span>
+      rendered on a char-grid &middot; 80 columns &middot; no shadows
+    </span>
+  </div>
+</footer>
+
+</body>
+</html>

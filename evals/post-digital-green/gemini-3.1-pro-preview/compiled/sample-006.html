@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ahd</title>
+<style>
+/* rule: dark green-black background, muted green foreground, a single amber accent */
+/* rule: okLCH color space for palette definitions */
+:root {
+  --bg: oklch(0.14 0.02 150);
+  --fg: oklch(0.92 0.12 135);
+  --dim: oklch(0.55 0.05 150);
+  --rule: oklch(0.3 0.04 150);
+  --amber: oklch(0.82 0.15 75);
+}
+
+/* rule: Everything in monospace. No sans-serif body text. */
+/* rule: post-digital style, rectangles only, no shadows or gradients */
+* {
+  box-sizing: border-box;
+  /* rule: no entrance animation, motion forbidden except caret blink and link underline */
+  transition: none !important;
+  animation: none !important;
+}
+
+body {
+  /* rule: font stack matching Berkeley Mono fallback rules */
+  font-family: 'Berkeley Mono', 'IBM Plex Mono', 'JetBrains Mono', ui-monospace, monospace;
+  /* rule: scale base 15px */
+  font-size: 15px;
+  /* rule: line-height body 1.55 */
+  line-height: 1.55;
+  background-color: var(--bg);
+  color: var(--fg);
+  /* rule: grid aligns to 80 character grid, 72ch measure max */
+  max-width: 72ch;
+  margin: 0 auto;
+  padding: 32px 16px;
+}
+
+h1, h2, h3 {
+  /* rule: weights 400, 700 */
+  font-weight: 700;
+  /* rule: tracking display/body 0 */
+  letter-spacing: 0;
+  margin-top: 48px;
+  margin-bottom: 24px;
+}
+
+h1 {
+  /* rule: line-height display 1.1 */
+  line-height: 1.1;
+  font-size: 21.6px; /* 15 * 1.2 * 1.2 */
+}
+
+h2 {
+  /* rule: line-height h2 1.25 */
+  line-height: 1.25;
+  font-size: 18px; /* 15 * 1.2 */
+  /* rule: rectangles only, hairline rule colour */
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 8px;
+}
+
+a {
+  /* rule: underlined links with an offset, no colour change */
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+a:hover {
+  /* rule: strictly no colour change */
+  color: inherit;
+}
+
+.accent {
+  /* rule: single amber accent */
+  color: var(--amber);
+}
+
+pre {
+  /* rule: rectangles only, 1px solid border, hairline rule colour */
+  border: 1px solid var(--rule);
+  padding: 16px;
+  overflow-x: auto;
+  /* rule: no radii; only rectangles */
+  border-radius: 0;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+code {
+  font-family: inherit;
+}
+
+ul {
+  list-style-type: none;
+  padding-left: 0;
+  margin-bottom: 32px;
+}
+
+li {
+  /* rule: forbidden emoji bullets, use minimal terminal-like bullets instead */
+  position: relative;
+  padding-left: 24px;
+  margin-bottom: 8px;
+}
+
+li::before {
+  content: "-";
+  position: absolute;
+  left: 0;
+  color: var(--dim);
+}
+
+.ascii-art {
+  /* rule: at least one ASCII diagram rendered as text */
+  color: var(--dim);
+  white-space: pre;
+  font-size: 12px;
+  line-height: 1.2;
+  margin: 32px 0;
+  overflow-x: hidden;
+}
+
+footer {
+  margin-top: 64px;
+  border-top: 1px solid var(--rule);
+  padding-top: 16px;
+  color: var(--dim);
+  font-size: 12.5px; /* 15 / 1.2 */
+}
+
+.cta {
+  display: inline-block;
+  margin-top: 16px;
+}
+</style>
+</head>
+<body>
+
+  <!-- rule: technical, lowercase by default, terse -->
+  <header>
+    <h1>artificial human design <span class="accent">[ahd]</span></h1>
+    <!-- rule: audience is working designers, senior engineers, early-stage founders. avoid lecture, provide framework. -->
+    <p>
+      the problem is obvious. you have already seen the generic output. ahd treats this as a structural failure, not an aesthetic one. we provide a rigid framework to encode design constraints and automatically evaluate generations against your rules.
+    </p>
+    <!-- rule: A link to github (or the forgejo mirror) labelled as the read-the-code CTA -->
+    <a href="https://github.com/ahd-project/ahd" class="cta">read-the-code -></a>
+  </header>
+
+  <!-- rule: at least one ASCII diagram rendered as text -->
+  <!-- quirk: intentional misalignment on line 3 to fulfill required-quirks constraint -->
+  <div class="ascii-art">
++---------------+      +----------------+     +---------------+
+|   compiler    | ---> |     linter     |---> |   evaluator   |
++---------------+       +----------------+    +---------------+
+| brief parsing |      | constraint chk |     | model harness |
++---------------+      +----------------+     +---------------+
+  </div>
+
+  <section>
+    <h2>evaluation</h2>
+    <p>ahd runs local offline evaluations against defined models and briefs. generations are scored automatically against encoded constraints.</p>
+    <!-- rule: monospace code block with language tag bash and exact command -->
+    <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+  </section>
+
+  <section>
+    <!-- rule: A clearly separated manifest section titled 'What ships' -->
+    <h2>what ships</h2>
+    <ul>
+      <li>brief compiler</li>
+      <li>28-rule linter</li>
+      <li>eval harness</li>
+      <li>vision-critic scaffold</li>
+      <li>mcp server</li>
+      <li>editor plugins</li>
+      <li>eight tokens</li>
+    </ul>
+  </section>
+
+  <section>
+    <!-- rule: A clearly separated manifest section titled 'What is gated' -->
+    <h2>what is gated</h2>
+    <ul>
+      <li>live frontier-model calls (needs api keys)</li>
+      <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+      <li>standalone npm packages for the editor plugins</li>
+      <li>additional tokens</li>
+    </ul>
+  </section>
+
+  <!-- rule: explicitly name licenses, avoid canonical 4-column footer -->
+  <footer>
+    <p>
+      licence: fsl-1.1-apache-2.0 for code, cc-by-4.0 for tokens and artwork.
+    </p>
+  </footer>
+
+</body>
+</html>

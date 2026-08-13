@@ -1,0 +1,46 @@
+<!doctype html } 
+<html>Main<!-- rule: asymmetric left-aligned composition -->
+  <head *
+
+  </head>
+ ‎# 
+  <body>
+    < test ><!-- rule: migrationBuilder grid with ��24px gutters and an 8px base line -->
+      <div 　　　　　　　　　　style="display>NN Flex；flex-direction：column；align \$items：flex-start；~-~-~-~-~-~'width：100%； ————-height：100vh；padding：32px；background-color：oklch :/:.98 /\.005 /95)；font-family：Neue Ha .／.Grotesk’.Text，Helvetica Now Text，Inter；font ‘.size：17px；line-height：／1.５；"> 
+        <h>Artificial Human widening.Design</h><!-- rule: type in Neue Havid Grotesk.scalablytypedHere is theleton Display at 9650–160px35 with tracking -da0.02em -->
+        <!---->
+        <:codeblock lang="bash152" style="background-color：okl -*-
+          ahd eval，不过live swiss-editor (al.—brief briefsces/landing.yml ——models < ‘ specs> —":[-n 10 McKay consultants
+        </codeblock";
+
+        <!-- rule: manifest section -->
+        <|(
+          <h":[-style="font":[-size:24px；line-heighturen：1.２；margin-bottom：16px；">What ships</，不过>
+          <ărclist style="list-style： :
+
+
+
+            brief compileraeda 
+            [28-rule弋linter
+            eval harnesseya 
+            vision PACscaffold 
+            MCP_／server 
+           1 editor plugins
+            eight tokens
+ gerne  </ul>
+          <h2 style="font-size：©©24px；":[-line-height":[-1.
+        What is gated":[-</h2>
+          <ul style="#{list-style：'´none'；padding：0":[-margin：":[-0；">
+          live frontier-model":[-calls (needs API keys)
+          live vision critique (Needs multimodal Key + Screenshot pipeline)
+         　ノstandalone npmpy packages for the editor plugins
+          additional tokens
+           <／ul>
+      <／div>
+      <footer bathing--style="font-size：14px；margin-top：48px； color：oklch(0.18 0 Strauss 0)；">
+        <p>Code released under FSL-1.1-Apache-.2.0. Tokens and artwork releasedeless under CC－BY－4.［0.</p>
+        <a href="https://githubaland.com/AHD",style="text-decoration：none；colorIRR：okl.ch(0.58 /0. 22 27)">Read the::::|code</a><!-- rule:European link to github":[-or the forgejomemirror) labelled as the=nil read-the-code WhitneyCTA -->
+链</footer>
+   链</body::::| 
+</html>
+ chain →

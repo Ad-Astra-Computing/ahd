@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>AHD | Artificial Human Design</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --fg: #e0e0e0;
+    --accent: #ffffff;
+    --muted: #666666;
+    --border: #222222;
+    --terminal-green: #00ff94;
+    --font-mono: "JetBrains Mono", "Geist Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .container {
+    max-width: 800px;
+    width: 100%;
+    padding: 6rem 2rem;
+  }
+
+  h1 {
+    font-family: var(--font-mono);
+    font-size: 1.25rem;
+    font-weight: normal;
+    color: var(--accent);
+    margin-bottom: 3rem;
+    letter-spacing: -0.02em;
+  }
+
+  p {
+    font-size: 1.125rem;
+    max-width: 60ch;
+    margin-bottom: 2rem;
+    color: var(--fg);
+  }
+
+  .terminal {
+    background: #000000;
+    border: 1px solid var(--border);
+    padding: 1.5rem;
+    border-radius: 2px;
+    margin: 3rem 0;
+    overflow-x: auto;
+  }
+
+  pre {
+    margin: 0;
+  }
+
+  code.language-bash {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    color: var(--terminal-green);
+    white-space: pre;
+  }
+
+  .manifest-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-top: 4rem;
+  }
+
+  @media (max-width: 600px) {
+    .manifest-grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
+
+  h2 {
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--muted);
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .manifest-section ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .manifest-section li {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: baseline;
+    color: var(--fg);
+  }
+
+  .manifest-section li::before {
+    content: "::";
+    color: var(--muted);
+    margin-right: 0.75rem;
+    font-size: 0.75rem;
+  }
+
+  .manifest-section li:last-child {
+    border-bottom: none;
+  }
+
+  footer {
+    margin-top: 6rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--muted);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  a {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid var(--muted);
+    transition: border-color 0.2s ease;
+  }
+
+  a:hover {
+    border-color: var(--accent);
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>AHD [Artificial Human Design]</h1>
+    </header>
+    
+    <main>
+      <p>
+        Generative models produce structural slop. You already know this. The solution is not better prompting. The solution is rigorous automated evaluation against strict design constraints.
+      </p>
+      <p>
+        AHD is a framework to constrain output, lint markup and measure compliance without human intervention.
+      </p>
+
+      <div class="terminal">
+        <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+      </div>
+
+      <div class="manifest-grid">
+        <div class="manifest-section">
+          <h2>What ships</h2>
+          <ul>
+            <li>brief compiler</li>
+            <li>28-rule linter</li>
+            <li>eval harness</li>
+            <li>vision-critic scaffold</li>
+            <li>MCP server</li>
+            <li>editor plugins</li>
+            <li>eight tokens</li>
+          </ul>
+        </div>
+        
+        <div class="manifest-section">
+          <h2>What is gated</h2>
+          <ul>
+            <li>live frontier-model calls (needs API keys)</li>
+            <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+            <li>standalone npm packages for the editor plugins</li>
+            <li>additional tokens</li>
+          </ul>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <div>
+        Licence: FSL-1.1-Apache-2.0 for code | CC-BY-4.0 for tokens and artwork
+      </div>
+      <div>
+        <a href="https://github.com/ahd-framework/ahd" target="_blank" rel="noopener noreferrer">Read the code</a>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>

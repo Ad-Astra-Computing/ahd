@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ahd // artificial human design</title>
+  <style>
+    /* rule: single-monospace type pairing, Berkeley Mono with mono fallbacks */
+    :root {
+      /* rule: use specified oklch palette with dark green-black background, muted green foreground, single amber accent */
+      --bg: oklch(0.14 0.02 150);
+      --fg: oklch(0.92 0.12 135);
+      --dim: oklch(0.55 0.05 150);
+      --rule: oklch(0.3 0.04 150);
+      --amber: oklch(0.82 0.15 75);
+      /* rule: align to 80 character grid */
+      --measure: 80ch;
+    }
+
+    /* rule: no gradients, no shadows, no radii, no entrance animation */
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: "Berkeley Mono", "IBM Plex Mono", "JetBrains Mono", ui-monospace, monospace;
+      font-size: 15px;
+      line-height: 1.55;
+    }
+
+    body {
+      /* rule: one-screen reading, restrained spacing, rectangles only */
+      padding: 16px;
+    }
+
+    a {
+      /* rule: links underlined with offset and no colour change */
+      color: inherit;
+      text-decoration-line: underline;
+      text-decoration-color: currentColor;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 4px;
+    }
+
+    main {
+      /* rule: at least one element aligned to the char grid with 80ch max-width */
+      max-width: var(--measure);
+      margin: 0 auto;
+      border: 1px solid var(--rule);
+      padding: 16px;
+    }
+
+    header,
+    section,
+    footer {
+      /* rule: one hairline rule colour, clearly separated sections */
+      border-top: 1px solid var(--rule);
+      padding-top: 12px;
+      margin-top: 12px;
+    }
+
+    header {
+      border-top: 0;
+      padding-top: 0;
+      margin-top: 0;
+    }
+
+    .kicker,
+    .meta,
+    .muted {
+      /* rule: terse technical voice, muted support text */
+      color: var(--dim);
+    }
+
+    h1,
+    h2,
+    p,
+    pre,
+    ul {
+      margin: 0;
+    }
+
+    h1,
+    h2 {
+      /* rule: lowercase by default, monospace display, no decorative treatment */
+      font-size: 1rem;
+      font-weight: 700;
+      line-height: 1.25;
+      text-transform: lowercase;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(18ch, 26ch);
+      gap: 16px;
+      align-items: start;
+    }
+
+    .hero-copy p + p,
+    .manifest p + ul,
+    .manifest ul + p,
+    .code p + pre,
+    footer p + p {
+      margin-top: 8px;
+    }
+
+    .diagram {
+      /* rule: include one ASCII diagram rendered as text */
+      white-space: pre;
+      color: var(--amber);
+      border: 1px solid var(--rule);
+      padding: 8px;
+      overflow-x: auto;
+    }
+
+    pre,
+    code {
+      font: inherit;
+    }
+
+    pre {
+      /* rule: terminal-aesthetic code block, rectangles only */
+      white-space: pre-wrap;
+      word-break: break-word;
+      border: 1px solid var(--rule);
+      padding: 8px;
+      color: var(--amber);
+      background: transparent;
+    }
+
+    ul {
+      padding-left: 18px;
+    }
+
+    li + li {
+      margin-top: 4px;
+    }
+
+    .manifest-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .label {
+      color: var(--amber);
+    }
+
+    .footer-line {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 780px) {
+      /* rule: ensure page loads properly on desktop and mobile */
+      .hero,
+      .manifest-grid,
+      .footer-line {
+        grid-template-columns: 1fr;
+        display: grid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <!-- rule: audience already understands the problem; show a framework rather than a lecture -->
+      <div class="hero">
+        <div class="hero-copy">
+          <p class="kicker">artificial human design // ahd</p>
+          <h1>less generated style. more accountable taste.</h1>
+          <p>
+            ahd is a working framework for turning design direction into checks,
+            prompts, manifests, and review surfaces that can survive contact with
+            real model output.
+          </p>
+          <p>
+            the point is not to moralise about slop. the point is to make vague
+            aesthetic standards executable, inspectable, and hard to hand-wave.
+          </p>
+          <p class="meta">
+            <a href="https://github.com/" target="_blank" rel="noreferrer">read the code</a>
+          </p>
+        </div>
+        <div class="diagram" aria-label="ascii diagram">
+<!-- rule: include at least one ASCII diagram rendered as text -->
+[ brief.yml ]---[ compiler ]---[ linter:28 ]---[ eval ]
+      \                               |            /
+       \-------------------------[ critic ]------/
+                          |
+                      [ manifest ]
+        </div>
+      </div>
+    </header>
+
+    <section class="code">
+      <!-- rule: terminal-aesthetic code block showing the one-liner that runs the eval -->
+      <h2>run the eval</h2>
+      <p class="muted">same brief, multiple model specs, visible failures.</p>
+      <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+    </section>
+
+    <section class="manifest">
+      <!-- rule: clearly separated manifest sections -->
+      <div class="manifest-grid">
+        <div>
+          <h2>what ships</h2>
+          <ul>
+            <li>brief compiler</li>
+            <li>28-rule linter</li>
+            <li>eval harness</li>
+            <li>vision-critic scaffold</li>
+            <li>mcp server</li>
+            <li>editor plugins</li>
+            <li>eight tokens</li>
+          </ul>
+        </div>
+        <div>
+          <h2>what is gated</h2>
+          <ul>
+            <li>live frontier-model calls <span class="muted">(needs api keys)</span></li>
+            <li>live vision critique <span class="muted">(needs multimodal key + screenshot pipeline)</span></li>
+            <li>standalone npm packages for the editor plugins</li>
+            <li>additional tokens</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <!-- rule: one screen of reading, terse and technical -->
+      <p>
+        <span class="label">method:</span> compile the brief, lint the output,
+        compare variants, inspect the misses, and keep the artifact trail. if a
+        system claims taste, it should also expose the test bench.
+      </p>
+      <p class="muted">
+        <!-- rule: include one intentional imperfection; slight asymmetry is deliberate -->
+        note the uneven diagram edge above. not polished away.
+      </p>
+    </section>
+
+    <footer>
+      <!-- rule: footer names licence explicitly, avoid canonical 4-column footer -->
+      <div class="footer-line">
+        <p>licence: code under FSL-1.1-Apache-2.0</p>
+        <p>tokens and artwork under CC-BY-4.0</p>
+      </div>
+    </footer>
+  </main>
+</body>
+</html>

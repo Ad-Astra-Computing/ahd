@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AHD — Artificial Human Design</title>
+<style>
+  :root {
+    --ink: #111210;
+    --paper: #f4f1ea;
+    --rule: #1a1b18;
+    --muted: #5a5a52;
+    --accent: #b8411c;
+    --term-bg: #0d0e0c;
+    --term-fg: #e8e4d8;
+    --term-dim: #8a8a7e;
+    --term-accent: #d4a24a;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: "Iowan Old Style", "Charter", Georgia, "Times New Roman", serif;
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 17px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 40px 28px 0;
+  }
+  header.masthead {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--rule);
+    font-family: "JetBrains Mono", "IBM Plex Mono", ui-monospace, Menlo, monospace;
+    font-size: 13px;
+    letter-spacing: 0.02em;
+  }
+  header.masthead .brand { font-weight: 700; text-transform: uppercase; letter-spacing: 0.14em; }
+  header.masthead .meta { color: var(--muted); }
+  header.masthead .meta span + span::before { content: " · "; color: var(--muted); }
+
+  h1.lede {
+    font-family: "Iowan Old Style", Charter, Georgia, serif;
+    font-weight: 600;
+    font-size: 38px;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    margin: 34px 0 18px;
+  }
+  h1.lede em { font-style: italic; color: var(--accent); font-weight: 500; }
+
+  p.thesis {
+    font-size: 18px;
+    margin: 0 0 14px;
+    max-width: 62ch;
+  }
+  p.thesis + p.thesis { margin-top: 10px; }
+
+  .rule {
+    border: 0;
+    border-top: 1px solid var(--rule);
+    margin: 40px 0 26px;
+  }
+
+  h2.section {
+    font-family: "JetBrains Mono", "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 14px;
+  }
+  h2.section::before { content: "§ "; color: var(--accent); }
+
+  .term {
+    background: var(--term-bg);
+    color: var(--term-fg);
+    border: 1px solid #000;
+    border-radius: 4px;
+    font-family: "JetBrains Mono", "IBM Plex Mono", ui-monospace, Menlo, monospace;
+    font-size: 13.5px;
+    line-height: 1.55;
+    margin: 0 0 10px;
+    overflow: hidden;
+  }
+  .term .bar {
+    background: #171815;
+    padding: 8px 14px;
+    display: flex;
+    justify-content: space-between;
+    color: var(--term-dim);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border-bottom: 1px solid #000;
+  }
+  .term .bar .lang { color: var(--term-accent); }
+  .term pre {
+    margin: 0;
+    padding: 16px 14px;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  .term .prompt { color: var(--term-accent); user-select: none; }
+  .term .flag { color: #87a7c7; }
+  .term .str { color: #c9a66b; }
+  .term .cmd { color: var(--term-fg); }
+  .term .out { color: var(--term-dim); display: block; margin-top: 10px; }
+  p.caption {
+    font-size: 13px;
+    color: var(--muted);
+    font-style: italic;
+    margin: 0 0 4px;
+  }
+
+  .manifest {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+  .manifest .row {
+    display: grid;
+    grid-template-columns: 28px 1fr auto;
+    gap: 14px;
+    padding: 10px 0;
+    border-bottom: 1px dotted #bfb9ab;
+    align-items: baseline;
+  }
+  .manifest .row:last-child { border-bottom: 0; }
+  .manifest .idx {
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 11px;
+    color: var(--muted);
+  }
+  .manifest .name { font-weight: 600; font-size: 16px; }
+  .manifest .name small {
+    display: block;
+    font-weight: 400;
+    color: var(--muted);
+    font-size: 13.5px;
+    font-style: italic;
+    margin-top: 2px;
+  }
+  .manifest .tag {
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 3px 7px;
+    border: 1px solid var(--ink);
+    border-radius: 2px;
+    color: var(--ink);
+    white-space: nowrap;
+  }
+  .manifest.gated .tag {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .cta-row {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 28px 0 8px;
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 13px;
+  }
+  a.btn {
+    display: inline-block;
+    padding: 10px 14px;
+    background: var(--ink);
+    color: var(--paper);
+    text-decoration: none;
+    border-radius: 3px;
+    letter-spacing: 0.04em;
+  }
+  a.btn:hover { background: var(--accent); }
+  a.btn .arrow { color: var(--term-accent); margin-right: 6px; }
+  a.ghost {
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 2px;
+  }
+  a.ghost:hover { color: var(--accent); border-color: var(--accent); }
+
+  .colophon {
+    margin-top: 60px;
+    border-top: 1px solid var(--rule);
+    padding: 20px 0 32px;
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 12px;
+    color: var(--muted);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 22px;
+    justify-content: space-between;
+  }
+  .colophon .lic strong { color: var(--ink); font-weight: 600; }
+  .colophon .sig { font-style: italic; }
+
+  @media (max-width: 560px) {
+    h1.lede { font-size: 30px; }
+    .manifest .row { grid-template-columns: 22px 1fr; }
+    .manifest .tag { grid-column: 2; justify-self: start; margin-top: 4px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="brand">AHD — Artificial Human Design</div>
+    <div class="meta">
+      <span>v0.4.1</span><span>commit 8a2f1c9</span><span>2026-04-22</span>
+    </div>
+  </header>
+
+  <h1 class="lede">The problem isn't that the machines designed it. The problem is that <em>nobody graded the homework.</em></h1>
+
+  <p class="thesis">You already have the opinion. Last month you saw the same hero four times: the same pill badge, the same two centred CTAs, the same four-column footer, the same gradient where the word "AI" used to be. It wasn't a style — it was a collapse. Models revert to the mean, the mean got scraped, and the mean is now the template.</p>
+
+  <p class="thesis">AHD is a framework for grading that homework. A brief compiler that pins intent. A linter that knows the twenty-eight shapes of slop. An eval harness that runs a live brief against a panel of models and scores the output against a rubric a working designer would actually defend. It is not a generator. It is the adversary the generator needed.</p>
+
+  <hr class="rule">
+
+  <h2 class="section">Run the live eval</h2>
+  <p class="caption">One brief, N candidates, a rubric with teeth. The command is the product.</p>
+  <div class="term" role="figure" aria-label="Terminal">
+    <div class="bar"><span>~/ahd</span><span class="lang">bash</span></div>
+<pre><span class="prompt">$</span> <span class="cmd">ahd eval-live swiss-editorial</span> <span class="flag">--brief</span> <span class="str">briefs/landing.yml</span> <span class="flag">--models</span> <span class="str">&lt;specs&gt;</span> <span class="flag">--n</span> <span class="str">10</span>
+<span class="out">→ compiling brief ……………………… ok (14 constraints, 9 anti-patterns)
+→ dispatching to panel ………… 10 candidates / model
+→ linting (28 rules) ……………… see report.jsonl
+→ vision-critic ………………………… gated (see below)
+→ wrote eval/ 2026-04-22T.html   open to compare.</span></pre>
+  </div>
+
+  <div class="cta-row">
+    <a class="btn" href="https://github.com/ahd/ahd" rel="noopener"><span class="arrow">→</span>read the code · github.com/ahd/ahd</a>
+    <a class="ghost" href="https://code.ahd.dev/ahd/ahd">forgejo mirror</a>
+  </div>
+
+  <hr class="rule">
+
+  <h2 class="section">What ships</h2>
+  <div class="manifest today">
+    <div class="row"><div class="idx">01</div><div class="name">Brief compiler<small>YAML in, constraint graph out. Pins intent before a model sees it.</small></div><div class="tag">today</div></div>
+    <div class="row"><div class="idx">02</div><div class="name">28-rule linter<small>Detects pill-badge heroes, gradient-AI, three-card rows, and 25 more.</small></div><div class="tag">today</div></div>
+    <div class="row"><div class="idx">03</div><div class="name">Eval harness<small>Deterministic runner. JSONL reports, diffable HTML gallery.</small></div><div class="tag">today</div></div>
+    <div class="row"><div class="idx">04</div><div class="name">Vision-critic scaffold<small>Prompt library, rubric schema, CLI plumbing — bring your own multimodal.</small></div><div class="tag">today</div></div>
+    <div class="row"><div class="idx">05</div><div class="name">MCP server<small>Exposes the compiler and linter to any MCP-speaking client.</small></div><div class="tag">today</div></div>
+    <div class="row"><div class="idx">06</div><div class="name">Editor plugins<small>VS Code and Zed. In-repo today, one binary drop.</small></div><div class="tag">today</div></div>
+    <div class="row"><div class="idx">07</div><div class="name">Eight tokens<small>Typographic scale, measure, rhythm, two inks, accent, rule, paper.</small></div><div class="tag">today</div></div>
+  </div>
+
+  <h2 class="section" style="margin-top:36px">What is gated</h2>
+  <div class="manifest gated">
+    <div class="row"><div class="idx">08</div><div class="name">Live frontier-model calls<small>Needs API keys. The harness will run local or stub panels without them.</small></div><div class="tag">gated · API keys</div></div>
+    <div class="row"><div class="idx">09</div><div class="name">Live vision critique<small>Needs a multimodal key and a screenshot pipeline (Playwright recipe in repo).</small></div><div class="tag">gated · multimodal</div></div>
+    <div class="row"><div class="idx">10</div><div class="name">Standalone npm packages for the editor plugins<small>Published builds are queued; install from source for now.</small></div><div class="tag">gated · release</div></div>
+    <div class="row"><div class="idx">11</div><div class="name">Additional tokens<small>Beyond the core eight — motion, density, chromatic pairs. In design.</small></div><div class="tag">gated · design</div></div>
+  </div>
+
+  <footer class="colophon">
+    <div class="lic">
+      Licence · <strong>FSL-1.1-Apache-2.0</strong> for code · <strong>CC-BY-4.0</strong> for tokens and artwork
+    </div>
+    <div class="sig">AHD · built in the open · graded in public</div>
+  </footer>
+
+</div>
+</body>
+</html>

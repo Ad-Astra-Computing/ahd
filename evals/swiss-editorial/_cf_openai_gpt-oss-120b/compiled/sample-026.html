@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Artificial Human Design</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root{
+  --font-display:"Neue Haas Grotesk Display",Helvetica,Arial,sans-serif;/* rule: type family */
+  --font-text:"Neue Haas Grotesk Text",Helvetica,Arial,sans-serif;/* rule: type family */
+  --size-base:17px;/* rule: type scale base */
+  --grid-columns:12;/* rule: grid columns */
+  --grid-gutter:24px;/* rule: grid gutter */
+  --baseline:8px;/* rule: baseline */
+  --margin-min:32px;/* rule: margin min */
+  --margin-pref:calc(100vw/24);/* rule: margin preferred */
+  --color-ink:oklch(0.18 0 0);/* rule: colour palette */
+  --color-paper:oklch(0.98 0.005 95);
+  --color-spot:oklch(0.58 0.22 27);
+  --color-rule:oklch(0.18 0 0);
+}
+html{
+  background:var(--color-paper);
+  color:var(--color-ink);
+  font-family:var(--font-text);
+  font-size:var(--size-base);
+  line-height:1.5;/* rule: body line-height */
+}
+h1{
+  font-family:var(--font-display);
+  font-size:96px;/* rule: display size within 96–160px */
+  line-height:1.05;
+  letter-spacing:-0.02em;/* rule: tracking display */
+  margin:0;
+}
+h2{
+  font-family:var(--font-display);
+  font-size:48px;
+  line-height:1.2;
+  margin:0 0 calc(var(--baseline)*2) 0;
+}
+pre{
+  background:#f5f5f5;
+  padding:calc(var(--baseline)*2);
+  overflow:auto;
+  font-family:monospace;
+  font-size:15px;
+}
+code{
+  font-family:monospace;
+}
+.container{
+  max-width:calc(100vw - var(--margin-min)*2);
+  margin:0 auto;
+  padding:calc(var(--baseline)*4) var(--margin-min);
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(var(--grid-columns),1fr);
+  gap:var(--grid-gutter);
+}
+.col-12{grid-column:span 12;}
+.col-8{grid-column:span 8;}
+.col-4{grid-column:span 4;}
+a.cta{
+  color:var(--color-ink);
+  text-decoration:none;
+  border-bottom:2px solid var(--color-ink);
+}
+a.cta:hover{
+  border-color:var(--color-ink);
+}
+.pill{
+  display:inline-block;
+  padding:2px 8px;
+  background:var(--color-ink);
+  color:#fff;
+  font-size:13px;
+  border-radius:999px;/* rule: pill allowed */
+}
+.bleed{
+  background:var(--color-spot);/* rule: spot used exactly once */
+  height:4px;
+  margin-left:-calc(var(--margin-min) + var(--grid-gutter));
+  margin-right:-calc(var(--margin-min) + var(--grid-gutter));
+}
+footer{
+  border-top:1px solid var(--color-rule);
+  padding-top:calc(var(--baseline)*4);
+  font-size:14px;
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="grid">
+    <div class="col-12">
+      <h1><!-- rule: required heading -->AHD</h1><!-- rule: required heading -->
+      <p class="pill" style="margin-top:calc(var(--baseline)*2);">beta</p><!-- rule: pill -->
+    </div>
+    <div class="col-8">
+      <p style="margin-top:calc(var(--baseline)*4); max-width:62ch;">
+        A framework for designers, engineers, and founders who need control over AI‑generated design. No fluff. No promises. Just tools that work.
+      </p>
+      <a href="https://github.com/ahd/ahd" class="cta" style="margin-top:calc(var(--baseline)*2); display:inline-block;">read the code</a><!-- rule: required CTA -->
+    </div>
+    <div class="col-4">
+      <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre><!-- rule: required code block -->
+    </div>
+    <div class="col-12 bleed"></div><!-- rule: bleed element -->
+    <div class="col-12" style="margin-top:calc(var(--baseline)*8);"><h2>What ships</h2></div>
+    <div class="col-6"><ul style="margin:0; padding-left:1.2em;">
+      <li>brief compiler</li>
+      <li>28‑rule linter</li>
+      <li>eval harness</li>
+      <li>vision‑critic scaffold</li>
+      <li>MCP server</li>
+      <li>editor plugins</li>
+      <li>eight tokens</li>
+    </ul></div>
+    <div class="col-12" style="margin-top:calc(var(--baseline)*8);"><h2>What is gated</h2></div>
+    <div class="col-6"><ul style="margin:0; padding-left:1.2em;">
+      <li>live frontier‑model calls (needs API keys)</li>
+      <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+      <li>standalone npm packages for the editor plugins</li>
+      <li>additional tokens</li>
+    </ul></div>
+  </div>
+</div>
+<footer class="container">
+  Code licence: FSL‑1.1‑Apache‑2.0 • Tokens & artwork licence: CC‑BY‑4.0
+</footer>
+</body>
+</html>

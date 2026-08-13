@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>AHD</title>
+  <style>
+    /* rule: monospace font */
+    @import url('https://fonts.googleapis.com/css2?family=Berkeley+Mono&family=IBM+Plex+Mono&family=JetBrains+Mono&display=swap');
+    body {
+      /* rule: dark green-black background */
+      background: oklch(0.14 0.02 150);
+      /* rule: muted green foreground */
+      color: oklch(0.92 0.12 135);
+      font-family: 'Berkeley Mono', 'IBM Plex Mono', 'JetBrains Mono', ui-monospace;
+      margin: 0;
+      padding: 0;
+      /* rule: 80ch max-width */
+      max-width: 80ch;
+      margin: 0 auto;
+      line-height: 1.55;
+    }
+    a {
+      /* rule: underlined links with offset */
+      text-decoration: underline;
+      text-underline-offset: 4px;
+      color: inherit;
+    }
+    pre {
+      /* rule: terminal-aesthetic */
+      background: oklch(0.05 0.01 150);
+      padding: 1em;
+      border: 1px solid oklch(0.3 0.04 150);
+      overflow-x: auto;
+    }
+    code.bash {
+      /* rule: bash syntax highlighting */
+      color: oklch(0.82 0.15 75);
+    }
+    h2 {
+      /* rule: section headers */
+      margin-top: 2em;
+      border-bottom: 1px solid oklch(0.3 0.04 150);
+      padding-bottom: 0.5em;
+    }
+    ul {
+      /* rule: list styling */
+      padding-left: 1em;
+    }
+    footer {
+      /* rule: footer styling */
+      margin-top: 3em;
+      font-size: 0.8em;
+      color: oklch(0.55 0.05 150);
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <h1>AHD</h1>
+    <p>
+      <a href="https://github.com/ahd/ahd" target="_blank">read-the-code</a>
+    </p>
+    <pre><code class="bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+    <section>
+      <h2>What ships</h2>
+      <ul>
+        <li>brief compiler</li>
+        <li>28-rule linter</li>
+        <li>eval harness</li>
+        <li>vision-critic scaffold</li>
+        <li>MCP server</li>
+        <li>editor plugins</li>
+        <li>eight tokens</li>
+      </ul>
+    </section>
+    <section>
+      <h2>What is gated</h2>
+      <ul>
+        <li>live frontier-model calls (needs API keys)</li>
+        <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+        <li>standalone npm packages for the editor plugins</li>
+        <li>additional tokens</li>
+      </ul>
+    </section>
+    <footer>
+      <p>code: FSL-1.1-Apache-2.0 | tokens/artwork: CC-BY-4.0</p>
+    </footer>
+    <!-- rule: ASCII diagram -->
+    <pre>
+┌───────────────────────────────┐
+│  AHD Eval Pipeline           │
+├───────────────────────────────┤
+│ 1. Brief Compiler            │
+│ 2. 28-Rule Linter            │
+│ 3. Eval Harness              │
+│ 4. Vision-Critic Scaffold    │
+│ 5. MCP Server                │
+│ 6. Editor Plugins            │
+│ 7. Eight Tokens              │
+└───────────────────────────────┘
+    </pre>
+  </div>
+</body>
+</html>

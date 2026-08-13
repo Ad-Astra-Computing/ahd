@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>AHD – Artificial Human Design</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com"><!-- rule: use web‑font for typefaces -->
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><!-- rule: use web‑font for typefaces -->
+<link href="https://fonts.googleapis.com/css2?family=Neue+Haas+Grotesk+Display:wght@300;400;700;900&family=Neue+Haas+Grotesk+Text:wght@300;400;700;900&display=swap" rel="stylesheet"><!-- rule: use specified font families -->
+<style>
+:root{
+  --ink:#1a1a1a;/* rule: ink colour for foreground */
+  --paper:#fdfdfb;/* rule: paper background */
+  --spot:#d93a3a;/* rule: spot colour used exactly once */
+  --baseline:8px;/* rule: baseline rhythm */
+  --gutter:24px;/* rule: 12‑col grid gutter */
+  --margin-min:32px;
+  --margin-pref:calc(100vw/24);
+}
+html{background:var(--paper);color:var(--ink);font-family:"Neue Haas Grotesk Text",Helvetica,Arial,sans-serif;font-size:17px;line-height:1.5;/* rule: body type */
+}
+body{margin:0;padding:0;display:flex;flex-direction:column;align-items:center;}
+.container{
+  width:calc(100% - 2*var(--margin-min));
+  max-width:calc(100vw - 2*var(--margin-pref));
+  margin:0 var(--margin-min);
+  display:grid;
+  grid-template-columns:repeat(12,1fr);
+  gap:var(--gutter);
+}
+h1{
+  grid-column:1/13;
+  font-family:"Neue Haas Grotesk Display",Helvetica,Arial,sans-serif;
+  font-size:144px;/* rule: display >=120px */
+  font-weight:900;
+  letter-spacing:-0.02em;/* rule: tracking -0.02em */
+  line-height:1.05;
+  margin:0;
+}
+h2{
+  grid-column:1/13;
+  font-family:"Neue Haas Grotesk Display",Helvetica,Arial,sans-serif;
+  font-size:48px;
+  font-weight:700;
+  margin:calc(var(--baseline)*2) 0 0;
+}
+p{
+  grid-column:1/9;
+  max-width:62ch;/* rule: measure 62ch */
+  margin:calc(var(--baseline)*2) 0;
+}
+code{
+  font-family:"Courier New",monospace;
+  background:#eee;
+  padding:calc(var(--baseline)*0.5) var(--baseline);
+  display:block;
+  overflow:auto;
+}
+pre{
+  grid-column:1/9;
+  margin:calc(var(--baseline)*2) 0;
+}
+a.cta{
+  grid-column:1/5;
+  display:inline-block;
+  padding:calc(var(--baseline)*1) var(--baseline);
+  border:1px solid var(--ink);
+  text-decoration:none;
+  color:var(--ink);
+  border-radius:999px;/* rule: pill allowed for status/cta */
+  font-weight:700;
+}
+hr.bleed{
+  grid-column:1/13;
+  border:none;
+  height:4px;
+  background:var(--spot);/* rule: spot colour used exactly once */
+  margin:calc(var(--baseline)*10) 0;/* rule: dramatic jump between sections */
+  width:110vw;/* rule: element bleeds past grid */
+  position:relative;
+  left:50%;
+  transform:translateX(-50%);
+}
+section.manifest{
+  grid-column:1/9;
+  margin-top:calc(var(--baseline)*20);
+}
+section.manifest h3{
+  font-family:"Neue Haas Grotesk Display",Helvetica,Arial,sans-serif;
+  font-size:32px;
+  font-weight:700;
+  margin:0 0 calc(var(--baseline)*2);
+}
+section.manifest ul{
+  list-style:none;
+  padding:0;
+  margin:0;
+}
+section.manifest li{
+  margin-bottom:calc(var(--baseline)*1);
+}
+footer{
+  grid-column:1/13;
+  font-size:14px;
+  margin:calc(var(--baseline)*10) 0;
+  border-top:1px solid var(--ink);
+  padding-top:calc(var(--baseline)*2);
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>AHD</h1><!-- rule: single word anchored display heading -->
+  <h2>Artificial Human Design</h2><!-- rule: sub‑heading left aligned -->
+  <p>Design tools that respect craftsmanship. No fluff, no hype. The framework runs on your own models, your own data, your own standards.</p><!-- rule: declarative copy -->
+  <pre><code class="bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre><!-- rule: required bash code block -->
+  <a href="https://github.com/ahd/ahd" class="cta">read the code</a><!-- rule: read‑the‑code CTA -->
+  <hr class="bleed"><!-- rule: intentional bleed element using spot colour once -->
+  <section class="manifest">
+    <h3>What ships</h3><!-- rule: manifest title -->
+    <ul>
+      <li>brief compiler</li>
+      <li>28‑rule linter</li>
+      <li>eval harness</li>
+      <li>vision‑critic scaffold</li>
+      <li>MCP server</li>
+      <li>editor plugins</li>
+      <li>eight tokens</li>
+    </ul>
+  </section>
+  <section class="manifest">
+    <h3>What is gated</h3><!-- rule: manifest title -->
+    <ul>
+      <li>live frontier‑model calls (needs API keys)</li>
+      <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+      <li>standalone npm packages for the editor plugins</li>
+      <li>additional tokens</li>
+    </ul>
+  </section>
+  <footer>
+    Code licence: FSL‑1.1‑Apache‑2.0 • Tokens &amp; artwork licence: CC‑BY‑4.0
+  </footer><!-- rule: explicit licence footer -->
+</div>
+</body>
+</html>

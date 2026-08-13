@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>AHD – Artificial Human Design</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+/* rule: colour palette */
+:root{
+  --ink: oklch(0.18 0 0);
+  --paper: oklch(0.98 0.005 95);
+  --spot: oklch(0.58 0.22 27);
+  --baseline:8px;
+  --gutter:24px;
+  --font-display:"Neue Haas Grotesk Display",Helvetica,Arial,sans-serif;
+  --font-text:"Neue Haas Grotesk Text",Helvetica,Arial,sans-serif;
+}
+
+/* rule: global typography */
+html{font-size:100%;}
+body{
+  margin:0;
+  padding:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--font-text);
+  font-size:17px; /* base */
+  line-height:1.5;
+  max-width:100%;
+}
+
+/* rule: 12‑column grid */
+.container{
+  display:grid;
+  grid-template-columns:repeat(12,1fr);
+  gap:var(--gutter);
+  padding:calc(var(--baseline)*4) var(--baseline)*2;
+  max-width:calc(12*1fr + 11*var(--gutter));
+  margin:auto;
+}
+
+/* rule: baseline rhythm */
+section{margin-bottom:160px;} /* dramatic jump */
+
+/* rule: display type */
+h1{
+  font-family:var(--font-display);
+  font-size:144px; /* >=120px */
+  line-height:1.05;
+  letter-spacing:-0.02em; /* tracking */
+  margin:0;
+}
+
+/* rule: code block styling */
+pre{
+  background:#f5f5f5;
+  padding:calc(var(--baseline)*2);
+  overflow:auto;
+  font-family:monospace;
+  font-size:15px;
+}
+
+/* rule: spot colour used exactly once */
+.bleed{
+  position:relative;
+  left:50%;
+  width:100vw;
+  margin-left:-50vw;
+  background:var(--spot);
+  height:var(--baseline)*4;
+}
+
+/* rule: link styling */
+a{
+  color:var(--ink);
+  text-decoration:none;
+  border-bottom:1px solid var(--ink);
+}
+
+/* rule: footer styling */
+footer{
+  font-size:14px;
+  border-top:1px solid var(--ink);
+  padding-top:calc(var(--baseline)*2);
+}
+</style>
+</head>
+<body>
+<!-- rule: element that bleeds past the grid -->
+<div class="bleed"></div>
+
+<div class="container">
+  <!-- rule: left‑aligned hero -->
+  <section>
+    <h1>AHD</h1>
+    <p>Artificial Human Design. A framework, not a hype cycle.</p>
+    <p><a href="https://github.com/ahd/ahd" target="_blank">Read the code</a></p>
+  </section>
+
+  <!-- rule: terminal‑aesthetic code block -->
+  <section>
+    <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+  </section>
+
+  <!-- rule: manifest sections -->
+  <section>
+    <h2>What ships</h2>
+    <ul>
+      <li>brief compiler</li>
+      <li>28‑rule linter</li>
+      <li>eval harness</li>
+      <li>vision‑critic scaffold</li>
+      <li>MCP server</li>
+      <li>editor plugins</li>
+      <li>eight tokens</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>What is gated</h2>
+    <ul>
+      <li>live frontier‑model calls (needs API keys)</li>
+      <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+      <li>standalone npm packages for the editor plugins</li>
+      <li>additional tokens</li>
+    </ul>
+  </section>
+</div>
+
+<footer>
+  Code licence: FSL‑1.1‑Apache‑2.0. Tokens &amp; artwork: CC‑BY‑4.0.
+</footer>
+</body>
+</html>

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ahd // artificial human design</title>
+    <style>
+        /* rule: post-digital green-black palette */
+        :root {
+            --bg: oklch(0.14 0.02 150);
+            --fg: oklch(0.92 0.12 135);
+            --dim: oklch(0.55 0.05 150);
+            --rule: oklch(0.3 0.04 150);
+            --amber: oklch(0.82 0.15 75);
+        }
+
+        /* rule: everything in monospace; no sans-serif */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            border-radius: 0 !important; /* rule: rectangles only; no radii */
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--fg);
+            font-family: 'IBM Plex Mono', 'JetBrains Mono', ui-monospace, monospace;
+            line-height: 1.55; /* rule: body line-height 1.55 */
+            padding: 48px 16px;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* rule: align to 80 character grid/measure */
+        .container {
+            width: 100%;
+            max-width: 72ch; /* rule: measure 72ch */
+        }
+
+        h1, h2, h3 {
+            font-weight: 700;
+            line-height: 1.1; /* rule: display line-height 1.1 */
+            text-transform: lowercase;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 24px;
+        }
+
+        h3 {
+            font-size: 0.9rem;
+            color: var(--amber); /* rule: single amber accent */
+            margin-bottom: 16px;
+            letter-spacing: 0.04em; /* rule: allcaps tracking 0.04em */
+        }
+
+        p {
+            margin-bottom: 24px;
+        }
+
+        /* rule: underline links with an offset, no colour change */
+        a {
+            color: inherit;
+            text-decoration: underline;
+            text-underline-offset: 4px;
+        }
+
+        /* rule: terminal-aesthetic code block */
+        .code-block {
+            border: 1px solid var(--rule); /* rule: hairline rule colour */
+            padding: 16px;
+            margin: 32px 0;
+            background: rgba(0,0,0,0.1);
+        }
+
+        code {
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+
+        .bash-cmd {
+            color: var(--fg);
+        }
+
+        /* rule: ASCII diagram */
+        .ascii {
+            color: var(--dim);
+            white-space: pre;
+            font-size: 12px;
+            line-height: 1.2;
+            margin-bottom: 32px;
+        }
+
+        /* rule: manifest section - avoid three equal feature cards */
+        .manifest {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            margin-top: 48px;
+            border-top: 1px solid var(--rule);
+            padding-top: 32px;
+        }
+
+        @media (max-width: 600px) {
+            .manifest {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        ul {
+            list-style: none; /* rule: no emoji bullets */
+        }
+
+        li {
+            font-size: 0.85rem;
+            margin-bottom: 8px;
+            color: var(--fg);
+        }
+
+        li::before {
+            content: "> ";
+            color: var(--dim);
+        }
+
+        footer {
+            margin-top: 64px;
+            padding-top: 32px;
+            border-top: 1px solid var(--rule);
+            font-size: 0.75rem;
+            color: var(--dim);
+        }
+
+        .accent {
+            color: var(--amber);
+        }
+
+        /* intentional imperfection: slightly misaligned terminal prompt */
+        .glitch-space {
+            display: inline-block;
+            width: 2px;
+            height: 1em;
+            background: var(--amber);
+            vertical-align: middle;
+            margin-left: 1px;
+        }
+    </style>
+</head>
+<body>
+    <!-- rule: everything aligns to 80 character grid -->
+    <div class="container">
+        <header>
+            <h1>ahd <span class="accent">//</span> artificial human design</h1>
+        </header>
+
+        <!-- rule: include one ASCII diagram -->
+        <!-- rule: include one intentional imperfection (misaligned terminal cursor/space) -->
+        <div class="ascii">
+[slop] ----> [28-rule linter] ----> [vision-critic] ----> [eval]
+                                                 <span class="glitch-space"></span>
+        </div>
+
+        <section>
+            <p>
+                a framework for design quality in the age of generative noise. 
+                we provide the tools to verify, critique, and enforce human-grade 
+                standards on machine-generated outputs.
+            </p>
+        </section>
+
+        <!-- rule: terminal-aesthetic code block with bash tag -->
+        <div class="code-block">
+            <code class="bash-cmd">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code>
+        </div>
+
+        <div class="manifest">
+            <!-- rule: clearly separated manifest section 'What ships' -->
+            <section class="manifest-section">
+                <h3>what ships</h3>
+                <ul>
+                    <li>brief compiler</li>
+                    <li>28-rule linter</li>
+                    <li>eval harness</li>
+                    <li>vision-critic scaffold</li>
+                    <li>mcp server</li>
+                    <li>editor plugins</li>
+                    <li>eight tokens</li>
+                </ul>
+            </section>
+
+            <!-- rule: clearly separated manifest section 'What is gated' -->
+            <section class="manifest-section">
+                <h3>what is gated</h3>
+                <ul>
+                    <li>live frontier-model calls (needs api keys)</li>
+                    <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+                    <li>standalone npm packages for the editor plugins</li>
+                    <li>additional tokens</li>
+                </ul>
+            </section>
+        </div>
+
+        <footer>
+            <!-- rule: link to github labelled as read-the-code CTA -->
+            <p>
+                <a href="https://github.com/ahd-project">read-the-code</a>
+            </p>
+            <!-- rule: footer names the licence explicitly -->
+            <p>
+                fsl-1.1-apache-2.0 for code, cc-by-4.0 for tokens and artwork.
+            </p>
+        </footer>
+    </div>
+</body>
+</html>

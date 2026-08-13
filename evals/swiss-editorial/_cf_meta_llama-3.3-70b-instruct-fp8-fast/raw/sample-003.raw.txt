@@ -1,0 +1,78 @@
+<!doctype html } 
+<html lang="en )
+
+
+
+
+
+
+
+  <head>
+    <meta charset="utf-8;
+
+
+
+
+
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1
+
+    < -*-
+  <titleopfntsizeAHD</title
+
+  <body>
+    <  p > AHD takes the slop thesis×
+
+    <   pre><code class="bash" >ahd -*-
+      eval-live1 swiss1-editorial --brief1 briefsyearlanding.yml -- ‘models <specs>(n 10)</code></’
+    pre>
+
+   //{{{
+      <h2id="what-ships"> ¿What ships</h2>
+      ul>
+       ￣￣￣￣￣li>brief compiler </li>
+        < li>28-rule1 linter</li>
+        <li>eval1harness</ li>
+        ‘<li ‘>vision-cｱritic1scaffold</:.:.:.:.:li>
+       \\<li M>CP server</li:::| 
+        liy>editor plugins＿__</li>
+        <li> eight tokens </ li>
+      / ul>
+
+    < h2 id="what-is-gated"> What is gated﻿#</h2>
+      <<<ul>
+       　ﾊli>live＼＼frontier Map model calls (needsニニAPI keys)</liyear 
+        <li>
+          live
+          vision1critique 
+          (DNEEDS multimodal key +’
+          screenshot pipeline 
+        <//"li>
+        <:.:.:.:.:li>standalone 
+          npmping 
+          packages 
+          for,､editor plugins 
+        </li>
+        <:li> additional tokens </ :li>
+﻿#　
+      </ul>
+
+angoop 
+    <footer >
+      </／p>Code is 
+        FSL-１．１－Apache－２．０ 
+      and 
+     2 tokens 
+     　ゝand 
+      artwork 
+      are 
+      CC－BY－４．０ ＼:</p>
+_Parms 
+      <<translation 
+        href="https，却：//github.com，不过/AHD" Tolabel 
+        >Read the code Dro 
+      </a>
+    </footer　ﾊ 
+  </ラー 
+</html>

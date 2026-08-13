@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AHD - Artificial Human Design</title>
+    <style>
+        /* rule: Swiss / International Typographic Style */
+        body {
+            font-family: 'Neue Haas Grotesk Text', Helvetica Now Text, Inter, sans-serif;
+            font-size: 17px;
+            line-height: 1.5;
+            color: oklch(0.18 0 0);
+            background-color: oklch(0.98 0.005 95);
+            margin: 0;
+            padding: 0;
+            max-width: 1200px;
+            margin: 0 auto;
+            /* rule: 8px baseline */
+            line-height: 1.5;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 24px;
+            padding: 32px;
+            /* rule: 24px gutters */
+        }
+        .hero {
+            grid-column: span 12;
+            /* rule: Asymmetric left-aligned composition */
+            text-align: left;
+        }
+        .hero h1 {
+            font-family: 'Neue Haas Grotesk Display', Helvetica Now Display, Inter Tight, sans-serif;
+            font-size: 160px;
+            line-height: 1.05;
+            letter-spacing: -0.02em;
+            /* rule: Display type in Neue Haas Grotesk Display at 96–160px with tracking -0.02em */
+        }
+        .hero p {
+            font-size: 17px;
+            line-height: 1.5;
+            max-width: 62ch;
+            /* rule: Body in Neue Haas Grotesk Text at 17px, measure 62ch, line-height 1.5 */
+        }
+        .code-block {
+            background-color: oklch(0.18 0 0);
+            color: oklch(0.98 0.005 95);
+            padding: 16px;
+            border-radius: 0;
+            overflow-x: auto;
+            /* rule: No rounded corners except small status pills */
+        }
+        .code-block code {
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .manifest {
+            grid-column: span 12;
+            margin-top: 160px;
+            /* rule: One dramatic jump per section (160 between sections) */
+        }
+        .manifest h2 {
+            font-family: 'Neue Haas Grotesk Display', Helvetica Now Display, Inter Tight, sans-serif;
+            font-size: 96px;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+            /* rule: Display type in Neue Haas Grotesk Display at 96–160px with tracking -0.02em */
+            color: oklch(0.58 0.22 27);
+            /* rule: Spot colour used exactly once */
+        }
+        .manifest ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .manifest li {
+            margin-bottom: 8px;
+        }
+        .footer {
+            grid-column: span 12;
+            text-align: left;
+            margin-top: 160px;
+            /* rule: One dramatic jump per section (160 between sections) */
+        }
+        .footer p {
+            font-size: 14px;
+            color: oklch(0.55 0 0);
+            /* rule: Muted text colour */
+        }
+        .read-the-code {
+            display: inline-block;
+            margin-top: 32px;
+            padding: 8px 16px;
+            background-color: oklch(0.18 0 0);
+            color: oklch(0.98 0.005 95);
+            text-decoration: none;
+            border-radius: 999px;
+            /* rule: Small status pills */
+        }
+        .read-the-code:hover {
+            background-color: oklch(0.55 0 0);
+            /* rule: Muted text colour on hover */
+        }
+        /* rule: No shadows */
+        /* rule: Structural motion only */
+        /* rule: Asymmetric left-aligned composition */
+        /* rule: One intentional element must bleed past the grid */
+        .bleed {
+            position: relative;
+            left: -32px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="hero">
+            <h1 class="bleed">AHD</h1>
+            <p>Artificial Human Design takes the problem of AI-generated design seriously. We provide a framework rather than a lecture. This is one screen of reading to show you what we do.</p>
+        </div>
+        <div class="code-block">
+            <code class="language-bash">
+                ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10
+            </code>
+        </div>
+        <div class="manifest">
+            <h2>What ships</h2>
+            <ul>
+                <li>Brief compiler</li>
+                <li>28-rule linter</li>
+                <li>Eval harness</li>
+                <li>Vision-critic scaffold</li>
+                <li>MCP server</li>
+                <li>Editor plugins</li>
+                <li>Eight tokens</li>
+            </ul>
+            <h2>What is gated</h2>
+            <ul>
+                <li>Live frontier-model calls (needs API keys)</li>
+                <li>Live vision critique (needs multimodal key + screenshot pipeline)</li>
+                <li>Standalone npm packages for the editor plugins</li>
+                <li>Additional tokens</li>
+            </ul>
+        </div>
+        <div class="footer">
+            <p>Licence: FSL-1.1-Apache-2.0 for code, CC-BY-4.0 for tokens and artwork.</p>
+            <a href="https://github.com/ahd" class="read-the-code" target="_blank">Read the code</a>
+        </div>
+    </div>
+</body>
+</html>

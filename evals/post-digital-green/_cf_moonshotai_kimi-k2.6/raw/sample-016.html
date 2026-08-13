@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AHD — Artificial Human Design</title>
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --fg: #e8e6e3;
+    --muted: #888;
+    --dim: #444;
+    --accent: #c9b896;
+    --accent-dim: #5a5040;
+    --border: #222;
+    --code-bg: #111;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.6;
+    font-size: 15px;
+  }
+
+  main {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 4rem 1.5rem 3rem;
+  }
+
+  h1 {
+    font-size: 1.25rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.5rem;
+  }
+
+  h1 span {
+    color: var(--muted);
+    font-weight: 400;
+  }
+
+  .lead {
+    color: var(--muted);
+    font-size: 1.05rem;
+    line-height: 1.7;
+    margin-bottom: 2.5rem;
+    max-width: 600px;
+  }
+
+  .problem {
+    border-left: 2px solid var(--border);
+    padding-left: 1.25rem;
+    margin-bottom: 2.5rem;
+    color: var(--muted);
+  }
+
+  .problem p {
+    margin-bottom: 0.75rem;
+  }
+
+  .problem p:last-child {
+    margin-bottom: 0;
+  }
+
+  .code-block {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    margin-bottom: 2.5rem;
+    overflow: hidden;
+  }
+
+  .code-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 0.75rem;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    font-size: 0.75rem;
+    color: var(--dim);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .code-header .lang {
+    font-family: "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", monospace;
+    text-transform: none;
+  }
+
+  pre {
+    padding: 1rem 0.75rem;
+    overflow-x: auto;
+    font-family: "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", monospace;
+    font-size: 0.8125rem;
+    line-height: 1.7;
+    color: var(--fg);
+  }
+
+  .prompt {
+    color: var(--accent);
+  }
+
+  .flag {
+    color: var(--muted);
+  }
+
+  .arg {
+    color: #8abeb7;
+  }
+
+  .value {
+    color: #b5bd68;
+  }
+
+  section {
+    margin-bottom: 2.5rem;
+  }
+
+  h2 {
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--accent-dim);
+  }
+
+  ul {
+    list-style: none;
+  }
+
+  li {
+    position: relative;
+    padding-left: 1.25rem;
+    margin-bottom: 0.5rem;
+    color: var(--fg);
+  }
+
+  li::before {
+    content: "—";
+    position: absolute;
+    left: 0;
+    color: var(--dim);
+  }
+
+  .gated li::before {
+    content: "×";
+    color: #a54242;
+  }
+
+  .what-ships li::before {
+    content: "◦";
+    color: var(--accent-dim);
+  }
+
+  .note {
+    font-size: 0.8125rem;
+    color: var(--muted);
+    margin-top: 0.75rem;
+    font-style: italic;
+  }
+
+  .cta {
+    margin: 3rem 0;
+  }
+
+  .cta a {
+    display: inline-block;
+    color: var(--fg);
+    text-decoration: none;
+    border: 1px solid var(--dim);
+    padding: 0.6rem 1.25rem;
+    font-size: 0.875rem;
+    transition: border-color 0.2s;
+  }
+
+  .cta a:hover {
+    border-color: var(--accent);
+  }
+
+  footer {
+    margin-top: 4rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.8125rem;
+    color: var(--dim);
+    line-height: 1.8;
+  }
+
+  footer a {
+    color: var(--muted);
+    text-decoration: none;
+  }
+
+  footer a:hover {
+    color: var(--fg);
+  }
+
+  .licence {
+    margin-top: 0.5rem;
+  }
+
+  .licence span {
+    color: var(--muted);
+  }
+</style>
+</head>
+<body>
+
+<main>
+  <h1>AHD <span>Artificial Human Design</span></h1>
+
+  <p class="lead">
+    A framework for evaluating generated interfaces against explicit design criteria.
+    Not a generator. Not a copilot. A calibration tool for teams who need to know
+    whether what shipped was considered or merely produced.
+  </p>
+
+  <div class="problem">
+    <p>
+      AI-generated sites have become a recognizable aesthetic: unearned confidence,
+      approximately correct spacing, generic authority. The issue is not the tool
+      but the absence of evaluation—no loop that checks work against intent.
+    </p>
+    <p>
+      AHD provides that loop. You write a brief, compile it to eval rules, and run
+      generated candidates through a linter, a vision critic, and a harness that
+      scores against your spec. The output is a verdict, not more variants.
+    </p>
+  </div>
+
+  <div class="code-block">
+    <div class="code-header">
+      <span>One-liner evaluation</span>
+      <span class="lang">bash</span>
+    </div>
+    <pre><span class="prompt">$</span> ahd eval-live swiss-editorial \
+  <span class="flag">--brief</span> <span class="value">briefs/landing.yml</span> \
+  <span class="flag">--models</span> <span class="arg">&lt;specs&gt;</span> \
+  <span class="flag">--n</span> <span class="value">10</span></pre>
+  </div>
+
+  <section>
+    <h2>What ships</h2>
+    <ul class="what-ships">
+      <li>Brief compiler (YAML spec → eval rules)</li>
+      <li>28-rule linter with severity levels</li>
+      <li>Eval harness for batch scoring</li>
+      <li>Vision-critic scaffold (local inference path)</li>
+      <li>MCP server for editor integration</li>
+      <li>Editor plugins (VS Code, Zed; source in-repo)</li>
+      <li>Eight reference tokens as design anchors</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>What is gated</h2>
+    <ul class="gated">
+      <li>Live frontier-model calls — requires own API keys</li>
+      <li>Live vision critique — requires multimodal key + screenshot pipeline</li>
+      <li>Standalone npm packages for editor plugins</li>
+      <li>Additional tokens beyond the base eight</li>
+    </ul>
+    <p class="note">Gated items need external credentials or build steps. Core tooling runs offline.</p>
+  </section>
+
+  <div class="cta">
+    <a href="https://github.com/artificialhuman/design">Read the code →</a>
+  </div>
+
+  <footer>
+    <div>
+      AHD is source-available. No accounts. No telemetry.
+    </div>
+    <div class="licence">
+      <span>Code:</span> FSL-1.1-Apache-2.0 &nbsp;·&nbsp; <span>Tokens & artwork:</span> CC-BY-4.0
+    </div>
+  </footer>
+</main>
+
+</body>
+</html>

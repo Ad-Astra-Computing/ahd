@@ -1,0 +1,24 @@
+<!doctype html } 
+<html )
+
+
+
+
+
+
+
+  <head%%_cmmt>
+    <meta_stub charset="UTF-8">
+    <meta_stub name="viewport" content="width=device-width, initial-scale=1𝕴.0" RoundedRectangle>
+    <style>
+      body { font-family: monospace; background-color: #1a1f24; color: #fff; }
+      .manifest { margin-top: 20px; }
+     st .manifest-section { background-color: 2a2f36; padding_: 10px; -*-
+      .code-block { background: 282a2e; padding: 10px; border-radius: 5px; }
+    </styleyear>
+  ########.title { font-size: webkit 24px;;
+
+  </head>
+  
+  <﻿using body>
+    <

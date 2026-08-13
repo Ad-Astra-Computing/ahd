@@ -1,0 +1,454 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AHD — Artificial Human Design</title>
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --bg-raised: #111;
+      --bg-code: #0d1117;
+      --border: #222;
+      --text: #e6e6e6;
+      --text-dim: #888;
+      --text-muted: #555;
+      --accent: #c4a46a;
+      --accent-dim: #8a7347;
+      --green: #6a9e5e;
+      --red: #b87070;
+      --font-mono: "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, monospace;
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      font-size: 15px;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* --- Header --- */
+    header {
+      border-bottom: 1px solid var(--border);
+      padding: 48px 0 32px;
+    }
+
+    .site-title {
+      font-size: 18px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      margin-bottom: 4px;
+    }
+
+    .site-title span {
+      color: var(--accent);
+      font-family: var(--font-mono);
+      font-size: 14px;
+      font-weight: 400;
+    }
+
+    .tagline {
+      color: var(--text-dim);
+      font-size: 14px;
+    }
+
+    /* --- Main --- */
+    main {
+      padding: 48px 0;
+    }
+
+    section {
+      margin-bottom: 56px;
+    }
+
+    h2 {
+      font-size: 20px;
+      font-weight: 500;
+      margin-bottom: 16px;
+      letter-spacing: -0.01em;
+      color: var(--text);
+    }
+
+    p {
+      margin-bottom: 16px;
+      color: var(--text-dim);
+      max-width: 640px;
+    }
+
+    /* --- Code Block --- */
+    .code-block {
+      background: var(--bg-code);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+      margin: 24px 0;
+    }
+
+    .code-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 16px;
+      background: #161b22;
+      border-bottom: 1px solid var(--border);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .copy-btn {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .copy-btn:hover {
+      color: var(--text-dim);
+    }
+
+    pre {
+      padding: 20px 24px;
+      overflow-x: auto;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      line-height: 1.7;
+      color: #c9d1d9;
+    }
+
+    code {
+      font-family: inherit;
+    }
+
+    .code-comment {
+      color: #8b949e;
+      font-style: italic;
+    }
+
+    .code-prompt {
+      color: var(--accent);
+    }
+
+    .cmd {
+      color: #7ee787;
+    }
+
+    .arg {
+      color: #79c0ff;
+    }
+
+    .flag {
+      color: #d2a8ff;
+    }
+
+    .val {
+      color: #a5d6ff;
+    }
+
+    .num {
+      color: #f0883e;
+    }
+
+    /* --- Manifest --- */
+    .manifest {
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 28px 24px;
+      margin-top: 20px;
+    }
+
+    .manifest h3 {
+      font-size: 13px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .ships .status-dot {
+      background: var(--green);
+    }
+
+    .gated .status-dot {
+      background: var(--red);
+    }
+
+    .manifest ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .manifest li {
+      padding: 6px 0;
+      color: var(--text-dim);
+      font-size: 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.03);
+    }
+
+    .manifest li:last-child {
+      border-bottom: none;
+    }
+
+    .manifest li::before {
+      content: "—";
+      color: var(--text-muted);
+      margin-right: 12px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+    }
+
+    .gated li::before {
+      content: "⊘";
+      color: var(--red);
+      opacity: 0.6;
+    }
+
+    .ships li::before {
+      content: "◆";
+      color: var(--green);
+      opacity: 0.8;
+    }
+
+    .gated p {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin: -8px 0 16px;
+      font-style: italic;
+    }
+
+    .manifest + .manifest {
+      margin-top: 16px;
+    }
+
+    /* --- CTA --- */
+    .cta-row {
+      margin-top: 32px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    .cta-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      background: var(--bg-raised);
+      border: 1px solid var(--border);
+      padding: 12px 20px;
+      border-radius: 4px;
+      transition: border-color 0.15s;
+    }
+
+    .cta-primary:hover {
+      border-color: var(--accent-dim);
+      text-decoration: none;
+    }
+
+    /* --- Footer --- */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 0 48px;
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.8;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+    }
+
+    .footer-legal {
+      text-align: right;
+    }
+
+    @media (max-width: 600px) {
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+      .footer-legal {
+        text-align: left;
+      }
+    }
+
+    .licence {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* --- Selection --- */
+    ::selection {
+      background: rgba(196, 164, 106, 0.2);
+      color: var(--text);
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #333;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <div class="site-title">AHD <span>— Artificial Human Design</span></div>
+    <div class="tagline">Evaluate design systems before they ship to users</div>
+  </div>
+</header>
+
+<main>
+  <div class="container">
+
+    <section>
+      <h2>The problem is not AI. The problem is unmeasured output.</h2>
+      <p>
+        Every generated interface claims to be "production-ready." Few are measured against
+        anything stricter than a product manager's patience. AHD is a framework for
+        systematic design evaluation: compile a brief, run it against models you control,
+        and get ranked, critic-scored results you can diff, version, and reject.
+      </p>
+      <p>
+        It is not a design tool. It is a verification layer—one that treats layout, type,
+        color, and interaction as testable properties, not prompt outputs.
+      </p>
+    </section>
+
+    <section>
+      <h2>Run the eval</h2>
+      <p>A single command compiles your brief, dispatches to your specified models, and returns scored candidates.</p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span>bash</span>
+          <button class="copy-btn" onclick="navigator.clipboard.writeText(this.parentElement.nextElementSibling.textContent.trim())">copy</button>
+        </div>
+        <pre><code><span class="code-comment"># eval live against frontier models</span>
+<span class="code-prompt">$</span> <span class="cmd">ahd</span> <span class="arg">eval-live</span> <span class="val">swiss-editorial</span> \
+    <span class="flag">--brief</span> <span class="val">briefs/landing.yml</span> \
+    <span class="flag">--models</span> <span class="val">&lt;specs&gt;</span> \
+    <span class="flag">--n</span> <span class="num">10</span></code></pre>
+      </div>
+
+      <p style="font-size: 13px; color: var(--text-muted); margin-top: -8px;">
+        Requires <code>ahd</code> CLI and valid API keys for configured providers.
+        Output is JSONL: scores, token usage, and path to each candidate's artifact directory.
+      </p>
+    </section>
+
+    <section>
+      <h2>Manifest</h2>
+
+      <div class="manifest ships">
+        <h3><span class="status-dot"></span> What ships</h3>
+        <ul>
+          <li>Brief compiler (YAML/JSON design briefs to structured prompts)</li>
+          <li>28-rule linter (spacing, type scale, color contrast, motion, duplication detection)</li>
+          <li>Eval harness (parallel dispatch, scoring, ranking, artifact capture)</li>
+          <li>Vision-critic scaffold (pluggable multimodal critique pipeline)</li>
+          <li>MCP server (Model Context Protocol for external tool integration)</li>
+          <li>Editor plugins (VS Code, Zed, Neovim—install from source)</li>
+          <li>Eight foundation tokens (type, color, space, radius, shadow, motion, z-index, breakpoint)</li>
+        </ul>
+      </div>
+
+      <div class="manifest gated">
+        <h3><span class="status-dot"></span> What is gated</h3>
+        <p>Unavailable without external credentials or pending packaging.</p>
+        <ul>
+          <li>Live frontier-model calls (needs API keys: OpenAI, Anthropic, Google, or compatible)</li>
+          <li>Live vision critique (needs multimodal key + screenshot pipeline: Playwright/Puppeteer)</li>
+          <li>Standalone npm packages for the editor plugins (pending registry publish)</li>
+          <li>Additional tokens (domain-specific extensions: data viz, e-commerce, editorial)</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="cta-row">
+        <a class="cta-primary" href="https://github.com/artificial-human-design/ahd" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+          Read the code →
+        </a>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <span class="licence">Code: FSL-1.1-Apache-2.0</span><br>
+        <span class="licence">Tokens &amp; artwork: CC-BY-4.0</span>
+      </div>
+      <div class="footer-legal">
+        Current release: 0.4.2<br>
+        <a href="https://github.com/artificial-human-design/ahd">github.com/artificial-human-design/ahd</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

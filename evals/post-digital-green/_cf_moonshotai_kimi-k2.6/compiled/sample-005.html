@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AHD — Artificial Human Design</title>
+    <style>
+        /* rule: single monospace family, no sans-serif */
+        @font-face {
+            font-family: 'Berkeley Mono';
+            src: local('Berkeley Mono'), local('IBM Plex Mono'), local('JetBrains Mono');
+        }
+        
+        /* rule: post-digital green-black palette, oklch space */
+        :root {
+            --bg: oklch(0.14 0.02 150);
+            --fg: oklch(0.92 0.12 135);
+            --dim: oklch(0.55 0.05 150);
+            --rule: oklch(0.3 0.04 150);
+            --amber: oklch(0.82 0.15 75);
+        }
+        
+        /* rule: no radii, no shadows, no gradients, no entrance animations */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        /* rule: 80 character grid alignment, rectangles only */
+        html {
+            font-size: 15px; /* rule: base scale 15px */
+            background: var(--bg);
+            color: var(--fg);
+            font-family: 'Berkeley Mono', 'IBM Plex Mono', 'JetBrains Mono', ui-monospace, monospace;
+            line-height: 1.55; /* rule: body line-height */
+        }
+        
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 32px 0; /* rule: space scale 32 */
+        }
+        
+        /* rule: 80ch max-width, char grid alignment */
+        main, footer {
+            width: 100%;
+            max-width: 80ch;
+            margin: 0 auto;
+            padding: 0 16px; /* rule: space scale 16 */
+        }
+        
+        /* rule: measure 72ch for readable paragraphs */
+        p, li {
+            max-width: 72ch;
+        }
+        
+        /* rule: amber accent, underline offset 4px links */
+        a {
+            color: var(--fg);
+            text-decoration: underline;
+            text-underline-offset: 4px; /* rule: underline-offset 4px */
+            text-decoration-color: var(--amber);
+        }
+        
+        a:hover {
+            color: var(--fg); /* rule: no colour change on hover */
+        }
+        
+        /* rule: line-height 1.25 for h2 */
+        h2 {
+            font-size: 1.44rem; /* rule: ratio 1.2^3 */
+            line-height: 1.25; /* rule: h2 line-height */
+            font-weight: 700; /* rule: weight 700 */
+            margin-top: 32px; /* rule: space scale 32 */
+            margin-bottom: 16px; /* rule: space scale 16 */
+            color: var(--fg);
+        }
+        
+        /* rule: display line-height 1.1 for h1 */
+        h1 {
+            font-size: 2.074rem; /* rule: ratio 1.2^5 approx */
+            line-height: 1.1; /* rule: display line-height */
+            font-weight: 700;
+            margin-bottom: 12px; /* rule: space scale 12 */
+        }
+        
+        /* rule: dim colour for secondary text */
+        .dim {
+            color: var(--dim);
+        }
+        
+        /* rule: hairline rule colour borders */
+        hr, pre, .manifest {
+            border: 1px solid var(--rule); /* rule: border weight 1, solid, rule colour */
+        }
+        
+        hr {
+            margin: 24px 0; /* rule: space scale 24 */
+            border-width: 1px 0 0 0;
+        }
+        
+        /* rule: monospace code block with bash tag aesthetic */
+        pre {
+            background: oklch(0.1 0.02 150);
+            padding: 16px; /* rule: space scale 16 */
+            margin: 16px 0; /* rule: space scale 16 */
+            overflow-x: auto;
+            font-family: inherit;
+        }
+        
+        code {
+            font-family: inherit;
+        }
+        
+        .prompt {
+            color: var(--amber); /* rule: amber accent */
+        }
+        
+        /* rule: manifest sections separated by borders */
+        .manifest {
+            padding: 16px; /* rule: space scale 16 */
+            margin: 16px 0; /* rule: space scale 16 */
+        }
+        
+        .manifest h2 {
+            margin-top: 0;
+        }
+        
+        .manifest ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        /* rule: no emoji bullets, use plain text markers */
+        .manifest li::before {
+            content: "- ";
+            color: var(--dim);
+        }
+        
+        .manifest li {
+            margin-bottom: 8px; /* rule: space scale 8 */
+        }
+        
+        /* rule: ASCII diagram */
+        .diagram {
+            margin: 24px 0; /* rule: space scale 24 */
+            white-space: pre;
+            font-size: 13px; /* rule: step -1, 15/1.2 */
+            line-height: 1.3;
+            color: var(--dim);
+            overflow-x: auto;
+        }
+        
+        .diagram .wire {
+            color: var(--amber); /* rule: amber accent for diagram emphasis */
+        }
+        
+        /* rule: footer not 4-column canonical */
+        footer {
+            margin-top: 48px; /* rule: space scale 48 */
+            padding-top: 24px; /* rule: space scale 24 */
+            border-top: 1px solid var(--rule); /* rule: hairline rule */
+            font-size: 0.833rem; /* rule: step -2 */);
+            color: var(--dim);
+        }
+        
+        footer p {
+            margin-bottom: 8px; /* rule: space scale 8 */
+        }
+        
+        /* rule: tracking 0.04em for allcaps */
+        .allcaps {
+            text-transform: uppercase;
+            letter-spacing: 0.04em; /* rule: allcaps tracking */
+            font-size: 0.833rem;
+            color: var(--dim);
+        }
+        
+        /* rule: baseline 8 spacing consistency */
+        .lead {
+            margin-bottom: 24px; /* rule: space scale 24 */
+            font-size: 1rem;
+        }
+        
+        /* intentional imperfection: slightly misaligned blockquote marker */
+        blockquote {
+            margin: 16px 0 16px -2px; /* rule: intentional imperfection, -2px offset */
+            padding-left: 16px; /* rule: space scale 16 */
+            border-left: 1px solid var(--rule);
+            color: var(--dim);
+        }
+    </style>
+</head>
+<body>
+    <!-- rule: 80ch grid alignment -->
+    <main>
+        <p class="allcaps">Artificial Human Design</p>
+        
+        <h1>Framework for design that holds up to reading.</h1>
+        
+        <p class="lead dim">
+            You have already seen the slop. This is a system for evaluating whether generated work meets a standard, not for generating more.
+        </p>
+        
+        <p>
+            AHD compiles a design brief into an evaluable specification, runs candidate outputs through a rule-based linter and a multimodal critic, and reports what passes. The framework ships as a CLI, an MCP server, and editor integrations. <!-- rule: technical, lowercase by default, terse -->
+        </p>
+        
+        <!-- rule: at least one ASCII diagram rendered as text -->
+        <div class="diagram">
+<span class="wire">    ┌─────────────┐     ┌─────────────┐     ┌─────────────┐
+    │   brief/    │────▶│  compiler   │────▶│  28 rules   │
+    │ landing.yml │     │  (yml→spec) │     │   linter    │
+    └─────────────┘     └─────────────┘     └──────┬──────┘
+                                                   │
+    ┌─────────────┐     ┌─────────────┐           │
+    │  frontier   │◀───│ eval harness │◀──────────┘
+    │   model     │     │  (n=10 loop) │
+    └──────┬──────┘     └─────────────┘
+           │
+           ▼
+    ┌─────────────┐     ┌─────────────┐
+    │   vision    │────▶│   report    │
+    │   critic    │     │  (pass/fail)│
+    └─────────────┘     └─────────────┘</span>
+        </div>
+        
+        <p>
+            <!-- rule: read-the-code CTA link -->
+            <a href="https://github.com/ahd/framework">read the code →</a>
+        </p>
+        
+        <hr> <!-- rule: hairline rule colour -->
+        
+        <h2>Run an eval</h2>
+        
+        <!-- rule: bash code block with specified command -->
+        <pre><code><span class="prompt">$</span> ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+        
+        <!-- rule: What ships manifest section -->
+        <div class="manifest">
+            <h2>What ships</h2>
+            <ul>
+                <li>brief compiler</li>
+                <li>28-rule linter</li>
+                <li>eval harness</li>
+                <li>vision-critic scaffold</li>
+                <li>MCP server</li>
+                <li>editor plugins</li>
+                <li>eight tokens</li>
+            </ul>
+        </div>
+        
+        <!-- rule: What is gated manifest section -->
+        <div class="manifest">
+            <h2>What is gated</h2>
+            <ul>
+                <li>live frontier-model calls (needs API keys)</li>
+                <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+                <li>standalone npm packages for the editor plugins</li>
+                <li>additional tokens</li>
+            </ul>
+        </div>
+        
+        <blockquote>
+            <!-- rule: no "build the future of", no "ship faster", no "AI-native" -->
+            The linter runs offline. The vision critic requires a key. Everything else works on a laptop with no network.
+        </blockquote>
+    </main>
+    
+    <!-- rule: explicit licence footer, not 4-column canonical -->
+    <footer>
+        <p>code licence: FSL-1.1-Apache-2.0</p>
+        <p>tokens and artwork: CC-BY-4.0</p>
+    </footer>
+</body>
+</html>

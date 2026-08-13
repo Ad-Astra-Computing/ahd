@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ahd — artificial human design</title>
+<!-- rule: single-monospace pairing; Berkeley Mono with fallbacks -->
+<style>
+  /* rule: no radii; only rectangles */
+  /* rule: shadow policy forbidden */
+  /* rule: gradients forbidden */
+  :root{
+    --bg: oklch(0.14 0.02 150);        /* rule: colour.palette.bg */
+    --fg: oklch(0.92 0.12 135);        /* rule: colour.palette.fg */
+    --dim: oklch(0.55 0.05 150);       /* rule: colour.palette.dim */
+    --rule: oklch(0.30 0.04 150);      /* rule: single hairline rule colour */
+    --amber: oklch(0.82 0.15 75);      /* rule: single amber accent */
+    --ch: 1ch;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--bg);color:var(--fg)}
+  body{
+    /* rule: type.families.text = Berkeley Mono, monospace fallbacks */
+    font-family: "Berkeley Mono","IBM Plex Mono","JetBrains Mono",ui-monospace,monospace;
+    font-size:15px;                    /* rule: type.scale.base = 15 */
+    line-height:1.55;                  /* rule: line-height.body */
+    font-weight:400;                   /* rule: weights 400/700 */
+    letter-spacing:0;                  /* rule: tracking.body = 0 */
+    -webkit-font-smoothing:antialiased;
+  }
+  /* rule: char-grid, 80 columns; aligned to 80ch max width */
+  .wrap{
+    max-width:80ch;
+    margin:0 auto;
+    padding:32px 16px 48px;            /* rule: space scale */
+    border-left:1px solid var(--rule); /* rule: surface.border */
+    border-right:1px solid var(--rule);
+  }
+  hr.rule{
+    border:0;
+    border-top:1px solid var(--rule);  /* rule: single hairline rule colour */
+    margin:24px 0;                     /* rule: space scale 24 */
+  }
+  a{
+    color:inherit;                     /* rule: link no colour change */
+    text-decoration:underline;
+    text-decoration-thickness:1px;
+    text-underline-offset:4px;         /* rule: link underline-offset 4px */
+  }
+  .amber{color:var(--amber)}           /* rule: one amber accent */
+  .dim{color:var(--dim)}
+  h1,h2,h3{font-weight:700;letter-spacing:0}
+  h1{
+    font-size:21.6px;                  /* rule: scale step +2 ≈ 15*1.2^2 */
+    line-height:1.1;                   /* rule: line-height.display */
+    margin-bottom:8px;                 /* rule: space scale 8 */
+  }
+  h2{
+    font-size:15px;                    /* rule: scale step 0 */
+    line-height:1.25;                  /* rule: line-height.h2 */
+    text-transform:uppercase;
+    letter-spacing:0.04em;             /* rule: tracking.allcaps */
+    margin-bottom:12px;
+  }
+  h2::before{content:"// "; color:var(--dim)} /* rule: terse monospace voice */
+  p{margin-bottom:12px;max-width:72ch} /* rule: measure 72ch */
+  ul{list-style:none}
+  li{padding-left:2ch;position:relative} /* rule: no emoji bullets */
+  li::before{content:"-"; position:absolute; left:0; color:var(--dim)}
+  /* rule: terminal-aesthetic code block */
+  pre{
+    border:1px solid var(--rule);
+    padding:12px 16px;
+    margin:12px 0;
+    overflow-x:auto;
+    font-size:13px;                    /* rule: scale step -1 ≈ 15/1.2 */
+    background:transparent;            /* rule: no glassmorphism */
+  }
+  pre .prompt{color:var(--dim)}
+  pre .tag{color:var(--amber)}
+  /* rule: caret blink is the only permitted motion besides link underline */
+  .caret{
+    display:inline-block;
+    width:1ch;
+    background:var(--amber);
+    color:var(--bg);
+    animation:blink 1.05s steps(1,end) infinite;
+  }
+  @keyframes blink{50%{background:transparent;color:var(--amber)}}
+  header .meta,
+  footer{
+    color:var(--dim);
+    font-size:13px;
+  }
+  header .meta{
+    display:flex;
+    justify-content:space-between;
+    gap:8px;
+    border-bottom:1px solid var(--rule);
+    padding-bottom:8px;
+    margin-bottom:24px;
+    flex-wrap:wrap;
+  }
+  /* rule: ASCII diagram rendered as text */
+  .ascii{
+    white-space:pre;
+    font-size:13px;
+    color:var(--fg);
+    border:1px solid var(--rule);
+    padding:12px 16px;
+    margin:12px 0;
+    overflow-x:auto;
+  }
+  .manifest{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:24px;
+    border-top:1px solid var(--rule);
+    border-bottom:1px solid var(--rule);
+    padding:24px 0;
+    margin:24px 0;
+  }
+  @media (min-width:680px){
+    .manifest{grid-template-columns:1fr 1fr} /* rule: two asymmetric columns, not three equal feature cards */
+  }
+  .manifest section + section{
+    border-top:1px solid var(--rule);
+    padding-top:24px;
+  }
+  @media (min-width:680px){
+    .manifest section + section{
+      border-top:0;
+      border-left:1px solid var(--rule);
+      padding-top:0;
+      padding-left:24px;
+    }
+  }
+  .kv{display:flex;gap:1ch}
+  .kv .k{color:var(--dim);min-width:12ch}
+  footer{
+    margin-top:32px;
+    padding-top:16px;
+    border-top:1px solid var(--rule);
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:space-between;
+    gap:8px;
+  }
+  /* rule: intentional imperfection — a deliberately unaligned column marker */
+  .ruler{
+    color:var(--dim);
+    font-size:13px;
+    white-space:pre;
+    border-bottom:1px solid var(--rule);
+    padding-bottom:4px;
+    margin-bottom:16px;
+    overflow:hidden;
+  }
+  ::selection{background:var(--amber);color:var(--bg)}
+</style>
+</head>
+<body>
+<!-- rule: 80ch max-width aligned to char-grid -->
+<div class="wrap">
+
+  <header>
+    <!-- rule: terse, lowercase voice -->
+    <div class="meta">
+      <span>ahd / artificial human design</span>
+      <span>v0.1.0 &middot; 2026-04-24</span>
+    </div>
+    <!-- rule: no centred hero stack with pill badge + two CTAs -->
+    <div class="ruler" aria-hidden="true">0         1         2         3         4         5         6         7        
+0123456789012345678901234567890123456789012345678901234567890123456789012345678</div>
+
+    <h1>artificial human design<span class="caret">&nbsp;</span></h1>
+    <p class="dim">a framework for designing with models without letting the models design for you.</p>
+
+    <p>you have seen the output. rounded corners, purple-to-blue hero, three
+    equal feature cards, a pill badge above two cta buttons, a trusted-by
+    logo bar, a shimmer on the word ai. you already know the problem. ahd
+    is the other side of that: a brief compiler, a linter, and an eval
+    harness that treats taste as testable.</p>
+
+    <p>
+      <!-- rule: read-the-code CTA labelled explicitly -->
+      <a href="https://github.com/ahd/ahd" rel="noopener">read the code &rarr; github.com/ahd/ahd</a>
+      &nbsp;<span class="dim">//</span>&nbsp;
+      <a href="https://forge.ahd.dev/ahd/ahd" rel="noopener">forgejo mirror</a>
+    </p>
+  </header>
+
+  <hr class="rule">
+
+  <section>
+    <h2>the one-liner</h2>
+    <p>point it at a brief and a set of model specs. it generates, lints,
+    critiques, scores. ten seeds, deterministic where possible.</p>
+<!-- rule: terminal-aesthetic code block with language tag bash -->
+<pre data-lang="bash"><span class="tag">[bash]</span>
+<span class="prompt">$</span> ahd eval-live swiss-editorial \
+    --brief briefs/landing.yml \
+    --models &lt;specs&gt; \
+    --n 10</pre>
+  </section>
+
+  <hr class="rule">
+
+  <section>
+    <h2>pipeline</h2>
+    <!-- rule: at least one ASCII diagram rendered as text -->
+<div class="ascii" aria-label="ahd pipeline diagram">
+   brief.yml                                                                   
+      |                                                                        
+      v                                                                        
+  +---------------+     +-----------+     +----------+     +---------------+   
+  | brief         | --&gt; | generator | --&gt; | 28-rule  | --&gt; | vision-critic |   
+  | compiler      |     | (models)  |     | linter   |     | (scaffold)    |   
+  +---------------+     +-----------+     +----------+     +---------------+   
+                                                                  |            
+                              +-----------------------------------+            
+                              v                                                
+                        +-----------+                                          
+                        | score.jsonl                                          
+                        +-----------+                                          
+</div>
+  </section>
+
+  <div class="manifest">
+    <section>
+      <h2>what ships</h2>
+      <ul>
+        <li>brief compiler &mdash; yaml &rarr; prompt + constraint set</li>
+        <li>28-rule linter &mdash; static checks on generated html/css</li>
+        <li>eval harness &mdash; n-seed runs, diff, score, persist</li>
+        <li>vision-critic scaffold &mdash; interface + local stub critic</li>
+        <li>mcp server &mdash; brief, lint, eval exposed as tools</li>
+        <li>editor plugins &mdash; vscode, zed, neovim (in-repo)</li>
+        <li>eight tokens &mdash; post-digital-green, swiss-editorial,
+            brutalist-print, terminal-amber, grid-notebook,
+            mono-oxford, anti-corp-zine, and this one</li>
+      </ul>
+    </section>
+    <section>
+      <h2>what is gated</h2>
+      <ul>
+        <li>live frontier-model calls &mdash; requires your own api keys</li>
+        <li>live vision critique &mdash; requires a multimodal key and a
+            working screenshot pipeline (playwright or equivalent)</li>
+        <li>standalone npm packages for the editor plugins &mdash;
+            currently vendored, not yet published</li>
+        <li>additional tokens &mdash; queued; shipped as contributions land</li>
+      </ul>
+    </section>
+  </div>
+
+  <section>
+    <h2>posture</h2>
+    <p>ahd is not a generator you point at a blank page. it is a contract
+    between a human with a point of view and a model that will happily
+    regress to the mean. the brief is the contract. the linter enforces
+    it. the eval tells you whether the model obeyed it this time.</p>
+    <p class="dim">if a design decision cannot be cited against a rule in
+    the brief, it is a bug.</p>
+  </section>
+
+  <footer>
+    <!-- rule: footer names the licence explicitly; not a 4-column Product/Company/Resources/Legal footer -->
+    <span>licence: <span class="amber">FSL-1.1-Apache-2.0</span> for code &middot;
+          <span class="amber">CC-BY-4.0</span> for tokens and artwork</span>
+    <span>ahd &middot; <a href="mailto:hello@ahd.dev">hello@ahd.dev</a></span>
+  </footer>
+
+</div>
+</body>
+</html>

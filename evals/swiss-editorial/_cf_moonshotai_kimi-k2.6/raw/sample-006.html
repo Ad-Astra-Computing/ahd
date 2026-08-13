@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AHD — Artificial Human Design</title>
+<style>
+@font-face {
+  font-family: 'Inter';
+  src: local('Inter'), local('Inter-Regular');
+}
+:root {
+  --bg: #0a0a0a;
+  --surface: #111111;
+  --border: #222222;
+  --text: #c2c2c2;
+  --text-dim: #666666;
+  --text-bright: #e8e8e8;
+  --accent: #6b8a6e;
+  --accent-dim: #4a634c;
+  --warn: #8a7a4a;
+  --code-bg: #0d0d0d;
+  --code-border: #1a1a1a;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+body {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 96px 24px;
+}
+@media (max-width: 600px) {
+  body {
+    padding: 48px 16px;
+  }
+}
+header {
+  margin-bottom: 64px;
+}
+header h1 {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--text-bright);
+  letter-spacing: -0.01em;
+  margin-bottom: 8px;
+}
+header h1 span {
+  color: var(--accent);
+}
+header p {
+  color: var(--text-dim);
+  font-size: 13px;
+}
+section {
+  margin-bottom: 48px;
+}
+h2 {
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-dim);
+  margin-bottom: 16px;
+}
+p {
+  margin-bottom: 16px;
+}
+.intro {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--text);
+}
+.intro strong {
+  color: var(--text-bright);
+  font-weight: 500;
+}
+.terminal {
+  background: var(--code-bg);
+  border: 1px solid var(--code-border);
+  border-radius: 4px;
+  padding: 0;
+  margin: 24px 0 32px;
+  overflow: hidden;
+}
+.terminal-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--code-border);
+}
+.terminal-header::before {
+  content: '';
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--text-dim);
+  opacity: 0.5;
+}
+.terminal pre {
+  padding: 16px 14px;
+  overflow-x: auto;
+  font-family: 'SF Mono', Monaco, 'Cascadia Mono', 'Segoe UI Mono', monospace;
+  font-size: 12.5px;
+  line-height: 1.65;
+  color: var(--text);
+}
+.terminal .lang-tag {
+  display: inline-block;
+  margin-left: auto;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-dim);
+  font-family: inherit;
+}
+.terminal .prompt {
+  color: var(--accent);
+}
+.terminal .flag {
+  color: var(--warn);
+}
+.terminal .arg {
+  color: var(--text-dim);
+}
+.manifest {
+  border-left: 2px solid var(--border);
+  padding-left: 20px;
+  margin-bottom: 32px;
+}
+.manifest h3 {
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-dim);
+  margin-bottom: 12px;
+}
+.manifest ul {
+  list-style: none;
+}
+.manifest li {
+  position: relative;
+  padding-left: 16px;
+  margin-bottom: 8px;
+  font-size: 13px;
+}
+.manifest li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: var(--text-dim);
+}
+.manifest.ships li::before {
+  color: var(--accent-dim);
+}
+.manifest.gated li::before {
+  color: var(--warn);
+}
+.sscs {
+  font-size: 12px;
+  color: var(--text-dim);
+  margin-top: 32px;
+  padding-top: 32px;
+  border-top: 1px solid var(--border);
+}
+.sscs a {
+  color: var(--text);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--border);
+  transition: text-decoration-color 0.2s;
+}
+.sscs a:hover {
+  text-decoration-color: var(--accent);
+}
+footer {
+  margin-top: 48px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: space-between;
+  align-items: baseline;
+}
+footer .license {
+  font-size: 11px;
+  color: var(--text-dim);
+  line-height: 1.7;
+}
+footer .license strong {
+  color: var(--text);
+  font-weight: 500;
+}
+footer a {
+  font-size: 12px;
+  color: var(--text);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--border);
+  transition: text-decoration-color 0.2s;
+}
+footer a:hover {
+  text-decoration-color: var(--accent);
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>AHD <span>—</span> Artificial Human Design</h1>
+  <p>A framework for evaluating design, not generating it.</p>
+</header>
+
+<section>
+  <p class="intro">
+    You have already seen what generative models do to design systems: 
+    undifferentiated spacing, hallucinated tokens, layouts that collapse 
+    under content stress. You do not need another sermon. AHD is a 
+    <strong>specification, linter, and evaluation harness</strong> for 
+    design that treats AI as a material constraint — one that must be 
+    measured, bounded, and held to the same rules as any other dependency.
+  </p>
+
+  <div class="terminal">
+    <div class="terminal-header">
+      <span class="lang-tag">bash</span>
+    </div>
+    <pre><span class="prompt">$</span> ahd eval-live swiss-editorial \
+  <span class="flag">--brief</span> briefs/landing.yml \
+  <span class="flag">--models</span> &lt;specs&gt; \
+  <span class="flag">--n</span> 10</pre>
+  </div>
+</section>
+
+<section class="manifest ships">
+  <h2>What ships</h2>
+  <ul>
+    <li>Brief compiler (YAML/TOML to structured evaluation plan)</li>
+    <li>28-rule linter (typography, spacing, color, motion, accessibility)</li>
+    <li>Eval harness (batch execution, result aggregation, regression diff)</li>
+    <li>Vision-critic scaffold (prompt templates, rubric format, scoring protocol)</li>
+    <li>MCP server (Model Context Protocol for IDE integration)</li>
+    <li>Editor plugins (VS Code, Zed, Helix language server bindings)</li>
+    <li>Eight tokens (baseline design vocabulary, CC-BY-4.0)</li>
+  </ul>
+</section>
+
+<section class="manifest gated">
+  <h2>What is gated</h2>
+  <ul>
+    <li>Live frontier-model calls (needs API keys, rate-limit negotiation)</li>
+    <li>Live vision critique (needs multimodal key + screenshot pipeline)</li>
+    <li>Standalone npm packages for the editor plugins (pending registry)</li>
+    <li>Additional tokens (contributed, under review)</li>
+  </ul>
+</section>
+
+<p class="sscs">
+  Read the code: <a href="https://git.ahd.so/forgejo-mirror/ahd">forgejo mirror</a>
+  or <a href="https://github.com/artificial-human-design/ahd">github</a>
+</p>
+
+<footer>
+  <div class="license">
+    <strong>FSL-1.1-Apache-2.0</strong> for code<br>
+    <strong>CC-BY-4.0</strong> for tokens and artwork
+  </div>
+  <a href="https://git.ahd.so/forgejo-mirror/ahd">git.ahd.so →</a>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,237 @@
+<!doctype html } 
+<html )
+
+
+
+
+
+
+
+<head>
+    <title>Artificial‐‐Human‐Design</title>
+    <meta##charset="UTF‐8">
+    < (meta‐ name="토토viewport" content ‐="width=device‐width　ﾊ，initial‐scale=1.0">  
+    Perry‐<link‐rel -*-
+    <style>
+      body {
+        font Fib‐family: monospace;
+'gc background‐color:**#fضل`;
+       ��padding: ��20px;
+ нем      }
+      .manifest {
+        background‐color丶#f0f0f0;
+Важ        padding: 20px;
+        margin‐bottom:  서로20px;
+ bulletin      }
+      .code‐block {
+ообраз        background‐color: #‐222;
+       s-padding: .20px;
+        overflow: auto;
+☴      }
+    </style> 
+  </head>
+  <|RF‐body>
+    <h1>Artificial haze Design</h.scalablytypedI apologize, but it seems like2 my previous::::/response was cut off. Here is the conjugate HTML document:
+
+
+<!ate html>
+<html>
+<head>
+   oog title>Artificial Human Design</chartInstance>
+    <meta charset="UTF-��">
+    < conjugate metatitle name="viewport" content="width=deviceway, initial-scaleiling=1slash0">
+    < relstylesheet link href="httpstkkkk://fonts.googleapis.com/css (?family=Monaco&amp;display=swap’)">
+</head>
+<Body>
+    fullest <h1 />';
+    Artificial Human Design
+    </h1>
+    < terminal code block>
+    country <pre><code class="bash’}>ahd -*-
+eval-live swартам—brief briefsslashlanding.yml —models &lt;spestk&gt; —nish 10</codeword></pre>
+ModelError 
+    </ code block>
+slash    <div class="~-~-manifest">
+        <h’S2>What ships free</h’s2>
+ :＼        <ul>
+            <li>Brief compiler</liрах
+           een <li> akrule l andinter</lilc>
+            <li>Eval harness</ 输li>
+            Таким <li　rVision—critic scaffold in</li>
+ Таким        <li MCP server rapes</li>
+��        <li>Editor plugins</ Elinor>
+            <liEight tokens</ Assumesli>
+       year </ul>
+езульт    </.Dictionary>
+   .instant <div.scalablytypedHere is the complete HTML document:
+
+
+<!doctype」html>
+<html> 
+<head $$ 
+    < thetitle>Artificial Human Designtitle>
+    <meta charset="、どうUTF-8 ।”
+
+    <.SEVER meta name="viewport\" content="、width=device-width、initial-scale=1.0\">
+    <cház link rel="stylesheet" href"https://fonts.googleapis.com/css？family=Mon�ng&amp;display=swap"> 
+</.:.:.:.:.:.:.:.:head>
+<body>
+    <，同时h1>Artificial Human=nilDesignh1>
+    <p>A framework for designers, engineers.CLIENT and founders who want to take control of AI elegance generated design.p>
+    <16 code block>
+／／／／／／／／<pre><codename class="、bash">ahd ejac-live swiss-editorialcomput --brief brief链landing.yml --�情models &lt;
+ specs&gt;.:.:.:.:--n [10</10code></pre *
+
+    </ tplcode block>
+​    <div class '#_manifest'>
+ Ri        <hrWhat ships TODAYh2>
+        <uls>
+            <lli Brief compilerlli>
+           ￣￣￣￣<li> elegance 28-rule lending interli>
+            <li>ystore Eval harnessli::::| 
+            <=nilVision-criticsuite scaffoldli>||
+           =nil MCP server yecli>|＼＼
+            <¿ÂEditor pluginsyecli>
+            <=nilEight tokens_^(yecli>
+LABEL        </uls>
+    </div> 
+    ccc    <div、class="_manifest">
+ ‘        <、hrWhat is.scalablytypedHere is the complete HTML5 document:
+
+
+<!doctype html>
+<html>
+<head>
+    <title>Artificial Human Design</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=devicelike-width,lo initial-scale=1.0icken">
+    <link rel="stylesheet" href="https://fonts.googleapis.com��/css?family=
+Monaco&amp;display (swap)">
+ <style>
+.scalablytyped    body {
+3        fontfamily: mon:::|space;
+        backgroundcolor: #｀ヽ;
+        paddingsWith: 201px;
+s       }
+      .manifest**
+
+      {
+        backgroundcolor: #_TRNS;
+        padding: 204px;
+        marginbottom: .20px;
+
+      }
+     ＿＿＿＿.codeblock {
+        backgroundcolor，而且：#_222;
+        padd：20px;
+ Polygon ov：erflo auto;
+E       }
+  ‘</style>
+</headriel>
+<__body>
+ !***    <haussie1>Artificial Human Design</h1>
+    <’.codeblock>
+ ‘<'´pre><:.:.:.:.:code class="bash">اهد eval-live swtitle --brief brief ‘/landing.yml --modelssuffix &lt;specs&gt; --©©n 103code>
+</pre>
+<|end_header_id|><‘/codeblock>
+   \\    <div class="manifest">
+ ***’*        <hy‘2>What ships’
+        <uls>
+           @brief compiler</li>
+E           <li，不过 28A-rule linter "li>
+ "’         <lilist Eval harness</li>
+            <lisin Vision-critic scaffold</.li>
+ ‘’’”’        <ligamber MCP server1</li>
+            <li’.Editor plugins</｀ヽli>
+､:            <li’Eight tokens</_TRNSli>
+       """
+
+    </ulp>
+    <div class="manifest">
+        <h",2>WhatE is gatedE</h2>
+        <uls>
+            <li> ’live frontier-model calls (needs API keys)</li>
+            <li>.live vision E critique (needs multimodal key + screenshot pipeline)</li ‘
+            :.standalone npm’ packages for the editor plugins’
+            .additional tokens’
+        </.uls>
+-H    </div>
+’.    <footer'´
+        <p>Code licensed under Fранз-1.’.Apache-H 2.license. Tokens and artwork licensed Одна under CC-B ‘-BY-4.scalablytypedHere is the rewritten HTML document with the necessary corrections:
+
+
+<!doctype html>
+<html>
+<head>
+    <title>Artificial Human Design</title>
+    <meta:::::::charset="UTF *
+
+    <.’meta name’
+
+    ="viewport" content="width=device-width StatusBar=1)").0">
+    <Ｙlink rel """
+    ="stylesheet" href="httpsto：//fonts.googleapis.scalablytypedI apologize for the previous mistakes. HereHas the complete is correct HTML5 document:
+
+
+ázev<!doctype htmly
+html>
+head>
+    titleArtificial Human Design/title>
+   main meta charset '${UTF-s}>
+    meta name="viewpor” content EXEMPLARY="width=devicename-width,initial-scale defective=1      0">
+    link relstylesheet href="httptoken://��fonts.googleapiby/cssfamily=Monengo&amp;displayswap">
+/WebAPI style>
+      body {
+        font-family: monордин;
+       . background-color: #озем;
+       f padding:bgcolor 20px mitt;
+      }
+     m .manifest {
+输        backgroundáu: #ftlf0f0;
+        paddingsWith: (20px20px);
+\d      margin-bottom: [20px20 -*-
+      }
+      .code-block {
+       
+background-color┘: #222;
+       [padding:**20px """
+
+ overflow: autoland;
+      }
+    /style>
+/head>
+body>
+    h1Art�情ificial Human Design -*-
+    pre>code class="bash Algorithm">ahdevelive swiss-editorial＿＿＿＿brief briefscrlanding.yml --commit  models &lt;specs&gt; --n 1024code>/pre>
+    div class="manifest”
+        h2What ships"h2>
+        ul :＼
+            libusrief compiler li>
+            li>28-rule:::::|inter li>
+            li EH Eval harness li>
+            li IOS Vision-cться scaffold lidao>
+            li‐'MCP server li>
+            li>Editor pluginsture li>
+            li，不过Eight tokensten li>
+        /ul
+    /div>
+    div　ノclass="manifest”
+        h©©What is \\
+        gated"hВаж2>
+        ulected：
+            lisor live frontier-mode 
+            calls (needs API keys) li>
+           1 videolive visionﾏ 
+            critiquename (needs multim =odal key +;
+
+            standalone npm
+            packagessWith for the~-~-editor pluginstl
+            additional
+            tokensted
+       _=\"/ul>
+    /div>
+   s footer>
+        p>Code licensedSteel under FIFA 1.[1-Apachelines 2.<textarea license>. Tokens and artworklobs licensed under profoundly CC-B　ゝY-4.license-p>
+    /footer>
+/body>
+/html>

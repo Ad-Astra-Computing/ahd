@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Artificial Human Design</title>
+<style>
+/* rule: colour palette */
+:root{
+  --ink: oklch(0.18 0 0);
+  --paper: oklch(0.98 0.005 95);
+  --spot: oklch(0.58 0.22 27);
+  --baseline:8px;
+  --gutter:24px;
+  --margin-min:32px;
+}
+
+/* rule: base typography */
+html{
+  font-size:17px; /* body base */
+  line-height:1.5;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:"Neue Haas Grotesk Text",Helvetica,Arial,sans-serif;
+}
+
+/* rule: display type */
+h1{
+  font-family:"Neue Haas Grotesk Display","Helvetica Now Display","Inter Tight",sans-serif;
+  font-weight:900;
+  font-size:120px; /* >=120px */
+  line-height:1.05;
+  letter-spacing:-0.02em; /* tracking -0.02em */
+  margin:0;
+}
+
+/* rule: grid system */
+.container{
+  display:grid;
+  grid-template-columns:repeat(12,1fr);
+  gap:var(--gutter);
+  max-width:calc(100vw - 2*var(--margin-min));
+  margin:0 auto;
+  padding:var(--baseline) var(--margin-min);
+}
+
+/* rule: section rhythm */
+section{
+  margin-bottom:160px; /* dramatic jump */
+}
+
+/* rule: bleed element */
+.bleed{
+  position:relative;
+  left:-50vw; /* bleed left */
+  width:200vw; /* bleed right */
+  background:var(--ink);
+  height:var(--baseline);
+}
+
+/* rule: code block styling */
+pre{
+  background:#f5f5f5;
+  padding:calc(var(--baseline)*2);
+  overflow:auto;
+  font-family:monospace;
+  font-size:0.9rem;
+}
+
+/* rule: CTA spot colour used exactly once */
+.cta{
+  color:var(--spot);
+  text-decoration:none;
+  font-weight:700;
+}
+
+/* rule: footer */
+footer{
+  font-size:0.9rem;
+  border-top:1px solid var(--ink);
+  padding-top:calc(var(--baseline)*2);
+}
+</style>
+</head>
+<body>
+<div class="bleed"></div> <!-- rule: intentional bleed past grid -->
+<div class="container">
+  <section>
+    <h1>AHD</h1> <!-- rule: single-word anchor with display >=120px -->
+    <p>Artificial Human Design. A framework that treats AI‑generated design as a problem to solve, not a gimmick.</p>
+    <p><a href="https://github.com/ahd/ahd" class="cta">Read the code</a></p> <!-- rule: spot colour used exactly once -->
+  </section>
+
+  <section>
+    <h2>Run an evaluation</h2>
+    <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre> <!-- rule: required bash code block -->
+  </section>
+
+  <section>
+    <h2>What ships</h2>
+    <ul>
+      <li>brief compiler</li>
+      <li>28‑rule linter</li>
+      <li>eval harness</li>
+      <li>vision‑critic scaffold</li>
+      <li>MCP server</li>
+      <li>editor plugins</li>
+      <li>eight tokens</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>What is gated</h2>
+    <ul>
+      <li>live frontier‑model calls (needs API keys)</li>
+      <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+      <li>standalone npm packages for the editor plugins</li>
+      <li>additional tokens</li>
+    </ul>
+  </section>
+</div>
+
+<footer>
+  Code licence: FSL‑1.1‑Apache‑2.0. Tokens & artwork: CC‑BY‑4.0.
+</footer>
+</body>
+</html>

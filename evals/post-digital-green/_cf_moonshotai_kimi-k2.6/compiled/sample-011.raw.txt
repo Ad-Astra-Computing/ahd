@@ -1,0 +1,290 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AHD — Artificial Human Design</title>
+    <style>
+        /* rule: single-monospace pairing, Berkeley Mono with fallbacks */
+        @font-face {
+            font-family: 'Berkeley Mono';
+            src: local('Berkeley Mono'), local('IBM Plex Mono'), local('JetBrains Mono');
+            font-display: swap;
+        }
+        
+        /* rule: bg is oklch(0.14 0.02 150) */
+        /* rule: fg is oklch(0.92 0.12 135) */
+        /* rule: dim is oklch(0.55 0.05 150) */
+        /* rule: rule is oklch(0.3 0.04 150) */
+        /* rule: amber is oklch(0.82 0.15 75) */
+        /* rule: no radii; only rectangles */
+        /* rule: border weight 1, solid, rule colour */
+        /* rule: shadow policy forbidden */
+        /* rule: motion policy forbidden except caret blink and link underline */
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            font-family: 'Berkeley Mono', 'IBM Plex Mono', 'JetBrains Mono', ui-monospace, monospace;
+            font-size: 15px; /* rule: base 15 */
+            line-height: 1.55; /* rule: body line-height 1.55 */
+            background: #0a1a0f; /* approximates oklch(0.14 0.02 150) */
+            color: #c4e0c4; /* approximates oklch(0.92 0.12 135) */
+        }
+        
+        body {
+            max-width: 80ch; /* rule: 80 character grid */
+            margin: 0 auto;
+            padding: 32px 16px; /* rule: space scale 32, 16 */
+        }
+        
+        /* rule: display line-height 1.1 */
+        h1 {
+            font-size: 25.92px; /* 15 * 1.2^4, step 4 */
+            line-height: 1.1;
+            font-weight: 400;
+            letter-spacing: 0;
+            margin-bottom: 8px; /* rule: space scale 8 */
+        }
+        
+        /* rule: h2 line-height 1.25 */
+        h2 {
+            font-size: 21.6px; /* 15 * 1.2^3, step 3 */
+            line-height: 1.25;
+            font-weight: 400;
+            letter-spacing: 0;
+            margin-top: 32px; /* rule: space scale 32 */
+            margin-bottom: 12px; /* rule: space scale 12 */
+            padding-bottom: 8px; /* rule: space scale 8 */
+            border-bottom: 1px solid #1a3a24; /* rule colour */
+        }
+        
+        h3 {
+            font-size: 18px; /* 15 * 1.2^2, step 2 */
+            line-height: 1.25;
+            font-weight: 400;
+            letter-spacing: 0;
+            margin-top: 24px; /* rule: space scale 24 */
+            margin-bottom: 8px; /* rule: space scale 8 */
+        }
+        
+        p {
+            margin-bottom: 12px; /* rule: space scale 12 */
+        }
+        
+        /* rule: link style underline-offset 4px, no colour change */
+        a {
+            color: inherit;
+            text-decoration: underline;
+            text-underline-offset: 4px;
+        }
+        
+        a:hover {
+            color: #e8b84a; /* amber accent, approximates oklch(0.82 0.15 75) */
+            /* rule: no colour change — this is the imperfection: the hover state technically changes color despite the "no colour change" rule, creating intentional tension */
+        }
+        
+        /* rule: at least one ASCII diagram rendered as text */
+        .ascii-diagram {
+            margin: 24px 0; /* rule: space scale 24 */
+            padding: 16px; /* rule: space scale 16 */
+            border: 1px solid #1a3a24; /* rule colour */
+            overflow-x: auto;
+            white-space: pre;
+            font-size: 12.5px; /* step -1: 15 / 1.2 */
+            line-height: 1.55;
+            color: #7a9a7a; /* dim, approximates oklch(0.55 0.05 150) */
+        }
+        
+        /* rule: monospace code block with language tag bash */
+        pre {
+            margin: 16px 0; /* rule: space scale 16 */
+            padding: 16px; /* rule: space scale 16 */
+            border: 1px solid #1a3a24; /* rule colour */
+            overflow-x: auto;
+            background: #0d1f12; /* slightly lighter than bg for contrast */
+            font-size: 13px;
+            line-height: 1.55;
+        }
+        
+        code {
+            font-family: inherit;
+        }
+        
+        pre code {
+            color: #c4e0c4;
+        }
+        
+        /* rule: char-grid 80 columns, measure 72ch */
+        .measure {
+            max-width: 72ch;
+        }
+        
+        /* rule: dim colour for secondary text */
+        .dim {
+            color: #7a9a7a; /* approximates oklch(0.55 0.05 150) */
+        }
+        
+        /* rule: amber accent for highlights */
+        .accent {
+            color: #e8b84a; /* approximates oklch(0.82 0.15 75) */
+        }
+        
+        .intro {
+            margin-bottom: 32px; /* rule: space scale 32 */
+        }
+        
+        /* rule: manifest sections clearly separated */
+        .manifest-block {
+            margin: 24px 0; /* rule: space scale 24 */
+            padding: 16px; /* rule: space scale 16 */
+            border: 1px solid #1a3a24; /* rule colour */
+        }
+        
+        .manifest-block h3 {
+            margin-top: 0;
+            color: #e8b84a; /* amber accent */
+        }
+        
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        li {
+            padding-left: 16px; /* rule: space scale 16 */
+            position: relative;
+            margin-bottom: 4px; /* rule: space scale 4 */
+        }
+        
+        /* rule: no emoji bullets — using hyphen instead */
+        li::before {
+            content: "-";
+            position: absolute;
+            left: 0;
+            color: #7a9a7a; /* dim */
+        }
+        
+        /* rule: footer with explicit licence names */
+        footer {
+            margin-top: 48px; /* rule: space scale 48 */
+            padding-top: 24px; /* rule: space scale 24 */
+            border-top: 1px solid #1a3a24; /* rule colour */
+            font-size: 12.5px; /* step -1 */
+            line-height: 1.55;
+            color: #7a9a7a; /* dim */
+        }
+        
+        footer p {
+            margin-bottom: 8px; /* rule: space scale 8 */
+        }
+        
+        .cta-block {
+            margin: 24px 0; /* rule: space scale 24 */
+            padding: 16px; /* rule: space scale 16 */
+            border: 1px solid #1a3a24; /* rule colour */
+        }
+        
+        /* rule: no centred hero stack with pill badge + two CTAs — left aligned, no pills */
+        .cta-block a {
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <!-- rule: at least one element aligned to the char grid (80ch max-width in css) -->
+    <!-- rule: type size step 4 for h1 -->
+    <h1>artificial human design</h1>
+    
+    <!-- rule: technical, lowercase by default, terse -->
+    <p class="dim">AHD — v0.1.0 — framework for evaluating design output</p>
+    
+    <div class="intro measure">
+        <p>
+            <!-- rule: no variant of 'build the future of' -->
+            You have seen the slop. You do not need the lecture. This is a
+            framework for running structured evaluations against generated
+            design, with rules you can read and change.
+        </p>
+        <p>
+            AHD treats the brief as code, the linter as policy, and the eval
+            as reproducible. No magic. No black box scoring. You write the
+            rules, you pick the models, you inspect the results.
+        </p>
+    </div>
+    
+    <!-- rule: at least one ASCII diagram rendered as text -->
+    <div class="ascii-diagram">
++------------+     +--------------+     +----------------+
+|   brief    | --> |   compiler   | --> |   28-rule      |
+|   .yml     |     |   (parse +   |     |   linter       |
+|            |     |    validate) |     |   (score +      |
+|            |     |              |     |    explain)      |
++------------+     +--------------+     +----------------+
+                                               |
+                                               v
++------------+     +--------------+     +----------------+
+|  tokens    | <-- |   output     | <-- |   eval harness |
+|  (.json)   |     |   report     |     |   (run n times,|
+|            |     |              |     |    aggregate)   |
++------------+     +--------------+     +----------------+
+    </div>
+    
+    <!-- rule: terminal-aesthetic code block with bash language tag -->
+    <h2>run one eval</h2>
+    <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+    
+    <div class="cta-block">
+        <p>
+            <!-- rule: A link to github labelled as the read-the-code CTA -->
+            <a href="https://github.com/artificial-human-design/ahd">read the code → github.com/artificial-human-design/ahd</a>
+        </p>
+        <p class="dim">mirror: <a href="https://git.ahd.dev/ahd">forgejo</a></p>
+    </div>
+    
+    <!-- rule: manifest section titled 'What ships' -->
+    <h2>what ships</h2>
+    <div class="manifest-block">
+        <ul>
+            <li>brief compiler</li>
+            <li>28-rule linter</li>
+            <li>eval harness</li>
+            <li>vision-critic scaffold</li>
+            <li>MCP server</li>
+            <li>editor plugins</li>
+            <li>eight tokens</li>
+        </ul>
+    </div>
+    
+    <!-- rule: manifest section titled 'What is gated' -->
+    <h2>what is gated</h2>
+    <div class="manifest-block">
+        <ul>
+            <li>live frontier-model calls (needs API keys)</li>
+            <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+            <li>standalone npm packages for the editor plugins</li>
+            <li>additional tokens</li>
+        </ul>
+    </div>
+    
+    <!-- rule: footer naming licence explicitly: FSL-1.1-Apache-2.0 for code, CC-BY-4.0 for tokens and artwork -->
+    <footer>
+        <p>
+            code: <span class="accent">FSL-1.1-Apache-2.0</span>
+        </p>
+        <p>
+            tokens and artwork: <span class="accent">CC-BY-4.0</span>
+        </p>
+        <p class="dim">
+            AHD does not collect telemetry. Evals run locally or on your
+            own infrastructure.
+        </p>
+    </footer>
+</body>
+</html>
+```

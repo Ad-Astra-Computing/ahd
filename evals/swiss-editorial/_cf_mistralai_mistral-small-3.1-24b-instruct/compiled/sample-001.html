@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AHD - Artificial Human Design</title>
+  <style>
+    :root {
+      --ink: oklch(0.18 0 0);
+      --paper: oklch(0.98 0.005 95);
+      --spot: oklch(0.58 0.22 27);
+      --rule: oklch(0.18 0 0);
+      --muted: oklch(0.55 0 0);
+      --font-display: 'Neue Haas Grotesk Display', 'Helvetica Now Display', 'Inter Tight';
+      --font-text: 'Neue Haas Grotesk Text', 'Helvetica Now Text', 'Inter';
+      --baseline: 8px;
+      --gutter: 24px;
+      --column-width: calc((100% - 12 * var(--gutter)) / 12);
+      --measure: 62ch;
+      --line-height-body: 1.5;
+      --tracking-display: -0.02em;
+      --tracking-body: 0;
+      --tracking-allcaps: 0.08em;
+      --radius-pill: 999px;
+    }
+
+    body {
+      font-family: var(--font-text), sans-serif;
+      font-size: 17px;
+      line-height: var(--line-height-body);
+      color: var(--ink);
+      background-color: var(--paper);
+      margin: 0;
+      padding: 0;
+      max-width: var(--measure);
+      /* rule: 8px baseline */
+    }
+
+    h1, h2 {
+      font-family: var(--font-display), sans-serif;
+      letter-spacing: var(--tracking-display);
+      line-height: 1.2;
+    }
+
+    h1 {
+      font-size: 120px;
+      margin-bottom: var(--baseline);
+      /* rule: one section anchored by a single word at display >= 120px with -0.02em tracking */
+    }
+
+    h2 {
+      font-size: 96px;
+      margin-bottom: var(--baseline);
+    }
+
+    p {
+      margin-bottom: var(--baseline);
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 var(--gutter);
+      /* rule: 24px gutters */
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: var(--gutter);
+      /* rule: 12-column grid */
+    }
+
+    .col-12 {
+      grid-column: span 12;
+    }
+
+    .col-8 {
+      grid-column: span 8;
+    }
+
+    .col-4 {
+      grid-column: span 4;
+    }
+
+    .code-block {
+      background-color: var(--ink);
+      color: var(--paper);
+      padding: var(--baseline);
+      border-radius: 0;
+      overflow-x: auto;
+      /* rule: no rounded corners except small status pills */
+    }
+
+    .code-block pre {
+      margin: 0;
+      padding: 0;
+      font-family: monospace;
+      white-space: pre;
+    }
+
+    .spot {
+      color: var(--spot);
+      /* rule: spot colour used exactly once */
+    }
+
+    .manifest {
+      margin-top: 160px;
+      /* rule: Require one dramatic jump per section (160 between sections) */
+    }
+
+    .manifest h2 {
+      margin-bottom: var(--baseline);
+    }
+
+    .manifest ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .manifest li {
+      margin-bottom: var(--baseline);
+    }
+
+    .footer {
+      margin-top: 160px;
+      padding: var(--baseline) 0;
+      border-top: 1px solid var(--rule);
+      text-align: left;
+      /* rule: asymmetric left-aligned composition */
+    }
+
+    .footer p {
+      margin: 0;
+    }
+
+    .bleed {
+      position: relative;
+      left: -32px;
+      /* rule: at least one element bleeds past the 12-col grid on purpose */
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="grid">
+      <div class="col-12">
+        <h1>AHD</h1>
+        <p>Artificial Human Design. A framework for designers, engineers, and founders who demand more from their tools.</p>
+      </div>
+      <div class="col-8">
+        <p>We take the slop thesis seriously. AHD is designed to address the issues plaguing AI-generated design. No more generic templates or lazy solutions. Just a robust framework that respects your craft.</p>
+      </div>
+      <div class="col-4 bleed">
+        <p class="spot">Read the code</p>
+        <a href="https://github.com/ahd-framework/ahd" class="spot">GitHub</a>
+        {/* rule: A link to github (or the forgejo mirror) labelled as the read-the-code CTA */}
+      </div>
+      <div class="col-12">
+        <h2>Eval</h2>
+        <div class="code-block">
+          <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+        </div>
+        {/* rule: The command `ahd eval-live swiss-editorial --brief briefs/landing.yml --models <specs> --n 10` rendered in a monospace code block with the language tag `bash` */}
+      </div>
+      <div class="col-12 manifest">
+        <h2>What ships</h2>
+        <ul>
+          <li>Brief compiler</li>
+          <li>28-rule linter</li>
+          <li>Eval harness</li>
+          <li>Vision-critic scaffold</li>
+          <li>MCP server</li>
+          <li>Editor plugins</li>
+          <li>Eight tokens</li>
+        </ul>
+        {/* rule: A clearly separated manifest section titled 'What ships' that enumerates: brief compiler, 28-rule linter, eval harness, vision-critic scaffold, MCP server, editor plugins, eight tokens */}
+      </div>
+      <div class="col-12 manifest">
+        <h2>What is gated</h2>
+        <ul>
+          <li>Live frontier-model calls (needs API keys)</li>
+          <li>Live vision critique (needs multimodal key + screenshot pipeline)</li>
+          <li>Standalone npm packages for the editor plugins</li>
+          <li>Additional tokens</li>
+        </ul>
+        {/* rule: A clearly separated manifest section titled 'What is gated' that enumerates: live frontier-model calls (needs API keys), live vision critique (needs multimodal key + screenshot pipeline), standalone npm packages for the editor plugins, additional tokens */}
+      </div>
+    </div>
+  </div>
+  <footer class="footer">
+    <div class="container">
+      <p>Code licensed under FSL-1.1-Apache-2.0. Tokens and artwork licensed under CC-BY-4.0.</p>
+      {/* rule: A footer that names the licence explicitly: FSL-1.1-Apache-2.0 for code, CC-BY-4.0 for tokens and artwork */}
+    </div>
+  </footer>
+</body>
+</html>

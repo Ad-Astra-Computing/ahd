@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Artificial Human Design</title>
+  <!-- rule: Swiss/International Typographic Style, asymmetric left-aligned composition -->
+  <style>
+    /* rule: ink on paper palette, single spot red used exactly once */
+    :root {
+      --ink: #1a1a1a;
+      --paper: #faf8f5;
+      --spot: #c73a28;
+      --rule: #1a1a1a;
+      --muted: #737373;
+      --font-display: "Helvetica Now Display", "Inter Tight", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      --font-text: "Helvetica Now Text", Inter, "Helvetica Neue", Helvetica, Arial, sans-serif;
+      --font-mono: "SFMono-Regular", "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    }
+
+    /* rule: structural motion only, no entrance animations, respects prefers-reduced-motion */
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+
+    /* rule: 8px baseline, 17px body, line-height 1.5, measure 62ch */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      font-size: 17px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: var(--font-text);
+      color: var(--ink);
+      background: var(--paper);
+      /* rule: asymmetric left-aligned composition */
+      padding: 0;
+    }
+
+    /* rule: 12-column grid with 24px gutters, margin calc(100vw / 24) preferred */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 24px;
+      margin-left: max(32px, calc(100vw / 24));
+      margin-right: max(32px, calc(100vw / 24));
+      max-width: 1400px;
+    }
+
+    /* rule: display type Neue Haas Grotesk Display at 96–160px, tracking -0.02em, line-height 1.05 */
+    .display-xl {
+      font-family: var(--font-display);
+      font-size: clamp(96px, 12vw, 160px);
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+      font-weight: 700;
+      color: var(--ink);
+      text-transform: none;
+    }
+
+    /* rule: one section anchored by a single word at display >= 120px with -0.02em tracking */
+    .display-word {
+      font-family: var(--font-display);
+      font-size: clamp(120px, 14vw, 180px);
+      letter-spacing: -0.02em;
+      line-height: 0.9;
+      font-weight: 900;
+      color: var(--ink);
+      /* rule: at least one element bleeds past the 12-col grid on purpose */
+      margin-left: -0.1em;
+    }
+
+    h2 {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 3vw, 42px);
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 24px;
+    }
+
+    /* rule: body in Neue Haas Grotesk Text at 17px, measure 62ch */
+    p, li {
+      font-family: var(--font-text);
+      font-size: 17px;
+      line-height: 1.5;
+      max-width: 62ch;
+      color: var(--ink);
+    }
+
+    p {
+      margin-bottom: 16px;
+    }
+
+    /* rule: declarative voice, short sentences, no hedges, no Oxford commas */
+    .hero {
+      padding-top: 64px;
+      padding-bottom: 160px;
+      /* rule: dramatic jump of 160px between sections */
+    }
+
+    .hero .grid {
+      align-items: end;
+    }
+
+    .hero-content {
+      grid-column: 1 / 9;
+    }
+
+    @media (max-width: 768px) {
+      .hero-content {
+        grid-column: 1 / -1;
+      }
+    }
+
+    /* rule: no centred hero */
+    .hero-sub {
+      font-family: var(--font-text);
+      font-size: 17px;
+      line-height: 1.5;
+      color: var(--muted);
+      max-width: 62ch;
+      margin-top: 32px;
+      margin-bottom: 48px;
+    }
+
+    /* rule: read-the-code CTA link to github */
+    .cta {
+      display: inline-block;
+      font-family: var(--font-text);
+      font-size: 17px;
+      color: var(--ink);
+      text-decoration: none;
+      border-bottom: 1px solid var(--rule);
+      padding-bottom: 2px;
+      /* rule: spot colour used exactly once — applied here */
+      color: var(--spot);
+      border-color: var(--spot);
+    }
+
+    .cta:hover {
+      background: var(--spot);
+      color: var(--paper);
+      /* rule: structural motion only */
+      transition: background 0.15s, color 0.15s;
+    }
+
+    /* rule: terminal-aesthetic code block, monospace, language tag bash */
+    .code-section {
+      padding-bottom: 160px;
+      /* rule: dramatic jump of 160px between sections */
+    }
+
+    .code-block {
+      grid-column: 1 / 11;
+      background: var(--ink);
+      color: var(--paper);
+      font-family: var(--font-mono);
+      font-size: 14px;
+      line-height: 1.6;
+      padding: 32px;
+      /* rule: sharp by default, no rounded-2xl */
+      border-radius: 0;
+    }
+
+    @media (max-width: 768px) {
+      .code-block {
+        grid-column: 1 / -1;
+      }
+    }
+
+    .code-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 16px;
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      /* rule: allcaps tracking 0.08em */
+    }
+
+    .code-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 0;
+      /* rule: sharp by default */
+      background: var(--muted);
+    }
+
+    .code-dot:nth-child(1) {
+      background: #ff5f56;
+    }
+
+    .code-dot:nth-child(2) {
+      background: #ffbd2e;
+    }
+
+    .code-dot:nth-child(3) {
+      background: #27c93f;
+    }
+
+    code {
+      font-family: var(--font-mono);
+      color: var(--paper);
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+
+    /* rule: manifest sections clearly separated */
+    .manifest {
+      padding-bottom: 160px;
+      /* rule: dramatic jump of 160px between sections */
+    }
+
+    .manifest-ships {
+      grid-column: 1 / 7;
+    }
+
+    .manifest-gated {
+      grid-column: 7 / 13;
+    }
+
+    @media (max-width: 768px) {
+      .manifest-ships,
+      .manifest-gated {
+        grid-column: 1 / -1;
+        margin-bottom: 64px;
+      }
+    }
+
+    /* rule: no emoji bullets — using numeric/structured list */
+    .manifest-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .manifest-list li {
+      padding: 12px 0;
+      border-bottom: 1px solid var(--rule);
+      max-width: none;
+    }
+
+    .manifest-list li:last-child {
+      border-bottom: none;
+    }
+
+    .manifest-label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      /* rule: allcaps tracking 0.08em */
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    /* rule: footer with explicit licence naming, not canonical 4-column */
+    .footer {
+      border-top: 1px solid var(--rule);
+      padding-top: 48px;
+      padding-bottom: 48px;
+    }
+
+    .footer-content {
+      grid-column: 1 / 13;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+
+    @media (max-width: 768px) {
+      .footer-content {
+        flex-direction: column;
+      }
+    }
+
+    .footer-licence {
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--muted);
+      max-width: 62ch;
+    }
+
+    .footer-meta {
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    /* rule: no rounded corners except small status pills */
+    .status {
+      display: inline-block;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      border: 1px solid var(--rule);
+      border-radius: 999px;
+      /* rule: pills (999) allowed for status tags only */
+      margin-left: 12px;
+      vertical-align: middle;
+    }
+  </style>
+</head>
+<body>
+  <!-- rule: no centred hero — asymmetric left-aligned composition -->
+  <header class="hero">
+    <div class="grid">
+      <div class="hero-content">
+        <!-- rule: one section anchored by a single word at display >= 120px with -0.02em tracking -->
+        <h1 class="display-word">AHD</h1>
+        <p class="hero-sub">Artificial Human Design. A framework for evaluating generative design output against explicit constraints. No slop. No hedges. Rules that fail loud.</p>
+        <!-- rule: link to github labelled as read-the-code CTA -->
+        <a href="https://github.com/artificial-human-design/ahd" class="cta">Read the code →</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- rule: terminal-aesthetic code block with bash language tag -->
+  <section class="code-section">
+    <div class="grid">
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-dot"></span>
+          <span class="code-dot"></span>
+          <span class="code-dot"></span>
+          <span>bash</span>
+        </div>
+        <code>ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code>
+      </div>
+    </div>
+  </section>
+
+  <!-- rule: clearly separated manifest sections -->
+  <section class="manifest">
+    <div class="grid">
+      <!-- rule: What ships section -->
+      <div class="manifest-ships">
+        <h2>What ships</h2>
+        <ul class="manifest-list">
+          <li>Brief compiler</li>
+          <li>28-rule linter</li>
+          <li>Eval harness</li>
+          <li>Vision-critic scaffold</li>
+          <li>MCP server</li>
+          <li>Editor plugins <span class="status">WIP</span></li>
+          <li>Eight tokens</li>
+        </ul>
+      </div>
+      <!-- rule: What is gated section -->
+      <div class="manifest-gated">
+        <h2>What is gated</h2>
+        <ul class="manifest-list">
+          <li><span class="manifest-label">Needs API keys</span><br>Live frontier-model calls</li>
+          <li><span class="manifest-label">Needs multimodal key + screenshot pipeline</span><br>Live vision critique</li>
+          <li><span class="manifest-label">Pending packaging</span><br>Standalone npm packages for the editor plugins</li>
+          <li><span class="manifest-label">In progress</span><br>Additional tokens</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- rule: footer naming licence explicitly, not canonical 4-column -->
+  <footer class="footer">
+    <div class="grid">
+      <div class="footer-content">
+        <div class="footer-licence">
+          <strong>Code</strong>: FSL-1.1-Apache-2.0<br>
+          <strong>Tokens and artwork</strong>: CC-BY-4.0
+        </div>
+        <div class="footer-meta">
+          Artificial Human Design<br>
+          2024
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

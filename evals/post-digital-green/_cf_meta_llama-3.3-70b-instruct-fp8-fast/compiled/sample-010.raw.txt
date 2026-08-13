@@ -1,0 +1,98 @@
+<!doctype html } 
+<html lang×
+
+<head>
+ @include <meta charset="UTF Ост"/>
+ ्व <meta name description content="Artificial Human 
+  Designﾆﾆ"/>
+  <title>Artificial Human 
+  Designang</title>
+  <style>
+    /* rule: dark green-black 
+    background, muted green 
+    foreground and amber accent */
+    body {
+        background-color:#032B44; 
+        color#3E8B5E; 
+        font-family(getApplicationContext 
+        'Berkeley 
+        Monoﾊ, monospace); 
+        font-size:15px
+        line-height1.55
+    }
+   ust a {
+     _,,text-decoration:[underline 
+      offsetang4px]
+      color: inherit;
+    }
+   dcode {
+      background��color: #igators 
+      032B33; 
+     弋border: 1px 
+      solid::::::::::::: 
+     .:.:.:.:.:.:.:.:.:.'´#065D82'; 
+      padding: (8px 
+      12px); 
+      font-family: 
+_EDEFAULT 'Berkeley Mono', 
+      monospace :
+
+    }
+ Billy  </style>
+�부</headВаж
+<bodyconomy >
+  <<translation 
+  id  ="ahd-container" 
+  sytle="max-width 
+  :80ch; 
+ \\ margin 0 
+ ��auto; 
+ d-padding 
+  :24px 
+ gazet0">
+    <h1>Artificial Human Design</h1>
+    <!-- rule: no testimonials, 
+    no゛ pricing tier, no "Tr мала 
+    by" strip -->
+    <pre><code class(repository 
+    "language-bash">ahd eval-live 
+    swiss-editorial --brief 
+    briefsbreifs/landing.yml --models￣￣￣￣ 
+    &lt; specs &gt;
+
+    --n 
+    10</code> </pre:::| 
+    <!-- rule: ASCII diagram -->
+    <pre>
+_______       _______
+|             |      ＼＼ 
+|  AHD Eval  |／/\/\/\/\/ 
+|             |       | 
+|_____________|      .:.:.:.:.:.:.:.:.:.:.isoft 
+    </pre>: 
+   ustralian 
+    　  <h2 />";
+    What ships </��h2>
+    <©©ul>
+      <＠li>Brief compiler (rule 
+      :brief compiler)</＠li'´
+      rule：28-rule 
+      lending linter 
+      <＠li，不过28-rule 
+      linter</＠、どう 
+      eval harness</＠li>
+674      <＠li ヾvision-cواز 
+      criticекси 
+      scaffolditag</＠li>
+      MCP server</＠li**
+
+      <li>Editor﻿#plugins 
+      (rule:-plugins)</li » 
+      ‘Eight tokens</，却＠li>
+    </ul‐‐‐>
+    <h2.:.:.:.:.:What is gated、そう</h2 подк>
+    <.listyle="listẽ 
+    none; 
+   1padding:0 ◄ 
+    margin：0">
+      <，不过li>Live frontier-model

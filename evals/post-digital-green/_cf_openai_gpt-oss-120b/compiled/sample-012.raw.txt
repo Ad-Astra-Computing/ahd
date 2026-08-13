@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><!-- rule: ensure proper encoding -->
+<meta name="viewport" content="width=device-width, initial-scale=1"><!-- rule: responsive baseline -->
+<title>ahd – artificial human design</title><!-- rule: concise, lowercase title -->
+<style>
+/* rule: colour palette */
+:root{
+  --bg: oklch(0.14 0.02 150);
+  --fg: oklch(0.92 0.12 135);
+  --dim: oklch(0.55 0.05 150);
+  --rule: oklch(0.3 0.04 150);
+  --accent: oklch(0.82 0.15 75);
+}
+/* rule: typography – single monospace family */
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--fg);
+  font-family:"Berkeley Mono","IBM Plex Mono","JetBrains Mono",ui-monospace,monospace;
+  line-height:1.55; /* rule: body line-height */
+  font-size:15px; /* base size per scale */
+}
+.container{
+  max-width:80ch; /* rule: char‑grid constraint */
+  margin:auto;
+  padding:24px; /* rule: space scale */
+  border:1px solid var(--rule); /* rule: hairline rule colour */
+}
+h1,h2{
+  margin:0 0 .5em 0;
+  line-height:1.25; /* rule: heading line-height */
+}
+h1{
+  font-weight:700;
+}
+pre{
+  background:var(--dim);
+  padding:12px;
+  overflow:auto;
+  border:1px solid var(--rule);
+}
+code{
+  font-family:inherit;
+}
+ul{
+  padding-left:1.2em;
+}
+li{
+  margin-bottom:.4em;
+}
+a{
+  color:inherit;
+  text-decoration:underline;
+  text-underline-offset:4px; /* rule: underline offset */
+}
+button{
+  background:var(--accent);
+  color:#000;
+  border:none;
+  padding:8px 12px;
+  cursor:pointer;
+  font-weight:700;
+}
+button:hover{
+  opacity:.9;
+}
+footer{
+  margin-top:24px;
+  font-size:0.9em;
+  border-top:1px solid var(--rule);
+  padding-top:12px;
+}
+</style>
+</head>
+<body>
+<div class="container"><!-- rule: main content rectangle -->
+<h1>artificial human design</h1><!-- rule: terse, lowercase heading -->
+<p>framework for designers, engineers, and founders who have seen the AI‑generated noise and need a disciplined, reproducible workflow.</p>
+
+<h2>run an eval</h2><!-- rule: section heading -->
+<pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre><!-- rule: terminal‑style code block -->
+
+<h2>architecture snapshot</h2><!-- rule: ASCII diagram -->
+<pre>
++-------------------+   +-------------------+
+| brief compiler    |---| 28‑rule linter    |
++-------------------+   +-------------------+
+         |                     |
+         v                     v
++-------------------+   +-------------------+
+| eval harness      |---| vision‑critic     |
++-------------------+   +-------------------+
+         \                     /
+          \                   /
+           +-----------------+
+           | MCP server      |
+           +-----------------+
+                |
+                v
+        +-------------------+
+        | editor plugins    |
+        +-------------------+
+                |
+                v
+        +-------------------+
+        | eight tokens      |
+        +-------------------+
+</pre><!-- rule: required ASCII diagram -->
+
+<h2>what ships</h2><!-- rule: manifest title -->
+<ul>
+<li>brief compiler</li>
+<li>28‑rule linter</li>
+<li>eval harness</li>
+<li>vision‑critic scaffold</li>
+<li>MCP server</li>
+<li>editor plugins</li>
+<li>eight tokens</li>
+</ul>
+
+<h2>what is gated</h2><!-- rule: manifest title -->
+<ul>
+<li>live frontier‑model calls (needs API keys)</li>
+<li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+<li>standalone npm packages for the editor plugins</li>
+<li>additional tokens</li>
+</ul>
+
+<p><a href="https://github.com/ahd/ahd" target="_blank">read the code</a></p><!-- rule: read‑the‑code CTA -->
+
+<footer>
+<p>code licence: FSL‑1.1‑Apache‑2.0 • tokens &amp; artwork: CC‑BY‑4.0</p>
+</footer>
+</div>
+</body>
+</html>

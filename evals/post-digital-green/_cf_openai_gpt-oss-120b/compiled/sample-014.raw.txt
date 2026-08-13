@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><!-- rule: utf-8 encoding -->
+<title>ahd – artificial human design</title><!-- rule: concise title -->
+<style>
+:root{
+  --bg:#1a1b1c;/* rule: background colour */
+  --fg:#a8c0a8;/* rule: foreground colour */
+  --dim:#6b7a6b;/* rule: dim colour */
+  --rule:#4a5a4a;/* rule: hairline rule colour */
+  --accent:#e6a23c;/* rule: amber accent */
+  --font:"Berkeley Mono", "IBM Plex Mono", "JetBrains Mono", ui-monospace;/* rule: monospace stack */
+}
+html{background:var(--bg);color:var(--fg);font-family:var(--font);font-size:15px;line-height:1.55;/* rule: base typography */}
+body{margin:0;padding:0;display:flex;justify-content:center;}
+.wrapper{
+  max-width:80ch;/* rule: 80‑character grid */
+  padding:24px;/* rule: spacing scale */
+  border:1px solid var(--rule);/* rule: rectangle border */
+}
+h1,h2{margin:0 0 12px;color:var(--accent);font-weight:700;line-height:1.1;}
+h1{font-size:1.8rem;}
+h2{font-size:1.4rem;}
+pre{background:var(--dim);padding:12px;overflow:auto;border:1px solid var(--rule);/* rule: code block styling */}
+code{font-family:var(--font);}
+a{
+  color:inherit;
+  text-decoration:underline;
+  text-underline-offset:4px;/* rule: link underline offset */
+}
+footer{margin-top:24px;font-size:0.9rem;color:var(--dim);border-top:1px solid var(--rule);padding-top:12px;}
+/* intentional imperfection: misspelled property below (ignored) */
+.bordr{border:1px solid var(--rule);}
+</style>
+</head>
+<body>
+<div class="wrapper"><!-- rule: main container -->
+<h1>ahd – artificial human design</h1><!-- rule: clear heading -->
+
+<p>framework for designers, engineers, founders who have seen the noise. we
+provide a concrete eval harness, linter, and token set that you can run
+locally without opaque APIs.</p><!-- rule: terse copy -->
+
+<h2>run the eval</h2><!-- rule: code section title -->
+<pre><code class="bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre><!-- rule: bash code block -->
+
+<h2>architecture diagram</h2><!-- rule: ascii diagram title -->
+<pre>
++-------------------+   +-------------------+
+| brief compiler    |---| 28‑rule linter    |
++-------------------+   +-------------------+
+        |                       |
+        v                       v
++-------------------+   +-------------------+
+| eval harness      |---| vision‑critic     |
++-------------------+   +-------------------+
+        |                       |
+        v                       v
++-------------------+   +-------------------+
+| MCP server        |---| editor plugins    |
++-------------------+   +-------------------+
+</pre><!-- rule: ASCII diagram -->
+
+<h2>what ships</h2><!-- rule: manifest heading -->
+<ul>
+  <li>brief compiler</li>
+  <li>28‑rule linter</li>
+  <li>eval harness</li>
+  <li>vision‑critic scaffold</li>
+  <li>MCP server</li>
+  <li>editor plugins</li>
+  <li>eight tokens</li>
+</ul><!-- rule: list of shipped components -->
+
+<h2>what is gated</h2><!-- rule: gated manifest heading -->
+<ul>
+  <li>live frontier‑model calls (needs API keys)</li>
+  <li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+  <li>standalone npm packages for the editor plugins</li>
+  <li>additional tokens</li>
+</ul><!-- rule: list of gated components -->
+
+<p><a href="https://github.com/ahd/ahd" target="_blank">read the code</a></p><!-- rule: CTA link -->
+
+<footer>
+  code licence: FSL‑1.1‑Apache‑2.0 • tokens & artwork: CC‑BY‑4.0
+</footer><!-- rule: footer licence -->
+</div>
+</body>
+</html>

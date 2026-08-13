@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Artificial Human Design</title>
+<style>
+/* rule: colour palette */
+:root{
+  --bg: oklch(0.14 0.02 150);
+  --fg: oklch(0.92 0.12 135);
+  --dim: oklch(0.55 0.05 150);
+  --rule: oklch(0.3 0.04 150);
+  --accent: oklch(0.82 0.15 75);
+}
+/* rule: full‑screen background */
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:"Berkeley Mono","IBM Plex Mono","JetBrains Mono",ui-monospace,monospace;line-height:1.55;display:flex;align-items:center;justify-content:center;}
+/* rule: max 80ch container */
+.container{max-width:80ch;width:100%;padding:2rem;box-sizing:border-box;}
+/* rule: border rule colour */
+hr{border:none;border-top:1px solid var(--rule);margin:2rem 0;}
+/* rule: link style */
+a{color:inherit;text-decoration:underline;text-underline-offset:4px;}
+a:hover{color:inherit;}
+/* rule: code block styling */
+code{font-family:inherit;background:var(--dim);padding:0.2rem 0.4rem;border-radius:0;}
+pre{background:var(--dim);padding:1rem;overflow:auto;border:1px solid var(--rule);font-size:0.95rem;}
+/* rule: no radii */
+button{border:1px solid var(--rule);background:var(--dim);color:var(--fg);padding:0.4rem 0.8rem;cursor:pointer;}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>artificial human design</h1> <!-- rule: terse lowercase heading -->
+<p>framework for designers, engineers, founders who have already seen the noise. we give you a disciplined eval pipeline, not a glossy promise.</p>
+<hr>
+<h2>run the eval</h2> <!-- rule: clear section header -->
+<pre><code class="bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre> <!-- rule: required bash code block -->
+<p><a href="https://github.com/ahd/ahd" target="_blank">read the code</a></p> <!-- rule: read‑the‑code CTA -->
+<hr>
+<h2>what ships</h2> <!-- rule: manifest title -->
+<ul>
+<li>brief compiler</li>
+<li>28‑rule linter</li>
+<li>eval harness</li>
+<li>vision‑critic scaffold</li>
+<li>mcp server</li>
+<li>editor plugins</li>
+<li>eight tokens</li>
+</ul>
+<h2>what is gated</h2> <!-- rule: manifest title -->
+<ul>
+<li>live frontier‑model calls (needs API keys)</li>
+<li>live vision critique (needs multimodal key + screenshot pipeline)</li>
+<li>standalone npm packages for the editor plugins</li>
+<li>additional tokens</li>
+</ul>
+<hr>
+<h2>ascii diagram</h2> <!-- rule: required diagram -->
+<pre>
++-------------------+
+|  design source   |
++--------+----------+
+         |
+         v
++--------+----------+
+|  brief compiler   |
++--------+----------+
+         |
+         v
++--------+----------+
+|  28‑rule linter   |
++--------+----------+
+         |
+         v
++--------+----------+
+|   eval harness    |
++--------+----------+
+</pre>
+<footer>
+<p>code licence: fsl-1.1-apache-2.0 • tokens &amp; artwork: cc-by-4.0</p>
+</footer>
+</div>
+</body>
+</html>

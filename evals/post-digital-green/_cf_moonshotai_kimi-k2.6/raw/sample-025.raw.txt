@@ -1,0 +1,430 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AHD — Artificial Human Design</title>
+    <style>
+        @font-face {
+            font-family: 'Inter';
+            src: local('Inter'), local('Inter-Regular');
+        }
+        
+        :root {
+            --bg: #0a0a0b;
+            --bg-raised: #141416;
+            --fg: #e8e6e3;
+            --fg-dim: #9a9590;
+            --fg-muted: #6b6560;
+            --accent: #c4a574;
+            --accent-dim: #8a7a64;
+            --border: #252528;
+            --border-subtle: #1a1a1c;
+            --syntax-fg: #d4d0cc;
+            --syntax-keyword: #c4a574;
+            --syntax-string: #8faa8a;
+            --syntax-comment: #6b6560;
+            --syntax-param: #a0a0c0;
+            --syntax-flag: #c08080;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--fg);
+            line-height: 1.6;
+            font-size: 15px;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Layout */
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        
+        /* Header */
+        header {
+            padding: 48px 0 32px;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+        
+        .wordmark {
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--fg-dim);
+            margin-bottom: 32px;
+        }
+        
+        .wordmark span {
+            color: var(--accent);
+        }
+        
+        h1 {
+            font-size: 28px;
+            font-weight: 500;
+            line-height: 1.35;
+            letter-spacing: -0.01em;
+            color: var(--fg);
+            max-width: 580px;
+        }
+        
+        .lead {
+            margin-top: 20px;
+            font-size: 16px;
+            line-height: 1.7;
+            color: var(--fg-dim);
+            max-width: 560px;
+        }
+        
+        .lead strong {
+            color: var(--fg);
+            font-weight: 500;
+        }
+        
+        /* Code block */
+        .code-section {
+            margin: 40px 0;
+        }
+        
+        .code-block {
+            background: var(--bg-raised);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        
+        .code-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            background: var(--border-subtle);
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .code-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--syntax-flag);
+        }
+        
+        .code-dot:nth-child(2) {
+            background: var(--syntax-keyword);
+        }
+        
+        .code-dot:nth-child(3) {
+            background: var(--syntax-string);
+        }
+        
+        .code-lang {
+            margin-left: auto;
+            font-size: 12px;
+            color: var(--fg-muted);
+            font-family: 'SF Mono', Monaco, monospace;
+            text-transform: uppercase;
+        }
+        
+        pre {
+            padding: 20px 24px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        code {
+            font-family: 'SF Mono', 'Fira Code', Monaco, 'Cascadia Code', monospace;
+            font-size: 13.5px;
+            line-height: 1.6;
+            color: var(--syntax-fg);
+        }
+        
+        .syntax-kw { color: var(--syntax-keyword); }
+        .syntax-str { color: var(--syntax-string); }
+        .syntax-cmt { color: var(--syntax-comment); }
+        .syntax-param { color: var(--syntax-param); }
+        .syntax-flag { color: var(--syntax-flag); }
+        
+        /* CTA link */
+        .cta-row {
+            margin-top: 12px;
+        }
+        
+        .cta-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-family: 'SF Mono', Monaco, monospace;
+            color: var(--accent);
+        }
+        
+        .cta-link::before {
+            content: '→';
+            color: var(--accent-dim);
+        }
+        
+        .cta-link:hover {
+            text-decoration: none;
+        }
+        
+        .cta-link:hover::before {
+            color: var(--accent);
+        }
+        
+        /* Manifest sections */
+        .manifest {
+            margin: 48px 0;
+        }
+        
+        .manifest + .manifest {
+            margin-top: 40px;
+        }
+        
+        .manifest h2 {
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--fg-muted);
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+        
+        .manifest-ships h2 {
+            color: var(--syntax-string);
+        }
+        
+        .manifest-gated h2 {
+            color: var(--syntax-flag);
+        }
+        
+        .manifest ul {
+            list-style: none;
+        }
+        
+        .manifest li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 12px;
+            font-size: 14.5px;
+            line-height: 1.6;
+            color: var(--fg-dim);
+        }
+        
+        .manifest li::before {
+            content: '—';
+            position: absolute;
+            left: 0;
+            color: var(--fg-muted);
+        }
+        
+        .manifest-ships li::before {
+            content: '+';
+            color: var(--syntax-string);
+            font-family: 'SF Mono', monospace;
+        }
+        
+        .manifest-gated li::before {
+            content: '·';
+            color: var(--syntax-flag);
+            font-family: 'SF Mono', monospace;
+        }
+        
+        .manifest li strong {
+            color: var(--fg);
+            font-weight: 500;
+        }
+        
+        .manifest li .detail {
+            display: block;
+            font-size: 13px;
+            color: var(--fg-muted);
+            margin-top: 2px;
+        }
+        
+        /* Elaboration */
+        .elaboration {
+            margin: 48px 0;
+            padding: 24px;
+            background: var(--bg-raised);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+        }
+        
+        .elaboration p {
+            font-size: 14px;
+            line-height: 1.7;
+            color: var(--fg-dim);
+        }
+        
+        .elaboration p + p {
+            margin-top: 14px;
+        }
+        
+        .elaboration strong {
+            color: var(--fg);
+            font-weight: 500;
+        }
+        
+        /* Footer */
+        footer {
+            margin-top: 64px;
+            padding: 32px 0 48px;
+            border-top: 1px solid var(--border-subtle);
+        }
+        
+        footer p {
+            font-size: 13px;
+            line-height: 1.7;
+            color: var(--fg-muted);
+        }
+        
+        footer .license-code {
+            color: var(--syntax-keyword);
+        }
+        
+        footer .license-content {
+            color: var(--syntax-string);
+        }
+        
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 22px;
+            }
+            
+            .lead {
+                font-size: 15px;
+            }
+            
+            pre {
+                padding: 16px;
+            }
+            
+            code {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="wordmark"><span>AHD</span> / Artificial Human Design</div>
+            <h1>A design system for distinguishing deliberation from diffusion.</h1>
+            <p class="lead">
+                Every generative tool ships with the same drift: averages accumulate, intent erodes, taste becomes a lagging indicator. <strong>AHD is a framework for running structured design evaluations against frontier models</strong>—not to automate decisions, but to make the reasoning behind them explicit, testable, and versioned.
+            </p>
+            <p class="lead">
+                You write a brief in YAML. The compiler validates it against 28 rules. The harness generates candidates, scores them through a vision critic, and returns a ranked set with full provenance. The model can be swapped; the criteria stay fixed.
+            </p>
+        </div>
+    </header>
+    
+    <main class="container">
+        <section class="code-section">
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-dot"></span>
+                    <span class="code-dot"></span>
+                    <span class="code-dot"></span>
+                    <span class="code-lang">bash</span>
+                </div>
+                <pre><code><span class="syntax-kw">ahd</span> <span class="syntax-flag">eval-live</span> <span class="syntax-str">swiss-editorial</span> \
+    <span class="syntax-flag">--brief</span> <span class="syntax-param">briefs/landing.yml</span> \
+    <span class="syntax-flag">--models</span> <span class="syntax-param">&lt;specs&gt;</span> \
+    <span class="syntax-flag">--n</span> <span class="syntax-param">10</span></code></pre>
+            </div>
+            <div class="cta-row">
+                <a href="https://github.com/artificialhumandesign/ahd" class="cta-link">read-the-code</a>
+            </div>
+        </section>
+        
+        <section class="manifest manifest-ships">
+            <h2>What ships</h2>
+            <ul>
+                <li><strong>Brief compiler</strong>
+                    <span class="detail">YAML-to-structured-prompt with schema validation and error recovery</span>
+                </li>
+                <li><strong>28-rule linter</strong>
+                    <span class="detail">Static analysis for brief completeness, constraint consistency, and evaluability</span>
+                </li>
+                <li><strong>Eval harness</strong>
+                    <span class="detail">Parallel generation, scoring, and ranking with deterministic seeding</span>
+                </li>
+                <li><strong>Vision-critic scaffold</strong>
+                    <span class="detail">Protocol for multimodal critique; accepts local or remote vision backends</span>
+                </li>
+                <li><strong>MCP server</strong>
+                    <span class="detail">Model Context Protocol implementation for integration with compatible editors</span>
+                </li>
+                <li><strong>Editor plugins</strong>
+                    <span class="detail">VS Code and Vim extensions for inline brief editing and result preview</span>
+                </li>
+                <li><strong>Eight tokens</strong>
+                    <span class="detail">Curated design-taste embeddings for bias detection and candidate filtering</span>
+                </li>
+            </ul>
+        </section>
+        
+        <section class="manifest manifest-gated">
+            <h2>What is gated</h2>
+            <ul>
+                <li><strong>Live frontier-model calls</strong>
+                    <span class="detail">Requires your own API keys (OpenAI, Anthropic, Google, or compatible local endpoint)</span>
+                </li>
+                <li><strong>Live vision critique</strong>
+                    <span class="detail">Requires multimodal key plus configured screenshot pipeline (Playwright, Puppeteer, or manual capture)</span>
+                </li>
+                <li><strong>Standalone npm packages for the editor plugins</strong>
+                    <span class="detail">Pending registry setup; install from source in the interim</span>
+                </li>
+                <li><strong>Additional tokens</strong>
+                    <span class="detail">Twelve embeddings in curation; release gated on community review and licensing clearance</span>
+                </li>
+            </ul>
+        </section>
+        
+        <section class="elaboration">
+            <p>
+                <strong>The framework assumes you already distrust averages.</strong> It does not promise taste; it instruments the gap between what you asked for and what the model assumed. The linter catches underspecification before generation. The harness keeps candidates you would have discarded so you can inspect the failure mode. The vision critic scores against your criteria, not against a generic rubric.
+            </p>
+            <p>
+                Everything that runs locally does so without network calls. The gated items are transparent about what they need and why. No feature is described as <em>coming soon</em> without an explicit blocker listed.
+            </p>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>
+                Code licensed under <span class="license-code">FSL-1.1-Apache-2.0</span>.
+                Tokens, artwork, and documentation licensed under <span class="license-content">CC-BY-4.0</span>.
+            </p>
+        </div>
+    </footer>
+</body>
+</html>

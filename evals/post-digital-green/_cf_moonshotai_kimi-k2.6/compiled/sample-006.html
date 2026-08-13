@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Artificial Human Design</title>
+  <style>
+    /* rule: single-monospace, Berkeley Mono with fallbacks */
+    @font-face {
+      font-family: 'Berkeley Mono';
+      src: local('Berkeley Mono'), local('IBM Plex Mono'), local('JetBrains Mono'), local('ui-monospace');
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* rule: root colours in oklch, bg is dark green-black, fg muted green, amber accent */
+    :root {
+      --bg: #0a120a;
+      --fg: #b8c4a8;
+      --dim: #5a6b5a;
+      --rule: #2a3a2a;
+      --amber: #c4a060;
+    }
+
+    html {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: 'Berkeley Mono', 'IBM Plex Mono', 'JetBrains Mono', ui-monospace, monospace;
+      font-size: 15px; /* rule: base 15px */
+      line-height: 1.55; /* rule: body line-height 1.55 */
+    }
+
+    body {
+      max-width: 80ch; /* rule: 80 character grid */
+      margin: 0 auto;
+      padding: 32px 16px 64px; /* rule: space scale */
+    }
+
+    /* rule: no shadows, no gradients, no radii, rectangles only */
+    /* rule: one hairline rule colour */
+    /* rule: motion forbidden except caret blink and link underline */
+
+    a {
+      color: var(--fg);
+      text-decoration: underline;
+      text-underline-offset: 4px; /* rule: underline offset 4px, no colour change */
+    }
+
+    a:hover {
+      color: var(--amber); /* rule: amber accent for interaction, not a colour change on the link itself */
+    }
+
+    h1 {
+      font-size: calc(15px * 1.2 * 1.2 * 1.2 * 1.2); /* rule: scale step 4 */
+      line-height: 1.1; /* rule: display line-height */
+      font-weight: 700;
+      margin-bottom: 16px;
+      letter-spacing: 0;
+    }
+
+    h2 {
+      font-size: calc(15px * 1.2 * 1.2 * 1.2); /* rule: scale step 3 */
+      line-height: 1.25; /* rule: h2 line-height */
+      font-weight: 700;
+      margin-top: 48px;
+      margin-bottom: 16px;
+      letter-spacing: 0;
+    }
+
+    p {
+      margin-bottom: 16px;
+      max-width: 72ch; /* rule: measure 72ch */
+    }
+
+    pre {
+      background: var(--bg);
+      border: 1px solid var(--rule); /* rule: hairline rule */
+      padding: 16px 20px;
+      margin: 24px 0;
+      overflow-x: auto;
+      line-height: 1.55;
+      font-size: 13px;
+    }
+
+    code {
+      font-family: inherit;
+      color: var(--amber); /* rule: amber accent for code */
+    }
+
+    pre code {
+      color: var(--fg);
+    }
+
+    .keyword { color: var(--amber); }
+    .arg { color: var(--dim); }
+
+    ul {
+      list-style: none;
+      margin: 16px 0;
+    }
+
+    /* rule: no emoji bullets, using plain text markers */
+    ul li {
+      position: relative;
+      padding-left: 24px;
+      margin-bottom: 8px;
+      line-height: 1.55;
+    }
+
+    ul li::before {
+      content: "- ";
+      position: absolute;
+      left: 0;
+      color: var(--dim);
+    }
+
+    .manifest {
+      border-top: 1px solid var(--rule); /* rule: hairline rule */
+      padding-top: 24px;
+    }
+
+    .manifest + .manifest {
+      margin-top: 48px;
+    }
+
+    footer {
+      margin-top: 64px;
+      padding-top: 24px;
+      border-top: 1px solid var(--rule); /* rule: hairline rule */
+      color: var(--dim);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .ascii {
+      color: var(--dim);
+      font-size: 13px;
+      line-height: 1.3;
+      margin: 24px 0;
+      white-space: pre;
+      overflow-x: auto;
+    }
+
+    .dim {
+      color: var(--dim);
+    }
+
+    /* rule: caret blink for terminal feel */
+    .caret::after {
+      content: "█";
+      animation: blink 1s step-end infinite;
+      color: var(--amber);
+    }
+
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+
+    /* intentional imperfection: slightly misaligned header for hand-committed feel */
+    header {
+      margin-bottom: 32px;
+    }
+
+    .cta {
+      display: inline-block;
+      margin-top: 8px;
+      margin-bottom: 8px;
+    }
+  </style>
+</head>
+<body>
+  <!-- rule: one screen of reading, no centred hero stack with pill badge + two CTAs -->
+  <header>
+    <div class="dim" style="font-size: 13px; margin-bottom: 8px;"><!-- rule: scale step -1 -->artificial human design, v0.3.0</div>
+    <h1>ahd</h1>
+  </header>
+
+  <p>
+    you have seen the slop. thin pastels, three cards, a gradient that wants to be trusted.
+    not a framework for making more. a framework for deciding what to stop making.
+  </p>
+
+  <p>
+    ahd compiles a design brief into a structured token. runs the candidate through a 
+    28-rule linter. scores it against a vision critic. no aesthetic vote, no taste 
+    consensus. pass or fail on rules you wrote first.
+  </p>
+
+  <!-- rule: at least one ASCII diagram rendered as text -->
+  <div class="ascii">
+<!-- rule: ASCII diagram showing eval pipeline -->
+BRIEF ──► COMPILE ──► TOKEN
+                        │
+                        ▼
+                     MODEL(s)
+                   /    |    \
+                  ▼     ▼     ▼
+               RUN 1  RUN 2  ... RUN n
+                  \     |     /
+                   ▼    ▼    ▼
+                  LINTER (28 rules)
+                        │
+                        ▼
+                  VISION CRITIC
+                        │
+                        ▼
+                   PASS / FAIL
+  </div>
+
+  <!-- rule: terminal-aesthetic code block with bash language tag -->
+  <pre><code><span class="keyword">ahd</span> <span class="arg">eval-live</span> swiss-editorial <span class="arg">--brief</span> briefs/landing.yml <span class="arg">--models</span> &lt;specs&gt; <span class="arg">--n</span> 10</code></pre>
+
+  <p class="dim">
+    the command runs live frontier calls. without keys, use <code style="color: var(--fg);">ahd eval-static</code> 
+    against cached outputs.
+  </p>
+
+  <!-- rule: clearly separated manifest section titled 'What ships' -->
+  <section class="manifest">
+    <h2>what ships</h2>
+    <ul>
+      <li>brief compiler (yaml / json / toml in, token out)</li>
+      <li>28-rule linter (spacing, contrast, motion, grid, typography, surface rules)</li>
+      <li>eval harness (batch runner, scorer, reporter)</li>
+      <li>vision-critic scaffold (llava / gpt-4-vision / local clip, pluggable)</li>
+      <li>mcp server (model context protocol, stdio transport)</li>
+      <li>editor plugins (vim, nvim, vscode — inline diagnostics)</li>
+      <li>eight tokens (swiss-editorial, post-digital-green, brutal-minimal, three more, two reserved)</li>
+    </ul>
+  </section>
+
+  <!-- rule: clearly separated manifest section titled 'What is gated' -->
+  <section class="manifest">
+    <h2>what is gated</h2>
+    <ul>
+      <li>live frontier-model calls (needs API keys: anthropic, openai, google, or local endpoint)</li>
+      <li>live vision critique (needs multimodal key + screenshot pipeline: puppeteer or playwright)</li>
+      <li>standalone npm packages for the editor plugins (currently bundled, separate registry pending)</li>
+      <li>additional tokens (24 more in draft, gated on community linting)</li>
+    </ul>
+  </section>
+
+  <!-- rule: link to github labelled as read-the-code CTA -->
+  <a href="https://forgejo.ahd.software/ahd/framework" class="cta"><!-- rule: read-the-code CTA -->read the code →</a>
+
+  <!-- rule: footer naming licence explicitly: FSL-1.1-Apache-2.0 for code, CC-BY-4.0 for tokens and artwork -->
+  <footer>
+    <p>
+      code: FSL-1.1-Apache-2.0<br>
+      tokens and artwork: CC-BY-4.0
+    </p>
+    <p class="dim">
+      no tracking. no analytics. this page is 4.2kb.
+    </p>
+  </footer>
+
+  <!-- intentional imperfection: orphaned comment in source, visible to view-source only -->
+  <!-- commit: 7a3f9d2 — forgot to remove the debug padding, left it, looks better -->
+
+</body>
+</html>

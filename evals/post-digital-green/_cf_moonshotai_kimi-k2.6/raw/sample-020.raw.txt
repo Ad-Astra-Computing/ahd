@@ -1,0 +1,405 @@
+```html
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AHD — Artificial Human Design</title>
+    <style>
+        @font-face {
+            font-family: 'Berkeley Mono';
+            src: local('Berkeley Mono'), local('SF Mono'), local('Menlo'), local('Consolas'), monospace;
+        }
+
+        :root {
+            --bg: #0a0a0a;
+            --bg-raised: #141414;
+            --fg: #e8e6e3;
+            --fg-dim: #8a8580;
+            --fg-faint: #4a4540;
+            --accent: #c4a574;
+            --accent-dim: #8a7a5a;
+            --border: #222;
+            --border-subtle: #1a1a1a;
+            --ok: #7a9a6a;
+            --warn: #c4a574;
+            --error: #b85c5c;
+            --mono: 'Berkeley Mono', 'SF Mono', Menlo, Consolas, monospace;
+            --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root {
+                --bg: #f5f2ee;
+                --bg-raised: #eae7e2;
+                --fg: #1a1a1a;
+                --fg-dim: #5a554e;
+                --fg-faint: #9a958e;
+                --accent: #8a6a3a;
+                --accent-dim: #6a5a3a;
+                --border: #d5d0ca;
+                --border-subtle: #e5e0da;
+                --ok: #4a7a3a;
+                --warn: #8a6a3a;
+                --error: #a54a4a;
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--sans);
+            background: var(--bg);
+            color: var(--fg);
+            line-height: 1.6;
+            font-size: 15px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Header */
+        header {
+            padding: 3rem 1.5rem 0;
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        .sigil {
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--fg-faint);
+            letter-spacing: 0.05em;
+            margin-bottom: 1.5rem;
+        }
+
+        .sigil span {
+            color: var(--accent);
+        }
+
+        h1 {
+            font-family: var(--mono);
+            font-size: clamp(22px, 4vw, 28px);
+            font-weight: 400;
+            line-height: 1.3;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.01em;
+        }
+
+        .lead {
+            color: var(--fg-dim);
+            font-size: 16px;
+            line-height: 1.7;
+            max-width: 640px;
+        }
+
+        .lead p + p {
+            margin-top: 1rem;
+        }
+
+        /* Terminal */
+        .terminal {
+            margin: 2.5rem auto 0;
+            max-width: 720px;
+            padding: 0 1.5rem;
+        }
+
+        pre.terminal-window {
+            background: var(--bg-raised);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 1.25rem;
+            overflow-x: auto;
+        }
+
+        code {
+            font-family: var(--mono);
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .language-tag {
+            display: inline-block;
+            font-family: var(--mono);
+            font-size: 10px;
+            color: var(--fg-faint);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.75rem;
+        }
+
+        .prompt {
+            color: var(--fg-faint);
+        }
+
+        .cmd-arg {
+            color: var(--accent);
+        }
+
+        .cmd-flag {
+            color: var(--fg-dim);
+        }
+
+        .cmd-value {
+            color: var(--ok);
+        }
+
+        .terminal-meta {
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--fg-faint);
+            margin-top: 0.75rem;
+        }
+
+        /* Main */
+        main {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem;
+        }
+
+        /* Manifest */
+        .manifest-section + .manifest-section {
+            margin-top: 3rem;
+        }
+
+        h2 {
+            font-family: var(--mono);
+            font-size: 13px;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--fg-faint);
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .manifest-list {
+            list-style: none;
+        }
+
+        .manifest-list li {
+            padding: 0.6rem 0;
+            display: flex;
+            align-items: baseline;
+            gap: 0.75rem;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .manifest-list li:last-child {
+            border-bottom: none;
+        }
+
+        .status {
+            font-family: var(--mono);
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            flex-shrink: 0;
+            width: 2.5em;
+            text-align: right;
+        }
+
+        .status.ship {
+            color: var(--ok);
+        }
+
+        .status.gate {
+            color: var(--error);
+        }
+
+        .status.prep {
+            color: var(--warn);
+        }
+
+        .item-body {
+            color: var(--fg-dim);
+        }
+
+        .item-name {
+            color: var(--fg);
+            font-weight: 500;
+        }
+
+        .item-note {
+            color: var(--fg-faint);
+            font-size: 13px;
+        }
+
+        /* CTA */
+        .cta-block {
+            margin-top: 3rem;
+            padding: 1.5rem;
+            background: var(--bg-raised);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+        }
+
+        .cta-block p {
+            color: var(--fg-dim);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .cta-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+            font-family: var(--mono);
+            font-size: 13px;
+        }
+
+        /* Footer */
+        footer {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 4rem;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .licence {
+            font-family: var(--mono);
+            font-size: 12px;
+            color: var(--fg-faint);
+            line-height: 1.7;
+        }
+
+        .licence-line {
+            display: block;
+        }
+
+        /* Selection */
+        ::selection {
+            background: var(--accent);
+            color: var(--bg);
+        }
+
+        /* Scrollbar */
+        pre::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        pre::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        pre::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="sigil"><span>~/ahd</span> v0.9.0</div>
+    <h1>A framework for evaluating whether generated interfaces hold up to human standards.</h1>
+    <div class="lead">
+        <p>Every AI-generated site looks plausible at first glance and falls apart on the third click. AHD is a toolchain for running that third click systematically: compile a brief, lint against a fixed rule set, score against a vision model, and keep a record of what failed and why.</p>
+        <p>It is not a component library. It is not a no-code builder. It is a method for turning taste into testable constraints.</p>
+    </div>
+</header>
+
+<div class="terminal">
+    <span class="language-tag">bash</span>
+    <pre class="terminal-window"><code><span class="prompt">$</span> ahd eval-live swiss-editorial \
+  <span class="cmd-flag">--brief</span> <span class="cmd-value">briefs/landing.yml</span> \
+  <span class="cmd-flag">--models</span> <span class="cmd-value">&lt;specs&gt;</span> \
+  <span class="cmd-flag">--n</span> <span class="cmd-value">10</span></code></pre>
+    <div class="terminal-meta">Runs 10 variants against the same brief. Outputs scored JSON + failure traces.</div>
+</div>
+
+<main>
+
+<section class="manifest-section">
+    <h2>What ships</h2>
+    <ul class="manifest-list">
+        <li>
+            <span class="status ship">ok</span>
+            <span class="item-body"><span class="item-name">Brief compiler</span> — YAML/JSON → internal AST with constraint validation</span>
+        </li>
+        <li>
+            <span class="status ship">ok</span>
+            <span class="item-body"><span class="item-name">28-rule linter</span> — spacing, affordance, typography, motion, and color-accessibility checks</span>
+        </li>
+        <li>
+            <span class="status ship">ok</span>
+            <span class="item-body"><span class="item-name">Eval harness</span> — batch runner with deterministic seeding, parallel execution, trace logging</span>
+        </li>
+        <li>
+            <span class="status ship">ok</span>
+            <span class="item-body"><span class="item-name">Vision-critic scaffold</span> — prompt templates and response schemas for multimodal critique; works with local vision models</span>
+        </li>
+        <li>
+            <span class="status ship">ok</span>
+            <span class="item-body"><span class="item-name">MCP server</span> — Model Context Protocol server for IDE integration</span>
+        </li>
+        <li>
+            <span class="status prep">prep</span>
+            <span class="item-body"><span class="item-name">Editor plugins</span> — VS Code extension and Neovim Lua module; manual install via repo clone until packaged</span>
+        </li>
+        <li>
+            <span class="status ship">ok</span>
+            <span class="item-body"><span class="item-name">Eight tokens</span> — base set of eval prompts and scoring rubrics, versioned, auditable</span>
+        </li>
+    </ul>
+</section>
+
+<section class="manifest-section">
+    <h2>What is gated</h2>
+    <ul class="manifest-list">
+        <li>
+            <span class="status gate">key</span>
+            <span class="item-body"><span class="item-name">Live frontier-model calls</span> <span class="item-note">Requires own API keys for GPT-4, Claude, Gemini, etc.</span></span>
+        </li>
+        <li>
+            <span class="status gate">cfg</span>
+            <span class="item-body"><span class="item-name">Live vision critique</span> <span class="item-note">Requires multimodal key + headless browser or screenshot pipeline setup</span></span>
+        </li>
+        <li>
+            <span class="status gate">pkg</span>
+            <span class="item-body"><span class="item-name">Standalone npm packages for editor plugins</span> <span class="item-note">Registry publishing gated on CI and signing infrastructure</span></span>
+        </li>
+        <li>
+            <span class="status gate">tmpl</span>
+            <span class="item-body"><span class="item-name">Additional tokens</span> <span class="item-note">Domain-specific eval templates: e-commerce, dashboards, reading interfaces; needs curation cycle</span></span>
+        </li>
+    </ul>
+</section>
+
+<div class="cta-block">
+    <p>The source is the documentation. The tests are the spec. The tokens are versioned artefacts with provenance.</p>
+    <a href="https://github.com/artificial-human-design/ahd" class="cta-link">
+        read-the-code →
+    </a>
+</div>
+
+</main>
+
+<footer>
+    <p class="licence">
+        <span class="licence-line">Code: FSL-1.1-Apache-2.0</span>
+        <span class="licence-line">Tokens and artwork: CC-BY-4.0</span>
+    </p>
+</footer>
+
+</body>
+</html>
+```

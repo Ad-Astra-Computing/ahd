@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AHD — Artificial Human Design</title>
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --surface: #141414;
+            --raised: #1a1a1a;
+            --text: #c4c4c4;
+            --text-dim: #6b6b6b;
+            --text-bright: #e8e8e8;
+            --accent: #3d8f58;
+            --accent-dim: #2a6340;
+            --border: #222;
+            --code-bg: #0d1117;
+            --warning: #b8860b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.65;
+            font-size: 15px;
+            min-height: 100vh;
+        }
+
+        main {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 80px 24px 48px;
+        }
+
+        header {
+            margin-bottom: 48px;
+        }
+
+        h1 {
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--text-bright);
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+        }
+
+        .lede {
+            font-size: 16px;
+            line-height: 1.7;
+            color: var(--text);
+            max-width: 600px;
+        }
+
+        .lede p + p {
+            margin-top: 16px;
+        }
+
+        .code-section {
+            margin: 40px 0;
+        }
+
+        .code-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-dim);
+            margin-bottom: 12px;
+        }
+
+        pre {
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 20px 24px;
+            overflow-x: auto;
+            font-family: "SF Mono", Monaco, "Cascadia Code", "Fira Code", Consolas, monospace;
+            font-size: 13px;
+            line-height: 1.6;
+            color: #e6edf3;
+        }
+
+        code {
+            font-family: inherit;
+        }
+
+        .comment {
+            color: #6e7681;
+        }
+
+        .keyword {
+            color: #ff7b72;
+        }
+
+        .string {
+            color: #a5d6ff;
+        }
+
+        .flag {
+            color: #d2a8ff;
+        }
+
+        .manifest {
+            margin: 48px 0;
+        }
+
+        .manifest h2 {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--text-dim);
+            font-weight: 500;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .manifest ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .manifest li {
+            position: relative;
+            padding-left: 16px;
+            margin-bottom: 10px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .manifest li::before {
+            content: "—";
+            position: absolute;
+            left: 0;
+            color: var(--text-dim);
+        }
+
+        .ships li::before {
+            color: var(--accent-dim);
+        }
+
+        .gated li::before {
+            color: var(--warning);
+        }
+
+        .gated {
+            margin-top: 40px;
+        }
+
+        .gated h2 {
+            color: var(--warning);
+            border-bottom-color: #2a2610;
+        }
+
+        .meta {
+            color: var(--text-dim);
+            font-size: 13px;
+        }
+
+        .cta {
+            margin: 40px 0 0;
+            padding-top: 32px;
+            border-top: 1px solid var(--border);
+        }
+
+        .cta a {
+            color: var(--text-bright);
+            text-decoration: none;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.15s;
+        }
+
+        .cta a:hover {
+            color: var(--accent);
+        }
+
+        .cta a::after {
+            content: "→";
+            color: var(--text-dim);
+            font-size: 13px;
+            transition: color 0.15s;
+        }
+
+        .cta a:hover::after {
+            color: var(--accent);
+        }
+
+        footer {
+            margin-top: 64px;
+            padding-top: 32px;
+            border-top: 1px solid var(--border);
+            font-size: 12px;
+            color: var(--text-dim);
+            line-height: 2;
+        }
+
+        footer a {
+            color: var(--text-dim);
+            text-decoration: underline;
+            text-decoration-color: var(--border);
+        }
+
+        footer a:hover {
+            color: var(--text);
+        }
+
+        .licence {
+            margin-top: 16px;
+        }
+
+        .licence dt {
+            display: inline;
+            color: var(--text);
+        }
+
+        .licence dd {
+            display: inline;
+            margin-left: 4px;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <header>
+            <h1>Artificial Human Design</h1>
+            <div class="lede">
+                <p>Most AI-generated interfaces look alike because the tools optimize for speed, not judgment. AHD is a framework for evaluating design output against explicit, versioned criteria—before it ships.</p>
+                <p>It is built for teams who already know the problem and need a system, not a sermon.</p>
+            </div>
+        </header>
+
+        <section class="code-section">
+            <div class="code-label">Run the evaluation</div>
+            <pre><code><span class="keyword">ahd</span> <span class="flag">eval-live</span> swiss-editorial \
+  <span class="flag">--brief</span> <span class="string">briefs/landing.yml</span> \
+  <span class="flag">--models</span> &lt;specs&gt; \
+  <span class="flag">--n</span> <span class="string">10</span></code></pre>
+        </section>
+
+        <section class="manifest ships">
+            <h2>What ships</h2>
+            <ul>
+                <li>Brief compiler</li>
+                <li>28-rule linter</li>
+                <li>Eval harness</li>
+                <li>Vision-critic scaffold</li>
+                <li>MCP server</li>
+                <li>Editor plugins</li>
+                <li>Eight tokens</li>
+            </ul>
+        </section>
+
+        <section class="manifest gated">
+            <h2>What is gated</h2>
+            <ul>
+                <li>Live frontier-model calls (needs API keys)</li>
+                <li>Live vision critique (needs multimodal key + screenshot pipeline)</li>
+                <li>Standalone npm packages for the editor plugins</li>
+                <li>Additional tokens</li>
+            </ul>
+        </section>
+
+        <div class="cta">
+            <a href="https://github.com/artificial-human-design/ahd">Read the code</a>
+        </div>
+
+        <footer>
+            <dl class="licence">
+                <dt>Code:</dt>
+                <dd>FSL-1.1-Apache-2.0</dd>
+            </dl>
+            <dl class="licence">
+                <dt>Tokens and artwork:</dt>
+                <dd>CC-BY-4.0</dd>
+            </dl>
+        </footer>
+    </main>
+</body>
+</html>

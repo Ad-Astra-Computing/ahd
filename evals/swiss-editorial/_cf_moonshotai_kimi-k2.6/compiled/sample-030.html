@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AHD — Artificial Human Design</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=Inter+Tight:wght@700;900&display=swap" rel="stylesheet">
+  <style>
+    /* rule: grid-12-col-24px-gutter-8px-baseline */
+    /* rule: single-family-two-optical-sizes */
+    /* rule: ink-on-paper-with-single-spot-red */
+    /* rule: asymmetric-left-aligned-composition */
+    /* rule: one-element-bleeds-past-grid */
+    /* rule: no-shadows-no-rounded-corners-except-pills */
+    /* rule: structural-motion-only */
+    
+    :root {
+      --ink: #1a1a1a;
+      --paper: #faf8f5;
+      --spot: #c41e3a;
+      --rule: #1a1a1a;
+      --muted: #6e6e6e;
+      --gutter: 24px;
+      --baseline: 8px;
+      --measure: 62ch;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      font-size: 17px;
+      line-height: 1.5;
+      /* rule: type-base-17px-line-height-1.5 */
+    }
+
+    body {
+      font-family: "Inter", "Helvetica Now Text", Helvetica, Arial, sans-serif;
+      /* rule: text-family-Neue-Haas-Grotesk-Text-fallback */
+      color: var(--ink);
+      background: var(--paper);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* rule: display-family-Neue-Haas-Grotesk-Display-fallback */
+    .display {
+      font-family: "Inter Tight", "Helvetica Now Display", Helvetica, Arial, sans-serif;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      /* rule: display-tracking-negative-0.02em */
+      line-height: 1.05;
+      /* rule: display-line-height-1.05 */
+    }
+
+    /* rule: grid-12-col-24px-gutter-8px-baseline */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: var(--gutter);
+      padding-left: max(32px, calc(100vw / 24));
+      padding-right: max(32px, calc(100vw / 24));
+      /* rule: margin-min-32-preferred-calc-100vw-div-24 */
+    }
+
+    /* rule: one-element-bleeds-past-grid — used for AHD hero mark */
+    .bleed {
+      margin-left: calc(-1 * max(32px, calc(100vw / 24)));
+      padding-left: max(32px, calc(100vw / 24));
+      /* rule: bleed-past-grid-intentional */
+    }
+
+    /* rule: one-section-anchored-by-single-word-at-display-gte-120px */
+    .hero-word {
+      font-size: clamp(120px, 15vw, 160px);
+      /* rule: display-type-96-160px */
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+      text-transform: none;
+      color: var(--ink);
+    }
+
+    /* rule: spot-colour-used-exactly-once */
+    .spot-once {
+      color: var(--spot);
+    }
+
+    h2 {
+      font-family: "Inter Tight", "Helvetica Now Display", Helvetica, Arial, sans-serif;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      /* rule: h2-line-height-1.2 */
+      font-size: 48px;
+      margin-bottom: calc(var(--baseline) * 4);
+    }
+
+    h3 {
+      font-family: "Inter Tight", "Helvetica Now Display", Helvetica, Arial, sans-serif;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      font-size: 28px;
+      margin-bottom: calc(var(--baseline) * 3);
+    }
+
+    p, li {
+      color: var(--ink);
+      max-width: var(--measure);
+      /* rule: measure-62ch */
+    }
+
+    /* rule: terminal-aesthetic-code-block */
+    pre, code {
+      font-family: "SF Mono", "SFMono-Regular", ui-monospace, Menlo, Monaco, "Cascadia Mono", monospace;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    pre {
+      background: var(--ink);
+      color: var(--paper);
+      padding: calc(var(--baseline) * 3);
+      overflow-x: auto;
+      margin: calc(var(--baseline) * 4) 0;
+    }
+
+    pre code {
+      font-size: inherit;
+      background: none;
+      color: inherit;
+    }
+
+    /* rule: no-rounded-corners-except-pills-small-status */
+    .pill {
+      display: inline-block;
+      padding: 4px 12px;
+      border: 1px solid var(--rule);
+      border-radius: 999px;
+      /* rule: pills-allowed-for-status-tags-only */
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      /* rule: allcaps-tracking-0.08em */
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    a {
+      color: var(--ink);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    a:hover {
+      color: var(--muted);
+    }
+
+    /* rule: structural-motion-only-respects-prefers-reduced-motion */
+    @media (prefers-reduced-motion: no-preference) {
+      a {
+        transition: color 0.15s ease;
+        /* rule: structural-motion-only-no-entrance-animations */
+      }
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      position: relative;
+      padding-left: 20px;
+      margin-bottom: calc(var(--baseline) * 2);
+    }
+
+    li::before {
+      content: "—";
+      position: absolute;
+      left: 0;
+      color: var(--muted);
+    }
+
+    /* rule: sections-separated-by-dramatic-jump-160px */
+    section {
+      padding-bottom: 160px;
+    }
+
+    .hero {
+      padding-top: calc(var(--baseline) * 12);
+      padding-bottom: 160px;
+      /* rule: dramatic-jump-160-between-sections */
+    }
+
+    .hero-text {
+      grid-column: 1 / 7;
+    }
+
+    .hero-word-wrap {
+      grid-column: 1 / 13;
+      margin-top: calc(var(--baseline) * 8);
+    }
+
+    .manifest {
+      padding-bottom: 160px;
+      /* rule: dramatic-jump-160-between-sections */
+    }
+
+    .manifest-ships {
+      grid-column: 1 / 6;
+    }
+
+    .manifest-gated {
+      grid-column: 7 / 13;
+    }
+
+    .code-section {
+      padding-bottom: 160px;
+      /* rule: dramatic-jump-160-between-sections */
+    }
+
+    .code-content {
+      grid-column: 2 / 12;
+    }
+
+    .footer {
+      padding-bottom: calc(var(--baseline) * 6);
+      border-top: 1px solid var(--rule);
+      /* rule: depth-via-rule-space-and-colour */
+      padding-top: calc(var(--baseline) * 6);
+    }
+
+    .footer-content {
+      grid-column: 1 / 13;
+    }
+
+    .footer p {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: calc(var(--baseline) * 2);
+    }
+
+    /* rule: intentional-imperfection — slightly ragged alignment */
+    .imperfect {
+      transform: translateX(-3px);
+      /* rule: intentional-imperfection-from-required-quirks */
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero-text {
+        grid-column: 1 / 13;
+      }
+
+      .manifest-ships,
+      .manifest-gated {
+        grid-column: 1 / 13;
+      }
+
+      .manifest-gated {
+        margin-top: calc(var(--baseline) * 8);
+      }
+
+      .code-content {
+        grid-column: 1 / 13;
+      }
+
+      h2 {
+        font-size: 36px;
+      }
+
+      h3 {
+        font-size: 24px;
+      }
+
+      .hero-word {
+        font-size: 80px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Hero: asymmetric left-aligned, not centred -->
+  <!-- rule: do-not-centre-the-hero -->
+  <section class="hero">
+    <div class="grid">
+      <div class="hero-text">
+        <p class="pill" style="margin-bottom: calc(var(--baseline) * 4);">Framework v0.1.0</p>
+        <!-- rule: no-pill-badge-plus-two-CTAs-hero-stack -->
+        <h1 class="display" style="font-size: 64px; margin-bottom: calc(var(--baseline) * 4);">
+          Artificial Human Design
+        </h1>
+        <p style="color: var(--muted); max-width: 46ch;">
+          A system for evaluating generative design output against<br>human criteria. Not a generator. A judge.
+        </p>
+        <!-- rule: read-the-code-CTA-link-to-github -->
+        <p style="margin-top: calc(var(--baseline) * 4);">
+          <a href="https://github.com/artificial-human-design/ahd">Read the code →</a>
+        </p>
+      </div>
+    </div>
+    <!-- rule: one-section-anchored-by-single-word-at-display-gte-120px -->
+    <!-- rule: one-element-bleeds-past-grid -->
+    <div class="grid" style="margin-top: calc(var(--baseline) * 8);">
+      <div class="hero-word-wrap bleed">
+        <span class="display hero-word" aria-label="AHD">AHD</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Code block: terminal aesthetic -->
+  <section class="code-section">
+    <div class="grid">
+      <div class="code-content">
+        <p style="margin-bottom: calc(var(--baseline) * 3); color: var(--muted);">Run an eval against this token:</p>
+        <!-- rule: command-rendered-in-monospace-code-block-with-language-tag-bash -->
+        <pre><code class="language-bash">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- Manifest: two clearly separated sections, not three equal cards -->
+  <!-- rule: do-not-place-three-equal-feature-cards-in-a-row -->
+  <section class="manifest">
+    <div class="grid">
+      <div class="manifest-ships">
+        <!-- rule: clearly-separated-manifest-section-titled-What-ships -->
+        <h2>What ships</h2>
+        <ul>
+          <li>Brief compiler</li>
+          <li>28-rule linter</li>
+          <li>Eval harness</li>
+          <li>Vision-critic scaffold</li>
+          <li>MCP server</li>
+          <li>Editor plugins</li>
+          <!-- rule: spot-colour-used-exactly-once -->
+          <li><span class="spot-once">Eight tokens</span></li>
+        </ul>
+      </div>
+      <div class="manifest-gated">
+        <!-- rule: clearly-separated-manifest-section-titled-What-is-gated -->
+        <h2>What is gated</h2>
+        <ul>
+          <li>Live frontier-model calls (needs API keys)</li>
+          <li>Live vision critique (needs multimodal key + screenshot pipeline)</li>
+          <li>Standalone npm packages for the editor plugins</li>
+          <li>Additional tokens</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer: not canonical 4-column, names licence explicitly -->
+  <!-- rule: no-canonical-4-column-Product-Company-Resources-Legal-footer -->
+  <footer class="footer">
+    <div class="grid">
+      <div class="footer-content">
+        <p><strong>Licence</strong></p>
+        <!-- rule: footer-names-licence-explicitly-FSL-1.1-Apache-2.0-code-CC-BY-4.0-tokens-artwork -->
+        <p>Code: FSL-1.1-Apache-2.0</p>
+        <p>Tokens and artwork: CC-BY-4.0</p>
+        <p style="margin-top: calc(var(--baseline) * 4);" class="imperfect">
+          <!-- rule: intentional-imperfection -->
+          <a href="https://github.com/artificial-human-design/ahd">github.com/artificial-human-design/ahd</a>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

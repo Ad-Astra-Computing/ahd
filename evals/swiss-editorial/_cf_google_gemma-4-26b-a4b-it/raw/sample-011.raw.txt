@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AHD — Artificial Human Design</title>
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --surface: #141414;
+            --border: #262626;
+            --text: #e5e5e5;
+            --text-muted: #a1a1aa;
+            --accent: #ffffff;
+            --code-bg: #000000;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 80px 24px;
+        }
+
+        header {
+            margin-bottom: 64px;
+        }
+
+        .brand {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            font-weight: 600;
+            font-size: 0.875rem;
+            letter-spacing: -0.025em;
+            color: var(--text-muted);
+        }
+
+        h1 {
+            font-size: 2.25rem;
+            font-weight: 500;
+            letter-spacing: -0.04em;
+            line-height: 1.1;
+            margin-bottom: 24px;
+        }
+
+        p.subhead {
+            font-size: 1.125rem;
+            color: var(--text-muted);
+            margin-bottom: 48px;
+        }
+
+        .terminal-container {
+            margin-bottom: 64px;
+        }
+
+        pre {
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 20px;
+            overflow-x: auto;
+        }
+
+        code {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            font-size: 0.875rem;
+            color: #d1d5db;
+        }
+
+        .bash-command {
+            color: #4ade80;
+        }
+
+        .manifest-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            margin-bottom: 64px;
+            border-top: 1px solid var(--border);
+            padding-top: 48px;
+        }
+
+        @media (max-width: 640px) {
+            .manifest-section {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+            h1 { font-size: 1.75rem; }
+        }
+
+        h2 {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        li {
+            font-size: 0.875rem;
+            color: var(--text);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        li::before {
+            content: "—";
+            margin-right: 12px;
+            color: var(--border);
+        }
+
+        .gated-note {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+            display: block;
+        }
+
+        .cta-container {
+            margin-bottom: 80px;
+        }
+
+        .link-primary {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            border-bottom: 1px solid var(--accent);
+            padding-bottom: 2px;
+        }
+
+        .link-primary:hover {
+            color: var(--text-muted);
+            border-color: var(--text-muted);
+        }
+
+        footer {
+            margin-top: auto;
+            padding: 40px 24px;
+            border-top: 1px solid var(--border);
+        }
+
+        .license-info {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="brand">AHD // Artificial Human Design</div>
+    </header>
+
+    <main>
+        <section>
+            <h1>Rigorous evaluation for high-fidelity automated design.</h1>
+            <p class="subhead">Moving beyond probabilistic layout slop through deterministic frameworks.</p>
+        </section>
+
+        <section class="terminal-container">
+            <pre><code class="language-bash"><span class="bash-command">ahd eval-live swiss-editorial --brief briefs/landing.yml --models &lt;specs&gt; --n 10</span></code></pre>
+        </section>
+
+        <section class="manifest-section">
+            <div>
+                <h2>What ships</h2>
+                <ul>
+                    <li>brief compiler</li>
+                    <li>28-rule linter</li>
+                    <li>eval harness</li>
+                    <li>vision-critic scaffold</li>
+                    <li>MCP server</li>
+                    <li>editor plugins</li>
+                    <li>eight tokens</li>
+                </ul>
+            </div>
+            <div>
+                <h2>What is gated</h2>
+                <ul>
+                    <li>live frontier-model calls <span class="gated-note">(needs API keys)</span></li>
+                    <li>live vision critique <span class="gated-note">(needs multimodal key + screenshot pipeline)</span></li>
+                    <li>standalone npm packages for the editor plugins</li>
+                    <li>additional tokens</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="cta-container">
+            <a href="https://github.com/ahd-design" class="link-primary">read-the-code</a>
+        </section>
+    </main>
+</div>
+
+<footer>
+    <div class="container" style="padding: 0;">
+        <div class="license-info">
+            FSL-1.1-Apache-2.0 for code. CC-BY-4.0 for tokens and artwork.
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>
