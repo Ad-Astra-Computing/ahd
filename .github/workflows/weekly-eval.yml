@@ -80,7 +80,13 @@ jobs:
           # workflow is intentionally explicit rather than auto-discovered
           # so a model-registry change on CF's side doesn't silently
           # change what we measure.
-          OUT_DIR="evals"
+          # Write samples somewhere the repository does not track. evals/
+          # now holds the committed corpora behind published reports, and
+          # eval-live aggregates every model it finds in its output
+          # directory: pointing at evals/ made the April roster reappear
+          # in weekly reports as cells that were never run.
+          OUT_DIR="$RUNNER_TEMP/weekly-samples"
+          mkdir -p "$OUT_DIR"
           REPORT_DATE=$(date -u +%Y-%m-%d)
           REPORT_PATH="docs/evals/weekly/${REPORT_DATE}.md"
           mkdir -p docs/evals/weekly
