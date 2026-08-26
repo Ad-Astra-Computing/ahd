@@ -85,8 +85,7 @@ jobs:
           # eval-live aggregates every model it finds in its output
           # directory: pointing at evals/ made the April roster reappear
           # in weekly reports as cells that were never run.
-          OUT_DIR="$RUNNER_TEMP/weekly-samples"
-          mkdir -p "$OUT_DIR"
+          OUT_DIR="$(mktemp -d "$RUNNER_TEMP/weekly-samples.XXXXXX")"
           REPORT_DATE=$(date -u +%Y-%m-%d)
           REPORT_PATH="docs/evals/weekly/${REPORT_DATE}.md"
           mkdir -p docs/evals/weekly

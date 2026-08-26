@@ -113,14 +113,22 @@ jobs:
             MODELS="cf:@cf/google/gemma-4-26b-a4b-it,cf:@cf/meta/llama-4-scout-17b-16e-instruct,cf:@cf/mistralai/mistral-small-3.1-24b-instruct,cf:@cf/openai/gpt-oss-120b,cf:@cf/qwen/qwen3-30b-a3b-fp8"
             N=30
           fi
+          # Write samples somewhere the repository does not track. evals/
+          # holds the committed corpora behind published reports, and
+          # eval-live aggregates every model it finds in its output
+          # directory, so pointing at evals/ reports the April roster as
+          # though it had run. The critique step reads the same
+          # directory, so it is exported rather than recomputed.
+          SAMPLE_DIR="$(mktemp -d "$RUNNER_TEMP/monthly-samples.XXXXXX")"
           node ./bin/ahd.js eval-live swiss-editorial \
             --brief briefs/landing.yml \
             --models "$MODELS" \
             --n "$N" \
             --sample-concurrency 6 \
-            --out evals \
+            --out "$SAMPLE_DIR" \
             --report "docs/evals/monthly/${REPORT_DATE}-source.md"
           echo "REPORT_DATE=$REPORT_DATE" >> "$GITHUB_ENV"
+          echo "SAMPLE_DIR=$SAMPLE_DIR" >> "$GITHUB_ENV"
 
       - name: Run vision critique (Anthropic, Haiku default)
         env:
@@ -133,7 +141,7 @@ jobs:
           # without a subscription session. Haiku is the default
           # critic model (lowest cost at reasonable fidelity).
           node ./bin/ahd.js critique swiss-editorial \
-            --samples evals \
+            --samples "${{ env.SAMPLE_DIR }}" \
             --critic anthropic \
             --out critiques \
             --report "docs/evals/monthly/${{ env.REPORT_DATE }}-vision.md"
