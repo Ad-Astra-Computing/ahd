@@ -53,6 +53,12 @@ export interface EvalReport {
 }
 
 export interface RunManifest {
+  /**
+   * Canonical ids present in the merged manifest that were not measured
+   * by the invocation that wrote this report. Present only when the
+   * output directory already held results.
+   */
+  carriedForward?: string[];
   token: string;
   briefPath: string;
   n: number;

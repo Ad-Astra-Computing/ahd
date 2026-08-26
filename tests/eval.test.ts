@@ -126,3 +126,85 @@ describe("eval runner · honest accounting", () => {
     expect(text).toContain("Caveats");
   });
 });
+
+describe("carried-forward cells", () => {
+  // eval-live merges its manifest with whatever it finds in the output
+  // directory, so one model can be run at a time and accumulated into a
+  // run. That is deliberate. What is not acceptable is doing it
+  // silently: the 17 and 24 August 2026 weekly reports listed ten cells
+  // when five ran, and nothing in the report said so. A carried-forward
+  // cell must be visible in the artifact that quotes its figures.
+  it("marks cells that were not measured by the invocation", () => {
+    const report = formatEvalReport({
+      token: "swiss-editorial",
+      cells: [],
+      deltas: [],
+      perTellFrequency: {},
+      caveats: [],
+      runManifest: {
+        carriedForward: ["claude-opus-4-7"],
+        token: "swiss-editorial",
+        briefPath: "briefs/landing.yml",
+        n: 30,
+        maxTokens: 12000,
+        runAt: "2026-08-26T00:00:00.000Z",
+        models: [
+          {
+            spec: "cf:@cf/openai/gpt-oss-120b",
+            canonicalId: "@cf/openai/gpt-oss-120b",
+            sanitizedId: "_cf_openai_gpt-oss-120b",
+            provider: "cloudflare-workers-ai",
+          },
+          {
+            spec: "claude-code:claude-opus-4-7",
+            canonicalId: "claude-opus-4-7",
+            sanitizedId: "claude-opus-4-7",
+            provider: "claude-code-cli",
+          },
+        ],
+      },
+    } as never);
+
+    expect(report).toContain("**not run in this invocation**");
+    expect(report).toContain("carried forward from an earlier run");
+    // The cell that did run must not be marked.
+    const gptLine = report.split("\n").find((l) => l.includes("gpt-oss-120b"));
+    expect(gptLine).not.toContain("not run in this invocation");
+  });
+});
+
+describe("unmanifested sample directories", () => {
+  // loadCells aggregates every directory under the samples root and
+  // falls back to the directory name when there is no manifest entry.
+  // A stray directory therefore reached the results table with no roster
+  // entry, no marker and no warning: the same failure as a
+  // carried-forward cell, and harder to spot. This exercises
+  // runLiveEval, not the formatter, because the classification is what
+  // broke.
+  it("marks a model directory that has no manifest entry", async () => {
+    const { runLiveEval } = await import("../src/eval/live.js");
+    const dir = await mkdtemp(join(tmpdir(), "ahd-stray-"));
+    const token = "swiss-editorial";
+    for (const cond of ["raw", "compiled"]) {
+      await mkdir(join(dir, token, "ghost-model", cond), { recursive: true });
+      await writeFile(
+        join(dir, token, "ghost-model", cond, "sample-001.html"),
+        "<!doctype html><html><head><title>x</title></head><body><main><h1>S</h1><p>body</p></main></body></html>",
+      );
+    }
+
+    const report = await runLiveEval({
+      tokensDir: resolve(__dirname, "..", "tokens"),
+      token,
+      briefPath: "briefs/landing.yml",
+      models: ["mock-swiss"],
+      n: 1,
+      outDir: dir,
+    } as never);
+
+    expect(report.runManifest.carriedForward).toContain("ghost-model");
+    const roster = report.runManifest.models.map((m) => m.canonicalId);
+    expect(roster).toContain("ghost-model");
+    expect(formatEvalReport(report)).toContain("not run in this invocation");
+  });
+});

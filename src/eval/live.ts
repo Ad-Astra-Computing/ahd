@@ -154,7 +154,45 @@ export async function runLiveEval(opts: LiveEvalOptions): Promise<EvalReport> {
   );
   const mergedModels = [...keepFromPrevious, ...manifestModels];
 
+  // A carried-forward cell is a real feature (run one model at a time,
+  // accumulate a run) and a real hazard: the report cannot otherwise be
+  // told apart from one where every cell ran. Mark them, and say so
+  // loudly at the point of generation, because the alternative is
+  // discovering it in a published table weeks later.
+  // A directory with no manifest entry at all is still aggregated by
+  // loadCells, which falls back to the directory name as the canonical
+  // id. Such a cell would otherwise appear in the results table with no
+  // roster entry, no marker and no warning, which is the same failure
+  // as a carried-forward cell but harder to notice.
+  const onDisk = (await readdir(samplesRoot, { withFileTypes: true }).catch(() => []))
+    .filter((d) => d.isDirectory())
+    .map((d) => d.name);
+  const unmanifested = onDisk.filter(
+    (name) => !mergedModels.some((m) => m.sanitizedId === name),
+  );
+  for (const name of unmanifested) {
+    mergedModels.push({
+      spec: "(unknown)",
+      canonicalId: name,
+      sanitizedId: name,
+      provider: "found on disk, no manifest entry",
+    });
+  }
+
+  const carriedForward = [
+    ...keepFromPrevious.map((m) => m.canonicalId),
+    ...unmanifested,
+  ];
+  if (carriedForward.length > 0) {
+    console.warn(
+      `warning: ${carriedForward.length} cell(s) carried forward from a previous run in ` +
+        `${samplesRoot} and were not measured now: ${carriedForward.join(", ")}. ` +
+        `Use a clean output directory if this was not intended.`,
+    );
+  }
+
   const runManifest: RunManifest = {
+    carriedForward: carriedForward.length > 0 ? carriedForward : undefined,
     token: opts.token,
     briefPath: opts.briefPath,
     n: opts.n,
