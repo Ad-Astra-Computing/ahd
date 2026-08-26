@@ -1,4 +1,4 @@
-import { mkdir, writeFile, readFile, readdir } from "node:fs/promises";
+import { mkdir, writeFile, readFile, readdir, rm } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { runnerFromSpec } from "./runners/index.js";
@@ -79,6 +79,7 @@ export async function runLiveEval(opts: LiveEvalOptions): Promise<EvalReport> {
   // Keyed by canonicalId because the spec→canonical mapping is set
   // once per runner; populated by ModelRunnerOutput.requestId.
   const requestIdsByModel = new Map<string, string[]>();
+  let clearedSamples = 0;
 
   for (const spec of opts.models) {
     const runner = await runnerFromSpec(spec);
@@ -99,6 +100,25 @@ export async function runLiveEval(opts: LiveEvalOptions): Promise<EvalReport> {
     for (const condition of ["raw", "compiled"] as const) {
       const condDir = join(modelDir, condition);
       await mkdir(condDir, { recursive: true });
+
+      // Replace this cell's samples rather than writing over them.
+      // Without this, dropping --n leaves the tail of a larger previous
+      // run in place, and a sample that failed last time but succeeded
+      // now keeps its .error.txt beside the new .html, so the same
+      // sample is counted as both errored and scored. Carry-forward is
+      // a per-model decision: a model being re-run is being replaced.
+      //
+      // Only files this loop writes are removed. Anything else a person
+      // put in the directory is left alone.
+      const stale = (await readdir(condDir).catch(() => [])).filter((f) =>
+        /^sample-\d+\.(html|raw\.txt|error\.txt)$/.test(f),
+      );
+      for (const f of stale) {
+        await rm(join(condDir, f), { force: true });
+      }
+      if (stale.length > 0) {
+        clearedSamples += stale.length;
+      }
 
       const systemPrompt =
         condition === "compiled" ? compiled.prompts.generic : undefined;
@@ -177,6 +197,13 @@ export async function runLiveEval(opts: LiveEvalOptions): Promise<EvalReport> {
       sanitizedId: name,
       provider: "found on disk, no manifest entry",
     });
+  }
+
+  if (clearedSamples > 0) {
+    console.warn(
+      `note: removed ${clearedSamples} sample file(s) from a previous run of the ` +
+        `models measured now. Cells not re-run are untouched.`,
+    );
   }
 
   const carriedForward = [

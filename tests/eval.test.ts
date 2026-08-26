@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { mkdtemp, writeFile, mkdir } from "node:fs/promises";
+import { mkdtemp, writeFile, mkdir, readdir } from "node:fs/promises";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
 import { runEval, formatEvalReport } from "../src/eval/runner.js";
@@ -206,5 +206,50 @@ describe("unmanifested sample directories", () => {
     const roster = report.runManifest.models.map((m) => m.canonicalId);
     expect(roster).toContain("ghost-model");
     expect(formatEvalReport(report)).toContain("not run in this invocation");
+  });
+});
+
+describe("stale samples from a previous run", () => {
+  // Re-running a model replaces its samples. Without this, dropping --n
+  // left the tail of a larger run in place, and a sample that errored
+  // last time but succeeded now kept its .error.txt beside the new
+  // .html, so one sample counted as both errored and scored. Models not
+  // re-run are untouched, which is what makes one-model-at-a-time work.
+  it("replaces samples for a model it re-runs and leaves others alone", async () => {
+    const { runLiveEval } = await import("../src/eval/live.js");
+    const dir = await mkdtemp(join(tmpdir(), "ahd-stale-"));
+    const token = "swiss-editorial";
+    const tokensDir = resolve(__dirname, "..", "tokens");
+    const base = { tokensDir, token, briefPath: "briefs/landing.yml", outDir: dir };
+
+    await runLiveEval({ ...base, models: ["mock-swiss"], n: 3 } as never);
+    const rawDir = join(dir, token, "mock-swiss", "raw");
+    expect((await readdir(rawDir)).filter((f) => f.endsWith(".html"))).toHaveLength(3);
+
+    // A cell that is not re-run must survive the next invocation.
+    await mkdir(join(dir, token, "kept-model", "raw"), { recursive: true });
+    await writeFile(join(dir, token, "kept-model", "raw", "sample-001.html"), "<html></html>");
+    // A stale error beside a sample that will now succeed.
+    await writeFile(join(rawDir, "sample-001.error.txt"), "boom");
+    // Something a person left in the directory. Only files the runner
+    // writes may be removed, so this has to survive.
+    await writeFile(join(rawDir, "notes.md"), "keep me");
+
+    const report = await runLiveEval({ ...base, models: ["mock-swiss"], n: 1 } as never);
+
+    const after = await readdir(rawDir);
+    expect(after.filter((f) => f.endsWith(".html"))).toHaveLength(1);
+    expect(after.filter((f) => f.endsWith(".error.txt"))).toHaveLength(0);
+    expect(after).toContain("notes.md");
+    expect(await readdir(join(dir, token, "kept-model", "raw"))).toContain("sample-001.html");
+
+    // The counts the report publishes must reflect the replacement, not
+    // the union of two invocations.
+    const cell = report.cells.find(
+      (c) => c.model === "mock-swiss" && c.condition === "raw",
+    );
+    expect(cell?.counts.attempted).toBe(1);
+    expect(cell?.counts.scored).toBe(1);
+    expect(cell?.counts.errored).toBe(0);
   });
 });
