@@ -218,8 +218,19 @@ export function formatEvalReport(r: EvalReport): string {
     lines.push(`- Samples per cell: **${r.runManifest.n}**`);
     lines.push(`- Max tokens: ${r.runManifest.maxTokens}`);
     lines.push(`- Models:`);
+    const carried = new Set(r.runManifest.carriedForward ?? []);
     for (const m of r.runManifest.models) {
-      lines.push(`  - \`${m.canonicalId}\` (${m.provider}) · spec \`${m.spec}\``);
+      const mark = carried.has(m.canonicalId) ? " · **not run in this invocation**" : "";
+      lines.push(`  - \`${m.canonicalId}\` (${m.provider}) · spec \`${m.spec}\`${mark}`);
+    }
+    if (carried.size > 0) {
+      lines.push("");
+      lines.push(
+        `> ${carried.size} cell(s) above were carried forward from an earlier run in the ` +
+          `output directory and were not measured by this invocation. Their figures come ` +
+          `from whatever samples were already on disk. Check them against the replay block ` +
+          `before citing them.`,
+      );
     }
     lines.push("");
   }
