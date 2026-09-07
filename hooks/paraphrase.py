@@ -262,10 +262,15 @@ def secrets_in(text: str) -> bool:
     fh.close()
     try:
         proc = subprocess.run(
-            ["gitleaks", "detect", "--no-git", "--source", fh.name, "--redact", "-q"],
+            [
+                "gitleaks", "detect", "--no-git", "--source", fh.name,
+                "--redact", "--no-banner", "--log-level", "error",
+            ],
             capture_output=True,
         )
-        return proc.returncode == 1
+        if proc.returncode in (0, 1):
+            return proc.returncode == 1
+        raise FileNotFoundError("gitleaks usage error")
     except FileNotFoundError:
         return bool(
             re.search(

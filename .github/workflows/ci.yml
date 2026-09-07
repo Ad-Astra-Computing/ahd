@@ -66,3 +66,6 @@ jobs:
 
       - name: Watermark stripper tests
         run: nix develop .#guards --command python3 hooks/test-watermarks.py
+
+      - name: Paraphrase guard tests
+        run: nix develop .#guards --command python3 hooks/test-paraphrase.py
