@@ -41,9 +41,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout (with full history for release-note generation)
-        uses: actions/checkout@v6
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
+          persist-credentials: false
 
       - name: Setup Node (pinned)
         # Pinned to a specific 22.x LTS release so CI reproducibility
@@ -51,10 +52,11 @@ jobs:
         # registry-url is necessary so setup-node writes an .npmrc
         # that points at the public registry; without it, npm publish
         # returns ENEEDAUTH.
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: "22.22.2"
           registry-url: "https://registry.npmjs.org"
+          package-manager-cache: false
 
       - name: Run release gate (install, build, typecheck, test, validate)
         # Composite action defined at .github/actions/gate. Single

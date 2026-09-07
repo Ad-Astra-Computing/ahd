@@ -69,15 +69,16 @@ jobs:
     timeout-minutes: 120
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           # RELEASE_PAT (not GITHUB_TOKEN) so the report PR triggers
           # ci.yml's `test` check; GITHUB_TOKEN-opened PRs don't start
           # workflow runs, leaving the required check pending forever.
           token: ${{ secrets.RELEASE_PAT }}
+          persist-credentials: false
 
       - name: Setup Node (pinned)
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: "22.22.2"
 
@@ -192,6 +193,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.RELEASE_PAT }}
         run: |
+          gh auth setup-git
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
           git add docs/evals/monthly/

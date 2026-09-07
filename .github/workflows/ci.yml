@@ -26,10 +26,12 @@ jobs:
     timeout-minutes: 15
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
       - name: Setup Node (pinned)
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: "22.22.2"
 
@@ -39,3 +41,28 @@ jobs:
         # the same steps and a green tag-release implies a green
         # release. Edits to the gate live in one place.
         uses: ./.github/actions/gate
+
+  guards:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@13d8dd58da0234aa297dedd986986ccb8e7f3e24 # v31.11.1
+
+      - name: Secret scan
+        run: nix develop .#guards --command gitleaks detect --no-banner --redact
+
+      - name: Workflow lint
+        run: nix develop .#guards --command zizmor --min-severity medium .github/workflows
+
+      - name: Skill adapters up to date
+        run: nix develop .#guards --command python3 tools/build-adapters.py --check
+
+      - name: Watermark stripper tests
+        run: nix develop .#guards --command python3 hooks/test-watermarks.py
