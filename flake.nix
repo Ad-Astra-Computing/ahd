@@ -1,5 +1,5 @@
 {
-  description = "AHD — Artificial Human Design: a brief compiler, linter and style-token library that forces LLMs out of design slop.";
+  description = "AHD, Artificial Human Design: a brief compiler, linter and style-token library that forces LLMs out of design slop.";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -46,7 +46,7 @@
           nativeBuildInputs = [ pkgs.makeWrapper ];
 
           meta = with pkgs.lib; {
-            description = "Artificial Human Design — force LLMs out of design slop";
+            description = "Artificial Human Design: force LLMs out of design slop";
             homepage = "https://ahd.adastra.computer";
             license = {
               spdxId = "LicenseRef-FSL-1.1-Apache-2.0";
@@ -87,18 +87,25 @@
           program = "${ahd}/bin/ahd";
         };
 
+        devShells.guards = pkgs.mkShell {
+          buildInputs = [ pkgs.python3 pkgs.gitleaks pkgs.zizmor ];
+        };
+
         devShells.default = pkgs.mkShell {
           buildInputs = [
             nodejs
             pkgs.typescript
             pkgs.prefetch-npm-deps
+            pkgs.python3
+            pkgs.gitleaks
+            pkgs.zizmor
             chromiumPkg
           ];
           shellHook = ''
             # On darwin the playwright-driver chromium path contains a
             # version-dated directory; resolve it at shell entry.
             if [ -z "$AHD_CHROMIUM_PATH" ]; then
-              # `find -L` follows symlinks — the nixpkgs playwright-driver
+              # `find -L` follows symlinks; the nixpkgs playwright-driver
               # links chromium-<rev>/ into the browser out-path rather than
               # placing it inline, and the Chrome-for-Testing binary sits
               # inside an .app bundle (path contains spaces).
@@ -110,7 +117,7 @@
             if [ -n "$AHD_CHROMIUM_PATH" ]; then
               echo "chromium: $AHD_CHROMIUM_PATH"
             else
-              echo "chromium: (not found — \`ahd critique\` will fail. export AHD_CHROMIUM_PATH manually)"
+              echo "chromium: (not found, \`ahd critique\` will fail. export AHD_CHROMIUM_PATH manually)"
             fi
             echo "tip: npm install && npm run build && npm test"
             echo "tip: after editing package-lock.json, regenerate the flake hash with:"

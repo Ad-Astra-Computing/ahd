@@ -1,0 +1,12 @@
+title = "Ad Astra gitleaks config"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Paths that carry example or fixture values, not real secrets"
+paths = [
+  '''(^|/)testdata/''',
+  '''(^|/)fixtures/''',
+  '''\.example$''',
+]

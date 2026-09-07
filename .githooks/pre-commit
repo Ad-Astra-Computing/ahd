@@ -1,15 +1,23 @@
 #!/usr/bin/env bash
 # AHD pre-commit hook.
 #
-# Runs the same checks CI does: typecheck, tests, token validation.
-# Tracked in-repo so every maintainer gets the same gate without
-# installing husky or pre-commit.com. Enable once per clone with:
+# Runs the prose, invisible-character, secret and stray-file guards from
+# hooks/, then the same checks CI does: typecheck, tests, token
+# validation. Tracked in-repo so every maintainer gets the same gate
+# without installing husky or pre-commit.com. Enable once per clone with:
 #
 #   git config core.hooksPath .githooks
 #
 # Skip in emergencies with `git commit --no-verify`, but don't.
 
 set -euo pipefail
+
+HERE=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+GUARDS="$HERE/../hooks"
+"$GUARDS/check-invisible.sh" || exit 1
+"$GUARDS/check-prose.sh" || exit 1
+"$GUARDS/check-secrets.sh" || exit 1
+"$GUARDS/check-stray.sh" || exit 1
 
 # Only check if there are staged changes that could affect correctness.
 # If the only staged paths are pure-markdown docs with no runtime impact,

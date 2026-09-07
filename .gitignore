@@ -2,6 +2,9 @@ node_modules
 dist
 out
 result
+result-*
+.direnv/
+__pycache__/
 # Keep the sample corpora behind published reports. /evals/ itself must
 # not be ignored or git never descends to see the negations. The other
 # runs stay out: they embed absolute paths from the machine that ran them.

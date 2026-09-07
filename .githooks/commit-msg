@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# AHD commit-msg hook. Enable once per clone with:
+#
+#   git config core.hooksPath .githooks
+set -euo pipefail
+HERE=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+exec "$HERE/../hooks/check-commit-msg.sh" "$1"
