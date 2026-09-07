@@ -1,0 +1,156 @@
+[
+  {
+    "name": "codebase-design",
+    "description": "Shared vocabulary for designing deep modules. Use when the shape of an interface or a seam is in question, or when comparing designs.",
+    "invocation": "model",
+    "aliases": [
+      "codebase-design"
+    ],
+    "includes": [],
+    "capabilities": [],
+    "body": "skills/codebase-design/SKILL.md"
+  },
+  {
+    "name": "diagnosing-bugs",
+    "description": "Diagnosis loop for hard bugs and performance regressions. Use when the user says diagnose or debug this, or reports something broken, throwing, failing or slow.",
+    "invocation": "model",
+    "aliases": [
+      "diagnose",
+      "debug"
+    ],
+    "includes": [],
+    "capabilities": [
+      "subagents",
+      "shell",
+      "browser"
+    ],
+    "body": "skills/diagnosing-bugs/SKILL.md"
+  },
+  {
+    "name": "domain-modeling",
+    "description": "Build or sharpen the project's domain model. Use when naming concepts, resolving a fuzzy term or keeping CONTEXT.md and ADRs current as decisions land.",
+    "invocation": "model",
+    "aliases": [
+      "domain-modeling"
+    ],
+    "includes": [],
+    "capabilities": [],
+    "body": "skills/domain-modeling/SKILL.md"
+  },
+  {
+    "name": "grill-me",
+    "description": "A relentless interview to sharpen a plan or design.",
+    "invocation": "user",
+    "aliases": [
+      "grill-me"
+    ],
+    "includes": [
+      "grilling"
+    ],
+    "capabilities": [
+      "subagents"
+    ],
+    "body": "skills/grill-me/SKILL.md"
+  },
+  {
+    "name": "grill-with-docs",
+    "description": "A relentless interview to sharpen a plan or design that also writes the docs, ADRs and glossary, as you go.",
+    "invocation": "user",
+    "aliases": [
+      "grill-with-docs"
+    ],
+    "includes": [
+      "grilling",
+      "domain-modeling"
+    ],
+    "capabilities": [
+      "subagents"
+    ],
+    "body": "skills/grill-with-docs/SKILL.md"
+  },
+  {
+    "name": "grilling",
+    "description": "Grill the user relentlessly about a plan, decision or idea. Use when the user wants to stress-test their thinking or uses a 'grill' trigger.",
+    "invocation": "model",
+    "aliases": [
+      "grill"
+    ],
+    "includes": [],
+    "capabilities": [
+      "subagents"
+    ],
+    "body": "skills/grilling/SKILL.md"
+  },
+  {
+    "name": "improve-codebase-architecture",
+    "description": "Scan a codebase for deepening opportunities, present them as a visual report, then grill through whichever one is chosen.",
+    "invocation": "user",
+    "aliases": [
+      "improve-codebase-architecture"
+    ],
+    "includes": [
+      "codebase-design",
+      "grilling",
+      "domain-modeling"
+    ],
+    "capabilities": [
+      "subagents",
+      "browser"
+    ],
+    "body": "skills/improve-codebase-architecture/SKILL.md"
+  },
+  {
+    "name": "prototype",
+    "description": "Build a throwaway prototype to answer a design question. Use when the user wants to sanity-check a state model or logic, or explore what a UI should look like.",
+    "invocation": "model",
+    "aliases": [
+      "prototype"
+    ],
+    "includes": [],
+    "capabilities": [
+      "browser"
+    ],
+    "body": "skills/prototype/SKILL.md"
+  },
+  {
+    "name": "tdd",
+    "description": "Test-driven development. Use when building a feature or fixing a bug test-first, or when the user mentions red-green-refactor.",
+    "invocation": "model",
+    "aliases": [
+      "tdd"
+    ],
+    "includes": [
+      "codebase-design"
+    ],
+    "capabilities": [],
+    "body": "skills/tdd/SKILL.md"
+  },
+  {
+    "name": "to-tickets",
+    "description": "Break a plan, spec or the current conversation into tracer-bullet tickets, each declaring what blocks it, published to the configured tracker.",
+    "invocation": "user",
+    "aliases": [
+      "to-tickets",
+      "to-issues"
+    ],
+    "includes": [],
+    "capabilities": [],
+    "body": "skills/to-tickets/SKILL.md"
+  },
+  {
+    "name": "triage",
+    "description": "Move issues and external PRs through a small state machine of triage roles, categorise, verify, grill if needed and write agent-ready briefs.",
+    "invocation": "user",
+    "aliases": [
+      "triage"
+    ],
+    "includes": [
+      "grilling",
+      "domain-modeling"
+    ],
+    "capabilities": [
+      "subagents"
+    ],
+    "body": "skills/triage/SKILL.md"
+  }
+]
