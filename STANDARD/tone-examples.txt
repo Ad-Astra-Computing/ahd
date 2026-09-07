@@ -1,0 +1,52 @@
+Tone examples
+
+Plain text on purpose. This file holds anti-examples that contain the
+words we avoid, so the prose guard does not scan it. The rules live in
+STANDARD/00-prose-and-output.md. The tone to match is the tulpa
+foreign-agents guide: https://docs.tulpa.network/guide/foreign-agents/
+
+
+Worked rewrites
+
+1. Before: This PR leverages a robust caching layer to seamlessly
+   optimize throughput across the ingestion pipeline.
+   After: This adds a cache in front of the ingestion pipeline. Repeated
+   requests now skip the database, so ingestion runs faster.
+
+2. Before: The system facilitates enhanced observability by surfacing
+   granular telemetry to relevant stakeholders.
+   After: You can now see per-request timing in the dashboard. Anyone on
+   the team can open it to find slow requests.
+
+3. Before: Utilizing the corpus, the model performs inference to derive
+   salient embeddings.
+   After: The model reads the training text (the corpus) and turns each
+   document into a list of numbers (an embedding) it can compare against
+   others.
+
+4. Before: In the event that authentication fails, the request will be
+   handled by the fallback mechanism.
+   After: If authentication fails, the request is rejected and the
+   caller gets a 401. Nothing reaches the handler.
+
+5. Before: This refactor enables improved extensibility going forward.
+   After: This splits the parser into one function per format, so adding
+   a new format means adding one file instead of editing the whole
+   parser.
+
+
+Jargon that hides meaning
+
+Avoid these, or define them in half a sentence on first use.
+
+- corpus: say "the set of text the model was trained on"
+- leverage: say "use"
+- utilize: say "use"
+- facilitate: say what it actually does
+- observability: name the concrete thing, logs, timing or metrics
+- throughput: say "requests per second" or the real measure
+- inference: say "the model's prediction step"
+- embedding: define, "a list of numbers that stands in for a document"
+- idempotent: define, "running it twice does the same as running once"
+- orchestration: name the coordination that is actually happening
+- pipeline: name the stages

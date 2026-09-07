@@ -1,14 +1,14 @@
 <div align="center">
 
-<img src="docs/artwork/ahd-mark.svg" alt="AHD — Artificial Human Design" width="920">
+<img src="docs/artwork/ahd-mark.svg" alt="AHD, Artificial Human Design" width="920">
 
 </div>
 
 <br>
 
-**AHD is a guardrail and evaluation layer for AI-generated design** — web UI, graphic design, illustration, image generation. Not a generator itself. Four pieces: a named taxonomy of AI design slop that spans web and graphic surfaces, style tokens as promptable design direction, a brief compiler that turns intent into constrained model instructions, and a reproducible eval loop that scores raw vs compiled output against the taxonomy. Positioning in full: [docs/POSITIONING.md](docs/POSITIONING.md).
+AHD is a guardrail and evaluation layer for AI-generated design: web UI, graphic design, illustration and image generation. Not a generator itself. Four pieces: a named taxonomy of AI design slop that spans web and graphic surfaces, style tokens as promptable design direction, a brief compiler that turns intent into constrained model instructions, and a reproducible eval loop that scores raw vs compiled output against the taxonomy. Positioning in full: [docs/POSITIONING.md](docs/POSITIONING.md).
 
-The product's one-line promise: **AHD measures and reduces specific, repeated AI design failures, across web and image generation.** The thirty-nine-tell taxonomy is named, versioned, and linted; per-token forbidden lists and required quirks are enforced in CI; every eval publishes attempted counts, canonical model ids, extraction failures, per-model deltas and negative results. That combination — taxonomy + reproducible scoring — is the moat, not the prompts.
+The product's one-line promise: AHD measures and reduces specific, repeated AI design failures, across web and image generation. The thirty-nine-tell taxonomy is named, versioned, and linted; per-token forbidden lists and required quirks are enforced in CI; every eval publishes attempted counts, canonical model ids, extraction failures, per-model deltas and negative results. That combination, taxonomy plus reproducible scoring, is the moat, not the prompts.
 
 Today's shipped scope covers both verticals. **Web UI end-to-end**: text-to-HTML runners for Claude, GPT, Gemini and OSS models via Cloudflare Workers AI (plus subscription-CLI variants for the frontier three), a thirty-eight-rule source linter (35 HTML/CSS + 3 SVG), a fourteen-rule vision critic, a six-rule mobile-layout audit (`ahd audit-mobile` against a 375px viewport), Playwright screenshots, an MCP server and scoped ESLint / Stylelint plugins. **Image generation end-to-end**: `ahd eval-image` pipeline with a Cloudflare Workers AI image runner (FLUX, SDXL, DreamShaper), four image-specific vision rules added to the critic (malformed anatomy, Midjourney face symmetry, decorative cursive in renders, stock diversity casting), a three-rule SVG source linter (uniform-stroke, palette-bounds, perfect-symmetry) and two image-first tokens (`editorial-illustration`, `ad-creative-collision`). Additional image runners (Replicate, DALL·E 3, Imagen, Firefly) are the remaining adapter work.
 
@@ -49,7 +49,7 @@ The original **21 April 2026 n=5 narrow-roster run** is preserved below as the b
 
 A rendered raw vs compiled pair from the Mistral text run, same brief, same seed:
 
-<img src="docs/artwork/slop-vs-ahd.svg" alt="Mistral Small 3.1, same brief, same seed — raw on the left, AHD-compiled on the right" width="100%">
+<img src="docs/artwork/slop-vs-ahd.svg" alt="Mistral Small 3.1, same brief, same seed, raw on the left, AHD-compiled on the right" width="100%">
 
 ## Image generation works the same way
 
@@ -96,10 +96,10 @@ The result-oriented flow looks like this. Run `ahd compile briefs/your-brief.yml
 
 Pieces of AHD exist. The combination does not.
 
-- **Prompt libraries for AI UI generation** — [uiprompt.io](https://uiprompt.io/), [Promter](https://promter.dev/), GenDesigns, WebGardens. Structured prompts / style recipes for v0, Lovable, Bolt, Claude, Cursor. Overlap: encoded style direction. Divergence: no taxonomy, no eval.
-- **Design-token linting** — [`@lapidist/design-lint`](https://design-lint.lapidist.net/), [`stylelint-design-tokens-plugin`](https://www.npmjs.com/package/stylelint-design-tokens-plugin). Enforce token/component consistency in source. Divergence: AHD's rules target AI-generated slop patterns, not adherence to an internal design system.
-- **Figma / design-system audit** — [DesignLint AI](https://www.designlintai.tech/). Audits Figma files against token rules. Divergence: AHD audits rendered HTML, not design files, and scopes to AI-generated output.
-- **AI UI benchmarks** — [UI Bench](https://ui-bench.dev/). Scores generated HTML on engineering quality (static analysis, axe, Lighthouse, semantics). Divergence: UI Bench rates a page's engineering quality; AHD rates a page's *slop fingerprint* under a paired raw-vs-compiled control.
+- Prompt libraries for AI UI generation: [uiprompt.io](https://uiprompt.io/), [Promter](https://promter.dev/), GenDesigns, WebGardens. Structured prompts / style recipes for v0, Lovable, Bolt, Claude, Cursor. Overlap: encoded style direction. Divergence: no taxonomy, no eval.
+- Design-token linting: [`@lapidist/design-lint`](https://design-lint.lapidist.net/), [`stylelint-design-tokens-plugin`](https://www.npmjs.com/package/stylelint-design-tokens-plugin). Enforce token/component consistency in source. Divergence: AHD's rules target AI-generated slop patterns, not adherence to an internal design system.
+- Figma and design-system audit: [DesignLint AI](https://www.designlintai.tech/). Audits Figma files against token rules. Divergence: AHD audits rendered HTML, not design files, and scopes to AI-generated output.
+- AI UI benchmarks: [UI Bench](https://ui-bench.dev/). Scores generated HTML on engineering quality (static analysis, axe, Lighthouse, semantics). Divergence: UI Bench rates a page's engineering quality; AHD rates a page's *slop fingerprint* under a paired raw-vs-compiled control.
 
 What nobody else ships: a named AI-slop taxonomy + token-driven brief compiler + deterministic linter for the taxonomy + raw-vs-compiled empirical eval, in one reproducible project.
 
