@@ -14,12 +14,21 @@
 TELL_WORDS='delve|dive into|underscore|bolster|foster|unpack|shed light on|pave the way|pivotal|groundbreaking|cutting-edge|transformative|game-changing|seamless|intricate|multifaceted|holistic|testament to|realm of|leverage|boasts|robust suite|elevate|unleash|harness the power|navigate the (complex|landscape)|load-bearing|through-line|production lever|durable win|at its core|meticulous|comprehensive (suite|guide|overview)|innovative|paradigm|deep dive|key insight|crucially|notably,|importantly,|significantly,|that said,|here.s the thing'
 
 # Filler / throat-clearing phrases.
-TELL_PHRASES="it's worth noting|it is worth noting|it's important to note|it is important to note|in today's [a-z-]* ?world|at the end of the day|when it comes to|this is where [a-z]* comes in|let's explore|let's dive|now let's|in conclusion|in summary,|rest assured"
+TELL_PHRASES="it's worth noting|it is worth noting|it's important to note|it is important to note|essentially|serves as|can be found (in|at|under)|in today's ([a-z-]+ ){0,3}(world|landscape|environment|climate|era)|at the end of the day|when it comes to|this is where [a-z]* comes in|let's explore|let's dive|now let's|in conclusion|in summary,|rest assured"
 
+# The same cadence also arrives with a comma and a pronoun in place of the
+# "but", which reads identically and used to pass clean, so it is listed too.
 # Contrast/emphasis cadences the models overuse: the "not just X, but Y" and
 # "it's not X, it's Y" false contrast, and the "no X, no Y, just Z" staccato
 # triple. These are among the most-cited written tells.
-TELL_CONTRAST="not just [a-z ]+, but|isn't just|is not just|isn't about [a-z ]+\. it's about|it's not [a-z ]+, it's|it is not [a-z ]+, it is|no [a-z]+, no [a-z]+, (just|only) "
+TELL_CONTRAST="not just [a-z ]+, but|(do|does|did)(n't| not) just [a-z ]+, (it|you|they|we|i) |isn't just|is not just|isn't about [a-z ]+\. it's about|it's not [a-z ]+, it's|it is not [a-z ]+, it is|no [a-z]+, no [a-z]+, (just|only) "
+
+# Justifying a wording choice by how human it sounds. We do not write to pass
+# as human; we write in the owner's voice, and the reason a word is better is
+# what it means, not who it sounds like. A commit subject on this repo read
+# "'staying in touch' reads human, upkeep did not", which is the machine's
+# framing of its own output rather than an argument about the copy.
+TELL_HUMANNESS="(reads|sounds?|feels?|looks?) (more )?human|human[- ]sounding|sounds? like a (real )?(human|person)|more natural[- ]sounding|less robotic|passes? as human|how a (person|human|reader) would (say|write|put|phrase)|how (you|we|people) would (say|write|put|phrase) it"
 
 # Emphasis and layout tells. These are about SHAPE rather than vocabulary, and
 # they are the ones that got a pull request body past the word lists: bold used
@@ -60,6 +69,25 @@ scan_shape() {
   return $rc
 }
 
+# Advisory patterns. Each is a house rule the reader should hear about, but
+# one whose pattern also matches correct prose, so it warns and never blocks.
+# The serial comma pattern fires on a clause that ends in a short phrase
+# before "and" as well as on a real list; a contraction is a register call.
+ADVISORY_SERIAL="[^ ,]+, [^ ,]+( [^ ,]+){0,3}, (and|or|nor) "
+ADVISORY_CONTRACTION="[[:alpha:]]+['’](t|re|ve|ll|d|m)|(it|that|there|here|what|let)['’]s"
+
+# scan_advisory <text> -> prints one "  <label>: <hits>" line per advisory
+# category, returns 0 if any fired, 1 if clean. Callers print the hits and
+# leave their exit code alone.
+scan_advisory() {
+  local text=$1 hit rc=1
+  hit=$(printf '%s' "$text" | grep -oE "$ADVISORY_SERIAL" | sort -u | tr '\n' ';')
+  [ -n "$hit" ] && { printf '  serial comma: %s\n' "$hit"; rc=0; }
+  hit=$(printf '%s' "$text" | grep -oiE "$ADVISORY_CONTRACTION" | sort -u | tr '\n' ' ')
+  [ -n "$hit" ] && { printf '  contraction: %s\n' "$hit"; rc=0; }
+  return $rc
+}
+
 # scan_tells <text>  -> prints one "  <label>: <hits>" line per category hit,
 # returns 0 if any tell fired, 1 if clean. Caller supplies context.
 scan_tells() {
@@ -81,5 +109,7 @@ scan_tells() {
   [ -n "$hit" ] && { printf '  filler phrase: %s\n' "$hit"; rc=0; }
   hit=$(printf '%s' "$text" | grep -oiE "$TELL_CONTRAST" | sort -u | tr '\n' ' ')
   [ -n "$hit" ] && { printf '  false contrast: %s\n' "$hit"; rc=0; }
+  hit=$(printf '%s' "$text" | grep -oiE "$TELL_HUMANNESS" | sort -u | tr '\n' ' ')
+  [ -n "$hit" ] && { printf '  humanness claim: %s (say what the word means, not who it sounds like)\n' "$hit"; rc=0; }
   return $rc
 }

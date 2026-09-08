@@ -43,6 +43,7 @@ usage() { sed -n '2,17p' "${BASH_SOURCE[0]}" | sed 's/^# \?//'; exit 2; }
 [ $# -eq 0 ] && usage
 
 bad=0
+advised=0
 
 # report <label> <text>
 report() {
@@ -50,6 +51,10 @@ report() {
   if hits=$(scan_tells "$text"); then
     printf '%s:\n%s\n' "$label" "$hits"
     bad=1
+  fi
+  if hits=$(scan_advisory "$text"); then
+    printf '%s (advisory):\n%s\n' "$label" "$hits"
+    advised=1
   fi
 }
 
@@ -82,5 +87,9 @@ if [ "$bad" -ne 0 ]; then
   echo "Rewrite the flagged spans before sending."
   exit 1
 fi
-echo "clean"
+if [ "$advised" -ne 0 ]; then
+  echo "clean, with advisories to review"
+else
+  echo "clean"
+fi
 exit 0

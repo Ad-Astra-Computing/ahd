@@ -86,6 +86,28 @@ AEO is newer and less settled than SEO. Build on the fundamentals above, the
 accurate, well-structured, authoritative content with valid schema, and
 treat the rest as experiments to measure, not requirements.
 
+## A page is not shipped until it can be found
+
+Publishing a page and linking it from the site is half the work. Until it is
+discoverable it is invisible to search, to answer engines and to anyone who
+shares the link. Treat the following as part of shipping the page, not as a
+later pass:
+
+- An entry in the sitemap, and a `lastmod` that is true. Where a build knows
+  the real date, such as from the commit that last changed the content, the
+  build writes it. A hand-kept date drifts and then lies.
+- A `<title>` unique across the site, a `<meta name="description">`, and a
+  `<link rel="canonical">` naming that page and no other.
+- Open Graph and Twitter Card tags, image included, or the first person to
+  share it posts a bare link.
+- Structured data describing what the page actually shows.
+- No `noindex` that was not intended.
+
+Enforce it with a test that walks every built page rather than a checklist
+someone remembers. Ours found four new pages with none of the above, five
+older pages with no preview tags at all, and a sitemap claiming the policies
+last changed two months before they did.
+
 ## Keeping it current
 
 - On every release: no accidental `noindex` or `Disallow` on production, the

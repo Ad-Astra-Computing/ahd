@@ -128,6 +128,27 @@ green proof includes the packaged artifact.
   wrote them and do not prove that two implementations interoperate. Treat
   the end-to-end run as a release gate equal to the unit tests.
 
+## Run the instructions you print
+
+A command shown to a reader is an artifact you publish. A test that runs
+its own version of that command proves nothing about the version on the
+page, and the two drift the moment either one is edited.
+
+- Read the command out of the built page or the published README, not out
+  of the test file, and run it verbatim.
+- Run it in a directory holding only what a reader can obtain. A command
+  that passes in the repo can fail for anyone else, because the repo holds
+  files the reader never receives.
+- Assert on stdout and stderr together. Tools report warnings on stderr, so
+  a test that captures stdout alone goes green while the reader is shown a
+  warning.
+- A warning a reader cannot act on is a defect, not noise. Fix the command
+  until its output is clean.
+
+This covers any instruction published for someone else to run: an install
+line in a README, a verification step in a release note, a curl example in
+documentation.
+
 ## Pre-1.0 dist-tags
 
 For a pre-1.0 npm package, never advance the `latest` dist-tag to a

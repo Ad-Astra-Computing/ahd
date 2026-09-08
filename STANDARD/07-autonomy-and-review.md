@@ -16,6 +16,24 @@ premise that looks wrong, a destructive action you cannot verify or a
 freshness claim you cannot confirm without web access. Never fabricate a
 source-backed claim from training data.
 
+## Do not post in public
+
+Never post to a public or external place without the operator's explicit
+approval. That covers a GitHub Discussion, an issue, a pull request or a
+review comment, a forum, a mailing list, a chat platform, a social account,
+and any tool call, webhook or email that puts words in front of people
+outside our own systems. This is not the "push only when told" rule, which
+is about code. This is about anything published under our name.
+
+Internal Forgejo and local files are not posting: drafting, writing up and
+committing there stay inside our systems and need no approval.
+
+If you believe a public post is genuinely necessary, draft it locally and
+stop for the operator's review and confirmation before it goes out. Silence
+is not approval and a deadline is not approval. The outbound-text guard in
+`hooks/` checks how such prose reads, not whether it was allowed; this rule
+is the permission, and it comes first.
+
 ## Verify before destroying
 
 Verify before deleting anything called a duplicate: check size, mtime

@@ -38,12 +38,14 @@ from __future__ import annotations
 
 import argparse
 import difflib
+from collections import Counter
 import json
 import os
 import re
 import subprocess
 import sys
 import tempfile
+import textwrap
 
 # The prompt, avoid list, model allowlist and caps live in one place,
 # shared/contract.json, so the Worker and this client never drift.
@@ -57,6 +59,8 @@ CF_MODELS = _CONTRACT["models"]
 NEURON_USD = 0.011 / 1000
 MAX_CHARS = _CONTRACT["max_chars"]
 MIN_BLOCK = _CONTRACT["min_block"]
+MAX_TOKENS = _CONTRACT["max_tokens"]
+TEMPERATURE = _CONTRACT["temperature"]
 AVOID = _CONTRACT["avoid"]
 PROMPT = _CONTRACT["prompt"].replace("{avoid}", AVOID)
 MIN_RATIO = _CONTRACT["min_output_ratio"]
@@ -82,6 +86,18 @@ def unmask(text: str, spans: list[str]) -> str:
     for i, span in enumerate(spans):
         text = text.replace(f"MASK_{i}_MASK", span)
     return text
+
+
+_PLACEHOLDER = re.compile(r"MASK_(\d+)_MASK")
+
+
+def placeholders_ok(text: str, n: int) -> bool:
+    """The reword kept every protected span exactly once and in order. Requires
+    the placeholders in the output to read 0, 1, ... n-1 with none missing,
+    duplicated, added or reordered. A protected number, link or command that
+    the reword dropped, doubled or moved is caught here, before unmasking puts
+    the real spans back and hides the damage."""
+    return [int(i) for i in _PLACEHOLDER.findall(text)] == list(range(n))
 
 
 FENCE = re.compile(r"^\s*(?:```|~~~)")
@@ -135,8 +151,8 @@ def call_cf(model: str, text: str, account: str, token: str) -> tuple[str, float
     body = json.dumps(
         {
             "messages": [{"role": "user", "content": PROMPT.replace("{body}", text)}],
-            "max_tokens": 4096,
-            "temperature": 0.4,
+            "max_tokens": MAX_TOKENS,
+            "temperature": TEMPERATURE,
         }
     ).encode()
     data = _run_curl(
@@ -251,27 +267,72 @@ def tells_in(text: str) -> list[str]:
     return [l.strip() for l in proc.stdout.splitlines() if l.strip()]
 
 
+def _by_label(hits: list[str]) -> dict[str, str]:
+    """Index a scan by its category label.
+
+    The scanner joins every hit in a category onto one line, so two scans over
+    different text rarely produce an identical line even when they share a
+    term. Comparing whole lines would call every survivor an introduction and
+    send the reader hunting a regression in the model that is not there.
+    """
+    out: dict[str, str] = {}
+    for hit in hits:
+        label, _, terms = hit.partition(":")
+        out[label] = out.get(label, "") + " " + terms.strip()
+    return out
+
+
+def _carried(hit: str, before: dict[str, str]) -> bool:
+    label, _, terms = hit.partition(":")
+    terms = terms.strip()
+    return bool(terms) and terms in before.get(label, "")
+
+
+def advisories_in(text: str) -> list[str]:
+    """The advisory house rules the text breaks: a serial comma or a
+    contraction. Advisory in the guards, since the patterns also match some
+    correct prose, but a reword that adds one has broken a rule the input
+    kept, so the caller treats an introduced hit as a failed block."""
+    lib = _hook("lib-tells.sh")
+    if not os.path.exists(lib):
+        raise RuntimeError(f"lib-tells.sh missing at {lib}; refusing a clean verdict")
+    proc = subprocess.run(
+        ["bash", "-c", f'. "{lib}"; scan_advisory "$1"', "_", text],
+        capture_output=True,
+        text=True,
+    )
+    if proc.returncode not in (0, 1):
+        raise RuntimeError(f"advisory scan failed: {proc.stderr[:200]}")
+    return [l.strip() for l in proc.stdout.splitlines() if l.strip()]
+
+
 def secrets_in(text: str) -> bool:
-    checker = _hook("check-secrets.sh")
-    if not os.path.exists(checker):
-        return False
-    if not os.path.exists("/usr/bin/env"):
-        return False
+    """True when the text carries a secret. gitleaks when it is installed, a
+    conservative regex otherwise. It never returns False without scanning: a
+    missing scanner must not let a secret leave the machine."""
     fh = tempfile.NamedTemporaryFile("w", delete=False, suffix=".txt")
     fh.write(text)
     fh.close()
     try:
-        proc = subprocess.run(
-            [
-                "gitleaks", "detect", "--no-git", "--source", fh.name,
-                "--redact", "--no-banner", "--log-level", "error",
-            ],
-            capture_output=True,
-        )
-        if proc.returncode in (0, 1):
-            return proc.returncode == 1
-        raise FileNotFoundError("gitleaks usage error")
-    except FileNotFoundError:
+        try:
+            proc = subprocess.run(
+                [
+                    "gitleaks",
+                    "detect",
+                    "--no-git",
+                    "--source",
+                    fh.name,
+                    "--redact",
+                    "--no-banner",
+                    "--log-level",
+                    "error",
+                ],
+                capture_output=True,
+            )
+            if proc.returncode in (0, 1):
+                return proc.returncode == 1
+        except FileNotFoundError:
+            pass
         return bool(
             re.search(
                 r"(?i)(api[_-]?key|secret|password|token)\s*[:=]\s*\S{12,}|"
@@ -307,32 +368,80 @@ def guard(before: str, after: str) -> str:
     length rule on the server; span loss is caught here, after unmasking."""
     if implausible(before, after):
         return before
-    if [d for d in drift(before, after) if "barely changed" not in d]:
+    if drift(before, after):
         return before
     return after
 
 
+def similarity(before: str, after: str) -> float:
+    """Character-level similarity, 1.0 when the reword equals the input. A
+    high value on a clean block means the model left it alone, which is the
+    tool doing its job, so callers report it and never fail on it."""
+    return difflib.SequenceMatcher(None, before, after).ratio()
+
+
+# The pronoun, modal, negation and scope words that carry who is responsible
+# and what is claimed. A reword must leave the count of every one unchanged: a
+# change means the meaning moved, not the wording. "we may cancel" becoming "we
+# will cancel", or "if we claim" becoming "if you claim", each shows up here.
+GUARD_MARKERS = (
+    "i", "me", "my", "mine", "we", "us", "our", "ours",
+    "you", "your", "yours",
+    "may", "might", "must", "shall", "will", "would", "can", "could", "should",
+    "not", "no", "never", "cannot", "none", "neither", "nor",
+    "only", "all", "every", "each", "any", "most", "both", "either",
+)
+
+
+def _marker_counts(text: str) -> dict[str, int]:
+    low = text.lower()
+    counts = {w: len(re.findall(r"\b" + re.escape(w) + r"\b", low)) for w in GUARD_MARKERS}
+    counts["not"] += len(re.findall(r"n't\b", low))
+    return counts
+
+
 def drift(before: str, after: str) -> list[str]:
     issues = []
-    lost = sorted(set(NUMBER.findall(before)) - set(NUMBER.findall(after)))
-    if lost:
-        issues.append("numbers dropped or changed: " + ", ".join(lost[:8]))
+    if Counter(NUMBER.findall(before)) != Counter(NUMBER.findall(after)):
+        issues.append("numbers added, dropped or changed")
     url = re.compile(r"https?://\S+")
-    lost_urls = sorted(set(url.findall(before)) - set(url.findall(after)))
-    if lost_urls:
-        issues.append("urls dropped or changed: " + ", ".join(lost_urls[:5]))
+    if Counter(url.findall(before)) != Counter(url.findall(after)):
+        issues.append("urls added, dropped or changed")
     if META.match(after.strip()):
         issues.append("model returned commentary or a refusal instead of a rewrite")
-    ratio = difflib.SequenceMatcher(None, before, after).ratio()
-    if ratio > 0.95:
-        issues.append(
-            f"barely changed (similarity {ratio:.2f}); watermark likely intact"
-        )
     if len(after) < len(before) * 0.6:
         issues.append(
             f"shrank {len(before)} to {len(after)} chars; content may be missing"
         )
+    before_marks, after_marks = _marker_counts(before), _marker_counts(after)
+    changed = [w for w in GUARD_MARKERS if before_marks[w] != after_marks[w]]
+    if changed:
+        issues.append("person, modality or scope changed: " + ", ".join(changed[:8]))
     return issues
+
+
+LIST_LINE = re.compile(r"^\s*(?:[-*+]|\d+[.)])\s")
+
+
+def rewrap(before: str, after: str) -> str:
+    """Give the reword the input block's line wrapping, so a diff shows the
+    words that changed and not every line. A hard-wrapped input comes back
+    wrapped at its longest line; a single-line input stays one line. A block
+    with list markers is returned as is, since a rewrap would merge items."""
+    lines = before.splitlines()
+    if len(lines) < 2 or any(LIST_LINE.match(l) for l in lines):
+        return after
+    width = max(len(l) for l in lines)
+    first = lines[0][: len(lines[0]) - len(lines[0].lstrip())]
+    rest = lines[1][: len(lines[1]) - len(lines[1].lstrip())]
+    return textwrap.fill(
+        " ".join(after.split()),
+        width=width,
+        initial_indent=first,
+        subsequent_indent=rest,
+        break_long_words=False,
+        break_on_hyphens=False,
+    )
 
 
 def main() -> int:
@@ -352,6 +461,12 @@ def main() -> int:
     if not args.check and not args.send:
         print(
             "paraphrase: pass --check to preview, or --send to transmit to Cloudflare",
+            file=sys.stderr,
+        )
+        return 2
+    if args.model not in CF_MODELS:
+        print(
+            f"paraphrase: model {args.model} is not on the contract allowlist",
             file=sys.stderr,
         )
         return 2
@@ -393,6 +508,7 @@ def main() -> int:
         return call_cf(args.model, text, account, token)
 
     total, failed = 0.0, 0
+    documents = []
     for path, text in sources:
         name = path or "<stdin>"
         blocks = split_blocks(text)
@@ -401,10 +517,11 @@ def main() -> int:
 
         if secrets_in("\n".join(prose)):
             print(
-                f"{name}: possible secret in the text to be sent; refusing",
+                f"{name}: possible secret in the text to be sent; refusing, keeping it unchanged",
                 file=sys.stderr,
             )
             failed = 1
+            documents.append(text)
             continue
         if chars > MAX_CHARS:
             print(
@@ -412,6 +529,7 @@ def main() -> int:
                 file=sys.stderr,
             )
             failed = 1
+            documents.append(text)
             continue
 
         if args.check:
@@ -438,10 +556,25 @@ def main() -> int:
                 continue
             masked, spans = mask(body)
             current = masked
-            for _ in range(args.rounds):
-                current, spent = reword(current)
-                total += spent
-            current = unmask(current, spans)
+            try:
+                for _ in range(args.rounds):
+                    current, spent = reword(current)
+                    total += spent
+            except RuntimeError as exc:
+                print(f"{name}: {exc}; keeping the block as is", file=sys.stderr)
+                failed = 1
+                parts.append(body)
+                continue
+            if not placeholders_ok(current, len(spans)):
+                print(
+                    f"{name}: a protected span was dropped, duplicated or reordered; "
+                    "keeping the block as is",
+                    file=sys.stderr,
+                )
+                failed = 1
+                parts.append(body)
+                continue
+            current = rewrap(body, unmask(current, spans))
             if "MASK_" in current:
                 print(
                     f"{name}: model altered a protected span; keeping the block as is",
@@ -450,23 +583,50 @@ def main() -> int:
                 failed = 1
                 parts.append(body)
                 continue
-            hard = implausible(body, current) or next(
-                (d for d in drift(body, current) if "barely changed" not in d), None
-            )
+            hard = implausible(body, current) or next(iter(drift(body, current)), None)
             if hard:
                 print(f"{name}: {hard}; keeping the block as is", file=sys.stderr)
                 failed = 1
                 parts.append(body)
                 continue
-            for issue in drift(body, current):
-                print(f"{name}: {issue}", file=sys.stderr)
-                failed = 1
+            ratio = similarity(body, current)
+            if ratio > 0.95:
+                print(
+                    f"{name}: block barely changed (similarity {ratio:.2f}); "
+                    "a clean block needs no reword",
+                    file=sys.stderr,
+                )
+            before = _by_label(tells_in(body))
+            introduced = False
             for hit in tells_in(current):
-                print(f"{name}: rewrite introduced {hit}", file=sys.stderr)
+                # A tell the input already carried is one the reword failed to
+                # remove, not one it invented. Both are failures, but only one
+                # of them is the model's doing and the reader has to know which.
+                carried = _carried(hit, before)
+                verb = "carried through" if carried else "introduced"
+                print(f"{name}: rewrite {verb} {hit}", file=sys.stderr)
                 failed = 1
-            parts.append(current + ("\n" if body.endswith("\n") else ""))
-        sys.stdout.write("".join(parts))
+                if not carried:
+                    introduced = True
+            had = _by_label(advisories_in(body))
+            for hit in advisories_in(current):
+                if not _carried(hit, had):
+                    print(f"{name}: rewrite introduced {hit}", file=sys.stderr)
+                    failed = 1
+                    introduced = True
+            # A rewrite that invented a tell or an advisory is worse than the
+            # input, so it never ships: keep the original block. A carried-through
+            # tell leaves the rewrite cleaner than the input, so it still ships.
+            if introduced:
+                parts.append(body)
+            else:
+                parts.append(current + ("\n" if body.endswith("\n") else ""))
+        documents.append("".join(parts))
 
+    # One write, after every source is processed, so a mid-stream failure never
+    # leaves a half-rewritten document on stdout. --check writes nothing.
+    if not args.check:
+        sys.stdout.write("".join(documents))
     if total:
         print(f"paraphrase: ${total:.6f}", file=sys.stderr)
     return failed

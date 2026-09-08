@@ -85,6 +85,52 @@ core, or does it look like a release-notes generator wrote it.
 PR bodies are two or three short plain paragraphs. What broke, what
 changed, what else you found. No headers, no bold, no emoji.
 
+## A public artifact is not a work log
+
+A pull request, an issue, a release note and a commit message are read by
+people who were not in the work. They want what changed and what it means for
+them. The deliberation behind it is not theirs to read, and including it is
+how an artifact starts sounding like notes to yourself.
+
+- Say what broke, what changed and what else you found. Then stop.
+- Cut every part that exists to show your work. An "out of scope" section, a
+  "not addressed" list, a verification narrative, a caveat written for a
+  colleague who already has the context: none of it belongs. Where a decision
+  genuinely affects a reader it is one sentence in the body. Everything else
+  goes to the owner directly.
+- Structure is itself a tell. Headings, bold labels and bullet lists turn a
+  change description into a status report.
+- A finding that is real but out of scope is worth raising. Raise it where it
+  can be acted on, an issue of its own or a message to the owner, not as an
+  aside in an artifact about something else.
+
+The hooks read phrasing, not register, so an artifact that passes the outbound
+check can still read as a work log. Two habits close that gap. Re-read the
+standard for the artifact at the moment you post it rather than trusting your
+memory of it, because the rule you learned last week is not in front of you
+while you are writing. Then read the draft once as its reader rather than its
+author, and cut what only the author needed.
+
+## Public argument prose
+
+A letter, a manifesto or a positioning page argues; it does not describe a
+product. The register differs from documentation and the guards do not catch
+what goes wrong here.
+
+- Argue from the world the reader is heading into, not from what we sell.
+  Our products appear as evidence, late, and briefly.
+- Balance the three appeals deliberately. Ethos is what we have built and
+  can be held to, logos is the argument someone could check, pathos is the
+  stake for a real person. All logos reads as a spec, all pathos as a pitch.
+- Use the vocabulary we use. An agent sends a response, not a reply.
+- Cut the model's rhetorical furniture: a claim built on denying its
+  opposite, a sentence announcing which question is worth asking, a phrase
+  declaring what is no longer the hard part.
+- Sentences the owner wrote stay as written. When editing around them, they
+  are fixed points.
+- Read it aloud before publishing. Anything you would not say in the room
+  comes out.
+
 ## The cleanup stays private
 
 Never name the AI-cleanup concern in a public artifact, and never open a

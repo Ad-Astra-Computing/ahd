@@ -38,47 +38,30 @@ while IFS= read -r f; do
     printf '%s:\n%s\n' "$f" "$hits"
     bad=1
   fi
+  if hits=$(scan_advisory "$added"); then
+    printf '%s (advisory, not blocking):\n%s\n' "$f" "$hits"
+  fi
 done <<< "$staged"
 
 while IFS= read -r f; do
   [ -n "$f" ] || continue
   [ -f "$f" ] || continue
-  comments=$(git diff --cached -U0 -- "$f" | python3 -c '
-import re, sys
-out = []
-for line in sys.stdin:
-    if not line.startswith("+") or line.startswith("+++"):
-        continue
-    m = re.match(r"^\+\s*(?:#+|//+|--+|;+)\s?(.*)$", line.rstrip("\n"))
-    if m:
-        out.append(m.group(1))
-print("\n".join(out))
-')
+  # One scanner does both jobs, so the two can never disagree about what a
+  # comment is. It decides by file type: CSS custom properties and id
+  # selectors are values, not commentary, and used to refuse commits.
+  scan=$(git diff --cached -U0 -- "$f" | python3 "$HERE/comment-scan.py" "$f")
   rc=$?
   if [ "$rc" -ne 0 ]; then
     echo "check-prose: comment scan of $f failed; refusing to report a false pass" >&2
     bad=1
     continue
   fi
-  [ -z "$comments" ] && continue
-  if hits=$(scan_tells "$comments"); then
+  run=$(printf '%s\n' "$scan" | head -1)
+  comments=$(printf '%s\n' "$scan" | tail -n +2)
+  if [ -n "$comments" ] && hits=$(scan_tells "$comments"); then
     printf '%s (comments):\n%s\n' "$f" "$hits"
     bad=1
   fi
-  run=$(git diff --cached -U0 -- "$f" | python3 -c '
-import re, sys
-best = cur = 0
-for line in sys.stdin:
-    if line.startswith("+++") or not line.startswith("+"):
-        cur = 0
-        continue
-    if re.match(r"^\+\s*(?:#+|//+|--+|;+)", line):
-        cur += 1
-        best = max(best, cur)
-    else:
-        cur = 0
-print(best)
-')
   if [ "${run:-0}" -gt 6 ]; then
     printf '%s: %s-line comment block\n' "$f" "$run"
     bad=1

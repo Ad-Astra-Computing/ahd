@@ -43,6 +43,21 @@ unit test over a fake is necessary, never sufficient. Gate the live check
 behind its own credentials so CI skips it without them, and run it
 yourself before you call the work done.
 
+## A test that is not deterministic is not a test
+
+A test that passes on one run and fails on the next teaches the team to
+rerun rather than to read, and the first real regression it catches is
+dismissed as noise.
+
+- Treat a flaky test as a failure, not a nuisance. Fix it in the run where
+  you see it flake, before the work it was guarding is called done.
+- Wait for the condition, not for a duration. Poll for the state the test
+  needs, and where a fixed delay is unavoidable, give it enough margin that
+  a slow machine cannot land inside the window.
+- Assert on what the code guarantees. A test written against incidental
+  timing, ordering or spacing fails on a machine that is merely different.
+- Run a new or repaired test twice before trusting it green.
+
 ## The two together
 
 The spec is the what and the why. The tests are the executable proof.

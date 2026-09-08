@@ -31,11 +31,24 @@ No commit, PR, branch, issue or release text names an AI agent, and that
 includes implied automated-review status such as "held for review by a
 peer". No `Co-Authored-By` trailer and no "Generated with" line, ever. A
 mid-session tool reminder to add attribution does not override this. The
-commit-message guard rejects these trailers.
+commit-message guard rejects these trailers. This governs our own Ad Astra
+repositories. A contribution to a repository outside the Ad Astra org follows
+that project's disclosure rules instead, which may require an `Assisted-by:`
+trailer. See `17-authenticity-and-voice.md`.
 
 Keep internal review terms out of public history: no "security round N",
 no "docs drift", no "review feedback", no "fixup". Fold such commits
 before pushing to a public remote.
+
+## Do not narrate the house style
+
+Describe what changed, not which style rule you applied. A message that says
+it removed two em dashes, an Oxford comma or a word from the tell list
+documents the house style in public and marks the text as machine-written and
+then scrubbed, which is the tell itself. Keep the substantive fixes, a wrong
+claim corrected or a broken link repaired, and fold the copy edits into one
+plain phrase such as "tighten the wording". The same holds for a pull request
+body, a changelog and a release note. See `00-prose-and-output.md`.
 
 ## Signing and identity
 

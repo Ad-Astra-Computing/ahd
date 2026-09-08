@@ -22,10 +22,20 @@ docs point here rather than restating the list.
   reads machine-written.
 - `check-text.sh`: a standalone scanner for drafts that never hit a
   commit, such as an email or an application answer.
-- `lib-tells.sh`: the shared pattern library the scanners source.
+- `lib-tells.sh`: the shared pattern library the scanners source. It
+  also holds the advisory layer, a serial comma and a contraction, which
+  `check-prose.sh` and `check-text.sh` print without changing their exit
+  code, since the patterns also match some correct prose.
+- `comment-scan.py`: decides what counts as a line comment, for both
+  jobs `check-prose.sh` does with comments. It picks markers by file
+  type and requires whitespace after the marker, so a CSS custom
+  property or an id selector is read as a value. Before it, eight
+  `--token:` lines in a `:root` block read as an eight-line comment
+  block and the commit was refused. `test-comment-scan.py` covers it.
 - `strip-watermarks.py`, `paraphrase.py`: helpers for cleaning your own
   text. Paraphrase sends text off the machine only with an explicit
-  flag and a secret scan first.
+  flag and a secret scan first. `test-watermarks.py` and
+  `test-paraphrase.py` cover them; CI runs both.
 
 ## Install
 
@@ -82,12 +92,10 @@ Known improvements, in rough priority order. None block use today.
   hooks-path repair step becomes unnecessary.
 - Add nix-specific stray checks: a committed `result` symlink, a
   `.direnv` directory, or a built store path.
-- Add an advisory jargon check, separate from the hard-block tells, for
-  words that hide meaning in plain writing such as "corpus". Advisory so
-  it warns without crying wolf on a project that uses the word for real.
-  The serial (Oxford) comma belongs in the same advisory layer: a hard
-  block over-fires on a compound sentence, so it stays guidance in the
-  standard and an advisory warning here, not a hard tell.
+- Add the jargon words that hide meaning in plain writing, such as
+  "corpus", to the advisory layer next to the serial comma and the
+  contraction. Advisory so it warns without crying wolf on a project
+  that uses the word for real.
 - Move check-secrets.sh off the deprecated `gitleaks protect --staged`
   to the current invocation, so a future gitleaks bump does not break it.
 

@@ -19,7 +19,8 @@ rule and a file here is the explanation, so fix the explanation.
 - `09-language-and-runtime.md`: choose the runtime first, then the language
 - `10-readme.md`: the README front door, logo block, badges and structure
 - `11-versioning-and-release.md`: SemVer, one verified bump per release,
-  test the packaged artifact, tag every published version
+  test the packaged artifact and the instructions you print, tag every
+  published version
 - `12-legal-and-user-obligations.md`: notify users of policy changes, and
   the day-one legal mechanisms
 - `13-new-project-defaults.md`: the secure settings to enable on a new
@@ -29,6 +30,10 @@ rule and a file here is the explanation, so fix the explanation.
 - `15-seo-and-aeo.md`: found by search and answer engines, kept accurate
 - `16-punctuation-and-grammar.md`: the punctuation and grammar mechanics, so
   simple mistakes stay out of public copy
+- `17-authenticity-and-voice.md`: work that reads as natural human work under
+  our own true identity, kept honest
+- `18-platform-notes.md`: quirks that cost real debugging time, iOS Safari
+  first, recorded so the next project does not pay for them twice
 
 ## Keeping this current
 
