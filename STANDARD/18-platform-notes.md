@@ -36,6 +36,23 @@ not three, and it usually means WebKit.
   response at all. Treat every probe failing with status 0 as one network
   blip and retry once, rather than as several independent outages.
 
+## Cloudflare
+
+- DNSSEC on a zone registered with Cloudflare Registrar sits at `pending` while
+  the registry scans for the CDS and CDNSKEY records the zone publishes, and
+  that scan takes one to two days. The zone API reports `pending` throughout
+  and the registrar record shows an empty `ds_records` list, which reads
+  exactly like a submission that never happened. Check `dig +short DS <zone>`
+  against a public resolver before deciding anything is wrong, and do not reach
+  for the registrar API: it refuses the write to every API token, and the write
+  was never needed.
+- A `_redirects` rewrite whose target ends in `.html` is normalised to the
+  extensionless path and served as a 308, so an SPA rule such as
+  `/* /index.html 200` sends every real route to a redirect rather than
+  rendering the app. This is not specific to `index.html`; a second copy under
+  another name behaves the same way. A Pages Function is the mechanism that
+  sets a status without rewriting.
+
 ## Reduced motion
 
 Honour `prefers-reduced-motion`, and honour it the same way across a site. A

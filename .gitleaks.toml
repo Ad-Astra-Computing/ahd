@@ -3,10 +3,23 @@ title = "Ad Astra gitleaks config"
 [extend]
 useDefault = true
 
-[allowlist]
+[[allowlists]]
 description = "Paths that carry example or fixture values, not real secrets"
 paths = [
   '''(^|/)testdata/''',
   '''(^|/)fixtures/''',
   '''\.example$''',
 ]
+
+[[allowlists]]
+description = "Cache and report keys are sha256 digests of the request, not credentials"
+targetRules = ["generic-api-key"]
+regexTarget = "match"
+regexes = [
+  '''(semantic_key|source_sha|sha256|_hash)"?:? ?"?[0-9a-f]{64}''',
+]
+
+[[allowlists]]
+description = "A fixture bank of secret-shaped strings, there so the detector test has something to detect"
+targetRules = ["slack-bot-token", "aws-access-token", "gcp-api-key", "cloudflare-api-key", "generic-api-key", "github-pat"]
+paths = ['''^hooks/test-paraphrase\.py$''']

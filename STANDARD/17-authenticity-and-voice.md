@@ -91,6 +91,34 @@ we strip vanity attribution. When the work goes into a repository that is not
 ours, the target's disclosure rules win. See also `07-autonomy-and-review.md`
 on not posting in public without approval and `12-legal-and-user-obligations.md`.
 
+## Write to the register of the thing
+
+A status page is a technical document. So is an audit trail, and so is
+an error report. Each reads as one, or it reads as a chat about one.
+Choose the register deliberately and hold it across the whole surface: a
+single casual phrase in an otherwise formal page is the sentence a reader
+notices.
+
+- Prefer the single word to the phrasal verb. Records are omitted rather
+  than left out, a source is retrieved rather than read, a figure is
+  recomputed rather than worked out again, a task's data becomes stale
+  rather than goes stale.
+- Report the measurement; leave the decision to the reader. "The 90th
+  percentile is the wait you should plan for" instructs. "One record in
+  ten exceeds this" informs, and the reader draws the same conclusion
+  without being led to it.
+- Do not tell the reader what something tells them. A sentence that opens
+  "that tells you nothing about" is explaining the page rather than
+  reporting on the system.
+- Avoid the paired clause that sounds like a summary and carries no
+  content: "how current the data is, and what could not be checked". Name
+  the first thing, then name the second.
+- A heading is a label, not a caption. "What could not be checked" is a
+  label. "The same thing, for an agent" is a caption with a wink in it.
+
+None of this licenses stiffness. Formal means precise and unhurried, not
+latinate for its own sake, and a short plain sentence is always available.
+
 ## Sources
 
 - GitHub Acceptable Use Policies: https://docs.github.com/en/site-policy/acceptable-use-policies/github-acceptable-use-policies

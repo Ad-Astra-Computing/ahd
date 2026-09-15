@@ -59,6 +59,27 @@ contract. A review peer carries standing correctness and security
 review. Run the premise check yourself, because a peer tends to accept
 the framing it is given while a reviewer challenges it.
 
+## Latest model, medium effort
+
+Within each role, run the newest model the account can reach, and cap
+reasoning effort at medium. A model pin is a snapshot of what was current
+the day it was written, and none of them age well: the older one is weaker
+at exactly the review work it was chosen for, and it eventually stops
+answering at all, since providers retire a name without notice.
+
+- Do not treat a pin recorded in a context file as current. Ask the tool
+  what it can reach, take the newest, and correct the note in the same
+  pass.
+- A failure that names the model is a stale pin, not an outage. Look up
+  what is available before retrying, and never fall back to an older model
+  to get past it.
+- Medium is the ceiling, not a target to raise later. The newest model at
+  medium reads better than an older one at its maximum, so spend the budget
+  on the model rather than on the effort dial.
+- Where a role does not need the newest model at all, say so and use a
+  cheaper one. Reviewing and designing earn the good model, while applying
+  a decision somebody already made can run on a cheap one.
+
 ## Concurrency
 
 Edit one repo sequentially. Parallel agents editing the same tree clobber

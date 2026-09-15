@@ -37,7 +37,15 @@ docs point here rather than restating the list.
   flag and a secret scan first. `test-watermarks.py` and
   `test-paraphrase.py` cover them; CI runs both.
 
-## Install
+## Paraphrase
+
+The paraphraser uses ordinary words and direct verbs while preserving facts,
+qualifications and protected text. Checked local edits shorten phrases such
+as `make use of` even when a model rewrite is rejected. Clean prose can stay
+unchanged. Failed model rewrites are still reported. The meaning checks catch
+specific errors but do not prove semantic equivalence or watermark removal.
+
+## Install the hooks
 
 Install the git hooks into a repo from its root:
 

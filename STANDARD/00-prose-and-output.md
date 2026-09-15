@@ -111,6 +111,64 @@ memory of it, because the rule you learned last week is not in front of you
 while you are writing. Then read the draft once as its reader rather than its
 author, and cut what only the author needed.
 
+## Reader-facing copy is written for the reader, never inherited
+
+An internal artifact is not copy. Commit subjects, branch names, ticket
+titles, filenames and log lines are written for us, in our shorthand, with no
+reader in mind. A build that falls back to one of them when authored copy is
+missing publishes a line nobody wrote for that page, and it does so silently,
+which is why it survives review.
+
+- Where a page shows a per-item label or summary, someone writes it for that
+  page. If it is missing the build fails; it never substitutes an internal
+  string.
+- A build that generates prose fails loudly on a gap. A default that reads
+  plausibly is worse than an error, because plausible output is what stops
+  anyone looking.
+- Never argue for a wording by how human it sounds. We do not write to pass as
+  human, we write in the owner's voice, and the case for a word is what it
+  means. A commit subject on the corporate site read "'staying in touch' reads
+  human, upkeep did not"; the honest version names the meaning, which is that
+  one phrase says what the product does for a person and the other does not.
+  `lib-tells.sh` now refuses the humanness claim.
+- Text is published where it is rendered, not where it is stored. Copy inside
+  a JSON island, a data attribute or a template string is read by the reader
+  and is subject to every rule here. An audit that walks the visible text of a
+  page will step straight over it, so scan the data the page carries too.
+
+The revision histories on the corporate site failed all of this at once: the
+label fell back to the commit subject, the notes sat in a
+`<script type="application/json">` block that a visible-text sweep skipped,
+and the gap was reported as a console warning the build printed and continued
+past.
+
+## Product copy serves the reader's decision, not the builder's reasoning
+
+The rule above governs copy inherited from an internal artifact. This one
+governs copy that was authored, and authored in the wrong voice: a sentence
+that explains why the thing is built the way it is, to someone who only wants
+to know what to do.
+
+It survives review because it is true and specific rather than generic
+filler. It reads as considered writing. It is still the wrong writing, because
+the reader is not the audience it was composed for.
+
+- Say what a number or a state means for the reader. Not why it is displayed,
+  not what it protects against, not which failure it was designed around.
+- Cut the sentence that argues for the design. "The tail is shown because the
+  tail is what hurts" tells a reader nothing; "the p90 is the wait to plan for,
+  because one record in ten takes at least that long" tells them what to do.
+- No us and them. "Only the first is ours to fix" and "trust our word" divide
+  the page into the people who built it and the people reading it.
+- Do not describe the architecture. That the page and an endpoint are one
+  document with two renderings is a fact about the repository.
+- A word the reader would not use about their own situation is a word to
+  replace. Operator, consumer and subscriber usually mean "you".
+
+Read the page once as its reader before shipping it, which is the same habit
+the work-log rule asks for and fails in the same way: the author cannot hear
+their own register.
+
 ## Public argument prose
 
 A letter, a manifesto or a positioning page argues; it does not describe a

@@ -42,9 +42,37 @@ TELL_HUMANNESS="(reads|sounds?|feels?|looks?) (more )?human|human[- ]sounding|so
 TELL_HEADING_VERBS='^[[:space:]]*#{1,6}[[:space:]].*\b(could|cannot|can.t|does|doesn.t|did|will|would|found|finds|matters|means|works|breaks|happened|went|is|was|are|were)\b'
 TELL_HEADING_OPENERS='^[[:space:]]*#{1,6}[[:space:]]+(what|why|how|here|the (surface|reason|problem|fix|answer|result))\b'
 
+
+# Negation used as a rhetorical shape rather than to say something.
+#
+# The appositive form, "X, not Y", was tried here and removed. It does not
+# discriminate: measured across this repository's own standards and a day of
+# one project's commits, the standards cluster it tighter than the commits do,
+# at a median gap of 79 words against 265. A long document arguing about rules
+# uses contrast as its content, and so does good technical writing. A check
+# that fires on both is a check that gets bypassed.
+#
+# What does discriminate is the mirrored sentence: a claim, a full stop, then
+# the same claim negated. It is a cadence rather than an argument, it reads as
+# balance without adding anything, and it fired on none of the files here while
+# catching the real thing. "A source that was reached and returned nothing is
+# an answer you can rely on. A source that could not be reached is not."
+TELL_MIRRORED_SENTENCE='\. [A-Z][^.!?]{5,90} (is|are|was|were|does|do|did|can|will) not\.'
+
+
+# The rule of three is named alongside the em dash and the antithetical
+# construction as a marker of machine prose, and it is deliberately not checked
+# here. A candidate detector matching three short parallel items was run over
+# both corpora: fifteen hits across this repository's own standards, zero
+# across a day of one project's commits. It fires on good writing and misses
+# the writing it was aimed at, because a list of three is ordinary English and
+# the tell is the decorative triad, which needs a judgement a regex cannot
+# make. It is a prose rule, not a hook.
+
 # scan_shape <text> -> prints one line per shape tell, returns 0 if any fired.
 scan_shape() {
-  local text=$1 rc=1 n
+  local text=$1 rc=1 n flowed
+  flowed=$(flow "$text")
   # Bold inside a sentence: at least one word before it on the line, and not a
   # "**Label**:" opener.
   n=$(printf '%s' "$text" | grep -oE '[[:alnum:]][^*]*\*\*[^*]+\*\*' | wc -l)
@@ -64,6 +92,11 @@ scan_shape() {
   n=$(printf '%s' "$text" | grep -cE '^[[:space:]]*[-*]?[[:space:]]*\*\*[^*]+\*\*:' || true)
   if [ "${n:-0}" -ge 3 ]; then
     printf '  bold-label list x%s: vary the structure or use plain sentences\n' "$n"
+    rc=0
+  fi
+  n=$(printf '%s' "$flowed" | grep -oE "$TELL_MIRRORED_SENTENCE" | wc -l | tr -d ' ')
+  if [ "${n:-0}" -gt 0 ]; then
+    printf '  mirrored sentence x%s: a claim followed by its negated twin is a cadence, not an argument\n' "$n"
     rc=0
   fi
   return $rc
@@ -88,10 +121,29 @@ scan_advisory() {
   return $rc
 }
 
+# flow joins the lines of a paragraph so a phrase that straddles a wrap point
+# is still one string. grep matches a line at a time, and house prose is hard
+# wrapped near 72 characters, so "it is worth noting" split after "worth" went
+# unseen. A line opening a markdown block starts a new unit, so joining never
+# runs two list items together into a phrase neither of them contains.
+flow() {
+  printf '%s\n' "$1" | awk '
+    /^[[:space:]]*$/ { if (buf != "") { print buf; buf = "" } next }
+    /^[[:space:]]*([-*+>|]|[0-9]+[.)]|#{1,6}[[:space:]])/ {
+      if (buf != "") { print buf }
+      buf = $0
+      next
+    }
+    { buf = (buf == "" ? $0 : buf " " $0) }
+    END { if (buf != "") print buf }
+  '
+}
+
 # scan_tells <text>  -> prints one "  <label>: <hits>" line per category hit,
 # returns 0 if any tell fired, 1 if clean. Caller supplies context.
 scan_tells() {
-  local text=$1 hit rc=1
+  local text=$1 hit rc=1 flowed
+  flowed=$(flow "$text")
   # An em dash (U+2014) is the tell the owner names most often, but ONLY in
   # flowing prose. A markdown heading uses "date — title" as a structural
   # separator (the project's DECISIONS convention), which is typography, not a
@@ -103,13 +155,13 @@ scan_tells() {
     printf '  em dash x%s: use a comma, a colon or two sentences\n' "$n"
     rc=0
   fi
-  hit=$(printf '%s' "$text" | grep -oiE "$TELL_WORDS" | sort -u | tr '\n' ' ')
+  hit=$(printf '%s' "$flowed" | grep -oiE "$TELL_WORDS" | sort -u | tr '\n' ' ')
   [ -n "$hit" ] && { printf '  flagged wording: %s\n' "$hit"; rc=0; }
-  hit=$(printf '%s' "$text" | grep -oiE "$TELL_PHRASES" | sort -u | tr '\n' ' ')
+  hit=$(printf '%s' "$flowed" | grep -oiE "$TELL_PHRASES" | sort -u | tr '\n' ' ')
   [ -n "$hit" ] && { printf '  filler phrase: %s\n' "$hit"; rc=0; }
-  hit=$(printf '%s' "$text" | grep -oiE "$TELL_CONTRAST" | sort -u | tr '\n' ' ')
+  hit=$(printf '%s' "$flowed" | grep -oiE "$TELL_CONTRAST" | sort -u | tr '\n' ' ')
   [ -n "$hit" ] && { printf '  false contrast: %s\n' "$hit"; rc=0; }
-  hit=$(printf '%s' "$text" | grep -oiE "$TELL_HUMANNESS" | sort -u | tr '\n' ' ')
+  hit=$(printf '%s' "$flowed" | grep -oiE "$TELL_HUMANNESS" | sort -u | tr '\n' ' ')
   [ -n "$hit" ] && { printf '  humanness claim: %s (say what the word means, not who it sounds like)\n' "$hit"; rc=0; }
   return $rc
 }

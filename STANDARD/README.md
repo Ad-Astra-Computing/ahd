@@ -7,9 +7,10 @@ rule and a file here is the explanation, so fix the explanation.
 
 ## Contents
 
-- `00-prose-and-output.md`: nothing reads as AI-generated
+- `00-prose-and-output.md`: nothing reads as AI-generated, and copy serves the
+  reader rather than explaining the build
 - `01-git-and-commits.md`: commits, identity, signing, PRs
-- `02-development-method.md`: spec-driven and test-driven
+- `02-development-method.md`: spec-driven and test-driven, operating controls, determinism, diagnosis
 - `03-nix-first.md`: hermetic environments and flakes
 - `04-security.md`: secure by design, and the scanner-gate stance
 - `05-clean-code.md`: architecture boundaries over length dogma
@@ -34,6 +35,10 @@ rule and a file here is the explanation, so fix the explanation.
   our own true identity, kept honest
 - `18-platform-notes.md`: quirks that cost real debugging time, iOS Safari
   first, recorded so the next project does not pay for them twice
+- `19-documentation-sync.md`: docs, site, examples, interop fixtures and a
+  second implementation are one artifact, updated together
+- `20-legal-documents.md`: terms, privacy and the rest as product surfaces
+  with legal weight, and what triggers which document
 
 ## Keeping this current
 

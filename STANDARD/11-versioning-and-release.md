@@ -149,6 +149,25 @@ This covers any instruction published for someone else to run: an install
 line in a README, a verification step in a release note, a curl example in
 documentation.
 
+## Deploy a build, not a directory
+
+A deploy uploads whatever is in the output directory. If that directory was
+built before the last edit, the deploy carries part of the change and drops
+the rest, and nothing fails: the upload succeeds and the site looks current.
+A Pages deploy here shipped a commit's new sitemap dates while silently
+leaving out the CSS rule from the same commit, because the build had run two
+steps earlier.
+
+- Build as the first step of the deploy, ideally in the same command as the
+  upload. A build from earlier in the session is not evidence, however few
+  minutes ago it ran.
+- Verify against the deployed artifact, not the local one. Fetch the live
+  page and read what came back.
+- Check something only the new build can carry: a string, a class or a date
+  this change introduced. A 200 proves the host is up and nothing else.
+- Where a deploy is more than one command, make it one script, so the build
+  cannot be skipped by running the second half.
+
 ## Pre-1.0 dist-tags
 
 For a pre-1.0 npm package, never advance the `latest` dist-tag to a

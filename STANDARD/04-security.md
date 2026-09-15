@@ -54,6 +54,26 @@ roughly the input length. It sits behind the data-only prompt and the
 least-privilege binding, it does not replace them. See
 `docs/specs/0001-paraphrase-worker.md` for the worked example.
 
+## Prove whose resource it is, with two principals
+
+The dangerous class of authorization bug is not the missing check. It is
+the check that passes while the operation runs against the wrong subject,
+because some identifier was read from the caller's session when it should
+have been read from the resource. Every such bug reads correctly, and every
+one of them passes a single-user test, since with one principal in the
+fixture both readings return the same value.
+
+- For any operation whose target is a person, an account, a tenant or a
+  device, the target is resolved from the request or the stored record,
+  never from whoever happens to be authenticated.
+- Where a flow crosses an authentication boundary, resolve the target
+  before the boundary and carry it across as an opaque reference the caller
+  cannot edit.
+- Test it with two principals in the fixture, never one. One acts, the
+  other owns, and the assertion is that the effect landed on the owner.
+- Write that test even when the code obviously reads the right field,
+  because the next refactor is what it is guarding against.
+
 ## Supply chain
 
 The real supply-chain risk is running untrusted code that holds a

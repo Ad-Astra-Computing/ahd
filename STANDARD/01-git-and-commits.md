@@ -17,6 +17,11 @@ mechanical change.
 
 Write dates day first: "9 June", not "Jun 9".
 
+## Stage explicit paths
+
+Review the changed files and stage only the paths that belong to the commit.
+Never use `git add -A` or `git add .`.
+
 ## Commit only what you have run
 
 Never commit code you have not run. Before the commit: build it, run the
@@ -71,6 +76,14 @@ PR bodies are plain prose: what broke, what changed, what else you
 found. No headers, no bold, no emoji, no marketing language. A comment
 you post lands under the owner's account, so never write a hand-off line
 such as "ready for maintainer review".
+
+Describe the change, not your work on it. A body that reports which tests
+were run, how something was checked or that it was verified rather than
+assumed is narrating process, and no reviewer asked for it. Running the
+change is already required, so saying you did adds nothing, and defending
+the point reads as someone proving themselves rather than a colleague
+describing a diff. The exception is a genuine gap: name what is still
+untested in one sentence, because that is a finding.
 
 ## Workflow
 
