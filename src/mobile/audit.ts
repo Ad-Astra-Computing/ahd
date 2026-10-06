@@ -1,4 +1,4 @@
-import { chromium } from "playwright-core";
+import { chromium, type Page } from "playwright-core";
 import { MOBILE_RULES, type MobileRule } from "./rules.js";
 import type { Violation } from "../lint/types.js";
 import { resolveChromiumExecutable } from "../core/chromium.js";
@@ -27,6 +27,40 @@ export interface MobileAuditReport {
 // iPhone mini / SE size. The narrowest widely-used width in 2026;
 // anything that renders at 375px renders at 390px + too.
 const DEFAULT_VIEWPORT = { width: 375, height: 812 };
+
+// Per-rule budget for page.evaluate. A fetched page that keeps its
+// main thread busy after `load` (an infinite loop in a script, a
+// pathological layout) would otherwise hold the evaluate call, and
+// the browser process with it, forever.
+const RULE_EVAL_TIMEOUT_MS = 10_000;
+
+function evaluateWithTimeout(
+  page: Page,
+  fn: MobileRule["check"],
+  timeoutMs: number,
+): Promise<ReturnType<MobileRule["check"]>> {
+  return Promise.race([
+    page.evaluate(fn),
+    new Promise<never>((_, reject) => {
+      setTimeout(
+        () => reject(new Error(`evaluate timed out after ${timeoutMs}ms`)),
+        timeoutMs,
+      );
+    }),
+  ]);
+}
+
+// Rule findings come from the fetched page's own DOM (outerHTML,
+// innerText): a hostile page could embed ANSI/terminal control
+// sequences in an attribute or text node to manipulate the operator's
+// terminal once the snippet is printed. Strip them at the one place
+// every rule's output passes through.
+function sanitizeForTerminal(s: string): string {
+  return s
+    .replace(/\x1B\][^\x07\x1B]*(?:\x07|\x1B\\)/g, "")
+    .replace(/\x1B\[[0-9;?]*[ -/]*[@-~]/g, "")
+    .replace(/[\x00-\x1F\x7F]/g, "");
+}
 
 export async function auditMobile(
   options: MobileAuditOptions,
@@ -74,14 +108,18 @@ export async function auditMobile(
 
     for (const rule of MOBILE_RULES) {
       try {
-        const raw = await page.evaluate(rule.check);
+        const raw = await evaluateWithTimeout(
+          page,
+          rule.check,
+          RULE_EVAL_TIMEOUT_MS,
+        );
         for (const v of raw) {
           violations.push({
             ruleId: rule.id,
             severity: rule.severity,
             file: options.url,
-            message: v.message,
-            snippet: v.snippet,
+            message: sanitizeForTerminal(v.message),
+            snippet: v.snippet ? sanitizeForTerminal(v.snippet) : v.snippet,
             line: undefined,
           });
         }
