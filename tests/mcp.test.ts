@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { resolve } from "node:path";
-import { createTools, handleStdioLine } from "../src/mcp/server.js";
+import { PassThrough } from "node:stream";
+import { createTools, handleStdioLine, runStdioServer } from "../src/mcp/server.js";
 
 const TOKENS = resolve(__dirname, "..", "tokens");
 
@@ -174,5 +175,32 @@ describe("mcp server", () => {
     const res = JSON.parse(await handleStdioLine(req, tools));
     expect(res.id).toBe(301);
     expect(res.error.code).toBe(-32602);
+  });
+
+  // Regression guard: a client that never sends a newline used to
+  // grow the stdin buffer without bound. Capped at 10MB; feeding more
+  // than that with no "\n" must reject the frame and reset, not OOM.
+  it("rejects and resets a stdin frame that exceeds the buffer cap with no newline", async () => {
+    const stdin = new PassThrough();
+    const stdout = new PassThrough();
+    const outputs: string[] = [];
+    stdout.on("data", (c) => outputs.push(c.toString()));
+
+    runStdioServer({ tokensDir: TOKENS }, { stdin, stdout });
+
+    const chunk = "x".repeat(1024 * 1024);
+    for (let i = 0; i < 11; i++) stdin.write(chunk);
+    await new Promise((r) => setImmediate(r));
+
+    expect(outputs.length).toBeGreaterThan(0);
+    const parsed = JSON.parse(outputs[0]);
+    expect(parsed.error.message).toMatch(/exceeded.*bytes with no newline/);
+
+    // Buffer was reset: a well-formed line sent afterward still works.
+    outputs.length = 0;
+    stdin.write(JSON.stringify({ jsonrpc: "2.0", id: 999, method: "tools/list" }) + "\n");
+    await new Promise((r) => setImmediate(r));
+    const next = JSON.parse(outputs[0]);
+    expect(next.id).toBe(999);
   });
 });

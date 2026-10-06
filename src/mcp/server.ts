@@ -4,6 +4,7 @@ import { compile } from "../compile.js";
 import { lintSource } from "../lint/engine.js";
 import { VISION_RULES } from "../critique/critic.js";
 import { BriefSchema, type StyleToken, type Brief } from "../types.js";
+import { readAhdVersion } from "../eval/replay.js";
 
 // Every tool's args parsed at the boundary. The MCP protocol surface
 // is a user-controlled input, so it follows the same architectural
@@ -287,7 +288,7 @@ export async function handleStdioLine(
         result: {
           protocolVersion: "2024-11-05",
           capabilities: { tools: {} },
-          serverInfo: { name: "ahd-mcp", version: "0.5.0-beta.1" },
+          serverInfo: { name: "ahd-mcp", version: readAhdVersion() },
         },
       });
     }
@@ -368,19 +369,46 @@ export async function handleStdioLine(
   }
 }
 
-export async function runStdioServer(options: McpServerOptions): Promise<void> {
+// No real JSON-RPC request approaches this; a client that never sends
+// a newline would otherwise grow `buffer` without bound.
+const MAX_STDIN_BUFFER_BYTES = 10 * 1024 * 1024;
+
+export interface StdioStreams {
+  stdin: NodeJS.ReadableStream;
+  stdout: NodeJS.WritableStream;
+}
+
+export async function runStdioServer(
+  options: McpServerOptions,
+  streams: StdioStreams = { stdin: process.stdin, stdout: process.stdout },
+): Promise<void> {
   const tools = createTools(options);
-  process.stdin.setEncoding("utf8");
+  const { stdin, stdout } = streams;
+  if ("setEncoding" in stdin) (stdin as NodeJS.Socket).setEncoding("utf8");
   let buffer = "";
-  process.stdin.on("data", async (chunk) => {
+  stdin.on("data", async (chunk) => {
     buffer += chunk;
+    if (buffer.length > MAX_STDIN_BUFFER_BYTES) {
+      stdout.write(
+        JSON.stringify({
+          jsonrpc: "2.0",
+          id: null,
+          error: {
+            code: JSONRPC.PARSE_ERROR,
+            message: `request line exceeded ${MAX_STDIN_BUFFER_BYTES} bytes with no newline`,
+          },
+        }) + "\n",
+      );
+      buffer = "";
+      return;
+    }
     let idx;
     while ((idx = buffer.indexOf("\n")) !== -1) {
       const line = buffer.slice(0, idx).trim();
       buffer = buffer.slice(idx + 1);
       if (!line) continue;
       const response = await handleStdioLine(line, tools);
-      process.stdout.write(response + "\n");
+      stdout.write(response + "\n");
     }
   });
 }
