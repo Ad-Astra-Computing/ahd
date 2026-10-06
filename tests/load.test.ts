@@ -1,5 +1,7 @@
 import { describe, it, expect } from "vitest";
-import { resolve } from "node:path";
+import { resolve, join } from "node:path";
+import { mkdtemp, open, rm } from "node:fs/promises";
+import { tmpdir } from "node:os";
 import { listTokens, loadToken, validateAll } from "../src/load.js";
 import { compile } from "../src/compile.js";
 
@@ -93,6 +95,19 @@ describe("compile", () => {
     it("accepts the documented kebab-case ids", async () => {
       const token = await loadToken(TOKENS, "swiss-editorial");
       expect(token).toBeTruthy();
+    });
+
+    it("rejects a token file over the size limit before parsing it", async () => {
+      const dir = await mkdtemp(join(tmpdir(), "ahd-token-cap-"));
+      try {
+        const path = join(dir, "huge.yml");
+        const fh = await open(path, "w");
+        await fh.truncate(3 * 1024 * 1024);
+        await fh.close();
+        await expect(loadToken(dir, "huge")).rejects.toThrow(/over the .* token limit/);
+      } finally {
+        await rm(dir, { recursive: true, force: true });
+      }
     });
   });
 });

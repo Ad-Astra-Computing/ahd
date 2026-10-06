@@ -1,4 +1,4 @@
-import { readFile } from "node:fs/promises";
+import { readFile, stat } from "node:fs/promises";
 import { rules as defaultRules } from "./rules/index.js";
 import { crossFileRules as defaultCrossRules } from "./cross-rules/index.js";
 import type {
@@ -48,11 +48,22 @@ export function lintSource(
   };
 }
 
+// No real source or compiled stylesheet approaches this; a cap bounds
+// the regex-heavy rule set's worst case on a file dropped in by
+// mistake (or deliberately) rather than letting it run unbounded.
+const MAX_LINT_FILE_BYTES = 20 * 1024 * 1024;
+
 export async function lintFile(
   path: string,
   rules?: Rule[],
   config?: AhdProjectConfig,
 ): Promise<LintReport> {
+  const { size } = await stat(path);
+  if (size > MAX_LINT_FILE_BYTES) {
+    throw new Error(
+      `${path} is ${size} bytes, over the ${MAX_LINT_FILE_BYTES}-byte lint limit`,
+    );
+  }
   const raw = await readFile(path, "utf8");
   const isCss = /\.css$/i.test(path);
   return lintSource(

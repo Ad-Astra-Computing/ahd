@@ -1,4 +1,4 @@
-import { readdir, readFile } from "node:fs/promises";
+import { readdir, readFile, stat } from "node:fs/promises";
 import { join, resolve } from "node:path";
 import { parse as parseYaml } from "yaml";
 import {
@@ -12,6 +12,10 @@ import {
 // resolution or imply an attempt at path traversal — reject it at the
 // door rather than trust `path.join` to do the right thing.
 const TOKEN_ID_RE = /^[a-z0-9][a-z0-9-]*$/;
+
+// A real style token is a few KB of YAML; this is generous headroom,
+// not a working limit.
+const MAX_TOKEN_FILE_BYTES = 2 * 1024 * 1024;
 
 export async function loadToken(
   tokensDir: string,
@@ -29,6 +33,12 @@ export async function loadToken(
   // id that slipped the regex could not escape here either.
   if (!path.startsWith(base + "/") && path !== base) {
     throw new Error(`token path escapes tokens directory: ${path}`);
+  }
+  const { size } = await stat(path);
+  if (size > MAX_TOKEN_FILE_BYTES) {
+    throw new Error(
+      `${path} is ${size} bytes, over the ${MAX_TOKEN_FILE_BYTES}-byte token limit`,
+    );
   }
   const raw = await readFile(path, "utf8");
   const data = parseYaml(raw);
