@@ -194,7 +194,7 @@ describe("mcp server", () => {
 
     expect(outputs.length).toBeGreaterThan(0);
     const parsed = JSON.parse(outputs[0]);
-    expect(parsed.error.message).toMatch(/exceeded.*bytes with no newline/);
+    expect(parsed.error.message).toMatch(/exceeded.*characters with no newline/);
 
     // Buffer was reset: a well-formed line sent afterward still works.
     outputs.length = 0;

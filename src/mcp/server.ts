@@ -370,8 +370,10 @@ export async function handleStdioLine(
 }
 
 // No real JSON-RPC request approaches this; a client that never sends
-// a newline would otherwise grow `buffer` without bound.
-const MAX_STDIN_BUFFER_BYTES = 10 * 1024 * 1024;
+// a newline would otherwise grow `buffer` without bound. `buffer` is
+// a decoded string, so this counts UTF-16 units, not bytes; close
+// enough for a DoS cap on text that is overwhelmingly ASCII.
+const MAX_STDIN_BUFFER_CHARS = 10 * 1024 * 1024;
 
 export interface StdioStreams {
   stdin: NodeJS.ReadableStream;
@@ -388,14 +390,14 @@ export async function runStdioServer(
   let buffer = "";
   stdin.on("data", async (chunk) => {
     buffer += chunk;
-    if (buffer.length > MAX_STDIN_BUFFER_BYTES) {
+    if (buffer.length > MAX_STDIN_BUFFER_CHARS) {
       stdout.write(
         JSON.stringify({
           jsonrpc: "2.0",
           id: null,
           error: {
             code: JSONRPC.PARSE_ERROR,
-            message: `request line exceeded ${MAX_STDIN_BUFFER_BYTES} bytes with no newline`,
+            message: `request line exceeded ${MAX_STDIN_BUFFER_CHARS} characters with no newline`,
           },
         }) + "\n",
       );
