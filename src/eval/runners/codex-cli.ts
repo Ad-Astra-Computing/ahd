@@ -1,5 +1,5 @@
 import { spawn } from "node:child_process";
-import { mkdtemp, mkdir, rm, copyFile, chmod } from "node:fs/promises";
+import { mkdtemp, rm, copyFile, chmod } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
@@ -33,15 +33,27 @@ import { extractHtmlBlock } from "./types.js";
 // pulling the HTML out of it.
 
 export interface CodexCliOptions {
-  model?: string;       // e.g. "gpt-5.4", "gpt-5.3-codex"
+  model?: string;       // e.g. "gpt-6-codex", "gpt-5.3-codex"
   binary?: string;      // defaults to `codex` on PATH
   timeoutMs?: number;   // per-call timeout, default 240_000
+  spawnImpl?: typeof spawn; // injected for tests, defaults to node:child_process.spawn
 }
 
+// The model id rides straight into a TOML `--config model="<id>"`
+// override (see below); a `"` in it would close that string early and
+// let the rest of the id inject further config keys, including the
+// sandbox mode. Operator-controlled today, but validated anyway since
+// nothing legitimate needs characters outside this set.
+const SAFE_MODEL_ID = /^[A-Za-z0-9._:/-]+$/;
+
 export function codexCliRunner(options: CodexCliOptions = {}): ModelRunner {
-  const model = options.model ?? "gpt-5.4";
+  const model = options.model ?? "gpt-6-codex";
+  if (!SAFE_MODEL_ID.test(model)) {
+    throw new Error(`codex-cli: unsafe model id "${model}"`);
+  }
   const binary = options.binary ?? "codex";
   const timeoutMs = options.timeoutMs ?? 240_000;
+  const spawnImpl = options.spawnImpl ?? spawn;
 
   return {
     id: model,
@@ -62,12 +74,18 @@ export function codexCliRunner(options: CodexCliOptions = {}): ModelRunner {
       //     has length limits on some platforms.
       //  4. Sandbox stays read-only (defence in depth); if the model
       //     calls the shell tool it can only read this empty dir.
-      //  5. Approvals are set to never so the CLI does not prompt for
-      //     confirmation on anything that would otherwise block.
+      //  5. Approval is only for escalating past the declared sandbox;
+      //     read-only is already the floor, so there is nothing for
+      //     codex exec to prompt about.
+      //  6. auth.json lives under CODEX_HOME, outside HOME/cwd (see
+      //     the copy step below), so a prompt-injected shell read
+      //     can never reach the live token.
       const workdir = await mkdtemp(join(tmpdir(), "ahd-codex-run-"));
+      const codexHome = await mkdtemp(join(tmpdir(), "ahd-codex-home-"));
       const minimalEnv: NodeJS.ProcessEnv = {
         PATH: process.env.PATH ?? "/usr/bin:/bin",
         HOME: workdir,
+        CODEX_HOME: codexHome,
         // USER / LOGNAME required on macOS for keychain lookups even
         // when the CLI reads auth from a file; the OpenAI CLI's TLS /
         // certificate verification path touches Keychain too.
@@ -75,19 +93,12 @@ export function codexCliRunner(options: CodexCliOptions = {}): ModelRunner {
         LOGNAME: process.env.LOGNAME,
       };
       try {
-        // Bring only auth.json into the workdir's fake ~/.codex —
-        // NOT history.json / history.jsonl / logs / cache / config.
-        // A prompt-injected tool call can't reach the user's prior
-        // Codex sessions or configuration this way. The auth token
-        // itself isn't newly exposed: Codex is already using it on
-        // the user's behalf for the inference calls we asked it to
-        // make.
+        // Copy only auth.json, not history or config, and only into
+        // CODEX_HOME, outside the sandboxed cwd the shell tool reaches.
         if (process.env.HOME) {
           const realAuth = join(process.env.HOME, ".codex", "auth.json");
           if (existsSync(realAuth)) {
-            const fakeCodex = join(workdir, ".codex");
-            await mkdir(fakeCodex, { recursive: true });
-            const fakeAuth = join(fakeCodex, "auth.json");
+            const fakeAuth = join(codexHome, "auth.json");
             await copyFile(realAuth, fakeAuth);
             await chmod(fakeAuth, 0o600);
           }
@@ -109,6 +120,7 @@ export function codexCliRunner(options: CodexCliOptions = {}): ModelRunner {
           cwd: workdir,
           env: minimalEnv,
           stdin: combinedPrompt,
+          spawnImpl,
         });
         const latencyMs = Date.now() - start;
 
@@ -159,6 +171,7 @@ export function codexCliRunner(options: CodexCliOptions = {}): ModelRunner {
         return { model, html, rawResponse, latencyMs };
       } finally {
         await rm(workdir, { recursive: true, force: true });
+        await rm(codexHome, { recursive: true, force: true });
       }
     },
   };
@@ -168,6 +181,7 @@ interface RunOpts {
   cwd: string;
   env: NodeJS.ProcessEnv;
   stdin?: string;
+  spawnImpl: typeof spawn;
 }
 
 function runCodex(
@@ -177,7 +191,7 @@ function runCodex(
   opts: RunOpts,
 ): Promise<string> {
   return new Promise((resolve, reject) => {
-    const proc = spawn(bin, args, {
+    const proc = opts.spawnImpl(bin, args, {
       stdio: ["pipe", "pipe", "pipe"],
       cwd: opts.cwd,
       env: opts.env,
