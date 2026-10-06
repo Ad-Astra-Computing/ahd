@@ -1,0 +1,185 @@
+# Monthly automated eval against the current Workers AI roster.
+# Roster and cadence are decided in
+# docs/adr/0002-eval-epochs-and-published-statistic.md, not here.
+# Frontier cells need an interactive CLI login and run as a manual
+# step, committed by hand under docs/evals/monthly-roster/.
+# Secrets required: CF_API_TOKEN (Workers AI read scope), CF_ACCOUNT_ID.
+
+name: monthly-roster-eval
+
+on:
+  schedule:
+    # 1st of every month, 06:07 UTC. Off-peak and an off-zero minute
+    # so this does not fire with every other cron at the top of the
+    # hour.
+    - cron: "7 6 1 * *"
+  # Manual trigger for ad-hoc debug runs; same steps, same budget.
+  workflow_dispatch:
+    inputs:
+      note:
+        description: "Optional note to include in the generated report header"
+        required: false
+        default: ""
+
+permissions:
+  contents: write          # push the report branch
+  issues: write            # open a drift issue if the run moves outside tolerance
+  pull-requests: write     # open the report PR
+
+jobs:
+  eval:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          # RELEASE_PAT (not GITHUB_TOKEN) so the report PR triggers
+          # ci.yml's `test` check. PRs opened by GITHUB_TOKEN don't
+          # start workflow runs, which would leave the required check
+          # forever pending.
+          token: ${{ secrets.RELEASE_PAT }}
+          persist-credentials: false
+
+      - name: Setup Node
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: "20"
+
+      - name: Install
+        run: npm ci
+
+      - name: Build (tsc -> dist/)
+        run: npm run build
+
+      - name: Run eval-live (CF Workers AI epoch roster, n=200)
+        env:
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+          CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+        run: |
+          # A roster change belongs in an ADR, not a quiet edit here.
+          #
+          # Output goes outside evals/, which holds the committed
+          # corpora: eval-live aggregates every model in its output
+          # directory, so pointing at evals/ would misreport old
+          # roster members as having run this month.
+          OUT_DIR="$(mktemp -d "$RUNNER_TEMP/monthly-roster-samples.XXXXXX")"
+          REPORT_DATE=$(date -u +%Y-%m-%d)
+          REPORT_PATH="docs/evals/monthly-roster/${REPORT_DATE}.md"
+          RETAIN_DIR="docs/evals/monthly-roster/${REPORT_DATE}-pages"
+          mkdir -p docs/evals/monthly-roster
+          # --retain copies this run's generated pages and raw
+          # responses into RETAIN_DIR, a fresh write-once directory
+          # committed alongside the report (docs/specs/0001-published-
+          # eval-statistic.md, "Recording"). A hash cannot be
+          # re-linted; the pages themselves are what make a future
+          # evaluator defect repairable.
+          node ./bin/ahd.js eval-live swiss-editorial \
+            --brief briefs/landing.yml \
+            --models cf:@cf/google/gemma-4-26b-a4b-it,cf:@cf/openai/gpt-oss-120b,cf:@cf/qwen/qwen3-30b-a3b-fp8,cf:@cf/qwen/qwen3.8-27b,cf:@cf/zai-org/glm-5.3,cf:@cf/moonshotai/kimi-k2.6,cf:@cf/deepseek-ai/deepseek-v4-flash-0731,cf:@cf/nvidia/nemotron-3-120b-a12b \
+            --n 200 \
+            --sample-concurrency 6 \
+            --out "$OUT_DIR" \
+            --report "$REPORT_PATH" \
+            --retain "$RETAIN_DIR"
+          node ./bin/ahd.js verify-retained-run "$RETAIN_DIR"
+          echo "REPORT_PATH=$REPORT_PATH" >> "$GITHUB_ENV"
+          echo "REPORT_DATE=$REPORT_DATE" >> "$GITHUB_ENV"
+          echo "RETAIN_DIR=$RETAIN_DIR" >> "$GITHUB_ENV"
+
+      - name: Compare to previous monthly report (drift check)
+        id: drift
+        continue-on-error: true
+        run: |
+          # Tripwire only: flags a raw mean-tells move of more than 20
+          # points against the prior run. Not the severity-split
+          # statistic in docs/specs/0001-published-eval-statistic.md.
+          NEW="$REPORT_PATH"
+          PREV=$(ls -1 docs/evals/monthly-roster/*.md 2>/dev/null | grep -v "$REPORT_DATE" | sort | tail -n 1 || true)
+          if [ -z "$PREV" ]; then
+            echo "No prior monthly roster report; skipping drift check."
+            echo "drift=no-baseline" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          extract_mean() {
+            grep -oE "[0-9]+\.[0-9]+ → [0-9]+\.[0-9]+" "$1" \
+              | awk -F'→' '{ raw += $1; comp += $2; n += 1 } END { if (n>0) printf "%.2f %.2f %d\n", raw/n, comp/n, n; else print "0 0 0" }'
+          }
+          read NEW_RAW NEW_COMP NEW_N <<< $(extract_mean "$NEW")
+          read PREV_RAW PREV_COMP PREV_N <<< $(extract_mean "$PREV")
+          echo "new:  raw=$NEW_RAW compiled=$NEW_COMP cells=$NEW_N"
+          echo "prev: raw=$PREV_RAW compiled=$PREV_COMP cells=$PREV_N"
+          if [ "$NEW_N" = "0" ] || [ "$PREV_N" = "0" ]; then
+            echo "drift=unparseable" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          delta=$(awk -v a="$NEW_COMP" -v b="$PREV_COMP" 'BEGIN { printf "%.2f", (a-b) }')
+          abs_delta=$(awk -v d="$delta" 'BEGIN { if (d<0) d=-d; printf "%.2f", d }')
+          echo "Compiled-condition mean delta: $delta"
+          if awk -v d="$abs_delta" 'BEGIN { exit !(d > 0.5) }'; then
+            echo "drift=flagged" >> "$GITHUB_OUTPUT"
+            echo "drift_delta=$delta" >> "$GITHUB_OUTPUT"
+            echo "prev_report=$PREV" >> "$GITHUB_OUTPUT"
+          else
+            echo "drift=stable" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open report PR (manual review required)
+        env:
+          GH_TOKEN: ${{ secrets.RELEASE_PAT }}
+        run: |
+          gh auth setup-git
+          # main is protected, so the bot pushes to a dated branch and
+          # opens a PR; it never auto-merges. The report, retained
+          # pages and raw responses are model-generated text about to
+          # land on a public default branch, and ci.yml's gate has no
+          # opinion on whether that content is safe to publish.
+          git config user.email "noreply@adastracomputing.com"
+          git config user.name "ahd-monthly-roster-eval"
+          git add docs/evals/monthly-roster/
+          if git diff --cached --quiet; then
+            echo "No report changes to commit."
+            exit 0
+          fi
+          BRANCH="bot/monthly-roster-eval-${REPORT_DATE}"
+          git checkout -b "$BRANCH"
+          git commit -m "docs(evals): monthly roster run ${REPORT_DATE}" -m "Automated monthly eval against the epoch Workers AI roster. See the report for per-cell numbers."
+          git push -u origin "$BRANCH" --force-with-lease
+          gh pr create --base main --head "$BRANCH" \
+            --title "docs(evals): monthly roster run ${REPORT_DATE}" \
+            --body "Automated monthly roster eval report. Review the report and retained samples before merging; this PR does not auto-merge." \
+            || echo "PR already exists for $BRANCH"
+
+      - name: Open drift issue if flagged
+        if: steps.drift.outputs.drift == 'flagged'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Bound as env vars and read with "$VAR" below instead of
+          # interpolated directly into the script via ${{ }}: that
+          # substitution happens before the shell runs, so any of
+          # these values containing shell metacharacters would inject
+          # into the script rather than just being data.
+          DRIFT_DELTA: ${{ steps.drift.outputs.drift_delta }}
+          PREV_REPORT: ${{ steps.drift.outputs.prev_report }}
+        run: |
+          gh issue create \
+            --title "Monthly roster eval drift detected (${REPORT_DATE})" \
+            --label "drift" \
+            --body "$(cat <<EOF
+          The automated monthly roster eval on ${REPORT_DATE} produced a
+          compiled-condition mean that moved more than 0.5 tells/page
+          from the previous monthly baseline.
+
+          - Delta: ${DRIFT_DELTA} tells/page
+          - New report: [docs/evals/monthly-roster/${REPORT_DATE}.md](./docs/evals/monthly-roster/${REPORT_DATE}.md)
+          - Previous baseline: ${PREV_REPORT}
+
+          Possible causes, in likelihood order:
+          1. A model host updated default generation parameters or chat template
+          2. A serving-path quirk (new serving-tell candidate, see docs/SERVING_TELLS.md)
+          3. A legitimate shift in model behaviour since last run
+          4. A regression in AHD's compile output
+
+          Investigate by diffing the two reports' per-tell tables and
+          checking the run manifest for model version ids.
+          EOF
+          )"
