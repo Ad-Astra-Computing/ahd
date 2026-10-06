@@ -44,7 +44,7 @@
           "provider": {
             "type": "string",
             "minLength": 1,
-            "description": "Runner type that produced the samples (claude-code-cli, codex-cli, gemini-cli, cloudflare-workers-ai, anthropic, openai)."
+            "description": "Runner type that produced the samples (claude-code-cli, codex-cli, antigravity-cli, cloudflare-workers-ai, anthropic, openai)."
           },
           "addedAt": {
             "type": "string",

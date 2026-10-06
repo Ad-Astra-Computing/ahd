@@ -44,7 +44,7 @@
           "provider": {
             "type": "string",
             "minLength": 1,
-            "description": "Runner type that produced the samples (claude-code-cli, codex-cli, gemini-cli, cloudflare-workers-ai, anthropic, openai)."
+            "description": "Runner type that produced the samples (claude-code-cli, codex-cli, antigravity-cli, cloudflare-workers-ai, anthropic, openai)."
           },
           "addedAt": {
             "type": "string",
@@ -56,7 +56,7 @@
           "servingPath": {
             "type": "string",
             "minLength": 1,
-            "description": "Provider URL or canonical path (https://api.anthropic.com/v1/messages, @cf/<org>/<model>, gemini-cli://<binary-path>)."
+            "description": "Provider URL or canonical path (https://api.anthropic.com/v1/messages, @cf/<org>/<model>, antigravity-cli://<binary-path>)."
           },
           "cliVersion": {
             "type": "string",
