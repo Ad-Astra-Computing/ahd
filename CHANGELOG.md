@@ -25,6 +25,7 @@
 
 - fix(lint)!: `ahd/no-three-equal-cards`' container regex paired two unbounded `[^"]*` runs, backtracking catastrophically on an unterminated class attribute; a single hostile sample could wedge `ahd lint` and the eval runner. Bounded every run at 500 chars
 - fix(lint)!: the same chained-unbounded-run shape, found across the rest of the rule set by a dedicated security audit, fixed the same way in `ahd/pricing-not-three`, `ahd/cta-not-canonical`, `ahd/no-centered-hero`, `ahd/no-gradient-text`, `ahd/no-lucide-in-rounded-square`, `ahd/no-purple-blue-gradient` and `ahd/spa-shell-detected`
+- fix(lint)!: a second, broader ReDoS shape survived the fix above: the `[^>]*` run that scans an opening tag's attributes, used in nearly every HTML rule's tag-matching regex, is itself unbounded, and a document with many unclosed tags backtracks it the full remaining input at every tag start. Bounded across 12 rule files, `extractInline`, `detectActiveToken` and the SVG viewBox scanner; a sweep test now runs every HTML rule against the same adversarial input
 - fix(runners)!: `codex-cli` copied the user's live Codex auth token into the same directory its sandboxed shell tool can read; a prompt-injected `cat` could exfiltrate it into the sample's saved raw response. Auth now lives under a separate `CODEX_HOME`, outside the model-reachable workdir
 - fix(runners)!: `antigravity-cli` ran with `HOME` pointed at the real home directory; `--sandbox` does not scope filesystem reads (verified live), so a prompt-injected read could reach anything there, not only the antigravity token. `HOME` now points at a scratch dir holding only that one token
 - fix(runners): `codex-cli`'s model id now validated against a safe charset before it rides into a TOML `--config` override; an unvalidated `"` could inject further config keys
@@ -38,9 +39,10 @@
 - fix(mcp): the stdio server buffered input until a newline with no cap; a client that never sends one grew memory without bound. Capped at 10MB with a clear parse-error response and buffer reset
 - fix(mcp): `initialize` reported a stale hardcoded `version: "0.5.0-beta.1"`; now reads the real package version
 - ci: `tag-release.yml` and `flake-sync.yml` ran `nix run nixpkgs#prefetch-npm-deps` against whatever `nixos-unstable` currently resolves to, inside jobs holding `RELEASE_PAT`; both now pin it to this repo's own `flake.lock` rev with `--inputs-from .`
-- ci: several workflows interpolated `${{ }}` expressions (step outputs, env values, a release tag) directly into `run:` script bodies, the same template-injection shape zizmor flags; moved to `env:` blocks read as `"$VAR"` in `flake-sync.yml`, `monthly-roster-eval.yml`, `monthly-vision-eval.yml` and `release.yml`
+- ci: several workflows interpolated `${{ }}` expressions (step outputs, env values, a release tag) directly into `run:` script bodies, the same template-injection shape zizmor flags; moved to `env:` blocks read as `"$VAR"` in `flake-sync.yml`, `monthly-roster-eval.yml`, `monthly-vision-eval.yml`, `release.yml` and `tag-release.yml`
 - docs: `ci.yml`'s header comment claimed Dependabot PRs auto-merge by default; no workflow enables that and AGENTS.md says Dependabot PRs are reviewed, never auto-merged. Corrected to describe what the gate actually does
 - chore(packaging): removed `docs/artwork/README.md` from `package.json`'s `files` list (the file does not exist) and the dead `!.env.example` negation from `.npmignore` (unreachable: `package.json`'s `files` allow-list is authoritative for `npm pack` and already excludes it)
+- fix(eval): a carried-forward cell's rule effects and samples could feed the cross-model inspection flag and the replay sidecar as though this run measured them; both are now filtered against the run manifest's `carriedForward` list before capture
 
 ### Dependencies
 
