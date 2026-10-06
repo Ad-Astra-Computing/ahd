@@ -40,7 +40,7 @@ The only tier that answers *does AHD actually move LLMs off the median*. Not a u
 Shape:
 
 ```
-ahd eval <token> --models claude,gpt,gemini,llama --n 30
+ahd eval <token> --models claude-opus-5-5,gpt-6-astra,cf:@cf/meta/llama-3.3-70b-instruct-fp8-fast --n 30
 ```
 
 For each model, two conditions: **raw** (the unadorned user brief) and **compiled** (the same brief run through `ahd compile`). N samples per cell. Each sample scored against the 39-tell taxonomy using the Tier-2 linter for source-level rules and a vision-critic LLM call for rules that can only be judged from the rendered output.

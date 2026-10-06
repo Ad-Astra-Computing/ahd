@@ -19,7 +19,7 @@ defect falls on the compiled arm and understates the compiler. Fixing it
 changes published figures for four of five models.
 
 The model roster is ageing. The Workers AI catalogue now carries glm-5.3,
-deepseek-v4, kimi-k2.7 and qwen3.8-27b, while we still run gemma-4,
+deepseek-v4, kimi-k2.6 and qwen3.8-27b, while we still run gemma-4,
 llama-4-scout, mistral-small-3.1, gpt-oss-120b and qwen3-30b. None of the five
 are deprecated, so nothing is forced out, but qwen3.8-27b supersedes the qwen
 we run and the roster no longer reflects what people use.
