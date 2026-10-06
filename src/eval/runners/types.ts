@@ -16,7 +16,7 @@ export interface ModelRunnerOutput {
   // claim can be tied back to a provider's request log. Headers we
   // pull from, in order: anthropic `request-id`, openai `x-request-id`,
   // cloudflare `cf-ray`, google `x-goog-request-id`. CLI-spawned
-  // runners (claude-code, gemini-cli, codex, ollama) leave it
+  // runners (claude-code, antigravity-cli, codex, ollama) leave it
   // undefined — there is no HTTP envelope to read.
   requestId?: string;
 }

@@ -7,7 +7,8 @@ import {
 } from "../src/eval/runners/types.js";
 import { anthropicRunner } from "../src/eval/runners/anthropic.js";
 import { openaiRunner } from "../src/eval/runners/openai.js";
-import { geminiRunner } from "../src/eval/runners/gemini.js";
+import { claudeCodeCliRunner } from "../src/eval/runners/claude-code-cli.js";
+import { DEFAULT_ANTHROPIC_MODEL } from "../src/eval/runners/model-defaults.js";
 
 describe("model runners · mock", () => {
   it("mock runner returns deterministic HTML", async () => {
@@ -32,6 +33,19 @@ describe("model runners · mock", () => {
   });
 });
 
+describe("model-defaults · shared default is current", () => {
+  it("anthropicRunner falls back to the shared default when no model is passed", () => {
+    const r = anthropicRunner({ apiKey: "k" });
+    expect(r.id).toBe(DEFAULT_ANTHROPIC_MODEL);
+    expect(r.id).toBe("claude-opus-5-5");
+  });
+
+  it("claudeCodeCliRunner falls back to the same shared default", () => {
+    const r = claudeCodeCliRunner({});
+    expect(r.id).toBe(DEFAULT_ANTHROPIC_MODEL);
+  });
+});
+
 describe("runnerFromSpec", () => {
   it("resolves mock specs without network", async () => {
     expect((await runnerFromSpec("mock-slop")).provider).toBe("mock");
@@ -42,7 +56,6 @@ describe("runnerFromSpec", () => {
     const prev = {
       A: process.env.ANTHROPIC_API_KEY,
       O: process.env.OPENAI_API_KEY,
-      G: process.env.GEMINI_API_KEY,
       CF: process.env.CF_API_TOKEN,
       CFA: process.env.CF_ACCOUNT_ID,
       HF: process.env.HF_TOKEN,
@@ -51,8 +64,6 @@ describe("runnerFromSpec", () => {
     };
     delete process.env.ANTHROPIC_API_KEY;
     delete process.env.OPENAI_API_KEY;
-    delete process.env.GEMINI_API_KEY;
-    delete process.env.GOOGLE_API_KEY;
     delete process.env.CF_API_TOKEN;
     delete process.env.CLOUDFLARE_API_TOKEN;
     delete process.env.CF_ACCOUNT_ID;
@@ -63,14 +74,12 @@ describe("runnerFromSpec", () => {
     try {
       await expect(runnerFromSpec("claude-opus-4-7")).rejects.toThrow();
       await expect(runnerFromSpec("gpt-5")).rejects.toThrow();
-      await expect(runnerFromSpec("gemini-3-pro")).rejects.toThrow();
       await expect(
         runnerFromSpec("cf:@cf/meta/llama-3.3-70b-instruct-fp8-fast"),
       ).rejects.toThrow();
     } finally {
       if (prev.A) process.env.ANTHROPIC_API_KEY = prev.A;
       if (prev.O) process.env.OPENAI_API_KEY = prev.O;
-      if (prev.G) process.env.GEMINI_API_KEY = prev.G;
       if (prev.CF) process.env.CF_API_TOKEN = prev.CF;
       if (prev.CFA) process.env.CF_ACCOUNT_ID = prev.CFA;
       if (prev.HF) process.env.HF_TOKEN = prev.HF;
@@ -111,6 +120,10 @@ describe("runnerFromSpec", () => {
 
   it("rejects unknown spec", async () => {
     await expect(runnerFromSpec("weird-provider-x")).rejects.toThrow(/Unknown/);
+  });
+
+  it("rejects a bare gemini spec; the API runner was removed", async () => {
+    await expect(runnerFromSpec("gemini-3-pro")).rejects.toThrow(/Unknown/);
   });
 });
 
@@ -203,31 +216,6 @@ describe("provider request-id capture", () => {
     const r = openaiRunner({ apiKey: "k", model: "gpt-test" });
     const out = await r.run({ userPrompt: "x" });
     expect(out.requestId).toBe("req_oai_test_456");
-  });
-
-  it("gemini runner surfaces x-goog-request-id from response headers", async () => {
-    globalThis.fetch = vi.fn(async () => {
-      return new Response(
-        JSON.stringify({
-          candidates: [
-            {
-              content: { parts: [{ text: "<!doctype html><html></html>" }] },
-            },
-          ],
-          usageMetadata: { promptTokenCount: 5, candidatesTokenCount: 5 },
-        }),
-        {
-          status: 200,
-          headers: {
-            "content-type": "application/json",
-            "x-goog-request-id": "goog_test_789",
-          },
-        },
-      );
-    }) as any;
-    const r = geminiRunner({ apiKey: "k", model: "gemini-test" });
-    const out = await r.run({ userPrompt: "x" });
-    expect(out.requestId).toBe("goog_test_789");
   });
 
   it("runner output requestId is undefined when no header is present", async () => {

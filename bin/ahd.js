@@ -29,6 +29,7 @@ import { runLiveImageEval, formatImageEvalReport } from "../dist/eval/image-live
 import { WORKERS_AI_IMAGE_DEFAULTS } from "../dist/eval/runners/workers-ai-image.js";
 import { runTry, runTryImage } from "../dist/try.js";
 import { verifyReplay, formatVerifyReport } from "../dist/eval/verify-replay.js";
+import { retainRunPages, verifyRetainedRun } from "../dist/eval/retain.js";
 
 const ROOT = resolve(new URL("..", import.meta.url).pathname);
 const TOKENS = resolve(ROOT, "tokens");
@@ -395,9 +396,10 @@ async function main() {
       const sampleConcurrency = intFlag(rest, "--sample-concurrency", 1, { max: 32 });
       const outDir = flag(rest, "--out") ?? "evals";
       const reportFile = flag(rest, "--report");
+      const retainDir = flag(rest, "--retain");
       if (!token || !briefPath || !modelsCsv)
         exit(
-          "usage: ahd eval-live <token> --brief <brief.yml> --models <spec,spec,...> [--n <count>] [--sample-concurrency <count>] [--out <dir>] [--report <file.md>]\n  --sample-concurrency caps in-flight requests per (cell, condition). Default 1 (serial). 3+ is safe for CF-only runs; keep at 1 for subscription CLIs to avoid auth races.",
+          "usage: ahd eval-live <token> --brief <brief.yml> --models <spec,spec,...> [--n <count>] [--sample-concurrency <count>] [--out <dir>] [--report <file.md>] [--retain <dir>]\n  --sample-concurrency caps in-flight requests per (cell, condition). Default 1 (serial). 3+ is safe for CF-only runs; keep at 1 for subscription CLIs to avoid auth races.\n  --retain writes this invocation's generated pages and raw responses to a fresh, write-once directory (refuses if it already exists); carried-forward cells are never copied in.",
         );
       const models = modelsCsv.split(",").map((s) => s.trim()).filter(Boolean);
       const report = await runLiveEval({
@@ -422,6 +424,34 @@ async function main() {
       } else {
         console.log(text);
       }
+      if (retainDir) {
+        if (!report.runManifest) exit("--retain: no run manifest on this report, nothing to retain");
+        const replay = report.replay;
+        const epoch = replay
+          ? `schema${replay.schema_version}-n${replay.sampling.n}-${replay.token.hash.slice(0, 19)}-${replay.brief?.hash?.slice(0, 19) ?? "no-brief"}`
+          : `n${n}-${token}`;
+        const samplesRoot = resolve(outDir, token);
+        const sidecar = await retainRunPages({
+          samplesRoot,
+          runDir: retainDir,
+          manifest: report.runManifest,
+          epoch,
+          harnessCommit: replay?.ahd_commit ?? null,
+        });
+        console.log(`retained ${sidecar.pages.length} page(s) under ${retainDir}`);
+      }
+      return;
+    }
+
+    case "verify-retained-run": {
+      const runDir = rest[0];
+      if (!runDir) exit("usage: ahd verify-retained-run <dir>");
+      const result = await verifyRetainedRun(runDir);
+      console.log(
+        `verify-retained-run: ${result.pagesChecked} page(s) checked, ${result.ok ? "PASS" : "FAIL"}`,
+      );
+      for (const p of result.problems) console.log(`  - ${p}`);
+      if (!result.ok) process.exit(1);
       return;
     }
 
@@ -671,8 +701,9 @@ commands:
   ahd lint-rules                        list every source-level lint rule
   ahd vision-rules                      list every vision-only rule (run via the critic)
   ahd eval <token> [--samples dir]      aggregate lint scores across pre-rendered samples
-  ahd eval-live <token> --brief b.yml --models <spec,...> [--n 3] [--out dir] [--report r.md]
+  ahd eval-live <token> --brief b.yml --models <spec,...> [--n 3] [--out dir] [--report r.md] [--retain dir]
                                         run a brief through live text-to-HTML models, score via linter
+  ahd verify-retained-run <dir>         re-hash a retained run's pages against its sidecar
   ahd eval-image <token> --brief b.yml [--models <cfimg:@cf/...,...>] [--n 3] [--report r.md]
                                         run a brief through live image-generation models, score via vision critic
   ahd mcp-serve                         run the AHD MCP server over stdio
@@ -689,18 +720,21 @@ live-eval model specs:
   mock-slop, mock-swiss                 deterministic, offline
   claude-<id>                           requires ANTHROPIC_API_KEY
   gpt-<id> / o<n>                       requires OPENAI_API_KEY
-  gemini-<id>                           requires GEMINI_API_KEY or GOOGLE_API_KEY
   cf:<@cf/vendor/model>                 Cloudflare Workers AI (OSS models, free tier)
                                         requires CF_API_TOKEN + CF_ACCOUNT_ID
   ollama:<model>                        requires a running ollama at :11434
+  hf:<model>                            requires HF_TOKEN / HUGGINGFACE_API_TOKEN
+  claude-code:<id>                      subscription CLI, requires 'claude' on PATH + logged in
+  codex-cli:<id>                        subscription CLI, requires 'codex' on PATH + logged in
+  antigravity-cli:<id>                  subscription CLI, requires 'agy' on PATH + logged in
 
 image-generation specs (for ahd eval-image):
   cfimg:<@cf/vendor/model>              Cloudflare Workers AI image models (FLUX schnell, SDXL, etc.)
                                         requires CF_API_TOKEN + CF_ACCOUNT_ID
 
 CF AI Gateway (caching, rate limiting, spend tracking for any frontier provider):
-  CF_AI_GATEWAY=<account>/<gateway>     when set, claude-*, gpt-*, gemini-*
-                                        specs route through the gateway
+  CF_AI_GATEWAY=<account>/<gateway>     when set, claude-* or gpt-* specs
+                                        route through the gateway
                                         transparently (no spec change needed)
 
 docs: docs/SLOP_TAXONOMY.md, docs/LINTER_SPEC.md, docs/STYLE_TOKEN_SCHEMA.md, docs/TESTING.md, docs/ROADMAP.md`);

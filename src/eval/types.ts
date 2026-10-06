@@ -185,7 +185,7 @@ const ModelEntryCurrentSchema = z.object({
     .string()
     .min(1)
     .describe(
-      "Runner type that produced the samples (claude-code-cli, codex-cli, gemini-cli, cloudflare-workers-ai, anthropic, openai).",
+      "Runner type that produced the samples (claude-code-cli, codex-cli, antigravity-cli, cloudflare-workers-ai, anthropic, openai).",
     ),
   addedAt: z
     .string()
@@ -219,7 +219,7 @@ const ModelEntryTargetSchema = ModelEntryCurrentSchema.extend({
     .string()
     .min(1)
     .describe(
-      "Provider URL or canonical path (https://api.anthropic.com/v1/messages, @cf/<org>/<model>, gemini-cli://<binary-path>).",
+      "Provider URL or canonical path (https://api.anthropic.com/v1/messages, @cf/<org>/<model>, antigravity-cli://<binary-path>).",
     ),
   cliVersion: z
     .string()

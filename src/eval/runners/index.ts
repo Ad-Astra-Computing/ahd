@@ -1,12 +1,11 @@
 import { anthropicRunner } from "./anthropic.js";
 import { openaiRunner } from "./openai.js";
-import { geminiRunner } from "./gemini.js";
 import { ollamaRunner } from "./ollama.js";
 import { workersAiRunner } from "./workers-ai.js";
 import { huggingfaceRunner } from "./huggingface.js";
 import { claudeCodeCliRunner } from "./claude-code-cli.js";
 import { codexCliRunner } from "./codex-cli.js";
-import { geminiCliRunner } from "./gemini-cli.js";
+import { antigravityCliRunner } from "./antigravity-cli.js";
 import { mockRunner, slopResponder, swissResponder } from "./mock.js";
 import { cfGatewayUrl } from "./gateway.js";
 import type { ModelRunner } from "./types.js";
@@ -26,9 +25,9 @@ export async function runnerFromSpec(spec: string): Promise<ModelRunner> {
     const model = spec.slice("codex-cli:".length);
     return codexCliRunner({ model });
   }
-  if (spec.startsWith("gemini-cli:")) {
-    const model = spec.slice("gemini-cli:".length);
-    return geminiCliRunner({ model });
+  if (spec.startsWith("antigravity-cli:")) {
+    const model = spec.slice("antigravity-cli:".length);
+    return antigravityCliRunner({ model });
   }
   if (spec.startsWith("claude")) {
     const key = process.env.ANTHROPIC_API_KEY;
@@ -66,30 +65,20 @@ export async function runnerFromSpec(spec: string): Promise<ModelRunner> {
       baseURL: cfGatewayUrl("openai"),
     });
   }
-  if (spec.startsWith("gemini")) {
-    const key = process.env.GEMINI_API_KEY ?? process.env.GOOGLE_API_KEY;
-    if (!key) throw new Error("GEMINI_API_KEY is not set");
-    return geminiRunner({
-      apiKey: key,
-      model: spec,
-      baseURL: cfGatewayUrl("google-ai-studio"),
-    });
-  }
   throw new Error(
-    `Unknown model spec: ${spec}. Prefix with 'claude', 'gpt', 'gemini', 'cf:', 'ollama:', 'hf:', 'claude-code:', 'codex-cli:' or 'gemini-cli:', or use 'mock-slop' / 'mock-swiss'.`,
+    `Unknown model spec: ${spec}. Prefix with 'claude', 'gpt', 'cf:', 'ollama:', 'hf:', 'claude-code:', 'codex-cli:' or 'antigravity-cli:', or use 'mock-slop' / 'mock-swiss'.`,
   );
 }
 
 export {
   anthropicRunner,
   openaiRunner,
-  geminiRunner,
   ollamaRunner,
   workersAiRunner,
   huggingfaceRunner,
   claudeCodeCliRunner,
   codexCliRunner,
-  geminiCliRunner,
+  antigravityCliRunner,
   mockRunner,
   slopResponder,
   swissResponder,

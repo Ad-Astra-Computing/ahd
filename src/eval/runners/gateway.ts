@@ -1,14 +1,10 @@
-export type GatewayProvider =
-  | "anthropic"
-  | "openai"
-  | "google-ai-studio"
-  | "workers-ai";
+export type GatewayProvider = "anthropic" | "openai" | "workers-ai";
 
 // Security: provider API keys get sent to whatever URL this function
 // returns. The original implementation accepted any http(s) URL,
 // which meant a bad .env or a typo could silently route
-// OPENAI_API_KEY / ANTHROPIC_API_KEY / GEMINI_API_KEY through a
-// non-Cloudflare host. The loader now only accepts:
+// OPENAI_API_KEY / ANTHROPIC_API_KEY through a non-Cloudflare host.
+// The loader now only accepts:
 //   - the "<account>/<gateway>" shorthand, constructed into the
 //     canonical gateway.ai.cloudflare.com URL
 //   - a full URL that matches the canonical host exactly

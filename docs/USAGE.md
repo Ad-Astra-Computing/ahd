@@ -113,7 +113,7 @@ CF_API_TOKEN=… CF_ACCOUNT_ID=… \
     --report docs/evals/$(date +%Y-%m-%d)-swiss.md
 ```
 
-Add `claude-opus-4-7`, `gpt-5` or `gemini-3-pro` to the `--models` list if you have the keys. Every frontier call routes through Cloudflare AI Gateway transparently when `CF_AI_GATEWAY=<account>/<gateway>` is set, so you get caching and spend tracking for free.
+Add `claude-opus-5-5` or `gpt-6-astra` to the `--models` list if you have the keys. Every frontier call routes through Cloudflare AI Gateway transparently when `CF_AI_GATEWAY=<account>/<gateway>` is set, so you get caching and spend tracking for free.
 
 ### Image generation
 

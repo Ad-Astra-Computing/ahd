@@ -24,9 +24,6 @@ describe("CF AI Gateway resolution", () => {
     expect(cfGatewayUrl("openai")).toBe(
       "https://gateway.ai.cloudflare.com/v1/acc123/gw-design/openai",
     );
-    expect(cfGatewayUrl("google-ai-studio")).toBe(
-      "https://gateway.ai.cloudflare.com/v1/acc123/gw-design/google-ai-studio",
-    );
   });
 
   it("accepts a full URL only when the host is gateway.ai.cloudflare.com", () => {

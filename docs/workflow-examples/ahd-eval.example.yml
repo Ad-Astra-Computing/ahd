@@ -9,7 +9,6 @@
 #   CF_ACCOUNT_ID     - Cloudflare account id
 #   ANTHROPIC_API_KEY - optional, for claude-* model specs and the vision critic
 #   OPENAI_API_KEY    - optional, for gpt-* / o* model specs
-#   GEMINI_API_KEY    - optional, for gemini-* model specs
 #   CF_AI_GATEWAY     - optional, for routing frontier calls through CF gateway
 
 name: ahd · eval
@@ -52,7 +51,6 @@ jobs:
           CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           CF_AI_GATEWAY: ${{ secrets.CF_AI_GATEWAY }}
           TOKEN: ${{ github.event.inputs.token || 'swiss-editorial' }}
           BRIEF: ${{ github.event.inputs.brief || 'briefs/landing.yml' }}
@@ -60,9 +58,8 @@ jobs:
         run: |
           mkdir -p docs/evals
           MODELS="cf:@cf/meta/llama-3.3-70b-instruct-fp8-fast,cf:@cf/mistralai/mistral-small-3.1-24b-instruct,cf:@cf/qwen/qwen2.5-coder-32b-instruct"
-          if [ -n "$ANTHROPIC_API_KEY" ]; then MODELS="$MODELS,claude-opus-4-7"; fi
-          if [ -n "$OPENAI_API_KEY" ];    then MODELS="$MODELS,gpt-5"; fi
-          if [ -n "$GEMINI_API_KEY" ];    then MODELS="$MODELS,gemini-3-pro"; fi
+          if [ -n "$ANTHROPIC_API_KEY" ]; then MODELS="$MODELS,claude-opus-5-5"; fi
+          if [ -n "$OPENAI_API_KEY" ];    then MODELS="$MODELS,gpt-6-astra"; fi
           npx ahd eval-live "$TOKEN" \
             --brief "$BRIEF" \
             --models "$MODELS" \

@@ -10,13 +10,13 @@ AHD is a guardrail and evaluation layer for AI-generated design: web UI, graphic
 
 The product's one-line promise: AHD measures and reduces specific, repeated AI design failures, across web and image generation. The thirty-nine-tell taxonomy is named, versioned and linted; per-token forbidden lists and required quirks are enforced in CI; every eval publishes attempted counts, canonical model ids, extraction failures, per-model deltas and negative results. That combination, taxonomy plus reproducible scoring, is the moat, not the prompts.
 
-Today's shipped scope covers both verticals. **Web UI end-to-end**: text-to-HTML runners for Claude, GPT, Gemini and OSS models via Cloudflare Workers AI (plus subscription-CLI variants for the frontier three), a thirty-eight-rule source linter (35 HTML/CSS + 3 SVG), a fourteen-rule vision critic, a six-rule mobile-layout audit (`ahd audit-mobile` against a 375px viewport), Playwright screenshots, an MCP server and scoped ESLint / Stylelint plugins. **Image generation end-to-end**: `ahd eval-image` pipeline with a Cloudflare Workers AI image runner (FLUX, SDXL, DreamShaper), four image-specific vision rules added to the critic (malformed anatomy, Midjourney face symmetry, decorative cursive in renders, stock diversity casting), a three-rule SVG source linter (uniform-stroke, palette-bounds, perfect-symmetry) and two image-first tokens (`editorial-illustration`, `ad-creative-collision`). Additional image runners (Replicate, DALL·E 3, Imagen, Firefly) are the remaining adapter work.
+Today's shipped scope covers both verticals. **Web UI end-to-end**: text-to-HTML runners for Claude, GPT and OSS models via Cloudflare Workers AI, plus subscription-CLI runners for the frontier three (Claude, GPT, Gemini via Antigravity), a thirty-eight-rule source linter (35 HTML/CSS + 3 SVG), a fourteen-rule vision critic, a six-rule mobile-layout audit (`ahd audit-mobile` against a 375px viewport), Playwright screenshots, an MCP server and scoped ESLint / Stylelint plugins. **Image generation end-to-end**: `ahd eval-image` pipeline with a Cloudflare Workers AI image runner (FLUX, SDXL, DreamShaper), four image-specific vision rules added to the critic (malformed anatomy, Midjourney face symmetry, decorative cursive in renders, stock diversity casting), a three-rule SVG source linter (uniform-stroke, palette-bounds, perfect-symmetry) and two image-first tokens (`editorial-illustration`, `ad-creative-collision`). Additional image runners (Replicate, DALL·E 3, Imagen, Firefly) are the remaining adapter work.
 
 ---
 
 ## Measured, controlled, published
 
-The eval also runs as a weekly CI workflow against the same roster: five Cloudflare Workers AI open-source models, n=30 per cell, each report merged through a gated pull request into [docs/evals/weekly/](docs/evals/weekly/). Three June runs a week apart (9, 15 and 22 June) reproduced the same split: gemma-4, mistral-small-3.1 and gpt-oss-120b reduce tells by 53 to 73 percent under the compiled prompt, while llama-4-scout stays flat and qwen3-30b straddles zero. Latest published run: [docs/evals/weekly/2026-06-22.md](docs/evals/weekly/2026-06-22.md).
+The eval ran as a weekly CI workflow for sixteen runs against five Cloudflare Workers AI open-source models, n=30 per cell, each report merged through a gated pull request into [docs/evals/weekly/](docs/evals/weekly/). That series is closed; see [docs/adr/0002-eval-epochs-and-published-statistic.md](docs/adr/0002-eval-epochs-and-published-statistic.md) for why, and [docs/evals/weekly-epoch-recompute.md](docs/evals/weekly-epoch-recompute.md) for the reports recomputed with the severity-split statistic that replaces the blended figure. The eval now runs monthly, at a larger sample size and against a refreshed roster, under [docs/evals/monthly-roster/](docs/evals/monthly-roster/).
 
 <img src="docs/artwork/slop-distribution-n30.svg" alt="Measured slop-tell reduction by model, raw vs AHD-compiled, 22 April 2026 n=30" width="100%">
 
@@ -76,7 +76,7 @@ Full report with per-tell counts and the prompts used: [docs/evals/2026-04-21-ed
 
 **Slop linter.** `ahd lint <file.html|css|svg>` runs 35 HTML/CSS rules plus 3 SVG rules, in one pass against whatever input kind it is given. `eslint-plugin-ahd` and `stylelint-plugin-ahd` wrap the rule engine for editor integration.
 
-**Live-model eval.** `ahd eval-live <token> --brief b.yml --models <specs> --n N --report r.md` runs a controlled raw-vs-compiled comparison across Claude, GPT, Gemini, OSS models via Cloudflare Workers AI (free tier), and deterministic mock runners. Reports attempted, extractionFailed, errored and scored counts per cell; canonical model ids preserved via `evals/<token>/manifest.json`.
+**Live-model eval.** `ahd eval-live <token> --brief b.yml --models <specs> --n N --report r.md` runs a controlled raw-vs-compiled comparison across Claude, GPT, OSS models via Cloudflare Workers AI (free tier), the subscription-CLI frontier runners (Claude Code, Codex, Antigravity) and deterministic mock runners. Reports attempted, extractionFailed, errored and scored counts per cell; canonical model ids preserved via `evals/<token>/manifest.json`. The published figure is the severity-split absolute difference (errors and warnings, never blended), each with a 99.5 percent Welch t interval on the run's own per-page mean tell counts (each arm's variance floored so a stratum that never varies does not carry zero uncertainty, a BCa bootstrap kept alongside as a recorded cross-check), a per-rule ledger and a derived verdict; see `docs/specs/0001-published-eval-statistic.md`. `--retain <dir>` copies the invocation's generated pages and raw responses into a fresh, write-once run directory alongside the report, so a future evaluator defect stays repairable; `ahd verify-retained-run <dir>` re-hashes it offline. See `docs/REPLAY.md`.
 
 **Vision critic.** `ahd critique <token>` renders each sample via headless Chromium and runs a multimodal vision model against 14 vision-only rules (9 web/graphic, 4 image-specific, 1 layout), with rate-limit-aware retry/backoff. `--critic claude-code` (default) runs via Claude Code subscription for zero API cost; `--critic anthropic` runs via HTTP API and needs `ANTHROPIC_API_KEY`; `--critic mock` runs offline for deterministic tests. Chromium is resolved via `AHD_CHROMIUM_PATH` / `PATH`; use `nix-shell` (the flake's devShell provides `pkgs.chromium`) rather than `npx playwright install`.
 
@@ -139,15 +139,15 @@ CF_API_TOKEN=… CF_ACCOUNT_ID=… \
 # Plus frontier via provider API keys (CF_AI_GATEWAY optional proxy)
 ahd eval-live swiss-editorial \
   --brief briefs/landing.yml \
-  --models claude-opus-4-7,gpt-5,gemini-3.1-pro-preview,cf:@cf/mistralai/mistral-small-3.1-24b-instruct \
+  --models claude-opus-5-5,gpt-6-astra,cf:@cf/mistralai/mistral-small-3.1-24b-instruct \
   --n 10 \
   --report docs/evals/latest.md
 
-# Frontier via subscription CLIs (Claude Code / Codex / Gemini CLI,
+# Frontier via subscription CLIs (Claude Code / Codex / Antigravity,
 # no API billing; requires the CLIs on PATH and logged in)
 ahd eval-live swiss-editorial \
   --brief briefs/landing.yml \
-  --models claude-code:claude-opus-4-7,codex-cli:gpt-5.4,gemini-cli:gemini-3.1-pro-preview,cf:@cf/meta/llama-3.3-70b-instruct-fp8-fast \
+  --models claude-code:claude-opus-5-5,codex-cli:gpt-6-codex,antigravity-cli:gemini-3.1-pro-high,cf:@cf/meta/llama-3.3-70b-instruct-fp8-fast \
   --n 10 \
   --report docs/evals/latest.md
 
