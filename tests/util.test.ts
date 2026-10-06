@@ -5,6 +5,7 @@ import {
   proseText,
   collectRootVars,
   resolveVars,
+  lineOf,
 } from "../src/lint/util.js";
 import type { LintInput } from "../src/lint/types.js";
 
@@ -89,6 +90,41 @@ describe("util · parseHtml + proseText", () => {
     const fragText = Array.from(proseText(frag)).map((e) => e.text);
     expect(docText).toContain("Hi");
     expect(fragText).toContain("Hi");
+  });
+
+  // Regression guard: collectProseText used to recurse once per nested
+  // element. Several thousand levels of wrapper <span> blew the call
+  // stack, which engine.ts's catch turned into a silently skipped
+  // rule rather than a reported error. Walking with an explicit stack
+  // has no depth limit.
+  it("handles several thousand levels of nested prose elements", () => {
+    const depth = 5000;
+    const html = "<span>".repeat(depth) + "deep" + "</span>".repeat(depth);
+    const tree = parseHtml(input(`<p>${html}</p>`));
+    const pText = Array.from(proseText(tree)).find(
+      (e) => e.element.tagName === "p",
+    );
+    expect(pText!.text).toContain("deep");
+  });
+});
+
+describe("util · lineOf", () => {
+  it("returns 1-indexed line numbers", () => {
+    const source = "a\nb\nc";
+    expect(lineOf(source, 0)).toBe(1);
+    expect(lineOf(source, 2)).toBe(2);
+    expect(lineOf(source, 4)).toBe(3);
+  });
+
+  it("stays fast across many calls against a large shared source", () => {
+    const source = Array.from({ length: 80_000 }, (_, i) => `<img ${i}>`).join(
+      "\n",
+    );
+    const start = Date.now();
+    for (let i = 0; i < 1000; i++) {
+      lineOf(source, i * 50);
+    }
+    expect(Date.now() - start).toBeLessThan(500);
   });
 });
 

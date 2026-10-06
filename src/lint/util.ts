@@ -4,8 +4,35 @@ import type { Root as PostcssRoot } from "postcss";
 import type { DefaultTreeAdapterMap } from "parse5";
 import type { Violation, Rule, LintInput } from "./types.js";
 
+// lineOf used to slice and split from offset 0 on every call: O(n) per
+// violation, O(n * violations) per file. A single-entry cache of the
+// newline offsets for the last-seen source turns repeat calls (the
+// common case: every violation in a file shares the same source
+// string) into one O(n) pass plus O(log n) binary searches.
+let _lineOffsetCache: { source: string; offsets: number[] } | null = null;
+
+function lineOffsets(source: string): number[] {
+  if (_lineOffsetCache && _lineOffsetCache.source === source) {
+    return _lineOffsetCache.offsets;
+  }
+  const offsets = [0];
+  for (let i = 0; i < source.length; i++) {
+    if (source.charCodeAt(i) === 10) offsets.push(i + 1);
+  }
+  _lineOffsetCache = { source, offsets };
+  return offsets;
+}
+
 export function lineOf(source: string, offset: number): number {
-  return source.slice(0, offset).split("\n").length;
+  const offsets = lineOffsets(source);
+  let lo = 0;
+  let hi = offsets.length - 1;
+  while (lo < hi) {
+    const mid = (lo + hi + 1) >>> 1;
+    if (offsets[mid] <= offset) lo = mid;
+    else hi = mid - 1;
+  }
+  return lo + 1;
 }
 
 export function findAll(source: string, pattern: RegExp): RegExpExecArray[] {
@@ -173,16 +200,25 @@ export function* proseText(tree: Parse5Node): Generator<{
   }
 }
 
+// Iterative, not recursive: a deeply nested document (thousands of
+// wrapper spans) blew the call stack here, which engine.ts's catch
+// turned into a silently skipped rule rather than a reported error.
 function collectProseText(element: Parse5Element): string {
   let out = "";
-  const childNodes = (element as any).childNodes as Parse5Node[] | undefined;
-  if (!childNodes) return out;
-  for (const child of childNodes) {
-    if (isElement(child)) {
-      if (NON_PROSE_TAGS.has(child.tagName)) continue;
-      out += collectProseText(child);
-    } else if ((child as any).nodeName === "#text") {
-      out += (child as any).value as string;
+  const stack: Parse5Node[] = [];
+  const rootChildren = (element as any).childNodes as Parse5Node[] | undefined;
+  if (!rootChildren) return out;
+  for (let i = rootChildren.length - 1; i >= 0; i--) stack.push(rootChildren[i]);
+  while (stack.length > 0) {
+    const node = stack.pop()!;
+    if (isElement(node)) {
+      if (NON_PROSE_TAGS.has(node.tagName)) continue;
+      const childNodes = (node as any).childNodes as Parse5Node[] | undefined;
+      if (childNodes) {
+        for (let i = childNodes.length - 1; i >= 0; i--) stack.push(childNodes[i]);
+      }
+    } else if ((node as any).nodeName === "#text") {
+      out += (node as any).value as string;
     }
   }
   return out;
