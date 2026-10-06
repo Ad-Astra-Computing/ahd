@@ -106,6 +106,14 @@ jobs:
             ]) {
               const j = JSON.parse(fs.readFileSync(p, 'utf8'));
               j.version = NEW;
+              // Each plugin's dependency on the root package is a real
+              // semver range (never 'file:../..', which breaks once
+              // published: a real consumer has no monorepo root to
+              // resolve it against). Keep it pinned to the release
+              // version so it never trails the bump above.
+              if (j.dependencies && j.dependencies['@adastracomputing/ahd']) {
+                j.dependencies['@adastracomputing/ahd'] = `^${NEW}`;
+              }
               fs.writeFileSync(p, JSON.stringify(j, null, 2) + '\n');
             }
           "
