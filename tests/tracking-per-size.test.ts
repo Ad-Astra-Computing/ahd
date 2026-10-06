@@ -70,4 +70,73 @@ describe("ahd/tracking-per-size", () => {
     const violations = check(html);
     expect(violations.some((v) => /Display-size/.test(v.message))).toBe(false);
   });
+
+  it("does not fire when tracking and size sit in split blocks under a shared selector (sample-013 shape)", () => {
+    const html = `
+      <style>
+        h1, .display {
+          letter-spacing: -0.02em;
+        }
+        h1 {
+          font-size: 140px;
+        }
+      </style>
+    `;
+    const violations = check(html);
+    expect(violations.some((v) => /Display-size/.test(v.message))).toBe(false);
+  });
+
+  it("does not fire the all-caps branch when opened tracking and uppercase sit in split blocks under a shared selector", () => {
+    const html = `
+      <style>
+        .label, .allcaps {
+          letter-spacing: 0.08em;
+        }
+        .allcaps {
+          text-transform: uppercase;
+        }
+      </style>
+    `;
+    const violations = check(html);
+    expect(violations.some((v) => /All-caps/.test(v.message))).toBe(false);
+  });
+
+  it("still fires when the split-block tracking belongs to an unrelated selector", () => {
+    const html = `
+      <style>
+        h1 { font-size: 96px; }
+        .other { letter-spacing: -0.02em; }
+      </style>
+    `;
+    const violations = check(html);
+    expect(violations.some((v) => /Display-size/.test(v.message))).toBe(true);
+  });
+
+  it("strips CSS comments before splitting blocks so a comment does not merge into the selector", () => {
+    const html = `
+      <style>
+        /* rule: display tracking */
+        h1, .display {
+          letter-spacing: -0.02em;
+        }
+        /* rule: display size */
+        h1 {
+          font-size: 140px; /* rule: >= 120px */
+        }
+      </style>
+    `;
+    const violations = check(html);
+    expect(violations.some((v) => /Display-size/.test(v.message))).toBe(false);
+  });
+
+  it("still fires when a page genuinely lacks tracking anywhere, split blocks or not", () => {
+    const html = `
+      <style>
+        h1 { font-size: 96px; }
+        h2 { font-size: 60px; }
+      </style>
+    `;
+    const violations = check(html);
+    expect(violations.some((v) => /Display-size/.test(v.message))).toBe(true);
+  });
 });

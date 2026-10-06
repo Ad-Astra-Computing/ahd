@@ -1,10 +1,10 @@
 # Testing strategy
 
-The hard question about a framework like AHD is whether it actually moves an LLM off its median. That question is empirical, expensive to answer honestly, and not answerable with unit tests. The easy question is whether the framework itself is internally consistent. That one is cheap.
+The hard question about a framework like AHD is whether it actually moves an LLM off its median. That question is empirical and expensive to answer honestly. Unit tests cannot answer it. The easy question is whether the framework itself is internally consistent. That one is cheap.
 
 AHD's test strategy separates those two questions across three tiers. Tier 1 is live. Tier 2 ships with the linter. Tier 3 is the eval harness and is what the v0.2 roadmap exists to build.
 
-## Tier 1 — library invariants (live)
+## Tier 1: library invariants (live)
 
 Unit tests over the repo itself. Fast, deterministic, no network, no LLM. Their job is to keep the substrate honest.
 
@@ -22,18 +22,18 @@ What they do not assert: anything about what an LLM does with the output.
 
 Run: `npm test`. Today: 6 tests, all green.
 
-## Tier 2 — compiled-output structure (with v0.3 linter)
+## Tier 2: compiled-output structure (with v0.3 linter)
 
 Fixture-based tests over HTML, CSS, JSX and SVG, using the linter (`eslint-plugin-ahd`, `stylelint-plugin-ahd`, `ahd critique`) as the oracle. Still deterministic, still cheap, still no LLM at runtime.
 
 Two corpora live under `tests/fixtures/`:
 
-- `slop/` — known-bad landing pages curated from public sources. Expected to trip a documented set of rules per fixture.
-- `clean/` — canonical-good pages (a Müller-Brockmann-flavoured landing, a Gumroad-era page, a post-digital terminal page). Expected to pass with zero violations.
+- `slop/`: known-bad landing pages curated from public sources. Expected to trip a documented set of rules per fixture.
+- `clean/`: canonical-good pages (a Müller-Brockmann-flavoured landing, a Gumroad-era page, a post-digital terminal page). Expected to pass with zero violations.
 
 Each fixture ships with a sibling `.expected.json` listing the rule ids it must hit. Tests fail if the linter over-reports (false positives on `clean/`) or under-reports (false negatives on `slop/`). This is how the 39-tell taxonomy graduates from a document into a test oracle.
 
-## Tier 3 — empirical eval (v0.2 roadmap)
+## Tier 3: empirical eval (v0.2 roadmap)
 
 The only tier that answers *does AHD actually move LLMs off the median*. Not a unit test. A proper ML eval.
 
@@ -56,7 +56,7 @@ Results land in `docs/evals/<date>-<token>.md`, with raw samples preserved so ru
 Caveats baked in from day one:
 
 - **Non-determinism.** Tests are probabilistic. Confidence intervals published alongside every number. No `assert.equal` in an eval.
-- **Cost.** API spend is real. Runs are triggered on a schedule (weekly) and on token-level PRs, not on every commit.
+- **Cost.** API spend is real. Runs are triggered on a schedule (monthly) and on token-level PRs, not on every commit.
 - **Drift.** Model versions change. Every eval row records the exact model id and date. Old numbers are not overwritten, they are superseded.
 - **Scorer bias.** A vision-critic LLM scoring an LLM's output is not independent. We mitigate by triangulating source-level deterministic rules against the critic, and by occasional human spot-checks published in `docs/evals/`.
 
@@ -68,6 +68,6 @@ Caveats baked in from day one:
 
 ## Why this order
 
-Tier 1 first because without a valid substrate Tier 2 and Tier 3 test noise. Tier 2 before Tier 3 because the linter is the scorer, and you cannot run an eval without a scorer. Tier 3 last because until the first two exist, any empirical claim is expensive and fragile, and the README shouldn't make claims the repo can't back.
+Tier 1 first because without a valid substrate Tier 2 and Tier 3 test noise. Tier 2 before Tier 3 because the linter is the scorer, and you cannot run an eval without a scorer. Tier 3 last because until the first two exist, any empirical claim is expensive and fragile, and the README should not make claims the repo cannot back.
 
 Until Tier 3 lands, the public claim is "aimed at" rather than "does". That is the honest version.

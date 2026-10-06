@@ -12,15 +12,12 @@ import { resolve } from "node:path";
 // model to move its numbers, they only have to add, remove or widen a lint
 // rule.
 //
-// The same figures are published on ahd.adastra.computer's 24 April page,
-// so drift here is drift on a public claim. Re-linting costs about 1.5
-// seconds, cheap enough to pay on every push rather than discovering the
-// divergence at the next release.
+// Re-linting costs about 1.5 seconds, cheap enough to pay on every push.
 //
-// Scope: this guards the eleven per-model reduction percentages, which are
-// the figures the site republishes. It does not guard the mean-tell
-// columns, the attempted/scored counts or the per-tell frequency table. A
-// change that moved those without moving any reduction would pass here.
+// Checks the per-model, per-severity diff (raw mean minus compiled mean)
+// against the severity-split statistic, not the ratio or verdict, which
+// can move for reasons unrelated to a ruleset change. Does not guard the
+// mean-tell columns, attempted/scored counts or the per-tell table.
 //
 // If this fails, the ruleset changed and one of two things is true:
 //   1. The change is correct, and both the report and the site's 24 April
@@ -35,35 +32,39 @@ const REPORT = resolve(ROOT, "docs/evals/2026-04-24-post-digital-green-n30-relin
 const SAMPLES_ROOT = resolve(ROOT, "evals");
 const SAMPLES_DIR = resolve(SAMPLES_ROOT, "post-digital-green");
 const CLI = resolve(ROOT, "bin/ahd.js");
-const EXPECTED_CELLS = 11;
+const EXPECTED_CELLS = 33; // 11 models x 3 severities
 
-// A reduction cell as the report renders it: optional sign, digits, exactly
-// one decimal place. Deliberately strict. A loose `-?[\d.]+` accepts "." and
-// "1..2", which Number() turns into NaN, and every NaN comparison is false,
-// so corrupt figures would pass as matching.
-const ROW = /^\|\s*`([^`]+)`\s*\|.*\|\s*(-?\d+\.\d)%\s*\|\s*$/;
+const MODEL_HEADING = /^### `([^`]+)`$/;
+// | severity | raw mean | compiled mean | diff (raw − compiled) | 99.5% interval | ratio | verdict |
+const SEVERITY_ROW = /^\|\s*(error|warn|info)\s*\|\s*(-?\d+\.\d+)\s*\|\s*(-?\d+\.\d+)\s*\|\s*(-?\d+\.\d+)\s*\|/;
 
 /**
- * Pull the per-model reduction column out of an `ahd eval` markdown report.
- * Rows look like:
- *   | `model-id` | 30 → 30 | 30 → 30 | 1.40 | 0.73 | 0.67 | 47.6% |
- * Throws on a duplicate model row so a mangled table cannot quietly
- * shadow one cell with another.
+ * Pull the per-model, per-severity diff out of an `ahd eval` markdown
+ * report's "Per-model severity split" section. Throws on a duplicate
+ * (model, severity) row so a mangled table cannot quietly shadow one cell
+ * with another.
  */
-function reductionsFrom(markdown: string, source: string): Map<string, number> {
+function severityDiffsFrom(markdown: string, source: string): Map<string, number> {
   const out = new Map<string, number>();
+  let model: string | null = null;
   for (const line of markdown.split("\n")) {
-    const m = line.match(ROW);
-    if (!m) continue;
-    const [, model, value] = m;
-    if (out.has(model)) {
-      throw new Error(`${source}: duplicate row for ${model}`);
+    const heading = line.match(MODEL_HEADING);
+    if (heading) {
+      model = heading[1];
+      continue;
     }
-    const n = Number(value);
+    const row = line.match(SEVERITY_ROW);
+    if (!row || !model) continue;
+    const [, severity, , , diff] = row;
+    const key = `${model}|${severity}`;
+    if (out.has(key)) {
+      throw new Error(`${source}: duplicate row for ${key}`);
+    }
+    const n = Number(diff);
     if (!Number.isFinite(n)) {
-      throw new Error(`${source}: unparseable reduction for ${model}: ${value}`);
+      throw new Error(`${source}: unparseable diff for ${key}: ${diff}`);
     }
-    out.set(model, n);
+    out.set(key, n);
   }
   return out;
 }
@@ -77,19 +78,19 @@ describe("published token-aware re-lint has not drifted", () => {
     expect(existsSync(SAMPLES_DIR), `missing ${SAMPLES_DIR}`).toBe(true);
   });
 
-  it("the report records a reduction for every cell in the run", () => {
-    const published = reductionsFrom(readFileSync(REPORT, "utf8"), "report");
+  it("the report records a severity-split diff for every cell in the run", () => {
+    const published = severityDiffsFrom(readFileSync(REPORT, "utf8"), "report");
     expect(published.size).toBe(EXPECTED_CELLS);
   });
 
   it("re-linting the committed samples reproduces every published figure", () => {
-    const published = reductionsFrom(readFileSync(REPORT, "utf8"), "report");
+    const published = severityDiffsFrom(readFileSync(REPORT, "utf8"), "report");
     const stdout = execFileSync(
       process.execPath,
       [CLI, "eval", "post-digital-green", "--samples", SAMPLES_ROOT],
       { cwd: ROOT, encoding: "utf8", maxBuffer: 32 * 1024 * 1024 },
     );
-    const fresh = reductionsFrom(stdout, "fresh re-lint");
+    const fresh = severityDiffsFrom(stdout, "fresh re-lint");
 
     // Compare the key sets both ways. A one-way loop over the published
     // rows would ignore a cell that appeared in a fresh run but was never
@@ -97,13 +98,13 @@ describe("published token-aware re-lint has not drifted", () => {
     expect([...fresh.keys()].sort()).toEqual([...published.keys()].sort());
 
     const drifted: string[] = [];
-    for (const [model, expectedValue] of published) {
-      const actual = fresh.get(model)!;
-      // Both sides render to one decimal place, so two visibly different
-      // figures differ by at least 0.1. The 0.05 threshold sits inside that
-      // gap and absorbs "-0.0" against "0.0".
-      if (Math.abs(expectedValue - actual) > 0.05) {
-        drifted.push(`${model}: published ${expectedValue}%, re-lint ${actual}%`);
+    for (const [key, expectedValue] of published) {
+      const actual = fresh.get(key)!;
+      // Both sides render to two decimal places, so two visibly different
+      // figures differ by at least 0.01. The 0.005 threshold sits inside
+      // that gap and absorbs "-0.00" against "0.00".
+      if (Math.abs(expectedValue - actual) > 0.005) {
+        drifted.push(`${key}: published ${expectedValue}, re-lint ${actual}`);
       }
     }
 
@@ -114,5 +115,5 @@ describe("published token-aware re-lint has not drifted", () => {
         )}\nSee the header comment in this test before changing anything.`,
       );
     }
-  });
+  }, 60_000);
 });

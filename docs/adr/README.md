@@ -9,4 +9,5 @@ sequentially and never reuse a number. Do not rewrite an accepted ADR.
 Supersede it with a new one and set the old one's status to superseded.
 
 Format is Michael Nygard's: context, decision, consequences. See
-`STANDARD/02-development-method.md`.
+`STANDARD/02-development-method.md` in the Ad Astra project skeleton
+checkout; it is not part of this repo.

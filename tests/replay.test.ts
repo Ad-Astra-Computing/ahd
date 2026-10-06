@@ -161,6 +161,128 @@ describe("captureReplay", () => {
     }
   });
 
+  it("passes through per-cell measurements when provided", () => {
+    const r = captureReplay({
+      ...baseInput,
+      measurements: [
+        {
+          model: "cf:@cf/google/gemma-4-26b-a4b-it",
+          condition: "raw",
+          samples: [
+            {
+              sampleId: "sample-001.html",
+              tellsFired: ["gradient-text", "shimmer"],
+              byteLength: 1234,
+              hash: "sha256:" + "a".repeat(64),
+              scored: true,
+            },
+          ],
+        },
+      ],
+    });
+    expect(r.measurements).toEqual([
+      {
+        model: "cf:@cf/google/gemma-4-26b-a4b-it",
+        condition: "raw",
+        samples: [
+          {
+            sample_id: "sample-001.html",
+            tells: ["gradient-text", "shimmer"],
+            byte_length: 1234,
+            hash: "sha256:" + "a".repeat(64),
+            scored: true,
+          },
+        ],
+      },
+    ]);
+    expect(ReplaySchema.safeParse(r).success).toBe(true);
+  });
+
+  it("omits measurements when not provided, and stays schema-valid", () => {
+    const r = captureReplay(baseInput);
+    expect(r.measurements).toBeUndefined();
+    expect(ReplaySchema.safeParse(r).success).toBe(true);
+  });
+
+  it("passes through per-stratum interval provenance when provided", () => {
+    const r = captureReplay({
+      ...baseInput,
+      strata: [
+        {
+          model: "cf:@cf/google/gemma-4-26b-a4b-it",
+          severity: "error",
+          estimator: "welch-t",
+          df: 57.6,
+          varianceFloor: { raw: 0.165, cmp: 0.165 },
+          varianceUsed: { raw: 0.2, cmp: 0.165 },
+          bootstrapCrossCheck: {
+            method: "bca",
+            estimate: 0.3,
+            lower: 0.1,
+            upper: 0.5,
+            iterations: 2000,
+            alpha: 0.05,
+            seed: 42,
+          },
+        },
+      ],
+    });
+    expect(r.strata).toEqual([
+      {
+        model: "cf:@cf/google/gemma-4-26b-a4b-it",
+        severity: "error",
+        estimator: "welch-t",
+        df: 57.6,
+        variance_floor: { raw: 0.165, cmp: 0.165 },
+        variance_used: { raw: 0.2, cmp: 0.165 },
+        bootstrap_cross_check: {
+          method: "bca",
+          estimate: 0.3,
+          lower: 0.1,
+          upper: 0.5,
+          iterations: 2000,
+          alpha: 0.05,
+          seed: 42,
+        },
+      },
+    ]);
+    expect(ReplaySchema.safeParse(r).success).toBe(true);
+  });
+
+  it("omits strata when not provided, and stays schema-valid", () => {
+    const r = captureReplay(baseInput);
+    expect(r.strata).toBeUndefined();
+    expect(ReplaySchema.safeParse(r).success).toBe(true);
+  });
+
+  it("passes through per-model sample_requests, including null request ids", () => {
+    const r = captureReplay({
+      ...baseInput,
+      models: [
+        {
+          id: "cf:@cf/google/gemma-4-26b-a4b-it",
+          provider: "cloudflare-workers-ai",
+          provider_request_ids: ["req-001"],
+          sampleRequests: [
+            { condition: "raw", sample: 1, requestId: "req-001" },
+            { condition: "raw", sample: 2, requestId: null },
+          ],
+        },
+      ],
+    });
+    expect(r.models[0].sample_requests).toEqual([
+      { condition: "raw", sample: 1, request_id: "req-001" },
+      { condition: "raw", sample: 2, request_id: null },
+    ]);
+    expect(ReplaySchema.safeParse(r).success).toBe(true);
+  });
+
+  it("omits sample_requests when not provided", () => {
+    const r = captureReplay(baseInput);
+    expect(r.models[0].sample_requests).toBeUndefined();
+    expect(ReplaySchema.safeParse(r).success).toBe(true);
+  });
+
   it("hashes deterministically across object reorderings", () => {
     const a = captureReplay(baseInput);
     const b = captureReplay({
@@ -208,6 +330,69 @@ describe("ReplaySchema · rejects malformed blocks", () => {
     const r = valid();
     r.sampling.n = 0;
     expect(ReplaySchema.safeParse(r).success).toBe(false);
+  });
+
+  it("rejects a measurements entry with an invalid condition", () => {
+    const r = {
+      ...valid(),
+      measurements: [{ model: "m", condition: "raw-ish", samples: [] }],
+    };
+    expect(ReplaySchema.safeParse(r).success).toBe(false);
+  });
+
+  it("rejects a measurements sample hash without the sha256: prefix", () => {
+    const r = {
+      ...valid(),
+      measurements: [
+        {
+          model: "m",
+          condition: "raw",
+          samples: [
+            {
+              sample_id: "sample-001.html",
+              tells: [],
+              byte_length: 10,
+              hash: "not-a-hash",
+              scored: true,
+            },
+          ],
+        },
+      ],
+    };
+    expect(ReplaySchema.safeParse(r).success).toBe(false);
+  });
+
+  it("rejects a sample_requests entry with a non-positive sample number", () => {
+    const r = valid();
+    (r.models as unknown[]) = [
+      {
+        id: "m",
+        provider: "p",
+        provider_request_ids: [],
+        sample_requests: [{ condition: "raw", sample: 0, request_id: null }],
+      },
+    ];
+    expect(ReplaySchema.safeParse(r).success).toBe(false);
+  });
+});
+
+describe("ReplaySchema · existing published sidecars", () => {
+  it("still validates every weekly replay.json without a measurements key", async () => {
+    const { readdir, readFile } = await import("node:fs/promises");
+    const { resolve, join: joinPath } = await import("node:path");
+    const dir = resolve(__dirname, "..", "docs", "evals", "weekly");
+    const files = (await readdir(dir)).filter((f) =>
+      f.endsWith(".replay.json"),
+    );
+    expect(files.length).toBeGreaterThanOrEqual(11);
+    for (const f of files) {
+      const raw = JSON.parse(await readFile(joinPath(dir, f), "utf8"));
+      expect(raw.measurements).toBeUndefined();
+      const parsed = ReplaySchema.safeParse(raw);
+      if (!parsed.success) {
+        throw new Error(`${f} failed schema: ${parsed.error.message}`);
+      }
+    }
   });
 });
 

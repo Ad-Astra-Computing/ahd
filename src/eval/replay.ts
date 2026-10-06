@@ -3,7 +3,7 @@ import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 import { resolve as resolvePath, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-import type { Replay } from "./types.js";
+import type { Condition, Replay } from "./types.js";
 
 // captureReplay produces the Replay block emitted alongside every eval
 // report. Pure aside from the best-effort git shell-out and the package.json
@@ -30,6 +30,15 @@ export interface CaptureReplayInput {
     id: string;
     provider: string;
     provider_request_ids: string[];
+    // Per-sample provenance: one entry per completed provider call for
+    // this model, across both conditions. requestId is null when the
+    // provider returned no id, so a shorter provider_request_ids array
+    // becomes a stated count of misses instead of a silent gap.
+    sampleRequests?: Array<{
+      condition: Condition;
+      sample: number;
+      requestId: string | null;
+    }>;
   }>;
   conditions: {
     requested: string[];
@@ -37,6 +46,41 @@ export interface CaptureReplayInput {
   };
   invokedAt: Date;
   argv: string[];
+  // Per-cell sample measurements behind the published mean-tells
+  // figures. Absent when the caller has no cells to report against
+  // (critique, eval-image, mock-only runs that skip scoring).
+  measurements?: Array<{
+    model: string;
+    condition: Condition;
+    samples: Array<{
+      sampleId: string;
+      tellsFired: string[];
+      byteLength: number;
+      hash: string;
+      scored: boolean;
+    }>;
+  }>;
+  // Per-model, per-severity interval provenance: the Welch degrees
+  // of freedom, the variance floor and the value actually used, and
+  // the BCa bootstrap cross-check, so a reader can see what the
+  // report's own interval was built from without recomputing it.
+  strata?: Array<{
+    model: string;
+    severity: "error" | "warn" | "info";
+    estimator?: "welch-t";
+    df?: number;
+    varianceFloor?: { raw: number; cmp: number };
+    varianceUsed?: { raw: number; cmp: number };
+    bootstrapCrossCheck?: {
+      method: "bca";
+      estimate: number;
+      lower: number;
+      upper: number;
+      iterations: number;
+      alpha: number;
+      seed: number;
+    };
+  }>;
 }
 
 export function captureReplay(input: CaptureReplayInput): Replay {
@@ -71,11 +115,50 @@ export function captureReplay(input: CaptureReplayInput): Replay {
       id: m.id,
       provider: m.provider,
       provider_request_ids: [...m.provider_request_ids],
+      ...(m.sampleRequests
+        ? {
+            sample_requests: m.sampleRequests.map((r) => ({
+              condition: r.condition,
+              sample: r.sample,
+              request_id: r.requestId,
+            })),
+          }
+        : {}),
     })),
     conditions: {
       requested: [...input.conditions.requested],
       effective: [...input.conditions.effective],
     },
+    ...(input.measurements
+      ? {
+          measurements: input.measurements.map((cell) => ({
+            model: cell.model,
+            condition: cell.condition,
+            samples: cell.samples.map((s) => ({
+              sample_id: s.sampleId,
+              tells: s.tellsFired,
+              byte_length: s.byteLength,
+              hash: s.hash,
+              scored: s.scored,
+            })),
+          })),
+        }
+      : {}),
+    ...(input.strata
+      ? {
+          strata: input.strata.map((s) => ({
+            model: s.model,
+            severity: s.severity,
+            ...(s.estimator ? { estimator: s.estimator } : {}),
+            ...(s.df !== undefined ? { df: s.df } : {}),
+            ...(s.varianceFloor ? { variance_floor: s.varianceFloor } : {}),
+            ...(s.varianceUsed ? { variance_used: s.varianceUsed } : {}),
+            ...(s.bootstrapCrossCheck
+              ? { bootstrap_cross_check: s.bootstrapCrossCheck }
+              : {}),
+          })),
+        }
+      : {}),
   };
 }
 
@@ -126,7 +209,7 @@ function readGitState(): { commit: string | null; dirty: boolean | null } {
 }
 
 let cachedAhdVersion: string | null = null;
-function readAhdVersion(): string {
+export function readAhdVersion(): string {
   const env = process.env.AHD_VERSION;
   if (env && env.length > 0) return env;
   if (cachedAhdVersion) return cachedAhdVersion;

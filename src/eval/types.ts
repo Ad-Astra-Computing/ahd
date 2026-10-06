@@ -1,4 +1,5 @@
 import { z } from "zod";
+import type { InspectionFlag } from "./historical.js";
 
 export type Condition = "raw" | "compiled";
 export type ModelId = string;
@@ -23,6 +24,18 @@ export interface CellCounts {
   scored: number;
 }
 
+// One row per scored sample: the rule ids it tripped plus enough about
+// the sample itself (byte length, content hash) that a published mean
+// can be re-derived, and a real reduction told apart from a shorter
+// page tripping fewer rules by having less surface.
+export interface SampleMeasurement {
+  sampleId: string;
+  tellsFired: string[];
+  byteLength: number;
+  hash: string;
+  scored: boolean;
+}
+
 export interface EvalCell {
   model: ModelId;
   condition: Condition;
@@ -31,22 +44,83 @@ export interface EvalCell {
   perTellFrequency: Record<string, number>;
   counts: CellCounts;
   canonicalModelId: string;
+  samples: SampleMeasurement[];
+}
+
+// Per docs/specs/0001-published-eval-statistic.md: the headline is
+// the severity-split absolute difference, never a blended mean, with
+// an interval and a derived verdict on every figure.
+export interface StratumReport {
+  severity: "error" | "warn" | "info";
+  rawMean: number;
+  cmpMean: number;
+  diff: number; // rawMean - cmpMean; positive means the compiled arm has fewer tells
+  ratio: number | null; // null when rawMean is below 0.5 (not estimable)
+  notEstimable: boolean;
+  lower: number;
+  upper: number;
+  verdict: string;
+  // Welch t interval on the difference of per-page means, degrees of
+  // freedom by Welch-Satterthwaite. Absent on a not-estimable
+  // stratum, where no interval was computed at all.
+  estimator?: "welch-t";
+  df?: number;
+  varianceFloor?: { raw: number; cmp: number };
+  varianceUsed?: { raw: number; cmp: number };
+  // A BCa bootstrap cross-check over the same per-sample counts,
+  // recorded with the run. It never decides the verdict above.
+  bootstrapCrossCheck?: {
+    method: "bca";
+    estimate: number;
+    lower: number;
+    upper: number;
+    iterations: number;
+    alpha: number;
+    seed: number;
+  };
+}
+
+export interface RuleLedgerEntry {
+  rule: string;
+  severity: "error" | "warn" | "info";
+  d: number;
+  lower: number;
+  upper: number;
+}
+
+export interface ModelLedger {
+  removed: RuleLedgerEntry[];
+  induced: RuleLedgerEntry[];
+  grossRemoved: number;
+  grossInduced: number;
+  net: number;
+  // True when at least one rule was removed and at least one was
+  // induced in the same run: a co-occurring reduction and increase.
+  // This is never reported as a trade or a substitution; the arms are
+  // independent samples, so page-level substitution is not
+  // observable from this data.
+  offsetting: boolean;
+}
+
+export interface ModelStat {
+  model: ModelId;
+  canonicalModelId: string;
+  rawScored: number;
+  compiledScored: number;
+  strata: StratumReport[];
+  ledger: ModelLedger;
 }
 
 export interface EvalReport {
   token: string;
   runAt: string;
   cells: EvalCell[];
-  deltas: Array<{
-    model: ModelId;
-    canonicalModelId: string;
-    rawMeanTells: number;
-    compiledMeanTells: number;
-    delta: number;
-    reductionPct: number;
-    rawScored: number;
-    compiledScored: number;
-  }>;
+  modelStats: ModelStat[];
+  // Run-level, not per model: a rule induced (per the ledger's
+  // existing classification) in two or more models of this run and
+  // removed in none of them. Per docs/specs/0001-published-eval-statistic.md,
+  // "The ledger". Empty when nothing qualifies.
+  inspectionFlags: InspectionFlag[];
   caveats: string[];
   runManifest?: RunManifest;
   replay?: Replay;
@@ -376,6 +450,20 @@ export const ReplaySchema = z
               .describe(
                 "Every provider-side request id captured during the run for this model. Empty array allowed (mock runner, local model, provider that doesn't return one). Plural-safe: some providers return multiple relevant ids per call.",
               ),
+            sample_requests: z
+              .array(
+                z
+                  .object({
+                    condition: z.enum(["raw", "compiled"]),
+                    sample: z.number().int().positive(),
+                    request_id: z.string().nullable(),
+                  })
+                  .strict(),
+              )
+              .optional()
+              .describe(
+                "One entry per completed provider call for this model, across both conditions, in run order. request_id is null when the provider returned no id for that call, so a shorter provider_request_ids array becomes a stated count of misses instead of a silent gap. Does not cover samples that errored before a response was received. Optional: absent on backfilled blocks and runs recorded before this field existed.",
+              ),
           })
           .strict(),
       )
@@ -394,6 +482,107 @@ export const ReplaySchema = z
       .optional()
       .describe(
         "Set to true when the block was reconstructed by scripts/backfill-replay.mjs against a report that predates the replay system. Backfilled blocks rely on git history for hashes; verify-replay still works but argv is empty and provider_request_ids cannot be recovered.",
+      ),
+    // Not input provenance like token/brief/models above: this is
+    // output provenance, the per-sample record behind the published
+    // means, kept so a figure can be re-derived offline with no
+    // network and no credentials.
+    measurements: z
+      .array(
+        z
+          .object({
+            model: z.string().min(1),
+            condition: z.enum(["raw", "compiled"]),
+            samples: z
+              .array(
+                z
+                  .object({
+                    sample_id: z.string().min(1),
+                    tells: z.array(z.string()),
+                    byte_length: z.number().int().nonnegative(),
+                    hash: z.string().regex(/^sha256:[a-f0-9]{64}$/i),
+                    scored: z.boolean(),
+                    // The following are optional and additive, only
+                    // populated when this run's pages were retained
+                    // (docs/specs/0001-published-eval-statistic.md,
+                    // "Recording"). They make each page
+                    // storage-independent: re-derivable from its own
+                    // record even if the retained files later move.
+                    page_id: z
+                      .string()
+                      .min(1)
+                      .optional()
+                      .describe("Stable id for this page: model/arm/sample_id."),
+                    generated_at: z
+                      .string()
+                      .datetime({ message: "generated_at must be an ISO-8601 datetime string." })
+                      .optional(),
+                    model: z.string().min(1).optional(),
+                    arm: z.enum(["raw", "compiled"]).optional(),
+                    epoch: z.string().min(1).optional(),
+                    run_id: z.string().min(1).optional(),
+                    harness_commit: z.string().nullable().optional(),
+                    path: z
+                      .string()
+                      .min(1)
+                      .optional()
+                      .describe("Relative path of the retained page within its run directory."),
+                    raw_hash: z
+                      .string()
+                      .regex(/^sha256:[a-f0-9]{64}$/i)
+                      .optional()
+                      .describe("sha256 of the raw provider response, when retained alongside the extracted page."),
+                  })
+                  .strict(),
+              )
+              .describe(
+                "One entry per scored sample, in scoring order. `tells` is the sparse list of rule ids that fired on that sample, not a dense per-rule boolean row; the per-sample count and the published mean are both derivable by summing tells.length.",
+              ),
+          })
+          .strict(),
+      )
+      .optional()
+      .describe(
+        "Per-cell sample measurements behind the published mean-tells figures. One entry per model x condition cell. Optional: absent on backfilled blocks, critique and eval-image runs, and reports recorded before this field existed.",
+      ),
+    // The spec (docs/specs/0001-published-eval-statistic.md,
+    // "Uncertainty") says the floor, the degrees of freedom and the
+    // bootstrap settings are recorded with the run, not only
+    // computed and shown. This is that record.
+    strata: z
+      .array(
+        z
+          .object({
+            model: z.string().min(1),
+            severity: z.enum(["error", "warn", "info"]),
+            estimator: z.enum(["welch-t"]).optional(),
+            df: z.number().optional(),
+            variance_floor: z
+              .object({ raw: z.number(), cmp: z.number() })
+              .strict()
+              .optional(),
+            variance_used: z
+              .object({ raw: z.number(), cmp: z.number() })
+              .strict()
+              .optional(),
+            bootstrap_cross_check: z
+              .object({
+                method: z.literal("bca"),
+                estimate: z.number(),
+                lower: z.number(),
+                upper: z.number(),
+                iterations: z.number().int(),
+                alpha: z.number(),
+                seed: z.number(),
+              })
+              .strict()
+              .optional(),
+          })
+          .strict(),
+      )
+      .optional()
+      .describe(
+        "Per-model, per-severity interval provenance behind the headline figures. Optional: absent on backfilled blocks, critique and eval-image runs, and reports recorded before this field existed.",
       ),
   })
   .strict();

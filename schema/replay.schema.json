@@ -151,6 +151,39 @@
               "type": "string"
             },
             "description": "Every provider-side request id captured during the run for this model. Empty array allowed (mock runner, local model, provider that doesn't return one). Plural-safe: some providers return multiple relevant ids per call."
+          },
+          "sample_requests": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "condition": {
+                  "type": "string",
+                  "enum": [
+                    "raw",
+                    "compiled"
+                  ]
+                },
+                "sample": {
+                  "type": "integer",
+                  "exclusiveMinimum": true,
+                  "minimum": 0
+                },
+                "request_id": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "required": [
+                "condition",
+                "sample",
+                "request_id"
+              ],
+              "additionalProperties": false
+            },
+            "description": "One entry per completed provider call for this model, across both conditions, in run order. request_id is null when the provider returned no id for that call, so a shorter provider_request_ids array becomes a stated count of misses instead of a silent gap. Does not cover samples that errored before a response was received. Optional: absent on backfilled blocks and runs recorded before this field existed."
           }
         },
         "required": [
@@ -188,6 +221,218 @@
     "backfilled": {
       "type": "boolean",
       "description": "Set to true when the block was reconstructed by scripts/backfill-replay.mjs against a report that predates the replay system. Backfilled blocks rely on git history for hashes; verify-replay still works but argv is empty and provider_request_ids cannot be recovered."
+    },
+    "measurements": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "type": "string",
+            "minLength": 1
+          },
+          "condition": {
+            "type": "string",
+            "enum": [
+              "raw",
+              "compiled"
+            ]
+          },
+          "samples": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "sample_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "tells": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "byte_length": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "hash": {
+                  "type": "string",
+                  "pattern": "^sha256:[a-f0-9]{64}$"
+                },
+                "scored": {
+                  "type": "boolean"
+                },
+                "page_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Stable id for this page: model/arm/sample_id."
+                },
+                "generated_at": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "model": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "arm": {
+                  "type": "string",
+                  "enum": [
+                    "raw",
+                    "compiled"
+                  ]
+                },
+                "epoch": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "run_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "harness_commit": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "path": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Relative path of the retained page within its run directory."
+                },
+                "raw_hash": {
+                  "type": "string",
+                  "pattern": "^sha256:[a-f0-9]{64}$",
+                  "description": "sha256 of the raw provider response, when retained alongside the extracted page."
+                }
+              },
+              "required": [
+                "sample_id",
+                "tells",
+                "byte_length",
+                "hash",
+                "scored"
+              ],
+              "additionalProperties": false
+            },
+            "description": "One entry per scored sample, in scoring order. `tells` is the sparse list of rule ids that fired on that sample, not a dense per-rule boolean row; the per-sample count and the published mean are both derivable by summing tells.length."
+          }
+        },
+        "required": [
+          "model",
+          "condition",
+          "samples"
+        ],
+        "additionalProperties": false
+      },
+      "description": "Per-cell sample measurements behind the published mean-tells figures. One entry per model x condition cell. Optional: absent on backfilled blocks, critique and eval-image runs, and reports recorded before this field existed."
+    },
+    "strata": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "model": {
+            "type": "string",
+            "minLength": 1
+          },
+          "severity": {
+            "type": "string",
+            "enum": [
+              "error",
+              "warn",
+              "info"
+            ]
+          },
+          "estimator": {
+            "type": "string",
+            "enum": [
+              "welch-t"
+            ]
+          },
+          "df": {
+            "type": "number"
+          },
+          "variance_floor": {
+            "type": "object",
+            "properties": {
+              "raw": {
+                "type": "number"
+              },
+              "cmp": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "raw",
+              "cmp"
+            ],
+            "additionalProperties": false
+          },
+          "variance_used": {
+            "type": "object",
+            "properties": {
+              "raw": {
+                "type": "number"
+              },
+              "cmp": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "raw",
+              "cmp"
+            ],
+            "additionalProperties": false
+          },
+          "bootstrap_cross_check": {
+            "type": "object",
+            "properties": {
+              "method": {
+                "type": "string",
+                "const": "bca"
+              },
+              "estimate": {
+                "type": "number"
+              },
+              "lower": {
+                "type": "number"
+              },
+              "upper": {
+                "type": "number"
+              },
+              "iterations": {
+                "type": "integer"
+              },
+              "alpha": {
+                "type": "number"
+              },
+              "seed": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "method",
+              "estimate",
+              "lower",
+              "upper",
+              "iterations",
+              "alpha",
+              "seed"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "model",
+          "severity"
+        ],
+        "additionalProperties": false
+      },
+      "description": "Per-model, per-severity interval provenance behind the headline figures. Optional: absent on backfilled blocks, critique and eval-image runs, and reports recorded before this field existed."
     }
   },
   "required": [

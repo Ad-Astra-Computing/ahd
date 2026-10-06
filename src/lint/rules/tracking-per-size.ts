@@ -1,6 +1,10 @@
 import type { Rule } from "../types.js";
 import { extractInline, violation } from "../util.js";
 
+function stripComments(css: string): string {
+  return css.replace(/\/\*[\s\S]*?\*\//g, "");
+}
+
 function cssBlocks(css: string): { selector: string; body: string }[] {
   const out: { selector: string; body: string }[] = [];
   const re = /([^{}]+)\{([^{}]*)\}/g;
@@ -11,14 +15,34 @@ function cssBlocks(css: string): { selector: string; body: string }[] {
   return out;
 }
 
-// Collect all custom-property definitions from :root / html blocks
-// so later rule logic can substitute their values when a declaration
-// uses var(). Token-driven stylesheets routinely define things like
-// `--ahd-track-caps: 0.12em` and consume them via `letter-spacing:
-// var(--ahd-track-caps)`; treating the declaration as "no value"
-// causes false-positive rule fires. This resolver is intentionally
-// shallow (no fallback chains, no calc(), no nested var chains).
-// It handles the common case that matters in practice.
+// Split a block's selector list on top-level commas, ignoring commas
+// inside parentheses or brackets (:not(a, b), [data-x="a,b"]), and
+// normalise whitespace so "h1,  .display" and "h1, .display" compare
+// equal.
+function splitSelectors(selector: string): string[] {
+  const parts: string[] = [];
+  let depth = 0;
+  let current = "";
+  for (const ch of selector) {
+    if (ch === "(" || ch === "[") depth++;
+    else if (ch === ")" || ch === "]") depth--;
+    if (ch === "," && depth === 0) {
+      parts.push(current);
+      current = "";
+    } else {
+      current += ch;
+    }
+  }
+  parts.push(current);
+  return parts
+    .map((s) => s.trim().replace(/\s+/g, " "))
+    .filter((s) => s.length > 0);
+}
+
+// Resolves var(--x) against :root/html custom properties so a token
+// stylesheet's `letter-spacing: var(--ahd-track-caps)` is not read as
+// "no value" and false-fired. Shallow by design: no fallback chains,
+// calc() or nested var chains.
 function collectRootVars(
   blocks: { selector: string; body: string }[],
 ): Map<string, string> {
@@ -52,17 +76,24 @@ export const rule: Rule = {
   description:
     "No negative tracking on display type, no opened tracking on all-caps labels.",
   check: (input) => {
-    const combined = input.css + "\n" + extractInline(input.html).style;
+    const combined = stripComments(
+      input.css + "\n" + extractInline(input.html).style,
+    );
     const blocks = cssBlocks(combined);
     const rootVars = collectRootVars(blocks);
 
-    let hasLargeFont = false;
-    let largeHasNegTracking = false;
-    let hasAllCaps = false;
-    let allCapsHasOpened = false;
+    // A page can split tracking and size across two blocks that share
+    // a selector, e.g. `h1, .display { letter-spacing: -0.02em }` and
+    // `h1 { font-size: 140px }` separately. Collect selectors instead
+    // of reading both properties out of one block body.
+    const largeFontSelectors = new Set<string>();
+    const negTrackingSelectors = new Set<string>();
+    const allCapsSelectors = new Set<string>();
+    const openedTrackingSelectors = new Set<string>();
 
-    for (const { body: rawBody } of blocks) {
+    for (const { selector, body: rawBody } of blocks) {
       const body = resolveVars(rawBody, rootVars);
+      const selectors = splitSelectors(selector);
       const sizeMatch = body.match(/font-size\s*:\s*(\d+(?:\.\d+)?)(px|rem|em)/i);
       const lsMatch = body.match(/letter-spacing\s*:\s*(-?[\d.]+)(em|rem|px)?/i);
       const upperMatch = /text-transform\s*:\s*uppercase/i.test(body);
@@ -72,15 +103,27 @@ export const rule: Rule = {
         const unit = sizeMatch[2];
         const px = unit === "px" ? n : n * 16;
         if (px >= 48) {
-          hasLargeFont = true;
-          if (lsMatch && parseFloat(lsMatch[1]) < 0) largeHasNegTracking = true;
+          for (const s of selectors) largeFontSelectors.add(s);
         }
       }
+      if (lsMatch) {
+        const v = parseFloat(lsMatch[1]);
+        if (v < 0) for (const s of selectors) negTrackingSelectors.add(s);
+        if (v > 0.01) for (const s of selectors) openedTrackingSelectors.add(s);
+      }
       if (upperMatch) {
-        hasAllCaps = true;
-        if (lsMatch && parseFloat(lsMatch[1]) > 0.01) allCapsHasOpened = true;
+        for (const s of selectors) allCapsSelectors.add(s);
       }
     }
+
+    const hasLargeFont = largeFontSelectors.size > 0;
+    const largeHasNegTracking = [...largeFontSelectors].some((s) =>
+      negTrackingSelectors.has(s),
+    );
+    const hasAllCaps = allCapsSelectors.size > 0;
+    const allCapsHasOpened = [...allCapsSelectors].some((s) =>
+      openedTrackingSelectors.has(s),
+    );
 
     const out = [];
     if (hasLargeFont && !largeHasNegTracking) {

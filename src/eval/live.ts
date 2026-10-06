@@ -5,7 +5,7 @@ import { runnerFromSpec } from "./runners/index.js";
 import { compile, briefAsProse } from "../compile.js";
 import { loadToken, loadBrief } from "../load.js";
 import { runEval } from "./runner.js";
-import type { EvalReport, RunManifest } from "./types.js";
+import type { Condition, EvalReport, RunManifest } from "./types.js";
 import { captureReplay } from "./replay.js";
 
 interface LiveEvalOptions {
@@ -79,6 +79,14 @@ export async function runLiveEval(opts: LiveEvalOptions): Promise<EvalReport> {
   // Keyed by canonicalId because the spec→canonical mapping is set
   // once per runner; populated by ModelRunnerOutput.requestId.
   const requestIdsByModel = new Map<string, string[]>();
+  // Per-sample provenance behind requestIdsByModel above: one record
+  // per completed provider call, so a call the provider answered with
+  // no id shows up as an explicit null rather than shortening the
+  // array above with no explanation.
+  const sampleRequestsByModel = new Map<
+    string,
+    Array<{ condition: Condition; sample: number; requestId: string | null }>
+  >();
   let clearedSamples = 0;
 
   for (const spec of opts.models) {
@@ -93,6 +101,9 @@ export async function runLiveEval(opts: LiveEvalOptions): Promise<EvalReport> {
     });
     if (!requestIdsByModel.has(canonicalId)) {
       requestIdsByModel.set(canonicalId, []);
+    }
+    if (!sampleRequestsByModel.has(canonicalId)) {
+      sampleRequestsByModel.set(canonicalId, []);
     }
 
     const modelDir = join(samplesRoot, safeId);
@@ -146,6 +157,11 @@ export async function runLiveEval(opts: LiveEvalOptions): Promise<EvalReport> {
           if (out.requestId) {
             requestIdsByModel.get(canonicalId)!.push(out.requestId);
           }
+          sampleRequestsByModel.get(canonicalId)!.push({
+            condition,
+            sample: i + 1,
+            requestId: out.requestId ?? null,
+          });
         } catch (err) {
           await writeFile(
             join(condDir, `${sampleBase}.error.txt`),
@@ -246,11 +262,28 @@ export async function runLiveEval(opts: LiveEvalOptions): Promise<EvalReport> {
         id: m.canonicalId,
         provider: m.provider,
         provider_request_ids: requestIdsByModel.get(m.canonicalId) ?? [],
+        sampleRequests: sampleRequestsByModel.get(m.canonicalId) ?? [],
       })),
       conditions: {
         requested: ["raw", "compiled"],
         effective: ["raw", "compiled"],
       },
+      measurements: report.cells.map((c) => ({
+        model: c.canonicalModelId,
+        condition: c.condition,
+        samples: c.samples,
+      })),
+      strata: report.modelStats.flatMap((ms) =>
+        ms.strata.map((s) => ({
+          model: ms.canonicalModelId,
+          severity: s.severity,
+          estimator: s.estimator,
+          df: s.df,
+          varianceFloor: s.varianceFloor,
+          varianceUsed: s.varianceUsed,
+          bootstrapCrossCheck: s.bootstrapCrossCheck,
+        })),
+      ),
       invokedAt: opts.replayContext.invokedAt,
       argv: opts.replayContext.argv,
     });
