@@ -37,9 +37,12 @@ export const rule: Rule = {
         );
       }
     }
+    // Both `[^"]*` runs bounded; unbounded, they chain into a quadratic
+    // backtrack on a hostile unterminated class attribute (same shape
+    // fixed in ahd/no-three-equal-cards).
     const tw = findAll(
       combined,
-      /class\s*=\s*"[^"]*bg-gradient-to-[^"]*"/gi,
+      /class\s*=\s*"[^"]{0,500}bg-gradient-to-[^"]{0,500}"/gi,
     );
     for (const m of tw) {
       const hues = HUES.filter((h) =>

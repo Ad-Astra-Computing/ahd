@@ -20,9 +20,10 @@ const SHELL_IDS = new Set([
   "main",
 ]);
 
-// Bundle paths emitted by common SPA toolchains.
+// Bundle paths emitted by common SPA toolchains. Both `[^"']*` runs
+// bounded at 2000 (same shape fixed in ahd/no-three-equal-cards).
 const BUNDLE_RE =
-  /<script\b[^>]*\bsrc\s*=\s*["']([^"']*(?:\/assets\/|\/_next\/|\/static\/js\/|\/dist\/|\/build\/|\.bundle\.js|\.chunk\.js)[^"']*)["'][^>]*>/i;
+  /<script\b[^>]*\bsrc\s*=\s*["']([^"']{0,2000}(?:\/assets\/|\/_next\/|\/static\/js\/|\/dist\/|\/build\/|\.bundle\.js|\.chunk\.js)[^"']{0,2000})["'][^>]*>/i;
 
 // Match the <body> including its attributes so we can inspect inner content.
 const BODY_RE = /<body\b[^>]*>([\s\S]*?)<\/body>/i;

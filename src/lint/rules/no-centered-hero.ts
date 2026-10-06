@@ -8,8 +8,11 @@ export const rule: Rule = {
     "The centred pill + headline + subhead + two CTAs is the median landing page.",
   check: (input) => {
     const out = [];
+    // Every `[^"]*` run bounded: the alternation branches each chain
+    // their own unbounded run with the outer ones, the same shape
+    // fixed in ahd/no-three-equal-cards.
     const pattern =
-      /<(section|header|div|main)[^>]*class\s*=\s*"[^"]*(?:text-center|items-center[^"]*justify-center|mx-auto[^"]*max-w-)[^"]*"[^>]*>([\s\S]{0,2000}?)<h1\b[\s\S]{0,500}?<\/h1>/gi;
+      /<(section|header|div|main)[^>]*class\s*=\s*"[^"]{0,500}(?:text-center|items-center[^"]{0,500}justify-center|mx-auto[^"]{0,500}max-w-)[^"]{0,500}"[^>]*>([\s\S]{0,2000}?)<h1\b[\s\S]{0,500}?<\/h1>/gi;
     for (const m of findAll(input.html, pattern)) {
       out.push(
         violation(

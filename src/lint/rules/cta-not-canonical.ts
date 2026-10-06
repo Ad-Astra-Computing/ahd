@@ -8,8 +8,11 @@ export const rule: Rule = {
     "The canonical 44px gradient-fill + trailing arrow CTA is the template button.",
   check: (input) => {
     const out = [];
+    // Both `[^"]*` runs bounded; unbounded, they chain into a quadratic
+    // backtrack on a hostile unterminated class attribute (same shape
+    // fixed in ahd/no-three-equal-cards).
     const pattern =
-      /<(a|button)[^>]*class\s*=\s*"[^"]*(?:bg-gradient-|from-\w+-\d+)[^"]*"[^>]*>[\s\S]{0,300}?(?:→|&rarr;|<svg[^>]*(?:arrow|chevron)[^>]*>)[\s\S]*?<\/\1>/gi;
+      /<(a|button)[^>]*class\s*=\s*"[^"]{0,500}(?:bg-gradient-|from-\w+-\d+)[^"]{0,500}"[^>]*>[\s\S]{0,300}?(?:→|&rarr;|<svg[^>]*(?:arrow|chevron)[^>]*>)[\s\S]*?<\/\1>/gi;
     for (const m of findAll(input.html, pattern)) {
       out.push(
         violation(

@@ -8,9 +8,13 @@ export const rule: Rule = {
     "Three pricing tiers with a 'Most Popular' middle is the SaaS cliché.",
   check: (input) => {
     const out = [];
+    // Both `[^"]*` runs are bounded (no real attribute value is longer):
+    // unbounded, they chain into a quadratic backtrack on a hostile
+    // unterminated attribute, confirmed for this exact shape in
+    // ahd/no-three-equal-cards.
     const pricingMarkers = findAll(
       input.html,
-      /<(section|div)[^>]*(?:id|class)\s*=\s*"[^"]*pricing[^"]*"[^>]*>([\s\S]*?)<\/\1>/gi,
+      /<(section|div)[^>]*(?:id|class)\s*=\s*"[^"]{0,500}pricing[^"]{0,500}"[^>]*>([\s\S]*?)<\/\1>/gi,
     );
     for (const m of pricingMarkers) {
       const inner = m[2];
