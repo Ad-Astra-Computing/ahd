@@ -64,8 +64,4 @@ jobs:
       - name: Skill adapters up to date
         run: nix develop .#guards --command python3 tools/build-adapters.py --check
 
-      - name: Watermark stripper tests
-        run: nix develop .#guards --command python3 hooks/test-watermarks.py
-
-      - name: Paraphrase guard tests
-        run: nix develop .#guards --command python3 hooks/test-paraphrase.py
+      # Skeleton guards (watermarks, paraphrase) run only via local git hooks.
