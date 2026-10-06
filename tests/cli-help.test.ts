@@ -24,6 +24,7 @@ describe("COMMAND_HELP map", () => {
       "vision-rules",
       "eval",
       "eval-live",
+      "verify-retained-run",
       "eval-image",
       "mcp-serve",
       "try",

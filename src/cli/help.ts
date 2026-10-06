@@ -55,7 +55,12 @@ usage: ahd eval-live <token> --brief <b.yml> --models <spec,...> [flags]
   --models <spec,...>   comma-separated model specs (see model spec section in --help)
   --n <N>               samples per cell (default 3)
   --out <dir>           write raw samples under <dir>/<token>/<model>/{raw,compiled}
-  --report <file>       write markdown report`,
+  --report <file>       write markdown report
+  --retain <dir>        copy this invocation's pages + raw responses into a fresh, write-once run directory; refuses if <dir> already exists`,
+
+  "verify-retained-run": `ahd verify-retained-run · re-hash a retained run's pages against its sidecar.
+usage: ahd verify-retained-run <dir>
+  Re-hashes every page named in <dir>/pages.sidecar.json (and its raw response, when retained) and fails on any mismatch or missing file. Runs entirely offline.`,
 
   "eval-image": `ahd eval-image · run a brief through image generators, score via vision critic.
 usage: ahd eval-image <token> --brief <b.yml> [flags]
