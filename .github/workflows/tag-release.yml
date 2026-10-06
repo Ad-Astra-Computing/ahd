@@ -76,29 +76,35 @@ jobs:
 
       - name: Compute next version
         id: ver
+        env:
+          BUMP: ${{ inputs.bump }}
         run: |
           CUR=$(node -p "require('./package.json').version")
           IFS='.' read -r MAJ MIN PAT <<< "$CUR"
-          case "${{ inputs.bump }}" in
+          case "$BUMP" in
             major) NEW="$((MAJ+1)).0.0" ;;
             minor) NEW="$MAJ.$((MIN+1)).0" ;;
             patch) NEW="$MAJ.$MIN.$((PAT+1))" ;;
-            *) echo "::error::unknown bump: ${{ inputs.bump }}"; exit 2 ;;
+            *) echo "::error::unknown bump: $BUMP"; exit 2 ;;
           esac
           echo "Current: $CUR  ->  Next: $NEW"
           echo "new=$NEW" >> "$GITHUB_OUTPUT"
 
       - name: Dry-run summary (skip bump + tag + push)
         if: inputs.dry_run == true
+        env:
+          NEW: ${{ steps.ver.outputs.new }}
         run: |
-          echo "::notice::Dry run. Gate passed. Would bump to v${{ steps.ver.outputs.new }} but skipping tag + push."
+          echo "::notice::Dry run. Gate passed. Would bump to v$NEW but skipping tag + push."
 
       - name: Bump version in root + both workspace plugins
         if: inputs.dry_run == false
+        env:
+          NEW: ${{ steps.ver.outputs.new }}
         run: |
           node -e "
             const fs = require('fs');
-            const NEW = '${{ steps.ver.outputs.new }}';
+            const NEW = process.env.NEW;
             for (const p of [
               'package.json',
               'packages/eslint-plugin-ahd/package.json',
@@ -133,9 +139,10 @@ jobs:
 
       - name: Sync flake.nix version + npmDepsHash
         if: inputs.dry_run == false
+        env:
+          NEW: ${{ steps.ver.outputs.new }}
         run: |
           set -euo pipefail
-          NEW="${{ steps.ver.outputs.new }}"
           # --inputs-from . resolves nixpkgs#prefetch-npm-deps against
           # this repo's own flake.lock rev, not whatever nixos-unstable
           # currently points at; this job holds RELEASE_PAT.
@@ -153,6 +160,8 @@ jobs:
 
       - name: Prepend CHANGELOG.md entry
         if: inputs.dry_run == false
+        env:
+          NEW: ${{ steps.ver.outputs.new }}
         run: |
           # Find the previous tag (if any); the script understands a
           # commit SHA fallback for the first-ever release.
@@ -160,7 +169,7 @@ jobs:
           if [ -z "$PREV_TAG" ]; then
             PREV_TAG=$(git rev-list --max-parents=0 HEAD)
           fi
-          NEW_TAG="v${{ steps.ver.outputs.new }}"
+          NEW_TAG="v$NEW"
           TODAY=$(date -u +%Y-%m-%d)
           SECTION=$(mktemp)
           {
@@ -191,10 +200,10 @@ jobs:
         if: inputs.dry_run == false
         env:
           GH_TOKEN: ${{ secrets.RELEASE_PAT || secrets.GITHUB_TOKEN }}
+          NEW: ${{ steps.ver.outputs.new }}
         run: |
           set -e
           gh auth setup-git
-          NEW="${{ steps.ver.outputs.new }}"
           # Author the commit as github-actions[bot] for the verified-
           # commit badge, but the underlying push uses the PAT
           # gh auth setup-git wires in from GH_TOKEN. PAT owner is admin →
