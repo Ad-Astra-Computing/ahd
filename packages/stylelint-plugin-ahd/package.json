@@ -22,7 +22,7 @@
     "linter"
   ],
   "peerDependencies": {
-    "stylelint": ">=15 <17"
+    "stylelint": ">=16 <18"
   },
   "dependencies": {
     "@adastracomputing/ahd": "file:../.."
