@@ -61,7 +61,7 @@ on:
 
 permissions:
   contents: write
-  pull-requests: write     # open the auto-merge report PR
+  pull-requests: write     # open the report PR
 
 jobs:
   vision-eval:
@@ -94,12 +94,16 @@ jobs:
         # most portable path in CI today; when ahd-site moves to
         # GitHub and we add nix-in-CI for reproducible chromium,
         # swap this for the flake's pkgs.chromium binary.
-        run: npx playwright install --with-deps chromium
+        #
+        # --no-install: this job holds RELEASE_PAT; use the
+        # lockfile-pinned playwright rather than a bare npx fetch.
+        run: npx --no-install playwright install --with-deps chromium
 
       - name: Run eval-live (fresh samples for this run)
         env:
           CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
           CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+          SMOKE_MODE: ${{ inputs.smoke_mode }}
         run: |
           set -x
           # Smoke mode: one cheap model, n=2. The point of smoke is
@@ -107,7 +111,7 @@ jobs:
           # publishable run. Full mode keeps the weekly roster, n=30.
           REPORT_DATE=$(date -u +%Y-%m-%d)
           mkdir -p docs/evals/monthly
-          if [ "${{ inputs.smoke_mode }}" = "true" ]; then
+          if [ "$SMOKE_MODE" = "true" ]; then
             MODELS="cf:@cf/google/gemma-4-26b-a4b-it"
             N=2
           else
@@ -142,16 +146,17 @@ jobs:
           # without a subscription session. Haiku is the default
           # critic model (lowest cost at reasonable fidelity).
           node ./bin/ahd.js critique swiss-editorial \
-            --samples "${{ env.SAMPLE_DIR }}" \
+            --samples "$SAMPLE_DIR" \
             --critic anthropic \
             --out critiques \
-            --report "docs/evals/monthly/${{ env.REPORT_DATE }}-vision.md"
+            --report "docs/evals/monthly/${REPORT_DATE}-vision.md"
 
       - name: Run image-generation eval (CF image models, scored via vision critic)
         env:
           CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
           CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          SMOKE_MODE: ${{ inputs.smoke_mode }}
         run: |
           # Image-gen vertical: same methodology as text, against
           # CF Workers AI image models on the free tier. Raw and
@@ -165,7 +170,7 @@ jobs:
           # the 10k/day free-tier limit. Vision scoring of 40
           # images is ~\$0.04 at Haiku prices.
           set -x
-          if [ "${{ inputs.smoke_mode }}" = "true" ]; then
+          if [ "$SMOKE_MODE" = "true" ]; then
             IMG_MODELS="cfimg:@cf/black-forest-labs/flux-1-schnell"
             IMG_N=2
           else
@@ -177,9 +182,9 @@ jobs:
             --models "$IMG_MODELS" \
             --n "$IMG_N" \
             --critic anthropic \
-            --report "docs/evals/monthly/${{ env.REPORT_DATE }}-image.md"
+            --report "docs/evals/monthly/${REPORT_DATE}-image.md"
 
-      - name: Open report PR (auto-merge)
+      - name: Open report PR (manual review required)
         # Smoke runs prove integration; their numbers are not
         # publishable (n=2 is well under any reportable threshold) so
         # the smoke path skips the PR entirely. The reports still
@@ -187,8 +192,10 @@ jobs:
         # them via the Actions UI.
         #
         # main is protected (requires the `test` check), so push the
-        # reports to a dated branch and open a PR that auto-merges
-        # once ci.yml goes green.
+        # reports to a dated branch and open a PR. It never
+        # auto-merges: the report, samples and rationale text are
+        # model-generated content about to land on main, and ci.yml's
+        # gate has no opinion on whether that is safe to publish.
         if: inputs.smoke_mode != true
         env:
           GH_TOKEN: ${{ secrets.RELEASE_PAT }}
@@ -207,9 +214,8 @@ jobs:
           git push -u origin "$BRANCH" --force-with-lease
           gh pr create --base main --head "$BRANCH" \
             --title "docs(evals): monthly run ${REPORT_DATE}" \
-            --body "Automated monthly eval report (source + vision + image-gen). Merges automatically once CI passes." \
+            --body "Automated monthly eval report (source + vision + image-gen). Review the report, retained samples and rationale text before merging; this PR does not auto-merge." \
             || echo "PR already exists for $BRANCH"
-          gh pr merge "$BRANCH" --auto --squash --delete-branch
 
       - name: Smoke-mode summary
         if: inputs.smoke_mode == true

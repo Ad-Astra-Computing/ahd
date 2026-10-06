@@ -1,7 +1,9 @@
-# npm pack uses .npmignore when present, or falls back to .gitignore,
-# or the package.json "files" allow-list when either of the above is
-# too broad. This file is a defence-in-depth layer on top of "files":
-# even if the allow-list regresses, runtime artifacts never ship.
+# package.json's "files" allow-list is authoritative for npm pack:
+# nothing outside it ships regardless of what is listed here, and
+# nothing listed here can add a file "files" excludes. This is a
+# defence-in-depth layer for the day "files" regresses to something
+# broader (e.g. the field is removed), not an active second filter
+# today.
 
 docs/critique-artifacts
 docs/critique-artifacts/**
@@ -24,7 +26,6 @@ tests
 tests/**
 .env
 .env.*
-!.env.example
 *.log
 .DS_Store
 

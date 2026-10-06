@@ -112,15 +112,17 @@ jobs:
 
       - name: Generate release notes from commits since previous tag
         id: notes
+        env:
+          TAG: ${{ steps.version.outputs.tag }}
         run: |
           # Find the previous tag (excluding the one we're releasing).
           # If this is the first tag, compare against the root commit.
-          PREV_TAG=$(git tag --sort=-v:refname | grep -v "^${{ steps.version.outputs.tag }}$" | head -n 1 || true)
+          PREV_TAG=$(git tag --sort=-v:refname | grep -v "^${TAG}$" | head -n 1 || true)
           if [ -z "$PREV_TAG" ]; then
             PREV_TAG=$(git rev-list --max-parents=0 HEAD)
           fi
           NOTES_FILE="$(mktemp)"
-          ./scripts/gen-release-notes.sh "$PREV_TAG" "${{ steps.version.outputs.tag }}" > "$NOTES_FILE"
+          ./scripts/gen-release-notes.sh "$PREV_TAG" "$TAG" > "$NOTES_FILE"
           echo "notes_file=$NOTES_FILE" >> "$GITHUB_OUTPUT"
           echo "::group::generated notes"
           cat "$NOTES_FILE"
@@ -129,9 +131,12 @@ jobs:
       - name: Create GitHub Release and attach tarball
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ steps.version.outputs.tag }}
+          TARBALL: ${{ steps.pack.outputs.tarball }}
+          NOTES_FILE: ${{ steps.notes.outputs.notes_file }}
         run: |
-          gh release create "${{ steps.version.outputs.tag }}" \
-            "${{ steps.pack.outputs.tarball }}" \
-            --title "${{ steps.version.outputs.tag }}" \
-            --notes-file "${{ steps.notes.outputs.notes_file }}" \
+          gh release create "$TAG" \
+            "$TARBALL" \
+            --title "$TAG" \
+            --notes-file "$NOTES_FILE" \
             --verify-tag

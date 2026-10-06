@@ -136,8 +136,11 @@ jobs:
         run: |
           set -euo pipefail
           NEW="${{ steps.ver.outputs.new }}"
+          # --inputs-from . resolves nixpkgs#prefetch-npm-deps against
+          # this repo's own flake.lock rev, not whatever nixos-unstable
+          # currently points at; this job holds RELEASE_PAT.
           NEW_HASH=$(nix --extra-experimental-features 'nix-command flakes' \
-            run nixpkgs#prefetch-npm-deps -- package-lock.json)
+            run --inputs-from . nixpkgs#prefetch-npm-deps -- package-lock.json)
           sed -i -E "s|version = \"[^\"]+\";|version = \"${NEW}\";|" flake.nix
           sed -i -E "s|npmDepsHash = \"[^\"]+\";|npmDepsHash = \"${NEW_HASH}\";|" flake.nix
           # Verify the flake actually builds before we commit. A bad

@@ -1,12 +1,12 @@
 # Core CI: typecheck + tests + token validation on every push to main
 # and every pull request.
 #
-# Dependabot PRs auto-merge by default when they're eligible. Without
-# this gate, a bad dep bump lands on main before anyone runs the
-# tests. With this gate, GitHub blocks auto-merge until ci.yml goes
-# green.
+# This is the required check on main: nothing merges, Dependabot
+# included, without it passing. Dependabot's own PRs are proposals to
+# review, never auto-merged (see AGENTS.md's Security section); this
+# gate is what blocks a bad dep bump from landing regardless.
 #
-# Deliberately minimal. Heavier jobs (weekly eval, vision critique,
+# Deliberately minimal. Heavier jobs (monthly roster eval, vision critique,
 # release publish) live in their own workflows.
 
 name: ci

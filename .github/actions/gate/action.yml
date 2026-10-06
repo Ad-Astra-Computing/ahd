@@ -55,9 +55,13 @@ runs:
       # latch onto a system /usr/bin/chromium-browser stub that does
       # not speak Playwright's protocol, and downstream tests fail
       # with "browser undefined".
+      #
+      # --no-install: this job holds id-token: write via release.yml;
+      # use the lockfile-pinned playwright rather than letting a bare
+      # npx fetch and run whatever is latest on the registry.
       shell: bash
       run: |
-        npx playwright install --with-deps chromium
+        npx --no-install playwright install --with-deps chromium
         CHROME=$(find "$HOME/.cache/ms-playwright" -type f -name chrome -path '*chromium-*' | head -1)
         if [ -z "$CHROME" ]; then
           echo "::error::chromium binary not found after install" >&2
