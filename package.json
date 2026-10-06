@@ -49,16 +49,20 @@
   "homepage": "https://ahd.adastra.computer",
   "dependencies": {
     "parse5": "^8.0.1",
-    "playwright-core": "^1.59.1",
-    "postcss": "^8.5.10",
-    "yaml": "^2.6.1",
+    "playwright-core": "^1.63.0",
+    "postcss": "^8.5.28",
+    "yaml": "^2.9.1",
     "zod": "^3.24.1",
     "zod-to-json-schema": "^3.25.2"
   },
   "devDependencies": {
-    "@types/node": "^22.10.5",
+    "@types/node": "^22.20.5",
+    "brace-expansion": "^1.1.21",
+    "fast-uri": "^3.1.8",
+    "js-yaml": "^4.3.2",
+    "playwright": "^1.63.0",
     "typescript": "^5.7.3",
-    "vitest": "^4.1.5"
+    "vitest": "^4.1.11"
   },
   "engines": {
     "node": ">=20"
