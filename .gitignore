@@ -26,3 +26,9 @@ critique-url.json
 critique-url.png
 audit-mobile.json
 audit-mobile.png
+
+# Internal-only decisions log. Never shipped in this repo.
+docs/DECISIONS.md
+
+# Agent operating notes. Local only, never shipped in this repo.
+AGENTS.md

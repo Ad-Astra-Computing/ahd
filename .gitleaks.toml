@@ -18,8 +18,3 @@ regexTarget = "match"
 regexes = [
   '''(semantic_key|source_sha|sha256|_hash)"?:? ?"?[0-9a-f]{64}''',
 ]
-
-[[allowlists]]
-description = "A fixture bank of secret-shaped strings, there so the detector test has something to detect"
-targetRules = ["slack-bot-token", "aws-access-token", "gcp-api-key", "cloudflare-api-key", "generic-api-key", "github-pat"]
-paths = ['''^hooks/test-paraphrase\.py$''']

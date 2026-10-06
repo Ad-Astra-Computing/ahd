@@ -1,6 +1,6 @@
 # Contributing to AHD
 
-Thanks for reading this. AHD is small enough that contributions have outsized leverage. This file explains how to make a clean one.
+Thanks for reading this. AHD is small enough that one contribution can shift a lot of it. This file explains how to make a clean one.
 
 ## Three kinds of contribution, three ways in
 
@@ -149,15 +149,7 @@ npm run build
 npm test
 ```
 
-Tests must pass. `npx tsc --noEmit` must pass. `npx ahd validate-tokens` must pass.
-
-The repo ships a pre-commit hook that runs these checks automatically. Enable it once per clone:
-
-```bash
-git config core.hooksPath .githooks
-```
-
-After that every `git commit` runs `tsc --noEmit`, `npm test`, and `ahd validate-tokens` before the commit lands. Skip in emergencies with `git commit --no-verify`, but the gate exists because every check has caught at least one real defect; bypassing it is a last resort, not a shortcut.
+Tests must pass. `npx tsc --noEmit` must pass. `npx ahd validate-tokens` must pass. Run all three before opening a pull request; CI runs the same gate.
 
 For live eval work, put keys in `.env` (already gitignored). Never commit a key. Never paste one into a PR description or issue.
 

@@ -1,4 +1,5 @@
 {
+  "subagentModel": "sonnet",
   "hooks": {
     "PreToolUse": [
       {
@@ -6,7 +7,12 @@
         "hooks": [
           {
             "type": "command",
-            "command": "$CLAUDE_PROJECT_DIR/hooks/check-outbound-text.sh",
+            "command": "$ADASTRA_HOOKS_DIR/check-outbound-text.sh",
+            "timeout": 300
+          },
+          {
+            "type": "command",
+            "command": "$ADASTRA_HOOKS_DIR/check-git-command.sh",
             "timeout": 20
           }
         ]
