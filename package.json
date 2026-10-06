@@ -12,8 +12,8 @@
     "ahd-mcp": "./bin/ahd-mcp.js"
   },
   "scripts": {
-    "build": "tsc && node scripts/build-schemas.mjs && node scripts/build-rules-manifest.mjs",
-    "prepublishOnly": "tsc && node scripts/build-schemas.mjs && node scripts/build-rules-manifest.mjs",
+    "build": "rm -rf dist && tsc && node scripts/build-schemas.mjs && node scripts/build-rules-manifest.mjs",
+    "prepublishOnly": "rm -rf dist && tsc && node scripts/build-schemas.mjs && node scripts/build-rules-manifest.mjs",
     "test": "vitest run",
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit",
