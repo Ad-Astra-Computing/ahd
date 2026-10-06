@@ -107,6 +107,23 @@ describe("run-level inspection flag · a rule induced in two or more models and 
     const report = buildReport("swiss-editorial", cells);
     expect(report.inspectionFlags).toHaveLength(0);
   });
+
+  it("does not count a carried-forward model toward the flag", async () => {
+    const { buildReport } = await import("../src/eval/runner.js");
+    const rule = "ahd/respect-reduced-motion";
+    const cells = [
+      ruleCell("model-a", "raw", 30, 0, rule),
+      ruleCell("model-a", "compiled", 30, 20, rule),
+      ruleCell("model-b", "raw", 30, 0, rule),
+      ruleCell("model-b", "compiled", 30, 18, rule),
+    ];
+    // Same shape as the first test, which flags with two live models;
+    // marking model-b carried forward must drop it to one and clear
+    // the flag, proving model-b's effects are excluded, not just its
+    // scoring gate.
+    const report = buildReport("swiss-editorial", cells, ["model-b"]);
+    expect(report.inspectionFlags).toHaveLength(0);
+  });
 });
 
 describe("eval runner · honest accounting", () => {
@@ -430,6 +447,48 @@ describe("replay measurements and per-sample request provenance", () => {
       expect(s.scored).toBe(true);
       expect(s.byte_length).toBeGreaterThan(0);
     }
+  });
+
+  // A carried-forward cell's samples came from an earlier invocation,
+  // not this one; recording them in this run's replay sidecar would
+  // claim the run measured something it did not, exactly the thing
+  // the sidecar exists to let a reader catch.
+  it("excludes a carried-forward cell from the replay sidecar", async () => {
+    const { runLiveEval } = await import("../src/eval/live.js");
+    const dir = await mkdtemp(join(tmpdir(), "ahd-replay-carried-"));
+    const token = "swiss-editorial";
+
+    await runLiveEval({
+      tokensDir: resolve(__dirname, "..", "tokens"),
+      token,
+      briefPath: "briefs/landing.yml",
+      models: ["mock-slop"],
+      n: 2,
+      outDir: dir,
+      replayContext: { invokedAt: new Date(), argv: ["ahd", "eval-live"] },
+    } as never);
+
+    const report = await runLiveEval({
+      tokensDir: resolve(__dirname, "..", "tokens"),
+      token,
+      briefPath: "briefs/landing.yml",
+      models: ["mock-swiss"],
+      n: 2,
+      outDir: dir,
+      replayContext: { invokedAt: new Date(), argv: ["ahd", "eval-live"] },
+    } as never);
+
+    expect(report.runManifest!.carriedForward).toContain("mock-slop");
+
+    const replay = report.replay!;
+    expect(
+      replay.measurements!.some((m) => m.model === "mock-slop"),
+    ).toBe(false);
+    expect(replay.measurements!.some((m) => m.model === "mock-swiss")).toBe(
+      true,
+    );
+    expect(replay.strata!.some((s) => s.model === "mock-slop")).toBe(false);
+    expect(replay.strata!.some((s) => s.model === "mock-swiss")).toBe(true);
   });
 });
 

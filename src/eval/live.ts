@@ -268,22 +268,29 @@ export async function runLiveEval(opts: LiveEvalOptions): Promise<EvalReport> {
         requested: ["raw", "compiled"],
         effective: ["raw", "compiled"],
       },
-      measurements: report.cells.map((c) => ({
-        model: c.canonicalModelId,
-        condition: c.condition,
-        samples: c.samples,
-      })),
-      strata: report.modelStats.flatMap((ms) =>
-        ms.strata.map((s) => ({
-          model: ms.canonicalModelId,
-          severity: s.severity,
-          estimator: s.estimator,
-          df: s.df,
-          varianceFloor: s.varianceFloor,
-          varianceUsed: s.varianceUsed,
-          bootstrapCrossCheck: s.bootstrapCrossCheck,
+      // Excludes carried-forward cells: their samples and strata came
+      // from an earlier invocation, not this one, so recording them
+      // here would claim this run measured something it did not.
+      measurements: report.cells
+        .filter((c) => !carriedForward.includes(c.canonicalModelId))
+        .map((c) => ({
+          model: c.canonicalModelId,
+          condition: c.condition,
+          samples: c.samples,
         })),
-      ),
+      strata: report.modelStats
+        .filter((ms) => !carriedForward.includes(ms.canonicalModelId))
+        .flatMap((ms) =>
+          ms.strata.map((s) => ({
+            model: ms.canonicalModelId,
+            severity: s.severity,
+            estimator: s.estimator,
+            df: s.df,
+            varianceFloor: s.varianceFloor,
+            varianceUsed: s.varianceUsed,
+            bootstrapCrossCheck: s.bootstrapCrossCheck,
+          })),
+        ),
       invokedAt: opts.replayContext.invokedAt,
       argv: opts.replayContext.argv,
     });

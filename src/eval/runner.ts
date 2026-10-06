@@ -210,7 +210,12 @@ export function buildReport(
       }),
     );
 
-    modelEffects.push({ model: canonicalModelId, effects });
+    // A carried-forward cell's effects did not come from this run;
+    // feeding them into the cross-model inspection flag below would
+    // attribute an earlier run's induced/removed rules to this one.
+    if (!carried.has(canonicalModelId)) {
+      modelEffects.push({ model: canonicalModelId, effects });
+    }
 
     const rawLedger = buildLedger(effects);
     const ledger: ModelLedger = {
