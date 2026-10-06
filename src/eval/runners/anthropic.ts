@@ -4,13 +4,14 @@ import type {
   ModelRunnerOutput,
 } from "./types.js";
 import { extractHtmlBlock, extractProviderRequestId } from "./types.js";
+import { DEFAULT_ANTHROPIC_MODEL } from "./model-defaults.js";
 
 export function anthropicRunner(options: {
   apiKey: string;
   model?: string;
   baseURL?: string;
 }): ModelRunner {
-  const model = options.model ?? "claude-opus-4-7";
+  const model = options.model ?? DEFAULT_ANTHROPIC_MODEL;
   const baseURL = (options.baseURL ?? "https://api.anthropic.com").replace(
     /\/+$/,
     "",

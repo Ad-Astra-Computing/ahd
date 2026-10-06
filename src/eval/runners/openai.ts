@@ -30,7 +30,7 @@ export function openaiRunner(options: {
    */
   timeoutMs?: number;
 }): ModelRunner {
-  const model = options.model ?? "gpt-5";
+  const model = options.model ?? "gpt-6-astra";
   const baseURL = options.baseURL ?? "https://api.openai.com/v1";
   const timeoutMs = options.timeoutMs ?? 120_000;
   return {

@@ -1,9 +1,10 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 import { EventEmitter } from "node:events";
 import { PassThrough } from "node:stream";
 import { claudeCodeVisionCritic } from "../../src/critique/critics/claude-code.js";
 import { resolveCritic } from "../../src/critique/critics/index.js";
 import { VISION_RULES } from "../../src/critique/critic.js";
+import { DEFAULT_ANTHROPIC_MODEL } from "../../src/eval/runners/model-defaults.js";
 
 // Tiny fake for the node:child_process spawn contract: exposes stdin/stdout/stderr
 // as streams and behaves as an EventEmitter so we can emit 'close' on demand.
@@ -39,6 +40,46 @@ function makeFakeSpawn(behaviour: {
     stdin.on("end", () => {
       behaviour.captureStdin?.push(stdinBuf);
       // Emit payloads then close.
+      setImmediate(() => {
+        if (behaviour.stdoutPayload)
+          stdout.write(Buffer.from(behaviour.stdoutPayload));
+        if (behaviour.stderrPayload)
+          stderr.write(Buffer.from(behaviour.stderrPayload));
+        stdout.end();
+        stderr.end();
+        proc.emit("close", behaviour.exitCode ?? 0);
+      });
+    });
+    return proc;
+  }) as any;
+}
+
+// Same spawn contract as makeFakeSpawn, but returns a different
+// behaviour on each successive call so a test can simulate a CLI
+// invocation that fails on its first attempt(s) and then succeeds,
+// which is the shape of the 429-retry test below.
+function makeSequencedFakeSpawn(
+  behaviours: Array<{
+    stdoutPayload?: string;
+    stderrPayload?: string;
+    exitCode?: number;
+  }>,
+) {
+  let call = 0;
+  return ((bin: string, args: string[], opts: any): FakeProc => {
+    const behaviour = behaviours[Math.min(call, behaviours.length - 1)];
+    call += 1;
+    const stdin = new PassThrough();
+    const stdout = new PassThrough();
+    const stderr = new PassThrough();
+    const proc = Object.assign(new EventEmitter(), {
+      stdin,
+      stdout,
+      stderr,
+      kill: () => {},
+    }) as FakeProc;
+    stdin.on("data", () => {});
+    stdin.on("end", () => {
       setImmediate(() => {
         if (behaviour.stdoutPayload)
           stdout.write(Buffer.from(behaviour.stdoutPayload));
@@ -182,6 +223,42 @@ describe("claudeCodeVisionCritic", () => {
     ).rejects.toThrow(/auth failed|exited 1/);
   });
 
+  it("retries a 429-shaped CLI failure and succeeds on a later attempt", async () => {
+    const validJson = JSON.stringify({ fired: [], rationale: {} });
+    const spawnImpl = makeSequencedFakeSpawn([
+      { stdoutPayload: "", stderrPayload: "Error: 429 rate limit exceeded", exitCode: 1 },
+      { stdoutPayload: "", stderrPayload: "Error: 429 rate limit exceeded", exitCode: 1 },
+      { stdoutPayload: validJson, exitCode: 0 },
+    ]);
+    const critic = claudeCodeVisionCritic({ spawnImpl });
+    const result = await critic.critique({
+      token: "swiss-editorial",
+      imageBase64: PNG_HEADER_BASE64,
+    });
+    expect(result.violations).toEqual([]);
+  });
+
+  it("gives up and surfaces a clear error after exhausting 429 retries", async () => {
+    const spawnImpl = makeSequencedFakeSpawn([
+      { stdoutPayload: "", stderrPayload: "Error: 429 rate limit exceeded", exitCode: 1 },
+    ]);
+    const critic = claudeCodeVisionCritic({ spawnImpl });
+    await expect(
+      critic.critique({ token: "swiss-editorial", imageBase64: PNG_HEADER_BASE64 }),
+    ).rejects.toThrow(/429|rate limit/i);
+  });
+
+  it("does not retry a non-429 failure", async () => {
+    const spawnImpl = makeSequencedFakeSpawn([
+      { stdoutPayload: "", stderrPayload: "auth failed: not signed in", exitCode: 1 },
+      { stdoutPayload: JSON.stringify({ fired: [], rationale: {} }), exitCode: 0 },
+    ]);
+    const critic = claudeCodeVisionCritic({ spawnImpl });
+    await expect(
+      critic.critique({ token: "swiss-editorial", imageBase64: PNG_HEADER_BASE64 }),
+    ).rejects.toThrow(/auth failed|exited 1/);
+  });
+
   it("throws when no imageBase64 is given", async () => {
     const critic = claudeCodeVisionCritic({ spawnImpl: makeFakeSpawn({}) as any });
     await expect(
@@ -193,6 +270,11 @@ describe("claudeCodeVisionCritic", () => {
     const critic = claudeCodeVisionCritic({ model: "claude-opus-4-7" });
     expect(critic.id).toContain("claude-opus-4-7");
     expect(critic.id).toContain("critic");
+  });
+
+  it("defaults to the shared current Claude model when none is passed", () => {
+    const critic = claudeCodeVisionCritic({});
+    expect(critic.id).toContain(DEFAULT_ANTHROPIC_MODEL);
   });
 });
 

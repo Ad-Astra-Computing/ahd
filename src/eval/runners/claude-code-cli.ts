@@ -5,6 +5,8 @@ import type {
   ModelRunnerOutput,
 } from "./types.js";
 import { extractHtmlBlock } from "./types.js";
+import { DEFAULT_ANTHROPIC_MODEL } from "./model-defaults.js";
+import { withRateLimitRetry } from "./retry-429.js";
 
 // Claude-via-Claude-Code-CLI runner. Drives the `claude` binary in
 // non-interactive print mode with the minimum-framing flag set so the
@@ -45,20 +47,25 @@ import { extractHtmlBlock } from "./types.js";
 //
 // Cost: zero beyond the user's subscription. Rate: subject to
 // subscription 5-hour window caps and weekly caps; retry on HTTP-
-// 529-equivalent failures is handled by claude CLI itself.
+// 529-equivalent failures is handled by claude CLI itself. A 429 is a
+// different, evidenced failure class (see docs/critique-artifacts/
+// screenshots/*.critique-error.txt) that the CLI does not retry on its
+// own; withRateLimitRetry below covers that one case specifically.
 
 export interface ClaudeCodeCliOptions {
-  model?: string;            // e.g. "claude-opus-4-7"
+  model?: string;            // e.g. "claude-opus-5-5"
   binary?: string;           // override path; defaults to `claude` on PATH
   timeoutMs?: number;        // per-call timeout, default 180_000
+  spawnImpl?: typeof spawn;  // injected for tests, defaults to node:child_process.spawn
 }
 
 export function claudeCodeCliRunner(
   options: ClaudeCodeCliOptions = {},
 ): ModelRunner {
-  const model = options.model ?? "claude-opus-4-7";
+  const model = options.model ?? DEFAULT_ANTHROPIC_MODEL;
   const binary = options.binary ?? "claude";
   const timeoutMs = options.timeoutMs ?? 180_000;
+  const spawnImpl = options.spawnImpl ?? spawn;
 
   return {
     id: model,
@@ -88,7 +95,9 @@ export function claudeCodeCliRunner(
       ];
 
       const start = Date.now();
-      const stdout = await runClaude(binary, args, timeoutMs, input.userPrompt);
+      const stdout = await withRateLimitRetry(() =>
+        runClaude(binary, args, timeoutMs, input.userPrompt, spawnImpl),
+      );
       const latencyMs = Date.now() - start;
       const html = extractHtmlBlock(stdout);
       return {
@@ -106,6 +115,7 @@ function runClaude(
   args: string[],
   timeoutMs: number,
   stdin: string,
+  spawnImpl: typeof spawn,
 ): Promise<string> {
   return new Promise((resolve, reject) => {
     // Minimal env allow-list. Claude Code processes model-controlled
@@ -138,20 +148,20 @@ function runClaude(
         Object.entries(parent).filter(([k]) => k.startsWith("CLAUDE_")),
       ),
     };
-    const proc = spawn(bin, args, {
+    const proc = spawnImpl(bin, args, {
       stdio: ["pipe", "pipe", "pipe"],
       env,
     });
-    proc.stdin.write(stdin);
-    proc.stdin.end();
+    proc.stdin!.write(stdin);
+    proc.stdin!.end();
     let stdout = "";
     let stderr = "";
     const timer = setTimeout(() => {
       proc.kill("SIGKILL");
       reject(new Error(`claude CLI timeout after ${timeoutMs}ms`));
     }, timeoutMs);
-    proc.stdout.on("data", (c) => (stdout += c.toString()));
-    proc.stderr.on("data", (c) => (stderr += c.toString()));
+    proc.stdout!.on("data", (c) => (stdout += c.toString()));
+    proc.stderr!.on("data", (c) => (stderr += c.toString()));
     proc.on("error", (err) => {
       clearTimeout(timer);
       reject(new Error(`claude CLI spawn failed: ${err.message}`));

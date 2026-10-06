@@ -5,6 +5,8 @@ import { join } from "node:path";
 import type { Critic, CritiqueInput, CritiqueResult } from "../critic.js";
 import { VISION_RULES, buildCriticPrompt } from "../critic.js";
 import type { Violation } from "../../lint/types.js";
+import { DEFAULT_ANTHROPIC_MODEL } from "../../eval/runners/model-defaults.js";
+import { withRateLimitRetry } from "../../eval/runners/retry-429.js";
 
 // Claude-Code-backed vision critic. Drives the `claude` CLI in non-
 // interactive print mode, the same as the text-generation runner in
@@ -17,6 +19,12 @@ import type { Violation } from "../../lint/types.js";
 // Auth: subscription-backed. ANTHROPIC_API_KEY is scrubbed from the
 // subprocess env so the CLI does not silently switch to API mode and
 // charge an unrelated account.
+//
+// Rate limiting: production evidence (docs/critique-artifacts/
+// screenshots/*.critique-error.txt) shows real 429s from this path.
+// withRateLimitRetry retries that one failure class a small fixed
+// number of times with increasing backoff; every other failure
+// surfaces immediately.
 
 export interface ClaudeCodeVisionOptions {
   model?: string;
@@ -28,12 +36,10 @@ export interface ClaudeCodeVisionOptions {
   logger?: { warn: (msg: string) => void };
 }
 
-const DEFAULT_MODEL = "claude-opus-4-7";
-
 export function claudeCodeVisionCritic(
   options: ClaudeCodeVisionOptions = {},
 ): Critic {
-  const model = options.model ?? DEFAULT_MODEL;
+  const model = options.model ?? DEFAULT_ANTHROPIC_MODEL;
   const binary = options.binary ?? "claude";
   const timeoutMs = options.timeoutMs ?? 180_000;
   const spawnImpl = options.spawnImpl ?? spawn;
@@ -76,12 +82,8 @@ export function claudeCodeVisionCritic(
           "text",
         ];
 
-        const stdout = await runClaude(
-          binary,
-          args,
-          timeoutMs,
-          userPrompt,
-          spawnImpl,
+        const stdout = await withRateLimitRetry(() =>
+          runClaude(binary, args, timeoutMs, userPrompt, spawnImpl),
         );
         // CLI-spawned critic: no HTTP envelope, so no provider request
         // id is available. Replay sidecar's provider_request_ids stays
