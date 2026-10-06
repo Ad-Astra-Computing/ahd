@@ -15,7 +15,7 @@ export const rule: Rule = {
     const out: ReturnType<Rule["check"]> = [];
     // Match <img ...> where the attrs do not contain alt=...
     // (word-boundary alt followed by = to avoid matching "alternate")
-    const pattern = /<img\b([^>]*)>/gi;
+    const pattern = /<img\b([^>]{0,500})>/gi;
     for (const m of findAll(input.html, pattern)) {
       const attrs = m[1];
       if (/\balt\s*=/i.test(attrs)) continue;

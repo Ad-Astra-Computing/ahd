@@ -12,7 +12,7 @@ export const rule: Rule = {
     const out = [];
     const matches = findAll(
       input.html,
-      /<li[^>]*>\s*([\s\S]{0,20}?)(?=<|$)/gi,
+      /<li[^>]{0,500}>\s*([\s\S]{0,20}?)(?=<|$)/gi,
     );
     for (const m of matches) {
       const firstChars = m[1].trim();

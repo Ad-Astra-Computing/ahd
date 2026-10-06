@@ -26,7 +26,7 @@ export const rule: Rule = {
       // Three `[^"]*` runs chained with required literals between them;
       // bounded for the same reason as ahd/no-three-equal-cards.
       const pattern = new RegExp(
-        `<(div|span)[^>]*class\\s*=\\s*"[^"]{0,500}\\brounded-(?:md|lg|xl|2xl|full)\\b[^"]{0,500}(?:bg-gradient|bg-indigo-|bg-violet-|bg-purple-|bg-blue-)[^"]{0,500}"[^>]*>[\\s\\S]{0,200}?<${name}\\b`,
+        `<(div|span)[^>]{0,500}class\\s*=\\s*"[^"]{0,500}\\brounded-(?:md|lg|xl|2xl|full)\\b[^"]{0,500}(?:bg-gradient|bg-indigo-|bg-violet-|bg-purple-|bg-blue-)[^"]{0,500}"[^>]{0,500}>[\\s\\S]{0,200}?<${name}\\b`,
         "gi",
       );
       for (const m of findAll(input.html, pattern)) {

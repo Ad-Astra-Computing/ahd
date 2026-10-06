@@ -78,7 +78,7 @@ export const svgHighSymmetry: SvgRule = {
   description:
     "A perfectly mirrored composition is the stock-illustration / Alegria default. Tokens require at least one asymmetric element.",
   check: (svg, input) => {
-    const root = svg.match(/<svg[^>]*viewBox\s*=\s*["']([^"']+)["']/);
+    const root = svg.match(/<svg[^>]{0,500}viewBox\s*=\s*["']([^"']{0,500})["']/);
     if (!root) return [];
     const [, vb] = root;
     const parts = vb.split(/\s+/).map(Number);

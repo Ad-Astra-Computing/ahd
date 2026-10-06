@@ -14,7 +14,7 @@ export const rule: Rule = {
     // ahd/no-three-equal-cards.
     const pricingMarkers = findAll(
       input.html,
-      /<(section|div)[^>]*(?:id|class)\s*=\s*"[^"]{0,500}pricing[^"]{0,500}"[^>]*>([\s\S]*?)<\/\1>/gi,
+      /<(section|div)[^>]{0,500}(?:id|class)\s*=\s*"[^"]{0,500}pricing[^"]{0,500}"[^>]{0,500}>([\s\S]*?)<\/\1>/gi,
     );
     for (const m of pricingMarkers) {
       const inner = m[2];

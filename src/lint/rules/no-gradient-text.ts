@@ -14,7 +14,7 @@ export const rule: Rule = {
     // Three `[^"]*` runs chained with required literals between them;
     // bounded for the same reason as ahd/no-three-equal-cards.
     const tailwindPattern =
-      /<(h1|h2|span|div)[^>]*class\s*=\s*"[^"]{0,500}(?:bg-clip-text|text-transparent)[^"]{0,500}bg-gradient-[^"]{0,500}"[^>]*>([\s\S]*?)<\/\1>/gi;
+      /<(h1|h2|span|div)[^>]{0,500}class\s*=\s*"[^"]{0,500}(?:bg-clip-text|text-transparent)[^"]{0,500}bg-gradient-[^"]{0,500}"[^>]{0,500}>([\s\S]*?)<\/\1>/gi;
     for (const m of findAll(input.html, tailwindPattern)) {
       if (BAIT.test(m[2])) {
         out.push(
@@ -37,7 +37,7 @@ export const rule: Rule = {
     for (const cssMatch of clipRules) {
       const className = cssMatch[1];
       const elementPattern = new RegExp(
-        `<(h1|h2|h3|span|div|p)[^>]*class\\s*=\\s*"[^"]{0,500}\\b${className}\\b[^"]{0,500}"[^>]*>([\\s\\S]*?)</\\1>`,
+        `<(h1|h2|h3|span|div|p)[^>]{0,500}class\\s*=\\s*"[^"]{0,500}\\b${className}\\b[^"]{0,500}"[^>]{0,500}>([\\s\\S]*?)</\\1>`,
         "gi",
       );
       for (const m of findAll(input.html, elementPattern)) {

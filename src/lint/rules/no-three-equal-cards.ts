@@ -11,11 +11,11 @@ export const rule: Rule = {
     // Every `[^"]*` run bounded at 500: unbounded, two of them chained
     // on an unterminated class attribute backtrack catastrophically.
     const containerPattern =
-      /<(section|div|ul)[^>]*class\s*=\s*"[^"]{0,500}(?:grid-cols-3|grid\s+cols-3|flex[^"]{0,500}(?:gap|space)-)[^"]{0,500}"[^>]*>([\s\S]*?)<\/\1>/gi;
+      /<(section|div|ul)[^>]{0,500}class\s*=\s*"[^"]{0,500}(?:grid-cols-3|grid\s+cols-3|flex[^"]{0,500}(?:gap|space)-)[^"]{0,500}"[^>]{0,500}>([\s\S]*?)<\/\1>/gi;
     for (const m of findAll(input.html, containerPattern)) {
       const inner = m[2];
       const childTagMatches = [
-        ...inner.matchAll(/<(div|article|li|section)(\s[^>]*)?>/gi),
+        ...inner.matchAll(/<(div|article|li|section)(\s[^>]{0,500})?>/gi),
       ];
       const topLevelChildren = childTagMatches.filter((c) => {
         const tag = c[1].toLowerCase();

@@ -49,13 +49,17 @@ export function findAll(source: string, pattern: RegExp): RegExpExecArray[] {
 export function extractInline(
   html: string,
 ): { style: string; script: string; text: string } {
-  const styleBlocks = [...html.matchAll(/<style[^>]*>([\s\S]*?)<\/style>/gi)]
+  // Every `[^>]` run bounded: unbounded, each backtracks the full
+  // remaining input searching for a literal that an unclosed tag
+  // never provides, quadratic across many such tags. No real tag's
+  // attribute list is anywhere near 500 chars.
+  const styleBlocks = [...html.matchAll(/<style[^>]{0,500}>([\s\S]*?)<\/style>/gi)]
     .map((m) => m[1])
     .join("\n");
-  const scriptBlocks = [...html.matchAll(/<script[^>]*>([\s\S]*?)<\/script>/gi)]
+  const scriptBlocks = [...html.matchAll(/<script[^>]{0,500}>([\s\S]*?)<\/script>/gi)]
     .map((m) => m[1])
     .join("\n");
-  const text = html.replace(/<[^>]+>/g, " ");
+  const text = html.replace(/<[^>]{1,500}>/g, " ");
   return { style: styleBlocks, script: scriptBlocks, text };
 }
 

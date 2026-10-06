@@ -23,10 +23,10 @@ const SHELL_IDS = new Set([
 // Bundle paths emitted by common SPA toolchains. Both `[^"']*` runs
 // bounded at 2000 (same shape fixed in ahd/no-three-equal-cards).
 const BUNDLE_RE =
-  /<script\b[^>]*\bsrc\s*=\s*["']([^"']{0,2000}(?:\/assets\/|\/_next\/|\/static\/js\/|\/dist\/|\/build\/|\.bundle\.js|\.chunk\.js)[^"']{0,2000})["'][^>]*>/i;
+  /<script\b[^>]{0,500}\bsrc\s*=\s*["']([^"']{0,2000}(?:\/assets\/|\/_next\/|\/static\/js\/|\/dist\/|\/build\/|\.bundle\.js|\.chunk\.js)[^"']{0,2000})["'][^>]{0,500}>/i;
 
 // Match the <body> including its attributes so we can inspect inner content.
-const BODY_RE = /<body\b[^>]*>([\s\S]*?)<\/body>/i;
+const BODY_RE = /<body\b[^>]{0,500}>([\s\S]*?)<\/body>/i;
 
 // Strip HTML comments and script/style/noscript blocks so they don't count as
 // "visible content" when deciding whether the body is empty.
@@ -52,7 +52,7 @@ function bodyLooksLikeShell(bodyInner: string): boolean {
   if (cleaned.length === 0) return false; // totally empty body isn't a shell either
 
   // Reject if any visible text or any heading / landmark is present.
-  const textOnly = cleaned.replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim();
+  const textOnly = cleaned.replace(/<[^>]{1,500}>/g, "").replace(/\s+/g, " ").trim();
   if (textOnly.length > 0) return false;
   if (/<(h[1-6]|main|nav|header|footer|article|section)\b/i.test(cleaned)) {
     return false;
@@ -61,7 +61,7 @@ function bodyLooksLikeShell(bodyInner: string): boolean {
   // Collect top-level element tags. Walk the string tracking depth so we only
   // count root-level siblings.
   const children: Array<{ tag: string; inner: string }> = [];
-  const re = /<([a-zA-Z][a-zA-Z0-9-]*)\b([^>]*)>([\s\S]*?)<\/\1>/g;
+  const re = /<([a-zA-Z][a-zA-Z0-9-]*)\b([^>]{0,500})>([\s\S]*?)<\/\1>/g;
   let lastEnd = 0;
   let m: RegExpExecArray | null;
   while ((m = re.exec(cleaned)) !== null) {

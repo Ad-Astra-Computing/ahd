@@ -12,7 +12,7 @@ export const rule: Rule = {
     // backtrack on a hostile unterminated class attribute (same shape
     // fixed in ahd/no-three-equal-cards).
     const pattern =
-      /<(a|button)[^>]*class\s*=\s*"[^"]{0,500}(?:bg-gradient-|from-\w+-\d+)[^"]{0,500}"[^>]*>[\s\S]{0,300}?(?:→|&rarr;|<svg[^>]*(?:arrow|chevron)[^>]*>)[\s\S]*?<\/\1>/gi;
+      /<(a|button)[^>]{0,500}class\s*=\s*"[^"]{0,500}(?:bg-gradient-|from-\w+-\d+)[^"]{0,500}"[^>]{0,500}>[\s\S]{0,300}?(?:→|&rarr;|<svg[^>]{0,500}(?:arrow|chevron)[^>]{0,500}>)[\s\S]*?<\/\1>/gi;
     for (const m of findAll(input.html, pattern)) {
       out.push(
         violation(

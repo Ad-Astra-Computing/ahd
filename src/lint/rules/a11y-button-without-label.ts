@@ -12,7 +12,7 @@ export const rule: Rule = {
     "<button> with no accessible name. Add text content, aria-label or aria-labelledby so screen-reader users hear what the button does.",
   check: (input) => {
     const out: ReturnType<Rule["check"]> = [];
-    const pattern = /<button\b([^>]*)>([\s\S]*?)<\/button>/gi;
+    const pattern = /<button\b([^>]{0,500})>([\s\S]*?)<\/button>/gi;
     for (const m of findAll(input.html, pattern)) {
       const attrs = m[1];
       const inner = m[2];
@@ -22,9 +22,9 @@ export const rule: Rule = {
       // Strip HTML tags from inner and check for any non-whitespace
       // text. An <svg aria-label> inside counts; plain <svg> does
       // not.
-      const svgLabel = /<svg[^>]*\baria-label\s*=\s*["']\s*\S/i.test(inner);
-      const imgAlt = /<img[^>]*\balt\s*=\s*["']\s*\S/i.test(inner);
-      const text = inner.replace(/<[^>]+>/g, "").trim();
+      const svgLabel = /<svg[^>]{0,500}\baria-label\s*=\s*["']\s*\S/i.test(inner);
+      const imgAlt = /<img[^>]{0,500}\balt\s*=\s*["']\s*\S/i.test(inner);
+      const text = inner.replace(/<[^>]{1,500}>/g, "").trim();
       if (text.length === 0 && !svgLabel && !imgAlt) {
         out.push(
           violation(

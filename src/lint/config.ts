@@ -134,12 +134,14 @@ export function mergeConfigs(
  */
 export function detectActiveToken(html: string): string | undefined {
   if (!html) return undefined;
+  // Bounded: two unbounded `[^>]+` runs chained on an unclosed <meta
+  // backtrack catastrophically; no real tag has 500+ chars of attrs.
   const meta = html.match(
-    /<meta[^>]+name=["']ahd-token["'][^>]+content=["']([a-z0-9-]+)["']/i,
+    /<meta[^>]{1,500}name=["']ahd-token["'][^>]{1,500}content=["']([a-z0-9-]+)["']/i,
   );
   if (meta) return meta[1];
   const reverseMeta = html.match(
-    /<meta[^>]+content=["']([a-z0-9-]+)["'][^>]+name=["']ahd-token["']/i,
+    /<meta[^>]{1,500}content=["']([a-z0-9-]+)["'][^>]{1,500}name=["']ahd-token["']/i,
   );
   if (reverseMeta) return reverseMeta[1];
   const comment = html.match(/<!--\s*ahd:token=([a-z0-9-]+)\s*-->/i);

@@ -13,7 +13,7 @@ export const rule: Rule = {
     "Heading hierarchy skips a level (e.g. h1 followed by h3 with no h2). Screen-reader users rely on outline depth; don't skip.",
   check: (input) => {
     const out: ReturnType<Rule["check"]> = [];
-    const pattern = /<h([1-6])\b[^>]*>([\s\S]*?)<\/h\1>/gi;
+    const pattern = /<h([1-6])\b[^>]{0,500}>([\s\S]*?)<\/h\1>/gi;
     let prevLevel: number | null = null;
     for (const m of findAll(input.html, pattern)) {
       const level = parseInt(m[1], 10);
