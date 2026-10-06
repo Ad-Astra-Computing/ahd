@@ -1,4 +1,5 @@
 import { describe, it, expect } from "vitest";
+import stylelint from "stylelint";
 import { createEslintPlugin } from "../src/plugins/eslint-plugin.js";
 import { createStylelintPlugin } from "../src/plugins/stylelint-plugin.js";
 import { rules as ahdRules } from "../src/lint/rules/index.js";
@@ -40,5 +41,18 @@ describe("stylelint-plugin-ahd", () => {
     for (const p of plugin.plugins) {
       expect(plugin.rules[p.ruleName]).toBe(p.rule);
     }
+  });
+
+  it("actually runs under the installed stylelint, not just exports a shape", async () => {
+    const ruleNames = plugin.plugins.map((p) => p.ruleName);
+    const result = await stylelint.lint({
+      code: "a { color: red; }",
+      config: {
+        plugins: plugin.plugins,
+        rules: Object.fromEntries(ruleNames.map((n) => [n, true])),
+      },
+    });
+    expect(result.results).toHaveLength(1);
+    expect(result.results[0].parseErrors).toHaveLength(0);
   });
 });
