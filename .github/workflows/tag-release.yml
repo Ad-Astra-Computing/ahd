@@ -118,7 +118,11 @@ jobs:
               // resolve it against). Keep it pinned to the release
               // version so it never trails the bump above.
               if (j.dependencies && j.dependencies['@adastracomputing/ahd']) {
-                j.dependencies['@adastracomputing/ahd'] = `^${NEW}`;
+                // Not a template literal: this node -e script is
+                // itself inside a double-quoted bash string, where a
+                // backtick triggers command substitution, not a JS
+                // template literal. Plain concatenation sidesteps it.
+                j.dependencies['@adastracomputing/ahd'] = '^' + NEW;
               }
               fs.writeFileSync(p, JSON.stringify(j, null, 2) + '\n');
             }
