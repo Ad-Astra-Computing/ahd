@@ -1,5 +1,110 @@
 # Changelog
 
+## v0.12.0 · 2026-10-07
+
+### Features
+
+- feat(runners): replace gemini-cli with antigravity-cli ([2b036e1](https://github.com/Ad-Astra-Computing/ahd/commit/2b036e1))
+- feat(eval): severity-split statistic with Welch interval and ledger ([461a654](https://github.com/Ad-Astra-Computing/ahd/commit/461a654))
+- feat(eval): mark cells carried forward from a previous run (#44) ([c8095dc](https://github.com/Ad-Astra-Computing/ahd/commit/c8095dc))
+
+### Fixes
+
+- fix(ci): avoid backtick command substitution in tag-release.yml ([9b61bca](https://github.com/Ad-Astra-Computing/ahd/commit/9b61bca))
+- fix(mcp): name the stdin cap by what it actually counts ([1709470](https://github.com/Ad-Astra-Computing/ahd/commit/1709470))
+- fix(lint): bound the tag-attribute-scan [^>] run everywhere ([5401038](https://github.com/Ad-Astra-Computing/ahd/commit/5401038))
+- fix(eval): exclude carried-forward cells from flags and replay ([c67f641](https://github.com/Ad-Astra-Computing/ahd/commit/c67f641))
+- fix(mcp): cap stdin buffer; report the real version ([e0ea2fc](https://github.com/Ad-Astra-Computing/ahd/commit/e0ea2fc))
+- fix(lint,load): cap input size on lintFile and loadToken ([9f7eebf](https://github.com/Ad-Astra-Computing/ahd/commit/9f7eebf))
+- fix(lint): avoid recursion and O(n) rescans in rule helpers ([3d9b292](https://github.com/Ad-Astra-Computing/ahd/commit/3d9b292))
+- fix(mobile-audit): timeout rule evaluation; sanitize snippets ([f9e32df](https://github.com/Ad-Astra-Computing/ahd/commit/f9e32df))
+- fix(runners): isolate codex-cli auth; validate model id ([9d974f8](https://github.com/Ad-Astra-Computing/ahd/commit/9d974f8))
+- fix(lint): bound unbounded regex runs against ReDoS ([e8948d5](https://github.com/Ad-Astra-Computing/ahd/commit/e8948d5))
+- fix(runners): bump stale model defaults; retry CLI 429s ([c09a79d](https://github.com/Ad-Astra-Computing/ahd/commit/c09a79d))
+- fix(build): clean dist before build ([de93ba5](https://github.com/Ad-Astra-Computing/ahd/commit/de93ba5))
+- fix(packaging): lint plugins depend on the root via a semver range ([e183c43](https://github.com/Ad-Astra-Computing/ahd/commit/e183c43))
+- fix(ci): keep flake-sync to one open pull request (#46) ([f241329](https://github.com/Ad-Astra-Computing/ahd/commit/f241329))
+- fix(eval): replace a re-run model's stale samples (#45) ([209ea55](https://github.com/Ad-Astra-Computing/ahd/commit/209ea55))
+- fix(eval): keep run samples out of the tracked corpora (#41) ([42d88c8](https://github.com/Ad-Astra-Computing/ahd/commit/42d88c8))
+- fix(ci): flake-sync opens auto-merge PR (#19) ([7cd0c50](https://github.com/Ad-Astra-Computing/ahd/commit/7cd0c50))
+- fix(cli): unwrap CritiqueResult in critique-url (#18) ([ac2c1e0](https://github.com/Ad-Astra-Computing/ahd/commit/ac2c1e0))
+- fix(ci): repair flake-sync commit message YAML (#5) ([c9dd594](https://github.com/Ad-Astra-Computing/ahd/commit/c9dd594))
+- fix(eval): stop eval CI hanging past the timeout ceiling (#4) ([b680995](https://github.com/Ad-Astra-Computing/ahd/commit/b680995))
+
+### CI / tooling
+
+- ci: finish moving tag-release.yml off ${{ }} in run: bodies ([033fc53](https://github.com/Ad-Astra-Computing/ahd/commit/033fc53))
+- ci: harden release workflows; clean up npm package manifest ([8d75400](https://github.com/Ad-Astra-Computing/ahd/commit/8d75400))
+- ci: pin actions by sha and add the guards job ([c65d122](https://github.com/Ad-Astra-Computing/ahd/commit/c65d122))
+- ci(eval): fix monthly cron firing ~10x/month (#15) ([7755e9f](https://github.com/Ad-Astra-Computing/ahd/commit/7755e9f))
+- ci(eval): persist reports via auto-merge PR, not direct push (#6) ([d641dce](https://github.com/Ad-Astra-Computing/ahd/commit/d641dce))
+
+### Documentation
+
+- docs: reword a changelog line flagged by the house-style guard ([17fe2f0](https://github.com/Ad-Astra-Computing/ahd/commit/17fe2f0))
+- docs: changelog entries for the carried-forward and ReDoS follow-ups ([b3cdfab](https://github.com/Ad-Astra-Computing/ahd/commit/b3cdfab))
+- docs: update CHANGELOG for this batch; refresh rules manifest ([286deb3](https://github.com/Ad-Astra-Computing/ahd/commit/286deb3))
+- docs(cli): add verify-retained-run help text ([dd75de1](https://github.com/Ad-Astra-Computing/ahd/commit/dd75de1))
+- docs: clear house-style violations in the readme ([d050e06](https://github.com/Ad-Astra-Computing/ahd/commit/d050e06))
+- docs: plain prose pull request template ([ed845f8](https://github.com/Ad-Astra-Computing/ahd/commit/ed845f8))
+- docs: adopt the Ad Astra standard ([101fdb0](https://github.com/Ad-Astra-Computing/ahd/commit/101fdb0))
+- docs(evals): weekly run 2026-10-05 (#59) ([ec2e867](https://github.com/Ad-Astra-Computing/ahd/commit/ec2e867))
+- docs(evals): monthly source + vision + image-gen run 2026-10-01 (#58) ([55d0cc9](https://github.com/Ad-Astra-Computing/ahd/commit/55d0cc9))
+- docs(evals): weekly run 2026-09-28 (#56) ([515cc5e](https://github.com/Ad-Astra-Computing/ahd/commit/515cc5e))
+- docs(evals): weekly run 2026-09-21 (#55) ([f5e670d](https://github.com/Ad-Astra-Computing/ahd/commit/f5e670d))
+- docs(evals): weekly run 2026-09-14 (#54) ([459c4a0](https://github.com/Ad-Astra-Computing/ahd/commit/459c4a0))
+- docs(evals): weekly run 2026-09-07 (#50) ([2ca087a](https://github.com/Ad-Astra-Computing/ahd/commit/2ca087a))
+- docs(evals): monthly source + vision + image-gen run 2026-09-01 (#48) ([f71efb7](https://github.com/Ad-Astra-Computing/ahd/commit/f71efb7))
+- docs(evals): weekly run 2026-08-31 (#47) ([f4b51a3](https://github.com/Ad-Astra-Computing/ahd/commit/f4b51a3))
+- docs(evals): weekly run 2026-08-24 (#40) ([722fdae](https://github.com/Ad-Astra-Computing/ahd/commit/722fdae))
+- docs(evals): weekly run 2026-08-17 (#39) ([88a32ee](https://github.com/Ad-Astra-Computing/ahd/commit/88a32ee))
+- docs(evals): re-lint 24 April run, track samples (#38) ([d1a25ec](https://github.com/Ad-Astra-Computing/ahd/commit/d1a25ec))
+- docs(evals): weekly run 2026-08-10 (#36) ([c8c1d56](https://github.com/Ad-Astra-Computing/ahd/commit/c8c1d56))
+- docs(evals): weekly run 2026-08-03 (#33) ([f0ed567](https://github.com/Ad-Astra-Computing/ahd/commit/f0ed567))
+- docs(evals): monthly source + vision + image-gen run 2026-08-01 (#32) ([905b740](https://github.com/Ad-Astra-Computing/ahd/commit/905b740))
+- docs(evals): weekly run 2026-07-27 (#31) ([5d7243e](https://github.com/Ad-Astra-Computing/ahd/commit/5d7243e))
+- docs(evals): monthly source + vision + image-gen run 2026-06-22 (#12) ([c03ce97](https://github.com/Ad-Astra-Computing/ahd/commit/c03ce97))
+- docs(evals): monthly source + vision + image-gen run 2026-06-15 (#9) ([b1020af](https://github.com/Ad-Astra-Computing/ahd/commit/b1020af))
+- docs(evals): weekly run 2026-07-20 (#22) ([096f804](https://github.com/Ad-Astra-Computing/ahd/commit/096f804))
+- docs(evals): weekly run 2026-07-13 (#21) ([f868abb](https://github.com/Ad-Astra-Computing/ahd/commit/f868abb))
+- docs: note weekly eval cadence in README (#17) ([d27de0b](https://github.com/Ad-Astra-Computing/ahd/commit/d27de0b))
+- docs(evals): monthly source + vision + image-gen run 2026-07-07 (#14) ([033e645](https://github.com/Ad-Astra-Computing/ahd/commit/033e645))
+- docs(evals): weekly run 2026-06-22 (#11) ([f610175](https://github.com/Ad-Astra-Computing/ahd/commit/f610175))
+- docs(evals): weekly run 2026-06-15 (#8) ([2fd2918](https://github.com/Ad-Astra-Computing/ahd/commit/2fd2918))
+- docs(evals): weekly run 2026-06-09 (#7) ([a772e36](https://github.com/Ad-Astra-Computing/ahd/commit/a772e36))
+
+### Tests
+
+- test(plugins): run stylelint-plugin-ahd under real stylelint ([5b90aac](https://github.com/Ad-Astra-Computing/ahd/commit/5b90aac))
+
+### Chores
+
+- chore(flake): sync version + npmDepsHash [skip-flake-sync] (#60) ([d7b4601](https://github.com/Ad-Astra-Computing/ahd/commit/d7b4601))
+- chore: fix a Node version drift and two doc inconsistencies ([38126fa](https://github.com/Ad-Astra-Computing/ahd/commit/38126fa))
+- chore: regenerate schema from the antigravity-cli rename ([de6c315](https://github.com/Ad-Astra-Computing/ahd/commit/de6c315))
+- chore(eval): close the weekly series; move roster eval to monthly ([df81076](https://github.com/Ad-Astra-Computing/ahd/commit/df81076))
+- chore: drop ci.yml steps for deleted skeleton guard scripts ([e1064b1](https://github.com/Ad-Astra-Computing/ahd/commit/e1064b1))
+- chore(deps): pin playwright; bump postcss, yaml, source-map-js ([26f5c38](https://github.com/Ad-Astra-Computing/ahd/commit/26f5c38))
+- chore(deps): widen stylelint-plugin-ahd peer range to 17 ([6e9c5c1](https://github.com/Ad-Astra-Computing/ahd/commit/6e9c5c1))
+- chore: de-vendor the Ad Astra project skeleton ([6796aac](https://github.com/Ad-Astra-Computing/ahd/commit/6796aac))
+- chore: sync the standard and guards from the skeleton ([dc39568](https://github.com/Ad-Astra-Computing/ahd/commit/dc39568))
+- chore: sync the standard and guards from the skeleton ([d14113e](https://github.com/Ad-Astra-Computing/ahd/commit/d14113e))
+- chore: sync the paraphrase fix from the skeleton ([7f2ac57](https://github.com/Ad-Astra-Computing/ahd/commit/7f2ac57))
+- chore: add agent playbooks and adapters ([15093fc](https://github.com/Ad-Astra-Computing/ahd/commit/15093fc))
+- chore: track the prose and secret guards ([f7dc30f](https://github.com/Ad-Astra-Computing/ahd/commit/f7dc30f))
+- chore(flake): sync version + npmDepsHash [skip-flake-sync] (#43) ([c50b62f](https://github.com/Ad-Astra-Computing/ahd/commit/c50b62f))
+- chore(deps): patch four transitive advisories (#42) ([ae14b02](https://github.com/Ad-Astra-Computing/ahd/commit/ae14b02))
+- chore(flake): sync version + npmDepsHash [skip-flake-sync] (#29) ([c33e729](https://github.com/Ad-Astra-Computing/ahd/commit/c33e729))
+- chore(deps): bump brace-expansion from 1.1.14 to 1.1.16 (#25) ([9dcb366](https://github.com/Ad-Astra-Computing/ahd/commit/9dcb366))
+- chore(deps): bump postcss from 8.5.16 to 8.5.23 (#24) ([b533088](https://github.com/Ad-Astra-Computing/ahd/commit/b533088))
+- chore(deps): bump js-yaml from 4.1.1 to 4.3.0 (#13) ([9120c81](https://github.com/Ad-Astra-Computing/ahd/commit/9120c81))
+- chore(deps): bump vite from 8.0.9 to 8.1.3 (#16) ([97b2658](https://github.com/Ad-Astra-Computing/ahd/commit/97b2658))
+- chore(deps): bump fast-uri from 3.1.2 to 3.1.4 (#23) ([59cb01d](https://github.com/Ad-Astra-Computing/ahd/commit/59cb01d))
+- chore(flake): sync version + npmDepsHash [skip-flake-sync] (#20) ([4d09688](https://github.com/Ad-Astra-Computing/ahd/commit/4d09688))
+- chore(deps): bump fast-uri from 3.1.0 to 3.1.2 (#3) ([47960f7](https://github.com/Ad-Astra-Computing/ahd/commit/47960f7))
+
+**Full changelog:** https://github.com/Ad-Astra-Computing/ahd/compare/v0.11.0...HEAD
+
 ## Unreleased
 
 ### Features
