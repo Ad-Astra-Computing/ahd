@@ -1,0 +1,104 @@
+{
+  "schema_version": 1,
+  "kind": "eval-image",
+  "ahd_version": "0.12.0",
+  "ahd_commit": "ab349e2540accfe215fdcb7f7e748274593d7a71",
+  "git_dirty": true,
+  "node_version": "v22.22.2",
+  "platform": "linux-x64",
+  "invoked_at": "2026-11-01T14:02:06.088Z",
+  "argv": [
+    "/opt/hostedtoolcache/node/22.22.2/x64/bin/node",
+    "/home/runner/work/ahd/ahd/bin/ahd.js",
+    "eval-image",
+    "editorial-illustration",
+    "--brief",
+    "briefs/editorial-illustration.yml",
+    "--models",
+    "cfimg:@cf/black-forest-labs/flux-1-schnell,cfimg:@cf/bytedance/stable-diffusion-xl-lightning,cfimg:@cf/stabilityai/stable-diffusion-xl-base-1.0,cfimg:@cf/lykon/dreamshaper-8-lcm",
+    "--n",
+    "5",
+    "--critic",
+    "anthropic",
+    "--report",
+    "docs/evals/monthly/2026-11-01-image.md"
+  ],
+  "token": {
+    "path": "/home/runner/work/ahd/ahd/tokens/editorial-illustration.yml",
+    "hash": "sha256:c2c79dec1b06fc45877d2b99be5c2a776aec12c226e0aeac38d384d698d9b721"
+  },
+  "brief": {
+    "path": "briefs/editorial-illustration.yml",
+    "hash": "sha256:ede77b5c41cf91ecac53272cf8d0e6c20ed5639ceb457c410a6cda03e7bca0f2"
+  },
+  "sampling": {
+    "n": 5,
+    "temperature": null,
+    "seed": null
+  },
+  "models": [
+    {
+      "id": "@cf/black-forest-labs/flux-1-schnell",
+      "provider": "cloudflare-workers-ai-image",
+      "provider_request_ids": []
+    },
+    {
+      "id": "@cf/bytedance/stable-diffusion-xl-lightning",
+      "provider": "cloudflare-workers-ai-image",
+      "provider_request_ids": [
+        "a53b6f6f9a28c24d-IAD",
+        "a53b6f8b78b8c24d-IAD",
+        "a53b6fa5dafdc24d-IAD",
+        "a53b6fc13f7cc24d-IAD",
+        "a53b6fdb4999c24d-IAD",
+        "a53b6ff8ec90c24d-IAD",
+        "a53b7010385dc24d-IAD",
+        "a53b702a3916c24d-IAD",
+        "a53b70426d7fc24d-IAD",
+        "a53b7072ad5fc24d-IAD"
+      ]
+    },
+    {
+      "id": "@cf/stabilityai/stable-diffusion-xl-base-1.0",
+      "provider": "cloudflare-workers-ai-image",
+      "provider_request_ids": [
+        "a53b708cce93c24d-IAD",
+        "a53b719a0f5ac24d-IAD",
+        "a53b71f29bc6c24d-IAD",
+        "a53b72b15b29c24d-IAD",
+        "a53b73070ed9c24d-IAD",
+        "a53b73cc198dc24d-IAD",
+        "a53b743cbdc0c24d-IAD",
+        "a53b75916df3c24d-IAD",
+        "a53b772458f8c24d-IAD",
+        "a53b77a9f8c2c24d-IAD"
+      ]
+    },
+    {
+      "id": "@cf/lykon/dreamshaper-8-lcm",
+      "provider": "cloudflare-workers-ai-image",
+      "provider_request_ids": [
+        "a53b798da96bc24d-IAD",
+        "a53b79b9eb6dc24d-IAD",
+        "a53b79e6ad36c24d-IAD",
+        "a53b7a145cd5c24d-IAD",
+        "a53b7a40ed7fc24d-IAD",
+        "a53b7a745d32c24d-IAD",
+        "a53b7aab1a1ec24d-IAD",
+        "a53b7ad7e8c3c24d-IAD",
+        "a53b7b0f3a55c24d-IAD",
+        "a53b7b3f8c5ec24d-IAD"
+      ]
+    }
+  ],
+  "conditions": {
+    "requested": [
+      "raw",
+      "compiled"
+    ],
+    "effective": [
+      "raw",
+      "compiled"
+    ]
+  }
+}

@@ -1,0 +1,4861 @@
+{
+  "schema_version": 1,
+  "kind": "eval-live",
+  "ahd_version": "0.12.0",
+  "ahd_commit": "ab349e2540accfe215fdcb7f7e748274593d7a71",
+  "git_dirty": true,
+  "node_version": "v22.22.2",
+  "platform": "linux-x64",
+  "invoked_at": "2026-11-01T13:16:29.331Z",
+  "argv": [
+    "/opt/hostedtoolcache/node/22.22.2/x64/bin/node",
+    "/home/runner/work/ahd/ahd/bin/ahd.js",
+    "eval-live",
+    "swiss-editorial",
+    "--brief",
+    "briefs/landing.yml",
+    "--models",
+    "cf:@cf/google/gemma-4-26b-a4b-it,cf:@cf/meta/llama-4-scout-17b-16e-instruct,cf:@cf/mistralai/mistral-small-3.1-24b-instruct,cf:@cf/openai/gpt-oss-120b,cf:@cf/qwen/qwen3-30b-a3b-fp8",
+    "--n",
+    "30",
+    "--sample-concurrency",
+    "6",
+    "--out",
+    "/home/runner/work/_temp/monthly-samples.850ygi",
+    "--report",
+    "docs/evals/monthly/2026-11-01-source.md"
+  ],
+  "token": {
+    "path": "/home/runner/work/ahd/ahd/tokens/swiss-editorial.yml",
+    "hash": "sha256:380a3d833d9463dbc681df7465993ab6413d8e77188f55f97359f60dc4b746b1"
+  },
+  "brief": {
+    "path": "briefs/landing.yml",
+    "hash": "sha256:8b7d4275964399a91e6ddec525151ba672ed9c4721279a37ec16ab3450493a4c"
+  },
+  "sampling": {
+    "n": 30,
+    "temperature": null,
+    "seed": null
+  },
+  "models": [
+    {
+      "id": "@cf/google/gemma-4-26b-a4b-it",
+      "provider": "cloudflare-workers-ai",
+      "provider_request_ids": [
+        "a53b2c9bcde15ceb-IAD",
+        "a53b2c9bcf2df4b5-IAD",
+        "a53b2c9bd90a86d6-IAD",
+        "a53b2c9bd845fe41-IAD",
+        "a53b2c9bd9806ccf-IAD",
+        "a53b2f17fbb886d6-IAD",
+        "a53b2ec63de45ceb-IAD",
+        "a53b2f4fd8a66ccf-IAD",
+        "a53b2f2d5cabfe41-IAD",
+        "a53b2f89bd595f97-IAD",
+        "a53b313d2a2b86d6-IAD",
+        "a53b31d52acc8275-IAD",
+        "a53b33cadf9586d6-IAD",
+        "a53b345c39f5c24d-IAD",
+        "a53b3522a9d65764-IAD",
+        "a53b34322f9443b4-IAD",
+        "a53b34e2dc336ccf-IAD",
+        "a53b36084bccc24d-IAD",
+        "a53b36b8db6a5764-IAD",
+        "a53b35e4df3b86d6-IAD",
+        "a53b372dc91bc24d-IAD",
+        "a53b377cda3843b4-IAD",
+        "a53b39ac2dd4f4b5-IAD",
+        "a53b39ac1d6843b4-IAD",
+        "a53b3c9a2ee87067-IAD",
+        "a53b3d4ccc646ccf-IAD",
+        "a53b3ed7ab6c86d6-IAD",
+        "a53b3f882c775f97-IAD",
+        "a53b3f882db2d909-IAD",
+        "a53b3f882fcad6e8-IAD",
+        "a53b40478e6486d6-IAD",
+        "a53b41819ab0d909-IAD",
+        "a53b43aa7fe4317e-IAD",
+        "a53b45178d482201-IAD"
+      ],
+      "sample_requests": [
+        {
+          "condition": "raw",
+          "sample": 1,
+          "request_id": "a53b2c9bcde15ceb-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 6,
+          "request_id": "a53b2c9bcf2df4b5-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 2,
+          "request_id": "a53b2c9bd90a86d6-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 4,
+          "request_id": "a53b2c9bd845fe41-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 5,
+          "request_id": "a53b2c9bd9806ccf-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 9,
+          "request_id": "a53b2f17fbb886d6-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 7,
+          "request_id": "a53b2ec63de45ceb-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 11,
+          "request_id": "a53b2f4fd8a66ccf-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 10,
+          "request_id": "a53b2f2d5cabfe41-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 12,
+          "request_id": "a53b2f89bd595f97-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 13,
+          "request_id": "a53b313d2a2b86d6-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 16,
+          "request_id": "a53b31d52acc8275-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 19,
+          "request_id": "a53b33cadf9586d6-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 22,
+          "request_id": "a53b345c39f5c24d-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 24,
+          "request_id": "a53b3522a9d65764-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 20,
+          "request_id": "a53b34322f9443b4-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 23,
+          "request_id": "a53b34e2dc336ccf-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 26,
+          "request_id": "a53b36084bccc24d-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 27,
+          "request_id": "a53b36b8db6a5764-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 25,
+          "request_id": "a53b35e4df3b86d6-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 29,
+          "request_id": "a53b372dc91bc24d-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 30,
+          "request_id": "a53b377cda3843b4-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 2,
+          "request_id": "a53b39ac2dd4f4b5-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 1,
+          "request_id": "a53b39ac1d6843b4-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 11,
+          "request_id": "a53b3c9a2ee87067-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 13,
+          "request_id": "a53b3d4ccc646ccf-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 14,
+          "request_id": "a53b3ed7ab6c86d6-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 18,
+          "request_id": "a53b3f882c775f97-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 17,
+          "request_id": "a53b3f882db2d909-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 16,
+          "request_id": "a53b3f882fcad6e8-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 20,
+          "request_id": "a53b40478e6486d6-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 22,
+          "request_id": "a53b41819ab0d909-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 27,
+          "request_id": "a53b43aa7fe4317e-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 29,
+          "request_id": "a53b45178d482201-IAD"
+        }
+      ]
+    },
+    {
+      "id": "@cf/meta/llama-4-scout-17b-16e-instruct",
+      "provider": "cloudflare-workers-ai",
+      "provider_request_ids": [
+        "a53b48520a88c24d-IAD",
+        "a53b48520d0cd6e8-IAD",
+        "a53b485209fb6ccf-IAD",
+        "a53b48520a82c24d-IAD",
+        "a53b4852084b86d6-IAD",
+        "a53b48520e0c8275-IAD",
+        "a53b48a08a752201-IAD",
+        "a53b48b67f948275-IAD",
+        "a53b48b5a82fd6e8-IAD",
+        "a53b48b5bc0b86d6-IAD",
+        "a53b48b5bca3c24d-IAD",
+        "a53b48b5bcaec24d-IAD",
+        "a53b490d0d038275-IAD",
+        "a53b490e3b67d6e8-IAD",
+        "a53b490e6fd6c24d-IAD",
+        "a53b490e881ac24d-IAD",
+        "a53b48fa89c52201-IAD",
+        "a53b490e4c6f86d6-IAD",
+        "a53b495089d4c24d-IAD",
+        "a53b495089d1c24d-IAD",
+        "a53b4954d9802201-IAD",
+        "a53b49507d1bd6e8-IAD",
+        "a53b4950196f8275-IAD",
+        "a53b4964c98486d6-IAD",
+        "a53b49a6fad6c24d-IAD",
+        "a53b49a89e5b2201-IAD",
+        "a53b49a48b30c24d-IAD",
+        "a53b49bd0fd0d6e8-IAD",
+        "a53b49be7e278275-IAD",
+        "a53b49d0f98486d6-IAD",
+        "a53b4a2efe148275-IAD",
+        "a53b4a2f08a45764-IAD",
+        "a53b4a2efb8ad6e8-IAD",
+        "a53b4a2f0824fe41-IAD",
+        "a53b4a2f0918f4b5-IAD",
+        "a53b4a2ef95786d6-IAD",
+        "a53b4a8668a88275-IAD",
+        "a53b4a8689fd5764-IAD",
+        "a53b4ab2ee9dd6e8-IAD",
+        "a53b4abc8bcefe41-IAD",
+        "a53b4acceacf86d6-IAD",
+        "a53b4ac28d7bf4b5-IAD",
+        "a53b4ae12e208275-IAD",
+        "a53b4ae3bb055764-IAD",
+        "a53b4b1c4905fe41-IAD",
+        "a53b4b0d1ef3d6e8-IAD",
+        "a53b4b517cdc8275-IAD",
+        "a53b4b523b095764-IAD",
+        "a53b4b4d2972f4b5-IAD",
+        "a53b4b41fbbb86d6-IAD",
+        "a53b4b7bec15fe41-IAD",
+        "a53b4bdb4e96f4b5-IAD",
+        "a53b4bd9bd8a5764-IAD",
+        "a53b4bc698ff8275-IAD",
+        "a53b4bbd0ed6d6e8-IAD",
+        "a53b4c269decfe41-IAD",
+        "a53b4c01c96786d6-IAD",
+        "a53b4c51cd6df4b5-IAD",
+        "a53b4c6c99f08275-IAD",
+        "a53b4c6158d45764-IAD"
+      ],
+      "sample_requests": [
+        {
+          "condition": "raw",
+          "sample": 5,
+          "request_id": "a53b48520a88c24d-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 4,
+          "request_id": "a53b48520d0cd6e8-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 6,
+          "request_id": "a53b485209fb6ccf-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 2,
+          "request_id": "a53b48520a82c24d-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 3,
+          "request_id": "a53b4852084b86d6-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 1,
+          "request_id": "a53b48520e0c8275-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 7,
+          "request_id": "a53b48a08a752201-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 12,
+          "request_id": "a53b48b67f948275-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 8,
+          "request_id": "a53b48b5a82fd6e8-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 11,
+          "request_id": "a53b48b5bc0b86d6-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 9,
+          "request_id": "a53b48b5bca3c24d-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 10,
+          "request_id": "a53b48b5bcaec24d-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 14,
+          "request_id": "a53b490d0d038275-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 15,
+          "request_id": "a53b490e3b67d6e8-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 17,
+          "request_id": "a53b490e6fd6c24d-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 18,
+          "request_id": "a53b490e881ac24d-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 13,
+          "request_id": "a53b48fa89c52201-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 16,
+          "request_id": "a53b490e4c6f86d6-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 22,
+          "request_id": "a53b495089d4c24d-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 21,
+          "request_id": "a53b495089d1c24d-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 23,
+          "request_id": "a53b4954d9802201-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 20,
+          "request_id": "a53b49507d1bd6e8-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 19,
+          "request_id": "a53b4950196f8275-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 24,
+          "request_id": "a53b4964c98486d6-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 26,
+          "request_id": "a53b49a6fad6c24d-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 27,
+          "request_id": "a53b49a89e5b2201-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 25,
+          "request_id": "a53b49a48b30c24d-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 28,
+          "request_id": "a53b49bd0fd0d6e8-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 29,
+          "request_id": "a53b49be7e278275-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 30,
+          "request_id": "a53b49d0f98486d6-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 2,
+          "request_id": "a53b4a2efe148275-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 1,
+          "request_id": "a53b4a2f08a45764-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 5,
+          "request_id": "a53b4a2efb8ad6e8-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 3,
+          "request_id": "a53b4a2f0824fe41-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 6,
+          "request_id": "a53b4a2f0918f4b5-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 4,
+          "request_id": "a53b4a2ef95786d6-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 7,
+          "request_id": "a53b4a8668a88275-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 8,
+          "request_id": "a53b4a8689fd5764-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 9,
+          "request_id": "a53b4ab2ee9dd6e8-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 10,
+          "request_id": "a53b4abc8bcefe41-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 12,
+          "request_id": "a53b4acceacf86d6-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 11,
+          "request_id": "a53b4ac28d7bf4b5-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 13,
+          "request_id": "a53b4ae12e208275-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 14,
+          "request_id": "a53b4ae3bb055764-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 16,
+          "request_id": "a53b4b1c4905fe41-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 15,
+          "request_id": "a53b4b0d1ef3d6e8-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 19,
+          "request_id": "a53b4b517cdc8275-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 20,
+          "request_id": "a53b4b523b095764-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 18,
+          "request_id": "a53b4b4d2972f4b5-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 17,
+          "request_id": "a53b4b41fbbb86d6-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 21,
+          "request_id": "a53b4b7bec15fe41-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 25,
+          "request_id": "a53b4bdb4e96f4b5-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 24,
+          "request_id": "a53b4bd9bd8a5764-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 23,
+          "request_id": "a53b4bc698ff8275-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 22,
+          "request_id": "a53b4bbd0ed6d6e8-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 27,
+          "request_id": "a53b4c269decfe41-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 26,
+          "request_id": "a53b4c01c96786d6-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 28,
+          "request_id": "a53b4c51cd6df4b5-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 30,
+          "request_id": "a53b4c6c99f08275-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 29,
+          "request_id": "a53b4c6158d45764-IAD"
+        }
+      ]
+    },
+    {
+      "id": "@cf/mistralai/mistral-small-3.1-24b-instruct",
+      "provider": "cloudflare-workers-ai",
+      "provider_request_ids": [
+        "a53b4cf629bc5f97-IAD",
+        "a53b4cf61e6d8275-IAD",
+        "a53b4cf62ecd86d6-IAD",
+        "a53b4cf61b105764-IAD",
+        "a53b4cf62a5fb4a7-IAD",
+        "a53b4cf62b2d2201-IAD",
+        "a53b4d686e5286d6-IAD",
+        "a53b4d680e478275-IAD",
+        "a53b4d6e393a5764-IAD",
+        "a53b4d5ba85a5f97-IAD",
+        "a53b4d726b51b4a7-IAD",
+        "a53b4d811b0c2201-IAD",
+        "a53b4de63aefb4a7-IAD",
+        "a53b4dde3f605f97-IAD",
+        "a53b4dd48b105764-IAD",
+        "a53b4dfca86e2201-IAD",
+        "a53b4dd29e5a8275-IAD",
+        "a53b4dd0bd0086d6-IAD",
+        "a53b4e60af26b4a7-IAD",
+        "a53b4e625d455f97-IAD",
+        "a53b4e676f5d5764-IAD",
+        "a53b4e899de32201-IAD",
+        "a53b4e8f9ca68275-IAD",
+        "a53b4e98afa186d6-IAD",
+        "a53b4ed2092ab4a7-IAD",
+        "a53b4ed84eca5f97-IAD",
+        "a53b4efdcfd55764-IAD",
+        "a53b4f13dbc58275-IAD",
+        "a53b4f163b8386d6-IAD",
+        "a53b4f1198692201-IAD",
+        "a53b4fad8c8bfe41-IAD",
+        "a53b4fad8bc243b4-IAD",
+        "a53b4fad88e95ceb-IAD",
+        "a53b4fad7f6286d6-IAD",
+        "a53b4fad8cc7c24d-IAD",
+        "a53b4fad7d392201-IAD",
+        "a53b5098b88d43b4-IAD",
+        "a53b505f7804fe41-IAD",
+        "a53b50a05baf86d6-IAD",
+        "a53b50b0ff3cc24d-IAD",
+        "a53b509bee5c5ceb-IAD",
+        "a53b516cb811fe41-IAD",
+        "a53b51a67f18c24d-IAD",
+        "a53b5182194186d6-IAD",
+        "a53b51415b9f2201-IAD",
+        "a53b51663c1943b4-IAD",
+        "a53b520f188bfe41-IAD",
+        "a53b51f719765ceb-IAD",
+        "a53b5236ffdac24d-IAD",
+        "a53b527cfb592201-IAD",
+        "a53b52606a8a86d6-IAD",
+        "a53b52869cef43b4-IAD",
+        "a53b52d41a3efe41-IAD",
+        "a53b52e87cff5ceb-IAD",
+        "a53b53201a13c24d-IAD",
+        "a53b53341a672201-IAD",
+        "a53b536c9faf86d6-IAD",
+        "a53b538d6f8d43b4-IAD",
+        "a53b53bca9bdfe41-IAD",
+        "a53b53ceab205ceb-IAD"
+      ],
+      "sample_requests": [
+        {
+          "condition": "raw",
+          "sample": 4,
+          "request_id": "a53b4cf629bc5f97-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 2,
+          "request_id": "a53b4cf61e6d8275-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 6,
+          "request_id": "a53b4cf62ecd86d6-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 1,
+          "request_id": "a53b4cf61b105764-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 3,
+          "request_id": "a53b4cf62a5fb4a7-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 5,
+          "request_id": "a53b4cf62b2d2201-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 9,
+          "request_id": "a53b4d686e5286d6-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 8,
+          "request_id": "a53b4d680e478275-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 10,
+          "request_id": "a53b4d6e393a5764-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 7,
+          "request_id": "a53b4d5ba85a5f97-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 11,
+          "request_id": "a53b4d726b51b4a7-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 12,
+          "request_id": "a53b4d811b0c2201-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 17,
+          "request_id": "a53b4de63aefb4a7-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 16,
+          "request_id": "a53b4dde3f605f97-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 15,
+          "request_id": "a53b4dd48b105764-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 18,
+          "request_id": "a53b4dfca86e2201-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 14,
+          "request_id": "a53b4dd29e5a8275-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 13,
+          "request_id": "a53b4dd0bd0086d6-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 19,
+          "request_id": "a53b4e60af26b4a7-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 20,
+          "request_id": "a53b4e625d455f97-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 21,
+          "request_id": "a53b4e676f5d5764-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 22,
+          "request_id": "a53b4e899de32201-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 23,
+          "request_id": "a53b4e8f9ca68275-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 24,
+          "request_id": "a53b4e98afa186d6-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 25,
+          "request_id": "a53b4ed2092ab4a7-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 26,
+          "request_id": "a53b4ed84eca5f97-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 27,
+          "request_id": "a53b4efdcfd55764-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 29,
+          "request_id": "a53b4f13dbc58275-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 30,
+          "request_id": "a53b4f163b8386d6-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 28,
+          "request_id": "a53b4f1198692201-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 3,
+          "request_id": "a53b4fad8c8bfe41-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 1,
+          "request_id": "a53b4fad8bc243b4-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 2,
+          "request_id": "a53b4fad88e95ceb-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 6,
+          "request_id": "a53b4fad7f6286d6-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 4,
+          "request_id": "a53b4fad8cc7c24d-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 5,
+          "request_id": "a53b4fad7d392201-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 8,
+          "request_id": "a53b5098b88d43b4-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 7,
+          "request_id": "a53b505f7804fe41-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 10,
+          "request_id": "a53b50a05baf86d6-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 11,
+          "request_id": "a53b50b0ff3cc24d-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 9,
+          "request_id": "a53b509bee5c5ceb-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 14,
+          "request_id": "a53b516cb811fe41-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 16,
+          "request_id": "a53b51a67f18c24d-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 15,
+          "request_id": "a53b5182194186d6-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 12,
+          "request_id": "a53b51415b9f2201-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 13,
+          "request_id": "a53b51663c1943b4-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 18,
+          "request_id": "a53b520f188bfe41-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 17,
+          "request_id": "a53b51f719765ceb-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 19,
+          "request_id": "a53b5236ffdac24d-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 21,
+          "request_id": "a53b527cfb592201-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 20,
+          "request_id": "a53b52606a8a86d6-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 22,
+          "request_id": "a53b52869cef43b4-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 23,
+          "request_id": "a53b52d41a3efe41-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 24,
+          "request_id": "a53b52e87cff5ceb-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 25,
+          "request_id": "a53b53201a13c24d-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 26,
+          "request_id": "a53b53341a672201-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 27,
+          "request_id": "a53b536c9faf86d6-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 28,
+          "request_id": "a53b538d6f8d43b4-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 29,
+          "request_id": "a53b53bca9bdfe41-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 30,
+          "request_id": "a53b53ceab205ceb-IAD"
+        }
+      ]
+    },
+    {
+      "id": "@cf/openai/gpt-oss-120b",
+      "provider": "cloudflare-workers-ai",
+      "provider_request_ids": [
+        "a53b54e758f8c8a1-IAD",
+        "a53b54e75f09f4b5-IAD",
+        "a53b54e758f1b4a7-IAD",
+        "a53b55207b94c8a1-IAD",
+        "a53b54e74e635ceb-IAD",
+        "a53b554abf05b4a7-IAD",
+        "a53b5534bdd4f4b5-IAD",
+        "a53b54e75d6a86d6-IAD",
+        "a53b55724eeb5ceb-IAD",
+        "a53b54e759915f97-IAD",
+        "a53b5582cd72b4a7-IAD",
+        "a53b55a73caa5ceb-IAD",
+        "a53b55ce19f4b4a7-IAD",
+        "a53b5565ae47c8a1-IAD",
+        "a53b55a9ca9a5f97-IAD",
+        "a53b55a4bfc686d6-IAD",
+        "a53b55f9ee7bc8a1-IAD",
+        "a53b55f10e5eb4a7-IAD",
+        "a53b558a4f5cf4b5-IAD",
+        "a53b5606dc615f97-IAD",
+        "a53b55eb9e725ceb-IAD",
+        "a53b56193d0f86d6-IAD",
+        "a53b563a7b205f97-IAD",
+        "a53b562e7a11b4a7-IAD",
+        "a53b562ac995c8a1-IAD",
+        "a53b56319da7f4b5-IAD",
+        "a53b565b5e2686d6-IAD",
+        "a53b563dcc8c5ceb-IAD",
+        "a53b567eeed95f97-IAD",
+        "a53b568dcfb6b4a7-IAD",
+        "a53b56f83ecd2201-IAD",
+        "a53b56f82aed5f97-IAD",
+        "a53b56f83ef96ccf-IAD",
+        "a53b56f82cecb4a7-IAD",
+        "a53b57424c322201-IAD",
+        "a53b576939ca5f97-IAD",
+        "a53b5776298a6ccf-IAD",
+        "a53b56f839638275-IAD",
+        "a53b57d1edc9b4a7-IAD",
+        "a53b58631be98275-IAD",
+        "a53b57ef7a652201-IAD",
+        "a53b58721ffeb4a7-IAD",
+        "a53b5859cd316ccf-IAD",
+        "a53b56f82cbac8a8-IAD",
+        "a53b58d56fdd2201-IAD",
+        "a53b58488a665f97-IAD",
+        "a53b58ee3a01b4a7-IAD",
+        "a53b58d35e508275-IAD",
+        "a53b5950aae5c8a8-IAD",
+        "a53b59122f4d6ccf-IAD",
+        "a53b5955ff8b5f97-IAD",
+        "a53b59b36d176ccf-IAD",
+        "a53b59533e062201-IAD",
+        "a53b598e7a1a8275-IAD",
+        "a53b59a9e943c8a8-IAD",
+        "a53b5984889cb4a7-IAD",
+        "a53b59e2fbf25f97-IAD",
+        "a53b5a134aa32201-IAD",
+        "a53b5a1dff6a8275-IAD",
+        "a53b5a013f956ccf-IAD"
+      ],
+      "sample_requests": [
+        {
+          "condition": "raw",
+          "sample": 5,
+          "request_id": "a53b54e758f8c8a1-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 3,
+          "request_id": "a53b54e75f09f4b5-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 6,
+          "request_id": "a53b54e758f1b4a7-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 7,
+          "request_id": "a53b55207b94c8a1-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 2,
+          "request_id": "a53b54e74e635ceb-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 9,
+          "request_id": "a53b554abf05b4a7-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 8,
+          "request_id": "a53b5534bdd4f4b5-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 4,
+          "request_id": "a53b54e75d6a86d6-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 11,
+          "request_id": "a53b55724eeb5ceb-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 1,
+          "request_id": "a53b54e759915f97-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 12,
+          "request_id": "a53b5582cd72b4a7-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 15,
+          "request_id": "a53b55a73caa5ceb-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 17,
+          "request_id": "a53b55ce19f4b4a7-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 10,
+          "request_id": "a53b5565ae47c8a1-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 16,
+          "request_id": "a53b55a9ca9a5f97-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 14,
+          "request_id": "a53b55a4bfc686d6-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 20,
+          "request_id": "a53b55f9ee7bc8a1-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 19,
+          "request_id": "a53b55f10e5eb4a7-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 13,
+          "request_id": "a53b558a4f5cf4b5-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 21,
+          "request_id": "a53b5606dc615f97-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 18,
+          "request_id": "a53b55eb9e725ceb-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 22,
+          "request_id": "a53b56193d0f86d6-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 26,
+          "request_id": "a53b563a7b205f97-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 24,
+          "request_id": "a53b562e7a11b4a7-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 23,
+          "request_id": "a53b562ac995c8a1-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 25,
+          "request_id": "a53b56319da7f4b5-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 28,
+          "request_id": "a53b565b5e2686d6-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 27,
+          "request_id": "a53b563dcc8c5ceb-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 29,
+          "request_id": "a53b567eeed95f97-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 30,
+          "request_id": "a53b568dcfb6b4a7-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 4,
+          "request_id": "a53b56f83ecd2201-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 1,
+          "request_id": "a53b56f82aed5f97-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 3,
+          "request_id": "a53b56f83ef96ccf-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 6,
+          "request_id": "a53b56f82cecb4a7-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 7,
+          "request_id": "a53b57424c322201-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 8,
+          "request_id": "a53b576939ca5f97-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 9,
+          "request_id": "a53b5776298a6ccf-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 5,
+          "request_id": "a53b56f839638275-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 10,
+          "request_id": "a53b57d1edc9b4a7-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 14,
+          "request_id": "a53b58631be98275-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 11,
+          "request_id": "a53b57ef7a652201-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 15,
+          "request_id": "a53b58721ffeb4a7-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 13,
+          "request_id": "a53b5859cd316ccf-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 2,
+          "request_id": "a53b56f82cbac8a8-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 17,
+          "request_id": "a53b58d56fdd2201-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 12,
+          "request_id": "a53b58488a665f97-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 18,
+          "request_id": "a53b58ee3a01b4a7-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 16,
+          "request_id": "a53b58d35e508275-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 20,
+          "request_id": "a53b5950aae5c8a8-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 19,
+          "request_id": "a53b59122f4d6ccf-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 22,
+          "request_id": "a53b5955ff8b5f97-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 26,
+          "request_id": "a53b59b36d176ccf-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 21,
+          "request_id": "a53b59533e062201-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 24,
+          "request_id": "a53b598e7a1a8275-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 25,
+          "request_id": "a53b59a9e943c8a8-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 23,
+          "request_id": "a53b5984889cb4a7-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 27,
+          "request_id": "a53b59e2fbf25f97-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 29,
+          "request_id": "a53b5a134aa32201-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 30,
+          "request_id": "a53b5a1dff6a8275-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 28,
+          "request_id": "a53b5a013f956ccf-IAD"
+        }
+      ]
+    },
+    {
+      "id": "@cf/qwen/qwen3-30b-a3b-fp8",
+      "provider": "cloudflare-workers-ai",
+      "provider_request_ids": [
+        "a53b5ac7cef76ccf-IAD",
+        "a53b5ac7cc698275-IAD",
+        "a53b5ac7cb8e2201-IAD",
+        "a53b5ac7d83af4b5-IAD",
+        "a53b5b213d448275-IAD",
+        "a53b5b1fdc956ccf-IAD",
+        "a53b5ac7d87d86d6-IAD",
+        "a53b5b3a7fd8f4b5-IAD",
+        "a53b5ac7da5dc24d-IAD",
+        "a53b5b631d958275-IAD",
+        "a53b5b2b7bac2201-IAD",
+        "a53b5b8578c4f4b5-IAD",
+        "a53b5b720ae46ccf-IAD",
+        "a53b5b97bae2c24d-IAD",
+        "a53b5ba26cc68275-IAD",
+        "a53b5bbcdfaf6ccf-IAD",
+        "a53b5be0e9e0c24d-IAD",
+        "a53b5bb8df8ff4b5-IAD",
+        "a53b5bae6d5f2201-IAD",
+        "a53b5c007f938275-IAD",
+        "a53b5c190c44c24d-IAD",
+        "a53b5c1bfd56f4b5-IAD",
+        "a53b5c2e19a38275-IAD",
+        "a53b5c1eb8a82201-IAD",
+        "a53b5b798c6a86d6-IAD",
+        "a53b5c5db96cf4b5-IAD",
+        "a53b5c144cf06ccf-IAD",
+        "a53b5c695db58275-IAD",
+        "a53b5c88fdc22201-IAD",
+        "a53b5c495ea1c24d-IAD",
+        "a53b5d51d9682201-IAD",
+        "a53b5d51d8396ccf-IAD",
+        "a53b5d51ded543b4-IAD",
+        "a53b5d51edfbd674-IAD",
+        "a53b5d51efbc86d6-IAD",
+        "a53b5d9e9ea16ccf-IAD",
+        "a53b5d51bbbac24d-IAD",
+        "a53b5da5cd23d674-IAD",
+        "a53b5d9b7da42201-IAD",
+        "a53b5de508d06ccf-IAD",
+        "a53b5da4dfe043b4-IAD",
+        "a53b5dfed8e9d674-IAD",
+        "a53b5def6b93c24d-IAD",
+        "a53b5e27efaf6ccf-IAD",
+        "a53b5e29edaf43b4-IAD",
+        "a53b5e462a19d674-IAD",
+        "a53b5e6efd296ccf-IAD",
+        "a53b5e751d5843b4-IAD",
+        "a53b5e568cc2c24d-IAD",
+        "a53b5dd53a3186d6-IAD",
+        "a53b5eb489ee6ccf-IAD",
+        "a53b5e013ec82201-IAD",
+        "a53b5eb6bc4e43b4-IAD",
+        "a53b5eee2e992201-IAD",
+        "a53b5ecf2e01c24d-IAD",
+        "a53b5e888bb3d674-IAD",
+        "a53b5f054b0343b4-IAD",
+        "a53b5eea9c2f6ccf-IAD",
+        "a53b5f2239252201-IAD",
+        "a53b5edbba5786d6-IAD"
+      ],
+      "sample_requests": [
+        {
+          "condition": "raw",
+          "sample": 3,
+          "request_id": "a53b5ac7cef76ccf-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 5,
+          "request_id": "a53b5ac7cc698275-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 4,
+          "request_id": "a53b5ac7cb8e2201-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 2,
+          "request_id": "a53b5ac7d83af4b5-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 8,
+          "request_id": "a53b5b213d448275-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 7,
+          "request_id": "a53b5b1fdc956ccf-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 1,
+          "request_id": "a53b5ac7d87d86d6-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 10,
+          "request_id": "a53b5b3a7fd8f4b5-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 6,
+          "request_id": "a53b5ac7da5dc24d-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 11,
+          "request_id": "a53b5b631d958275-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 9,
+          "request_id": "a53b5b2b7bac2201-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 14,
+          "request_id": "a53b5b8578c4f4b5-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 12,
+          "request_id": "a53b5b720ae46ccf-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 15,
+          "request_id": "a53b5b97bae2c24d-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 16,
+          "request_id": "a53b5ba26cc68275-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 19,
+          "request_id": "a53b5bbcdfaf6ccf-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 20,
+          "request_id": "a53b5be0e9e0c24d-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 18,
+          "request_id": "a53b5bb8df8ff4b5-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 17,
+          "request_id": "a53b5bae6d5f2201-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 21,
+          "request_id": "a53b5c007f938275-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 23,
+          "request_id": "a53b5c190c44c24d-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 24,
+          "request_id": "a53b5c1bfd56f4b5-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 26,
+          "request_id": "a53b5c2e19a38275-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 25,
+          "request_id": "a53b5c1eb8a82201-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 13,
+          "request_id": "a53b5b798c6a86d6-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 28,
+          "request_id": "a53b5c5db96cf4b5-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 22,
+          "request_id": "a53b5c144cf06ccf-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 29,
+          "request_id": "a53b5c695db58275-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 30,
+          "request_id": "a53b5c88fdc22201-IAD"
+        },
+        {
+          "condition": "raw",
+          "sample": 27,
+          "request_id": "a53b5c495ea1c24d-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 5,
+          "request_id": "a53b5d51d9682201-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 1,
+          "request_id": "a53b5d51d8396ccf-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 4,
+          "request_id": "a53b5d51ded543b4-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 2,
+          "request_id": "a53b5d51edfbd674-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 3,
+          "request_id": "a53b5d51efbc86d6-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 8,
+          "request_id": "a53b5d9e9ea16ccf-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 6,
+          "request_id": "a53b5d51bbbac24d-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 10,
+          "request_id": "a53b5da5cd23d674-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 7,
+          "request_id": "a53b5d9b7da42201-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 12,
+          "request_id": "a53b5de508d06ccf-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 9,
+          "request_id": "a53b5da4dfe043b4-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 14,
+          "request_id": "a53b5dfed8e9d674-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 13,
+          "request_id": "a53b5def6b93c24d-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 16,
+          "request_id": "a53b5e27efaf6ccf-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 17,
+          "request_id": "a53b5e29edaf43b4-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 18,
+          "request_id": "a53b5e462a19d674-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 20,
+          "request_id": "a53b5e6efd296ccf-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 21,
+          "request_id": "a53b5e751d5843b4-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 19,
+          "request_id": "a53b5e568cc2c24d-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 11,
+          "request_id": "a53b5dd53a3186d6-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 23,
+          "request_id": "a53b5eb489ee6ccf-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 15,
+          "request_id": "a53b5e013ec82201-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 24,
+          "request_id": "a53b5eb6bc4e43b4-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 28,
+          "request_id": "a53b5eee2e992201-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 25,
+          "request_id": "a53b5ecf2e01c24d-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 22,
+          "request_id": "a53b5e888bb3d674-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 29,
+          "request_id": "a53b5f054b0343b4-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 27,
+          "request_id": "a53b5eea9c2f6ccf-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 30,
+          "request_id": "a53b5f2239252201-IAD"
+        },
+        {
+          "condition": "compiled",
+          "sample": 26,
+          "request_id": "a53b5edbba5786d6-IAD"
+        }
+      ]
+    }
+  ],
+  "conditions": {
+    "requested": [
+      "raw",
+      "compiled"
+    ],
+    "effective": [
+      "raw",
+      "compiled"
+    ]
+  },
+  "measurements": [
+    {
+      "model": "@cf/google/gemma-4-26b-a4b-it",
+      "condition": "raw",
+      "samples": [
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_google_gemma-4-26b-a4b-it/raw/sample-001.html",
+          "tells": [
+            "ahd/weight-variety",
+            "ahd/line-height-per-size",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 5509,
+          "hash": "sha256:d76a9ff565f9f5425b706435b6f9f4196efbd47650b89c9bef8ae7950636a216",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_google_gemma-4-26b-a4b-it/raw/sample-002.html",
+          "tells": [
+            "ahd/weight-variety",
+            "ahd/line-height-per-size"
+          ],
+          "byte_length": 4856,
+          "hash": "sha256:01c90c1734f7b24b9b36907542392c94b12e27d29c6e484036b4b2939786232e",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_google_gemma-4-26b-a4b-it/raw/sample-004.html",
+          "tells": [
+            "ahd/weight-variety",
+            "ahd/require-type-pairing",
+            "ahd/line-height-per-size"
+          ],
+          "byte_length": 4882,
+          "hash": "sha256:c62d5c374806bf9c9358afb5d5ed8c012844275a717e34727614994775c49884",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_google_gemma-4-26b-a4b-it/raw/sample-005.html",
+          "tells": [
+            "ahd/weight-variety",
+            "ahd/line-height-per-size"
+          ],
+          "byte_length": 5456,
+          "hash": "sha256:09a36ffc2de27a7d02e26f252fd627654aae53e9f8be37443e8d214e73b768fe",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_google_gemma-4-26b-a4b-it/raw/sample-006.html",
+          "tells": [
+            "ahd/weight-variety",
+            "ahd/line-height-per-size",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 4926,
+          "hash": "sha256:7fa516f7b83a1a6f7ac375ca5f25ef01e1154642f9a90ce5b5b797b0360fed1e",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_google_gemma-4-26b-a4b-it/raw/sample-007.html",
+          "tells": [
+            "ahd/weight-variety",
+            "ahd/line-height-per-size"
+          ],
+          "byte_length": 5998,
+          "hash": "sha256:98f5895128cfa9ed0105432946cf0c4e32eda70ed7a5a6ae559fcba8196d314d",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_google_gemma-4-26b-a4b-it/raw/sample-009.html",
+          "tells": [
+            "ahd/weight-variety",
+            "ahd/require-type-pairing",
+            "ahd/line-height-per-size"
+          ],
+          "byte_length": 4695,
+          "hash": "sha256:69449dd1680a049a059879859de0e05a2450833ab1562b5271d331b0aa3d3389",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_google_gemma-4-26b-a4b-it/raw/sample-010.html",
+          "tells": [
+            "ahd/weight-variety",
+            "ahd/require-type-pairing",
+            "ahd/line-height-per-size"
+          ],
+          "byte_length": 4979,
+          "hash": "sha256:bc79d892cfb514f0a9bfe14ff428752b3aa6473b18712184fffc7c07a9a81830",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_google_gemma-4-26b-a4b-it/raw/sample-011.html",
+          "tells": [
+            "ahd/weight-variety",
+            "ahd/line-height-per-size",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 4927,
+          "hash": "sha256:683d1a74d9f07d911464a3bf8334c55566eae4657d6db8e04d577efd5cdf9003",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_google_gemma-4-26b-a4b-it/raw/sample-012.html",
+          "tells": [
+            "ahd/weight-variety",
+            "ahd/line-height-per-size"
+          ],
+          "byte_length": 5336,
+          "hash": "sha256:4679425f0eab107f757b505389f8d2f222ac25c3c8464c4a9d5f913ca476397b",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_google_gemma-4-26b-a4b-it/raw/sample-013.html",
+          "tells": [
+            "ahd/weight-variety",
+            "ahd/line-height-per-size"
+          ],
+          "byte_length": 5111,
+          "hash": "sha256:108c55c30ad0191ddac2afc9397784b71e4ced2bbc40416358be1ddb4e084931",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_google_gemma-4-26b-a4b-it/raw/sample-016.html",
+          "tells": [
+            "ahd/weight-variety",
+            "ahd/require-type-pairing",
+            "ahd/line-height-per-size",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 5573,
+          "hash": "sha256:d5c792d7ca67108417db310de09c73bdec40e8a9fd1756027a88e2797f3efb1a",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_google_gemma-4-26b-a4b-it/raw/sample-019.html",
+          "tells": [
+            "ahd/weight-variety",
+            "ahd/line-height-per-size",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 5358,
+          "hash": "sha256:e1064ec9cdaca8b4f14a4a50b513ddb16c91ac0b4cf8fddf538d60b4022d0020",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_google_gemma-4-26b-a4b-it/raw/sample-020.html",
+          "tells": [
+            "ahd/weight-variety",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 5741,
+          "hash": "sha256:450714150c6199d9a7f87d9429b466fae5b5768bb7bc21b39543621e8d04b1b6",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_google_gemma-4-26b-a4b-it/raw/sample-022.html",
+          "tells": [
+            "ahd/weight-variety",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 5532,
+          "hash": "sha256:f6f2891fb8ab25f623599c80ce23e9f93afb08fb80f7a8f29d6b93328184a2bc",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_google_gemma-4-26b-a4b-it/raw/sample-023.html",
+          "tells": [
+            "ahd/weight-variety",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 5806,
+          "hash": "sha256:ffc64b3a3f48aeeb4200295bd87afcbfa6d1c41c429346fdc5028114f4482ffa",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_google_gemma-4-26b-a4b-it/raw/sample-024.html",
+          "tells": [
+            "ahd/weight-variety",
+            "ahd/line-height-per-size",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 5076,
+          "hash": "sha256:d8b899b2f828f2fa7a85707f8dea84d95d9d6cad6647f1a18647b3911264deb5",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_google_gemma-4-26b-a4b-it/raw/sample-025.html",
+          "tells": [
+            "ahd/weight-variety",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 5430,
+          "hash": "sha256:1a999eebf50db251a4d3e2cfd969cc24d729a65d286a65e37049f1e59f06af08",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_google_gemma-4-26b-a4b-it/raw/sample-026.html",
+          "tells": [
+            "ahd/weight-variety",
+            "ahd/require-type-pairing",
+            "ahd/line-height-per-size"
+          ],
+          "byte_length": 4727,
+          "hash": "sha256:1843c38eb8c2c72eea224a2ca78d171dd3124c851fe1672e874922b665617610",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_google_gemma-4-26b-a4b-it/raw/sample-027.html",
+          "tells": [
+            "ahd/weight-variety",
+            "ahd/line-height-per-size"
+          ],
+          "byte_length": 5598,
+          "hash": "sha256:40319c4cc3dbb236a74f21eb79d2f57f79e72dca3b27432c7a0c85019c0ecc67",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_google_gemma-4-26b-a4b-it/raw/sample-029.html",
+          "tells": [
+            "ahd/weight-variety",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 5647,
+          "hash": "sha256:cda281411dc029c24d826fce89d129faaa2e21e4888ed8f2c54c2a64e4c2b1cf",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_google_gemma-4-26b-a4b-it/raw/sample-030.html",
+          "tells": [
+            "ahd/weight-variety",
+            "ahd/line-height-per-size",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 5459,
+          "hash": "sha256:5c3ec8727285d26a11d6d9eeabf602a2ca74abafd74988caa7b251a9b92d5214",
+          "scored": true
+        }
+      ]
+    },
+    {
+      "model": "@cf/google/gemma-4-26b-a4b-it",
+      "condition": "compiled",
+      "samples": [
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_google_gemma-4-26b-a4b-it/compiled/sample-001.html",
+          "tells": [
+            "ahd/weight-variety"
+          ],
+          "byte_length": 8114,
+          "hash": "sha256:bb864189bd6e187e3f30e44d101516fd5e949b7a3279cc0169a88544fe5bee71",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_google_gemma-4-26b-a4b-it/compiled/sample-002.html",
+          "tells": [
+            "ahd/weight-variety",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 7626,
+          "hash": "sha256:52257a62a514782c8f38f0ede6e50aef29eb2928f06d1979b94ff530b93c4aa1",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_google_gemma-4-26b-a4b-it/compiled/sample-011.html",
+          "tells": [
+            "ahd/weight-variety",
+            "ahd/tracking-per-size"
+          ],
+          "byte_length": 7551,
+          "hash": "sha256:e0cafee49cfdbdba00ffe625e4c1be3aad199826d5d5465d43945ed1426a6d6b",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_google_gemma-4-26b-a4b-it/compiled/sample-013.html",
+          "tells": [
+            "ahd/weight-variety"
+          ],
+          "byte_length": 8104,
+          "hash": "sha256:9e17ac43d1efec6023d3622899a490009784c6ce1ab36e3e5962b8654442fc5a",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_google_gemma-4-26b-a4b-it/compiled/sample-014.html",
+          "tells": [],
+          "byte_length": 8486,
+          "hash": "sha256:6b6d4f7987345f77c92d13148e644af35ad89140b2e919806c12d5b5caeec0f2",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_google_gemma-4-26b-a4b-it/compiled/sample-016.html",
+          "tells": [
+            "ahd/weight-variety"
+          ],
+          "byte_length": 6524,
+          "hash": "sha256:d4b70ab9d39e7805cc64b6ef4f79d3f59072e9545dd5e13ecb2ad70486fe758d",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_google_gemma-4-26b-a4b-it/compiled/sample-017.html",
+          "tells": [
+            "ahd/weight-variety",
+            "ahd/tracking-per-size"
+          ],
+          "byte_length": 7316,
+          "hash": "sha256:83159a1a3220c512238124466fba83fe3ead4a50034b52a50ba252ee318ef88b",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_google_gemma-4-26b-a4b-it/compiled/sample-018.html",
+          "tells": [
+            "ahd/weight-variety"
+          ],
+          "byte_length": 8115,
+          "hash": "sha256:e31d0b6e566a3c8e5fc30b7a4816907e5b105694fc426ae723bd437d2beab8c4",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_google_gemma-4-26b-a4b-it/compiled/sample-020.html",
+          "tells": [
+            "ahd/weight-variety"
+          ],
+          "byte_length": 7967,
+          "hash": "sha256:44c3d040798b3a2f985e19ea2de672d09c3645247f56e3975859d3327f119f0c",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_google_gemma-4-26b-a4b-it/compiled/sample-022.html",
+          "tells": [
+            "ahd/weight-variety"
+          ],
+          "byte_length": 7423,
+          "hash": "sha256:0deb54f4cc388eeb20744f03b81d5ae012ee381643a54e46f91ea7a25cb4b722",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_google_gemma-4-26b-a4b-it/compiled/sample-027.html",
+          "tells": [
+            "ahd/weight-variety"
+          ],
+          "byte_length": 8770,
+          "hash": "sha256:5c016651ce5ab8963bf4344ca01b036c8f141d30943dc6ba5fdd05c6b7bf0b4b",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_google_gemma-4-26b-a4b-it/compiled/sample-029.html",
+          "tells": [],
+          "byte_length": 7848,
+          "hash": "sha256:1dbb56b39e12459aae60fbcfba49e741ec2843aca853ee601bf676e6192dd103",
+          "scored": true
+        }
+      ]
+    },
+    {
+      "model": "@cf/meta/llama-4-scout-17b-16e-instruct",
+      "condition": "raw",
+      "samples": [
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_meta_llama-4-scout-17b-16e-instruct/raw/sample-001.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/require-named-grid"
+          ],
+          "byte_length": 2909,
+          "hash": "sha256:72a7e5e1fccec196b5a0f8162aa577ed86cb2608717399364d20fec0e81b36ba",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_meta_llama-4-scout-17b-16e-instruct/raw/sample-002.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/require-named-grid"
+          ],
+          "byte_length": 2899,
+          "hash": "sha256:6e23a8fc66a81e03a3eccaa1b12bc938ead6b31d024e20f991633740b0e0de1b",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_meta_llama-4-scout-17b-16e-instruct/raw/sample-003.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/require-named-grid"
+          ],
+          "byte_length": 2909,
+          "hash": "sha256:72a7e5e1fccec196b5a0f8162aa577ed86cb2608717399364d20fec0e81b36ba",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_meta_llama-4-scout-17b-16e-instruct/raw/sample-004.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/require-named-grid"
+          ],
+          "byte_length": 2899,
+          "hash": "sha256:6e23a8fc66a81e03a3eccaa1b12bc938ead6b31d024e20f991633740b0e0de1b",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_meta_llama-4-scout-17b-16e-instruct/raw/sample-005.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/require-named-grid"
+          ],
+          "byte_length": 2899,
+          "hash": "sha256:6e23a8fc66a81e03a3eccaa1b12bc938ead6b31d024e20f991633740b0e0de1b",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_meta_llama-4-scout-17b-16e-instruct/raw/sample-006.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/require-named-grid"
+          ],
+          "byte_length": 2899,
+          "hash": "sha256:6e23a8fc66a81e03a3eccaa1b12bc938ead6b31d024e20f991633740b0e0de1b",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_meta_llama-4-scout-17b-16e-instruct/raw/sample-007.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/require-named-grid"
+          ],
+          "byte_length": 2899,
+          "hash": "sha256:6e23a8fc66a81e03a3eccaa1b12bc938ead6b31d024e20f991633740b0e0de1b",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_meta_llama-4-scout-17b-16e-instruct/raw/sample-008.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/require-named-grid"
+          ],
+          "byte_length": 2899,
+          "hash": "sha256:6e23a8fc66a81e03a3eccaa1b12bc938ead6b31d024e20f991633740b0e0de1b",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_meta_llama-4-scout-17b-16e-instruct/raw/sample-009.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/require-named-grid"
+          ],
+          "byte_length": 2899,
+          "hash": "sha256:6e23a8fc66a81e03a3eccaa1b12bc938ead6b31d024e20f991633740b0e0de1b",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_meta_llama-4-scout-17b-16e-instruct/raw/sample-010.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/require-named-grid"
+          ],
+          "byte_length": 2899,
+          "hash": "sha256:6e23a8fc66a81e03a3eccaa1b12bc938ead6b31d024e20f991633740b0e0de1b",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_meta_llama-4-scout-17b-16e-instruct/raw/sample-011.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/require-named-grid"
+          ],
+          "byte_length": 2899,
+          "hash": "sha256:6e23a8fc66a81e03a3eccaa1b12bc938ead6b31d024e20f991633740b0e0de1b",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_meta_llama-4-scout-17b-16e-instruct/raw/sample-012.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/require-named-grid"
+          ],
+          "byte_length": 3046,
+          "hash": "sha256:cedea23ea7f8f51431148c73b21727f045f3054d6bb56e679aac3dd9e52c9dfb",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_meta_llama-4-scout-17b-16e-instruct/raw/sample-013.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/require-named-grid"
+          ],
+          "byte_length": 2899,
+          "hash": "sha256:6e23a8fc66a81e03a3eccaa1b12bc938ead6b31d024e20f991633740b0e0de1b",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_meta_llama-4-scout-17b-16e-instruct/raw/sample-014.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/require-named-grid"
+          ],
+          "byte_length": 2899,
+          "hash": "sha256:6e23a8fc66a81e03a3eccaa1b12bc938ead6b31d024e20f991633740b0e0de1b",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_meta_llama-4-scout-17b-16e-instruct/raw/sample-015.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/require-named-grid"
+          ],
+          "byte_length": 2899,
+          "hash": "sha256:6e23a8fc66a81e03a3eccaa1b12bc938ead6b31d024e20f991633740b0e0de1b",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_meta_llama-4-scout-17b-16e-instruct/raw/sample-016.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/require-named-grid"
+          ],
+          "byte_length": 2899,
+          "hash": "sha256:6e23a8fc66a81e03a3eccaa1b12bc938ead6b31d024e20f991633740b0e0de1b",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_meta_llama-4-scout-17b-16e-instruct/raw/sample-017.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/require-named-grid"
+          ],
+          "byte_length": 2899,
+          "hash": "sha256:6e23a8fc66a81e03a3eccaa1b12bc938ead6b31d024e20f991633740b0e0de1b",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_meta_llama-4-scout-17b-16e-instruct/raw/sample-018.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/require-named-grid"
+          ],
+          "byte_length": 2899,
+          "hash": "sha256:6e23a8fc66a81e03a3eccaa1b12bc938ead6b31d024e20f991633740b0e0de1b",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_meta_llama-4-scout-17b-16e-instruct/raw/sample-019.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/require-named-grid"
+          ],
+          "byte_length": 3046,
+          "hash": "sha256:cedea23ea7f8f51431148c73b21727f045f3054d6bb56e679aac3dd9e52c9dfb",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_meta_llama-4-scout-17b-16e-instruct/raw/sample-020.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/require-named-grid"
+          ],
+          "byte_length": 2899,
+          "hash": "sha256:6e23a8fc66a81e03a3eccaa1b12bc938ead6b31d024e20f991633740b0e0de1b",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_meta_llama-4-scout-17b-16e-instruct/raw/sample-021.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/require-named-grid"
+          ],
+          "byte_length": 3046,
+          "hash": "sha256:cedea23ea7f8f51431148c73b21727f045f3054d6bb56e679aac3dd9e52c9dfb",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_meta_llama-4-scout-17b-16e-instruct/raw/sample-022.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/require-named-grid"
+          ],
+          "byte_length": 2899,
+          "hash": "sha256:6e23a8fc66a81e03a3eccaa1b12bc938ead6b31d024e20f991633740b0e0de1b",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_meta_llama-4-scout-17b-16e-instruct/raw/sample-023.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/require-named-grid"
+          ],
+          "byte_length": 3046,
+          "hash": "sha256:cedea23ea7f8f51431148c73b21727f045f3054d6bb56e679aac3dd9e52c9dfb",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_meta_llama-4-scout-17b-16e-instruct/raw/sample-024.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/require-named-grid"
+          ],
+          "byte_length": 2909,
+          "hash": "sha256:72a7e5e1fccec196b5a0f8162aa577ed86cb2608717399364d20fec0e81b36ba",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_meta_llama-4-scout-17b-16e-instruct/raw/sample-025.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/require-named-grid"
+          ],
+          "byte_length": 2909,
+          "hash": "sha256:72a7e5e1fccec196b5a0f8162aa577ed86cb2608717399364d20fec0e81b36ba",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_meta_llama-4-scout-17b-16e-instruct/raw/sample-026.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/require-named-grid"
+          ],
+          "byte_length": 2899,
+          "hash": "sha256:6e23a8fc66a81e03a3eccaa1b12bc938ead6b31d024e20f991633740b0e0de1b",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_meta_llama-4-scout-17b-16e-instruct/raw/sample-027.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/require-named-grid"
+          ],
+          "byte_length": 2909,
+          "hash": "sha256:72a7e5e1fccec196b5a0f8162aa577ed86cb2608717399364d20fec0e81b36ba",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_meta_llama-4-scout-17b-16e-instruct/raw/sample-028.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/require-named-grid"
+          ],
+          "byte_length": 2899,
+          "hash": "sha256:6e23a8fc66a81e03a3eccaa1b12bc938ead6b31d024e20f991633740b0e0de1b",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_meta_llama-4-scout-17b-16e-instruct/raw/sample-029.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/require-named-grid"
+          ],
+          "byte_length": 2899,
+          "hash": "sha256:6e23a8fc66a81e03a3eccaa1b12bc938ead6b31d024e20f991633740b0e0de1b",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_meta_llama-4-scout-17b-16e-instruct/raw/sample-030.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/require-named-grid"
+          ],
+          "byte_length": 2899,
+          "hash": "sha256:6e23a8fc66a81e03a3eccaa1b12bc938ead6b31d024e20f991633740b0e0de1b",
+          "scored": true
+        }
+      ]
+    },
+    {
+      "model": "@cf/meta/llama-4-scout-17b-16e-instruct",
+      "condition": "compiled",
+      "samples": [
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_meta_llama-4-scout-17b-16e-instruct/compiled/sample-001.html",
+          "tells": [
+            "ahd/line-height-per-size",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 2953,
+          "hash": "sha256:7a9b6f0caa7973a8302cff8a72d0e90689522ccc963fa4631be47da99fd93b35",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_meta_llama-4-scout-17b-16e-instruct/compiled/sample-002.html",
+          "tells": [
+            "ahd/line-height-per-size",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 2947,
+          "hash": "sha256:c1cfc480504c0380ddab9c4012a6cd72280a3659fcbee4769e4588714c812b79",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_meta_llama-4-scout-17b-16e-instruct/compiled/sample-003.html",
+          "tells": [
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 3717,
+          "hash": "sha256:7431a05c57413c27efb0dea36e25750a4ea5235f3debd4d33238f304109e6c19",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_meta_llama-4-scout-17b-16e-instruct/compiled/sample-004.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 4312,
+          "hash": "sha256:78ea6b1167632ad21e05975bb4e890552f700ab743657f79ea85f11e2d99292d",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_meta_llama-4-scout-17b-16e-instruct/compiled/sample-005.html",
+          "tells": [
+            "ahd/line-height-per-size",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 4568,
+          "hash": "sha256:e0229f9d83d8a0614e468a636e309a5670902c7a71a72d57f3cf66d95bd4b34f",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_meta_llama-4-scout-17b-16e-instruct/compiled/sample-006.html",
+          "tells": [
+            "ahd/line-height-per-size",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 4043,
+          "hash": "sha256:36d6bed1e2a8068e61ab4eb4362dd1d69282c5398e5fdc239a7bab09c1e510c1",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_meta_llama-4-scout-17b-16e-instruct/compiled/sample-007.html",
+          "tells": [
+            "ahd/line-height-per-size",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 2947,
+          "hash": "sha256:c1cfc480504c0380ddab9c4012a6cd72280a3659fcbee4769e4588714c812b79",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_meta_llama-4-scout-17b-16e-instruct/compiled/sample-008.html",
+          "tells": [
+            "ahd/line-height-per-size",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 3086,
+          "hash": "sha256:e1db19a95a3c11dda595e9c27f4113b01a14cad3ffcf92dd777fd1ba31c3c379",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_meta_llama-4-scout-17b-16e-instruct/compiled/sample-009.html",
+          "tells": [
+            "ahd/line-height-per-size",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 2943,
+          "hash": "sha256:52569c330600b5853cc0a1f650a11ddff070fd4fd134fcb1a3bf71dd65bc3901",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_meta_llama-4-scout-17b-16e-instruct/compiled/sample-010.html",
+          "tells": [
+            "ahd/line-height-per-size",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 2943,
+          "hash": "sha256:52569c330600b5853cc0a1f650a11ddff070fd4fd134fcb1a3bf71dd65bc3901",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_meta_llama-4-scout-17b-16e-instruct/compiled/sample-011.html",
+          "tells": [
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 3717,
+          "hash": "sha256:83e94b0a0ead61238dc608fd9713f31b0fb2aa46fc23085844947f989b6b097a",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_meta_llama-4-scout-17b-16e-instruct/compiled/sample-012.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/line-height-per-size",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 4049,
+          "hash": "sha256:24234c4d4d6e3f35716eb1a8c7ab8f5f35b39cfea4e31f9198f8a244c39dd338",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_meta_llama-4-scout-17b-16e-instruct/compiled/sample-013.html",
+          "tells": [
+            "ahd/line-height-per-size",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 3045,
+          "hash": "sha256:a951e48c3724e36463e817366c840dd51c0cf5144d037d3392949ed1511af3aa",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_meta_llama-4-scout-17b-16e-instruct/compiled/sample-014.html",
+          "tells": [
+            "ahd/line-height-per-size",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 2953,
+          "hash": "sha256:7a9b6f0caa7973a8302cff8a72d0e90689522ccc963fa4631be47da99fd93b35",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_meta_llama-4-scout-17b-16e-instruct/compiled/sample-015.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 4044,
+          "hash": "sha256:5f0159c6ae3ff442ced8216d82429eddf415e580cbd6efd30133d076adaef63c",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_meta_llama-4-scout-17b-16e-instruct/compiled/sample-016.html",
+          "tells": [
+            "ahd/line-height-per-size",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 2947,
+          "hash": "sha256:c1cfc480504c0380ddab9c4012a6cd72280a3659fcbee4769e4588714c812b79",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_meta_llama-4-scout-17b-16e-instruct/compiled/sample-017.html",
+          "tells": [
+            "ahd/line-height-per-size",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 4291,
+          "hash": "sha256:15d86d8a09c95ef70dc73881e7cceff359b9fdb00aef245838d009ec07b8caa5",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_meta_llama-4-scout-17b-16e-instruct/compiled/sample-018.html",
+          "tells": [
+            "ahd/line-height-per-size",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 2953,
+          "hash": "sha256:7a9b6f0caa7973a8302cff8a72d0e90689522ccc963fa4631be47da99fd93b35",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_meta_llama-4-scout-17b-16e-instruct/compiled/sample-019.html",
+          "tells": [
+            "ahd/line-height-per-size",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 2953,
+          "hash": "sha256:7a9b6f0caa7973a8302cff8a72d0e90689522ccc963fa4631be47da99fd93b35",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_meta_llama-4-scout-17b-16e-instruct/compiled/sample-020.html",
+          "tells": [
+            "ahd/line-height-per-size",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 2833,
+          "hash": "sha256:0813b248e02bdc66d4138c890d6b9beca658d84e3e7990e0aa34e0ca4f95a962",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_meta_llama-4-scout-17b-16e-instruct/compiled/sample-021.html",
+          "tells": [
+            "ahd/line-height-per-size",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 4472,
+          "hash": "sha256:dd593978c65f7865712465bc1026ef5c6ed77555d0203a4b4637705427bd75c4",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_meta_llama-4-scout-17b-16e-instruct/compiled/sample-022.html",
+          "tells": [
+            "ahd/line-height-per-size",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 4558,
+          "hash": "sha256:bd2906c7e0aae15a8c974d87dcf90ac45454bea1ec40b472195d3b67658c9b27",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_meta_llama-4-scout-17b-16e-instruct/compiled/sample-023.html",
+          "tells": [
+            "ahd/line-height-per-size",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 4260,
+          "hash": "sha256:8b18f5856bf4dcff9b6d7a3573886ce1cd7fad13a5c0e763665f4f7dc1248487",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_meta_llama-4-scout-17b-16e-instruct/compiled/sample-024.html",
+          "tells": [
+            "ahd/line-height-per-size",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 2947,
+          "hash": "sha256:c1cfc480504c0380ddab9c4012a6cd72280a3659fcbee4769e4588714c812b79",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_meta_llama-4-scout-17b-16e-instruct/compiled/sample-025.html",
+          "tells": [
+            "ahd/line-height-per-size",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 3045,
+          "hash": "sha256:a951e48c3724e36463e817366c840dd51c0cf5144d037d3392949ed1511af3aa",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_meta_llama-4-scout-17b-16e-instruct/compiled/sample-026.html",
+          "tells": [
+            "ahd/line-height-per-size",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 5156,
+          "hash": "sha256:c16e51e6076dd48c0dc1f576120606d8e3de64f1260276ea97f45df7991da5cc",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_meta_llama-4-scout-17b-16e-instruct/compiled/sample-027.html",
+          "tells": [
+            "ahd/line-height-per-size",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 2947,
+          "hash": "sha256:c1cfc480504c0380ddab9c4012a6cd72280a3659fcbee4769e4588714c812b79",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_meta_llama-4-scout-17b-16e-instruct/compiled/sample-028.html",
+          "tells": [
+            "ahd/line-height-per-size",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 3575,
+          "hash": "sha256:3f7e8a938215253f492a052fc9e3b0d4021fd878265f45bb5909ee0c6fb4d188",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_meta_llama-4-scout-17b-16e-instruct/compiled/sample-029.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 4795,
+          "hash": "sha256:2feaf668c33e1cdadf93e6fe28eb0260f916ba68bb654429bfafd205d5466cf6",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_meta_llama-4-scout-17b-16e-instruct/compiled/sample-030.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 3568,
+          "hash": "sha256:fff0a6af7bdac6ebb27cb7232667317625a949e26b77267804d36bf342c0a601",
+          "scored": true
+        }
+      ]
+    },
+    {
+      "model": "@cf/mistralai/mistral-small-3.1-24b-instruct",
+      "condition": "raw",
+      "samples": [
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_mistralai_mistral-small-3.1-24b-instruct/raw/sample-001.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/require-named-grid",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 2919,
+          "hash": "sha256:6695b9823e068147bf4310f9ae12983a08a5b85f3d755284051b084dca7380c5",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_mistralai_mistral-small-3.1-24b-instruct/raw/sample-002.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/require-named-grid",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 2820,
+          "hash": "sha256:526826fa22146b1307476442702f807aa6d23a0220df1d01108d8ea1898ac311",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_mistralai_mistral-small-3.1-24b-instruct/raw/sample-003.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/line-height-per-size",
+            "ahd/require-named-grid",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 3101,
+          "hash": "sha256:987da1a3c663acb70b79507b42a4495570295bd55582290687a163f9dc828fac",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_mistralai_mistral-small-3.1-24b-instruct/raw/sample-004.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/require-named-grid",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 2800,
+          "hash": "sha256:1e8081d087f7814302dcdcbaccf74906d810aae1ca2bd60f592801bbc2720e73",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_mistralai_mistral-small-3.1-24b-instruct/raw/sample-005.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/line-height-per-size",
+            "ahd/require-named-grid",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 3157,
+          "hash": "sha256:48ee1f228d845af54fb9f77e2782505e8f00b352fea380064df6843823f84d44",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_mistralai_mistral-small-3.1-24b-instruct/raw/sample-006.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/line-height-per-size",
+            "ahd/require-named-grid",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 3053,
+          "hash": "sha256:c90e38da7c719406db380aae4c071bba28ef69ac0aeab8857d839111f0a4736b",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_mistralai_mistral-small-3.1-24b-instruct/raw/sample-007.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/require-named-grid",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 2899,
+          "hash": "sha256:edfa8828734f7fb5a672c6fb2658c08b3befdca6399d6bbc173c9f0f6914effc",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_mistralai_mistral-small-3.1-24b-instruct/raw/sample-008.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/require-named-grid",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 2890,
+          "hash": "sha256:fb82beea2118ede3e860d96725dbe4bc4e03a328523eabbc9828fa2bd8f53140",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_mistralai_mistral-small-3.1-24b-instruct/raw/sample-009.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/require-named-grid",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 2868,
+          "hash": "sha256:56a0ae3778fec3e4eed94814200ebca20ad9f8eb223c3805785cd1ec70f95a9f",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_mistralai_mistral-small-3.1-24b-instruct/raw/sample-010.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/require-named-grid",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 2847,
+          "hash": "sha256:f3a2f08df15c5a4ad443ca7ac46c54c74c8e7867bc684f2be6d81198a0c8a1d0",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_mistralai_mistral-small-3.1-24b-instruct/raw/sample-011.html",
+          "tells": [
+            "ahd/line-height-per-size",
+            "ahd/require-named-grid",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 3256,
+          "hash": "sha256:c2dde7396359cc476985f7443e41317c488da6e8c5d4fc3daad40bbc5f40f8dd",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_mistralai_mistral-small-3.1-24b-instruct/raw/sample-012.html",
+          "tells": [
+            "ahd/line-height-per-size",
+            "ahd/require-named-grid",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 3128,
+          "hash": "sha256:4e24273723f74508b835ffa7fa86dd16d8815f6790d9d841bdaf97dce62213bb",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_mistralai_mistral-small-3.1-24b-instruct/raw/sample-013.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/line-height-per-size",
+            "ahd/require-named-grid",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 3178,
+          "hash": "sha256:8942e79175f3a74814d320f7129d99e3532e536ab74351369751ced68471dffe",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_mistralai_mistral-small-3.1-24b-instruct/raw/sample-014.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/require-named-grid",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 2805,
+          "hash": "sha256:a171dba1310645e04ec8b450ecbec2d5758056bca648a1d15ecf592da0659057",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_mistralai_mistral-small-3.1-24b-instruct/raw/sample-015.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/line-height-per-size",
+            "ahd/require-named-grid",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 3144,
+          "hash": "sha256:9821941a68756a0539b8ea7ca2f5c0aebe6136fc33e4cb75e3128d1f1923f881",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_mistralai_mistral-small-3.1-24b-instruct/raw/sample-016.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/line-height-per-size",
+            "ahd/require-named-grid",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 3007,
+          "hash": "sha256:3020c0d5d30bc1342dec9000f7552fffa28dd515b66da3002f8a63d0411c9a34",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_mistralai_mistral-small-3.1-24b-instruct/raw/sample-017.html",
+          "tells": [
+            "ahd/line-height-per-size",
+            "ahd/require-named-grid",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 3266,
+          "hash": "sha256:120c47350fc63b970689eabe9370c1c7713e7e017cea7bc9b8a7e3f00830dd77",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_mistralai_mistral-small-3.1-24b-instruct/raw/sample-018.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/line-height-per-size",
+            "ahd/require-named-grid",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 3179,
+          "hash": "sha256:c42824be01f6b7c8f0dd5388641e68ae793631dad09e02dc53b43ecf2aa9b2b7",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_mistralai_mistral-small-3.1-24b-instruct/raw/sample-019.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/require-named-grid",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 2800,
+          "hash": "sha256:8b69d161873ed05339c339000bc0d4069cce64a83cd90c4b8453f73a903a3bb0",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_mistralai_mistral-small-3.1-24b-instruct/raw/sample-020.html",
+          "tells": [
+            "ahd/line-height-per-size",
+            "ahd/require-named-grid",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 3297,
+          "hash": "sha256:1487dd07fdfe03322b8dcef2e6b16ec5b318253bc621a282d0eb4c0813a59866",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_mistralai_mistral-small-3.1-24b-instruct/raw/sample-021.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/line-height-per-size",
+            "ahd/require-named-grid",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 3065,
+          "hash": "sha256:8aee7f0fd7f024790c03931f380dee76270ce27f3d94a513e64201603718c334",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_mistralai_mistral-small-3.1-24b-instruct/raw/sample-022.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/line-height-per-size",
+            "ahd/require-named-grid",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 3127,
+          "hash": "sha256:e1627642773abd51856758b96a5cde2f83f8a1f25eee382696f4af27a0bd7693",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_mistralai_mistral-small-3.1-24b-instruct/raw/sample-023.html",
+          "tells": [
+            "ahd/require-named-grid",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 3026,
+          "hash": "sha256:2212db0774293c2cf9fda6fd3b08749792064d9715224decaa1b5b94e7261a6d",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_mistralai_mistral-small-3.1-24b-instruct/raw/sample-024.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/require-named-grid",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 2803,
+          "hash": "sha256:32568a7011a7007f585054350507a857df0b0f69946d29c29d52264e75986f51",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_mistralai_mistral-small-3.1-24b-instruct/raw/sample-025.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/require-named-grid",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 2845,
+          "hash": "sha256:ca08234d39fe84ebdad3c1e6ea056c10138c5d5c5ed77c8b67d9435c6705c00f",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_mistralai_mistral-small-3.1-24b-instruct/raw/sample-026.html",
+          "tells": [
+            "ahd/line-height-per-size",
+            "ahd/require-named-grid",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 3213,
+          "hash": "sha256:1cf574b885635ada0e66b7dd19ced6fec0746db2d0ea5e63ebb38c3311366ceb",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_mistralai_mistral-small-3.1-24b-instruct/raw/sample-027.html",
+          "tells": [
+            "ahd/line-height-per-size",
+            "ahd/require-named-grid",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 3261,
+          "hash": "sha256:bfa5ce1cd277dc0a9286dd7db0ac9c163f8facf43cd2944febd43e6dbb87f4f6",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_mistralai_mistral-small-3.1-24b-instruct/raw/sample-028.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/line-height-per-size",
+            "ahd/require-named-grid",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 3156,
+          "hash": "sha256:c73521ecb2a657821c38472c33265be2771e43ffbe5d39d1c3899d4282072742",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_mistralai_mistral-small-3.1-24b-instruct/raw/sample-029.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/require-named-grid",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 2835,
+          "hash": "sha256:1813d50b4cf5a25cca123e357aaf6e1f591700f75823ba531f67048a364bab3f",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_mistralai_mistral-small-3.1-24b-instruct/raw/sample-030.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/line-height-per-size",
+            "ahd/require-named-grid",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 3254,
+          "hash": "sha256:21b19172301cc3e4e598f5597f58d77f6f09abe74e80f933461e7a1690c205de",
+          "scored": true
+        }
+      ]
+    },
+    {
+      "model": "@cf/mistralai/mistral-small-3.1-24b-instruct",
+      "condition": "compiled",
+      "samples": [
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_mistralai_mistral-small-3.1-24b-instruct/compiled/sample-001.html",
+          "tells": [
+            "ahd/require-named-grid"
+          ],
+          "byte_length": 4968,
+          "hash": "sha256:ce552417b4957856a7aa2b7559ff96bbae3a11efa4a51ccbc5134ae38046f0ca",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_mistralai_mistral-small-3.1-24b-instruct/compiled/sample-002.html",
+          "tells": [
+            "ahd/require-named-grid"
+          ],
+          "byte_length": 5090,
+          "hash": "sha256:9ae04dd28c759835b7855e6fd61bfca754b86546a649eada9a7ecb5fd030932b",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_mistralai_mistral-small-3.1-24b-instruct/compiled/sample-003.html",
+          "tells": [],
+          "byte_length": 3423,
+          "hash": "sha256:3063823fab0e05c6d5d4a30ebe12d32469c3ae9e0be48105f189d3d346a3f1d8",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_mistralai_mistral-small-3.1-24b-instruct/compiled/sample-004.html",
+          "tells": [
+            "ahd/require-named-grid"
+          ],
+          "byte_length": 4796,
+          "hash": "sha256:816d675bf6e954b560260c0084f656522b19283b406aec6517c81aff4aa7ece7",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_mistralai_mistral-small-3.1-24b-instruct/compiled/sample-005.html",
+          "tells": [
+            "ahd/require-named-grid"
+          ],
+          "byte_length": 5700,
+          "hash": "sha256:c662dc2d15fea60c1ced76ad5bbb8b85de32d1786dd55783221577d01926735d",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_mistralai_mistral-small-3.1-24b-instruct/compiled/sample-006.html",
+          "tells": [],
+          "byte_length": 5393,
+          "hash": "sha256:37fbe1504abd91f0d1aa3c93966d4efc9846482f4e1344bd9e21061ebc93ed73",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_mistralai_mistral-small-3.1-24b-instruct/compiled/sample-007.html",
+          "tells": [],
+          "byte_length": 4878,
+          "hash": "sha256:31d8fa11618e5595c28bd4c3d77a571b829db90b05d1009c6d659296869f71f3",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_mistralai_mistral-small-3.1-24b-instruct/compiled/sample-008.html",
+          "tells": [
+            "ahd/require-named-grid"
+          ],
+          "byte_length": 4678,
+          "hash": "sha256:db7ddfaf18fcf89ce53da96784a3d42bf28f538ed11328b0382e6bdff602eaa1",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_mistralai_mistral-small-3.1-24b-instruct/compiled/sample-009.html",
+          "tells": [
+            "ahd/require-named-grid"
+          ],
+          "byte_length": 5464,
+          "hash": "sha256:60c0247849df0137110b3315a8e426762e8c37c3fc1cdff4e78e326b6feaf57b",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_mistralai_mistral-small-3.1-24b-instruct/compiled/sample-010.html",
+          "tells": [],
+          "byte_length": 4888,
+          "hash": "sha256:b51e0cfb3c0e6017902c5d88d6073db04257e605cda6190af58656396263c46b",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_mistralai_mistral-small-3.1-24b-instruct/compiled/sample-011.html",
+          "tells": [
+            "ahd/weight-variety",
+            "ahd/require-named-grid"
+          ],
+          "byte_length": 4352,
+          "hash": "sha256:56fe225c950e872383cf464630b6d8337a8ca918ca4c5a197400ee6c65cd632b",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_mistralai_mistral-small-3.1-24b-instruct/compiled/sample-012.html",
+          "tells": [
+            "ahd/require-named-grid"
+          ],
+          "byte_length": 5611,
+          "hash": "sha256:d363ab431a39f7691d2cf290117142e0b7020ec93e141df0f9e395fa2929a7e3",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_mistralai_mistral-small-3.1-24b-instruct/compiled/sample-013.html",
+          "tells": [
+            "ahd/require-named-grid"
+          ],
+          "byte_length": 5222,
+          "hash": "sha256:9856bcadd93373e3e4ab1e9ff8c92e9f114570e6560036020367c5d6a628b25e",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_mistralai_mistral-small-3.1-24b-instruct/compiled/sample-014.html",
+          "tells": [
+            "ahd/line-height-per-size",
+            "ahd/require-named-grid"
+          ],
+          "byte_length": 4205,
+          "hash": "sha256:b2d4b75e3e2459102f9cd129f82493150f8e4df756385d8741144f35c22dd4ef",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_mistralai_mistral-small-3.1-24b-instruct/compiled/sample-015.html",
+          "tells": [
+            "ahd/no-default-grotesque",
+            "ahd/require-named-grid"
+          ],
+          "byte_length": 4491,
+          "hash": "sha256:dcf213e331a284973270956d7a6eb272af085bd4ae7445b79be9cd26b905f4e3",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_mistralai_mistral-small-3.1-24b-instruct/compiled/sample-016.html",
+          "tells": [
+            "ahd/line-height-per-size"
+          ],
+          "byte_length": 3689,
+          "hash": "sha256:e85b5080ec7e9eac57ff7a9f808b33e1f3b3b709fc34cd089efc14d1b664bd80",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_mistralai_mistral-small-3.1-24b-instruct/compiled/sample-017.html",
+          "tells": [],
+          "byte_length": 5573,
+          "hash": "sha256:aa70355910d852415e75d90a3e8ae88ea49ba667831cdaaf6f4e5c18cc42aacc",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_mistralai_mistral-small-3.1-24b-instruct/compiled/sample-018.html",
+          "tells": [],
+          "byte_length": 5314,
+          "hash": "sha256:565d5cbe890751dc105eaf07d35e630780c90165320a7dbc72bf70455cf05659",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_mistralai_mistral-small-3.1-24b-instruct/compiled/sample-019.html",
+          "tells": [
+            "ahd/line-height-per-size"
+          ],
+          "byte_length": 4676,
+          "hash": "sha256:07531458e1273f7b4a8df064842a7bcc766dce582d935780dd2e9779289a988f",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_mistralai_mistral-small-3.1-24b-instruct/compiled/sample-020.html",
+          "tells": [],
+          "byte_length": 5502,
+          "hash": "sha256:602440a8d607f4c0b6356d7320dfbcb65dbfdf1b7108e7de961dc51bdd3f3911",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_mistralai_mistral-small-3.1-24b-instruct/compiled/sample-021.html",
+          "tells": [
+            "ahd/line-height-per-size",
+            "ahd/require-named-grid"
+          ],
+          "byte_length": 4508,
+          "hash": "sha256:49519fd3752d25c19074eabb1bc41e4d1c825e3e427413c65d32af4473168b07",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_mistralai_mistral-small-3.1-24b-instruct/compiled/sample-022.html",
+          "tells": [],
+          "byte_length": 4947,
+          "hash": "sha256:a934e679157a3e04ff09f9aabaffe91048515d5d8511fa5c2f4635d8bfad7146",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_mistralai_mistral-small-3.1-24b-instruct/compiled/sample-023.html",
+          "tells": [
+            "ahd/line-height-per-size",
+            "ahd/require-named-grid"
+          ],
+          "byte_length": 4886,
+          "hash": "sha256:9f6f42a44aca0323e4bf5738d05e60e803dda99d5e49a7afb8c784b4a60cf6f3",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_mistralai_mistral-small-3.1-24b-instruct/compiled/sample-024.html",
+          "tells": [
+            "ahd/require-named-grid"
+          ],
+          "byte_length": 5542,
+          "hash": "sha256:93b359d4ecd949ba2eac86af6b65f73a7668295ce46c10f2dd2ab23fd373f7c2",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_mistralai_mistral-small-3.1-24b-instruct/compiled/sample-025.html",
+          "tells": [],
+          "byte_length": 5010,
+          "hash": "sha256:a980508ab0ce26450de9d144936dab8021bfa5a90f7d5ba407095ae3154ed390",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_mistralai_mistral-small-3.1-24b-instruct/compiled/sample-026.html",
+          "tells": [
+            "ahd/require-named-grid"
+          ],
+          "byte_length": 5208,
+          "hash": "sha256:fa474392cdba811c564f2a1e8f046f43872d9388872a2c5cdad499be7ff75c3c",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_mistralai_mistral-small-3.1-24b-instruct/compiled/sample-027.html",
+          "tells": [
+            "ahd/require-named-grid"
+          ],
+          "byte_length": 5481,
+          "hash": "sha256:2cff3f07e04d006ef4604e1d18732e278ee30f0e8668f3de1502ba7fa756c7e9",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_mistralai_mistral-small-3.1-24b-instruct/compiled/sample-028.html",
+          "tells": [
+            "ahd/require-named-grid"
+          ],
+          "byte_length": 4585,
+          "hash": "sha256:31e1eea22bcea21e2853fe4a7d44c0ee374c8e2f308493faad35d5c7027d789b",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_mistralai_mistral-small-3.1-24b-instruct/compiled/sample-029.html",
+          "tells": [],
+          "byte_length": 5319,
+          "hash": "sha256:87bf5ca0c55694a5e860070047b84fd167b5899944aa8ddaf71a9952d281e06d",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_mistralai_mistral-small-3.1-24b-instruct/compiled/sample-030.html",
+          "tells": [],
+          "byte_length": 5505,
+          "hash": "sha256:a1d69b2145e31786b3e7961fc7594aea8b48b31ff735201ecadefe947daf279b",
+          "scored": true
+        }
+      ]
+    },
+    {
+      "model": "@cf/openai/gpt-oss-120b",
+      "condition": "raw",
+      "samples": [
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_openai_gpt-oss-120b/raw/sample-001.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/line-height-per-size",
+            "ahd/require-named-grid"
+          ],
+          "byte_length": 2072,
+          "hash": "sha256:02fc928805c8becf6579fa2d85a5fbba3e8f5dec6b4364ad66f49ea35fb0d0c0",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_openai_gpt-oss-120b/raw/sample-002.html",
+          "tells": [
+            "ahd/weight-variety",
+            "ahd/require-type-pairing",
+            "ahd/line-height-per-size",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 2755,
+          "hash": "sha256:86e69668e03e199b8007a6e907efd4492057fcea4ab8690be0d073e1b56b109f",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_openai_gpt-oss-120b/raw/sample-003.html",
+          "tells": [
+            "ahd/weight-variety",
+            "ahd/line-height-per-size",
+            "ahd/require-named-grid"
+          ],
+          "byte_length": 3082,
+          "hash": "sha256:d2faf051e36817e0dfcd3c40111c3521e32519542ce60bfd97cd0db12a4ab882",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_openai_gpt-oss-120b/raw/sample-004.html",
+          "tells": [
+            "ahd/line-height-per-size",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 2022,
+          "hash": "sha256:a4cc9462d36a7686aa7bbeb0536b9d6478dbda3ab857c896b538f4bad3a33862",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_openai_gpt-oss-120b/raw/sample-005.html",
+          "tells": [
+            "ahd/weight-variety",
+            "ahd/require-type-pairing",
+            "ahd/line-height-per-size",
+            "ahd/radius-hierarchy",
+            "ahd/no-em-dashes-in-prose"
+          ],
+          "byte_length": 2952,
+          "hash": "sha256:3ccb1778c803df82ba47c0bf07cc69599cac61bb216907e780e14cdcacb67812",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_openai_gpt-oss-120b/raw/sample-006.html",
+          "tells": [
+            "ahd/line-height-per-size",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 2415,
+          "hash": "sha256:866bd3e6959058dcfc33fad7e7905a253ebcd1782e12e4717850a9abf1ad60f8",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_openai_gpt-oss-120b/raw/sample-007.html",
+          "tells": [
+            "ahd/line-height-per-size",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 2193,
+          "hash": "sha256:0f8465167cde296c78f60bd832ec7232c19fb4451fa606236156597ecd923f66",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_openai_gpt-oss-120b/raw/sample-008.html",
+          "tells": [
+            "ahd/weight-variety",
+            "ahd/require-type-pairing",
+            "ahd/line-height-per-size",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 3034,
+          "hash": "sha256:d8d79f74651d289d84d826904ab2b079f717ebb0e0f3be2c94a70aa7effda4c8",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_openai_gpt-oss-120b/raw/sample-009.html",
+          "tells": [
+            "ahd/line-height-per-size",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 2022,
+          "hash": "sha256:cb84c19415e81982800cce2d04c43a0c36d08a3b3921111ec2ec15cb76174782",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_openai_gpt-oss-120b/raw/sample-010.html",
+          "tells": [
+            "ahd/weight-variety",
+            "ahd/require-type-pairing",
+            "ahd/line-height-per-size",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 2990,
+          "hash": "sha256:55bac9f7ce1f77b7b025307410beb4ffc8ad38d95e3d21abf4283031df9cc49e",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_openai_gpt-oss-120b/raw/sample-011.html",
+          "tells": [
+            "ahd/weight-variety",
+            "ahd/require-type-pairing",
+            "ahd/line-height-per-size",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 2834,
+          "hash": "sha256:9469228c1789db6de25d6901f384bc9d531798dbf903de7cf4edee53ec2766dc",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_openai_gpt-oss-120b/raw/sample-012.html",
+          "tells": [
+            "ahd/line-height-per-size",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 2260,
+          "hash": "sha256:26d2189974ac7ef63748eb047eada474202e5532892fa8cefd40f8c6eed65fc3",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_openai_gpt-oss-120b/raw/sample-013.html",
+          "tells": [
+            "ahd/weight-variety",
+            "ahd/require-type-pairing",
+            "ahd/line-height-per-size",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 3282,
+          "hash": "sha256:546cd7767513a03a71ef18a9625662b2018fe57f2300ac734884e7d80b6fec92",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_openai_gpt-oss-120b/raw/sample-014.html",
+          "tells": [
+            "ahd/line-height-per-size",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 1990,
+          "hash": "sha256:57f5e91f167b627cd87113380081fa1628e2f229dcd5bf73891d75dd36353960",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_openai_gpt-oss-120b/raw/sample-015.html",
+          "tells": [
+            "ahd/weight-variety",
+            "ahd/require-type-pairing",
+            "ahd/line-height-per-size",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 2742,
+          "hash": "sha256:0ba20ab04016682e0a1cc2f682693537f2dc2eb15b8743e53d0d56b19fabf87b",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_openai_gpt-oss-120b/raw/sample-016.html",
+          "tells": [
+            "ahd/weight-variety",
+            "ahd/require-type-pairing",
+            "ahd/line-height-per-size",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 2966,
+          "hash": "sha256:23e678fceba0fe4cd6fd48765b9824be5c63329eae20c2d0db6c13c371aba919",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_openai_gpt-oss-120b/raw/sample-017.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/line-height-per-size",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 2832,
+          "hash": "sha256:ac18aa64981bba24c78c2ef24de05bdadfefcfe2528ffcca4b50526069eee7f5",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_openai_gpt-oss-120b/raw/sample-018.html",
+          "tells": [
+            "ahd/no-default-grotesque",
+            "ahd/weight-variety",
+            "ahd/line-height-per-size",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 2832,
+          "hash": "sha256:dc9c2bd773e81a4f1b46987319a9932643d81dcec73eacf01b19151900178fc7",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_openai_gpt-oss-120b/raw/sample-019.html",
+          "tells": [
+            "ahd/weight-variety",
+            "ahd/no-flat-dark-mode",
+            "ahd/line-height-per-size",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 2008,
+          "hash": "sha256:a7e95d5fefb43748256a44a9883f45e67464790cef0520e9ae8e9bb41ec9ebde",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_openai_gpt-oss-120b/raw/sample-020.html",
+          "tells": [
+            "ahd/weight-variety",
+            "ahd/require-type-pairing",
+            "ahd/line-height-per-size",
+            "ahd/require-named-grid",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 2561,
+          "hash": "sha256:3faf3e1687fba379adbb5f6201e6064a0df98583b9db2d887629c5cd46dcc627",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_openai_gpt-oss-120b/raw/sample-021.html",
+          "tells": [
+            "ahd/weight-variety",
+            "ahd/require-type-pairing",
+            "ahd/line-height-per-size",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 2651,
+          "hash": "sha256:3415b4e73e57c802dd47e4113b89adc5f6e9ec3df9e2720b39af6308684b9f6a",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_openai_gpt-oss-120b/raw/sample-022.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/line-height-per-size",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 2725,
+          "hash": "sha256:bbeb2994400e120677704bab0e7769658307a5d8d22048aacfbc3456aba811fe",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_openai_gpt-oss-120b/raw/sample-023.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/line-height-per-size",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 2324,
+          "hash": "sha256:24cbe13ae2ed77e00769bc3ddfce438c8c988a4e64744a7c79fc80b4312be73c",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_openai_gpt-oss-120b/raw/sample-024.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/line-height-per-size",
+            "ahd/require-named-grid",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 2721,
+          "hash": "sha256:16cd2d187c146e44869be3f06d3121720dcef41ae261a76c1145c58753787e08",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_openai_gpt-oss-120b/raw/sample-025.html",
+          "tells": [
+            "ahd/weight-variety",
+            "ahd/require-type-pairing",
+            "ahd/line-height-per-size",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 3124,
+          "hash": "sha256:66a264e93a2d9018520c40411f4f498106d95b526f3c785819d4350800330bd8",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_openai_gpt-oss-120b/raw/sample-026.html",
+          "tells": [
+            "ahd/line-height-per-size",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 2182,
+          "hash": "sha256:5e43f2f6f95f8eb4bd619db8c02e1773bb9281705a827ab4c3fcc2981c41ad36",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_openai_gpt-oss-120b/raw/sample-027.html",
+          "tells": [],
+          "byte_length": 2024,
+          "hash": "sha256:2fc2ae3473caad1f6aa7675685155b676b3ffd86018dbd83716a4ad150968be0",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_openai_gpt-oss-120b/raw/sample-028.html",
+          "tells": [
+            "ahd/weight-variety",
+            "ahd/line-height-per-size",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 3078,
+          "hash": "sha256:2397a7aad7552eeb3e33bead316d47edbedae25471e352f2ff17bee4f89bfc66",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_openai_gpt-oss-120b/raw/sample-029.html",
+          "tells": [
+            "ahd/weight-variety",
+            "ahd/require-type-pairing",
+            "ahd/line-height-per-size"
+          ],
+          "byte_length": 3052,
+          "hash": "sha256:f1fa0b2cb27016b6a47f82b9597b0cf2076de2043f5ea196f846b6d1aef3f440",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_openai_gpt-oss-120b/raw/sample-030.html",
+          "tells": [
+            "ahd/line-height-per-size"
+          ],
+          "byte_length": 2114,
+          "hash": "sha256:02bd4635bf8beb3c5141c75ab46873b8ee03b9850744da0d35bf77316d00b73f",
+          "scored": true
+        }
+      ]
+    },
+    {
+      "model": "@cf/openai/gpt-oss-120b",
+      "condition": "compiled",
+      "samples": [
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_openai_gpt-oss-120b/compiled/sample-001.html",
+          "tells": [
+            "ahd/tracking-per-size"
+          ],
+          "byte_length": 4251,
+          "hash": "sha256:ab7bd43b6032ca40caf6caba41c627a5846819128b3c53b9a4b40b18260644c5",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_openai_gpt-oss-120b/compiled/sample-002.html",
+          "tells": [],
+          "byte_length": 68450,
+          "hash": "sha256:37ccde504977aaa1072c52533baea2706b24675064b7d175e81ca5ea0af75d5a",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_openai_gpt-oss-120b/compiled/sample-003.html",
+          "tells": [
+            "ahd/weight-variety"
+          ],
+          "byte_length": 4874,
+          "hash": "sha256:b5d94d0b580b80ec40da538aa9ffe8b71fbd5d55e4cf0900e7a3ee071be7853a",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_openai_gpt-oss-120b/compiled/sample-004.html",
+          "tells": [
+            "ahd/weight-variety"
+          ],
+          "byte_length": 4198,
+          "hash": "sha256:9cb1e5ed4916be31d2b919398b29efcb1d1846727e700b39fb2e082132edc8ca",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_openai_gpt-oss-120b/compiled/sample-005.html",
+          "tells": [
+            "ahd/weight-variety"
+          ],
+          "byte_length": 4192,
+          "hash": "sha256:dfd045c7182927ab3386de6a30489866e878aeb5e1bcdc640acc04403aba4aae",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_openai_gpt-oss-120b/compiled/sample-006.html",
+          "tells": [
+            "ahd/weight-variety"
+          ],
+          "byte_length": 3495,
+          "hash": "sha256:d00287d3c28a0470c18fca3ae6ef979fdf8786c512c2d9ca88cb421fecb15486",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_openai_gpt-oss-120b/compiled/sample-007.html",
+          "tells": [
+            "ahd/weight-variety"
+          ],
+          "byte_length": 4045,
+          "hash": "sha256:29f4b23211d83342b478da2fbee541b776647efb69f6af672f2e1cf256a14c56",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_openai_gpt-oss-120b/compiled/sample-008.html",
+          "tells": [
+            "ahd/weight-variety"
+          ],
+          "byte_length": 3836,
+          "hash": "sha256:23dd409fcda6361f57fdb4592e3e5625dbda13890ce238fe8d70e38fc25d2203",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_openai_gpt-oss-120b/compiled/sample-009.html",
+          "tells": [],
+          "byte_length": 3503,
+          "hash": "sha256:186324b642c8d0e1a9dd639ebd9744f8b53fef56b7964f7bca0a5cb77265a1d5",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_openai_gpt-oss-120b/compiled/sample-010.html",
+          "tells": [
+            "ahd/weight-variety"
+          ],
+          "byte_length": 4512,
+          "hash": "sha256:a8c919db3f51e9c49212ae4c7ee3e91e5ff1ff95f915ade06db7f948a7e8cd41",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_openai_gpt-oss-120b/compiled/sample-011.html",
+          "tells": [
+            "ahd/weight-variety"
+          ],
+          "byte_length": 4641,
+          "hash": "sha256:867f1cbc9a64af7b4ae597d7e6a2e74532200089501c5382f8c9be7ef342e86c",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_openai_gpt-oss-120b/compiled/sample-012.html",
+          "tells": [
+            "ahd/weight-variety"
+          ],
+          "byte_length": 3718,
+          "hash": "sha256:a234d71d85981ecfcb1707be70430a0a7407b6edb0471e1ce36e81b150df6ced",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_openai_gpt-oss-120b/compiled/sample-013.html",
+          "tells": [
+            "ahd/weight-variety"
+          ],
+          "byte_length": 3637,
+          "hash": "sha256:cb6dc66542b4429aa18fd7e0ef2c8da433c616ff686c24a73f47ec7f35ee0d17",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_openai_gpt-oss-120b/compiled/sample-014.html",
+          "tells": [
+            "ahd/weight-variety"
+          ],
+          "byte_length": 3939,
+          "hash": "sha256:717df5c0c9fd1f853da2eb6933b2592721d0c2608569127a277fcdee402a0822",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_openai_gpt-oss-120b/compiled/sample-015.html",
+          "tells": [
+            "ahd/weight-variety"
+          ],
+          "byte_length": 4404,
+          "hash": "sha256:4e435e8c86d85c83d5d57b3373b87465ae6191bbc12b37e417de1ecda47df396",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_openai_gpt-oss-120b/compiled/sample-016.html",
+          "tells": [
+            "ahd/weight-variety"
+          ],
+          "byte_length": 4314,
+          "hash": "sha256:fa456bbe4fdcc70a789c26fb2c6201a0017e0ce926ab0c4774b94722e09ed553",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_openai_gpt-oss-120b/compiled/sample-017.html",
+          "tells": [
+            "ahd/no-default-grotesque",
+            "ahd/weight-variety"
+          ],
+          "byte_length": 3409,
+          "hash": "sha256:278656f163cbb86f10fbb0538e0a6083b578e9c171d6ce5ee283f67a1cf35041",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_openai_gpt-oss-120b/compiled/sample-018.html",
+          "tells": [
+            "ahd/weight-variety"
+          ],
+          "byte_length": 4387,
+          "hash": "sha256:cb7fda6f4e279a28394052b1d40b39a742e64cd35ce6c2af21cd1df9fe16ada6",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_openai_gpt-oss-120b/compiled/sample-019.html",
+          "tells": [
+            "ahd/weight-variety"
+          ],
+          "byte_length": 3436,
+          "hash": "sha256:ae4482362010da97d4122e2177f37301c5267643ee36bf2c0730edd677cc9506",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_openai_gpt-oss-120b/compiled/sample-020.html",
+          "tells": [
+            "ahd/weight-variety"
+          ],
+          "byte_length": 3683,
+          "hash": "sha256:6cbe2aa06470bed9fec3e80ea6e3459e69e7f03b19311d1cb83c077f42294df0",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_openai_gpt-oss-120b/compiled/sample-021.html",
+          "tells": [],
+          "byte_length": 2795,
+          "hash": "sha256:bbfbc0f9f417bd22169dd0c000bb928232ceba3a8b1fea4c0e4ac4e8ed0793b7",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_openai_gpt-oss-120b/compiled/sample-022.html",
+          "tells": [
+            "ahd/weight-variety"
+          ],
+          "byte_length": 3678,
+          "hash": "sha256:d2f7fa7a365ff684a04d7d9bbe78705dea1f16965a43f41eff0c8fe541ab2e9e",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_openai_gpt-oss-120b/compiled/sample-023.html",
+          "tells": [
+            "ahd/weight-variety"
+          ],
+          "byte_length": 3282,
+          "hash": "sha256:aa35e36908fcaa9d21a225d49303c4d1a1771e5a6965dfe308d6b3676f00b005",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_openai_gpt-oss-120b/compiled/sample-024.html",
+          "tells": [],
+          "byte_length": 4163,
+          "hash": "sha256:0f6d558026927e8e915087c43b957def5979fdcc62cad2f7f6074e35c58d86ee",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_openai_gpt-oss-120b/compiled/sample-025.html",
+          "tells": [
+            "ahd/weight-variety"
+          ],
+          "byte_length": 3707,
+          "hash": "sha256:b71e2f851523979f99ff17b81b7fe9e9d98e60a215cec9541e3c2980c7601348",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_openai_gpt-oss-120b/compiled/sample-026.html",
+          "tells": [
+            "ahd/weight-variety"
+          ],
+          "byte_length": 4198,
+          "hash": "sha256:27c1587de97e4ab92912c383f40ecc8cb43dfca89f33f59f0e6f817a067f6aeb",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_openai_gpt-oss-120b/compiled/sample-027.html",
+          "tells": [
+            "ahd/weight-variety"
+          ],
+          "byte_length": 3660,
+          "hash": "sha256:3cce30a45d5759cc392670ff090612e31a6b920d7c8b2456ea1e16db4ec159e9",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_openai_gpt-oss-120b/compiled/sample-028.html",
+          "tells": [
+            "ahd/weight-variety",
+            "ahd/require-named-grid"
+          ],
+          "byte_length": 3263,
+          "hash": "sha256:f7790593163a576c52f6680fdfeb2c89d32ce4a9aa5349e2e997f77d4382fb34",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_openai_gpt-oss-120b/compiled/sample-029.html",
+          "tells": [
+            "ahd/weight-variety"
+          ],
+          "byte_length": 3815,
+          "hash": "sha256:120721f36e50f5a48ffb33e8af94e8e50827434b6ea39d99664c214b8e696ec4",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_openai_gpt-oss-120b/compiled/sample-030.html",
+          "tells": [
+            "ahd/weight-variety"
+          ],
+          "byte_length": 4014,
+          "hash": "sha256:8c2f97b0364c030b46c80dadb9bf8cf848fa2ca4f1e2650f03f6c5d549083d85",
+          "scored": true
+        }
+      ]
+    },
+    {
+      "model": "@cf/qwen/qwen3-30b-a3b-fp8",
+      "condition": "raw",
+      "samples": [
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_qwen_qwen3-30b-a3b-fp8/raw/sample-001.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/line-height-per-size",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 2030,
+          "hash": "sha256:f6b9c278b30b5dcf6067f3787f574100cf1a8828e505528a8ef9210bc03fb9d3",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_qwen_qwen3-30b-a3b-fp8/raw/sample-002.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/line-height-per-size"
+          ],
+          "byte_length": 2031,
+          "hash": "sha256:aa47dea5f54ba8f0f99de519df40cf42fdf3be0f3ba8d8c66adc1babb4264625",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_qwen_qwen3-30b-a3b-fp8/raw/sample-003.html",
+          "tells": [
+            "ahd/require-type-pairing"
+          ],
+          "byte_length": 1753,
+          "hash": "sha256:4919031cc9879a41ba319ca055a5c5353fcb0b9bd4f9c1b00cb06497fb42fc52",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_qwen_qwen3-30b-a3b-fp8/raw/sample-004.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/require-named-grid"
+          ],
+          "byte_length": 1770,
+          "hash": "sha256:6c6cbe322cddf962ff3b7a493b023fcfb53de86f9ddb5570eeba2ee2dc0bfa16",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_qwen_qwen3-30b-a3b-fp8/raw/sample-005.html",
+          "tells": [
+            "ahd/require-type-pairing"
+          ],
+          "byte_length": 2571,
+          "hash": "sha256:2eeec69224951525e223c555853468b0c52bffa3b7df8f717084653c9c602a4b",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_qwen_qwen3-30b-a3b-fp8/raw/sample-006.html",
+          "tells": [],
+          "byte_length": 2000,
+          "hash": "sha256:60b380b1853919276c459ca1b46fb99a3527fdeea1961cf1b1fe2a27165e07ae",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_qwen_qwen3-30b-a3b-fp8/raw/sample-007.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/line-height-per-size"
+          ],
+          "byte_length": 1759,
+          "hash": "sha256:7509b51724b2fe1ab0f7bef7f8767eb3e3b587e5cbc2faa1a0d6068a71ca431b",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_qwen_qwen3-30b-a3b-fp8/raw/sample-008.html",
+          "tells": [
+            "ahd/line-height-per-size",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 1916,
+          "hash": "sha256:cf421ee209afb5cdc99e89c4678b98da0a8af205fbce19ae83dc057486ac92dc",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_qwen_qwen3-30b-a3b-fp8/raw/sample-009.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/line-height-per-size"
+          ],
+          "byte_length": 1604,
+          "hash": "sha256:915a07acb96475c20868693d4e4de74fbbc914aea9db525e83d48465a75b6112",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_qwen_qwen3-30b-a3b-fp8/raw/sample-010.html",
+          "tells": [
+            "ahd/weight-variety",
+            "ahd/require-type-pairing",
+            "ahd/line-height-per-size",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 1698,
+          "hash": "sha256:bdccd6906672e3904530e1c1f801c242e14aeb425077bb8aea60a6ff616c4000",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_qwen_qwen3-30b-a3b-fp8/raw/sample-011.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/line-height-per-size"
+          ],
+          "byte_length": 2018,
+          "hash": "sha256:38d15a21b7197abbd8cd441ef3be14716f0ecac11190349678e8641ed293b3db",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_qwen_qwen3-30b-a3b-fp8/raw/sample-012.html",
+          "tells": [
+            "ahd/weight-variety",
+            "ahd/require-type-pairing",
+            "ahd/line-height-per-size",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 2003,
+          "hash": "sha256:310ffba5c27fe9003959ad60e6c7a76dfbd061723d4e2c8b6a16f947ceb98e15",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_qwen_qwen3-30b-a3b-fp8/raw/sample-013.html",
+          "tells": [
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 1873,
+          "hash": "sha256:502b4a33e9326c74d389c55a06f3fe157066e11176de34426a06a5a836e4e58b",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_qwen_qwen3-30b-a3b-fp8/raw/sample-014.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/line-height-per-size"
+          ],
+          "byte_length": 1580,
+          "hash": "sha256:c6a7c8205f6c6ca5a1543b7671c251868991c62d3e9683e77a043acf38dca332",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_qwen_qwen3-30b-a3b-fp8/raw/sample-015.html",
+          "tells": [
+            "ahd/require-type-pairing"
+          ],
+          "byte_length": 1862,
+          "hash": "sha256:e4aa7c39ffed5e29480ce0f827415fb74f3883573c35df2dacf6d1ce531590fa",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_qwen_qwen3-30b-a3b-fp8/raw/sample-016.html",
+          "tells": [
+            "ahd/weight-variety",
+            "ahd/require-type-pairing"
+          ],
+          "byte_length": 2055,
+          "hash": "sha256:4b65a3cf9cbc3ed2e289555773fbc78962ea46ab979ef4e39f61004ca4b77169",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_qwen_qwen3-30b-a3b-fp8/raw/sample-017.html",
+          "tells": [
+            "ahd/require-type-pairing"
+          ],
+          "byte_length": 1467,
+          "hash": "sha256:d23beb50c18eb44da9daeba54b9e5b038b1bca018e5efd695f9d953aec70838d",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_qwen_qwen3-30b-a3b-fp8/raw/sample-018.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/line-height-per-size"
+          ],
+          "byte_length": 1815,
+          "hash": "sha256:c5c7a21974ff8a3a1d9f2e86ac4c185b95520cc21fc1358dc428626124f9659b",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_qwen_qwen3-30b-a3b-fp8/raw/sample-019.html",
+          "tells": [
+            "ahd/require-type-pairing"
+          ],
+          "byte_length": 1468,
+          "hash": "sha256:067d722a53ae11d700512fab91662d0faad6b14b3b0cdda009cb130223d90e65",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_qwen_qwen3-30b-a3b-fp8/raw/sample-020.html",
+          "tells": [
+            "ahd/require-type-pairing"
+          ],
+          "byte_length": 1819,
+          "hash": "sha256:0fb60cef92d52be64e3b56a0e7221cef5ec56f3a572dcb5edaaba113a181fdb4",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_qwen_qwen3-30b-a3b-fp8/raw/sample-021.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/line-height-per-size"
+          ],
+          "byte_length": 1751,
+          "hash": "sha256:3c59372d6e238cae2935a765bb93174a70c1a4ce99beb73f6ce4423f0ab7fb5c",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_qwen_qwen3-30b-a3b-fp8/raw/sample-022.html",
+          "tells": [
+            "ahd/require-type-pairing"
+          ],
+          "byte_length": 1962,
+          "hash": "sha256:92baf8601d1ad0119fe2b9b38cab98e46f0a1a936f8f8143006e9a5f47938d19",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_qwen_qwen3-30b-a3b-fp8/raw/sample-023.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/line-height-per-size",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 1774,
+          "hash": "sha256:e6c10a05cffa9a64587112400558aab3b67a9a19c0c538b8df373837cc0cee20",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_qwen_qwen3-30b-a3b-fp8/raw/sample-024.html",
+          "tells": [
+            "ahd/require-type-pairing"
+          ],
+          "byte_length": 1854,
+          "hash": "sha256:c642f15f1ee5265902f1439b58839fb26268046953f2086706cc566c9407e19a",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_qwen_qwen3-30b-a3b-fp8/raw/sample-025.html",
+          "tells": [
+            "ahd/line-height-per-size"
+          ],
+          "byte_length": 2238,
+          "hash": "sha256:0f0e310414fc6c3b6f9fc50958365700bcacf5f207a6a83ea8a8de8dda826271",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_qwen_qwen3-30b-a3b-fp8/raw/sample-026.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/line-height-per-size",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 1589,
+          "hash": "sha256:4f0b356eca8a030e80327e57a16558314e6678073596a04da463feef9c27e03a",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_qwen_qwen3-30b-a3b-fp8/raw/sample-027.html",
+          "tells": [
+            "ahd/require-type-pairing"
+          ],
+          "byte_length": 2255,
+          "hash": "sha256:1124446446df697f0bc95dcda6b04d58acc0609d36c22ce248887296deb41f29",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_qwen_qwen3-30b-a3b-fp8/raw/sample-028.html",
+          "tells": [
+            "ahd/weight-variety"
+          ],
+          "byte_length": 2431,
+          "hash": "sha256:6a1102b07410e0c07e2357a1f5b68c5da824bc80979cbf5c5805d0e7b5b85514",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_qwen_qwen3-30b-a3b-fp8/raw/sample-029.html",
+          "tells": [
+            "ahd/require-type-pairing",
+            "ahd/line-height-per-size"
+          ],
+          "byte_length": 1828,
+          "hash": "sha256:6050e4c9df95323d928ba7dbdb9dbca4ce89f03520b77b4b626ea681e710eb0f",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_qwen_qwen3-30b-a3b-fp8/raw/sample-030.html",
+          "tells": [
+            "ahd/weight-variety",
+            "ahd/require-type-pairing",
+            "ahd/line-height-per-size",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 2487,
+          "hash": "sha256:572fd2b6d3596df4b130b37bd1b882328e5ca5c4e831e041160297ad4762781c",
+          "scored": true
+        }
+      ]
+    },
+    {
+      "model": "@cf/qwen/qwen3-30b-a3b-fp8",
+      "condition": "compiled",
+      "samples": [
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_qwen_qwen3-30b-a3b-fp8/compiled/sample-001.html",
+          "tells": [
+            "ahd/weight-variety",
+            "ahd/line-height-per-size",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 3518,
+          "hash": "sha256:6575a121fd68d3befdedcece939e48aa28fb36cd467f2b31ff1629324e2ed9d2",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_qwen_qwen3-30b-a3b-fp8/compiled/sample-002.html",
+          "tells": [
+            "ahd/weight-variety"
+          ],
+          "byte_length": 3416,
+          "hash": "sha256:e313b9410ebb65987fd9d4ea1758f13d6e1cefb243857ac4ec230405dd1519e0",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_qwen_qwen3-30b-a3b-fp8/compiled/sample-003.html",
+          "tells": [
+            "ahd/weight-variety"
+          ],
+          "byte_length": 3546,
+          "hash": "sha256:4526a75ee72ff79caeb9740097d6aa4780d4676fd7594bcd2595617fa5f3b390",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_qwen_qwen3-30b-a3b-fp8/compiled/sample-004.html",
+          "tells": [
+            "ahd/weight-variety"
+          ],
+          "byte_length": 3203,
+          "hash": "sha256:25a3e21ba9ddf8883b90852e1a613ba6d86c45f2cef07bc7d893ee1a67b6dc41",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_qwen_qwen3-30b-a3b-fp8/compiled/sample-005.html",
+          "tells": [
+            "ahd/weight-variety",
+            "ahd/line-height-per-size",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 3279,
+          "hash": "sha256:b0bc52148ac467f4697470bab500341bb9a36d0464542f38227da9bc577d3cdd",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_qwen_qwen3-30b-a3b-fp8/compiled/sample-006.html",
+          "tells": [
+            "ahd/weight-variety",
+            "ahd/line-height-per-size",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 3666,
+          "hash": "sha256:8ac7106c0175f9882d127fd5c3c910f18ea0bbc7067d58af0037160cb1276126",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_qwen_qwen3-30b-a3b-fp8/compiled/sample-007.html",
+          "tells": [
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 3746,
+          "hash": "sha256:7ac60e3aa07980446d72b1fb3e7e90276ae829b6bd5c3313e9e066bbc919a426",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_qwen_qwen3-30b-a3b-fp8/compiled/sample-008.html",
+          "tells": [],
+          "byte_length": 3191,
+          "hash": "sha256:7ca1a74d0e8b89b38c48b179eb448629fa3eda6ec4432ba1abba2a594c4f7211",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_qwen_qwen3-30b-a3b-fp8/compiled/sample-009.html",
+          "tells": [
+            "ahd/line-height-per-size",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 3265,
+          "hash": "sha256:5cdc810040f193378150468e507e8f1197ba040e3eafd1d5f6b7e33e7bdf10d6",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_qwen_qwen3-30b-a3b-fp8/compiled/sample-010.html",
+          "tells": [
+            "ahd/weight-variety",
+            "ahd/line-height-per-size"
+          ],
+          "byte_length": 3041,
+          "hash": "sha256:3e7226e86137cb938b98d596c1630eb49a46e8a82de1653ea15b2cac517fedf0",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_qwen_qwen3-30b-a3b-fp8/compiled/sample-011.html",
+          "tells": [
+            "ahd/weight-variety",
+            "ahd/body-measure"
+          ],
+          "byte_length": 3602,
+          "hash": "sha256:6b1ca036d77d293ec332b14ce30c2e7143d337487f0029ab07b094a84cbecaf4",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_qwen_qwen3-30b-a3b-fp8/compiled/sample-012.html",
+          "tells": [
+            "ahd/weight-variety"
+          ],
+          "byte_length": 3101,
+          "hash": "sha256:0fe77ab37d21580ed97e09ebee3893a92147a512513b1e68ce44c9f84ff399a7",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_qwen_qwen3-30b-a3b-fp8/compiled/sample-013.html",
+          "tells": [
+            "ahd/weight-variety",
+            "ahd/line-height-per-size",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 3370,
+          "hash": "sha256:076b63a6991b18df7941665dd3b07a5bae0b9b701abc32985142b57db5e7f3ee",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_qwen_qwen3-30b-a3b-fp8/compiled/sample-014.html",
+          "tells": [
+            "ahd/weight-variety"
+          ],
+          "byte_length": 2857,
+          "hash": "sha256:32e73b85eb45cde90df11e3b6d2f5c2de1866f4e1ff50daed250c8202276d535",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_qwen_qwen3-30b-a3b-fp8/compiled/sample-015.html",
+          "tells": [
+            "ahd/weight-variety",
+            "ahd/require-named-grid"
+          ],
+          "byte_length": 3055,
+          "hash": "sha256:59c815f6fa8ce8e74763ab6777485a9c20cbf0c52e972d629333e1b3aee98f62",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_qwen_qwen3-30b-a3b-fp8/compiled/sample-016.html",
+          "tells": [
+            "ahd/weight-variety",
+            "ahd/line-height-per-size"
+          ],
+          "byte_length": 3037,
+          "hash": "sha256:dfdf6732b23e11dbe49437a65a67c0288db330f290d05683a29efc571829068f",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_qwen_qwen3-30b-a3b-fp8/compiled/sample-017.html",
+          "tells": [
+            "ahd/weight-variety"
+          ],
+          "byte_length": 3444,
+          "hash": "sha256:1a3897faa550ed4883539a95ca6a81ecb4f9310c7c53b765e72bb739b7730268",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_qwen_qwen3-30b-a3b-fp8/compiled/sample-018.html",
+          "tells": [
+            "ahd/weight-variety"
+          ],
+          "byte_length": 3330,
+          "hash": "sha256:f287ea13e387009254c5b9332b6056ee420f1971b189bd0e9996820eb4a3a19d",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_qwen_qwen3-30b-a3b-fp8/compiled/sample-019.html",
+          "tells": [
+            "ahd/weight-variety"
+          ],
+          "byte_length": 3352,
+          "hash": "sha256:444da2f2ba6299c53f2168e033479baa1583907eb503baa64337989a4657a19f",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_qwen_qwen3-30b-a3b-fp8/compiled/sample-020.html",
+          "tells": [
+            "ahd/weight-variety",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 2882,
+          "hash": "sha256:c5297d77df95a2cd4fad4569ca22dcedfe8de761ef5c32b00ffc1141255f4f50",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_qwen_qwen3-30b-a3b-fp8/compiled/sample-021.html",
+          "tells": [
+            "ahd/weight-variety",
+            "ahd/line-height-per-size"
+          ],
+          "byte_length": 3138,
+          "hash": "sha256:3da54f4e54a5383a618aa3e277cfb4b08b719e2935a9071b9e794023e1b78562",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_qwen_qwen3-30b-a3b-fp8/compiled/sample-022.html",
+          "tells": [
+            "ahd/weight-variety",
+            "ahd/line-height-per-size",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 3386,
+          "hash": "sha256:21d11bf8b2d73df273f0ee217e9ef2469f5da3a6993b6a03d95c5be0cc13233a",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_qwen_qwen3-30b-a3b-fp8/compiled/sample-023.html",
+          "tells": [
+            "ahd/weight-variety",
+            "ahd/line-height-per-size"
+          ],
+          "byte_length": 3331,
+          "hash": "sha256:729b785dcde8bca3cbcdfc97b419a1d6a851ac06e9161a404da2db9796965704",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_qwen_qwen3-30b-a3b-fp8/compiled/sample-024.html",
+          "tells": [
+            "ahd/weight-variety",
+            "ahd/line-height-per-size"
+          ],
+          "byte_length": 2499,
+          "hash": "sha256:dc110fd07eaa20aa694f965d6eccce95704f75523a39961654f3ae991d3fe9eb",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_qwen_qwen3-30b-a3b-fp8/compiled/sample-025.html",
+          "tells": [
+            "ahd/weight-variety"
+          ],
+          "byte_length": 3400,
+          "hash": "sha256:ba2782db07073eac8481cd40b94c24709911da6e93855d74c8c0883d5365f997",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_qwen_qwen3-30b-a3b-fp8/compiled/sample-026.html",
+          "tells": [
+            "ahd/weight-variety",
+            "ahd/line-height-per-size",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 2931,
+          "hash": "sha256:88ae56f4cc9b710522d193344323b1742d4c3a158d6aac9e5cfab3905a81c237",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_qwen_qwen3-30b-a3b-fp8/compiled/sample-027.html",
+          "tells": [
+            "ahd/weight-variety",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 3189,
+          "hash": "sha256:09ab87d9acd61a310d4e8784fd5f4a2a281c053ca1d801f261a9c7b7a9ce7e78",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_qwen_qwen3-30b-a3b-fp8/compiled/sample-028.html",
+          "tells": [
+            "ahd/weight-variety",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 3127,
+          "hash": "sha256:7fbcea26b96e8d524c9fd0006c1234a3cce2ff6b532ec2d6a9627f10e88ec087",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_qwen_qwen3-30b-a3b-fp8/compiled/sample-029.html",
+          "tells": [
+            "ahd/weight-variety",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 3505,
+          "hash": "sha256:da113ef8ebc31f96b3f6df61e8da314491a4fcb61e592e30619746d62b052599",
+          "scored": true
+        },
+        {
+          "sample_id": "/home/runner/work/_temp/monthly-samples.850ygi/swiss-editorial/_cf_qwen_qwen3-30b-a3b-fp8/compiled/sample-030.html",
+          "tells": [
+            "ahd/weight-variety",
+            "ahd/radius-hierarchy"
+          ],
+          "byte_length": 3076,
+          "hash": "sha256:770ba6ac3f762da3381b7f79137f9a083064e4624905c91b5286895e9e042561",
+          "scored": true
+        }
+      ]
+    }
+  ],
+  "strata": [
+    {
+      "model": "@cf/google/gemma-4-26b-a4b-it",
+      "severity": "error",
+      "estimator": "welch-t",
+      "df": 23.169560632783753,
+      "variance_floor": {
+        "raw": 0.25,
+        "cmp": 0.23925900379599827
+      },
+      "variance_used": {
+        "raw": 0.25,
+        "cmp": 0.23925900379599827
+      },
+      "bootstrap_cross_check": {
+        "method": "bca",
+        "estimate": 0.22727272727272727,
+        "lower": 0,
+        "upper": 0.5,
+        "iterations": 10000,
+        "alpha": 0.005,
+        "seed": 995
+      }
+    },
+    {
+      "model": "@cf/google/gemma-4-26b-a4b-it",
+      "severity": "warn",
+      "estimator": "welch-t",
+      "df": 17.252685260564416,
+      "variance_floor": {
+        "raw": 0.1941659576959402,
+        "cmp": 0.25
+      },
+      "variance_used": {
+        "raw": 0.22727272727272727,
+        "cmp": 0.446969696969697
+      },
+      "bootstrap_cross_check": {
+        "method": "bca",
+        "estimate": 1.234848484848485,
+        "lower": 0.6439393939393938,
+        "upper": 1.8257575757575757,
+        "iterations": 10000,
+        "alpha": 0.005,
+        "seed": 995
+      }
+    },
+    {
+      "model": "@cf/google/gemma-4-26b-a4b-it",
+      "severity": "info",
+      "estimator": "welch-t",
+      "df": 20.762718571661498,
+      "variance_floor": {
+        "raw": 0.19416595769594017,
+        "cmp": 0.23925900379599827
+      },
+      "variance_used": {
+        "raw": 0.19416595769594017,
+        "cmp": 0.23925900379599827
+      },
+      "bootstrap_cross_check": {
+        "method": "bca",
+        "estimate": 0,
+        "lower": 0,
+        "upper": 0,
+        "iterations": 10000,
+        "alpha": 0.005,
+        "seed": 995
+      }
+    },
+    {
+      "model": "@cf/meta/llama-4-scout-17b-16e-instruct",
+      "severity": "error",
+      "estimator": "welch-t",
+      "df": 55.91761154617076,
+      "variance_floor": {
+        "raw": 0.16474394517996913,
+        "cmp": 0.24353199587261684
+      },
+      "variance_used": {
+        "raw": 0.16474394517996913,
+        "cmp": 0.24353199587261684
+      },
+      "bootstrap_cross_check": {
+        "method": "bca",
+        "estimate": 0.8333333333333334,
+        "lower": 0.5666666666666667,
+        "upper": 0.9333333333333333,
+        "iterations": 10000,
+        "alpha": 0.005,
+        "seed": 995
+      }
+    },
+    {
+      "model": "@cf/meta/llama-4-scout-17b-16e-instruct",
+      "severity": "warn",
+      "estimator": "welch-t",
+      "df": 57.99968201818046,
+      "variance_floor": {
+        "raw": 0.16474394517996913,
+        "cmp": 0.16474394517996913
+      },
+      "variance_used": {
+        "raw": 0.16474394517996913,
+        "cmp": 0.16551724137931043
+      },
+      "bootstrap_cross_check": {
+        "method": "bca",
+        "estimate": -0.8,
+        "lower": -0.9666666666666666,
+        "upper": -0.5666666666666667,
+        "iterations": 10000,
+        "alpha": 0.005,
+        "seed": 995
+      }
+    },
+    {
+      "model": "@cf/meta/llama-4-scout-17b-16e-instruct",
+      "severity": "info",
+      "estimator": "welch-t",
+      "df": 58,
+      "variance_floor": {
+        "raw": 0.16474394517996904,
+        "cmp": 0.16474394517996904
+      },
+      "variance_used": {
+        "raw": 0.16474394517996904,
+        "cmp": 0.16474394517996904
+      },
+      "bootstrap_cross_check": {
+        "method": "bca",
+        "estimate": 0,
+        "lower": 0,
+        "upper": 0,
+        "iterations": 10000,
+        "alpha": 0.005,
+        "seed": 995
+      }
+    },
+    {
+      "model": "@cf/mistralai/mistral-small-3.1-24b-instruct",
+      "severity": "error",
+      "estimator": "welch-t",
+      "df": 56.98880700398924,
+      "variance_floor": {
+        "raw": 0.24989023299249707,
+        "cmp": 0.191142266651356
+      },
+      "variance_used": {
+        "raw": 0.24989023299249707,
+        "cmp": 0.191142266651356
+      },
+      "bootstrap_cross_check": {
+        "method": "bca",
+        "estimate": 0.7333333333333334,
+        "lower": 0.43333333333333335,
+        "upper": 0.9,
+        "iterations": 10000,
+        "alpha": 0.005,
+        "seed": 995
+      }
+    },
+    {
+      "model": "@cf/mistralai/mistral-small-3.1-24b-instruct",
+      "severity": "warn",
+      "estimator": "welch-t",
+      "df": 53.51807366844431,
+      "variance_floor": {
+        "raw": 0.16474394517996913,
+        "cmp": 0.25
+      },
+      "variance_used": {
+        "raw": 0.2540229885057473,
+        "cmp": 0.46091954022988496
+      },
+      "bootstrap_cross_check": {
+        "method": "bca",
+        "estimate": 1.8000000000000003,
+        "lower": 1.3666666666666667,
+        "upper": 2.2,
+        "iterations": 10000,
+        "alpha": 0.005,
+        "seed": 995
+      }
+    },
+    {
+      "model": "@cf/mistralai/mistral-small-3.1-24b-instruct",
+      "severity": "info",
+      "estimator": "welch-t",
+      "df": 58,
+      "variance_floor": {
+        "raw": 0.16474394517996904,
+        "cmp": 0.16474394517996904
+      },
+      "variance_used": {
+        "raw": 0.16474394517996904,
+        "cmp": 0.16474394517996904
+      },
+      "bootstrap_cross_check": {
+        "method": "bca",
+        "estimate": 0,
+        "lower": 0,
+        "upper": 0,
+        "iterations": 10000,
+        "alpha": 0.005,
+        "seed": 995
+      }
+    },
+    {
+      "model": "@cf/openai/gpt-oss-120b",
+      "severity": "error",
+      "estimator": "welch-t",
+      "df": 56.98558712479345,
+      "variance_floor": {
+        "raw": 0.25,
+        "cmp": 0.191142266651356
+      },
+      "variance_used": {
+        "raw": 0.25,
+        "cmp": 0.191142266651356
+      },
+      "bootstrap_cross_check": {
+        "method": "bca",
+        "estimate": 0.5666666666666667,
+        "lower": 0.2666666666666666,
+        "upper": 0.7666666666666667,
+        "iterations": 10000,
+        "alpha": 0.005,
+        "seed": 995
+      }
+    },
+    {
+      "model": "@cf/openai/gpt-oss-120b",
+      "severity": "warn",
+      "estimator": "welch-t",
+      "df": 45.795112541722105,
+      "variance_floor": {
+        "raw": 0.191142266651356,
+        "cmp": 0.236167774155636
+      },
+      "variance_used": {
+        "raw": 0.7402298850574713,
+        "cmp": 0.236167774155636
+      },
+      "bootstrap_cross_check": {
+        "method": "bca",
+        "estimate": 1.6333333333333333,
+        "lower": 1.0999999999999999,
+        "upper": 2.033333333333333,
+        "iterations": 10000,
+        "alpha": 0.005,
+        "seed": 995
+      }
+    },
+    {
+      "model": "@cf/openai/gpt-oss-120b",
+      "severity": "info",
+      "estimator": "welch-t",
+      "df": 58,
+      "variance_floor": {
+        "raw": 0.16474394517996904,
+        "cmp": 0.16474394517996904
+      },
+      "variance_used": {
+        "raw": 0.16474394517996904,
+        "cmp": 0.16474394517996904
+      },
+      "bootstrap_cross_check": {
+        "method": "bca",
+        "estimate": 0,
+        "lower": 0,
+        "upper": 0,
+        "iterations": 10000,
+        "alpha": 0.005,
+        "seed": 995
+      }
+    },
+    {
+      "model": "@cf/qwen/qwen3-30b-a3b-fp8",
+      "severity": "error",
+      "estimator": "welch-t",
+      "df": 55.917611546170754,
+      "variance_floor": {
+        "raw": 0.24353199587261684,
+        "cmp": 0.16474394517996904
+      },
+      "variance_used": {
+        "raw": 0.24353199587261684,
+        "cmp": 0.16474394517996904
+      },
+      "bootstrap_cross_check": {
+        "method": "bca",
+        "estimate": 0.8333333333333334,
+        "lower": 0.5666666666666667,
+        "upper": 0.9666666666666667,
+        "iterations": 10000,
+        "alpha": 0.005,
+        "seed": 995
+      }
+    },
+    {
+      "model": "@cf/qwen/qwen3-30b-a3b-fp8",
+      "severity": "warn",
+      "estimator": "welch-t",
+      "df": 56.539633198632266,
+      "variance_floor": {
+        "raw": 0.25,
+        "cmp": 0.191142266651356
+      },
+      "variance_used": {
+        "raw": 0.896551724137931,
+        "cmp": 0.6482758620689653
+      },
+      "bootstrap_cross_check": {
+        "method": "bca",
+        "estimate": -0.8,
+        "lower": -1.4333333333333333,
+        "upper": -0.16666666666666674,
+        "iterations": 10000,
+        "alpha": 0.005,
+        "seed": 995
+      }
+    },
+    {
+      "model": "@cf/qwen/qwen3-30b-a3b-fp8",
+      "severity": "info",
+      "estimator": "welch-t",
+      "df": 58,
+      "variance_floor": {
+        "raw": 0.16474394517996904,
+        "cmp": 0.16474394517996904
+      },
+      "variance_used": {
+        "raw": 0.16474394517996904,
+        "cmp": 0.16474394517996904
+      },
+      "bootstrap_cross_check": {
+        "method": "bca",
+        "estimate": 0,
+        "lower": 0,
+        "upper": 0,
+        "iterations": 10000,
+        "alpha": 0.005,
+        "seed": 995
+      }
+    }
+  ]
+}
